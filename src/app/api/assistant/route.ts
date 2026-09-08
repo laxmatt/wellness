@@ -9,12 +9,16 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary, screenModelClaims } from "@/domain/match-claims";
+import { approvedFigures, limitationText, verifyReply } from "@/domain/reply-verification";
+import { toEngineConstraints } from "@/domain/model-constraints";
+import { moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
 import { applyPreferences } from "@/domain/personalization/match";
 import type { ProductView } from "@/domain/view";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
+import { buildRejection, captureRejectedIntent } from "@/providers/ai/diagnostics";
 import { OpenAIConversationProvider, ProviderCallError, type ConversationProvider, type ConverseInput, type GroundedProduct } from "@/providers/ai/OpenAIProvider";
 import { ScriptedConversationProvider } from "@/providers/ai/ScriptedProvider";
 import { getMeter } from "@/providers/usage";
@@ -57,12 +61,18 @@ function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
             : "unattributed",
     });
   }
+  // A placeholder price is demo data. It used to be sent with a warning label
+  // and the model quoted it to a shopper as "$139" anyway. Labels are advice;
+  // withholding is not. It is listed as not stated, like any other value the
+  // catalogue does not really have.
+  const priceIsPlaceholder = view.price.isDemo;
+  if (priceIsPlaceholder) notStated.push("price");
   return {
     id: view.id,
     name: view.name,
     brand: view.brand.name,
-    price: formatMoney(view.price.money),
-    priceIsPlaceholder: view.price.isDemo,
+    price: priceIsPlaceholder ? null : formatMoney(view.price.money),
+    priceIsPlaceholder,
     facts,
     notStated,
   };
@@ -184,6 +194,7 @@ export async function POST(req: Request) {
     // The model is told how much it cannot see, so it cannot report a
     // shortlist's emptiness as the category's.
     catalogueSize: views.length,
+    moneyContract: moneyContractText(cat),
     messages: messages.map((m) => ({ role: m.role, text: m.text })),
     activeConstraints: hard.map((c) => describeConstraint(cat, c)),
   };
@@ -294,8 +305,42 @@ export async function POST(req: Request) {
   }
 
   const validKeys = new Set<string>([...cat.attributeDefinitions.map((a) => a.key), "price"]);
-  const proposedHard = intent.hard.filter((c) => validKeys.has(c.key));
-  const proposedSoft = intent.soft.filter((s) => validKeys.has(s.key));
+  const knownHard = intent.hard.filter((c) => validKeys.has(c.key));
+  const knownSoft = intent.soft.filter((s) => validKeys.has(s.key));
+
+  // Money becomes integer minor units here, in code, once. A constraint that
+  // cannot be converted is never guessed at and never dropped: the whole reply
+  // fails visibly, because a silently missing budget is what turned "under
+  // $700" into a search for products under seven dollars.
+  const converted = toEngineConstraints(cat, knownHard, knownSoft);
+  if (!converted.ok) {
+    captureRejectedIntent(
+      buildRejection({
+        model: "route",
+        finishReason: null,
+        error: new z.ZodError(
+          converted.problems.map((p) => ({ code: "custom" as const, path: [p.where, p.index, "value"], message: p.reason, input: undefined })),
+        ),
+        rawContent: JSON.stringify({ hard: knownHard, soft: knownSoft }),
+      }),
+    );
+    return NextResponse.json(
+      reply({
+        text: "I could not read that reliably. Could you say it another way?",
+        mode: provider.isLive ? "live" : "prototype",
+        cat,
+        outcome: agreed,
+        totalProducts: views.length,
+        proposals: [],
+        medicalRedirect: false,
+        failure: "unconvertible_constraint",
+        notice: "The assistant did not state a budget in a form this site can use, so nothing has been changed. Your filters are as you left them.",
+      }),
+    );
+  }
+
+  const proposedHard = converted.hard;
+  const proposedSoft = converted.soft;
   const changed = JSON.stringify(proposedHard) !== JSON.stringify(hard) || JSON.stringify(proposedSoft) !== JSON.stringify(soft);
 
   // When the model proposes new constraints, everything shown describes those
@@ -337,9 +382,20 @@ export async function POST(req: Request) {
   // shown. A reply that says nothing matches while the cards show a match is
   // replaced by the engine's sentence: what the shopper reads and what the
   // shopper sees now come from the same computation.
+  // Prose is verified against the approved data before the count screen runs.
+  // A figure the data does not hold, or a sentence explaining what a product
+  // does to a body, is replaced by a limitation: the site says less rather than
+  // publishing something it cannot support.
+  const approved = approvedFigures(
+    shortlist.map((v) => ground(v, cat)),
+    [shown.matching.length, views.length, ...proposedHard.map((c) => (typeof c.value === "number" ? c.value / 100 : 0))],
+  );
+  const verdict = intent.medicalIntent ? ({ ok: true } as const) : verifyReply(intent.reply, approved);
+  const verifiedText = verdict.ok ? intent.reply : limitationText(verdict.reason);
+
   const screened = intent.medicalIntent
     ? { text: MEDICAL_REDIRECT, replaced: false, reason: null as null | "availability" | "count" }
-    : screenModelClaims(intent.reply, shown.matching.length, views.length);
+    : screenModelClaims(verifiedText, shown.matching.length, views.length);
 
   return NextResponse.json(
     reply({
@@ -351,7 +407,11 @@ export async function POST(req: Request) {
       proposals,
       question: intent.question,
       medicalRedirect: intent.medicalIntent,
-      notice: screened.replaced
+      notice: !verdict.ok
+        ? verdict.reason === "unsupported_claim"
+          ? "The assistant's answer made a claim this site does not publish, so it was not shown. The specifications below come from the site's own records."
+          : "The assistant's answer quoted a figure this site does not hold, so it was not shown. The specifications below come from the site's own records."
+        : screened.replaced
         ? "The assistant described the results differently from the site's own count, so the count shown here is the site's."
         : intent.unmapped.length > 0
           ? `Not something this site compares: ${intent.unmapped.join(", ")}.`
@@ -360,7 +420,7 @@ export async function POST(req: Request) {
   );
 }
 
-function toRef(v: ProductView, outcome: Outcome): AssistantProductRef {
+function toRef(v: ProductView, outcome: Outcome, cat: CategoryDefinition): AssistantProductRef {
   return {
     productId: v.id,
     slug: v.slug,
@@ -368,9 +428,34 @@ function toRef(v: ProductView, outcome: Outcome): AssistantProductRef {
     brand: v.brand.name,
     price: formatMoney(v.price.money),
     priceIsPlaceholder: v.price.isDemo,
+    // Rendered here from the catalogue, with the attribution attached, so what
+    // the shopper reads as fact never passes through the model at all.
+    facts: renderFacts(v, cat),
     fits: outcome.result.explanations[v.id]?.fits ?? [],
     misses: outcome.result.explanations[v.id]?.misses ?? [],
   };
+}
+
+// The site's own rendering of a product's facts: value, and who says so.
+function renderFacts(view: ProductView, cat: CategoryDefinition): AssistantProductRef["facts"] {
+  const out: AssistantProductRef["facts"] = [];
+  for (const def of cat.attributeDefinitions.slice(0, 24)) {
+    const spec = view.specs.find((sp) => sp.key === def.key);
+    const p = view.provenance[`attributes.${def.key}`];
+    if (!spec || spec.raw === undefined || p?.verification === "demo") continue;
+    out.push({
+      label: def.shortLabel ?? def.label,
+      value: spec.formatted,
+      attribution:
+        p?.verification === "independently_verified"
+          ? "verified by this site"
+          : p?.verification === "manufacturer_reported"
+            ? "reported by the maker"
+            : "source not recorded",
+    });
+    if (out.length >= 4) break;
+  }
+  return out;
 }
 
 function reply(args: {
@@ -395,9 +480,9 @@ function reply(args: {
     mode: args.mode,
     question: args.question,
     // Cards, matching set and proposal all come from one evaluation.
-    products: outcome.matching.slice(0, 3).map((v) => toRef(v, outcome)),
+    products: outcome.matching.slice(0, 3).map((v) => toRef(v, outcome, args.cat)),
     matchingIds: outcome.matching.map((v) => v.id),
-    unconfirmedPrice: outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome)),
+    unconfirmedPrice: outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome, args.cat)),
     proposals: args.proposals,
     activeConstraints: outcome.result.constraintLabels,
     medicalRedirect: args.medicalRedirect,

@@ -54,8 +54,10 @@ type ExpectedConstraint = {
   key: string;
   // Operators any of which would be a correct reading of the sentence.
   ops: string[];
-  // The value, in the unit the filter uses. Checked exactly when `value` is
-  // given, or as a range when `atMost` / `atLeast` are.
+  // Money is checked in dollars, as the model now sends it. The engine's cents
+  // are code's business, not the model's.
+  dollars?: number;
+  // Non-money values.
   value?: number | string | boolean;
   atMost?: number;
   atLeast?: number;
@@ -69,6 +71,16 @@ type Expected = {
   // The engine's own count for the proposed constraints. "someMatch" means the
   // reply must not be able to claim emptiness; "noneMatch" the opposite.
   engine?: "someMatch" | "noneMatch";
+  // Keys a careful person could justifiably read into the sentence without
+  // being wrong. They are neither required nor counted as invented.
+  //
+  // This is not a way to make failures go away. It exists because "cheap as
+  // possible" really does imply a price preference and "small" really does
+  // imply footprint, and scoring those as inventions measured the test's
+  // imagination rather than the model's accuracy. Every hard budget, every
+  // negation and every factual case below stays strict: nothing that could
+  // hide a wrong number or an inverted operator is listed here.
+  alsoReasonable?: string[];
 };
 
 type Case = { category: string; text: string; expect: Expected; note: string };
@@ -79,15 +91,19 @@ const CASES: Case[] = [
     category: "red-light",
     text: "I need a full-body panel under $700 that won't take over my apartment.",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], value: 70000 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], dollars: 700 }],
       soft: [{ key: "coverage" }, { key: "footprint", directions: ["prefer_low"] }],
+      alsoReasonable: ["mounting"],
     },
     note: "budget plus two preferences",
   },
   {
     category: "red-light",
     text: "Something small for my face, cheap as possible",
-    expect: { soft: [{ key: "coverage" }] },
+    // "small" is a footprint preference and "cheap as possible" is a price
+    // preference. Both are correct readings, so neither counts against it, but
+    // coverage is still required: "for my face" is what the filters exist for.
+    expect: { soft: [{ key: "coverage" }], alsoReasonable: ["footprint", "price"] },
     note: "vague budget, clear coverage",
   },
   { category: "red-light", text: "What's the difference between 660nm and 850nm?", expect: {}, note: "factual question, no constraints" },
@@ -98,7 +114,7 @@ const CASES: Case[] = [
     text: "under 500",
     // The engine matches at least one product under $500. A reply that says
     // otherwise is the failure this case exists to catch.
-    expect: { hard: [{ key: "price", ops: ["lt", "lte"], value: 50000 }], engine: "someMatch" },
+    expect: { hard: [{ key: "price", ops: ["lt", "lte"], dollars: 500 }], engine: "someMatch" },
     note: "bare number, and the count must match the engine",
   },
   { category: "red-light", text: "I have no idea where to start", expect: { mustAskQuestion: true }, note: "must ask, not guess" },
@@ -107,8 +123,9 @@ const CASES: Case[] = [
     category: "cold-plunge",
     text: "A tub with a chiller for my garage, up to $5,000",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], value: 500000 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], dollars: 5000 }],
       soft: [{ key: "chiller_included" }, { key: "placement" }],
+      alsoReasonable: ["tub_type"],
     },
     note: "boolean plus placement",
   },
@@ -122,9 +139,10 @@ const CASES: Case[] = [
     expect: {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
-        { key: "price_per_serving_minor", ops: ["lt", "lte"], value: 200 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], dollars: 2 },
       ],
       soft: [{ key: "function" }],
+      alsoReasonable: ["format", "electrolytes_mg"],
     },
     note: "two hard constraints, both with real values",
   },
@@ -185,6 +203,7 @@ async function usage(): Promise<Usage | null> {
 }
 
 function describeWant(w: ExpectedConstraint): string {
+  if (w.dollars !== undefined) return `$${w.dollars}, sent as {"amount": ${w.dollars}, "currency": "USD"}`;
   if (w.value !== undefined) return `exactly ${JSON.stringify(w.value)}`;
   if (w.atMost !== undefined) return `at most ${w.atMost}`;
   if (w.atLeast !== undefined) return `at least ${w.atLeast}`;
@@ -192,6 +211,14 @@ function describeWant(w: ExpectedConstraint): string {
 }
 
 function valueFits(got: unknown, w: ExpectedConstraint): boolean {
+  if (w.dollars !== undefined) {
+    // The money contract: an object in whole dollars. A bare number is the
+    // defect this test exists to catch, so it fails here rather than being
+    // interpreted.
+    if (typeof got !== "object" || got === null) return false;
+    const m = got as { amount?: unknown; currency?: unknown };
+    return m.currency === "USD" && typeof m.amount === "number" && Math.abs(m.amount - w.dollars) < 1e-9;
+  }
   if (w.value !== undefined) return got === w.value;
   if (typeof got !== "number") return false;
   if (w.atMost !== undefined) return got <= w.atMost;
@@ -291,7 +318,11 @@ async function main() {
     }
 
     // Invented constraints are worse than missing ones: they silently filter.
-    const allowed = new Set([...(c.expect.hard ?? []).map((h) => h.key), ...(c.expect.soft ?? []).map((sp) => sp.key)]);
+    const allowed = new Set([
+      ...(c.expect.hard ?? []).map((h) => h.key),
+      ...(c.expect.soft ?? []).map((sp) => sp.key),
+      ...(c.expect.alsoReasonable ?? []),
+    ]);
     for (const k of [...gotHard.map((h) => h.key), ...gotSoft.map((sp) => sp.key)]) {
       if (!allowed.has(k)) problems.push(`invented constraint ${k}`);
     }

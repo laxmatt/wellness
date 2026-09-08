@@ -19,6 +19,7 @@ const input = (over: Partial<ConverseInput> = {}): ConverseInput => ({
     { id: "p2", name: "Two", brand: "B", price: "$200", priceIsPlaceholder: false, facts: [], notStated: [] },
   ],
   catalogueSize: 8,
+  moneyContract: "MONEY: price is money.",
   messages: [{ role: "user", text: "under 500" }],
   activeConstraints: [],
   ...over,

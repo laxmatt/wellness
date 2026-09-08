@@ -22,6 +22,7 @@ const input = (messages: { role: "user" | "assistant"; text: string }[]): Conver
   categoryName: "Red light therapy",
   filterVocabulary: "price (integer cents, use op lte)",
   catalogueSize: 8,
+  moneyContract: "MONEY: price is money.",
   products: [
     {
       id: "p1",

@@ -139,7 +139,7 @@ describe("a readable reply is unaffected", () => {
       raw(
         JSON.stringify({
           reply: "Narrowing to under $500.",
-          hard: [{ key: "price", op: "lte", value: 50000 }],
+          hard: [{ key: "price", op: "lte", value: { amount: 500, currency: "USD" } }],
           soft: [],
           unmapped: [],
           medicalIntent: false,

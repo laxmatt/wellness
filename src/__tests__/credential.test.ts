@@ -8,6 +8,7 @@ const input: ConverseInput = {
   filterVocabulary: "price",
   products: [],
       catalogueSize: 0,
+  moneyContract: "MONEY: price is money.",
   messages: [{ role: "user", text: "hi" }],
   activeConstraints: [],
 };

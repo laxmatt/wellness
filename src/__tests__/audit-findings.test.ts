@@ -204,6 +204,8 @@ describe("what the shopper reads about matches comes from the engine", () => {
   it("the route rewrites the contradictory reply rather than passing it through", async () => {
     const { cat, views } = await redLight();
     const under500: Condition[] = [{ key: "price", op: "lte", value: 50000 }];
+    // As the model sends it now: dollars, converted to cents by code.
+    const under500Model = [{ key: "price", op: "lte", value: { amount: 500, currency: "USD" } }];
     const engineCount = views.filter((v) => matchesAll(v, cat, under500)).length;
     expect(engineCount).toBeGreaterThan(0);
 
@@ -211,7 +213,7 @@ describe("what the shopper reads about matches comes from the engine", () => {
       "fetch",
       modelSays({
         reply: "There are no products listed under $500 in the catalogue.",
-        hard: under500,
+        hard: under500Model,
         soft: [],
         unmapped: [],
         medicalIntent: false,

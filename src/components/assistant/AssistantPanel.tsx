@@ -252,6 +252,15 @@ function ProductLine({ p }: { p: AssistantProductRef }) {
         {p.brand} {p.name}
       </Link>
       <span className="text-fg-soft"> · {p.price}</span>
+      {p.facts.length > 0 ? (
+        <ul className="mt-1 flex flex-col gap-0.5">
+          {p.facts.map((f) => (
+            <li key={f.label} className="text-sm leading-snug text-fg-soft">
+              <span className="font-medium text-fg">{f.label}:</span> {f.value} <span className="text-fg-muted">({f.attribution})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {p.fits.length > 0 ? <p className="mt-0.5 text-sm leading-snug text-positive">Fits: {p.fits.slice(0, 2).join("; ")}</p> : null}
       {p.misses.length > 0 ? <p className="mt-0.5 text-sm leading-snug text-accent-strong">Misses: {p.misses.slice(0, 2).join("; ")}</p> : null}
     </li>

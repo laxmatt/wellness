@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { HardConstraint, SoftPreference } from "./personalization";
+import { CONDITION_OPS, FilterKey } from "./category";
+import { ModelMoney } from "./money-contract";
+import { HardConstraint, SOFT_DIRECTIONS, SOFT_WEIGHT_RANGE, SoftPreference } from "./personalization";
 
 // The assistant is a way to express preferences in words. It is never the only
 // way: filters, comparison and product pages do the same work without it.
@@ -62,6 +64,9 @@ export type AssistantProductRef = {
   priceIsPlaceholder: boolean;
   fits: string[];
   misses: string[];
+  // Rendered by the site from its own records, with attribution. Never
+  // written by the model.
+  facts: { label: string; value: string; attribution: string }[];
 };
 
 export type AssistantReply = {
@@ -91,7 +96,7 @@ export type AssistantReply = {
   // carries the shopper's existing preferences unchanged and proposes nothing,
   // because a reply that could not be read is not a request to change
   // anything.
-  failure?: "unreadable_reply";
+  failure?: "unreadable_reply" | "unconvertible_constraint";
   // A short, non-financial explanation when the assistant is unavailable.
   // Spend figures are operator information and never reach the customer.
   notice?: string;
@@ -120,10 +125,29 @@ export const INTENT_LIMITS = {
   suggestCompare: 4,
 } as const;
 
+// The model's own constraint shapes. They differ from the engine's in exactly
+// one way: money crosses this boundary as {amount, currency} in whole dollars,
+// and code converts it to the integer minor units the engine compares. See
+// src/domain/money-contract.ts for why a bare number is refused.
+export const ModelHardConstraint = z.object({
+  key: FilterKey,
+  op: z.enum(CONDITION_OPS),
+  value: z.union([ModelMoney, z.number(), z.string(), z.boolean(), z.array(z.string()), z.array(z.number())]).optional(),
+});
+export type ModelHardConstraint = z.infer<typeof ModelHardConstraint>;
+
+export const ModelSoftPreference = z.object({
+  key: z.string(),
+  direction: z.enum(SOFT_DIRECTIONS),
+  value: z.union([ModelMoney, z.number(), z.string(), z.boolean(), z.array(z.string())]).optional(),
+  weight: z.number().min(SOFT_WEIGHT_RANGE.min).max(SOFT_WEIGHT_RANGE.max).default(SOFT_WEIGHT_RANGE.default),
+});
+export type ModelSoftPreference = z.infer<typeof ModelSoftPreference>;
+
 export const ModelIntent = z.object({
   reply: z.string().max(INTENT_LIMITS.replyChars),
-  hard: z.array(HardConstraint).max(INTENT_LIMITS.hard).default([]),
-  soft: z.array(SoftPreference).max(INTENT_LIMITS.soft).default([]),
+  hard: z.array(ModelHardConstraint).max(INTENT_LIMITS.hard).default([]),
+  soft: z.array(ModelSoftPreference).max(INTENT_LIMITS.soft).default([]),
   unmapped: z.array(z.string()).max(INTENT_LIMITS.unmapped).default([]),
   question: z
     .object({

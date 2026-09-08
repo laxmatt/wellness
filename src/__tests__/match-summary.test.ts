@@ -26,6 +26,7 @@ const config: MeterConfig = {
 };
 
 const UNDER_500: Condition[] = [{ key: "price", op: "lte", value: 50000 }];
+const UNDER_500_MODEL = [{ key: "price", op: "lte", value: { amount: 500, currency: "USD" } }];
 const ENV = { ...process.env };
 
 function modelSays(intent: Record<string, unknown>) {
@@ -71,7 +72,7 @@ describe("the authored summary, which is the guarantee", () => {
     const views = await getCatalog().listProductViews({ categoryId: cat.id, status: ["published"] });
     const expected = views.filter((v) => matchesAll(v, cat, UNDER_500)).length;
 
-    vi.stubGlobal("fetch", modelSays({ reply: "Sure.", hard: UNDER_500, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
+    vi.stubGlobal("fetch", modelSays({ reply: "Sure.", hard: UNDER_500_MODEL, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
     const body = await (await POST(ask("under 500"))).json();
 
     expect(body.matchSummary).toBe(engineSummary(expected, views.length));
@@ -92,7 +93,7 @@ describe("the authored summary, which is the guarantee", () => {
 
     vi.stubGlobal(
       "fetch",
-      modelSays({ reply: "Seven products match that easily.", hard: UNDER_500, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
+      modelSays({ reply: "Seven products match that easily.", hard: UNDER_500_MODEL, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const body = await (await POST(ask("under 500"))).json();
     expect(body.matchSummary).toBe(engineSummary(body.matchingIds.length, views.length));
@@ -172,7 +173,7 @@ describe("the screen over the model's prose, which is a backstop", () => {
     const sneaky = "Your budget rules out this entire category, I am afraid.";
     expect(screenModelClaims(sneaky, 1, 8).replaced).toBe(false);
 
-    vi.stubGlobal("fetch", modelSays({ reply: sneaky, hard: UNDER_500, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
+    vi.stubGlobal("fetch", modelSays({ reply: sneaky, hard: UNDER_500_MODEL, soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
     const body = await (await POST(ask("under 500"))).json();
     expect(body.text).toBe(sneaky);
     expect(body.matchSummary).toBe(engineSummary(body.matchingIds.length, views.length));
@@ -184,7 +185,7 @@ describe("the screen over the model's prose, which is a backstop", () => {
       "fetch",
       modelSays({
         reply: "There are no products listed under $500 in the catalogue.",
-        hard: UNDER_500,
+        hard: UNDER_500_MODEL,
         soft: [],
         unmapped: [],
         medicalIntent: false,

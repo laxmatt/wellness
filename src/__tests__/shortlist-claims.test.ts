@@ -25,13 +25,14 @@ const config: MeterConfig = {
 };
 
 const UNDER_500: Condition[] = [{ key: "price", op: "lte", value: 50000 }];
+const UNDER_500_MODEL = [{ key: "price", op: "lte", value: { amount: 500, currency: "USD" } }];
 const ENV = { ...process.env };
 let store: MemoryUsageStore;
 let sent: string[] = [];
 
 // Captures what the model was actually shown, and answers with the intent the
 // live model produced for "under 500": the constraint extracted correctly.
-function modelProposing(hard: Condition[]) {
+function modelProposing(hard: unknown[]) {
   return vi.fn(async (_url: string, init: RequestInit) => {
     const body = JSON.parse(String(init.body)) as { messages: { content: string }[] };
     sent = body.messages.map((m) => m.content);
@@ -130,7 +131,7 @@ describe("what the route reports comes from the engine, not the reply", () => {
     const views = await getCatalog().listProductViews({ categoryId: cat.id, status: ["published"] });
     const expected = views.filter((v) => matchesAll(v, cat, UNDER_500)).map((v) => v.id).sort();
 
-    vi.stubGlobal("fetch", modelProposing(UNDER_500));
+    vi.stubGlobal("fetch", modelProposing(UNDER_500_MODEL));
     const res = await POST(ask("under 500"));
     const body = await res.json();
 
@@ -141,7 +142,7 @@ describe("what the route reports comes from the engine, not the reply", () => {
   });
 
   it("counts over every product, not over the six the model was shown", async () => {
-    vi.stubGlobal("fetch", modelProposing(UNDER_500));
+    vi.stubGlobal("fetch", modelProposing(UNDER_500_MODEL));
     const res = await POST(ask("under 500"));
     const body = await res.json();
 
