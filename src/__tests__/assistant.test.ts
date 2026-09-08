@@ -4,7 +4,7 @@ import { categoryById } from "@/domain/categories";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
 import { ScriptedConversationProvider } from "@/providers/ai/ScriptedProvider";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
-import { UsageMeter, type MeterConfig, type UsageStore } from "@/providers/usage/UsageMeter";
+import { UsageMeter, hourKey, monthKey, type MeterConfig, type UsageStore } from "@/providers/usage/UsageMeter";
 import { viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
@@ -12,10 +12,12 @@ const redLight = categoryById("red-light")!;
 const config: MeterConfig = {
   monthlyCapUsd: 25,
   sessionTurnLimit: 3,
+  clientHourlyLimit: 100,
   inputUsdPerMillion: 0.15,
   outputUsdPerMillion: 0.6,
   maxInputTokens: 6000,
   maxOutputTokens: 500,
+  estimateSafetyFactor: 1,
 };
 
 const meterWith = (over: Partial<MeterConfig> = {}) => {
@@ -23,24 +25,31 @@ const meterWith = (over: Partial<MeterConfig> = {}) => {
   return { store, meter: new UsageMeter(store, { ...config, ...over }) };
 };
 
+const billed = (inputTokens: number, outputTokens: number) => ({ kind: "billed" as const, model: "test", inputTokens, outputTokens });
+
 describe("spend control", () => {
   it("reserves the worst case a request could cost, not the average", async () => {
     const { meter } = meterWith();
     // 6000 in + 500 out at the configured rates.
     expect(meter.worstCaseUsd).toBeCloseTo(0.0009 + 0.0003, 6);
-    const r = await meter.reserve("s1");
+    const r = await meter.reserve("s1", "c1");
     expect(r.ok).toBe(true);
+  });
+
+  it("adds a safety margin so an under-estimated prompt cannot slip past the cap", () => {
+    const { meter } = meterWith({ estimateSafetyFactor: 1.3 });
+    expect(meter.worstCaseUsd).toBeCloseTo((0.0009 + 0.0003) * 1.3, 6);
   });
 
   it("reconciles the reservation against what was actually used", async () => {
     const { meter } = meterWith();
-    const r = await meter.reserve("s1");
+    const r = await meter.reserve("s1", "c1");
     if (!r.ok) throw new Error("expected a reservation");
     let snap = await meter.snapshot("s1");
     expect(snap.reservedUsd).toBeCloseTo(meter.worstCaseUsd, 6);
     expect(snap.spentUsd).toBe(0);
 
-    await meter.settle(r.reservation, "test", 1000, 100);
+    await meter.settle(r.reservation, billed(1000, 100));
     snap = await meter.snapshot("s1");
     expect(snap.reservedUsd).toBe(0);
     expect(snap.spentUsd).toBeCloseTo(meter.costOf(1000, 100), 6);
@@ -53,7 +62,7 @@ describe("spend control", () => {
     const { meter } = meterWith({ monthlyCapUsd: cap, sessionTurnLimit: 100 });
 
     // Ten requests started together, before any of them settles.
-    const results = await Promise.all(Array.from({ length: 10 }, (_, i) => meter.reserve(`s${i}`)));
+    const results = await Promise.all(Array.from({ length: 10 }, (_, i) => meter.reserve(`s${i}`, `c${i}`)));
     const granted = results.filter((r) => r.ok);
     expect(granted.length).toBe(2);
 
@@ -62,24 +71,82 @@ describe("spend control", () => {
     for (const r of results) if (!r.ok) expect(r.kind).toBe("monthly_cap");
   });
 
-  it("releases the reservation when the call fails, so nothing is lost to the cap", async () => {
+  it("releases the reservation when the provider rejected the call before inference", async () => {
     const probe = new UsageMeter(new MemoryUsageStore(), config);
     const { meter } = meterWith({ monthlyCapUsd: probe.worstCaseUsd, sessionTurnLimit: 100 });
-    const first = await meter.reserve("s1");
+    const first = await meter.reserve("s1", "c1");
     if (!first.ok) throw new Error("expected a reservation");
-    expect((await meter.reserve("s2")).ok).toBe(false);
+    expect((await meter.reserve("s2", "c2")).ok).toBe(false);
 
-    // The call failed: settle with zero spend.
-    await meter.settle(first.reservation, "failed", 0, 0);
-    expect((await meter.reserve("s3")).ok).toBe(true);
+    // A 400 or a refused connection is not charged, so the budget gets it back.
+    await meter.settle(first.reservation, { kind: "not_billed", reason: "The provider returned 400." });
+    const snap = await meter.snapshot("s1");
+    expect(snap.spentUsd).toBe(0);
+    expect(snap.uncertainUsd).toBe(0);
+    expect((await meter.reserve("s3", "c3")).ok).toBe(true);
+  });
+
+  it("holds an uncertain charge instead of settling a timeout at zero", async () => {
+    const { meter } = meterWith({ sessionTurnLimit: 100 });
+    const r = await meter.reserve("s1", "c1");
+    if (!r.ok) throw new Error("expected a reservation");
+
+    await meter.settle(r.reservation, { kind: "uncertain", reason: "The request timed out." });
+    const snap = await meter.snapshot("s1");
+    // Not written off as free: the estimate is retained.
+    expect(snap.spentUsd).toBe(0);
+    expect(snap.uncertainUsd).toBeCloseTo(meter.worstCaseUsd, 6);
+    expect(snap.reservedUsd).toBe(0);
+
+    const held = await meter.listUncertain();
+    expect(held).toHaveLength(1);
+    expect(held[0].reservationId).toBe(r.reservation.id);
+    expect(held[0].heldUsd).toBeCloseTo(meter.worstCaseUsd, 6);
+  });
+
+  it("counts held uncertain charges against the cap until they are reconciled", async () => {
+    const probe = new UsageMeter(new MemoryUsageStore(), config);
+    const { meter } = meterWith({ monthlyCapUsd: probe.worstCaseUsd, sessionTurnLimit: 100 });
+    const first = await meter.reserve("s1", "c1");
+    if (!first.ok) throw new Error("expected a reservation");
+    await meter.settle(first.reservation, { kind: "uncertain", reason: "timeout" });
+
+    // The held amount still occupies the budget, so the next request is refused.
+    const blocked = await meter.reserve("s2", "c2");
+    expect(blocked.ok).toBe(false);
+    if (!blocked.ok) expect(blocked.kind).toBe("monthly_cap");
+
+    // An operator checks the provider's record: the call was never charged.
+    expect(await meter.reconcile(first.reservation.id, 0)).toBe(true);
+    const snap = await meter.snapshot("s1");
+    expect(snap.uncertainUsd).toBe(0);
+    expect(snap.spentUsd).toBe(0);
+    expect((await meter.reserve("s3", "c3")).ok).toBe(true);
+  });
+
+  it("reconciling replaces the held estimate with the real figure, once", async () => {
+    const { meter } = meterWith({ sessionTurnLimit: 100 });
+    const r = await meter.reserve("s1", "c1");
+    if (!r.ok) throw new Error("expected a reservation");
+    await meter.settle(r.reservation, { kind: "uncertain", reason: "unreadable response" });
+
+    expect(await meter.reconcile(r.reservation.id, 0.0004)).toBe(true);
+    const snap = await meter.snapshot("s1");
+    expect(snap.uncertainUsd).toBe(0);
+    expect(snap.spentUsd).toBeCloseTo(0.0004, 6);
+
+    // A second attempt changes nothing, so a repeated operator action is safe.
+    expect(await meter.reconcile(r.reservation.id, 0.0004)).toBe(false);
+    expect((await meter.snapshot("s1")).spentUsd).toBeCloseTo(0.0004, 6);
+    expect(await meter.reconcile("r_unknown", 1)).toBe(false);
   });
 
   it("settling twice never double-counts", async () => {
     const { meter, store } = meterWith();
-    const r = await meter.reserve("s1");
+    const r = await meter.reserve("s1", "c1");
     if (!r.ok) throw new Error("expected a reservation");
-    await meter.settle(r.reservation, "test", 1000, 100);
-    await meter.settle(r.reservation, "test", 1000, 100);
+    await meter.settle(r.reservation, billed(1000, 100));
+    await meter.settle(r.reservation, billed(1000, 100));
     expect(store.records.length).toBe(1);
     const snap = await meter.snapshot("s1");
     expect(snap.spentUsd).toBeCloseTo(meter.costOf(1000, 100), 6);
@@ -88,13 +155,36 @@ describe("spend control", () => {
   it("stops a session at its turn limit without affecting other sessions", async () => {
     const { meter } = meterWith();
     for (let i = 0; i < 3; i++) {
-      const r = await meter.reserve("s1");
-      if (r.ok) await meter.settle(r.reservation, "test", 10, 10);
+      const r = await meter.reserve("s1", "c1");
+      if (r.ok) await meter.settle(r.reservation, billed(10, 10));
     }
-    const blocked = await meter.reserve("s1");
+    const blocked = await meter.reserve("s1", "c1");
     expect(blocked.ok).toBe(false);
     if (!blocked.ok) expect(blocked.kind).toBe("session_limit");
-    expect((await meter.reserve("s2")).ok).toBe(true);
+    expect((await meter.reserve("s2", "c1")).ok).toBe(true);
+  });
+
+  it("stops a client at its hourly limit even when it invents a new session each time", async () => {
+    // The session id comes from the browser and is changeable, so the turn
+    // limit alone is a convenience limit. The client key is not chosen by the
+    // caller, so this is the limit that actually bounds a single abuser.
+    const { meter } = meterWith({ clientHourlyLimit: 4, sessionTurnLimit: 100 });
+    for (let i = 0; i < 4; i++) {
+      expect((await meter.reserve(`fresh-session-${i}`, "1.2.3.4")).ok).toBe(true);
+    }
+    const blocked = await meter.reserve("fresh-session-5", "1.2.3.4");
+    expect(blocked.ok).toBe(false);
+    if (!blocked.ok) expect(blocked.kind).toBe("client_limit");
+
+    // A different connection is unaffected.
+    expect((await meter.reserve("fresh-session-6", "5.6.7.8")).ok).toBe(true);
+  });
+
+  it("buckets the client limit by hour, not for all time", () => {
+    const a = hourKey(new Date("2026-01-05T10:59:00Z"));
+    const b = hourKey(new Date("2026-01-05T11:00:00Z"));
+    expect(a).not.toBe(b);
+    expect(monthKey(new Date("2026-01-05T11:00:00Z"))).toBe("2026-01");
   });
 
   it("computes cost from configured per-million rates", () => {
@@ -118,9 +208,15 @@ describe("spend control", () => {
       async snapshot() {
         throw new Error("ledger offline");
       },
+      async listUncertain() {
+        throw new Error("ledger offline");
+      },
+      async reconcile() {
+        throw new Error("ledger offline");
+      },
     };
     const m = new UsageMeter(broken, config);
-    const d = await m.reserve("s1");
+    const d = await m.reserve("s1", "c1");
     expect(d.ok).toBe(false);
     if (!d.ok) expect(d.kind).toBe("store_error");
   });

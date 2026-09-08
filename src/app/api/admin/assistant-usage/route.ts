@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
+import { authorizeAdmin } from "@/domain/admin-auth";
 import { DEFAULT_METER_CONFIG } from "@/providers/usage/UsageMeter";
 import { getMeter } from "@/providers/usage";
 
@@ -9,30 +11,39 @@ export const dynamic = "force-dynamic";
 // here behind a key rather than in the customer-facing panel, which only ever
 // says whether the assistant is available.
 export async function GET(req: Request) {
-  const expected = process.env.ADMIN_ACCESS_KEY;
-  if (!expected) {
-    return NextResponse.json({ error: "ADMIN_ACCESS_KEY is not configured." }, { status: 503 });
-  }
-  const supplied = req.headers.get("x-admin-key") ?? new URL(req.url).searchParams.get("key");
-  if (supplied !== expected) {
-    return NextResponse.json({ error: "Not authorised." }, { status: 401 });
-  }
+  const auth = authorizeAdmin(req.headers, req.url);
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
 
   const meter = getMeter();
   const sessionId = new URL(req.url).searchParams.get("sessionId") ?? "";
   try {
     const snapshot = await meter.snapshot(sessionId);
+    const uncertain = await meter.listUncertain();
     return NextResponse.json({
       ledger: { store: meter.storeName, shared: meter.isShared },
       month: snapshot.month,
-      spentUsd: Number(snapshot.spentUsd.toFixed(6)),
+      spentUsd: round(snapshot.spentUsd),
       // Held for requests that started but have not reconciled yet.
-      reservedUsd: Number(snapshot.reservedUsd.toFixed(6)),
+      reservedUsd: round(snapshot.reservedUsd),
+      // Held for calls that may have been charged but could not be measured.
+      // Counts against the cap until reconciled against the provider's record.
+      uncertainUsd: round(snapshot.uncertainUsd),
       capUsd: snapshot.capUsd,
-      remainingUsd: Number(Math.max(0, snapshot.capUsd - snapshot.spentUsd - snapshot.reservedUsd).toFixed(6)),
-      worstCasePerRequestUsd: Number(meter.worstCaseUsd.toFixed(6)),
+      remainingUsd: round(Math.max(0, snapshot.capUsd - snapshot.spentUsd - snapshot.reservedUsd - snapshot.uncertainUsd)),
+      worstCasePerRequestUsd: round(meter.worstCaseUsd),
+      uncertainCharges: uncertain.map((u) => ({
+        reservationId: u.reservationId,
+        sessionId: u.sessionId,
+        reason: u.reason,
+        heldUsd: round(u.heldUsd),
+        at: u.at,
+      })),
       config: {
         sessionTurnLimit: DEFAULT_METER_CONFIG.sessionTurnLimit,
+        clientHourlyLimit: DEFAULT_METER_CONFIG.clientHourlyLimit,
+        maxInputTokens: DEFAULT_METER_CONFIG.maxInputTokens,
+        maxOutputTokens: DEFAULT_METER_CONFIG.maxOutputTokens,
+        estimateSafetyFactor: DEFAULT_METER_CONFIG.estimateSafetyFactor,
         inputUsdPerMillion: DEFAULT_METER_CONFIG.inputUsdPerMillion,
         outputUsdPerMillion: DEFAULT_METER_CONFIG.outputUsdPerMillion,
         pricesAreVerified: process.env.ASSISTANT_PRICES_VERIFIED === "1",
@@ -42,4 +53,40 @@ export async function GET(req: Request) {
   } catch {
     return NextResponse.json({ error: "The usage ledger could not be read." }, { status: 503 });
   }
+}
+
+const Reconcile = z.object({
+  action: z.literal("reconcile"),
+  reservationId: z.string().min(1).max(200),
+  // What the provider's own usage record shows for this call, in dollars.
+  actualUsd: z.number().min(0).max(1000),
+});
+
+// Closes out a held uncertain charge with the figure from the provider's usage
+// page. This is an operator judgement, not something the application can
+// determine, which is why the charge is held until someone does it.
+export async function POST(req: Request) {
+  const auth = authorizeAdmin(req.headers, req.url);
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Malformed request." }, { status: 400 });
+  }
+  const parsed = Reconcile.safeParse(body);
+  if (!parsed.success) return NextResponse.json({ error: "Unrecognised request.", detail: z.prettifyError(parsed.error) }, { status: 400 });
+
+  try {
+    const done = await getMeter().reconcile(parsed.data.reservationId, parsed.data.actualUsd);
+    if (!done) return NextResponse.json({ error: "No unreconciled charge with that reservation id." }, { status: 404 });
+    return NextResponse.json({ reconciled: parsed.data.reservationId, actualUsd: round(parsed.data.actualUsd) });
+  } catch {
+    return NextResponse.json({ error: "The usage ledger could not be written." }, { status: 503 });
+  }
+}
+
+function round(n: number) {
+  return Number(n.toFixed(6));
 }

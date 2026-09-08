@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AssistantRequest, type AssistantProductRef, type AssistantReply, type ProposedAction } from "@/domain/assistant";
@@ -11,9 +12,10 @@ import { describeConstraint } from "@/domain/personalization/describe";
 import { applyPreferences } from "@/domain/personalization/match";
 import type { ProductView } from "@/domain/view";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
-import { OpenAIConversationProvider, type ConversationProvider, type GroundedProduct } from "@/providers/ai/OpenAIProvider";
+import { OpenAIConversationProvider, ProviderCallError, type ConversationProvider, type ConverseInput, type GroundedProduct } from "@/providers/ai/OpenAIProvider";
 import { ScriptedConversationProvider } from "@/providers/ai/ScriptedProvider";
 import { getMeter } from "@/providers/usage";
+import type { CallOutcome } from "@/providers/usage/UsageMeter";
 import { getCatalog } from "@/providers";
 
 export const runtime = "nodejs";
@@ -92,6 +94,28 @@ function evaluate(views: ProductView[], cat: CategoryDefinition, hard: HardConst
   return { hard, soft, result, matching, unconfirmed: unconfirmedByPrice(views, cat, hard as Condition[]) };
 }
 
+// The rate limit has to key on something the caller does not choose. The
+// session id comes from the browser and is trivially changed, so it is keyed on
+// the connection instead. The address is hashed with a server-side salt so the
+// ledger holds no readable IP, and only the hash is ever stored.
+function clientKeyFor(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const ip = fwd || req.headers.get("x-real-ip") || req.headers.get("cf-connecting-ip") || "unknown";
+  return createHash("sha256").update(`${process.env.ASSISTANT_CLIENT_SALT ?? "wellness"}|${ip}`).digest("hex").slice(0, 32);
+}
+
+// The reservation assumes a request of at most `maxInputTokens`. That is only
+// true if the request we actually send is held to it. Drop the oldest turns
+// until the prompt fits; if it still does not fit, refuse rather than send a
+// request larger than the budget accounted for.
+function boundInput(provider: ConversationProvider, input: ConverseInput, maxInputTokens: number): ConverseInput | null {
+  let trimmed = input;
+  while (provider.estimatePromptTokens(trimmed) > maxInputTokens && trimmed.messages.length > 1) {
+    trimmed = { ...trimmed, messages: trimmed.messages.slice(1) };
+  }
+  return provider.estimatePromptTokens(trimmed) > maxInputTokens ? null : trimmed;
+}
+
 export async function POST(req: Request) {
   let body: unknown;
   try {
@@ -139,11 +163,37 @@ export async function POST(req: Request) {
     );
   }
 
+  // The model sees only a shortlist, sourced facts only.
+  const shortlist = (agreed.matching.length > 0 ? agreed.matching : views).slice(0, 6);
+  const full: ConverseInput = {
+    categoryName: cat.name,
+    filterVocabulary: vocabulary(cat),
+    products: shortlist.map((v) => ground(v, cat)),
+    messages: messages.map((m) => ({ role: m.role, text: m.text })),
+    activeConstraints: hard.map((c) => describeConstraint(cat, c)),
+  };
+
+  // Held to the size the reservation pays for, before any budget is taken.
+  const bounded = boundInput(provider, full, meter.config.maxInputTokens);
+  if (!bounded) {
+    return NextResponse.json(
+      reply({
+        text: "That is more than I can read at once. Try asking about one thing at a time.",
+        mode: provider.isLive ? "live" : "prototype",
+        cat,
+        outcome: agreed,
+        proposals: [],
+        medicalRedirect: false,
+        notice: "The message was too long to send.",
+      }),
+    );
+  }
+
   // Budget is reserved before the call and reconciled after it, so requests
   // arriving together cannot both spend the same headroom.
   let reservation = null as Awaited<ReturnType<typeof meter.reserve>> | null;
   if (provider.isLive) {
-    reservation = await meter.reserve(sessionId);
+    reservation = await meter.reserve(sessionId, clientKeyFor(req));
     if (!reservation.ok) {
       return NextResponse.json(
         reply({ text: CAPPED_TEXT, mode: "unavailable", cat, outcome: agreed, proposals: [], medicalRedirect: false, notice: reservation.reason }),
@@ -151,23 +201,22 @@ export async function POST(req: Request) {
     }
   }
 
-  // The model sees only a shortlist, sourced facts only.
-  const shortlist = (agreed.matching.length > 0 ? agreed.matching : views).slice(0, 6);
-
   let intent;
   try {
-    const res = await provider.converse({
-      categoryName: cat.name,
-      filterVocabulary: vocabulary(cat),
-      products: shortlist.map((v) => ground(v, cat)),
-      messages: messages.map((m) => ({ role: m.role, text: m.text })),
-      activeConstraints: hard.map((c) => describeConstraint(cat, c)),
-    });
+    const res = await provider.converse(bounded);
     intent = res.intent;
-    if (reservation?.ok) await meter.settle(reservation.reservation, res.model, res.inputTokens, res.outputTokens);
-  } catch {
-    // The reservation is released with nothing spent; the call never landed.
-    if (reservation?.ok) await meter.settle(reservation.reservation, "failed", 0, 0);
+    if (reservation?.ok) {
+      await meter.settle(reservation.reservation, { kind: "billed", model: res.model, inputTokens: res.inputTokens, outputTokens: res.outputTokens });
+    }
+  } catch (e) {
+    // A failure is not automatically free. Only what the provider rejected
+    // before inference settles at zero; anything that was sent and then went
+    // dark is held as uncertain until an operator checks the provider's record.
+    const outcome: CallOutcome =
+      e instanceof ProviderCallError
+        ? { kind: e.billable, reason: e.message }
+        : { kind: "uncertain", reason: e instanceof Error ? e.message : "The call failed for an unknown reason." };
+    if (reservation?.ok) await meter.settle(reservation.reservation, outcome);
     return NextResponse.json(
       reply({
         text: "I could not reach the assistant just now. The filters and comparison on this page are unaffected.",

@@ -42,3 +42,6 @@ next-env.d.ts
 
 # assistant usage ledger (prototype file store)
 /.data
+
+# The example file holds no values, only names and comments.
+!.env.example

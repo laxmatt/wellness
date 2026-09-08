@@ -51,7 +51,7 @@ src/providers/           Replaceable interfaces plus prototype implementations.
   index.ts               Composition root. Swap implementations here only.
 src/components/ui/       Design primitives. Button (buttonStyles recipe), Chip, Badge, VerificationTag, PriceDisplay, SpecRow, ImageFrame, DemoArt.
 docs/DESIGN.md           Token layers and how to reskin without touching product logic.
-docs/ASSISTANT.md        Assistant behaviour, key placement, spend caps, launch checks.
+docs/ASSISTANT.md        Assistant behaviour, key placement, spend caps, failure accounting, rate limits, launch checks.
 src/components/product/  ProductCard.
 src/app/                 Next.js App Router. page.tsx is the Phase 1 smoke route.
 ```
@@ -96,7 +96,7 @@ Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader reject
 1. Done. Architecture, model, tokens, catalog, engine, tests.
 2. Done. Homepage, category and facet pages, product detail, compare table, supporting pages.
 3. Done. Compare differences, filters, matcher engine, relaxation, similarity.
-4. Done. Optional assistant, OpenAI server-side, spend caps, proposal-based actions.
+4. Done. Optional assistant, OpenAI server-side, reserved spend caps, uncertain-charge accounting, per-connection rate limit, proposal-based actions. Live AI stays off until the private test is reviewed.
 5. Cold Plunge and Wellness Drinks through the same components.
 6. Admin and merchandising on Postgres via the Prisma mapping in docs/DATA-MODEL.md.
 7. Production integrations.

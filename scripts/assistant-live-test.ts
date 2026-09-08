@@ -61,12 +61,15 @@ type Reply = {
   notice?: string;
 };
 
-async function usage(): Promise<{ spentUsd: number; store: string } | null> {
+type Usage = { spentUsd: number; uncertainUsd: number; store: string; uncertainCharges: { reservationId: string; reason: string; heldUsd: number }[] };
+
+async function usage(): Promise<Usage | null> {
   if (!ADMIN_KEY) return null;
+  // Header only. The endpoint refuses a key passed in the query string.
   const res = await fetch(`${BASE}/api/admin/assistant-usage`, { headers: { "x-admin-key": ADMIN_KEY } });
   if (!res.ok) return null;
-  const j = (await res.json()) as { spentUsd: number; ledger: { store: string } };
-  return { spentUsd: j.spentUsd, store: j.ledger.store };
+  const j = (await res.json()) as Usage & { ledger: { store: string } };
+  return { spentUsd: j.spentUsd, uncertainUsd: j.uncertainUsd, store: j.ledger.store, uncertainCharges: j.uncertainCharges ?? [] };
 }
 
 async function main() {
@@ -135,6 +138,16 @@ async function main() {
     console.log(`\nMeasured spend for ${CASES.length} single-turn conversations: $${spent.toFixed(4)}`);
     console.log(`Observed cost per conversation: $${(spent / CASES.length).toFixed(5)}`);
     console.log("A real conversation runs several turns, so multiply by your expected turns per session before setting the cap.");
+
+    const newlyUncertain = after.uncertainCharges.filter((u) => !before.uncertainCharges.some((b) => b.reservationId === u.reservationId));
+    if (newlyUncertain.length > 0) {
+      // These are calls that may have been charged but could not be measured.
+      // They hold budget until an operator checks the provider's usage page.
+      console.log(`\n${newlyUncertain.length} call(s) ended without a confirmed cost, holding $${after.uncertainUsd.toFixed(4)} against the cap:`);
+      for (const u of newlyUncertain) console.log(`  ${u.reservationId}  $${u.heldUsd.toFixed(5)}  ${u.reason}`);
+      console.log("Check the provider's usage record for this window, then POST {action:\"reconcile\",reservationId,actualUsd} to the admin endpoint.");
+      console.log("Measured spend above excludes these, so treat it as a lower bound until they are reconciled.");
+    }
   }
 
   console.log("\nThis measures extraction and cost. It does not measure whether the wording is good; read the replies above.");

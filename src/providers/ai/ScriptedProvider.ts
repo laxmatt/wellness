@@ -6,6 +6,10 @@ import { MockAIProvider } from "./AIProvider";
 // few phrases, and nothing more. Every reply it produces is labelled in the UI
 // as a scripted prototype so it is never mistaken for a working assistant.
 export class ScriptedConversationProvider implements ConversationProvider {
+  estimatePromptTokens(): number {
+    return 0;
+  }
+
   readonly name = "scripted";
   readonly isLive = false;
   private readonly extractor = new MockAIProvider();

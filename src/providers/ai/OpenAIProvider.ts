@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ModelIntent } from "@/domain/assistant";
+import { estimateTokens } from "@/providers/usage/UsageMeter";
 
 // Called over plain fetch. No SDK dependency to pin, patch or audit.
 // The key is read from the environment on the server only and never reaches a
@@ -31,9 +32,25 @@ export type ConverseResult = {
   model: string;
 };
 
+// Carries whether the provider could have charged for the attempt. Anything
+// the provider rejected before inference is free; anything that was sent and
+// then went dark is not known to be free and must not be treated as such.
+export class ProviderCallError extends Error {
+  constructor(
+    message: string,
+    readonly billable: "not_billed" | "uncertain",
+  ) {
+    super(message);
+    this.name = "ProviderCallError";
+  }
+}
+
 export interface ConversationProvider {
   readonly name: string;
   readonly isLive: boolean;
+  // Estimated prompt size in tokens, so the caller can refuse to send a
+  // request larger than it reserved budget for.
+  estimatePromptTokens(input: ConverseInput): number;
   converse(input: ConverseInput): Promise<ConverseResult>;
 }
 
@@ -62,9 +79,11 @@ export class OpenAIConversationProvider implements ConversationProvider {
     private readonly apiKey: string,
     private readonly model = process.env.OPENAI_MODEL ?? "gpt-4o-mini",
     private readonly baseUrl = process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
+    private readonly maxOutputTokens = Number(process.env.ASSISTANT_MAX_OUTPUT_TOKENS ?? 500),
+    private readonly timeoutMs = Number(process.env.ASSISTANT_TIMEOUT_MS ?? 20000),
   ) {}
 
-  async converse(input: ConverseInput): Promise<ConverseResult> {
+  private buildMessages(input: ConverseInput) {
     const catalogue = input.products
       .map((p) => {
         const facts = p.facts.map((f) => `    ${f.label}: ${f.value} [${f.evidence}]`).join("\n");
@@ -81,32 +100,64 @@ export class OpenAIConversationProvider implements ConversationProvider {
       `CATALOGUE:\n${catalogue}`,
     ].join("\n\n");
 
-    const res = await fetch(`${this.baseUrl}/chat/completions`, {
-      method: "POST",
-      headers: { "content-type": "application/json", authorization: `Bearer ${this.apiKey}` },
-      body: JSON.stringify({
-        model: this.model,
-        temperature: 0.2,
-        max_tokens: 500,
-        response_format: { type: "json_object" },
-        messages: [
-          { role: "system", content: SYSTEM },
-          { role: "system", content: context },
-          ...input.messages.map((m) => ({ role: m.role, content: m.text })),
-        ],
-      }),
-    });
+    return [
+      { role: "system" as const, content: SYSTEM },
+      { role: "system" as const, content: context },
+      ...input.messages.map((m) => ({ role: m.role, content: m.text })),
+    ];
+  }
 
-    if (!res.ok) {
-      const body = await res.text().catch(() => "");
-      // Never surface the provider's body to the client: it can echo headers.
-      throw new Error(`OpenAI request failed with ${res.status}${body ? ` (${body.slice(0, 120)})` : ""}`);
+  estimatePromptTokens(input: ConverseInput): number {
+    return estimateTokens(this.buildMessages(input).map((m) => m.content).join("\n"));
+  }
+
+  async converse(input: ConverseInput): Promise<ConverseResult> {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), this.timeoutMs);
+    let res: Response;
+    try {
+      res = await fetch(`${this.baseUrl}/chat/completions`, {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: `Bearer ${this.apiKey}` },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: this.model,
+          temperature: 0.2,
+          // Bounds the output side of the reservation. Without it the provider
+          // would be free to generate far more than the budget assumed.
+          max_tokens: this.maxOutputTokens,
+          response_format: { type: "json_object" },
+          messages: this.buildMessages(input),
+        }),
+      });
+    } catch (e) {
+      // A connection that never opened costs nothing. A request that was sent
+      // and then timed out or dropped may well have been processed and billed.
+      const aborted = e instanceof Error && (e.name === "AbortError" || /abort/i.test(e.message));
+      const neverSent = e instanceof Error && /ENOTFOUND|ECONNREFUSED|EAI_AGAIN|getaddrinfo/i.test(e.message);
+      throw new ProviderCallError(aborted ? "The request timed out." : "The request could not be completed.", neverSent ? "not_billed" : "uncertain");
+    } finally {
+      clearTimeout(timer);
     }
 
-    const json = (await res.json()) as {
+    if (!res.ok) {
+      // Never surface the provider's body to the client: it can echo headers.
+      // 4xx is rejected before inference and not charged. 5xx may have run.
+      const billable = res.status >= 400 && res.status < 500 ? "not_billed" : "uncertain";
+      throw new ProviderCallError(`The provider returned ${res.status}.`, billable);
+    }
+
+    let json: {
       choices?: { message?: { content?: string } }[];
       usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
+    try {
+      json = await res.json();
+    } catch {
+      // The provider answered 200, so inference ran and was charged, but we
+      // cannot read what it cost.
+      throw new ProviderCallError("The provider's response could not be read.", "uncertain");
+    }
     const raw = json.choices?.[0]?.message?.content ?? "{}";
 
     let parsedJson: unknown;
