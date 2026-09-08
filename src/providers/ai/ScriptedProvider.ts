@@ -51,8 +51,8 @@ export class ScriptedConversationProvider implements ConversationProvider {
         medicalIntent: prefs.medicalIntent,
         suggestCompare: [],
       },
-      inputTokens: 0,
-      outputTokens: 0,
+      // Costs nothing and is never metered, so zero here is a fact.
+      usage: { inputTokens: 0, outputTokens: 0 },
       model: "scripted",
     };
   }

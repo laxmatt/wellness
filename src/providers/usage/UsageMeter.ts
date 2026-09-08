@@ -1,11 +1,17 @@
-// Spend control is enforced by this application, before any request is made.
+// Spend control, as enforced by this application before any request is made.
 //
 // A counter that is read, checked and then written is not enough: two requests
 // arriving together both read the same total, both decide there is room, and
-// both spend. So the budget is held as a reservation. A request reserves the
-// most it could possibly cost, in one atomic step that refuses when the cap
-// would be exceeded, makes the call, then reconciles the reservation against
-// what was actually used.
+// both spend. So the budget is held as a reservation. A request reserves an
+// estimate of its cost, in one atomic step that refuses when the cap would be
+// exceeded, makes the call, then reconciles the reservation against what was
+// actually used.
+//
+// What this is NOT: a guaranteed ceiling on the provider's bill. The
+// reservation is computed from our own token estimate, and the provider counts
+// tokens with a different tokenizer at prices we hold as configuration. It is a
+// conservative estimate that fails in the safe direction. The only enforceable
+// ceiling is the hard spend limit set at the provider. See docs/ASSISTANT.md.
 
 export type MeterConfig = {
   monthlyCapUsd: number;
@@ -18,12 +24,14 @@ export type MeterConfig = {
   // provider's current price list. Defaults are a planning assumption only.
   inputUsdPerMillion: number;
   outputUsdPerMillion: number;
-  // Worst-case request size. The route must enforce these on the request it
-  // actually sends, or the reservation stops bounding the charge.
+  // Largest request the route will send. `maxOutputTokens` is passed to the
+  // provider as `max_tokens` and is a real cap. `maxInputTokens` is checked
+  // against our own estimate of the prompt, so it caps the estimate, not the
+  // provider's count of the same text.
   maxInputTokens: number;
   maxOutputTokens: number;
-  // Multiplier applied to the reservation to absorb the difference between
-  // our token estimate and the provider's own count.
+  // Multiplier applied to the reservation to absorb the difference between our
+  // token estimate and the provider's own count. A margin, not a proof.
   estimateSafetyFactor: number;
 };
 
@@ -100,8 +108,11 @@ export function hourKey(d = new Date()): string {
   return `${monthKey(d)}-${String(d.getUTCDate()).padStart(2, "0")}T${String(d.getUTCHours()).padStart(2, "0")}`;
 }
 
-// Rough token count. Deliberately generous: it feeds a reservation, and the
-// safety factor above absorbs the rest. It is never used for billing.
+// Rough token count, from characters. This is not the provider's tokenizer and
+// will disagree with it, in both directions: text that tokenizes badly (long
+// identifiers, unusual scripts, dense punctuation) uses more tokens per
+// character than this assumes. It feeds a reservation and is never used for
+// billing. Raise `estimateSafetyFactor` to widen the margin it leaves.
 export function estimateTokens(text: string): number {
   return Math.ceil(text.length / 3.5);
 }
@@ -124,8 +135,13 @@ export class UsageMeter {
     return (inputTokens / 1_000_000) * this.config.inputUsdPerMillion + (outputTokens / 1_000_000) * this.config.outputUsdPerMillion;
   }
 
-  // The most a single request may cost, given the limits the route enforces on
-  // the request it sends, plus a margin for estimate error.
+  // What one request is expected to cost at the configured limits, widened by
+  // the safety factor. Reserved before the call and released after it.
+  //
+  // Not a guarantee. It rests on three things that are outside this code: our
+  // token estimate matching the provider's count closely enough, the configured
+  // prices being current, and the provider reporting usage honestly. A request
+  // whose prompt tokenizes worse than estimated costs more than this reserved.
   get worstCaseUsd(): number {
     return this.costOf(this.config.maxInputTokens, this.config.maxOutputTokens) * this.config.estimateSafetyFactor;
   }

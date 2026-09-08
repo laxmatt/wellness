@@ -301,8 +301,7 @@ describe("scripted stand-in", () => {
   it("costs nothing", async () => {
     const p = new ScriptedConversationProvider(redLight);
     const res = await p.converse({ categoryName: "x", filterVocabulary: "price", products: [], messages: [], activeConstraints: [] });
-    expect(res.inputTokens).toBe(0);
-    expect(res.outputTokens).toBe(0);
+    expect(res.usage).toEqual({ inputTokens: 0, outputTokens: 0 });
   });
 });
 

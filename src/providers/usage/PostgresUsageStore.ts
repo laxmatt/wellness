@@ -7,42 +7,55 @@ import type { BudgetSnapshot, CallOutcome, MeterConfig, Reservation, ReserveResu
 // Postgres serialises the row update and re-evaluates the WHERE clause against
 // the committed row, so the loser matches zero rows and is refused.
 
-const SCHEMA = `
-CREATE TABLE IF NOT EXISTS assistant_budget (
-  month           TEXT PRIMARY KEY,
-  reserved_usd    NUMERIC(12,6) NOT NULL DEFAULT 0,
-  spent_usd       NUMERIC(12,6) NOT NULL DEFAULT 0,
-  uncertain_usd   NUMERIC(12,6) NOT NULL DEFAULT 0
-);
-ALTER TABLE assistant_budget ADD COLUMN IF NOT EXISTS uncertain_usd NUMERIC(12,6) NOT NULL DEFAULT 0;
-CREATE TABLE IF NOT EXISTS assistant_session (
-  session_id      TEXT PRIMARY KEY,
-  turns           INTEGER NOT NULL DEFAULT 0,
-  first_seen      TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE TABLE IF NOT EXISTS assistant_client (
-  client_key      TEXT NOT NULL,
-  hour_bucket     TEXT NOT NULL,
-  requests        INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (client_key, hour_bucket)
-);
-CREATE TABLE IF NOT EXISTS assistant_usage (
-  id              BIGSERIAL PRIMARY KEY,
-  reservation_id  TEXT UNIQUE NOT NULL,
-  month           TEXT NOT NULL,
-  session_id      TEXT NOT NULL,
-  outcome         TEXT NOT NULL,
-  reason          TEXT,
-  model           TEXT,
-  input_tokens    INTEGER NOT NULL DEFAULT 0,
-  output_tokens   INTEGER NOT NULL DEFAULT 0,
-  cost_usd        NUMERIC(12,6) NOT NULL DEFAULT 0,
-  reconciled_at   TIMESTAMPTZ,
-  settled_at      TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX IF NOT EXISTS assistant_usage_month_idx ON assistant_usage (month);
-CREATE INDEX IF NOT EXISTS assistant_usage_uncertain_idx ON assistant_usage (month, outcome) WHERE reconciled_at IS NULL;
-`;
+// Schema changes are applied as ordered, idempotent steps inside one
+// transaction, so a fresh database and one created by an earlier version end up
+// identical and a half-applied upgrade cannot be left behind.
+//
+// Order matters. `CREATE TABLE IF NOT EXISTS` does nothing to a table that
+// already exists, so every column added after v1 needs its own `ADD COLUMN IF
+// NOT EXISTS`, and indexes that reference those columns come last.
+const MIGRATIONS: string[] = [
+  // v1 shape. On an existing database every one of these is a no-op.
+  `CREATE TABLE IF NOT EXISTS assistant_budget (
+     month           TEXT PRIMARY KEY,
+     reserved_usd    NUMERIC(12,6) NOT NULL DEFAULT 0,
+     spent_usd       NUMERIC(12,6) NOT NULL DEFAULT 0
+   )`,
+  `CREATE TABLE IF NOT EXISTS assistant_session (
+     session_id      TEXT PRIMARY KEY,
+     turns           INTEGER NOT NULL DEFAULT 0,
+     first_seen      TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  `CREATE TABLE IF NOT EXISTS assistant_usage (
+     id              BIGSERIAL PRIMARY KEY,
+     reservation_id  TEXT UNIQUE NOT NULL,
+     month           TEXT NOT NULL,
+     session_id      TEXT NOT NULL,
+     model           TEXT,
+     input_tokens    INTEGER NOT NULL DEFAULT 0,
+     output_tokens   INTEGER NOT NULL DEFAULT 0,
+     cost_usd        NUMERIC(12,6) NOT NULL DEFAULT 0,
+     settled_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+   )`,
+  `CREATE INDEX IF NOT EXISTS assistant_usage_month_idx ON assistant_usage (month)`,
+
+  // v2: uncertain charges, per-client limits, outcome classification.
+  `CREATE TABLE IF NOT EXISTS assistant_client (
+     client_key      TEXT NOT NULL,
+     hour_bucket     TEXT NOT NULL,
+     requests        INTEGER NOT NULL DEFAULT 0,
+     PRIMARY KEY (client_key, hour_bucket)
+   )`,
+  `ALTER TABLE assistant_budget ADD COLUMN IF NOT EXISTS uncertain_usd NUMERIC(12,6) NOT NULL DEFAULT 0`,
+  // Existing rows predate the billed/not_billed/uncertain distinction, so they
+  // are marked 'legacy' rather than assigned an outcome we cannot know. Their
+  // recorded cost is untouched, and 'legacy' is never treated as uncertain, so
+  // an upgrade neither loses money already spent nor invents a held charge.
+  `ALTER TABLE assistant_usage ADD COLUMN IF NOT EXISTS outcome TEXT NOT NULL DEFAULT 'legacy'`,
+  `ALTER TABLE assistant_usage ADD COLUMN IF NOT EXISTS reason TEXT`,
+  `ALTER TABLE assistant_usage ADD COLUMN IF NOT EXISTS reconciled_at TIMESTAMPTZ`,
+  `CREATE INDEX IF NOT EXISTS assistant_usage_uncertain_idx ON assistant_usage (month, outcome) WHERE reconciled_at IS NULL`,
+];
 
 export class PostgresUsageStore implements UsageStore {
   readonly name = "postgres";
@@ -56,8 +69,27 @@ export class PostgresUsageStore implements UsageStore {
   }
 
   async init(): Promise<void> {
-    this.ready ??= this.pool.query(SCHEMA).then(() => undefined);
+    this.ready ??= this.migrate();
     return this.ready;
+  }
+
+  private async migrate(): Promise<void> {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      // A lock so two instances starting together do not both run the DDL and
+      // deadlock against each other. The number is arbitrary but fixed.
+      await client.query("SELECT pg_advisory_xact_lock(4820193)");
+      for (const step of MIGRATIONS) await client.query(step);
+      await client.query("COMMIT");
+    } catch (e) {
+      await client.query("ROLLBACK").catch(() => {});
+      // Let the next call try again rather than caching the failure forever.
+      this.ready = null;
+      throw e;
+    } finally {
+      client.release();
+    }
   }
 
   async reserve(sessionId: string, clientKey: string, month: string, hourBucket: string, estimateUsd: number, config: MeterConfig): Promise<ReserveResult> {

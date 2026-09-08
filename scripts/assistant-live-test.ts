@@ -1,7 +1,10 @@
 /**
  * Private live-model check. Never runs in CI, never exposed as a page.
  *
- *   OPENAI_API_KEY=... DATABASE_URL=... npx tsx scripts/assistant-live-test.ts
+ *   npm run assistant:livetest
+ *
+ * Secrets are read from .env.local, so nothing sensitive is typed at a shell
+ * prompt or left in shell history.
  *
  * It sends a fixed set of shopper sentences to the running app's assistant
  * endpoint and reports two things the deterministic tests cannot:
@@ -13,7 +16,31 @@
  * Nothing here proves the assistant is ready. It gives numbers to judge it by.
  */
 
+import { readFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
+
+// The same file the app reads, parsed the same way: KEY=value, one per line,
+// blank lines and # comments skipped, existing environment variables win.
+// Avoids asking anyone to retype a secret into a terminal.
+function loadEnvLocal(path = ".env.local") {
+  let text: string;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch {
+    return;
+  }
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq < 1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    if (process.env[key] !== undefined) continue;
+    process.env[key] = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+  }
+}
+
+loadEnvLocal();
 
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
 const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";

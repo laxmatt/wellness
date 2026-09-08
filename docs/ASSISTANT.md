@@ -42,26 +42,29 @@ Set `DATABASE_URL` to a Postgres instance. The tables are created on first use. 
 
 Cost is computed from `ASSISTANT_INPUT_USD_PER_MTOK` and `ASSISTANT_OUTPUT_USD_PER_MTOK`, dollars per million tokens. **These defaults are a planning assumption, not a quote.** Set them from the provider's current price list, then set `ASSISTANT_PRICES_VERIFIED=1` so the admin endpoint reports that they were checked.
 
-### The reservation bounds the request that is actually sent
+### What the reservation is, and is not
 
-A reservation is only meaningful if the request it pays for cannot exceed it. Both sides are held:
+Two different things, and the difference matters:
 
-- **Output.** Every call sends `max_tokens: ASSISTANT_MAX_OUTPUT_TOKENS`. The provider cannot generate past it.
-- **Input.** Before reserving, the route estimates the whole prompt, system text and catalogue included, not just the shopper's message. It drops the oldest turns until the estimate fits `ASSISTANT_MAX_INPUT_TOKENS`. If a single message still does not fit, the request is refused and no budget is taken.
+**The output side is a real cap.** Every call sends `max_tokens: ASSISTANT_MAX_OUTPUT_TOKENS`. The provider will not generate past it. That number is enforced by them, not by us.
 
-The estimate is `characters / 3.5`, which is not the provider's tokenizer. `ASSISTANT_ESTIMATE_SAFETY_FACTOR` reserves 30 percent more than the bound to absorb the difference.
+**The input side is an estimate.** Before reserving, the route measures the whole prompt, system text and catalogue included, not just the shopper's message. It drops the oldest turns until the estimate fits `ASSISTANT_MAX_INPUT_TOKENS`, and refuses the request outright if a single message still does not fit. But the measurement is `characters / 3.5`. That is not OpenAI's tokenizer and it will disagree with it. `ASSISTANT_ESTIMATE_SAFETY_FACTOR` reserves 30 percent more than the estimate to leave room for the difference.
+
+So the reservation is a conservative estimate that fails in the safe direction. **It is not a guaranteed ceiling on your bill.** A prompt that tokenizes worse than 3.5 characters per token, by more than 30 percent, costs more than was reserved for it. That is unlikely with ordinary English and possible with unusual input.
+
+The only enforceable ceiling is the hard spend limit set at OpenAI. Set one. The application cap exists to stop the bill long before that, and to stop it per session and per connection, which the provider limit cannot do.
 
 ### Where the cap can still underestimate
 
 Stated plainly, because none of these are fixed by the code:
 
-1. **Token estimation.** Our count is an approximation. Text that tokenizes badly (long identifiers, unusual scripts) uses more tokens per character than the estimate assumes. The safety factor covers a wide margin, not an unbounded one.
-2. **Price drift.** The cap converts tokens to dollars with two numbers set by hand. If the provider changes prices, or the configured model falls back to a costlier one, the ledger under-reports. It is only as accurate as those two numbers.
-3. **Charges we cannot see.** The provider may bill for things the ledger has no view of at all: request retries inside their infrastructure, cached-prompt accounting, or a model that returns usage figures we do not read. The `uncertain` bucket below covers the cases we can detect; it does not cover ones we cannot.
-4. **Reconciliation lag.** Uncertain charges are held at the reservation estimate until an operator closes them out. Until then the ledger's `spentUsd` is a lower bound and `uncertainUsd` is the exposure.
-5. **Provider enforcement lag.** OpenAI's own limit is not instantaneous either (below).
+1. **Token estimation.** Our count is characters divided by 3.5, not a tokenizer. Text that tokenizes badly (long identifiers, unusual scripts, dense punctuation) uses more tokens per character than the estimate assumes. The safety factor covers a wide margin, not an unbounded one, and nothing in this application closes the gap.
+2. **Price drift.** The cap converts tokens to dollars using two numbers you set by hand. If OpenAI changes prices, or the configured model is unavailable and a costlier one serves the request, the ledger under-reports. It is only as accurate as those two numbers.
+3. **Charges we cannot see.** The provider bills for things the ledger has no view of: retries inside their infrastructure, cached-prompt accounting, usage attributed after the fact. A reply that arrives without token counts is caught and held as uncertain. A charge that never surfaces in any response is not.
+4. **Reconciliation lag.** Uncertain charges are held at the reservation estimate until an operator closes them out. Until then `spentUsd` is a lower bound and `uncertainUsd` is the exposure.
+5. **Provider enforcement lag.** OpenAI's own hard limit is not instantaneous either. See below.
 
-For those reasons the application cap is the first line of defence, never the only one. Set a hard limit at the provider too.
+For those reasons the application cap is the first line of defence, never the only one.
 
 ### Failed calls are not assumed free
 
@@ -105,21 +108,39 @@ So set a project-scoped hard limit, at or slightly above `ASSISTANT_MONTHLY_CAP_
 
 Sources: [Spend limits, OpenAI API](https://developers.openai.com/api/docs/guides/spend-limits) and [Troubleshooting API usage and spend limits](https://help.openai.com/en/articles/6614457-troubleshooting-api-usage-and-spend-limits). Re-check both before launch; provider policy changes.
 
-## Rate limits, and what the session limit is worth
+## Rate limits, and identifying the client
 
 The per-session turn limit is keyed on `sessionId`, which the browser generates and sends. Anyone can clear it, edit it, or post a fresh one with every request. **It is a convenience limit.** It stops an ordinary visitor from running a conversation forever. It stops nobody who does not want to be stopped.
 
-The limit that actually bounds abuse is keyed on the connection: `ASSISTANT_CLIENT_HOURLY_LIMIT` requests per client per hour, taken from `x-forwarded-for` (falling back to `x-real-ip` and `cf-connecting-ip`). The caller does not choose that value. It is hashed with `ASSISTANT_CLIENT_SALT` before it is stored, so the ledger holds no readable IP address.
+The limit that bounds abuse is keyed on the connection: `ASSISTANT_CLIENT_HOURLY_LIMIT` requests per client per hour, checked inside the same transaction as the budget.
 
-Both limits are checked inside the same reserve transaction as the budget, so they hold under concurrency.
+### Where the client address comes from
 
-**Before public launch**, the simplest sufficient protection, in order of effort:
+This is the part that is easy to get wrong. `x-forwarded-for` is a header the caller sends. A proxy that *appends* to it leaves the leftmost value under the caller's control, so reading it produces a limit that a single attacker defeats by sending a different value on every request. That is worse than no limit, because it looks enforced.
 
-1. **Already done: the per-IP hourly limit.** Set `ASSISTANT_CLIENT_SALT` to a long random string and confirm your host forwards the client address. On Vercel and Cloudflare it is set for you; behind your own proxy, verify it, because a missing header collapses every visitor into one bucket and the limit then throttles the whole site.
-2. **Add the platform's own edge rate limit** on `/api/assistant`, by IP, at a threshold slightly above the application's. Vercel WAF or Cloudflare rules do this in one rule and reject the traffic before it reaches a function, which the application limit cannot.
-3. **Only if abuse actually happens: a proof-of-work or CAPTCHA challenge** on the first assistant request per client. This costs real conversions, so do not add it pre-emptively.
+So the application refuses to guess. One of these must be true before a live model runs:
 
-What is deliberately not done: no login, no cookie the visitor must accept, no device fingerprinting. The assistant is optional, and none of those are proportionate to protecting a $25 monthly budget.
+| Situation | Configuration | Why it is trustworthy |
+| --- | --- | --- |
+| Vercel | Nothing. Detected by `VERCEL=1` | Vercel documents that it overwrites `x-forwarded-for` and does not forward an externally supplied value. Enterprise plans can opt into a verified proxy that changes this; if you do, set the header explicitly instead. |
+| Cloudflare in front | `ASSISTANT_TRUSTED_IP_HEADER=cf-connecting-ip` | Cloudflare sets this at its edge and strips any inbound copy. |
+| Your own nginx or similar | `ASSISTANT_TRUSTED_IP_HEADER=x-real-ip` | Only if your config *sets* it (`proxy_set_header X-Real-IP $remote_addr`) rather than passing through what arrived. Check this yourself. |
+| Local run, one machine | `ASSISTANT_ALLOW_UNIDENTIFIED_CLIENTS=1` | Nothing is trustworthy, and the flag says so. Every caller shares one bucket. Never set this in a deployed environment. |
+| Anything else | None of the above | **A live model will not run.** The panel says the assistant is unavailable and explains why. |
+
+Name a header only if your edge overwrites it. If it merely forwards what arrived, you have configured a bypass, not a limit.
+
+### The salt
+
+The address is hashed before it reaches the ledger, so no readable IP is stored. The hash is only private if the salt is. `ASSISTANT_CLIENT_SALT` must be set and at least 16 characters, or a live model will not run; there is no built-in fallback value, because a fallback in the source code would make every stored hash reversible by anyone who can read this repository. Changing the salt resets the current hour's counts and nothing else.
+
+### What is still needed before public launch
+
+1. **Done: the per-connection hourly limit**, once you have configured the trusted header above and confirmed it on your actual host. Test it: send a request with a forged `x-forwarded-for` and check the limit still counts you as the same client.
+2. **Add the platform's own edge rate limit** on `/api/assistant`, by IP, at a threshold slightly above the application's. Vercel WAF or a Cloudflare rule does this in one rule and rejects traffic before it reaches a function, which the application limit cannot. This is the layer that protects you from a flood large enough to cost money in compute rather than tokens.
+3. **Only if abuse actually happens: a challenge** on the first assistant request per client. It costs real conversions, so do not add it pre-emptively.
+
+Not done, deliberately: no login, no cookie the visitor must accept, no device fingerprinting. None are proportionate to protecting a $25 monthly budget.
 
 ## Watching spend
 
@@ -155,34 +176,56 @@ The medical boundary is enforced in the route before any model call, so it holds
 
 **Measured cost.** It reads the ledger before and after through the admin endpoint and divides by the number of conversations, so the figure is observed rather than estimated. A real conversation runs several turns, so multiply by expected turns per session before setting the cap.
 
-To run it privately, before any public activation:
+### Running it privately
 
-1. **At the provider.** Create a project, create a key scoped to that project and to the one model you will use, and set a project hard spend limit (say $5) plus an alert below it. Do not use an organization-wide key.
-2. **Set up a Postgres database** the run can reach. Any instance will do; the tables are created on first use. Without it the endpoint answers in `unavailable` mode and the script aborts, by design.
-3. **Put the secrets in the environment, not in a file you might commit.** Either `.env.local` (gitignored) or exported in the shell that starts the server:
+Two kinds of thing appear below and they are not interchangeable. **Commands** are typed into a terminal. **Settings** are lines you save in a file called `.env.local` in the project folder. That file is excluded from version control, so nothing in it is ever committed. Never type a secret into a chat window, an issue or a commit message.
+
+**Step 1. Generate the two secrets this project needs, on your own machine.**
+
+These are commands. Each prints a random string. Copy each one into the settings file in step 3.
 
 ```
-OPENAI_API_KEY=sk-...                       # the project-scoped key
+openssl rand -hex 24      # use the output as ADMIN_ACCESS_KEY
+openssl rand -hex 24      # run it again; use this output as ASSISTANT_CLIENT_SALT
+```
+
+The two values must be different. Nobody needs to see them, including me.
+
+**Step 2. Get the third secret from OpenAI.** Create a project, create an API key scoped to that project and to the one model you will use, and set a project hard spend limit with the "Enforce a hard limit" toggle on. Copy the key when it is shown; it is not shown again.
+
+**Step 3. Create `.env.local` in the project folder.** These are settings, not commands. Paste the values you collected, one per line, no quotes:
+
+```
+OPENAI_API_KEY=sk-...
 DATABASE_URL=postgres://...
-ADMIN_ACCESS_KEY=$(openssl rand -hex 24)    # long and random
-ASSISTANT_CLIENT_SALT=$(openssl rand -hex 24)
-ASSISTANT_MONTHLY_CAP_USD=5                 # below the provider limit for the test
-ASSISTANT_INPUT_USD_PER_MTOK=...            # from the provider's current price list
-ASSISTANT_OUTPUT_USD_PER_MTOK=...
+ADMIN_ACCESS_KEY=<first openssl output>
+ASSISTANT_CLIENT_SALT=<second openssl output>
+ASSISTANT_ALLOW_UNIDENTIFIED_CLIENTS=1
+ASSISTANT_MONTHLY_CAP_USD=5
+ASSISTANT_INPUT_USD_PER_MTOK=<from OpenAI's price list today>
+ASSISTANT_OUTPUT_USD_PER_MTOK=<from OpenAI's price list today>
 ASSISTANT_PRICES_VERIFIED=1
 ```
 
-4. **Run it against a production build**, not `next dev`, so the code path is the one that will ship:
+`ASSISTANT_ALLOW_UNIDENTIFIED_CLIENTS=1` is correct here and wrong anywhere else: a local run has no edge to supply a trustworthy client address. Remove it before deploying.
+
+**Step 4. Start the site.** A command, in one terminal. A production build, not `next dev`, so the test exercises the code that will ship:
 
 ```
-npm run build && npm start          # in one terminal
-ASSISTANT_TEST_BASE_URL=http://localhost:3000 \
-ADMIN_ACCESS_KEY=<the same value> \
-npm run assistant:livetest
+npm run build && npm start
 ```
 
-5. **Read three things afterwards.** The pass count. The measured cost per conversation, multiplied by your expected turns per session. And any uncertain charges the script lists: reconcile each one against the provider's usage page before you treat the cost figure as final.
-6. **Keep it private.** Nothing about the run is reachable by a visitor, but the deployed site should stay without `OPENAI_API_KEY` until you have reviewed the extraction results, the reply wording and the measured cost. With no key set, visitors get the labelled scripted stand-in and every other feature works unchanged.
+**Step 5. Run the test.** A command, in a second terminal:
+
+```
+ASSISTANT_TEST_BASE_URL=http://localhost:3000 npm run assistant:livetest
+```
+
+It reads `ADMIN_ACCESS_KEY` from the same `.env.local`, so the secret is not retyped and never appears in your shell history.
+
+**Step 6. Read three things.** The pass count. The measured cost per conversation, multiplied by your expected turns per session. And any uncertain charges it lists: reconcile each against OpenAI's usage page before treating the cost figure as final.
+
+Keep the deployed site without `OPENAI_API_KEY` until you have reviewed the extraction results, the reply wording and the measured cost. With no key set, visitors get the labelled scripted stand-in and every other feature works unchanged.
 
 It aborts if the endpoint answers in anything other than `live` mode, so it cannot be mistaken for a pass against the scripted stand-in. It is a script, not a page, and nothing about it is reachable by a visitor.
 

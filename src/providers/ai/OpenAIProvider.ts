@@ -25,11 +25,14 @@ export type ConverseInput = {
   activeConstraints: string[];
 };
 
+export type TokenUsage = { inputTokens: number; outputTokens: number };
+
 export type ConverseResult = {
   intent: ModelIntent;
-  inputTokens: number;
-  outputTokens: number;
   model: string;
+  // Null when the provider answered but did not report usable token counts.
+  // The caller must then treat the cost as unknown rather than as zero.
+  usage: TokenUsage | null;
 };
 
 // Carries whether the provider could have charged for the attempt. Anything
@@ -112,14 +115,25 @@ export class OpenAIConversationProvider implements ConversationProvider {
   }
 
   async converse(input: ConverseInput): Promise<ConverseResult> {
+    // One deadline for the whole exchange. Clearing it once headers arrive
+    // would leave a stalled body to hang until the platform killed the
+    // function, with the reservation still open and no outcome recorded.
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
+    try {
+      return await this.exchange(input, controller.signal);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  private async exchange(input: ConverseInput, signal: AbortSignal): Promise<ConverseResult> {
     let res: Response;
     try {
       res = await fetch(`${this.baseUrl}/chat/completions`, {
         method: "POST",
         headers: { "content-type": "application/json", authorization: `Bearer ${this.apiKey}` },
-        signal: controller.signal,
+        signal,
         body: JSON.stringify({
           model: this.model,
           temperature: 0.2,
@@ -131,20 +145,12 @@ export class OpenAIConversationProvider implements ConversationProvider {
         }),
       });
     } catch (e) {
-      // A connection that never opened costs nothing. A request that was sent
-      // and then timed out or dropped may well have been processed and billed.
-      const aborted = e instanceof Error && (e.name === "AbortError" || /abort/i.test(e.message));
-      const neverSent = e instanceof Error && /ENOTFOUND|ECONNREFUSED|EAI_AGAIN|getaddrinfo/i.test(e.message);
-      throw new ProviderCallError(aborted ? "The request timed out." : "The request could not be completed.", neverSent ? "not_billed" : "uncertain");
-    } finally {
-      clearTimeout(timer);
+      throw connectionError(e, "before");
     }
 
     if (!res.ok) {
       // Never surface the provider's body to the client: it can echo headers.
-      // 4xx is rejected before inference and not charged. 5xx may have run.
-      const billable = res.status >= 400 && res.status < 500 ? "not_billed" : "uncertain";
-      throw new ProviderCallError(`The provider returned ${res.status}.`, billable);
+      throw await statusError(res);
     }
 
     let json: {
@@ -153,11 +159,13 @@ export class OpenAIConversationProvider implements ConversationProvider {
     };
     try {
       json = await res.json();
-    } catch {
-      // The provider answered 200, so inference ran and was charged, but we
-      // cannot read what it cost.
-      throw new ProviderCallError("The provider's response could not be read.", "uncertain");
+    } catch (e) {
+      // The provider answered 200, so inference ran and was charged. Whether
+      // the body stalled, was truncated or was not JSON, we cannot read the
+      // cost, and the timeout above still applies to this read.
+      throw connectionError(e, "after");
     }
+
     const raw = json.choices?.[0]?.message?.content ?? "{}";
 
     let parsedJson: unknown;
@@ -172,11 +180,53 @@ export class OpenAIConversationProvider implements ConversationProvider {
       intent: parsed.success
         ? parsed.data
         : { reply: "I could not read that reliably. Could you say it another way?", hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] },
-      inputTokens: json.usage?.prompt_tokens ?? 0,
-      outputTokens: json.usage?.completion_tokens ?? 0,
+      // Missing or nonsensical usage is not zero usage. Reporting it as null
+      // makes the caller hold the reservation instead of releasing it.
+      usage: readUsage(json.usage),
       model: this.model,
     };
   }
+}
+
+function readUsage(u: { prompt_tokens?: number; completion_tokens?: number } | undefined): TokenUsage | null {
+  if (!u) return null;
+  const inputTokens = u.prompt_tokens;
+  const outputTokens = u.completion_tokens;
+  const usable = (n: unknown): n is number => typeof n === "number" && Number.isFinite(n) && n >= 0;
+  if (!usable(inputTokens) || !usable(outputTokens)) return null;
+  // A 200 that reports no tokens at all did not happen. Treat it as unknown.
+  if (inputTokens === 0 && outputTokens === 0) return null;
+  return { inputTokens, outputTokens };
+}
+
+// A status code is only evidence of "not billed" when the provider itself
+// rejected the request. An OpenAI error body carries an `error` object; a 4xx
+// from an intermediary in front of it does not, and gives us no such evidence.
+async function statusError(res: Response): Promise<ProviderCallError> {
+  if (res.status < 400 || res.status >= 500) return new ProviderCallError(`The provider returned ${res.status}.`, "uncertain");
+  let looksLikeProvider = false;
+  try {
+    const body = (await res.json()) as { error?: unknown };
+    looksLikeProvider = typeof body?.error === "object" && body.error !== null;
+  } catch {
+    looksLikeProvider = false;
+  }
+  // 408 and 499 mean the request was cut off, not refused, so they stay uncertain.
+  const refusedBeforeInference = looksLikeProvider && res.status !== 408 && res.status !== 499;
+  return new ProviderCallError(`The provider returned ${res.status}.`, refusedBeforeInference ? "not_billed" : "uncertain");
+}
+
+// Only a failure that provably happened before the request was written settles
+// at zero: a name that did not resolve, a connection that was refused. Anything
+// after that, including an abort, may have been processed and charged.
+function connectionError(e: unknown, phase: "before" | "after"): ProviderCallError {
+  const message = e instanceof Error ? e.message : String(e);
+  const aborted = e instanceof Error && (e.name === "AbortError" || e.name === "TimeoutError" || /abort/i.test(message));
+  if (phase === "before") {
+    const neverSent = /ENOTFOUND|ECONNREFUSED|EAI_AGAIN|getaddrinfo|ERR_SSL|CERT_/i.test(message);
+    if (neverSent && !aborted) return new ProviderCallError("The assistant could not be reached.", "not_billed");
+  }
+  return new ProviderCallError(aborted ? "The request timed out." : "The request could not be completed.", "uncertain");
 }
 
 // The model returns JSON but not necessarily our JSON. Coerce the shapes we

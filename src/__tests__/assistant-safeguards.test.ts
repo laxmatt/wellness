@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { createServer, type Server } from "node:http";
 import { authorizeAdmin } from "@/domain/admin-auth";
+import { resolveClientIdentity, resolveClientIp, resolveClientSalt, type ClientEnv } from "@/domain/client-identity";
+import { boundInput } from "@/domain/request-bounds";
 import { OpenAIConversationProvider, ProviderCallError, type ConverseInput } from "@/providers/ai/OpenAIProvider";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, estimateTokens, type MeterConfig } from "@/providers/usage/UsageMeter";
@@ -32,15 +35,6 @@ const input = (messages: { role: "user" | "assistant"; text: string }[]): Conver
   messages,
   activeConstraints: [],
 });
-
-// Mirrors the bound the route applies. Kept in step by the route test below.
-function boundInput(provider: OpenAIConversationProvider, i: ConverseInput, max: number): ConverseInput | null {
-  let trimmed = i;
-  while (provider.estimatePromptTokens(trimmed) > max && trimmed.messages.length > 1) {
-    trimmed = { ...trimmed, messages: trimmed.messages.slice(1) };
-  }
-  return provider.estimatePromptTokens(trimmed) > max ? null : trimmed;
-}
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -78,6 +72,25 @@ describe("the reservation actually bounds the request", () => {
     expect(boundInput(provider, input([{ role: "user", text: "hi" }]), 10)).toBeNull();
   });
 
+  it("keeps the deadline running while the response body is read", async () => {
+    // A provider that answers with headers and then stops sending. Clearing the
+    // timeout once headers arrive would leave this hanging until the platform
+    // killed the function, with the reservation still open.
+    const server = await stalling();
+    try {
+      const p = new OpenAIConversationProvider("sk-test", "gpt-4o-mini", `http://127.0.0.1:${server.port}/v1`, 120, 300);
+      const started = Date.now();
+      const e = await p.converse(input([{ role: "user", text: "hi" }])).catch((err) => err as ProviderCallError);
+      expect(e).toBeInstanceOf(ProviderCallError);
+      // Aborted at the deadline, not left to hang.
+      expect(Date.now() - started).toBeLessThan(3000);
+      // Headers arrived, so the request reached the provider. Not free.
+      expect((e as ProviderCallError).billable).toBe("uncertain");
+    } finally {
+      await server.close();
+    }
+  });
+
   it("caps the output side on the request body it sends", async () => {
     let body: Record<string, unknown> = {};
     vi.stubGlobal("fetch", async (_url: string, init: RequestInit) => {
@@ -90,6 +103,17 @@ describe("the reservation actually bounds the request", () => {
     await provider.converse(input([{ role: "user", text: "hi" }]));
     expect(body.max_tokens).toBe(120);
     expect(body.model).toBe("gpt-4o-mini");
+  });
+
+  it("reports usage as unknown rather than zero when the provider omits it", async () => {
+    const reply = { choices: [{ message: { content: "{}" } }] };
+    for (const usage of [undefined, {}, { prompt_tokens: 10 }, { prompt_tokens: "x", completion_tokens: 2 }, { prompt_tokens: 0, completion_tokens: 0 }]) {
+      vi.stubGlobal("fetch", async () => new Response(JSON.stringify({ ...reply, usage }), { status: 200, headers: { "content-type": "application/json" } }));
+      const res = await provider.converse(input([{ role: "user", text: "hi" }]));
+      expect(res.usage).toBeNull();
+    }
+    vi.stubGlobal("fetch", async () => new Response(JSON.stringify({ ...reply, usage: { prompt_tokens: 5, completion_tokens: 3 } }), { status: 200, headers: { "content-type": "application/json" } }));
+    expect((await provider.converse(input([{ role: "user", text: "hi" }]))).usage).toEqual({ inputTokens: 5, outputTokens: 3 });
   });
 
   it("the worst case reserved covers the bounds the route enforces", () => {
@@ -113,10 +137,25 @@ describe("failed calls are classified, not written off", () => {
     throw new Error("expected the call to fail");
   }
 
-  it("treats a 4xx as not billed: the provider rejected it before inference", async () => {
-    const e = await classify(async () => new Response("bad request", { status: 400 }));
+  it("treats a provider 4xx as not billed, on the evidence of its error body", async () => {
+    const e = await classify(async () =>
+      new Response(JSON.stringify({ error: { message: "bad request", type: "invalid_request_error" } }), {
+        status: 400,
+        headers: { "content-type": "application/json" },
+      }),
+    );
     expect(e).toBeInstanceOf(ProviderCallError);
     expect(e.billable).toBe("not_billed");
+  });
+
+  it("holds a 4xx with no provider error body: an intermediary is not evidence", async () => {
+    const e = await classify(async () => new Response("<html>403 Forbidden</html>", { status: 403 }));
+    expect(e.billable).toBe("uncertain");
+  });
+
+  it("holds a 408, which means cut off rather than refused", async () => {
+    const e = await classify(async () => new Response(JSON.stringify({ error: { message: "timeout" } }), { status: 408, headers: { "content-type": "application/json" } }));
+    expect(e.billable).toBe("uncertain");
   });
 
   it("treats a 5xx as uncertain: it may have run before failing", async () => {
@@ -147,6 +186,7 @@ describe("failed calls are classified, not written off", () => {
 
   it("never puts the provider's response body into the error", async () => {
     const e = await classify(async () => new Response("Authorization: Bearer sk-live-secret", { status: 401 }));
+    expect(e.billable).toBe("uncertain");
     expect(e.message).not.toMatch(/sk-live/);
     expect(e.message).toBe("The provider returned 401.");
   });
@@ -208,3 +248,77 @@ describe("admin access", () => {
     if (!r.ok) expect(r.status).toBe(503);
   });
 });
+
+describe("identifying the client", () => {
+  const salt: ClientEnv = { ASSISTANT_CLIENT_SALT: "a-long-enough-test-salt" };
+
+  it("reads only the header the operator named", () => {
+    const headers = new Headers({ "cf-connecting-ip": "198.51.100.9", "x-forwarded-for": "1.1.1.1" });
+    const r = resolveClientIp(headers, { ...salt, ASSISTANT_TRUSTED_IP_HEADER: "cf-connecting-ip" });
+    expect(r.ok && r.ip).toBe("198.51.100.9");
+  });
+
+  it("ignores x-forwarded-for when nothing says it can be trusted", () => {
+    // The important case. A caller sends this header themselves; a proxy that
+    // appends leaves the leftmost value under their control.
+    const r = resolveClientIp(new Headers({ "x-forwarded-for": "1.2.3.4" }), salt);
+    expect(r.ok).toBe(false);
+  });
+
+  it("trusts x-forwarded-for on Vercel, which overwrites it", () => {
+    const r = resolveClientIp(new Headers({ "x-forwarded-for": "203.0.113.4, 10.0.0.1" }), { ...salt, VERCEL: "1" });
+    expect(r.ok && r.ip).toBe("203.0.113.4");
+  });
+
+  it("fails when the named header is missing rather than falling back", () => {
+    const r = resolveClientIp(new Headers({ "x-real-ip": "203.0.113.4" }), { ...salt, ASSISTANT_TRUSTED_IP_HEADER: "cf-connecting-ip" });
+    expect(r.ok).toBe(false);
+  });
+
+  it("requires a private salt of real length", () => {
+    expect(resolveClientSalt({}).ok).toBe(false);
+    expect(resolveClientSalt({ ASSISTANT_CLIENT_SALT: "wellness" }).ok).toBe(false);
+    expect(resolveClientSalt(salt).ok).toBe(true);
+  });
+
+  it("stores a hash, not an address, and separates two addresses", () => {
+    const env = { ...salt, ASSISTANT_TRUSTED_IP_HEADER: "x-real-ip" };
+    const a = resolveClientIdentity(new Headers({ "x-real-ip": "198.51.100.1" }), env);
+    const b = resolveClientIdentity(new Headers({ "x-real-ip": "198.51.100.2" }), env);
+    expect(a.ok && b.ok && a.key).not.toBe(b.ok && b.key);
+    expect(a.ok && a.key).not.toMatch(/198\.51/);
+    expect(a.ok && a.key).toMatch(/^[0-9a-f]{32}$/);
+  });
+
+  it("a different salt gives a different key for the same address", () => {
+    const headers = new Headers({ "x-real-ip": "198.51.100.1" });
+    const a = resolveClientIdentity(headers, { ASSISTANT_CLIENT_SALT: "salt-number-one-value", ASSISTANT_TRUSTED_IP_HEADER: "x-real-ip" });
+    const b = resolveClientIdentity(headers, { ASSISTANT_CLIENT_SALT: "salt-number-two-value", ASSISTANT_TRUSTED_IP_HEADER: "x-real-ip" });
+    expect(a.ok && a.key).not.toBe(b.ok && b.key);
+  });
+
+  it("only buckets everyone together when explicitly asked to, for a local run", () => {
+    expect(resolveClientIdentity(new Headers(), salt).ok).toBe(false);
+    const local = resolveClientIdentity(new Headers(), { ...salt, ASSISTANT_ALLOW_UNIDENTIFIED_CLIENTS: "1" });
+    expect(local.ok && local.key).toBe("local-unidentified");
+  });
+});
+
+// A server that answers with headers and a content-length it never satisfies.
+async function stalling(): Promise<{ port: number; close: () => Promise<void> }> {
+  const server: Server = createServer((_req, res) => {
+    res.writeHead(200, { "content-type": "application/json", "content-length": "200" });
+    res.write("{");
+    // Never ends.
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const port = (server.address() as { port: number }).port;
+  return {
+    port,
+    close: () =>
+      new Promise<void>((resolve) => {
+        server.closeAllConnections?.();
+        server.close(() => resolve());
+      }),
+  };
+}
