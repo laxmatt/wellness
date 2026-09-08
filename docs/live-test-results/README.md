@@ -11,4 +11,7 @@ so an uncommitted report does not survive the session that produced it. These
 files are also the record of what the assistant sounded like at a given commit,
 which no test asserts.
 
-No report is present yet. Nothing here has made a paid request.
+The first run against a live model is `2026-09-08T18-51.md`. It aborted on
+its first case: the credential the proxy attaches is a restricted key without
+the scope for model inference, so OpenAI answered 403 and no conversation ran.
+No cost was billed and no extraction was measured.
