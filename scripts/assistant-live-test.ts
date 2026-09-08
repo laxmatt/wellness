@@ -19,6 +19,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
 import { checkReply, type CheckableReply, type ExpectedCase } from "../src/domain/livetest-expectations";
+import { buildReport, reportStamp, type CaseRecord } from "../src/domain/livetest-report";
 
 // The same file the app reads, parsed the same way: KEY=value, one per line,
 // blank lines and # comments skipped, existing environment variables win.
@@ -54,7 +55,7 @@ const CASES: Case[] = [
     category: "red-light",
     text: "I need a full-body panel under $700 that won't take over my apartment.",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000, orAtMost: 69999 }],
       soft: [{ key: "coverage" }, { key: "footprint", directions: ["prefer_low"] }],
       alsoReasonable: ["mounting"],
     },
@@ -77,7 +78,7 @@ const CASES: Case[] = [
     text: "under 500",
     // The engine matches at least one product under $500. A reply that says
     // otherwise is the failure this case exists to catch.
-    expect: { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 50000 }], engine: "someMatch" },
+    expect: { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 50000, orAtMost: 49999 }], engine: "someMatch" },
     note: "bare number, and the count must match the engine",
   },
   { category: "red-light", text: "I have no idea where to start", expect: { mustAskQuestion: true }, note: "must ask, not guess" },
@@ -86,7 +87,7 @@ const CASES: Case[] = [
     category: "cold-plunge",
     text: "A tub with a chiller for my garage, up to $5,000",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 500000 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 500000, orAtMost: 499999 }],
       soft: [{ key: "chiller_included" }, { key: "placement" }],
       alsoReasonable: ["tub_type"],
     },
@@ -102,7 +103,7 @@ const CASES: Case[] = [
     expect: {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
-        { key: "price_per_serving_minor", ops: ["lt", "lte"], minorUnits: 200 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 },
       ],
       soft: [{ key: "function" }],
       alsoReasonable: ["format", "electrolytes_mg"],
@@ -174,7 +175,7 @@ async function main() {
   const failures: string[] = [];
   // Kept for the written report. The container this runs in is disposable, so
   // the result has to end up in the repository to be worth anything later.
-  const records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[] = [];
+  const records: CaseRecord[] = [];
 
   for (const [i, c] of CASES.entries()) {
     const sessionId = `s_livetest_${Date.now()}_${i}`;
@@ -228,7 +229,7 @@ async function main() {
       if (now && now.uncertainUsd > before.uncertainUsd + 1e-9) {
         console.error(`\nStopping: a charge could not be measured. Held uncertain is now $${now.uncertainUsd.toFixed(4)}, was $${before.uncertainUsd.toFixed(4)}.`);
         console.error("Reconcile it against the provider's usage record before running again.");
-        writeReport({ pass, records, before, after: now });
+        writeReport({ records, plannedCases: CASES.length, before, after: now, stoppedEarly: { reason: "a charge could not be measured" } });
         process.exit(3);
       }
     }
@@ -257,74 +258,28 @@ async function main() {
     }
   }
 
-  const reportPath = writeReport({ pass, records, before, after });
+  const reportPath = writeReport({ records, plannedCases: CASES.length, before, after });
   console.log(`\nReport written to ${reportPath}. Commit it: the container this ran in is disposable.`);
   console.log("This measures extraction and cost. It does not measure whether the wording is good; read the replies above.");
   process.exit(failures.length === 0 ? 0 : 1);
 }
 
 // Written into the repository, not just printed, so the numbers survive the
-// session that produced them.
+// session that produced them. The text itself is built by
+// src/domain/livetest-report.ts, which a non-paid test exercises.
 function writeReport(args: {
-  pass: number;
-  records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[];
+  records: CaseRecord[];
+  plannedCases: number;
   before: Usage | null;
   after: Usage | null;
+  stoppedEarly?: { reason: string };
 }): string {
-  const { pass, records, before, after } = args;
-  const stamp = new Date().toISOString().replace(/:/g, "-").slice(0, 16);
   const dir = "docs/live-test-results";
   mkdirSync(dir, { recursive: true });
-
-  const spent = before && after ? after.spentUsd - before.spentUsd : null;
-  const newlyUncertain = before && after ? after.uncertainCharges.filter((u) => !before.uncertainCharges.some((b) => b.reservationId === u.reservationId)) : [];
-
-  const lines: string[] = [
-    `# Live assistant test, ${new Date().toISOString()}`,
-    "",
-    `Model: \`${process.env.OPENAI_MODEL ?? "gpt-4o-mini"}\`. Credential mode: \`${after?.credential.mode ?? "unknown"}\`. Ledger: \`${after?.store ?? "unknown"}\`.`,
-    "",
-    "## Extraction",
-    "",
-    `${pass} of ${records.length} cases matched the constraints a careful person would have entered.`,
-    "",
-    "| Category | Case | Result | Products shown |",
-    "| --- | --- | --- | --- |",
-    ...records.map((r) => `| ${r.category} | ${r.note} | ${r.problems.length === 0 ? "ok" : r.problems.join("; ")} | ${r.shown} |`),
-    "",
-    "## Cost",
-    "",
-    spent === null
-      ? "Not measured: no admin key was available to read the ledger."
-      : [
-          `Measured spend for ${records.length} single-turn conversations: **$${spent.toFixed(4)}**.`,
-          "",
-          `Observed cost per conversation: **$${(spent / records.length).toFixed(5)}**.`,
-          "",
-          "A real conversation runs several turns. Multiply by expected turns per session before setting the cap.",
-        ].join("\n"),
-    "",
-  ];
-
-  if (newlyUncertain.length > 0) {
-    lines.push(
-      "## Unconfirmed charges",
-      "",
-      `${newlyUncertain.length} call(s) ended without a confirmed cost, holding $${(after?.uncertainUsd ?? 0).toFixed(4)} against the cap. The measured spend above is a lower bound until these are reconciled against the provider's usage record.`,
-      "",
-      "| Reservation | Held | Reason |",
-      "| --- | --- | --- |",
-      ...newlyUncertain.map((u) => `| \`${u.reservationId}\` | $${u.heldUsd.toFixed(5)} | ${u.reason} |`),
-      "",
-    );
-  }
-
-  lines.push("## Replies, verbatim", "", "Read these. No script judges whether the wording is right for the site.", "");
-  for (const r of records) lines.push(`**${r.category}** | "${r.text}"`, "", `> ${r.reply.replace(/\n/g, " ")}`, "");
-
-  const path = `${dir}/${stamp}.md`;
-  writeFileSync(path, lines.join("\n"));
-  writeFileSync(`${dir}/latest.md`, lines.join("\n"));
+  const body = buildReport({ ...args, model: process.env.OPENAI_MODEL ?? "gpt-4o-mini" });
+  const path = `${dir}/${reportStamp()}.md`;
+  writeFileSync(path, body);
+  writeFileSync(`${dir}/latest.md`, body);
   return path;
 }
 

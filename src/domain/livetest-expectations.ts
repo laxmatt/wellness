@@ -13,10 +13,21 @@ export type ExpectedConstraint = {
   key: string;
   // Operators any of which would be a correct reading of the sentence.
   ops: string[];
-  // Money as the ENGINE holds it: integer minor units. The proposal this is
-  // checked against has already been converted from the model's dollars by
-  // src/domain/model-constraints.ts, so $700 is 70000 here.
-  minorUnits?: number;
+  // Money as the ENGINE holds it: integer minor units, judged by the set of
+  // amounts the constraint admits rather than by the literal number.
+  //
+  // Operator and amount only mean something together. On integer cents,
+  // `lt 200` and `lte 199` admit exactly the same products, so both are correct
+  // readings of "under $2". `lt 199` is not: it excludes $1.99. So an
+  // expectation names the largest amount that must be admitted, and the check
+  // computes the same figure from whatever the model sent.
+  //
+  // `admitsAtMost` is the strict reading. `orAtMost` is the second reading
+  // where the boundary itself is genuinely ambiguous in English: someone who
+  // says "under $700" usually means a $700 product is fine, and someone who
+  // says "under $2 a serving" usually does not mean $2.00 exactly.
+  admitsAtMost?: number;
+  orAtMost?: number;
   // Non-money values.
   value?: number | string | boolean;
   atMost?: number;
@@ -51,16 +62,32 @@ export type CheckableReply = {
   }[];
 };
 
+// The largest amount a comparison admits, in minor units. Undefined when the
+// operator is not an upper bound or the value is not an integer amount.
+export function admittedMaximum(op: string, value: unknown): number | undefined {
+  if (typeof value !== "number" || !Number.isInteger(value)) return undefined;
+  if (op === "lte") return value;
+  if (op === "lt") return value - 1;
+  return undefined;
+}
+
 export function describeWant(w: ExpectedConstraint): string {
-  if (w.minorUnits !== undefined) return `${w.minorUnits} minor units`;
+  if (w.admitsAtMost !== undefined) {
+    const alt = w.orAtMost !== undefined ? ` (or ${w.orAtMost})` : "";
+    return `a constraint admitting at most ${w.admitsAtMost}${alt} minor units`;
+  }
   if (w.value !== undefined) return `exactly ${JSON.stringify(w.value)}`;
   if (w.atMost !== undefined) return `at most ${w.atMost}`;
   if (w.atLeast !== undefined) return `at least ${w.atLeast}`;
   return "any value";
 }
 
-export function valueFits(got: unknown, w: ExpectedConstraint): boolean {
-  if (w.minorUnits !== undefined) return got === w.minorUnits;
+export function valueFits(got: unknown, w: ExpectedConstraint, gotOp?: string): boolean {
+  if (w.admitsAtMost !== undefined) {
+    const max = admittedMaximum(gotOp ?? "", got);
+    if (max === undefined) return false;
+    return max === w.admitsAtMost || (w.orAtMost !== undefined && max === w.orAtMost);
+  }
   if (w.value !== undefined) return got === w.value;
   if (typeof got !== "number") return false;
   if (w.atMost !== undefined) return got <= w.atMost;
@@ -89,8 +116,9 @@ export function checkReply(reply: CheckableReply, expect: ExpectedCase): string[
       problems.push(`hard ${want.key} used op ${found.map((h) => h.op).join("/")}, expected one of ${want.ops.join("/")}`);
       continue;
     }
-    if (!right.some((h) => valueFits(h.value, want))) {
-      problems.push(`hard ${want.key} value ${JSON.stringify(right[0].value)} does not fit ${describeWant(want)}`);
+    if (!right.some((h) => valueFits(h.value, want, h.op))) {
+      const shown = right.map((h) => `${h.op} ${JSON.stringify(h.value)}`).join(", ");
+      problems.push(`hard ${want.key} ${shown} does not fit ${describeWant(want)}`);
     }
   }
 

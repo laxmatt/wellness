@@ -303,7 +303,13 @@ It sees only a shortlist of at most six products, and only sourced facts. Placeh
 
 Its output is parsed by `ModelIntent` and anything outside that shape is dropped. Constraints are checked against real filter keys before they are offered.
 
-**Schema-constrained output is available and off.** `ASSISTANT_RESPONSE_FORMAT=json_schema` sends the intent's JSON Schema with the request, so the provider can refuse a bad shape before it is billed for. It is not the default: whether this model and this account support `json_schema` with `strict` has not been verified against the API, and changing the request on an assumption is how a working integration breaks. Verify with one call before turning it on. Application validation runs either way and is not relaxed by it.
+**Schema-constrained output is prepared and off.** `ASSISTANT_RESPONSE_FORMAT=json_schema` sends the intent's schema with `strict: true`, so the provider refuses a bad shape during generation rather than this application discarding it afterwards. It targets the one error that has now repeated twice: `{"key":"chiller_included","op":"true","value":true}`, the value written into the operator field.
+
+Strict mode compiles the schema and rejects what it cannot, so the schema is written to its constraints: every object closed with `additionalProperties: false`, every property listed in `required`, optional values expressed as nullable, and none of the size or length keywords it does not accept. The counts and ranges stay in Zod, which validates every reply either way and is not relaxed by any of this. Tests walk the schema and fail if a rejected keyword or an unlisted property reappears.
+
+**What could not be verified here, and what it would cost.** The official documentation is unreachable from a Claude Code container: `platform.openai.com` and `developers.openai.com` are both refused by the egress policy. The constraints above come from secondary sources and are encoded as tests, not as belief.
+
+One question remains open and cannot be answered without a request: whether this account and `gpt-4o-mini` accept this schema. The check is cheap and asymmetric. A schema strict mode will not compile comes back as a 400 before inference, which `statusError` settles as `not_billed`, so it costs nothing. A schema it accepts costs one ordinary call, about $0.0004. Send one request with the flag set before running anything longer with it.
 
 **A reply nothing could be read from is a failure, and it changes nothing.** The route marks it `failure: "unreadable_reply"`, keeps the shopper's existing preferences exactly as they were, and returns no proposals. The placeholder intent's empty `hard` and `soft` mean "nothing was understood", not "the shopper asked for nothing": read the second way, a malformed reply offered to clear every filter the shopper had set.
 

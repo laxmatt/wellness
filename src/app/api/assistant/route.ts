@@ -9,7 +9,7 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { clarifyingQuestion, composeReply } from "@/domain/reply-composer";
+import { FIXED_LIMITATION, clarifyingQuestion, composeReply } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
@@ -355,7 +355,7 @@ export async function POST(req: Request) {
   const shown = changed && (proposedHard.length > 0 || proposedSoft.length > 0 || clearing) ? evaluate(views, cat, proposedHard, proposedSoft, intent.unmapped) : agreed;
 
   const proposals: ProposedAction[] = [];
-  if (shown !== agreed) {
+  if (shown !== agreed && !intent.medicalIntent) {
     const constraintText = proposedHard.length > 0 ? proposedHard.map((c) => describeConstraint(cat, c)).join(", ") : "what I am ranking for";
     proposals.push({
       kind: "apply_preferences",
@@ -387,8 +387,22 @@ export async function POST(req: Request) {
   // The shopper reads this site's own words, composed from the catalogue and
   // the engine's result. The model's prose is not displayed: its job is to turn
   // a sentence into preferences, and everything factual is rendered here.
-  const composed = intent.medicalIntent
-    ? MEDICAL_REDIRECT
+  //
+  // The medical refusal is this site's decision, taken before the model was
+  // called, and the model's own `medicalIntent` flag does not reopen it. A live
+  // run had the model flag "which one is healthiest?" as medical: the site's
+  // detector says otherwise, there is a test for it, and a shopper asking which
+  // drink is healthiest is asking a shopping question this site cannot answer,
+  // not a clinical one. Treatment and diagnosis requests are unaffected: they
+  // are caught by detectMedicalIntent before any of this runs.
+  //
+  // The flag is not ignored, though. When the model raises it and this site
+  // does not, nothing it extracted is applied and the shopper gets the fixed
+  // clarification, so a sentence one of them found troubling never turns into a
+  // filter.
+  const modelFlaggedOnly = intent.medicalIntent;
+  const composed = modelFlaggedOnly
+    ? FIXED_LIMITATION
     : composeReply({
         cat,
         hard: shown.hard,
@@ -413,8 +427,10 @@ export async function POST(req: Request) {
       // question text and options are not displayed: they are free text on the
       // way to the screen, and a question can carry a claim as easily as a
       // sentence can.
-      question: intent.question ? clarifyingQuestion(cat, [...shown.hard.map((c) => c.key), ...shown.soft.map((p) => p.key)]) : undefined,
-      medicalRedirect: intent.medicalIntent,
+      question: intent.question && !modelFlaggedOnly ? clarifyingQuestion(cat, [...shown.hard.map((c) => c.key), ...shown.soft.map((p) => p.key)]) : undefined,
+      // False here always: the only path that sets it is the detector's, which
+      // returned before the model was called.
+      medicalRedirect: false,
       notice: undefined,
     }),
   );

@@ -355,60 +355,90 @@ function unreadable(): ModelIntent {
   return { reply: UNREADABLE_REPLY, hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] };
 }
 
-// The shape the model is asked for, expressed as JSON Schema. Kept beside the
-// Zod schema it mirrors; the tests assert they agree on the enums and limits.
+// The shape the model is asked for, expressed as JSON Schema for OpenAI's
+// strict structured outputs.
+//
+// Strict mode is constrained decoding, not advice, and it rejects a schema it
+// cannot compile. The constraints it imposes are narrower than JSON Schema:
+//
+//   - every object needs `additionalProperties: false`;
+//   - every property must appear in `required`, so an optional field is
+//     expressed by allowing null rather than by leaving it out;
+//   - size and length keywords are not supported. `maxItems`, `minLength`,
+//     `maxLength`, `minimum` and `maximum` all have to go.
+//
+// So this schema carries the shape and the closed enumerations, which is what
+// the model kept getting wrong, and the counts and ranges stay in Zod, which
+// validates every reply either way. Losing `maxItems` here costs nothing: an
+// over-long array is still refused after the fact.
+//
+// IMPORTANT: the official documentation could not be read from this container
+// (platform.openai.com and developers.openai.com are both blocked by the egress
+// policy), so the rules above come from secondary sources. See
+// docs/ASSISTANT.md for what that means and what remains unverified.
+const NULLABLE_VALUE = {
+  anyOf: [
+    {
+      type: "object",
+      properties: { amount: { type: "number" }, currency: { type: "string", enum: [MONEY_CURRENCY] } },
+      required: ["amount", "currency"],
+      additionalProperties: false,
+    },
+    { type: "number" },
+    { type: "string" },
+    { type: "boolean" },
+    { type: "array", items: { type: "string" } },
+    { type: "array", items: { type: "number" } },
+    { type: "null" },
+  ],
+};
+
 export function intentJsonSchema(): Record<string, unknown> {
-  const money = {
-    type: "object",
-    properties: { amount: { type: "number" }, currency: { type: "string", enum: [MONEY_CURRENCY] } },
-    required: ["amount", "currency"],
-    additionalProperties: false,
-  };
-  const value = {
-    anyOf: [money, { type: "number" }, { type: "string" }, { type: "boolean" }, { type: "array", items: { type: "string" } }, { type: "array", items: { type: "number" } }],
-  };
   return {
     type: "object",
     properties: {
       reply: { type: "string" },
       hard: {
         type: "array",
-        maxItems: INTENT_LIMITS.hard,
         items: {
           type: "object",
-          properties: { key: { type: "string" }, op: { type: "string", enum: [...CONDITION_OPS] }, value },
-          required: ["key", "op"],
+          properties: { key: { type: "string" }, op: { type: "string", enum: [...CONDITION_OPS] }, value: NULLABLE_VALUE },
+          required: ["key", "op", "value"],
           additionalProperties: false,
         },
       },
       soft: {
         type: "array",
-        maxItems: INTENT_LIMITS.soft,
         items: {
           type: "object",
           properties: {
             key: { type: "string" },
             direction: { type: "string", enum: [...SOFT_DIRECTIONS] },
-            value,
-            weight: { type: "number", minimum: SOFT_WEIGHT_RANGE.min, maximum: SOFT_WEIGHT_RANGE.max },
+            value: NULLABLE_VALUE,
+            weight: { type: "number" },
           },
-          required: ["key", "direction"],
+          required: ["key", "direction", "value", "weight"],
           additionalProperties: false,
         },
       },
-      unmapped: { type: "array", maxItems: INTENT_LIMITS.unmapped, items: { type: "string" } },
+      unmapped: { type: "array", items: { type: "string" } },
       medicalIntent: { type: "boolean" },
-      suggestCompare: { type: "array", maxItems: INTENT_LIMITS.suggestCompare, items: { type: "string" } },
+      suggestCompare: { type: "array", items: { type: "string" } },
     },
-    required: ["reply"],
+    required: ["reply", "hard", "soft", "unmapped", "medicalIntent", "suggestCompare"],
     additionalProperties: false,
   };
 }
 
-// Unchanged unless an operator opts in, because the capability is unverified.
+// Keywords strict mode does not accept. Exported so a test can walk the schema
+// and fail if one is ever reintroduced.
+export const STRICT_UNSUPPORTED_KEYWORDS = ["maxItems", "minItems", "minLength", "maxLength", "minimum", "maximum", "pattern", "format", "default"];
+
+// Unchanged unless an operator opts in, because the capability is unverified
+// against this account.
 export function responseFormat(env: NodeJS.ProcessEnv = process.env): Record<string, unknown> {
   if (env.ASSISTANT_RESPONSE_FORMAT?.trim() === "json_schema") {
-    return { type: "json_schema", json_schema: { name: "model_intent", schema: intentJsonSchema() } };
+    return { type: "json_schema", json_schema: { name: "model_intent", strict: true, schema: intentJsonSchema() } };
   }
   return { type: "json_object" };
 }

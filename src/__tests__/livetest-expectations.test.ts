@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/assistant/route";
 import { categoryById } from "@/domain/categories";
 import { matchesAll } from "@/domain/conditions";
-import { checkReply, type CheckableReply, type ExpectedCase } from "@/domain/livetest-expectations";
+import { admittedMaximum, checkReply, valueFits, type CheckableReply, type ExpectedCase } from "@/domain/livetest-expectations";
 import { getCatalog } from "@/providers";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, type MeterConfig } from "@/providers/usage/UsageMeter";
@@ -87,7 +87,7 @@ describe("money is asserted where the script actually reads it", () => {
     const proposal = reply.proposals.find((p) => p.kind === "apply_preferences");
     expect(proposal?.hard?.[0].value).toBe(70000);
 
-    const expectCase: ExpectedCase = { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }] };
+    const expectCase: ExpectedCase = { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000 }] };
     expect(checkReply(reply, expectCase)).toEqual([]);
   });
 
@@ -100,7 +100,7 @@ describe("money is asserted where the script actually reads it", () => {
       modelSays({ reply: "ok", hard: [{ key: "price", op: "lte", value: usd(dollars) }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const reply = await askRoute("budget question");
-    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits }] })).toEqual([]);
+    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: minorUnits }] })).toEqual([]);
   });
 
   it("passes $2 a serving, whose proposal carries 200", async () => {
@@ -116,7 +116,7 @@ describe("money is asserted where the script actually reads it", () => {
       }),
     );
     const reply = await askRoute("under $2 a serving", "wellness-drinks");
-    expect(checkReply(reply, { hard: [{ key: "price_per_serving_minor", ops: ["lt", "lte"], minorUnits: 200 }] })).toEqual([]);
+    expect(checkReply(reply, { hard: [{ key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 200 }] })).toEqual([]);
   });
 
   it("fails a budget that converted to the wrong amount", async () => {
@@ -125,9 +125,9 @@ describe("money is asserted where the script actually reads it", () => {
       modelSays({ reply: "ok", hard: [{ key: "price", op: "lte", value: usd(7) }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const reply = await askRoute("a panel under $700");
-    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }] });
+    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000 }] });
     expect(problems).toHaveLength(1);
-    expect(problems[0]).toMatch(/value 700 does not fit 70000 minor units/);
+    expect(problems[0]).toMatch(/lte 700 does not fit a constraint admitting at most 70000/);
   });
 
   it("fails an inverted operator even when the amount is right", async () => {
@@ -136,7 +136,7 @@ describe("money is asserted where the script actually reads it", () => {
       modelSays({ reply: "ok", hard: [{ key: "price", op: "gte", value: usd(700) }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const reply = await askRoute("a panel under $700");
-    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }] });
+    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000 }] });
     expect(problems[0]).toMatch(/used op gte/);
   });
 
@@ -146,7 +146,7 @@ describe("money is asserted where the script actually reads it", () => {
       modelSays({ reply: "ok", hard: [{ key: "price", op: "lte", value: 700 }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const reply = await askRoute("a panel under $700");
-    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }] });
+    const problems = checkReply(reply, { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000 }] });
     expect(problems).toEqual(["the reply could not be used (unconvertible_constraint); nothing was extracted"]);
   });
 });
@@ -155,7 +155,7 @@ describe("the other assertions, against real responses", () => {
   it("reports a missing constraint", async () => {
     vi.stubGlobal("fetch", modelSays({ reply: "ok", hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
     const reply = await askRoute("under $700");
-    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], minorUnits: 70000 }] })).toContain("missing hard price");
+    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], admitsAtMost: 70000 }] })).toContain("missing hard price");
   });
 
   it("reports an invented constraint, and accepts a justified one", async () => {
@@ -190,7 +190,7 @@ describe("the other assertions, against real responses", () => {
       modelSays({ reply: "ok", hard: [{ key: "price", op: "lte", value: usd(500) }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }),
     );
     const reply = await askRoute("under 500");
-    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], minorUnits: 50000 }], engine: "someMatch" })).toEqual([]);
+    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], admitsAtMost: 50000 }], engine: "someMatch" })).toEqual([]);
   });
 
   it("reports a medical question that was not declined, and one wrongly declined", async () => {
@@ -206,8 +206,89 @@ describe("the other assertions, against real responses", () => {
   it("reports an unreadable reply as its own failure", async () => {
     vi.stubGlobal("fetch", raw("not json at all"));
     const reply = await askRoute("under $700");
-    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], minorUnits: 70000 }] })).toEqual([
+    expect(checkReply(reply, { hard: [{ key: "price", ops: ["lte"], admitsAtMost: 70000 }] })).toEqual([
       "the reply could not be used (unreadable_reply); nothing was extracted",
     ]);
+  });
+});
+
+describe("budget equivalence is judged by operator and amount together", () => {
+  it("treats lt 200 and lte 199 as the same request", () => {
+    // Both admit every price up to $1.99 and nothing above it.
+    expect(admittedMaximum("lt", 200)).toBe(199);
+    expect(admittedMaximum("lte", 199)).toBe(199);
+  });
+
+  it("does not treat lt 199 as the same request", () => {
+    expect(admittedMaximum("lt", 199)).toBe(198);
+  });
+
+  it("accepts either spelling of under $2 a serving, and refuses the others", () => {
+    const want = { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 };
+    expect(valueFits(200, want, "lt")).toBe(true);
+    expect(valueFits(199, want, "lte")).toBe(true);
+    // $2.00 exactly is not under $2.
+    expect(valueFits(200, want, "lte")).toBe(false);
+    // $1.99 excluded is not under $2 either.
+    expect(valueFits(199, want, "lt")).toBe(false);
+  });
+
+  it("allows the inclusive reading only where the expectation says so", () => {
+    const strict = { key: "price", ops: ["lt", "lte"], admitsAtMost: 199 };
+    const lenient = { key: "price", ops: ["lt", "lte"], admitsAtMost: 70000, orAtMost: 69999 };
+    expect(valueFits(200, strict, "lte")).toBe(false);
+    expect(valueFits(70000, lenient, "lte")).toBe(true);
+    expect(valueFits(70000, lenient, "lt")).toBe(true);
+    expect(valueFits(69000, lenient, "lte")).toBe(false);
+  });
+
+  it("refuses an operator that is not an upper bound at all", () => {
+    const want = { key: "price", ops: ["lt", "lte", "gte"], admitsAtMost: 70000 };
+    expect(valueFits(70000, want, "gte")).toBe(false);
+    expect(valueFits(70000, want, "eq")).toBe(false);
+  });
+
+  it("passes the live case that failed at 13d4873, without loosening the check", async () => {
+    // The model sent lte $1.99, which the route converted to lte 199. That
+    // admits exactly what "under $2 a serving" admits.
+    vi.stubGlobal(
+      "fetch",
+      modelSays({
+        reply: "ok",
+        hard: [{ key: "price_per_serving_minor", op: "lte", value: usd(1.99) }],
+        soft: [{ key: "function", direction: "prefer_value", value: "electrolytes", weight: 0.5 }],
+        unmapped: [],
+        medicalIntent: false,
+        suggestCompare: [],
+      }),
+    );
+    const reply = await askRoute("zero sugar electrolytes under $2 a serving", "wellness-drinks");
+    expect(
+      checkReply(reply, {
+        hard: [{ key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 }],
+        soft: [{ key: "function" }],
+      }),
+    ).toEqual([]);
+  });
+
+  it("still reports the missing soft preference as its own failure", async () => {
+    vi.stubGlobal(
+      "fetch",
+      modelSays({
+        reply: "ok",
+        hard: [{ key: "price_per_serving_minor", op: "lte", value: usd(1.99) }],
+        soft: [],
+        unmapped: [],
+        medicalIntent: false,
+        suggestCompare: [],
+      }),
+    );
+    const reply = await askRoute("zero sugar electrolytes under $2 a serving", "wellness-drinks");
+    const problems = checkReply(reply, {
+      hard: [{ key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 }],
+      soft: [{ key: "function" }],
+    });
+    // The budget is accepted and the missing preference stands alone.
+    expect(problems).toEqual(["missing soft function"]);
   });
 });

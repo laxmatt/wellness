@@ -63,13 +63,20 @@ Credential injection confirmed before spending by `openai-processing-ms`,
 | wellness-drinks, healthiest | FAIL, declined as medical |
 | wellness-drinks, tastes good | ok |
 
-### The money contract holds
+### The money contract: followed in four cases, broken in one
 
-Every budget case passed. "under $700", "under 500" and the per-serving budget
-all arrived as `{"amount": N, "currency": "USD"}` and reached the engine as
-70000, 50000 and 199 minor units. The three cases that failed on price units at
-`4119c27` all pass. The one place a bare number still appeared is inside the
-rejected payload below, where the schema failed first.
+Corrected after review. The original wording here was "the money contract
+holds", which was too strong.
+
+Four budgets arrived correctly as `{"amount": N, "currency": "USD"}` and reached
+the engine as 70000, 50000, 199 and (in the vague-budget case) nothing at all.
+The three price-unit failures from `4119c27` are gone.
+
+The fifth carried `"value": 5000`, a bare number, in the chiller payload below.
+That is a violation of the money contract, not a hypothetical one: the contract
+would have refused it, and the only reason it was never refused is that schema
+validation rejected the payload for a different error first. The run scored four
+correct budgets out of five, not five.
 
 ## Cost
 
@@ -105,41 +112,49 @@ issue: hard.1.op | invalid_value |
 ]
 ```
 
-Two separate errors in one payload, and only the first is reported because
-validation stops there:
+Two independent contract violations in one payload, both invalid:
 
-1. `"op": "true"` puts the value in the operator field. A boolean filter is the
-   only place this has ever happened, twice now, in the same sentence.
-2. `"value": 5000` is a bare number for a money key. The money contract would
-   have refused it, but the schema rejected the payload first, so this never
-   reached the converter.
+1. `"op": "true"` puts the value in the operator field. This is a repeat: the
+   identical error, on the identical sentence, was captured at `4119c27`. It is
+   not a new symptom and it is not intermittent.
+2. `"value": 5000` is a bare number for a money key. Invalid on its own terms.
+   Validation never reached it only because it stops at the first error, and
+   "was not the error reported" is not the same as "was not an error".
 
-The second is worth noting precisely because the case never got far enough to
-test it. Every budget that did reach the converter was correct.
+So this payload failed the operator enum and the money contract at once, and the
+run's headline should be read accordingly.
 
 ## The two other failures, and what they are
 
-**`$1.99` for "under $2 a serving".** The model sent
-`{"amount": 1.99, "currency": "USD"}`, which converted to 199. The expectation
-says 200. For prices held to two decimals, `lte 199` and `lt 200` select exactly
-the same products, so the model's reading is defensible and the engine's answer
-was right: "2 of the 6 products in this category match".
+**`$1.99` for "under $2 a serving".** Resolved after review, by checking the
+operator rather than the number alone.
 
-This is a question about the expectation, not a defect, and it is left failing
-rather than quietly widened. Deciding it means deciding whether "under $2"
-should be recorded as the boundary the shopper said or the largest value that
-satisfies it. The same case also genuinely missed the `function` soft
-preference.
+The composed reply for that case reads "price per serving of $1.99 or less", and
+`describeConstraint` renders `lte` as "or less", so the model sent `lte 1.99`,
+which converted to `lte 199`. On integer cents `lte 199` admits exactly what
+`lt 200` admits, so it is a correct reading of "under $2 a serving". The
+expectation was `lte 200`, which admits $2.00 itself and is the wrong reading.
+
+The expectation is now stated as the set a constraint must admit rather than a
+literal number, so both correct spellings pass and `lte 200` and `lt 199` do
+not. The operator is checked with the amount, never separately.
+
+The missing `function` soft preference stands as its own failure and is
+unaffected by any of that.
 
 **"Which one is healthiest?" declined as medical.** This is not the substring
 bug fixed in `53697fc`. The route's own detector returns false for that
 sentence, and there is a test asserting it. The model set `medicalIntent: true`
 itself, and the route trusts that flag.
 
-So the site now has two independent medical gates, and only one of them is
-tested. Whether a model that volunteers caution on "healthiest" is wrong is a
-judgement; that the route accepts the flag without any check is a fact, and it
-is what made this case fail.
+Fixed after review. The site's own detector is now the authority: it runs before
+any model call, and the model's flag no longer produces a clinical refusal. A
+shopper asking which drink is healthiest gets the fixed shopping clarification.
+
+The flag is not ignored. When the model raises it and the site does not, nothing
+it extracted is applied and no proposal is offered, so a sentence either of them
+found troubling cannot turn into a filter. Treatment and diagnosis requests are
+untouched, because they never reach that code.
 
 ## A defect in this report
 
