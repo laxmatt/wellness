@@ -1,0 +1,193 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "ice-barrel-400",
+  "slug": "ice-barrel-400",
+  "name": "Ice Barrel 400",
+  "brandId": "ice-barrel",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "tub-only",
+  "description": "Upright barrel plunge with stand, lid, step stool and cover. No chiller, no insulation, no chiller ports.",
+  "images": [
+    {
+      "id": "ice-barrel-400-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:ice-barrel-400-primary",
+      "alt": "Ice Barrel 400 upright barrel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "ice-barrel-400-direct",
+      "merchantId": "ice-barrel-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 119999,
+      "url": "https://icebarrel.com/products/ice-barrel-400",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-400",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "weight": {
+    "value": 55,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://icebarrel.com/products/ice-barrel-400",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Empty. Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "Lifetime warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://icebarrel.com/products/ice-barrel-400",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-400",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "barrel",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Upright barrel."
+      },
+      "verification": "unknown"
+    },
+    "water_capacity_gal": {
+      "value": 105,
+      "unit": "gal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-400",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Sources state 397 L capacity and an 80 gal typical fill. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "fits_height_in": {
+      "value": 78,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-400",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Up to 6 ft 6 in and 300 lb. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "insulated": {
+      "value": false,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-400",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "plumbing": {
+      "value": "none",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Fill with a hose. No powered components."
+      },
+      "verification": "unknown"
+    },
+    "sanitation_system": {
+      "value": false,
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "No filtration or sanitation system listed."
+      },
+      "verification": "unknown"
+    },
+    "warranty_years": {
+      "value": 10,
+      "unit": "yr",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Lifetime warranty scored as 10 years for comparison."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

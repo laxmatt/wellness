@@ -1,0 +1,187 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B007R8XGJA",
+    "merchantSkus": {}
+  },
+  "id": "celsius-sparkling-orange-12",
+  "slug": "celsius-sparkling-orange-12-pack",
+  "name": "Sparkling Orange, 12 pack",
+  "brandId": "celsius",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "energy",
+  "description": "Zero-sugar sparkling energy drink with 200 mg caffeine per can.",
+  "images": [
+    {
+      "id": "celsius-sparkling-orange-12-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:celsius-sparkling-orange-12-primary",
+      "alt": "CELSIUS Sparkling Orange cans (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "celsius-sparkling-orange-12-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1612,
+      "url": "https://www.amazon.com/dp/B007R8XGJA",
+      "affiliate": {
+        "status": "unknown",
+        "network": "amazon"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Amazon pack price reported at $16.12. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "energy"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "rtd_can",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Canned drink."
+      },
+      "verification": "unknown"
+    },
+    "serving_size": {
+      "value": "1 can (12 fl oz)",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "servings_per_pack": {
+      "value": 12,
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "12-pack."
+      },
+      "verification": "unknown"
+    },
+    "price_per_serving_minor": {
+      "value": 134,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Pack price divided by cans."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "calories": {
+      "value": 10,
+      "unit": "kcal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "caffeine_mg": {
+      "value": 200,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "sucralose"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sweetener not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "dietary": {
+      "value": [
+        "non_gmo"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B007R8XGJA",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

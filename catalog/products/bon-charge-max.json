@@ -1,0 +1,177 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "bon-charge-max",
+  "slug": "bon-charge-max",
+  "name": "Max Red Light Therapy Device",
+  "brandId": "bon-charge",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Full-height two-wavelength panel with 200 LEDs and door-mount capability. One-year warranty.",
+  "images": [
+    {
+      "id": "bon-charge-max-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:bon-charge-max-primary",
+      "alt": "BON CHARGE Max panel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "bon-charge-max-direct",
+      "merchantId": "bon-charge-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 109900,
+      "url": "https://boncharge.com/products/max-red-light-device",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Price not found in sources. Super Max listed at $1,599. Demo value."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 35.8,
+      "width": 8.37,
+      "height": 2.56
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://boncharge.com/products/max-red-light-device",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "One-year manufacturer's warranty from date of purchase",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://boncharge.com/products/max-red-light-device",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 142,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand states greater than 142 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 200,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "door_hang"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 1,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

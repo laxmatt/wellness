@@ -1,0 +1,208 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "olipop-root-beer-12",
+  "slug": "olipop-classic-root-beer-12-pack",
+  "name": "Classic Root Beer, 12 pack",
+  "brandId": "olipop",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "prebiotic-soda",
+  "description": "Prebiotic soda with 9 g of fiber per can and low sugar. Caffeine free.",
+  "images": [
+    {
+      "id": "olipop-root-beer-12-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:olipop-root-beer-12-primary",
+      "alt": "OLIPOP Root Beer cans (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "olipop-root-beer-12-direct",
+      "merchantId": "olipop-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 3588,
+      "url": "https://drinkolipop.com",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Direct 12-pack price not confirmed. Sources say $2 to $3 per can. Demo value."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "prebiotic"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "rtd_can",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkolipop.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "serving_size": {
+      "value": "1 can (12 fl oz)",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkolipop.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "servings_per_pack": {
+      "value": 12,
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "12-pack."
+      },
+      "verification": "unknown"
+    },
+    "price_per_serving_minor": {
+      "value": 299,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Pack price divided by cans."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 2,
+      "unit": "g",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sources give 2 to 5 g across flavors. Root Beer figure not confirmed. Demo value."
+      },
+      "verification": "demo"
+    },
+    "calories": {
+      "value": 35,
+      "unit": "kcal",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sources give 30 to 50 kcal across flavors. Demo value."
+      },
+      "verification": "demo"
+    },
+    "caffeine_mg": {
+      "value": 0,
+      "unit": "mg",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Caffeine content for this flavor not confirmed. Demo value."
+      },
+      "verification": "demo"
+    },
+    "fiber_g": {
+      "value": 9,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkolipop.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "stevia",
+        "fruit_juice"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "dietary": {
+      "value": [
+        "vegan",
+        "gluten_free",
+        "non_gmo",
+        "paleo",
+        "keto"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkolipop.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_available": {
+      "value": true,
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

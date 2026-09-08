@@ -1,0 +1,16 @@
+{
+  "id": "ag1",
+  "slug": "ag1",
+  "name": "AG1",
+  "websiteUrl": "https://drinkag1.com",
+  "images": [
+    {
+      "id": "ag1-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:ag1-logo",
+      "alt": "AG1 logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

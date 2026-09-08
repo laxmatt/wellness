@@ -1,0 +1,172 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "infraredi-flex-max",
+  "slug": "infraredi-flex-max",
+  "name": "Flex Max",
+  "brandId": "infraredi",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Five-wavelength panel with pulsing and dimming modes and a three-year warranty.",
+  "images": [
+    {
+      "id": "infraredi-flex-max-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:infraredi-flex-max-primary",
+      "alt": "Infraredi Flex Max panel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "infraredi-flex-max-direct",
+      "merchantId": "infraredi-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 124900,
+      "url": "https://infraredi.com/products/infraredi-flex-max",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Only the Flex Max Plus price ($1,249) was found. Flex Max price unconfirmed. Demo value."
+      }
+    }
+  ],
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://infraredi.com/products/infraredi-flex-max",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day trial",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://infraredi.com/products/infraredi-flex-max",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Panel dimensions not found in sources. Coverage class is a demo value."
+      },
+      "verification": "demo"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Panel dimensions not found in sources. Footprint class is a demo value."
+      },
+      "verification": "demo"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        810,
+        830,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://infraredi.com/products/infraredi-flex-max",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 79,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://infraredi.com/products/infraredi-flex-max",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand reports 167 mW/cm² by solar meter and an average of 79 mW/cm² by spectrometer. Using the spectrometer figure. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://infraredi.com/products/infraredi-flex-max",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://infraredi.com/products/infraredi-flex-max",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://infraredi.com/products/infraredi-flex-max",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

@@ -1,0 +1,289 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B07TT8B1JJ",
+    "merchantSkus": {}
+  },
+  "id": "lmnt-citrus-salt-30",
+  "slug": "lmnt-citrus-salt-30-stick-packs",
+  "name": "Citrus Salt, 30 stick packs",
+  "brandId": "lmnt",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "electrolytes",
+  "description": "High-sodium zero-sugar electrolyte mix. One stick in 16 to 32 oz of water.",
+  "images": [
+    {
+      "id": "lmnt-citrus-salt-30-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:lmnt-citrus-salt-30-primary",
+      "alt": "LMNT Citrus Salt box (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "lmnt-citrus-salt-30-direct",
+      "merchantId": "lmnt-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 4500,
+      "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [
+        {
+          "code": "DEMO10",
+          "description": "Demo discount code. Not valid. Exists to exercise the offer model.",
+          "source": {
+            "kind": "demo",
+            "ref": "Prototype demo value",
+            "method": "direct",
+            "note": "Not a real measurement. Replace before production."
+          }
+        }
+      ],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    },
+    {
+      "id": "lmnt-citrus-salt-30-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 4500,
+      "url": "https://www.amazon.com/dp/B07TT8B1JJ",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Amazon listing price not retrieved. Demo value."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "electrolytes"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "powder_stick",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "serving_size": {
+      "value": "1 stick pack in 16 to 32 oz water",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "servings_per_pack": {
+      "value": 30,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "price_per_serving_minor": {
+      "value": 150,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Pack price divided by servings."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "added_sugar_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "calories": {
+      "value": 5,
+      "unit": "kcal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "caffeine_mg": {
+      "value": 0,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sodium_mg": {
+      "value": 1000,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "potassium_mg": {
+      "value": 200,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "magnesium_mg": {
+      "value": 60,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "stevia"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sweetener not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "dietary": {
+      "value": [
+        "keto",
+        "paleo"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_available": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_discount_pct": {
+      "value": 13,
+      "unit": "%",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "$1.50 one-time versus $1.30 subscription per serving, as reported."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

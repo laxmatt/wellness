@@ -1,0 +1,16 @@
+{
+  "id": "olipop",
+  "slug": "olipop",
+  "name": "OLIPOP",
+  "websiteUrl": "https://drinkolipop.com",
+  "images": [
+    {
+      "id": "olipop-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:olipop-logo",
+      "alt": "OLIPOP logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

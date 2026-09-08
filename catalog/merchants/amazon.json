@@ -1,0 +1,10 @@
+{
+  "id": "amazon",
+  "slug": "amazon",
+  "name": "Amazon",
+  "websiteUrl": "https://www.amazon.com",
+  "network": "amazon",
+  "markets": [
+    "US"
+  ]
+}

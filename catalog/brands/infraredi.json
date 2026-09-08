@@ -1,0 +1,16 @@
+{
+  "id": "infraredi",
+  "slug": "infraredi",
+  "name": "Infraredi",
+  "websiteUrl": "https://infraredi.com",
+  "images": [
+    {
+      "id": "infraredi-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:infraredi-logo",
+      "alt": "Infraredi logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

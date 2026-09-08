@@ -1,0 +1,188 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [
+      {
+        "text": "Chiller ports mean you can start with ice and add a chiller later without replacing the tub.",
+        "author": "editorial",
+        "date": "2026-09-08",
+        "experiential": false
+      }
+    ],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "ice-barrel-500",
+  "slug": "ice-barrel-500",
+  "name": "Ice Barrel 500",
+  "brandId": "ice-barrel",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "tub-only",
+  "description": "Insulated upright barrel with built-in steps, a textured seat, and chiller ports for adding cooling later.",
+  "images": [
+    {
+      "id": "ice-barrel-500-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:ice-barrel-500-primary",
+      "alt": "Ice Barrel 500 insulated barrel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "ice-barrel-500-direct",
+      "merchantId": "ice-barrel-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 149999,
+      "url": "https://icebarrel.com/products/ice-barrel-500",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "warranty": {
+    "value": "Limited lifetime warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://icebarrel.com/products/ice-barrel-500",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Chiller ports built in; chiller sold separately. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "barrel",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Upright barrel."
+      },
+      "verification": "unknown"
+    },
+    "water_capacity_gal": {
+      "value": 94,
+      "unit": "gal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "356 L. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "fits_height_in": {
+      "value": 84,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Fits most body types up to 7 ft. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "insulated": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Polyurethane foam insulation in barrel and lid. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "plumbing": {
+      "value": "none",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Fill with a hose. No powered components."
+      },
+      "verification": "unknown"
+    },
+    "sanitation_system": {
+      "value": false,
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "No filtration or sanitation system listed."
+      },
+      "verification": "unknown"
+    },
+    "warranty_years": {
+      "value": 10,
+      "unit": "yr",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Limited lifetime warranty scored as 10 years for comparison."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

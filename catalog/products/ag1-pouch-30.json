@@ -1,0 +1,233 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "ag1-pouch-30",
+  "slug": "ag1-greens-powder-30-servings",
+  "name": "AG1 Greens Powder, 30 servings",
+  "brandId": "ag1",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "greens",
+  "description": "Daily greens and vitamin powder. One scoop in 8 oz of water. Subscription cuts the per-serving price.",
+  "images": [
+    {
+      "id": "ag1-pouch-30-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:ag1-pouch-30-primary",
+      "alt": "AG1 pouch and scoop (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "ag1-pouch-30-direct",
+      "merchantId": "ag1-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 9900,
+      "url": "https://drinkag1.com/products/greens-powder-pouch",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "$99 one-time; $79 on subscription. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "greens"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "powder_scoop",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "serving_size": {
+      "value": "1 scoop (about 12 g) in 8 oz water",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sources report 12 to 13 g per scoop. Demo value."
+      },
+      "verification": "demo"
+    },
+    "servings_per_pack": {
+      "value": 30,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "price_per_serving_minor": {
+      "value": 330,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "One-time pack price divided by servings. Subscription is $2.63 per serving."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 1,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Label states less than 1 g total sugar; no added sugar. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "added_sugar_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "calories": {
+      "value": 50,
+      "unit": "kcal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "caffeine_mg": {
+      "value": 0,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "No added caffeine. Brand notes trace caffeine from green tea extract; amount not on label. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "fiber_g": {
+      "value": 2,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "stevia"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "dietary": {
+      "value": [
+        "vegan",
+        "gluten_free",
+        "non_gmo"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "subscription_available": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_discount_pct": {
+      "value": 20,
+      "unit": "%",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "$99 to $79."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

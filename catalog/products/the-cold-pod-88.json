@@ -1,0 +1,176 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B0CPKYNJ9Q",
+    "merchantSkus": {}
+  },
+  "id": "the-cold-pod-88",
+  "slug": "the-cold-pod-88-gallon",
+  "name": "Ice Bath Tub, 88 Gallon",
+  "brandId": "the-cold-pod",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "inflatable",
+  "description": "Portable multi-layer ice bath with cover, pump, drain hose and carry bag. Fill with a hose, cool with ice.",
+  "images": [
+    {
+      "id": "the-cold-pod-88-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:the-cold-pod-88-primary",
+      "alt": "The Cold Pod 88 gallon portable tub (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "the-cold-pod-88-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 13999,
+      "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+      "affiliate": {
+        "status": "unknown",
+        "network": "amazon"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Regular price reported at $139.99; sale prices seen far lower. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 29.5,
+      "width": 29.5,
+      "height": 29.5
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "inflatable",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Soft-sided portable tub with support legs."
+      },
+      "verification": "unknown"
+    },
+    "water_capacity_gal": {
+      "value": 88,
+      "unit": "gal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "fits_height_in": {
+      "value": 79,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Users up to 6 ft 7 in. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "insulated": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Pearl foam middle layer between PVC and nylon. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "plumbing": {
+      "value": "none",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Fill with a hose. No powered components."
+      },
+      "verification": "unknown"
+    },
+    "sanitation_system": {
+      "value": false,
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "No filtration or sanitation system listed."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

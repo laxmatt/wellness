@@ -1,0 +1,16 @@
+{
+  "id": "celsius",
+  "slug": "celsius",
+  "name": "CELSIUS",
+  "websiteUrl": "https://www.celsius.com",
+  "images": [
+    {
+      "id": "celsius-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:celsius-logo",
+      "alt": "CELSIUS logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

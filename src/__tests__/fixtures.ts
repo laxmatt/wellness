@@ -1,0 +1,104 @@
+import { join } from "node:path";
+import { categoryById } from "@/domain/categories";
+import type { CategoryDefinition } from "@/domain/category";
+import { CategoryDefinition as CategorySchema } from "@/domain/category";
+import type { Brand, Merchant, MerchantOffer, Product } from "@/domain/product";
+import { demo, manufacturer } from "@/domain/provenance";
+import { toProductView, type ProductView } from "@/domain/view";
+import { loadLocalCatalog, type LoadedCatalog } from "@/providers/catalog/LocalCatalogProvider";
+
+export const CATALOG_DIR = join(process.cwd(), "catalog");
+
+let cached: LoadedCatalog | undefined;
+export function catalog(): LoadedCatalog {
+  cached ??= loadLocalCatalog(CATALOG_DIR);
+  return cached;
+}
+
+export function viewsFor(categoryId: string, products = catalog().products): ProductView[] {
+  const c = catalog();
+  return products
+    .filter((p) => p.categoryId === categoryId)
+    .map((p) => toProductView(p, { category: categoryById(p.categoryId)!, brands: c.brands, merchants: c.merchants }));
+}
+
+export const testBrand: Brand = { id: "acme", slug: "acme", name: "Acme", images: [], market: "US" };
+export const testMerchant: Merchant = { id: "shop", slug: "shop", name: "Shop", markets: ["US"] };
+
+export function offer(id: string, priceMinor: number, status: MerchantOffer["affiliate"]["status"] = "unknown"): MerchantOffer {
+  return {
+    id,
+    merchantId: "shop",
+    market: "US",
+    currency: "USD",
+    priceMinor,
+    url: "https://example.com/" + id,
+    affiliate: { status },
+    discountCodes: [],
+    availability: "unknown",
+    lastChecked: "2026-09-08",
+    source: { kind: "demo", method: "direct" },
+  };
+}
+
+// Minimal category for engine tests. Two numeric criteria, one enum, one boolean.
+export const miniCategory: CategoryDefinition = CategorySchema.parse({
+  id: "mini",
+  slug: "mini",
+  name: "Mini",
+  navLabel: "Mini",
+  tagline: "t",
+  intro: "i",
+  attributeDefinitions: [
+    { key: "power", label: "Power", type: "number", group: "g", compareOrder: 1, preferenceDirection: "higher_better", required: true },
+    { key: "noise", label: "Noise", type: "number", group: "g", compareOrder: 2, preferenceDirection: "lower_better" },
+    { key: "size", label: "Size", type: "enum", enumOptions: [{ value: "s", label: "S", rank: 1 }, { value: "m", label: "M", rank: 2 }, { value: "l", label: "L", rank: 3 }], group: "g", compareOrder: 3, preferenceDirection: "higher_better", required: true },
+    { key: "wifi", label: "Wifi", type: "boolean", group: "g", compareOrder: 4, preferenceDirection: "higher_better" },
+  ],
+  cardSpecKeys: ["power"],
+  compareGroups: [{ label: "g", keys: ["power", "noise", "size", "wifi"] }],
+  filters: [],
+  scoring: { criteria: [{ key: "power", weight: 2 }, { key: "noise", weight: 1 }, { key: "size", weight: 1 }, { key: "wifi", weight: 1 }], completenessFloor: 0.5 },
+  value: { qualityWeight: 1, priceWeight: 1, priceScale: "log", priceBasis: "price", minScoreShare: 0.5 },
+  badges: { priceBasis: "price", budgetMaxMinor: 20000, premiumMinMinor: 80000, minQualifying: 2, tieBreak: ["power"] },
+  insightRules: [{ id: "cheap", when: [{ key: "price", op: "lt", value: 20000 }], text: "Under $200 with {power} of power.", tone: "strength" }],
+  relaxationOrder: ["price", "size"],
+  priceTiers: [{ id: "b", label: "b", maxMinor: 20000 }, { id: "p", label: "p" }],
+  facets: [],
+});
+
+export function miniProduct(
+  id: string,
+  priceMinor: number,
+  attrs: { power?: number; noise?: number; size?: "s" | "m" | "l"; wifi?: boolean },
+  status: MerchantOffer["affiliate"]["status"] = "unknown",
+): Product {
+  const attributes: Product["attributes"] = {};
+  if (attrs.power !== undefined) attributes.power = manufacturer(attrs.power, { url: "https://example.com", retrievedAt: "2026-09-08" });
+  if (attrs.noise !== undefined) attributes.noise = demo(attrs.noise);
+  if (attrs.size !== undefined) attributes.size = demo(attrs.size);
+  if (attrs.wifi !== undefined) attributes.wifi = demo(attrs.wifi);
+  return {
+    id,
+    slug: id,
+    name: id,
+    brandId: "acme",
+    categoryId: "mini",
+    description: "",
+    status: "published",
+    availability: "unknown",
+    market: "US",
+    images: [{ id: `${id}-primary`, kind: "demo_placeholder", role: "primary", src: `demo:${id}`, alt: id }],
+    offers: [offer(`${id}-o`, priceMinor, status)],
+    identifiers: { gtin: [], merchantSkus: {} },
+    attributes,
+    editorial: { strengths: [], tradeoffs: [] },
+    source: { kind: "demo", method: "direct" },
+    lastUpdated: "2026-09-08",
+    flags: { demo: true, newArrival: false },
+  };
+}
+
+export function miniView(p: Product): ProductView {
+  return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+}

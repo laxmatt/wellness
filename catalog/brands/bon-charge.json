@@ -1,0 +1,16 @@
+{
+  "id": "bon-charge",
+  "slug": "bon-charge",
+  "name": "BON CHARGE",
+  "websiteUrl": "https://boncharge.com",
+  "images": [
+    {
+      "id": "bon-charge-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:bon-charge-logo",
+      "alt": "BON CHARGE logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wellness Compare
 
-## Getting Started
+Premium wellness storefront plus comparison tool. Launch categories: red light therapy, cold plunges, functional wellness drinks. This repository is the standalone product. Nothing here depends on the printer site.
 
-First, run the development server:
+Status: Phase 1 complete. Architecture, data model, design tokens, provider interfaces, recommendation engine, and a 20-product demo catalog. No public pages beyond a smoke route.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Run
+
+```
+npm install
+npm run dev            # http://localhost:3000 smoke route
+npm test               # vitest
+npm run typecheck
+npm run catalog:check  # validate catalog JSON and print rankings and badges
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Node 22. No database. No environment variables.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+catalog/                 The catalog. JSON per product, brand, merchant. Validated on load.
+  products/*.json
+  brands/*.json
+  merchants/*.json
+docs/DATA-MODEL.md       Field-level model and the explicit Prisma mapping for Phase 6.
+prisma/schema.prisma     Draft target schema. Not wired. No Prisma dependency yet.
+scripts/check-catalog.ts Loads, validates, prints rankings.
+src/domain/              Pure TypeScript. No React, no IO.
+  provenance.ts          Sourced<T>, Source, Verification.
+  money.ts               Money in integer minor units. Market, Currency, Language.
+  attributes.ts          AttributeDefinition, AttributeValue, formatting, validation.
+  product.ts             Product, MerchantOffer, Brand, Merchant, ImageAsset, identifiers.
+  category.ts            CategoryDefinition: attributes, filters, scoring, value, badges, insights, facets.
+  categories/            red-light, cold-plunge, wellness-drinks definitions.
+  view.ts                toProductView: plain values plus a provenance map for the UI.
+  conditions.ts          Condition evaluation used by filters, facets, insights.
+  personalization.ts     PreferenceSet, MatchResult (Phase 3 and 4 fill these in).
+  analytics.ts           Typed event union.
+  recommend/             score, value, badges, insights. Deterministic.
+src/providers/           Replaceable interfaces plus prototype implementations.
+  catalog/               CatalogProvider, LocalCatalogProvider (JSON).
+  feeds/                 MerchantFeedAdapter, FeedRow, EntityResolver, review queue triage.
+  ai/                    AIProvider, MockAIProvider (regex plus vocabulary).
+  email/                 EmailProvider, Noop.
+  analytics/             AnalyticsProvider, Console, Memory.
+  index.ts               Composition root. Swap implementations here only.
+src/components/ui/       Design primitives. Button, Chip, Badge, VerificationTag, PriceDisplay, SpecRow, ImageFrame, DemoArt.
+src/components/product/  ProductCard.
+src/app/                 Next.js App Router. page.tsx is the Phase 1 smoke route.
+```
 
-## Learn More
+## Three layers, kept apart
 
-To learn more about Next.js, take a look at the following resources:
+1. Product truth. `Product` in `catalog/`. Every factual field is `Sourced<T>`: value, source (kind, url, retrievedAt, method, note), verification.
+2. Editorial interpretation. Derived deterministically from truth by `insightRules` in the category definition. Optional authored notes on the product carry author, date and a source when experiential.
+3. Personalization. `PreferenceSet` and `MatchResult`. Held in memory on the client. Never written to the catalog, never tracked.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The UI consumes `ProductView`, not `Product`. `toProductView` strips provenance into a flat `attributes` map and a parallel `provenance` map keyed by field path (`attributes.irradiance_mw_cm2`, `warranty`, `price`). Components read plain values and pull provenance when they need to render a verification tag.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Provenance rules
 
-## Deploy on Vercel
+Verification levels: `manufacturer_reported`, `independently_verified`, `demo`, `unknown`. `independently_verified` requires a source of kind `independent_test`; the catalog validator rejects anything else. Every prototype product is flagged `demo: true`. Manufacturer domains were unreachable from the build environment, so every manufacturer-reported value in the current catalog carries `method: "secondhand"` and a note. Re-verify against the source before production.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Recommendation rules
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Scoring: per-category weighted criteria, min-max normalized across published products in the category, direction from each attribute's `preferenceDirection`. Missing values contribute zero. Products under the completeness floor are ineligible for badges.
+
+Value: `qualityWeight * scoreRatio - priceWeight * relPrice`. `scoreRatio` is score over the category best. `relPrice` is log- or linear-relative price across admitted products. Products under `minScoreShare` of the best score are excluded. `priceBasis` is `price` or `attribute:<key>` (drinks use per-serving cost).
+
+Badges, in order: Best Overall (top score), Best Value (top value, stacks with Overall when the same product), Best Budget and Best Premium (top score in tier, at least `minQualifying` products in tier, never to a product already badged). Ties break on `tieBreak` keys then id.
+
+`ScoringInput` carries `id`, `priceMinor`, `attributes`. No offers. A test flips every offer's affiliate status and asserts identical ranking and badges.
+
+## Adding a product
+
+Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader rejects unknown attribute keys, wrong attribute types, unknown brands or merchants, missing primary images, duplicate ids or slugs, and unsupported verification claims.
+
+## Phases
+
+1. Done. Architecture, model, tokens, catalog, engine, tests.
+2. Homepage and full Red Light experience. Stop for review.
+3. Compare views, relaxation search, personalization core.
+4. Matcher in the UI with the mock provider, then a real AIProvider behind a flag.
+5. Cold Plunge and Wellness Drinks through the same components.
+6. Admin and merchandising on Postgres via the Prisma mapping in docs/DATA-MODEL.md.
+7. Production integrations.

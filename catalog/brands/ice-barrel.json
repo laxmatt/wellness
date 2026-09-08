@@ -1,0 +1,16 @@
+{
+  "id": "ice-barrel",
+  "slug": "ice-barrel",
+  "name": "Ice Barrel",
+  "websiteUrl": "https://icebarrel.com",
+  "images": [
+    {
+      "id": "ice-barrel-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:ice-barrel-logo",
+      "alt": "Ice Barrel logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

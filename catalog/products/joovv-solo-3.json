@@ -1,0 +1,228 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "joovv-solo-3",
+  "slug": "joovv-solo-3-0",
+  "name": "Solo 3.0",
+  "brandId": "joovv",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Joovv's single full-height panel with app control and pulsed near-infrared modes. Two wavelengths, modular design.",
+  "images": [
+    {
+      "id": "joovv-solo-3-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:joovv-solo-3-primary",
+      "alt": "Joovv Solo 3.0 panel (demo placeholder)"
+    },
+    {
+      "id": "joovv-solo-3-lifestyle",
+      "kind": "demo_placeholder",
+      "role": "lifestyle",
+      "src": "demo:joovv-solo-3-lifestyle",
+      "alt": "Solo 3.0 in a bedroom (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "joovv-solo-3-direct",
+      "merchantId": "joovv-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 149900,
+      "url": "https://joovv.com/products/joovv-solo-3-0",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sources conflict: $799 and $1,499 reported. Using $1,499. Demo value."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 36,
+      "width": 8.75,
+      "height": 2.34
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://joovv.com/products/joovv-solo-3-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Figure appears in third-party reviews. Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "weight": {
+    "value": 14,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://joovv.com/products/joovv-solo-3-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Figure appears in third-party reviews. Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "2-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://joovv.com/products/joovv-solo-3-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return period",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://joovv.com/products/joovv-solo-3-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 100,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand states over 100 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 150,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "app_control": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Recovery+ pulsed NIR mode. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 2,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://joovv.com/products/joovv-solo-3-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

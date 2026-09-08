@@ -1,0 +1,15 @@
+{
+  "id": "the-cold-pod",
+  "slug": "the-cold-pod",
+  "name": "The Cold Pod",
+  "images": [
+    {
+      "id": "the-cold-pod-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:the-cold-pod-logo",
+      "alt": "The Cold Pod logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

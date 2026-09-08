@@ -1,0 +1,16 @@
+{
+  "id": "plunge",
+  "slug": "plunge",
+  "name": "Plunge",
+  "websiteUrl": "https://plunge.com",
+  "images": [
+    {
+      "id": "plunge-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:plunge-logo",
+      "alt": "Plunge logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

@@ -1,0 +1,207 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "renu-cold-stoic-2",
+  "slug": "renu-therapy-cold-stoic-2-0",
+  "name": "Cold Stoic 2.0",
+  "brandId": "renu-therapy",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "tub-with-chiller",
+  "description": "Handbuilt insulated tank with a quarter-horsepower chiller, ozone sanitation, and a five-year limited warranty.",
+  "images": [
+    {
+      "id": "renu-cold-stoic-2-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:renu-cold-stoic-2-primary",
+      "alt": "Renu Therapy Cold Stoic 2.0 (demo placeholder)"
+    },
+    {
+      "id": "renu-cold-stoic-2-lifestyle",
+      "kind": "demo_placeholder",
+      "role": "lifestyle",
+      "src": "demo:renu-cold-stoic-2-lifestyle",
+      "alt": "Cold Stoic on a wood deck (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "renu-cold-stoic-2-direct",
+      "merchantId": "renu-therapy-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 959900,
+      "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Starting price reported at $9,599. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 40,
+      "width": 25,
+      "height": 31
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "5-year limited warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "1/4 HP chiller. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "min_temp_f": {
+      "value": 36,
+      "unit": "°F",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "tub",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Seated or partially reclined tank."
+      },
+      "verification": "unknown"
+    },
+    "water_capacity_gal": {
+      "value": 95,
+      "unit": "gal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "insulated": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand describes the tank as super insulated with contoured side panels. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sanitation_system": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sanitation_methods": {
+      "value": [
+        "ozone",
+        "filter"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Advanced filtration with ozone sanitation. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "warranty_years": {
+      "value": 5,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "lmnt",
+  "slug": "lmnt",
+  "name": "LMNT",
+  "websiteUrl": "https://drinklmnt.com",
+  "images": [
+    {
+      "id": "lmnt-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:lmnt-logo",
+      "alt": "LMNT logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

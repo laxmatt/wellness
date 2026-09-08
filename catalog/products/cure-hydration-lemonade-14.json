@@ -1,0 +1,268 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B07LFLRGQ6",
+    "merchantSkus": {}
+  },
+  "id": "cure-hydration-lemonade-14",
+  "slug": "cure-hydration-lemonade-14-pack",
+  "name": "Hydrating Electrolyte Mix, Lemonade, 14 pack",
+  "brandId": "cure-hydration",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "electrolytes",
+  "description": "Coconut-water based electrolyte mix with no added sugar, built on the WHO oral rehydration ratio.",
+  "images": [
+    {
+      "id": "cure-hydration-lemonade-14-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:cure-hydration-lemonade-14-primary",
+      "alt": "Cure Hydration Lemonade box (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "cure-14-direct",
+      "merchantId": "cure-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2299,
+      "url": "https://www.curehydration.com/products/variety-pack-1",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "$22.99 one-time; $18.39 on subscription. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    },
+    {
+      "id": "cure-14-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2399,
+      "url": "https://www.amazon.com/dp/B07LFLRGQ6",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Amazon price reported at $23.99 in one source. Demo value."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "electrolytes",
+        "hydration"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "powder_stick",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "serving_size": {
+      "value": "1 packet in 8 to 16 oz water",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Mixing volume not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "servings_per_pack": {
+      "value": 14,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "price_per_serving_minor": {
+      "value": 164,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Pack price divided by servings."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 4,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Total sugars from coconut water and fruit juice. No added sugar. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "added_sugar_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "calories": {
+      "value": 25,
+      "unit": "kcal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "caffeine_mg": {
+      "value": 0,
+      "unit": "mg",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "No caffeine listed."
+      },
+      "verification": "unknown"
+    },
+    "sodium_mg": {
+      "value": 240,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "potassium_mg": {
+      "value": 300,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "fruit_juice",
+        "monk_fruit"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "dietary": {
+      "value": [
+        "vegan",
+        "non_gmo",
+        "gluten_free"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_available": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.curehydration.com/products/variety-pack-1",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_discount_pct": {
+      "value": 20,
+      "unit": "%",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "$22.99 to $18.39."
+      },
+      "verification": "unknown"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

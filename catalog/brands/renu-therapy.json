@@ -1,0 +1,16 @@
+{
+  "id": "renu-therapy",
+  "slug": "renu-therapy",
+  "name": "Renu Therapy",
+  "websiteUrl": "https://www.renutherapy.com",
+  "images": [
+    {
+      "id": "renu-therapy-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:renu-therapy-logo",
+      "alt": "Renu Therapy logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

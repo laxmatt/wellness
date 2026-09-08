@@ -1,0 +1,250 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "hooga-hg300",
+  "slug": "hooga-hg300",
+  "name": "HG300",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Compact two-wavelength panel with a built-in stand and timer. Sized for face, joints and desk use.",
+  "images": [
+    {
+      "id": "hooga-hg300-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:hooga-hg300-primary",
+      "alt": "Hooga HG300 compact panel (demo placeholder)"
+    },
+    {
+      "id": "hooga-hg300-lifestyle",
+      "kind": "demo_placeholder",
+      "role": "lifestyle",
+      "src": "demo:hooga-hg300-lifestyle",
+      "alt": "HG300 on a desk (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-hg300-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 13900,
+      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Price not found in sources. Demo value."
+      }
+    },
+    {
+      "id": "hooga-hg300-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 14900,
+      "url": "https://www.amazon.com/s?k=hooga+hg300",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Amazon listing price not retrieved. Demo value."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 12.2,
+      "width": 8.2
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "weight": {
+    "value": 6,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "targeted",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "compact",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 73,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand states over 73 mW/cm² at 6 inches. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_distance_in": {
+      "value": 6,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 60,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "stand"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Built-in stand. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

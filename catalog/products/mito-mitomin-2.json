@@ -1,0 +1,171 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B0CL5KJB7M",
+    "merchantSkus": {}
+  },
+  "id": "mito-mitomin-2",
+  "slug": "mito-red-light-mitomin-2-0",
+  "name": "MitoMIN 2.0",
+  "brandId": "mito-red-light",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Sixty-LED compact panel with kickstand and session timer. Two wavelengths, two-year warranty.",
+  "images": [
+    {
+      "id": "mito-mitomin-2-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:mito-mitomin-2-primary",
+      "alt": "MitoMIN 2.0 compact panel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "mito-mitomin-2-direct",
+      "merchantId": "mito-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 24900,
+      "url": "https://mitoredlight.com/products/mitomin",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    },
+    {
+      "id": "mito-mitomin-2-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 24900,
+      "url": "https://www.amazon.com/dp/B0CL5KJB7M",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Amazon listing price not retrieved. Demo value."
+      }
+    }
+  ],
+  "warranty": {
+    "value": "Full 2-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://mitoredlight.com/products/mitomin",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "targeted",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up. Based on the reported 12 by 9 in treatment area."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "compact",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in. Based on the reported 12 by 9 in treatment area; panel dimensions not stated."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 60,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "stand"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Kickstand. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 2,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

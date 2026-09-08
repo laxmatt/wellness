@@ -1,0 +1,16 @@
+{
+  "id": "platinumled",
+  "slug": "platinumled",
+  "name": "PlatinumLED Therapy Lights",
+  "websiteUrl": "https://platinumtherapylights.com",
+  "images": [
+    {
+      "id": "platinumled-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:platinumled-logo",
+      "alt": "PlatinumLED Therapy Lights logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

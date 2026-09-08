@@ -1,0 +1,196 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "edge-tub-elite",
+  "slug": "edge-theory-labs-edge-tub-elite",
+  "name": "Edge Tub Elite",
+  "brandId": "edge-theory-labs",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "tub-with-chiller",
+  "description": "Portable inflatable tub paired with a one-horsepower chiller that both cools to 37°F and heats to 105°F.",
+  "images": [
+    {
+      "id": "edge-tub-elite-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:edge-tub-elite-primary",
+      "alt": "Edge Tub Elite with chiller (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "edge-tub-elite-direct",
+      "merchantId": "edge-theory-labs-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 549000,
+      "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "RRP reported at $5,490. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 45.5,
+      "width": 25.5,
+      "height": 24.1
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Standard size. Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "1-year warranty on tub and chiller; 6 months for commercial use",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "1 HP compressor. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "min_temp_f": {
+      "value": 37,
+      "unit": "°F",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heating": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Heats to 105°F. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "inflatable",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Inflatable tub with rigid chiller unit."
+      },
+      "verification": "unknown"
+    },
+    "sanitation_system": {
+      "value": true,
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Filtration details not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "sanitation_methods": {
+      "value": [
+        "filter",
+        "ozone"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "plumbing": {
+      "value": "plug_in_120v",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Power requirement not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "warranty_years": {
+      "value": 1,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

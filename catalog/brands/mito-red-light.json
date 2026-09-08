@@ -1,0 +1,16 @@
+{
+  "id": "mito-red-light",
+  "slug": "mito-red-light",
+  "name": "Mito Red Light",
+  "websiteUrl": "https://mitoredlight.com",
+  "images": [
+    {
+      "id": "mito-red-light-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:mito-red-light-logo",
+      "alt": "Mito Red Light logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

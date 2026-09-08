@@ -1,0 +1,231 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "plunge-original",
+  "slug": "plunge-original",
+  "name": "Plunge Original",
+  "brandId": "plunge",
+  "categoryId": "cold-plunge",
+  "subcategoryId": "tub-with-chiller",
+  "description": "Acrylic tub with an integrated half-horsepower chiller, ozone sanitation, and app temperature control.",
+  "images": [
+    {
+      "id": "plunge-original-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:plunge-original-primary",
+      "alt": "Plunge Original tub (demo placeholder)"
+    },
+    {
+      "id": "plunge-original-lifestyle",
+      "kind": "demo_placeholder",
+      "role": "lifestyle",
+      "src": "demo:plunge-original-lifestyle",
+      "alt": "Plunge on a covered patio (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "plunge-original-direct",
+      "merchantId": "plunge-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 699000,
+      "url": "https://plunge.com/products/plunge",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 66.625,
+      "width": 31.5,
+      "height": 26
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://plunge.com/products/plunge",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "weight": {
+    "value": 144,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://plunge.com/products/plunge",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Without water. Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "1-year limited manufacturer warranty from date of delivery",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://plunge.com/products/plunge",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "1/2 HP cooling. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "min_temp_f": {
+      "value": 37,
+      "unit": "°F",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "As low as 37°F with Pro Chiller. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "tub",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Reclined acrylic tub."
+      },
+      "verification": "unknown"
+    },
+    "water_capacity_gal": {
+      "value": 105,
+      "unit": "gal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "fits_height_in": {
+      "value": 80,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Accommodates individuals up to 6 ft 8 in. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": [
+        "indoor",
+        "outdoor"
+      ],
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Placement rating not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    },
+    "plumbing": {
+      "value": "dedicated_circuit",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Chiller needs a dedicated 120V 15A circuit. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sanitation_system": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sanitation_methods": {
+      "value": [
+        "ozone",
+        "filter"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Ozone sanitation stated; filtration assumed in the chiller loop. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 1,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

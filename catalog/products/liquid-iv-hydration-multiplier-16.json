@@ -1,0 +1,246 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "asin": "B01IT9NLHW",
+    "merchantSkus": {}
+  },
+  "id": "liquid-iv-hydration-multiplier-16",
+  "slug": "liquid-iv-hydration-multiplier-lemon-lime-16",
+  "name": "Hydration Multiplier, Lemon Lime, 16 pack",
+  "brandId": "liquid-iv",
+  "categoryId": "wellness-drinks",
+  "subcategoryId": "electrolytes",
+  "description": "Sugar-based electrolyte mix with added vitamins. One stick in 16 oz of water.",
+  "images": [
+    {
+      "id": "liquid-iv-hydration-multiplier-16-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:liquid-iv-hydration-multiplier-16-primary",
+      "alt": "Liquid I.V. Hydration Multiplier box (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "liquid-iv-16-direct",
+      "merchantId": "liquid-iv-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2499,
+      "url": "https://www.liquid-iv.com",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Direct price not confirmed. Demo value."
+      }
+    },
+    {
+      "id": "liquid-iv-16-amazon",
+      "merchantId": "amazon",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2799,
+      "url": "https://www.amazon.com/dp/B01IT9NLHW",
+      "affiliate": {
+        "status": "unknown",
+        "network": "amazon"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.amazon.com/dp/B01IT9NLHW",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Amazon price reported at $27.99 for a variety pack; sale prices lower. Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "attributes": {
+    "function": {
+      "value": [
+        "electrolytes",
+        "hydration"
+      ],
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Category assignment."
+      },
+      "verification": "unknown"
+    },
+    "format": {
+      "value": "powder_stick",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "serving_size": {
+      "value": "1 stick in 16 oz water",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "servings_per_pack": {
+      "value": 16,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "price_per_serving_minor": {
+      "value": 156,
+      "unit": "USD_minor",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Pack price divided by servings."
+      },
+      "verification": "unknown"
+    },
+    "sugar_g": {
+      "value": 11,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Sources report 11 g carbohydrate from cane sugar and dextrose. Sugar figure may vary by flavor. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "calories": {
+      "value": 45,
+      "unit": "kcal",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "caffeine_mg": {
+      "value": 0,
+      "unit": "mg",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "No caffeine listed."
+      },
+      "verification": "unknown"
+    },
+    "sodium_mg": {
+      "value": 500,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "potassium_mg": {
+      "value": 370,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sweeteners": {
+      "value": [
+        "cane_sugar",
+        "dextrose"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "dietary": {
+      "value": [
+        "gluten_free",
+        "vegan",
+        "non_gmo"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://www.liquid-iv.com/pages/ingredients",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_available": {
+      "value": true,
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Subscription availability not confirmed from the source. Demo value."
+      },
+      "verification": "demo"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

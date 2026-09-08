@@ -1,0 +1,16 @@
+{
+  "id": "joovv",
+  "slug": "joovv",
+  "name": "Joovv",
+  "websiteUrl": "https://joovv.com",
+  "images": [
+    {
+      "id": "joovv-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:joovv-logo",
+      "alt": "Joovv logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

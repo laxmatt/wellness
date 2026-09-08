@@ -1,0 +1,16 @@
+{
+  "id": "liquid-iv",
+  "slug": "liquid-iv",
+  "name": "Liquid I.V.",
+  "websiteUrl": "https://www.liquid-iv.com",
+  "images": [
+    {
+      "id": "liquid-iv-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:liquid-iv-logo",
+      "alt": "Liquid I.V. logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

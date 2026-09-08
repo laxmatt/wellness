@@ -1,0 +1,16 @@
+{
+  "id": "hooga",
+  "slug": "hooga",
+  "name": "Hooga",
+  "websiteUrl": "https://hoogahealth.com",
+  "images": [
+    {
+      "id": "hooga-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:hooga-logo",
+      "alt": "Hooga logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

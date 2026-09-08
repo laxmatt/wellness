@@ -1,0 +1,204 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "platinumled-biomax-900",
+  "slug": "platinumled-biomax-900",
+  "name": "BIOMAX 900",
+  "brandId": "platinumled",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Seven-wavelength full-height panel spanning 480 to 1060 nm, with a three-year warranty.",
+  "images": [
+    {
+      "id": "platinumled-biomax-900-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:platinumled-biomax-900-primary",
+      "alt": "PlatinumLED BIOMAX 900 panel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "platinumled-biomax-900-direct",
+      "merchantId": "platinumled-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 129900,
+      "url": "https://platinumtherapylights.com/products/biomax-900",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Sources report $1,149, $1,299 and promotional prices near $799. Using $1,299. Demo value."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 36,
+      "width": 12,
+      "height": 3
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://platinumtherapylights.com/products/biomax-900",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "weight": {
+    "value": 33,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://platinumtherapylights.com/products/biomax-900",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://platinumtherapylights.com/products/biomax-900",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        480,
+        630,
+        660,
+        810,
+        830,
+        850,
+        1060
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "demo",
+        "ref": "Prototype demo value",
+        "method": "direct",
+        "note": "Brand reports seven wavelengths spanning 480 to 1060 nm. Individual peaks not confirmed from the source. Demo list."
+      },
+      "verification": "demo"
+    },
+    "irradiance_mw_cm2": {
+      "value": 185,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://platinumtherapylights.com/products/biomax-900",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Reported at 6 inches. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_distance_in": {
+      "value": 6,
+      "unit": "in",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://platinumtherapylights.com/products/biomax-900",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 300,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://platinumtherapylights.com/products/biomax-900",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 186,
+      "unit": "W",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://platinumtherapylights.com/products/biomax-900",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://platinumtherapylights.com/products/biomax-900",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

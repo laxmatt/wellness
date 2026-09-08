@@ -1,0 +1,201 @@
+{
+  "status": "published",
+  "availability": "unknown",
+  "market": "US",
+  "lastUpdated": "2026-09-08",
+  "flags": {
+    "demo": true,
+    "newArrival": false
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "id": "mito-mitopro-1500-plus",
+  "slug": "mito-red-light-mitopro-1500-plus",
+  "name": "MitoPRO 1500+",
+  "brandId": "mito-red-light",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "Four-wavelength full-height panel with 300 dual-chip LEDs and a three-year warranty.",
+  "images": [
+    {
+      "id": "mito-mitopro-1500-plus-primary",
+      "kind": "demo_placeholder",
+      "role": "primary",
+      "src": "demo:mito-mitopro-1500-plus-primary",
+      "alt": "MitoPRO 1500+ panel (demo placeholder)"
+    }
+  ],
+  "offers": [
+    {
+      "id": "mito-mitopro-1500-plus-direct",
+      "merchantId": "mito-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 116900,
+      "url": "https://mitoredlight.com/products/mitopro-series",
+      "affiliate": {
+        "status": "unknown"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-08",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      }
+    }
+  ],
+  "dimensions": {
+    "value": {
+      "length": 35,
+      "width": 13
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://mitoredlight.com/products/mitopro-series",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://mitoredlight.com/products/mitopro-series",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window",
+    "source": {
+      "kind": "manufacturer",
+      "url": "https://mitoredlight.com/products/mitopro-series",
+      "retrievedAt": "2026-09-08",
+      "method": "secondhand",
+      "note": "Relayed via search summary; manufacturer page not fetched directly."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+      },
+      "verification": "unknown"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "editorial",
+        "ref": "Editorial classification",
+        "retrievedAt": "2026-09-08",
+        "method": "direct",
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+      },
+      "verification": "unknown"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        830,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 76.5,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Brand reports average irradiance across the panel face. Distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 300,
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "300 dual-chip LEDs. Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 270,
+      "unit": "W",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "manufacturer",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-08",
+        "method": "secondhand",
+        "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "source": {
+    "kind": "editorial",
+    "ref": "Prototype catalog entry",
+    "retrievedAt": "2026-09-08",
+    "method": "direct",
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  }
+}

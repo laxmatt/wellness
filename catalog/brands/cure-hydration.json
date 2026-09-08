@@ -1,0 +1,16 @@
+{
+  "id": "cure-hydration",
+  "slug": "cure-hydration",
+  "name": "Cure Hydration",
+  "websiteUrl": "https://www.curehydration.com",
+  "images": [
+    {
+      "id": "cure-hydration-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:cure-hydration-logo",
+      "alt": "Cure Hydration logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

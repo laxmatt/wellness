@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
+/* Warm tech. Ivory ground, warm charcoal ink, terracotta accent, tide teal
+   secondary. Single committed look; no dark theme in the prototype. */
+@theme {
+  --color-ivory: #f5efe4;
+  --color-ivory-deep: #ebe2d2;
+  --color-paper: #fcf9f3;
+  --color-ink: #1f1a16;
+  --color-ink-soft: #57504a;
+  --color-ink-mute: #8a8178;
+  --color-line: #e2d8c7;
+  --color-line-strong: #cfc2ad;
+  --color-ember: #c2542b;
+  --color-ember-deep: #9b3f1c;
+  --color-ember-soft: #f3d9cc;
+  --color-tide: #2f5d62;
+  --color-tide-soft: #d3e3e2;
+  --color-moss: #3e5c4a;
+  --color-moss-soft: #d8e3d9;
+  --color-honey: #d3a04a;
+  --color-honey-soft: #f3e4c4;
+  --color-plum: #5a3b5c;
+  --color-plum-soft: #e5d9e6;
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgb(31 26 22 / 0.05), 0 14px 34px -16px rgb(31 26 22 / 0.22);
+  --shadow-float: 0 2px 6px rgb(31 26 22 / 0.08), 0 24px 48px -20px rgb(31 26 22 / 0.3);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-ivory);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  letter-spacing: -0.02em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-ink-mute);
+}
+
+/* Tap targets: every interactive control clears 44px. */
+.tap {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lift {
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
 }

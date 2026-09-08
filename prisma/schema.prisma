@@ -1,0 +1,315 @@
+// DRAFT. Not wired. No @prisma/client dependency until Phase 6.
+// Canonical types live in src/domain (Zod). Mapping is documented in
+// docs/DATA-MODEL.md and maintained by hand.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductStatus {
+  draft
+  published
+  hidden
+  discontinued
+}
+
+enum Availability {
+  in_stock
+  backorder
+  preorder
+  out_of_stock
+  unknown
+  discontinued
+}
+
+enum AffiliateStatus {
+  affiliate
+  non_affiliate
+  unknown
+}
+
+enum AffiliateNetwork {
+  awin
+  impact
+  cj
+  amazon
+  direct
+  other
+}
+
+enum Verification {
+  manufacturer_reported
+  independently_verified
+  demo
+  unknown
+}
+
+enum ImageKind {
+  affiliate_feed
+  approved_creative
+  licensed_upload
+  demo_placeholder
+}
+
+enum ImageRole {
+  primary
+  card
+  lifestyle
+  gallery
+  logo
+}
+
+enum Market {
+  US
+}
+
+enum Currency {
+  USD
+}
+
+enum IdentifierType {
+  gtin
+  mpn
+  asin
+  manufacturer_sku
+  merchant_sku
+}
+
+model Brand {
+  id          String       @id
+  slug        String       @unique
+  name        String
+  description String?
+  websiteUrl  String?
+  market      Market       @default(US)
+  images      BrandImage[]
+  products    Product[]
+}
+
+model BrandImage {
+  id         String    @id
+  brandId    String
+  brand      Brand     @relation(fields: [brandId], references: [id])
+  kind       ImageKind
+  role       ImageRole
+  src        String
+  alt        String
+  license    String?
+  width      Int?
+  height     Int?
+  sourceJson Json?
+}
+
+model Merchant {
+  id         String            @id
+  slug       String            @unique
+  name       String
+  websiteUrl String?
+  network    AffiliateNetwork?
+  markets    Market[]
+  offers     MerchantOffer[]
+}
+
+model Product {
+  id                       String         @id
+  slug                     String         @unique
+  name                     String
+  description              String
+  brandId                  String
+  brand                    Brand          @relation(fields: [brandId], references: [id])
+  categoryId               String
+  subcategoryId            String?
+  status                   ProductStatus
+  availability             Availability   @default(unknown)
+  market                   Market         @default(US)
+
+  referencePriceMinor      Int?
+  referencePriceCurrency   Currency?
+  referencePriceSourceJson Json?
+  referencePriceVerification Verification?
+
+  warrantyText             String?
+  warrantySourceJson       Json?
+  warrantyVerification     Verification?
+  returnPolicyText         String?
+  returnPolicySourceJson   Json?
+  returnPolicyVerification Verification?
+
+  dimLength                Float?
+  dimWidth                 Float?
+  dimHeight                Float?
+  dimUnit                  String?
+  dimSourceJson            Json?
+  dimVerification          Verification?
+  weightValue              Float?
+  weightUnit               String?
+  weightSourceJson         Json?
+  weightVerification       Verification?
+
+  sourceJson               Json
+  lastUpdated              DateTime
+  isDemo                   Boolean        @default(false)
+  isNewArrival             Boolean        @default(false)
+
+  images                   ProductImage[]
+  offers                   MerchantOffer[]
+  identifiers              ProductIdentifier[]
+  attributes               ProductAttribute[]
+  editorialNotes           EditorialNote[]
+
+  @@index([categoryId, status])
+}
+
+model ProductImage {
+  id         String    @id
+  productId  String
+  product    Product   @relation(fields: [productId], references: [id])
+  kind       ImageKind
+  role       ImageRole
+  src        String
+  alt        String
+  license    String?
+  width      Int?
+  height     Int?
+  sourceJson Json?
+}
+
+model ProductIdentifier {
+  id         String         @id @default(cuid())
+  productId  String
+  product    Product        @relation(fields: [productId], references: [id])
+  type       IdentifierType
+  value      String
+  merchantId String?
+
+  @@unique([type, value, merchantId])
+  @@index([productId])
+}
+
+model ProductAttribute {
+  id           String       @id @default(cuid())
+  productId    String
+  product      Product      @relation(fields: [productId], references: [id])
+  key          String
+  valueJson    Json
+  unit         String?
+  sourceJson   Json
+  verification Verification
+
+  @@unique([productId, key])
+}
+
+model EditorialNote {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id])
+  kind         String
+  text         String
+  author       String
+  date         DateTime
+  experiential Boolean  @default(false)
+  sourceJson   Json?
+}
+
+model MerchantOffer {
+  id                  String            @id
+  productId           String
+  product             Product           @relation(fields: [productId], references: [id])
+  merchantId          String
+  merchant            Merchant          @relation(fields: [merchantId], references: [id])
+  market              Market
+  currency            Currency
+  priceMinor          Int
+  listPriceMinor      Int?
+  url                 String
+  affiliateStatus     AffiliateStatus
+  affiliateNetwork    AffiliateNetwork?
+  affiliateProgramRef String?
+  availability        Availability      @default(unknown)
+  shippingNote        String?
+  merchantSku         String?
+  lastChecked         DateTime
+  sourceJson          Json
+  discountCodes       DiscountCode[]
+  priceChecks         PriceCheck[]
+
+  @@index([productId])
+  @@index([merchantId, merchantSku])
+}
+
+model DiscountCode {
+  id          String        @id @default(cuid())
+  offerId     String
+  offer       MerchantOffer @relation(fields: [offerId], references: [id])
+  code        String
+  description String
+  expiresAt   DateTime?
+  sourceJson  Json
+}
+
+// Phase 6
+
+model PriceCheck {
+  id         String        @id @default(cuid())
+  offerId    String
+  offer      MerchantOffer @relation(fields: [offerId], references: [id])
+  checkedAt  DateTime
+  priceMinor Int
+
+  @@index([offerId, checkedAt])
+}
+
+model MerchandisingSlot {
+  id        String  @id @default(cuid())
+  pageKey   String
+  moduleKey String
+  position  Int
+  productId String
+  pinned    Boolean @default(false)
+
+  @@unique([pageKey, moduleKey, position])
+}
+
+model ImportRun {
+  id           String    @id @default(cuid())
+  adapter      String
+  startedAt    DateTime
+  finishedAt   DateTime?
+  rowCount     Int       @default(0)
+  matchedCount Int       @default(0)
+  reviewCount  Int       @default(0)
+  errorJson    Json?
+  reviewItems  ReviewQueueItem[]
+}
+
+model ReviewQueueItem {
+  id                String    @id @default(cuid())
+  importRunId       String
+  importRun         ImportRun @relation(fields: [importRunId], references: [id])
+  rowJson           Json
+  resultJson        Json
+  queuedAt          DateTime
+  resolvedAt        DateTime?
+  resolvedProductId String?
+  resolvedBy        String?
+}
+
+model SavedComparison {
+  id          String   @id @default(cuid())
+  shortId     String   @unique
+  categoryId  String
+  productIds  String[]
+  createdAt   DateTime @default(now())
+  ownerUserId String?
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}

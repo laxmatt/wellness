@@ -1,0 +1,16 @@
+{
+  "id": "edge-theory-labs",
+  "slug": "edge-theory-labs",
+  "name": "Edge Theory Labs",
+  "websiteUrl": "https://www.edgetheorylabs.com",
+  "images": [
+    {
+      "id": "edge-theory-labs-logo",
+      "kind": "demo_placeholder",
+      "role": "logo",
+      "src": "demo:edge-theory-labs-logo",
+      "alt": "Edge Theory Labs logo (demo placeholder)"
+    }
+  ],
+  "market": "US"
+}

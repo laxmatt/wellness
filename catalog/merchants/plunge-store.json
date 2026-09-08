@@ -1,0 +1,9 @@
+{
+  "id": "plunge-store",
+  "slug": "plunge-store",
+  "name": "Plunge (direct)",
+  "websiteUrl": "https://plunge.com",
+  "markets": [
+    "US"
+  ]
+}
