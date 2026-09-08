@@ -1,13 +1,21 @@
 import { z } from "zod";
-import { ModelIntent } from "@/domain/assistant";
+import { INTENT_LIMITS, ModelIntent } from "@/domain/assistant";
+import { CONDITION_OPS } from "@/domain/category";
 import { DEFAULT_BASE_URL, OPENAI_HOST } from "@/domain/credential";
+import { SOFT_DIRECTIONS, SOFT_WEIGHT_RANGE } from "@/domain/personalization";
+import { buildRejection, captureRejectedIntent } from "@/providers/ai/diagnostics";
 import { estimateTokens } from "@/providers/usage/UsageMeter";
 
 // Called over plain fetch. No SDK dependency to pin, patch or audit.
 // The key is read from the environment on the server only and never reaches a
 // response body, a log line or the browser bundle.
 
-export type GroundedFact = { label: string; value: string; evidence: "sourced" | "manufacturer_claim" };
+// Three tiers, not two. A value whose provenance is recorded as unknown is not
+// a manufacturer's claim, and presenting it as one invents an attribution the
+// catalogue never made. Placeholder values are still withheld entirely.
+export const EVIDENCE_TIERS = ["sourced", "manufacturer_claim", "unattributed"] as const;
+export type Evidence = (typeof EVIDENCE_TIERS)[number];
+export type GroundedFact = { label: string; value: string; evidence: Evidence };
 export type GroundedProduct = {
   id: string;
   name: string;
@@ -21,7 +29,11 @@ export type GroundedProduct = {
 export type ConverseInput = {
   categoryName: string;
   filterVocabulary: string;
+  // A shortlist, never the whole catalogue. `catalogueSize` is how many
+  // published products the category actually holds, so the model can be told
+  // plainly that what it sees is partial and must not be treated as the set.
   products: GroundedProduct[];
+  catalogueSize: number;
   messages: { role: "user" | "assistant"; text: string }[];
   activeConstraints: string[];
 };
@@ -58,22 +70,50 @@ export interface ConversationProvider {
   converse(input: ConverseInput): Promise<ConverseResult>;
 }
 
+// The instructions the model gets are generated from the same constants that
+// validate its answer, so the contract cannot drift away from the validator.
+// It drifted once: the schema enforced two closed enums that the prompt never
+// named, and every reply carrying a constraint was discarded whole.
+const OPS = CONDITION_OPS.join(" | ");
+const DIRECTIONS = SOFT_DIRECTIONS.join(" | ");
+
 const SYSTEM = `You help someone choose between products on a comparison site.
 
 Your job is to understand what they need and turn it into structured filters. You do NOT decide which product is best: the site's own ranking engine does that and its result is shown alongside your reply. Never claim a product is best, top-rated or recommended by you.
 
 Rules you must follow:
 1. Only ever refer to products and figures given to you in the CATALOGUE block. Never introduce a product, brand, price or specification that is not there. If asked something the catalogue does not answer, say the information is not stated.
-2. Distinguish evidence. A fact marked "manufacturer_claim" is what the maker says, not an independent measurement; say so when you rely on it. A field listed under "not stated" is unknown; never estimate it.
-3. Ask about budget, intended use, space and preferences when they are still unknown, one question at a time, and offer a few concrete options.
-4. If a constraint the shopper gave cannot be met, do NOT silently drop it. Say what does not fit and ask whether they want to relax it.
-5. These are wellness products. Help with the shopping decision only. Never say or imply a product treats, cures, prevents, diagnoses or relieves any medical condition, and never give personalized medical advice. If asked, set medicalIntent true, say plainly that you cannot answer that, and offer to compare on specifications instead.
-6. Be brief. Two or three sentences.
+2. Distinguish evidence, every time you use a figure.
+   - "sourced" was independently verified. State it plainly.
+   - "manufacturer_claim" is what the maker says, not a measurement. Say whose claim it is when you rely on it, for example "the maker reports 189 mW/cm2".
+   - "unattributed" means the value is recorded but its source is not. Say that its source is not recorded, or do not use it.
+   - a field under "not stated" is unknown. Never estimate it.
+3. The CATALOGUE block is a SHORTLIST, not the catalogue. It holds at most the products listed, out of a larger category, and it was chosen before you replied. So you cannot see what is missing from it. Never say that no product exists, that nothing meets a constraint, that something is unavailable, or that a count is complete. If nothing in the shortlist fits, say that about the shortlist only, and still put the constraint in "hard": the site's engine searches every product and reports the real count beside your reply.
+4. Ask about budget, intended use, space and preferences when they are still unknown, one question at a time, and offer a few concrete options.
+5. If a constraint the shopper gave cannot be met, do NOT silently drop it. Say what does not fit and ask whether they want to relax it.
+6. These are wellness products. Help with the shopping decision only. Never say or imply a product treats, cures, prevents, diagnoses or relieves any medical condition, and never give personalized medical advice. If asked, set medicalIntent true, say plainly that you cannot answer that, and offer to compare on specifications instead.
+7. Be brief. Two or three sentences.
 
-Reply with a single JSON object and nothing else:
+OUTPUT CONTRACT. Reply with a single JSON object and nothing else. Every field below is validated exactly as written. A reply that breaks any one of these rules is discarded whole and the shopper sees an error instead of your answer, so follow them literally.
+
 {"reply": string, "hard": [{"key","op","value"}], "soft": [{"key","direction","value","weight"}], "unmapped": [string], "question": {"text","options":[string]} | null, "medicalIntent": boolean, "suggestCompare": [productId]}
 
-"hard" and "soft" must use only the filter keys listed in FILTERS. Repeat every constraint that still applies, not just new ones. Use "unmapped" for anything the shopper cares about that the filters cannot express.`;
+- reply: required string, at most ${INTENT_LIMITS.replyChars} characters.
+- hard: array of at most ${INTENT_LIMITS.hard} entries.
+  - key: one of the keys listed in FILTERS. No other key.
+  - op: EXACTLY one of these words: ${OPS}. Not a symbol, not a synonym, not "less_than", not "<", not "under".
+  - value: a number, string, boolean, array of strings, or array of numbers. Omit it only with op ${CONDITION_OPS[CONDITION_OPS.length - 2]} or ${CONDITION_OPS[CONDITION_OPS.length - 1]}.
+- soft: array of at most ${INTENT_LIMITS.soft} entries.
+  - key: one of the keys listed in FILTERS.
+  - direction: EXACTLY one of these words: ${DIRECTIONS}. Not "low", not "lower", not "minimize", not "cheap".
+  - weight: a number from ${SOFT_WEIGHT_RANGE.min} to ${SOFT_WEIGHT_RANGE.max} inclusive. Use ${SOFT_WEIGHT_RANGE.default} if you have no reason to prefer another.
+  - value: optional, same types as above.
+- unmapped: at most ${INTENT_LIMITS.unmapped} strings.
+- question: null, or {"text": at most ${INTENT_LIMITS.questionChars} characters, "options": at most ${INTENT_LIMITS.questionOptions} strings of at most ${INTENT_LIMITS.questionOptionChars} characters each}.
+- medicalIntent: boolean.
+- suggestCompare: at most ${INTENT_LIMITS.suggestCompare} product ids taken from the CATALOGUE.
+
+Repeat every constraint that still applies, not just new ones. Use "unmapped" for anything the shopper cares about that the filters cannot express.`;
 
 export class OpenAIConversationProvider implements ConversationProvider {
   readonly name = "openai";
@@ -103,7 +143,11 @@ export class OpenAIConversationProvider implements ConversationProvider {
       `CATEGORY: ${input.categoryName}`,
       `FILTERS: ${input.filterVocabulary}`,
       input.activeConstraints.length > 0 ? `ALREADY AGREED: ${input.activeConstraints.join("; ")}` : "ALREADY AGREED: nothing yet",
-      `CATALOGUE:\n${catalogue}`,
+      // Stated as a count, in the block itself, because a model that is not
+      // told the list is partial will answer as though it is complete. It did:
+      // it reported that nothing under $500 existed while the engine matched a
+      // product that was ranked just outside this shortlist.
+      `CATALOGUE: a shortlist of ${input.products.length} of the ${input.catalogueSize} products in this category, chosen before your reply. You cannot see the other ${Math.max(0, input.catalogueSize - input.products.length)}. Do not describe this list as the catalogue and do not claim anything about products missing from it.\n${catalogue}`,
     ].join("\n\n");
 
     return [
@@ -166,7 +210,7 @@ export class OpenAIConversationProvider implements ConversationProvider {
     }
 
     let json: {
-      choices?: { message?: { content?: string } }[];
+      choices?: { message?: { content?: string }; finish_reason?: string }[];
       usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
     try {
@@ -187,6 +231,19 @@ export class OpenAIConversationProvider implements ConversationProvider {
       parsedJson = {};
     }
     const parsed = ModelIntent.safeParse(normalize(parsedJson));
+
+    // A rejected reply costs the same as an accepted one and tells the shopper
+    // nothing. Under the private test's diagnostics flag, record why.
+    if (!parsed.success) {
+      captureRejectedIntent(
+        buildRejection({
+          model: this.model,
+          finishReason: json.choices?.[0]?.finish_reason ?? null,
+          error: parsed.error,
+          rawContent: raw,
+        }),
+      );
+    }
 
     return {
       intent: parsed.success

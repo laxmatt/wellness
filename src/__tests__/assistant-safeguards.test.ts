@@ -21,6 +21,7 @@ const config: MeterConfig = {
 const input = (messages: { role: "user" | "assistant"; text: string }[]): ConverseInput => ({
   categoryName: "Red light therapy",
   filterVocabulary: "price (integer cents, use op lte)",
+  catalogueSize: 8,
   products: [
     {
       id: "p1",

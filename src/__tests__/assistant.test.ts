@@ -263,6 +263,7 @@ describe("medical boundary", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
       messages: [{ role: "user", text: "which one will cure my eczema?" }],
       activeConstraints: [],
     });
@@ -282,6 +283,7 @@ describe("scripted stand-in", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
       messages: [{ role: "user", text: "I want something for my knees" }],
       activeConstraints: [],
     });
@@ -291,6 +293,7 @@ describe("scripted stand-in", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
       messages: [{ role: "user", text: "under $700" }],
       activeConstraints: [],
     });
@@ -300,7 +303,8 @@ describe("scripted stand-in", () => {
 
   it("costs nothing", async () => {
     const p = new ScriptedConversationProvider(redLight);
-    const res = await p.converse({ categoryName: "x", filterVocabulary: "price", products: [], messages: [], activeConstraints: [] });
+    const res = await p.converse({ categoryName: "x", filterVocabulary: "price", products: [],
+      catalogueSize: 0, messages: [], activeConstraints: [] });
     expect(res.usage).toEqual({ inputTokens: 0, outputTokens: 0 });
   });
 });

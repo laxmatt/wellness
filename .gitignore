@@ -45,3 +45,6 @@ next-env.d.ts
 
 # The example file holds no values, only names and comments.
 !.env.example
+
+# private live-test diagnostics: rejected model output, never committed
+/.diagnostics

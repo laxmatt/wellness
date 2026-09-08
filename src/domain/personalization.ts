@@ -6,11 +6,16 @@ import { Condition } from "./category";
 export const HardConstraint = Condition;
 export type HardConstraint = z.infer<typeof HardConstraint>;
 
+// Exported for the same reason as CONDITION_OPS: the instructions the model is
+// given are built from this list, not written alongside it.
+export const SOFT_DIRECTIONS = ["prefer_high", "prefer_low", "prefer_value"] as const;
+export const SOFT_WEIGHT_RANGE = { min: 0, max: 1, default: 0.5 } as const;
+
 export const SoftPreference = z.object({
   key: z.string(),
-  direction: z.enum(["prefer_high", "prefer_low", "prefer_value"]),
+  direction: z.enum(SOFT_DIRECTIONS),
   value: z.union([z.number(), z.string(), z.boolean(), z.array(z.string())]).optional(),
-  weight: z.number().min(0).max(1).default(0.5),
+  weight: z.number().min(SOFT_WEIGHT_RANGE.min).max(SOFT_WEIGHT_RANGE.max).default(SOFT_WEIGHT_RANGE.default),
 });
 export type SoftPreference = z.infer<typeof SoftPreference>;
 

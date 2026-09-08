@@ -7,6 +7,18 @@ import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageM
 // conditional UPDATE actually serialises, nor that an upgrade from the previous
 // schema keeps existing rows. Set TEST_DATABASE_URL to enable them.
 const URL = process.env.TEST_DATABASE_URL;
+
+// This suite drops every ledger table after each test. Pointed at the database
+// an application instance is using, it destroys that instance's ledger: real
+// spend, open reservations and uncertain charges awaiting reconciliation. That
+// happened once, to a ledger holding two uncertain charges. Refuse loudly
+// rather than skip, because a silent skip here looks like a passing run.
+if (URL && process.env.DATABASE_URL && URL === process.env.DATABASE_URL) {
+  throw new Error(
+    "TEST_DATABASE_URL is the same database as DATABASE_URL. This suite drops the ledger tables. Point TEST_DATABASE_URL at a separate database.",
+  );
+}
+
 const suite = URL ? describe : describe.skip;
 
 const config: MeterConfig = {

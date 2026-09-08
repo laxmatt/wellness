@@ -44,7 +44,16 @@ function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
     facts.push({
       label: def.shortLabel ?? def.label,
       value: spec.formatted,
-      evidence: p?.verification === "independently_verified" ? "sourced" : "manufacturer_claim",
+      // Only what the manufacturer actually reported is labelled as their
+      // claim. A value whose provenance is recorded as unknown, or not
+      // recorded at all, is neither verified nor claimed by anyone, and
+      // calling it a manufacturer claim invents an attribution.
+      evidence:
+        p?.verification === "independently_verified"
+          ? "sourced"
+          : p?.verification === "manufacturer_reported"
+            ? "manufacturer_claim"
+            : "unattributed",
     });
   }
   return {
@@ -169,6 +178,9 @@ export async function POST(req: Request) {
     categoryName: cat.name,
     filterVocabulary: vocabulary(cat),
     products: shortlist.map((v) => ground(v, cat)),
+    // The model is told how much it cannot see, so it cannot report a
+    // shortlist's emptiness as the category's.
+    catalogueSize: views.length,
     messages: messages.map((m) => ({ role: m.role, text: m.text })),
     activeConstraints: hard.map((c) => describeConstraint(cat, c)),
   };

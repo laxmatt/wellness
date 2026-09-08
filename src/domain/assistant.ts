@@ -96,14 +96,32 @@ export const AssistantRequest = z.object({
 });
 export type AssistantRequest = z.infer<typeof AssistantRequest>;
 
-// What the model is allowed to return. Anything outside this shape is dropped.
+// What the model is allowed to return. Anything outside this shape is dropped,
+// so every limit here is stated to the model in its instructions, generated
+// from this object rather than written next to it.
+export const INTENT_LIMITS = {
+  replyChars: 1200,
+  hard: 8,
+  soft: 8,
+  unmapped: 6,
+  questionChars: 300,
+  questionOptions: 5,
+  questionOptionChars: 60,
+  suggestCompare: 4,
+} as const;
+
 export const ModelIntent = z.object({
-  reply: z.string().max(1200),
-  hard: z.array(HardConstraint).max(8).default([]),
-  soft: z.array(SoftPreference).max(8).default([]),
-  unmapped: z.array(z.string()).max(6).default([]),
-  question: z.object({ text: z.string().max(300), options: z.array(z.string().max(60)).max(5).default([]) }).optional(),
+  reply: z.string().max(INTENT_LIMITS.replyChars),
+  hard: z.array(HardConstraint).max(INTENT_LIMITS.hard).default([]),
+  soft: z.array(SoftPreference).max(INTENT_LIMITS.soft).default([]),
+  unmapped: z.array(z.string()).max(INTENT_LIMITS.unmapped).default([]),
+  question: z
+    .object({
+      text: z.string().max(INTENT_LIMITS.questionChars),
+      options: z.array(z.string().max(INTENT_LIMITS.questionOptionChars)).max(INTENT_LIMITS.questionOptions).default([]),
+    })
+    .optional(),
   medicalIntent: z.boolean().default(false),
-  suggestCompare: z.array(z.string()).max(4).default([]),
+  suggestCompare: z.array(z.string()).max(INTENT_LIMITS.suggestCompare).default([]),
 });
 export type ModelIntent = z.infer<typeof ModelIntent>;

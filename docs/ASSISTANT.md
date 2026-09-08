@@ -249,6 +249,12 @@ It sees only a shortlist of at most six products, and only sourced facts. Placeh
 
 Its output is parsed by `ModelIntent` and anything outside that shape is dropped. Constraints are checked against real filter keys before they are offered.
 
+**The contract it is given is generated from the schema that validates it.** `CONDITION_OPS`, `SOFT_DIRECTIONS`, `SOFT_WEIGHT_RANGE` and `INTENT_LIMITS` are named once and used twice: to build the enums Zod enforces, and to write the instructions the model receives. They drifted apart once. The prompt described `{"key","op","value"}` without ever naming the ten operators or the three directions that validation requires, and a live run had seven of fifteen replies rejected whole, each one charged for and replaced with an error sentence. Validation was not the problem and was not loosened; the instructions were incomplete. A test fails if either list changes without the other.
+
+**The model is told what it cannot see.** The `CATALOGUE` block is a shortlist of at most six products, chosen before the model replies, out of a category that holds more. It is now labelled with both numbers and the model is forbidden from claiming a product does not exist, that nothing meets a constraint, or that a count is complete. Without that, it reported "there are no products listed under $500" while the engine matched one that was ranked just outside the six it was shown. What the shopper sees beside the reply always comes from the engine over every product, so the cards and the count were right; the prose was not.
+
+**Three evidence tiers, not two.** `sourced` is independently verified, `manufacturer_claim` is what the maker reported and must be attributed when used, and `unattributed` covers a value the catalogue records without recording where it came from. That third tier used to be folded into `manufacturer_claim`, which invented an attribution the catalogue never made. Placeholder values are still withheld entirely.
+
 Nothing it suggests is applied automatically. Preference changes and comparison additions arrive as proposals with an Apply and a No thanks, and the proposal states how many products would remain. Applying narrows the grid by the engine's answer for exactly those constraints, not by an approximate chip match.
 
 The medical boundary is enforced in the route before any model call, so it holds even when the model is unavailable or wrong. It matches whole words, not substrings: a shopper asking which drink is healthiest gets an answer, and one asking what will treat, diagnose, cure or heal something gets the redirect. Any word ending in -itis is treated as a named condition, so tendonitis and bursitis are caught without listing every one. Refusing ordinary shopping language is not the safe side of that line; it just looks broken. Chat text is never persisted, never sent to analytics and never used to build a profile.
@@ -312,6 +318,14 @@ npm run build && npm start
 ```
 ASSISTANT_TEST_BASE_URL=http://localhost:3000 npm run assistant:livetest
 ```
+
+**Diagnosing a rejected reply.** When `ModelIntent` refuses the model's JSON the shopper gets a fixed sentence and the payload is gone, which is right on a live site and useless when a run fails. For the private test only, start the server with a file to write to:
+
+```
+ASSISTANT_DIAGNOSTICS_FILE=./.diagnostics/rejected.jsonl NODE_USE_ENV_PROXY=1 npm start
+```
+
+Each rejection appends one JSON line: the timestamp, the model, the provider's `finish_reason`, the validator's complaints as `path`, `code` and `message`, and the model's own output truncated to 8000 characters. It records no conversation, no shortlist, no headers and no environment, so a visitor's words cannot reach it. It refuses to write at all when `NODE_ENV` is `production`, so setting the variable on a deployed host does nothing. `.diagnostics/` is gitignored; do not commit its contents.
 
 It reads `ADMIN_ACCESS_KEY` from the same `.env.local`, so the secret is not retyped and never appears in your shell history.
 
