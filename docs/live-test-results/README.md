@@ -22,5 +22,9 @@ proxied path. The third run, `2026-09-08T19-29.md`, completed all 15 cases for
 $0.0038 with no new uncertain charges. It scored 8 of 15, but seven of the
 failures returned the schema-parse fallback rather than a model reply, so the
 assistant produced usable constraints on one of the eight cases that called for
-them. The reports separate what was observed from what was inferred, and list
-the claims earlier revisions got wrong.
+them. The fourth run, `2026-09-08T20-57.md`, is the first to complete with
+diagnostics on. It scored 10 of 15 for $0.0053 with no new uncertain charges,
+captured the exact field of the one rejected reply, and surfaced a price unit
+defect that the older key-only assertions would have scored as a pass. The
+reports separate what was observed from what was inferred, and list the claims
+earlier revisions got wrong.
