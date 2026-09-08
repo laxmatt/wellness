@@ -28,3 +28,8 @@ captured the exact field of the one rejected reply, and surfaced a price unit
 defect that the older key-only assertions would have scored as a pass. The
 reports separate what was observed from what was inferred, and list the claims
 earlier revisions got wrong.
+
+The fifth run, `2026-09-08T21-37.md`, scored 12 of 15 for $0.0055 with no new
+uncertain charges. Every budget case passed, so the money contract is followed.
+Its generated tables are incomplete: a defect in the report writer, explained
+and fixed in the same commit, and the file says so.
