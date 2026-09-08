@@ -209,6 +209,10 @@ async function main() {
     // The same function a non-paid test exercises against a real route
     // response, so the assertions cannot drift from what the route returns.
     const problems = checkReply(r as CheckableReply, c.expect);
+    // Recorded for every case, passing or not. Dropping this on the pass path
+    // once cost a run its report: the console had all fifteen results and the
+    // committed file had one.
+    records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems, shown: r.matchingIds.length });
     if (problems.length === 0) {
       pass++;
       console.log(`ok   ${c.category} | ${c.note}`);
