@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "catalog:check": "tsx scripts/check-catalog.ts",
-    "assistant:livetest": "tsx scripts/assistant-live-test.ts"
+    "assistant:livetest": "tsx scripts/assistant-live-test.ts",
+    "ledger:restore": "tsx scripts/ledger-restore.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

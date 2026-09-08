@@ -68,9 +68,18 @@ describe("when diagnostics are allowed to write", () => {
     expect(diagnosticsTarget({ NODE_ENV: "test", ASSISTANT_DIAGNOSTICS_FILE: "  " } as unknown as NodeJS.ProcessEnv)).toBeNull();
   });
 
-  it("refuses in production even when the file is named", () => {
+  it("stays on under a production build, which is the runtime the private test uses", () => {
+    // next start sets NODE_ENV=production. A gate on that disabled diagnostics
+    // in the only runtime they are for.
     const env = { NODE_ENV: "production", ASSISTANT_DIAGNOSTICS_FILE: "/tmp/x.jsonl" } as unknown as NodeJS.ProcessEnv;
-    expect(diagnosticsTarget(env)).toBeNull();
+    expect(diagnosticsTarget(env)).toBe("/tmp/x.jsonl");
+  });
+
+  it("refuses on a deployed host even when the file is named", () => {
+    for (const marker of [{ VERCEL: "1" }, { ASSISTANT_DEPLOYED: "1" }]) {
+      const env = { NODE_ENV: "production", ASSISTANT_DIAGNOSTICS_FILE: "/tmp/x.jsonl", ...marker } as unknown as NodeJS.ProcessEnv;
+      expect(diagnosticsTarget(env)).toBeNull();
+    }
   });
 
   it("appends one JSON line per rejection when enabled", () => {

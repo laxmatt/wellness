@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import type { BudgetSnapshot, CallOutcome, MeterConfig, Reservation, ReserveResult, UncertainCharge, UsageStore } from "./UsageMeter";
+import type { BudgetSnapshot, CallOutcome, MeterConfig, OpenReservation, Reservation, ReserveResult, UncertainCharge, UsageStore } from "./UsageMeter";
 
 // Shared across every instance of the application, which is what makes the cap
 // real. Each limit is enforced by a single conditional UPDATE, so two
@@ -141,6 +141,18 @@ export class PostgresUsageStore implements UsageStore {
       }
 
       const id = `r_${month}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+
+      // The reservation is written down before the call, in the same
+      // transaction that took the budget. Without this a crash between
+      // reserving and settling left reserved_usd raised against an id that
+      // existed only in a dead process: budget held forever, with nothing for
+      // an operator to reconcile. An `open` row is that record.
+      await client.query(
+        `INSERT INTO assistant_usage (reservation_id, month, session_id, outcome, cost_usd)
+         VALUES ($1, $2, $3, 'open', $4) ON CONFLICT (reservation_id) DO NOTHING`,
+        [id, month, sessionId, estimateUsd],
+      );
+
       await client.query("COMMIT");
       return { ok: true, reservation: { id, month, sessionId, estimateUsd } };
     } catch (e) {
@@ -155,15 +167,17 @@ export class PostgresUsageStore implements UsageStore {
     const client = await this.pool.connect();
     try {
       await client.query("BEGIN");
-      // Unique reservation_id makes this idempotent: a retry records nothing
-      // twice and never releases the same reservation twice.
-      const inserted = await client.query(
-        `INSERT INTO assistant_usage (reservation_id, month, session_id, outcome, reason, model, input_tokens, output_tokens, cost_usd)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT (reservation_id) DO NOTHING`,
+      // Closes the `open` row written when the budget was taken. The WHERE on
+      // outcome = 'open' is what makes this idempotent: a retry updates nothing
+      // and never releases the same reservation twice. A reservation whose row
+      // is missing (an older schema, or a hand-recovered ledger) is inserted so
+      // the outcome is still recorded.
+      const settled = await client.query(
+        `UPDATE assistant_usage
+            SET outcome = $2, reason = $3, model = $4, input_tokens = $5, output_tokens = $6, cost_usd = $7, settled_at = now()
+          WHERE reservation_id = $1 AND outcome = 'open'`,
         [
           reservation.id,
-          reservation.month,
-          reservation.sessionId,
           outcome.kind,
           outcome.kind === "billed" ? null : outcome.reason,
           outcome.kind === "billed" ? outcome.model : null,
@@ -172,6 +186,24 @@ export class PostgresUsageStore implements UsageStore {
           costUsd,
         ],
       );
+      const inserted =
+        settled.rowCount === 1
+          ? settled
+          : await client.query(
+              `INSERT INTO assistant_usage (reservation_id, month, session_id, outcome, reason, model, input_tokens, output_tokens, cost_usd)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT (reservation_id) DO NOTHING`,
+              [
+                reservation.id,
+                reservation.month,
+                reservation.sessionId,
+                outcome.kind,
+                outcome.kind === "billed" ? null : outcome.reason,
+                outcome.kind === "billed" ? outcome.model : null,
+                outcome.kind === "billed" ? outcome.inputTokens : 0,
+                outcome.kind === "billed" ? outcome.outputTokens : 0,
+                costUsd,
+              ],
+            );
       if (inserted.rowCount === 1) {
         // An uncertain charge is held rather than spent: it keeps counting
         // against the cap until an operator confirms it against the provider.
@@ -226,6 +258,53 @@ export class PostgresUsageStore implements UsageStore {
       heldUsd: Number(row.cost_usd),
       at: row.settled_at.toISOString(),
     }));
+  }
+
+  async listOpen(month: string, olderThanMs = 0): Promise<OpenReservation[]> {
+    const r = await this.pool.query<{ reservation_id: string; month: string; session_id: string; cost_usd: string; settled_at: Date }>(
+      `SELECT reservation_id, month, session_id, cost_usd, settled_at
+         FROM assistant_usage
+        WHERE month = $1 AND outcome = 'open' AND settled_at < now() - make_interval(secs => $2)
+        ORDER BY settled_at`,
+      [month, olderThanMs / 1000],
+    );
+    return r.rows.map((x) => ({
+      reservationId: x.reservation_id,
+      month: x.month,
+      sessionId: x.session_id,
+      heldUsd: Number(x.cost_usd),
+      at: new Date(x.settled_at).toISOString(),
+    }));
+  }
+
+  async releaseOpen(reservationId: string): Promise<boolean> {
+    const client = await this.pool.connect();
+    try {
+      await client.query("BEGIN");
+      const held = await client.query<{ month: string; cost_usd: string }>(
+        `SELECT month, cost_usd FROM assistant_usage WHERE reservation_id = $1 AND outcome = 'open' FOR UPDATE`,
+        [reservationId],
+      );
+      if (held.rowCount === 0) {
+        await client.query("ROLLBACK");
+        return false;
+      }
+      const { month, cost_usd } = held.rows[0];
+      // Recorded as abandoned, not deleted. The row stays in the ledger so the
+      // history shows a reservation that was taken and never answered for.
+      await client.query(
+        `UPDATE assistant_usage SET outcome = 'abandoned', reason = 'Released by an operator: no outcome was ever recorded.', cost_usd = 0, reconciled_at = now() WHERE reservation_id = $1`,
+        [reservationId],
+      );
+      await client.query(`UPDATE assistant_budget SET reserved_usd = GREATEST(0, reserved_usd - $2) WHERE month = $1`, [month, Number(cost_usd)]);
+      await client.query("COMMIT");
+      return true;
+    } catch (e) {
+      await client.query("ROLLBACK").catch(() => {});
+      throw e;
+    } finally {
+      client.release();
+    }
   }
 
   async reconcile(reservationId: string, actualUsd: number): Promise<boolean> {

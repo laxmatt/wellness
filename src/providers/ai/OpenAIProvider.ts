@@ -222,33 +222,47 @@ export class OpenAIConversationProvider implements ConversationProvider {
       throw connectionError(e, "after");
     }
 
-    const raw = json.choices?.[0]?.message?.content ?? "{}";
+    const raw = json.choices?.[0]?.message?.content ?? "";
+    const finishReason = json.choices?.[0]?.finish_reason ?? null;
 
+    // Unparseable output is a rejection, not an empty answer. It used to become
+    // `{}`, which normalize filled with empty arrays and an empty reply, and
+    // which the schema's defaults then accepted: a truncated reply became a
+    // successful blank one, invisible to diagnostics. A reply the shopper can
+    // read is required, so an empty one fails here too.
     let parsedJson: unknown;
     try {
       parsedJson = JSON.parse(raw);
     } catch {
-      parsedJson = {};
+      const failure = new z.ZodError([
+        { code: "custom", path: ["(body)"], message: `The reply was not JSON. finish_reason=${finishReason ?? "unknown"}.`, input: raw },
+      ]);
+      captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: failure, rawContent: raw }));
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
     }
+
     const parsed = ModelIntent.safeParse(normalize(parsedJson));
 
     // A rejected reply costs the same as an accepted one and tells the shopper
     // nothing. Under the private test's diagnostics flag, record why.
     if (!parsed.success) {
-      captureRejectedIntent(
-        buildRejection({
-          model: this.model,
-          finishReason: json.choices?.[0]?.finish_reason ?? null,
-          error: parsed.error,
-          rawContent: raw,
-        }),
-      );
+      captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: parsed.error, rawContent: raw }));
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
+    }
+
+    // An empty reply is not an answer. It is what a truncated or hollow payload
+    // looks like once the schema's defaults have filled it in, and it reached
+    // the shopper as a blank message rather than a rejection.
+    if (parsed.data.reply.trim() === "") {
+      const failure = new z.ZodError([
+        { code: "custom", path: ["reply"], message: `The reply was empty. finish_reason=${finishReason ?? "unknown"}.`, input: raw },
+      ]);
+      captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: failure, rawContent: raw }));
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
     }
 
     return {
-      intent: parsed.success
-        ? parsed.data
-        : { reply: "I could not read that reliably. Could you say it another way?", hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] },
+      intent: parsed.data,
       // Missing or nonsensical usage is not zero usage. Reporting it as null
       // makes the caller hold the reservation instead of releasing it.
       usage: readUsage(json.usage),
@@ -309,6 +323,15 @@ function connectionError(e: unknown, phase: "before" | "after"): ProviderCallErr
 
 // The model returns JSON but not necessarily our JSON. Coerce the shapes we
 // tolerate, then let Zod reject the rest.
+// What the shopper gets when nothing usable came back. Named once so every
+// path that gives up returns the same thing and none of them can be mistaken
+// for a successful empty answer.
+export const UNREADABLE_REPLY = "I could not read that reliably. Could you say it another way?";
+
+function unreadable(): ModelIntent {
+  return { reply: UNREADABLE_REPLY, hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] };
+}
+
 function normalize(v: unknown): unknown {
   if (typeof v !== "object" || v === null) return {};
   const o = { ...(v as Record<string, unknown>) };

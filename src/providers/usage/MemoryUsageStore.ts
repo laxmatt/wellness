@@ -1,4 +1,4 @@
-import type { BudgetSnapshot, CallOutcome, MeterConfig, Reservation, ReserveResult, UncertainCharge, UsageStore } from "./UsageMeter";
+import type { BudgetSnapshot, CallOutcome, MeterConfig, OpenReservation, Reservation, ReserveResult, UncertainCharge, UsageStore } from "./UsageMeter";
 
 // Single process only: correct for tests and for `next dev` on one machine,
 // and wrong the moment a second instance exists. `isShared` is false so the
@@ -13,6 +13,7 @@ export class MemoryUsageStore implements UsageStore {
   private clients = new Map<string, number>();
   private settled = new Set<string>();
   private uncertain = new Map<string, UncertainCharge>();
+  private open = new Map<string, OpenReservation>();
   readonly records: { reservationId: string; outcome: CallOutcome; costUsd: number }[] = [];
 
   async init() {}
@@ -43,12 +44,16 @@ export class MemoryUsageStore implements UsageStore {
     this.sessions.set(sessionId, turns + 1);
     this.clients.set(clientSlot, clientCount + 1);
     const id = `r_${month}_${sessionId}_${this.records.length}_${Math.random().toString(36).slice(2, 8)}`;
+    // Recorded before the call, as the shared store does, so a reservation that
+    // never settles is visible rather than lost with the process.
+    this.open.set(id, { reservationId: id, month, sessionId, heldUsd: estimateUsd, at: new Date().toISOString() });
     return { ok: true, reservation: { id, month, sessionId, estimateUsd } };
   }
 
   async settle(reservation: Reservation, outcome: CallOutcome, costUsd: number) {
     if (this.settled.has(reservation.id)) return;
     this.settled.add(reservation.id);
+    this.open.delete(reservation.id);
     const b = this.bucket(reservation.month);
     b.reserved = Math.max(0, b.reserved - reservation.estimateUsd);
     if (outcome.kind === "uncertain") {
@@ -84,6 +89,20 @@ export class MemoryUsageStore implements UsageStore {
 
   async listUncertain(month: string): Promise<UncertainCharge[]> {
     return [...this.uncertain.values()].filter((u) => u.month === month);
+  }
+
+  async listOpen(month: string, olderThanMs = 0): Promise<OpenReservation[]> {
+    const cutoff = Date.now() - olderThanMs;
+    return [...this.open.values()].filter((o) => o.month === month && Date.parse(o.at) <= cutoff);
+  }
+
+  async releaseOpen(reservationId: string): Promise<boolean> {
+    const o = this.open.get(reservationId);
+    if (!o) return false;
+    this.open.delete(reservationId);
+    const b = this.bucket(o.month);
+    b.reserved = Math.max(0, b.reserved - o.heldUsd);
+    return true;
   }
 
   async reconcile(reservationId: string, actualUsd: number): Promise<boolean> {

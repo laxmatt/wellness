@@ -211,6 +211,12 @@ describe("spend control", () => {
       async listUncertain() {
         throw new Error("ledger offline");
       },
+      async listOpen() {
+        throw new Error("ledger offline");
+      },
+      async releaseOpen(): Promise<boolean> {
+        throw new Error("ledger offline");
+      },
       async reconcile() {
         throw new Error("ledger offline");
       },

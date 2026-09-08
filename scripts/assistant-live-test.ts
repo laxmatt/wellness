@@ -45,34 +45,97 @@ loadEnvLocal();
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
 const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";
 
+// A key on its own is far too weak. `price gte 5000000` and `price lte 50000`
+// both "contain price", and a run that only compared key names scored the first
+// as a pass for "under $500". So each expectation names the operator and the
+// direction of the value, and the resulting product set is checked against the
+// site's own engine.
+type ExpectedConstraint = {
+  key: string;
+  // Operators any of which would be a correct reading of the sentence.
+  ops: string[];
+  // The value, in the unit the filter uses. Checked exactly when `value` is
+  // given, or as a range when `atMost` / `atLeast` are.
+  value?: number | string | boolean;
+  atMost?: number;
+  atLeast?: number;
+};
+
 type Expected = {
-  // Constraint keys a careful person would have set for this sentence.
-  hardKeys?: string[];
-  softKeys?: string[];
+  hard?: ExpectedConstraint[];
+  soft?: { key: string; directions?: string[] }[];
   medicalIntent?: boolean;
-  // The reply must not name any product outside the catalogue shortlist.
   mustAskQuestion?: boolean;
+  // The engine's own count for the proposed constraints. "someMatch" means the
+  // reply must not be able to claim emptiness; "noneMatch" the opposite.
+  engine?: "someMatch" | "noneMatch";
 };
 
 type Case = { category: string; text: string; expect: Expected; note: string };
 
 const CASES: Case[] = [
-  // Red light
-  { category: "red-light", text: "I need a full-body panel under $700 that won't take over my apartment.", expect: { hardKeys: ["price"], softKeys: ["coverage", "footprint"] }, note: "budget plus two preferences" },
-  { category: "red-light", text: "Something small for my face, cheap as possible", expect: { softKeys: ["coverage"] }, note: "vague budget, clear coverage" },
+  // Red light. Prices are in integer cents, which is what the filter uses.
+  {
+    category: "red-light",
+    text: "I need a full-body panel under $700 that won't take over my apartment.",
+    expect: {
+      hard: [{ key: "price", ops: ["lt", "lte"], value: 70000 }],
+      soft: [{ key: "coverage" }, { key: "footprint", directions: ["prefer_low"] }],
+    },
+    note: "budget plus two preferences",
+  },
+  {
+    category: "red-light",
+    text: "Something small for my face, cheap as possible",
+    expect: { soft: [{ key: "coverage" }] },
+    note: "vague budget, clear coverage",
+  },
   { category: "red-light", text: "What's the difference between 660nm and 850nm?", expect: {}, note: "factual question, no constraints" },
   { category: "red-light", text: "I want the strongest one you have", expect: {}, note: "superlative with no budget" },
   { category: "red-light", text: "Will red light therapy heal my tendonitis?", expect: { medicalIntent: true }, note: "medical, must decline" },
-  { category: "red-light", text: "under 500", expect: { hardKeys: ["price"] }, note: "bare number" },
+  {
+    category: "red-light",
+    text: "under 500",
+    // The engine matches at least one product under $500. A reply that says
+    // otherwise is the failure this case exists to catch.
+    expect: { hard: [{ key: "price", ops: ["lt", "lte"], value: 50000 }], engine: "someMatch" },
+    note: "bare number, and the count must match the engine",
+  },
   { category: "red-light", text: "I have no idea where to start", expect: { mustAskQuestion: true }, note: "must ask, not guess" },
   // Cold plunge
-  { category: "cold-plunge", text: "A tub with a chiller for my garage, up to $5,000", expect: { hardKeys: ["price"], softKeys: ["chiller_included", "placement"] }, note: "boolean plus placement" },
-  { category: "cold-plunge", text: "Something I can pack away when guests come", expect: { softKeys: ["tub_type"] }, note: "implied portability" },
-  { category: "cold-plunge", text: "I don't want to deal with an electrician", expect: { softKeys: ["plumbing"] }, note: "implied setup constraint" },
+  {
+    category: "cold-plunge",
+    text: "A tub with a chiller for my garage, up to $5,000",
+    expect: {
+      hard: [{ key: "price", ops: ["lt", "lte"], value: 500000 }],
+      soft: [{ key: "chiller_included" }, { key: "placement" }],
+    },
+    note: "boolean plus placement",
+  },
+  { category: "cold-plunge", text: "Something I can pack away when guests come", expect: { soft: [{ key: "tub_type" }] }, note: "implied portability" },
+  { category: "cold-plunge", text: "I don't want to deal with an electrician", expect: { soft: [{ key: "plumbing" }] }, note: "implied setup constraint" },
   { category: "cold-plunge", text: "How cold do these actually get?", expect: {}, note: "factual, manufacturer-reported" },
   // Drinks
-  { category: "wellness-drinks", text: "Zero sugar electrolytes under $2 a serving", expect: { hardKeys: ["sugar_g", "price_per_serving_minor"], softKeys: ["function"] }, note: "two hard constraints" },
-  { category: "wellness-drinks", text: "No caffeine, I drink it at night", expect: { hardKeys: ["caffeine_mg"] }, note: "negation" },
+  {
+    category: "wellness-drinks",
+    text: "Zero sugar electrolytes under $2 a serving",
+    expect: {
+      hard: [
+        { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], value: 200 },
+      ],
+      soft: [{ key: "function" }],
+    },
+    note: "two hard constraints, both with real values",
+  },
+  {
+    category: "wellness-drinks",
+    text: "No caffeine, I drink it at night",
+    // "neq 0" would be the opposite of what was asked, so the operator matters
+    // more here than anywhere else in the set.
+    expect: { hard: [{ key: "caffeine_mg", ops: ["lte", "eq", "lt"], atMost: 0 }] },
+    note: "negation, and the operator must not invert it",
+  },
   { category: "wellness-drinks", text: "Which one is healthiest?", expect: {}, note: "must not answer as a health claim" },
   { category: "wellness-drinks", text: "Something that tastes good", expect: {}, note: "must land in unmapped, not invented" },
 ];
@@ -83,7 +146,13 @@ type Reply = {
   products: { productId: string; brand: string; name: string }[];
   matchingIds: string[];
   unconfirmedPrice: { productId: string }[];
-  proposals: { kind: string; hard?: { key: string }[]; soft?: { key: string }[]; matchingIds?: string[]; matchCount?: number }[];
+  proposals: {
+    kind: string;
+    hard?: { key: string; op: string; value?: unknown }[];
+    soft?: { key: string; direction: string; value?: unknown; weight?: number }[];
+    matchingIds?: string[];
+    matchCount?: number;
+  }[];
   medicalRedirect: boolean;
   notice?: string;
 };
@@ -109,6 +178,21 @@ async function usage(): Promise<Usage | null> {
     credential: j.credential ?? { mode: "unknown" },
     uncertainCharges: j.uncertainCharges ?? [],
   };
+}
+
+function describeWant(w: ExpectedConstraint): string {
+  if (w.value !== undefined) return `exactly ${JSON.stringify(w.value)}`;
+  if (w.atMost !== undefined) return `at most ${w.atMost}`;
+  if (w.atLeast !== undefined) return `at least ${w.atLeast}`;
+  return "any value";
+}
+
+function valueFits(got: unknown, w: ExpectedConstraint): boolean {
+  if (w.value !== undefined) return got === w.value;
+  if (typeof got !== "number") return false;
+  if (w.atMost !== undefined) return got <= w.atMost;
+  if (w.atLeast !== undefined) return got >= w.atLeast;
+  return true;
 }
 
 async function main() {
@@ -142,19 +226,60 @@ async function main() {
     }
 
     const proposal = r.proposals.find((p) => p.kind === "apply_preferences");
-    const gotHard = (proposal?.hard ?? []).map((h) => h.key).sort();
-    const gotSoft = (proposal?.soft ?? []).map((s) => s.key).sort();
+    const gotHard = proposal?.hard ?? [];
+    const gotSoft = proposal?.soft ?? [];
     const problems: string[] = [];
 
-    for (const k of c.expect.hardKeys ?? []) if (!gotHard.includes(k)) problems.push(`missing hard ${k}`);
-    for (const k of c.expect.softKeys ?? []) if (!gotSoft.includes(k) && !gotHard.includes(k)) problems.push(`missing soft ${k}`);
+    // Each expected constraint must be present with an operator that reads the
+    // sentence correctly and a value in the right place. A matching key with
+    // the wrong operator is a wrong answer, not a partial one.
+    for (const want of c.expect.hard ?? []) {
+      const found = gotHard.filter((h) => h.key === want.key);
+      if (found.length === 0) {
+        problems.push(`missing hard ${want.key}`);
+        continue;
+      }
+      const right = found.filter((h) => want.ops.includes(h.op));
+      if (right.length === 0) {
+        problems.push(`hard ${want.key} used op ${found.map((h) => h.op).join("/")}, expected one of ${want.ops.join("/")}`);
+        continue;
+      }
+      const valued = right.filter((h) => valueFits(h.value, want));
+      if (valued.length === 0) {
+        problems.push(`hard ${want.key} value ${JSON.stringify(right[0].value)} does not fit ${describeWant(want)}`);
+      }
+    }
+
+    for (const want of c.expect.soft ?? []) {
+      const found = gotSoft.filter((sp) => sp.key === want.key);
+      const alsoHard = gotHard.some((h) => h.key === want.key);
+      if (found.length === 0 && !alsoHard) {
+        problems.push(`missing soft ${want.key}`);
+        continue;
+      }
+      if (want.directions && found.length > 0 && !found.some((sp) => want.directions!.includes(sp.direction))) {
+        problems.push(`soft ${want.key} pointed ${found.map((sp) => sp.direction).join("/")}, expected ${want.directions.join("/")}`);
+      }
+    }
+
     if (c.expect.medicalIntent && !r.medicalRedirect) problems.push("medical question was not declined");
     if (!c.expect.medicalIntent && r.medicalRedirect) problems.push("declined a question that was not medical");
     if (c.expect.mustAskQuestion && !/\?/.test(r.text)) problems.push("did not ask a clarifying question");
 
+    // The engine decides what matches. The reply must not contradict it.
+    if (c.expect.engine === "someMatch") {
+      const count = proposal?.matchCount ?? r.matchingIds.length;
+      if (count === 0) problems.push("the engine matched nothing, but this sentence has matching products");
+      if (/\bno (?:products?|options?|matches)\b/i.test(r.text) && count > 0) {
+        problems.push(`reply claims nothing matches while the engine matched ${count}`);
+      }
+    }
+
     // Invented constraints are worse than missing ones: they silently filter.
-    const allowed = new Set([...(c.expect.hardKeys ?? []), ...(c.expect.softKeys ?? [])]);
-    for (const k of [...gotHard, ...gotSoft]) if (!allowed.has(k)) problems.push(`invented constraint ${k}`);
+    const allowed = new Set([...(c.expect.hard ?? []).map((h) => h.key), ...(c.expect.soft ?? []).map((sp) => sp.key)]);
+    for (const k of [...gotHard.map((h) => h.key), ...gotSoft.map((sp) => sp.key)]) {
+      if (!allowed.has(k)) problems.push(`invented constraint ${k}`);
+    }
 
     // The three surfaces must agree, whatever the model said.
     if (proposal && proposal.matchCount !== (proposal.matchingIds ?? []).length) problems.push("proposal count disagrees with its own set");
@@ -170,6 +295,19 @@ async function main() {
       failures.push(`${c.category} | "${c.text}"\n       ${problems.join("; ")}\n       reply: ${r.text.slice(0, 140)}`);
       console.log(`FAIL ${c.category} | ${c.note}`);
     }
+    // Checked after every request, not only at the end. A run that keeps going
+    // after the first unmeasurable charge holds more budget with each one, and
+    // the operator asked to be stopped at the first.
+    if (before) {
+      const now = await usage();
+      if (now && now.uncertainUsd > before.uncertainUsd + 1e-9) {
+        console.error(`\nStopping: a charge could not be measured. Held uncertain is now $${now.uncertainUsd.toFixed(4)}, was $${before.uncertainUsd.toFixed(4)}.`);
+        console.error("Reconcile it against the provider's usage record before running again.");
+        writeReport({ pass, records, before, after: now });
+        process.exit(3);
+      }
+    }
+
     await sleep(400);
   }
 

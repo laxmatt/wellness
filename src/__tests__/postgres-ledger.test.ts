@@ -8,15 +8,39 @@ import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageM
 // schema keeps existing rows. Set TEST_DATABASE_URL to enable them.
 const URL = process.env.TEST_DATABASE_URL;
 
-// This suite drops every ledger table after each test. Pointed at the database
-// an application instance is using, it destroys that instance's ledger: real
+// This suite drops every ledger table after each test. Pointed at a database an
+// application instance is using, it destroys that instance's accounting: real
 // spend, open reservations and uncertain charges awaiting reconciliation. That
-// happened once, to a ledger holding two uncertain charges. Refuse loudly
-// rather than skip, because a silent skip here looks like a passing run.
-if (URL && process.env.DATABASE_URL && URL === process.env.DATABASE_URL) {
-  throw new Error(
-    "TEST_DATABASE_URL is the same database as DATABASE_URL. This suite drops the ledger tables. Point TEST_DATABASE_URL at a separate database.",
-  );
+// happened, to a ledger holding two uncertain charges and $0.003837 of recorded
+// spend.
+//
+// Comparing TEST_DATABASE_URL to DATABASE_URL as text does not prevent it. Two
+// different strings reach the same database through a host alias, a different
+// user, an added option or a socket instead of TCP. So identity is established
+// from inside the database instead: a table named `disposable_test_database`
+// that only a throwaway database is given. The application's own database will
+// never have one, whatever the connection string says.
+//
+// The database permissions are the real barrier and this is the second one. The
+// test role should have no CONNECT privilege on the application database at
+// all; see docs/ASSISTANT.md.
+export const DISPOSABLE_MARKER = "disposable_test_database";
+
+async function assertDisposable(url: string): Promise<void> {
+  const probe = new Pool({ connectionString: url, max: 1 });
+  try {
+    const r = await probe.query<{ present: boolean }>(`SELECT to_regclass($1) IS NOT NULL AS present`, [DISPOSABLE_MARKER]);
+    if (!r.rows[0]?.present) {
+      const named = await probe.query<{ db: string }>("SELECT current_database() AS db");
+      throw new Error(
+        `Refusing to run: database "${named.rows[0]?.db}" has no ${DISPOSABLE_MARKER} table, so it is not marked disposable. ` +
+          `This suite drops every ledger table. Create the marker only in a throwaway database:\n` +
+          `  CREATE TABLE ${DISPOSABLE_MARKER} (note TEXT);`,
+      );
+    }
+  } finally {
+    await probe.end();
+  }
 }
 
 const suite = URL ? describe : describe.skip;
@@ -69,7 +93,9 @@ suite("postgres ledger", () => {
     return s;
   };
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    // Before anything is dropped, and before any connection is reused.
+    await assertDisposable(URL!);
     admin = new Pool({ connectionString: URL, max: 2 });
   });
 

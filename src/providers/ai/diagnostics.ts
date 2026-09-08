@@ -12,8 +12,11 @@ import type { ZodError } from "zod";
 // So this exists, and it is off unless an operator turns it on:
 //
 //   - It writes nothing unless `ASSISTANT_DIAGNOSTICS_FILE` names a path.
-//   - It refuses to run when `NODE_ENV` is "production", so setting the
-//     variable on a deployed host does nothing.
+//   - It refuses on a deployed host, detected the same way the rest of the
+//     application detects one. It does NOT key off `NODE_ENV`: the private test
+//     is run against a production build, so `next start` sets NODE_ENV to
+//     "production" and a check on that would have disabled diagnostics in the
+//     one runtime they exist for. That gate was wrong and is gone.
 //   - It records the model's rejected output, the validator's complaint and the
 //     provider's finish reason. It never records the conversation, the
 //     shortlist, request headers, environment variables or any credential.
@@ -37,8 +40,16 @@ export type RejectedIntent = {
 
 const MAX_RAW_CHARS = 8000;
 
+// A deployed host, by the signals this application already trusts elsewhere:
+// Vercel identifies itself, and any other platform is named explicitly by the
+// operator. `NODE_ENV` is not one of them, because a local production build
+// sets it too.
+export function looksDeployed(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.VERCEL === "1" || env.ASSISTANT_DEPLOYED === "1";
+}
+
 export function diagnosticsTarget(env: NodeJS.ProcessEnv = process.env): string | null {
-  if (env.NODE_ENV === "production") return null;
+  if (looksDeployed(env)) return null;
   const path = env.ASSISTANT_DIAGNOSTICS_FILE?.trim();
   return path ? path : null;
 }

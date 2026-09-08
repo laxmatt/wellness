@@ -113,6 +113,36 @@ A shared Postgres ledger, required before a live model will run at all.
 
 Reading a total, deciding there is room, then spending is not safe: two requests arriving together both read the same total and both proceed. So the budget is **reserved** instead. Before each call the request reserves the most it could possibly cost in one conditional `UPDATE` that refuses when the cap would be exceeded. After the call the reservation is released and the outcome recorded. Concurrency cannot spend past the cap; the worst case is that a request is refused while other reservations are outstanding. Settlement is keyed on a unique reservation id, so a retry cannot double-count.
 
+### Never point the tests at the application's database
+
+`src/__tests__/postgres-ledger.test.ts` drops every ledger table after each test, because it tests the migration path against a real Postgres. Pointed at a database an application instance is using, it destroys that instance's accounting. That happened on 2026-09-08 and cost this project its only real spend record; see `docs/live-test-results/LEDGER-HISTORY.md`.
+
+Comparing `TEST_DATABASE_URL` to `DATABASE_URL` as text does not prevent it, because two different strings reach the same database through a host alias, a different user, an added option, or a socket instead of TCP. So there are two barriers, of different kinds.
+
+**Permissions, which Postgres enforces.** Give the tests a role that cannot reach the application's database at all:
+
+```
+CREATE ROLE wellness_tester LOGIN PASSWORD '<a local password>';
+REVOKE ALL ON DATABASE <application database> FROM PUBLIC;
+CREATE DATABASE wellness_ledger_test OWNER <application role>;
+GRANT ALL ON DATABASE wellness_ledger_test TO wellness_tester;
+\connect wellness_ledger_test
+GRANT ALL ON SCHEMA public TO wellness_tester;
+```
+
+A misaimed connection string is then refused before any statement runs:
+`FATAL: permission denied for database ... User does not have CONNECT privilege`.
+
+**A marker inside the database, which the suite checks itself.** In the throwaway database only:
+
+```
+CREATE TABLE disposable_test_database (note TEXT);
+```
+
+The suite refuses to run without it, naming the database it reached. Identity is established from inside the database, so no connection-string trick gets past it, and the application's database will never carry the marker.
+
+Set `TEST_DATABASE_URL` to the restricted role on the disposable database. Without it the Postgres tests skip.
+
 Set `DATABASE_URL` to a Postgres instance. The tables are created on first use. Without it the meter falls back to an in-process store, which is marked not shared, and **the route refuses to run a live model against it** rather than enforcing a private cap per instance. For local development on one machine you may set `ASSISTANT_ALLOW_UNSHARED_LEDGER=1`; never set it in a deployed environment.
 
 Cost is computed from `ASSISTANT_INPUT_USD_PER_MTOK` and `ASSISTANT_OUTPUT_USD_PER_MTOK`, dollars per million tokens. **These defaults are a planning assumption, not a quote.** Set them from the provider's current price list, then set `ASSISTANT_PRICES_VERIFIED=1` so the admin endpoint reports that they were checked.
@@ -325,7 +355,11 @@ ASSISTANT_TEST_BASE_URL=http://localhost:3000 npm run assistant:livetest
 ASSISTANT_DIAGNOSTICS_FILE=./.diagnostics/rejected.jsonl NODE_USE_ENV_PROXY=1 npm start
 ```
 
-Each rejection appends one JSON line: the timestamp, the model, the provider's `finish_reason`, the validator's complaints as `path`, `code` and `message`, and the model's own output truncated to 8000 characters. It records no conversation, no shortlist, no headers and no environment, so a visitor's words cannot reach it. It refuses to write at all when `NODE_ENV` is `production`, so setting the variable on a deployed host does nothing. `.diagnostics/` is gitignored; do not commit its contents.
+Each rejection appends one JSON line: the timestamp, the model, the provider's `finish_reason`, the validator's complaints as `path`, `code` and `message`, and the model's own output truncated to 8000 characters. It records no conversation, no shortlist, no headers and no environment, so a visitor's words cannot reach it. `.diagnostics/` is gitignored; do not commit its contents.
+
+It refuses to write on a deployed host, detected by `VERCEL=1` or an explicit `ASSISTANT_DEPLOYED=1`. It deliberately does **not** key off `NODE_ENV`: the private test runs against a production build, so `next start` sets `NODE_ENV=production` and a check on that would switch diagnostics off in the one runtime they exist for. That was the first version of this gate and it was wrong.
+
+Both capture paths are proven against a production build rather than assumed. Point `OPENAI_BASE_URL` at a local stand-in that returns a deliberately invalid reply, run `npm start`, send one request, and read the file. A schema rejection records `hard.0.op`, `soft.0.direction` and `soft.0.weight` with the offending values; a truncated reply records `(body)` with the provider's `finish_reason`. Neither costs anything and neither leaves the machine.
 
 It reads `ADMIN_ACCESS_KEY` from the same `.env.local`, so the secret is not retyped and never appears in your shell history.
 

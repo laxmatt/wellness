@@ -44,7 +44,10 @@ export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c:
     case "eq":
       return raw === c.value;
     case "neq":
-      return raw !== c.value;
+      // An unknown value does not establish that a product differs. "No
+      // caffeine" written as caffeine_mg neq 0 must not admit a drink whose
+      // caffeine is unrecorded: absence of a fact is not evidence of fitness.
+      return raw !== undefined && raw !== c.value;
     case "in":
       return Array.isArray(c.value) && (c.value as unknown[]).includes(raw as unknown);
     case "includes":

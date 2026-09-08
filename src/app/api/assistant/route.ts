@@ -8,6 +8,7 @@ import { resolveClientIdentity } from "@/domain/client-identity";
 import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
+import { reconcileMatchClaim } from "@/domain/match-claims";
 import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
@@ -272,14 +273,20 @@ export async function POST(req: Request) {
   // When the model proposes new constraints, everything shown describes those
   // constraints. Showing the old ranking next to a new proposal is what made
   // the reply, the cards and the proposal disagree.
-  const shown = changed && (proposedHard.length > 0 || proposedSoft.length > 0) ? evaluate(views, cat, proposedHard, proposedSoft, intent.unmapped) : agreed;
+  // Dropping every constraint is a change like any other. Requiring a non-empty
+  // proposal meant "actually, show me everything" produced no proposal at all:
+  // the shopper was told the filters were still there with no way to clear them.
+  const clearing = changed && proposedHard.length === 0 && proposedSoft.length === 0 && (hard.length > 0 || soft.length > 0);
+  const shown = changed && (proposedHard.length > 0 || proposedSoft.length > 0 || clearing) ? evaluate(views, cat, proposedHard, proposedSoft, intent.unmapped) : agreed;
 
   const proposals: ProposedAction[] = [];
   if (shown !== agreed) {
     const constraintText = proposedHard.length > 0 ? proposedHard.map((c) => describeConstraint(cat, c)).join(", ") : "what I am ranking for";
     proposals.push({
       kind: "apply_preferences",
-      summary: `Narrow to ${constraintText} (${shown.matching.length} of ${views.length} products)`,
+      summary: clearing
+        ? `Clear every filter and show all ${shown.matching.length} products`
+        : `Narrow to ${constraintText} (${shown.matching.length} of ${views.length} products)`,
       hard: proposedHard,
       soft: proposedSoft,
       matchingIds: shown.matching.map((v) => v.id),
@@ -298,16 +305,28 @@ export async function POST(req: Request) {
     }
   }
 
+  // The model's prose is checked against the engine's own count before it is
+  // shown. A reply that says nothing matches while the cards show a match is
+  // replaced by the engine's sentence: what the shopper reads and what the
+  // shopper sees now come from the same computation.
+  const reconciled = intent.medicalIntent
+    ? { text: MEDICAL_REDIRECT, replaced: false }
+    : reconcileMatchClaim(intent.reply, shown.matching.length, views.length);
+
   return NextResponse.json(
     reply({
-      text: intent.medicalIntent ? MEDICAL_REDIRECT : intent.reply,
+      text: reconciled.text,
       mode: provider.isLive ? "live" : "prototype",
       cat,
       outcome: shown,
       proposals,
       question: intent.question,
       medicalRedirect: intent.medicalIntent,
-      notice: intent.unmapped.length > 0 ? `Not something this site compares: ${intent.unmapped.join(", ")}.` : undefined,
+      notice: reconciled.replaced
+        ? "The assistant described the results differently from the site's own count, so the count shown here is the site's."
+        : intent.unmapped.length > 0
+          ? `Not something this site compares: ${intent.unmapped.join(", ")}.`
+          : undefined,
     }),
   );
 }

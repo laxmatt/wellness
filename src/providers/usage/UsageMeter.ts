@@ -48,6 +48,9 @@ export const DEFAULT_METER_CONFIG: MeterConfig = {
 
 export type Reservation = { id: string; month: string; sessionId: string; estimateUsd: number };
 
+// A reservation that took budget and never recorded an outcome.
+export type OpenReservation = { reservationId: string; month: string; sessionId: string; heldUsd: number; at: string };
+
 export type ReserveResult =
   | { ok: true; reservation: Reservation }
   | { ok: false; kind: "monthly_cap" | "session_limit" | "client_limit" | "store_error"; reason: string };
@@ -94,6 +97,14 @@ export interface UsageStore {
   settle(reservation: Reservation, outcome: CallOutcome, costUsd: number): Promise<void>;
   snapshot(sessionId: string, month: string, config: MeterConfig): Promise<BudgetSnapshot>;
   listUncertain(month: string): Promise<UncertainCharge[]>;
+  // Reservations taken and never settled. A crash between the call and its
+  // settlement leaves budget held with no outcome; without this an operator
+  // cannot see it, let alone release it.
+  listOpen(month: string, olderThanMs?: number): Promise<OpenReservation[]>;
+  // Operator action: close an open reservation that no process will ever
+  // settle, releasing the budget it holds. Returns false when the id is
+  // unknown or already settled.
+  releaseOpen(reservationId: string): Promise<boolean>;
   // Operator action: replace a held uncertain amount with the real figure from
   // the provider's usage record. Returns false when the id is unknown or was
   // already reconciled.
@@ -176,6 +187,19 @@ export class UsageMeter {
   async listUncertain(): Promise<UncertainCharge[]> {
     await this.store.init();
     return this.store.listUncertain(monthKey());
+  }
+
+  // Default: only reservations old enough that no live request could still be
+  // holding them. A request is bounded by ASSISTANT_TIMEOUT_MS, so anything
+  // older than a few minutes is orphaned rather than in flight.
+  async listOpen(olderThanMs = 10 * 60 * 1000): Promise<OpenReservation[]> {
+    await this.store.init();
+    return this.store.listOpen(monthKey(), olderThanMs);
+  }
+
+  async releaseOpen(reservationId: string): Promise<boolean> {
+    await this.store.init();
+    return this.store.releaseOpen(reservationId);
   }
 
   async reconcile(reservationId: string, actualUsd: number): Promise<boolean> {
