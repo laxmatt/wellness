@@ -30,6 +30,17 @@ For running inside a Claude Code cloud environment on a Pro or Max plan. The key
 
 Set `ASSISTANT_CREDENTIAL_MODE=proxy` and leave `OPENAI_API_KEY` unset. The application then sends no authorization header of its own and lets the proxy supply one.
 
+**Start the server with `NODE_USE_ENV_PROXY=1`.** The proxy attaches the
+credential only to requests that go through it by `CONNECT`, and Node's built-in
+`fetch` ignores `HTTPS_PROXY` unless this is set. Without it the request is
+intercepted and refused with a plain-text `403` before it reaches OpenAI, which
+this application cannot tell apart from a refusal by OpenAI itself, so it holds
+the reservation as an uncertain charge. Two live-test runs failed this way
+before the cause was found; see `docs/live-test-results/2026-09-08T19-20.md`.
+Verify with `NODE_USE_ENV_PROXY=1 node -e "fetch('https://api.openai.com/v1/models').then(r=>console.log(r.status))"`:
+a JSON body from OpenAI means the credential is being attached, a plain-text
+allowlist message means it is not.
+
 Three refusals, all deliberate:
 
 - **A host other than `https://api.openai.com`** is rejected. The proxy attaches credentials by hostname, so any other host would receive an unauthenticated request, or an authenticated one the operator did not intend. The provider re-checks this before every send and fails as `not_billed`.

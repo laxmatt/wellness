@@ -14,8 +14,9 @@ which no test asserts.
 The first run against a live model is `2026-09-08T18-51.md`. It aborted on its
 first case with a 403, so no conversation ran, nothing was billed and no
 extraction was measured. The cause of that 403 is not established: the route
-discards provider error bodies, so nothing recorded what it said. One authorized diagnostic
-request afterwards showed the OpenAI account has no credits, which blocks any
-inference regardless of caps or permissions. The report separates what was
-observed from what was inferred, and lists the claims earlier revisions got
-wrong.
+discards provider error bodies, so nothing recorded what it said. A second run after credits were
+purchased, `2026-09-08T19-20.md`, aborted the same way and established the
+cause: the server's requests never leave for OpenAI, because Node's built-in
+fetch does not use HTTPS_PROXY and the credential is only attached on the
+proxied path. Both reports separate what was observed from what was inferred,
+and list the claims earlier revisions got wrong.
