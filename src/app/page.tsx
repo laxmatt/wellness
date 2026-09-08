@@ -1,84 +1,50 @@
+import { BrandStrip, CategoryTiles, DiscoveryModules, Hero, HowWeChooseCallout, SectionHeading } from "@/components/home/sections";
+import { MiniCard } from "@/components/product/MiniCard";
 import { ProductCard } from "@/components/product/ProductCard";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Chip } from "@/components/ui/Chip";
-import { VerificationTag } from "@/components/ui/VerificationTag";
-import { primaryStrength, primaryTradeoff, recommendCategory } from "@/domain/recommend";
-import { getCatalog } from "@/providers";
+import { Shell } from "@/components/site/Shell";
+import { primaryStrength } from "@/domain/recommend";
+import { getAllCategoryPages, getBrands } from "@/lib/queries";
 
-// Phase 1 smoke route. Proves tokens, primitives and the catalog pipeline
-// render. Replaced by the storefront homepage in Phase 2.
-export default async function SmokePage() {
-  const catalog = getCatalog();
-  const categories = await catalog.listCategories();
-  const sections = await Promise.all(
-    categories.map(async (cat) => {
-      const views = await catalog.listProductViews({ categoryId: cat.id, status: ["published"] });
-      return { cat, rec: recommendCategory(views, cat) };
-    }),
-  );
+export default async function HomePage() {
+  const [pages, brands] = await Promise.all([getAllCategoryPages(), getBrands()]);
 
-  const swatches = [
-    ["ivory", "bg-ivory"], ["ivory-deep", "bg-ivory-deep"], ["paper", "bg-paper"], ["ink", "bg-ink"], ["ink-soft", "bg-ink-soft"],
-    ["ink-mute", "bg-ink-mute"], ["line", "bg-line"], ["ember", "bg-ember"], ["ember-soft", "bg-ember-soft"], ["tide", "bg-tide"],
-    ["tide-soft", "bg-tide-soft"], ["moss", "bg-moss"], ["honey", "bg-honey"], ["plum", "bg-plum"],
-  ];
+  // Featured: each category's Best Overall, then Best Value picks, up to 4.
+  const featured = [
+    ...pages.map((p) => p.products.find((x) => x.badges.includes("best_overall"))).filter(Boolean),
+    ...pages.map((p) => p.products.find((x) => x.badges.includes("best_value") && !x.badges.includes("best_overall"))).filter(Boolean),
+  ].slice(0, 4) as NonNullable<(typeof pages)[number]["products"][number]>[];
+  const catOf = (categoryId: string) => pages.find((p) => p.cat.id === categoryId)!.cat;
+
+  const notable = pages.flatMap((p) => p.products.filter((x) => x.view.flags.newArrival)).slice(0, 4);
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <p className="eyebrow">Phase 1 smoke test</p>
-      <h1 className="font-display mt-2 text-5xl leading-none sm:text-6xl">Warm tech, on the page.</h1>
-      <p className="mt-4 max-w-xl text-lg text-ink-soft">
-        Tokens, type, badges, verification tags and product cards per category, rendered from the catalog through the recommendation engine.
-      </p>
+    <Shell current="/">
+      <Hero pages={pages} />
+      <div className="mt-4 flex flex-col gap-20">
+        <CategoryTiles pages={pages} />
 
-      <section className="mt-12">
-        <h2 className="eyebrow">Color</h2>
-        <div className="mt-3 grid grid-cols-4 gap-3 sm:grid-cols-7">
-          {swatches.map(([name, cls]) => (
-            <div key={name} className="flex flex-col gap-1.5">
-              <div className={`h-14 rounded-xl border border-line ${cls}`} />
-              <span className="text-xs text-ink-mute">{name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-10 flex flex-wrap items-center gap-3">
-        <Button>Primary</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Chip>Under $500</Chip>
-        <Chip selected>Full body</Chip>
-        <Badge kind="best_overall" />
-        <Badge kind="best_value" />
-        <Badge kind="best_budget" />
-        <Badge kind="best_premium" />
-        <Badge kind="best_match" />
-        <VerificationTag verification="manufacturer_reported" />
-        <VerificationTag verification="independently_verified" />
-        <VerificationTag verification="demo" />
-        <VerificationTag verification="unknown" />
-      </section>
-
-      {sections.map(({ cat, rec }) => (
-        <section key={cat.id} className="mt-14">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="eyebrow">{cat.navLabel}</p>
-              <h2 className="font-display mt-1 text-3xl">{cat.tagline}</h2>
-            </div>
-            <p className="text-sm text-ink-mute">
-              {rec.products.length} products · {rec.set.badges.length} badges
-            </p>
-          </div>
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Featured" title="Category winners." href="/how-we-choose" linkLabel="How badges work" />
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {rec.products.slice(0, 4).map((item) => (
-              <ProductCard key={item.view.id} item={item} strength={primaryStrength(item.view, cat)} tradeoff={primaryTradeoff(item.view, cat)} />
+            {featured.map((item, i) => (
+              <ProductCard key={item.view.id} item={item} cat={catOf(item.view.categoryId)} priority={i < 2} />
             ))}
           </div>
         </section>
-      ))}
-    </main>
+
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="New and notable" title="Recently added." />
+          <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {notable.map((item) => (
+              <MiniCard key={item.view.id} item={item} note={primaryStrength(item.view, catOf(item.view.categoryId))} />
+            ))}
+          </div>
+        </section>
+
+        <DiscoveryModules pages={pages} />
+        <HowWeChooseCallout />
+        <BrandStrip brands={brands} />
+      </div>
+    </Shell>
   );
 }

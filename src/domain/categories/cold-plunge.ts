@@ -206,10 +206,10 @@ export const coldPlunge = CategoryDefinition.parse({
     { id: "premium", label: "Over $5,000" },
   ],
   facets: [
-    { slug: "with-chiller", title: "Cold Plunges With a Chiller", description: "Systems with an included chiller and temperature control.", conditions: [{ key: "chiller_included", op: "eq", value: true }] },
-    { slug: "under-2000", title: "Cold Plunges Under $2,000", description: "Tubs and inflatables priced under $2,000.", conditions: [{ key: "price", op: "lt", value: 200000 }] },
-    { slug: "under-5000", title: "Cold Plunges Under $5,000", description: "Mid-range systems priced under $5,000.", conditions: [{ key: "price", op: "lt", value: 500000 }] },
-    { slug: "indoor", title: "Indoor Cold Plunges", description: "Rated by the manufacturer for indoor placement.", conditions: [{ key: "placement", op: "includes", value: "indoor" }] },
+    { slug: "with-chiller", label: "With a chiller", title: "Cold Plunges With a Chiller", description: "Systems with an included chiller and temperature control.", conditions: [{ key: "chiller_included", op: "eq", value: true }] },
+    { slug: "under-2000", label: "Under $2,000", title: "Cold Plunges Under $2,000", description: "Tubs and inflatables priced under $2,000.", conditions: [{ key: "price", op: "lt", value: 200000 }] },
+    { slug: "under-5000", label: "Under $5,000", title: "Cold Plunges Under $5,000", description: "Mid-range systems priced under $5,000.", conditions: [{ key: "price", op: "lt", value: 500000 }] },
+    { slug: "indoor", label: "Indoor", title: "Indoor Cold Plunges", description: "Rated by the manufacturer for indoor placement.", conditions: [{ key: "placement", op: "includes", value: "indoor" }] },
   ],
   matcherVocabulary: {
     chiller_included: {

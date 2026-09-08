@@ -247,10 +247,10 @@ export const wellnessDrinks = CategoryDefinition.parse({
     { id: "premium", label: "Over $2.50 per serving" },
   ],
   facets: [
-    { slug: "electrolytes", title: "Electrolyte Drinks", description: "Electrolyte mixes compared by sodium, sugar and cost per serving.", conditions: [{ key: "function", op: "includes", value: "electrolytes" }] },
-    { slug: "greens", title: "Greens Powders", description: "Daily greens compared by serving cost and label.", conditions: [{ key: "function", op: "includes", value: "greens" }] },
-    { slug: "energy", title: "Energy Drinks", description: "Caffeinated functional drinks compared by caffeine, sugar and cost.", conditions: [{ key: "function", op: "includes", value: "energy" }] },
-    { slug: "sugar-free", title: "Sugar-Free Wellness Drinks", description: "Zero-sugar options across every function.", conditions: [{ key: "sugar_g", op: "eq", value: 0 }] },
+    { slug: "electrolytes", label: "Electrolytes", title: "Electrolyte Drinks", description: "Electrolyte mixes compared by sodium, sugar and cost per serving.", conditions: [{ key: "function", op: "includes", value: "electrolytes" }] },
+    { slug: "greens", label: "Greens", title: "Greens Powders", description: "Daily greens compared by serving cost and label.", conditions: [{ key: "function", op: "includes", value: "greens" }] },
+    { slug: "energy", label: "Energy", title: "Energy Drinks", description: "Caffeinated functional drinks compared by caffeine, sugar and cost.", conditions: [{ key: "function", op: "includes", value: "energy" }] },
+    { slug: "sugar-free", label: "Sugar-free", title: "Sugar-Free Wellness Drinks", description: "Zero-sugar options across every function.", conditions: [{ key: "sugar_g", op: "eq", value: 0 }] },
   ],
   matcherVocabulary: {
     function: {

@@ -204,10 +204,10 @@ export const redLight = CategoryDefinition.parse({
     { id: "premium", label: "Over $1,000" },
   ],
   facets: [
-    { slug: "full-body", title: "Full-Body Red Light Panels", description: "Panels 35 inches and taller, sized for standing sessions.", conditions: [{ key: "coverage", op: "eq", value: "full_body" }] },
-    { slug: "targeted", title: "Targeted Red Light Panels", description: "Compact panels for face, joints and desk use.", conditions: [{ key: "coverage", op: "eq", value: "targeted" }] },
-    { slug: "under-500", title: "Red Light Panels Under $500", description: "Every panel we track priced under $500.", conditions: [{ key: "price", op: "lt", value: 50000 }] },
-    { slug: "under-1000", title: "Red Light Panels Under $1,000", description: "Mid-range panels priced under $1,000.", conditions: [{ key: "price", op: "lt", value: 100000 }] },
+    { slug: "full-body", label: "Full body", title: "Full-Body Red Light Panels", description: "Panels 35 inches and taller, sized for standing sessions.", conditions: [{ key: "coverage", op: "eq", value: "full_body" }] },
+    { slug: "targeted", label: "Targeted", title: "Targeted Red Light Panels", description: "Compact panels for face, joints and desk use.", conditions: [{ key: "coverage", op: "eq", value: "targeted" }] },
+    { slug: "under-500", label: "Under $500", title: "Red Light Panels Under $500", description: "Every panel we track priced under $500.", conditions: [{ key: "price", op: "lt", value: 50000 }] },
+    { slug: "under-1000", label: "Under $1,000", title: "Red Light Panels Under $1,000", description: "Mid-range panels priced under $1,000.", conditions: [{ key: "price", op: "lt", value: 100000 }] },
   ],
   matcherVocabulary: {
     coverage: {

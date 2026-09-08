@@ -2,7 +2,7 @@
 
 Premium wellness storefront plus comparison tool. Launch categories: red light therapy, cold plunges, functional wellness drinks. This repository is the standalone product. Nothing here depends on the printer site.
 
-Status: Phase 1 complete. Architecture, data model, design tokens, provider interfaces, recommendation engine, and a 20-product demo catalog. No public pages beyond a smoke route.
+Status: Phase 2 complete. Storefront homepage, category and facet pages, product detail pages, compare table, brands, explore, How We Choose. Matcher rendered but inert until Phase 4.
 
 ## Run
 
@@ -79,7 +79,7 @@ Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader reject
 ## Phases
 
 1. Done. Architecture, model, tokens, catalog, engine, tests.
-2. Homepage and full Red Light experience. Stop for review.
+2. Done. Homepage, category and facet pages, product detail, compare table, supporting pages.
 3. Compare views, relaxation search, personalization core.
 4. Matcher in the UI with the mock provider, then a real AIProvider behind a flag.
 5. Cold Plunge and Wellness Drinks through the same components.

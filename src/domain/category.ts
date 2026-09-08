@@ -76,6 +76,8 @@ export const PriceTier = z.object({
 
 export const FacetPage = z.object({
   slug: Slug,
+  // Short chip label ("Full body"). title is the page heading.
+  label: z.string().min(1).max(24),
   title: z.string(),
   description: z.string(),
   conditions: z.array(Condition).min(1),

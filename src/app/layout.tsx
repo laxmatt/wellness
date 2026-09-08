@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
+import { CompareProvider } from "@/components/compare/CompareProvider";
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -17,14 +19,17 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Wellness Compare",
-  description: "Compare red light panels, cold plunges and wellness drinks on the specs that matter.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: `${SITE_NAME}. ${SITE_TAGLINE}`, template: `%s | ${SITE_NAME}` },
+  description: "Compare red light panels, cold plunges and wellness drinks on the specs that matter, with sources shown.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <CompareProvider>{children}</CompareProvider>
+      </body>
     </html>
   );
 }

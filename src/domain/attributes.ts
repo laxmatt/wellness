@@ -75,7 +75,7 @@ export function formatAttribute(def: AttributeDefinition, value: AttributePrimit
       return opt?.label ?? String(value);
     }
     case "list":
-      return Array.isArray(value) ? value.join(", ") : String(value);
+      return Array.isArray(value) ? (value as string[]).map(humanize).join(", ") : humanize(String(value));
     case "number_list":
       return Array.isArray(value)
         ? value.map((v) => `${v}${def.unit ?? ""}`).join(", ")
@@ -92,6 +92,11 @@ export function formatAttribute(def: AttributeDefinition, value: AttributePrimit
     default:
       return String(value);
   }
+}
+
+export function humanize(v: string): string {
+  const s = v.replace(/_/g, " ");
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 export function validateAttributeAgainstDefinition(
