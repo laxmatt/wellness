@@ -14,6 +14,8 @@ which no test asserts.
 The first run against a live model is `2026-09-08T18-51.md`. It aborted on its
 first case with a 403, so no conversation ran, nothing was billed and no
 extraction was measured. The cause of that 403 is not established: the route
-discards provider error bodies, so nothing recorded what it said. The report
-separates what was observed from what was inferred, and lists one claim an
-earlier revision got wrong.
+discards provider error bodies, so nothing recorded what it said. One authorized diagnostic
+request afterwards showed the OpenAI account has no credits, which blocks any
+inference regardless of caps or permissions. The report separates what was
+observed from what was inferred, and lists the claims earlier revisions got
+wrong.

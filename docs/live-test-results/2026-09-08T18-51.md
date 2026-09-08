@@ -91,26 +91,82 @@ record for this timestamp, which nothing in this container can read.
    after the request left this session, OpenAI evaluated it, and answered about
    that specific key's scopes. The key never entered the session.
 
-## Not established
+## Diagnostic POST, 2026-09-08T19:08:27Z
 
-1. **Why the POST returned 403.** The scope the GET names, `api.model.read`,
-   governs listing models. It does not govern chat completions. The operator
-   reports that the chat completions permission on this key is set to Request.
-   Nothing observed here contradicts that, and nothing observed here explains
-   the POST.
-2. **Whether the POST's 403 came from OpenAI or from an intermediary.** The
-   headers and body that would answer it were discarded before anything recorded
-   them.
-3. **Whether a credential was attached to the POST.** Confirmed for
-   `GET /v1/models`. Not tested for `POST /v1/chat/completions`, which is a
-   different path and method.
+One authorized `POST https://api.openai.com/v1/chat/completions`, sent by `curl`
+outside the application, with `gpt-4o-mini`, a one-word prompt and
+`max_tokens: 1`. Not retried.
+
+**Status 429.** Body:
+
+```json
+{
+  "error": {
+    "message": "You have no credits remaining. Add credits to continue using
+                the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
+    "param": null,
+    "code": "credit_balance_exhausted"
+  }
+}
+```
+
+Selected response headers:
+
+```
+X-Request-Id: req_b6be4a2d4836414b8b2f9f65249f4754
+X-Openai-Proxy-Wasm: v0.1
+Cf-Ray: a3803de38de9d909-IAD
+Server: cloudflare
+Content-Type: application/json; charset=utf-8
+Date: Tue, 08 Sep 2026 19:08:27 GMT
+```
+
+No `usage` object was returned, because no inference ran. **Cost: $0.00.** No
+`X-Proxy-Error` header, so Anthropic's agent proxy relayed this request rather
+than denying it.
+
+This request went through `curl`, not the application. **It bypassed the ledger
+entirely**: no reservation was taken, no outcome was settled, and no row was
+written to `assistant_usage`. The ledger still holds exactly one row, the
+uncertain charge from the aborted run.
+
+### What the diagnostic establishes
+
+1. **Credential injection works on `POST /v1/chat/completions`.** The request
+   carried no authorization header of its own, reached OpenAI, and was answered
+   about the account's billing state. That was previously untested on this path
+   and method.
+2. **Chat completions permission is not the current blocker.** A permission
+   denial returns 403 with an authorization error. This is 429 with
+   `insufficient_quota` and `credit_balance_exhausted`, which is a billing state,
+   not a scope decision.
+3. **The account has no credits.** No inference will run, at any cap or any
+   permission setting, until credits are added. The provider's $5 hard limit is
+   not the binding constraint while the balance is zero.
+4. **Had the application made this call, it would have settled correctly.** The
+   body is JSON whose `error` field is an object, so `statusError` classifies it
+   `not_billed` and releases the reservation. No uncertain hold.
+
+## Still not established
+
+1. **Why the run's POST returned 403 at 18:51.** The diagnostic 17 minutes later
+   returned 429, a different status with a different cause. The earlier body was
+   discarded, so the two observations cannot be reconciled from evidence.
+   Candidates, neither confirmed: the key lacked inference permission at 18:51
+   and gained it before 19:08, or an intermediary denied that request. Nothing
+   retained distinguishes them.
+2. **Whether the credential was attached to the run's POST.** Injection is now
+   confirmed on this path in general. It is not confirmed for that specific
+   earlier request.
 
 ## Withdrawn
 
 An earlier revision of this file claimed the POST failed because the key lacks a
 model inference scope, and listed provider-side permission changes as the fix.
 That was an assumption carried over from the GET, and it is withdrawn. The GET
-establishes only that model listing is denied.
+establishes only that model listing is denied. The diagnostic POST above did not
+rescue that claim either: it failed on billing, not permission.
 
 Also withdrawn: the argument that a JSON body whose `error` field is a string is
 evidence of OpenAI origin. It is not. An intermediary can return that shape. The
@@ -142,9 +198,11 @@ Neither is done, and neither should be done without a decision:
   credential-scrubbed body excerpt for non-2xx responses. This is a change to
   the rule that error bodies are discarded entirely, so it needs a deliberate
   decision about what is safe to keep.
-- **One controlled POST.** A single `POST /v1/chat/completions` with a one-word
-  prompt and `max_tokens: 1`, capturing headers. A 403 costs nothing and names
-  the reason. A success costs roughly $0.0003 and proves the permission is live.
+- **One controlled POST.** Done, above. It cost nothing and named a cause, but a
+  different one from the run's failure.
+- **Add credits to the OpenAI account.** Nothing else can proceed first. Until
+  then a re-run fails at case 1 on 429, and the ledger will record it correctly
+  as `not_billed` rather than holding budget.
 
 ## Extraction
 
