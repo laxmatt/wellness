@@ -218,6 +218,10 @@ export const wellnessDrinks = CategoryDefinition.parse({
       { key: "calories", weight: 0.5 },
       { key: "subscription_available", weight: 0.5 },
     ],
+    label: "Label score",
+    meaning:
+      "How the nutrition label reads against our criteria: less sugar and fewer calories score higher. It says nothing about taste, ingredient quality or whether the formula suits you.",
+    segmentKey: "function",
     completenessFloor: 0.75,
   },
   value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "attribute:price_per_serving_minor" },

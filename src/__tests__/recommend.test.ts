@@ -135,10 +135,11 @@ describe("affiliate neutrality", () => {
     }
   });
 
-  it("ScoringInput carries no offer data", () => {
+  it("ScoringInput carries no offer or affiliate data", () => {
     const v = viewsFor("red-light")[0];
     const input = toScoringInput(v);
-    expect(Object.keys(input).sort()).toEqual(["attributes", "id", "priceMinor"]);
+    expect(Object.keys(input).sort()).toEqual(["attributes", "demoKeys", "id", "priceIsDemo", "priceMinor"]);
+    expect(JSON.stringify(input)).not.toMatch(/affiliate|merchant|offer|http/i);
   });
 });
 

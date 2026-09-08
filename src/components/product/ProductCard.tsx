@@ -52,12 +52,10 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             {strength}
           </p>
         ) : null}
-        {tradeoff ? (
-          <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
-            <span className="font-semibold text-accent-strong">Tradeoff: </span>
-            {tradeoff}
-          </p>
-        ) : null}
+        <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
+          <span className="font-semibold text-accent-strong">Tradeoff: </span>
+          {tradeoff ?? "Not assessed"}
+        </p>
         <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a

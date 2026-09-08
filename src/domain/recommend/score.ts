@@ -6,20 +6,34 @@ import type { ProductView } from "../view";
 
 // ScoringInput deliberately carries no offer or affiliate data. Ranking cannot
 // see who pays us. Price here is the display price, used only for value and
-// tier rules, never inside the quality score.
+// tier rules, never inside the capability score.
 export type ScoringInput = {
   id: string;
   priceMinor: number;
+  priceIsDemo: boolean;
   attributes: Record<string, AttributePrimitive>;
+  // Attributes withheld because their value is a placeholder. They score zero
+  // and count against completeness, exactly like a missing value.
+  demoKeys: string[];
 };
 
+// Demo values never reach the score. A placeholder is not evidence, so it is
+// treated as absent rather than as a measurement.
 export function toScoringInput(view: ProductView): ScoringInput {
-  return { id: view.id, priceMinor: view.price.money.amountMinor, attributes: view.attributes };
+  const attributes: Record<string, AttributePrimitive> = {};
+  const demoKeys: string[] = [];
+  for (const [key, value] of Object.entries(view.attributes)) {
+    if (view.provenance[`attributes.${key}`]?.verification === "demo") demoKeys.push(key);
+    else attributes[key] = value;
+  }
+  return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys };
 }
 
 export type CriterionContribution = {
   key: string;
   weight: number;
+  // Weight as a share of the category total, for display.
+  share: number;
   raw: number | undefined;
   normalized: number;
   contribution: number;
@@ -31,6 +45,8 @@ export type ScoreResult = {
   completeness: number;
   eligible: boolean;
   criteria: CriterionContribution[];
+  // Scoring criteria whose value was withheld as demo data.
+  demoCriteria: string[];
 };
 
 export function numericFor(input: ScoringInput, cat: CategoryDefinition, key: string): number | undefined {
@@ -62,6 +78,7 @@ export function scoreProducts(inputs: ScoringInput[], cat: CategoryDefinition): 
     if (values.length > 0) ranges.set(c.key, { min: Math.min(...values), max: Math.max(...values) });
   }
   const totalWeight = cat.scoring.criteria.reduce((s, c) => s + c.weight, 0);
+  const shareOf = (w: number) => w / totalWeight;
 
   return inputs.map((input) => {
     const criteria: CriterionContribution[] = cat.scoring.criteria.map((c) => {
@@ -73,10 +90,11 @@ export function scoreProducts(inputs: ScoringInput[], cat: CategoryDefinition): 
         const dir = attributeDef(cat, c.key)?.preferenceDirection ?? "neutral";
         if (dir === "lower_better") normalized = 1 - normalized;
       }
-      return { key: c.key, weight: c.weight, raw, normalized, contribution: (c.weight * normalized) / totalWeight };
+      return { key: c.key, weight: c.weight, share: shareOf(c.weight), raw, normalized, contribution: (c.weight * normalized) / totalWeight };
     });
     const score = Math.round(criteria.reduce((s, c) => s + c.contribution, 0) * 1000) / 10;
     const completeness = completenessOf(input, cat);
-    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria };
+    const demoCriteria = cat.scoring.criteria.map((c) => c.key).filter((k) => input.demoKeys.includes(k));
+    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria, demoCriteria };
   });
 }

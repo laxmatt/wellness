@@ -26,6 +26,9 @@ export type RecommendationSet = {
   badgesByProduct: Record<string, Badge[]>;
   // Eligible products sorted by score desc, tie-broken deterministically.
   ranking: string[];
+  // Badges deliberately not awarded, and why. The UI states these rather than
+  // silently showing fewer picks.
+  withheld: { badge: Badge; reason: string }[];
 };
 
 function tieBreakCompare(a: ScoringInput, b: ScoringInput, cat: CategoryDefinition): number {
@@ -52,6 +55,10 @@ export function rankByScore(inputs: ScoringInput[], scores: Map<string, ScoreRes
 //   Best Value:   highest value-formula result among eligible products. May be
 //                 the same product as Best Overall; both are recorded, and the
 //                 UI shows Overall with a value note rather than two badges.
+// Best Value, Best Budget and Best Premium are claims about price, so a product
+// whose price is a placeholder cannot win them. Best Overall is not a price
+// claim, so it stands. Demo attribute values never reach the score at all;
+// toScoringInput drops them.
 //   Best Budget:  highest score among products at or under budgetMaxMinor,
 //                 awarded only when at least minQualifying products sit in the
 //                 tier, and never to a product already holding a badge.
@@ -67,6 +74,15 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
   const ranked = rankByScore(eligible, scores, cat);
   const taken = new Set<string>();
   const badges: BadgeAssignment[] = [];
+  const withheld: { badge: Badge; reason: string }[] = [];
+
+  // Price-based badges only consider products with an observed price.
+  const priced = eligible.filter((i) => !i.priceIsDemo);
+  const demoPricedCount = eligible.length - priced.length;
+  const demoPriceNote =
+    demoPricedCount === 0
+      ? ""
+      : ` ${demoPricedCount} of ${eligible.length} products carry placeholder prices and were left out of price-based picks.`;
 
   const overall = ranked[0];
   if (overall) {
@@ -74,11 +90,11 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
     badges.push({
       badge: "best_overall",
       productId: overall.id,
-      reason: `Highest weighted score (${scores.get(overall.id)!.score}) across ${cat.scoring.criteria.length} criteria.`,
+      reason: `Highest ${cat.scoring.label.toLowerCase()} (${scores.get(overall.id)!.score}) across ${cat.scoring.criteria.length} weighted criteria.`,
     });
   }
 
-  const valueRanked = eligible
+  const valueRanked = priced
     .filter((i) => values.get(i.id)!.eligible)
     .sort((a, b) => {
       const d = values.get(b.id)!.value - values.get(a.id)!.value;
@@ -90,13 +106,19 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
     badges.push({
       badge: "best_value",
       productId: value.id,
-      reason: `Best score-to-price balance under the category value formula (value ${values.get(value.id)!.value}).`,
+      reason: `Best balance of ${cat.scoring.label.toLowerCase()} and price under the category value formula (value ${values.get(value.id)!.value}).${demoPriceNote}`,
+    });
+  } else {
+    withheld.push({
+      badge: "best_value",
+      reason: demoPricedCount > 0 ? `No product has an observed price yet. ${demoPricedCount} of ${eligible.length} prices are placeholders.` : "No product qualified under the value formula.",
     });
   }
 
   const basis = cat.badges.priceBasis;
+  const rankedPriced = ranked.filter((i) => !i.priceIsDemo);
   const inTier = (pred: (p: number) => boolean) =>
-    ranked.filter((i) => {
+    rankedPriced.filter((i) => {
       const p = numericFor(i, cat, basis);
       return p !== undefined && pred(p);
     });
@@ -109,9 +131,14 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
       badges.push({
         badge: "best_budget",
         productId: winner.id,
-        reason: `Highest score among ${budgetTier.length} products at or under the budget line.`,
+        reason: `Highest ${cat.scoring.label.toLowerCase()} among ${budgetTier.length} priced products at or under the budget line.${demoPriceNote}`,
       });
     }
+  } else {
+    withheld.push({
+      badge: "best_budget",
+      reason: `Fewer than ${cat.badges.minQualifying} products with an observed price sit under the budget line.${demoPriceNote}`,
+    });
   }
 
   const premiumTier = inTier((p) => p >= cat.badges.premiumMinMinor);
@@ -122,9 +149,14 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
       badges.push({
         badge: "best_premium",
         productId: winner.id,
-        reason: `Highest score among ${premiumTier.length} products at or above the premium line.`,
+        reason: `Highest ${cat.scoring.label.toLowerCase()} among ${premiumTier.length} priced products at or above the premium line.${demoPriceNote}`,
       });
     }
+  } else {
+    withheld.push({
+      badge: "best_premium",
+      reason: `Fewer than ${cat.badges.minQualifying} products with an observed price sit at or above the premium line.${demoPriceNote}`,
+    });
   }
 
   const badgesByProduct: Record<string, Badge[]> = {};
@@ -136,5 +168,6 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
     badges,
     badgesByProduct,
     ranking: ranked.map((i) => i.id),
+    withheld,
   };
 }

@@ -70,6 +70,7 @@ export const redLight = CategoryDefinition.parse({
       compareOrder: 40,
       preferenceDirection: "higher_better",
       alwaysShowVerification: true,
+      comparabilityKey: "irradiance_distance_in",
       tooltip: "Manufacturer-reported figure at the stated distance. Measurement methods differ across brands. Not comparable with precision.",
     },
     {
@@ -175,6 +176,10 @@ export const redLight = CategoryDefinition.parse({
       { key: "warranty_years", weight: 1.5 },
       { key: "return_window_days", weight: 0.5 },
     ],
+    label: "Capability score",
+    meaning:
+      "How much this panel does: coverage area, light output and the warranty behind it. It is not a quality grade. A targeted panel scores lower because it covers less, not because it is built worse.",
+    segmentKey: "coverage",
     completenessFloor: 0.75,
   },
   value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "price" },

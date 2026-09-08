@@ -164,10 +164,10 @@ describe("compare model", () => {
     expect(wavelengths.cells.every((c) => !c.best)).toBe(true);
   });
 
-  it("marks the cheapest product on price", () => {
+  it("does not mark a price winner while any price in the set is a placeholder", () => {
     const price = model.groups[0].rows.find((r) => r.key === "price")!;
-    const cheapest = model.columns.findIndex((c) => c.id === "hooga-hg300");
-    expect(price.cells[cheapest].best).toBe(true);
+    expect(price.cells.every((c) => !c.best)).toBe(true);
+    expect(price.notComparable).toMatch(/placeholder/);
   });
 
   it("flags rows where every product states the same value", () => {

@@ -156,13 +156,21 @@ export function InsightsPanel({ insights, view }: { insights: Insight[]; view: P
       <section className="rounded-card bg-positive-soft/60 p-5">
         <h3 className="eyebrow text-positive">Strengths</h3>
         <ul className="mt-2 flex flex-col gap-2 text-sm">
-          {strengths.length === 0 ? <li className="text-fg-muted">No standout strengths under our rules.</li> : strengths.map((t) => <li key={t}>{t}</li>)}
+          {strengths.length === 0 ? (
+            <li className="text-fg-muted">No strengths flagged from the stated specs.</li>
+          ) : (
+            strengths.map((t) => <li key={t}>{t}</li>)
+          )}
         </ul>
       </section>
       <section className="rounded-card bg-accent-soft/60 p-5">
         <h3 className="eyebrow text-accent-strong">Tradeoffs</h3>
         <ul className="mt-2 flex flex-col gap-2 text-sm">
-          {tradeoffs.length === 0 ? <li className="text-fg-muted">No tradeoffs flagged under our rules.</li> : tradeoffs.map((t) => <li key={t}>{t}</li>)}
+          {tradeoffs.length === 0 ? (
+            <li className="text-fg-muted">Tradeoffs not assessed. Our rules found nothing to flag from the stated specs, which is not the same as finding none.</li>
+          ) : (
+            tradeoffs.map((t) => <li key={t}>{t}</li>)
+          )}
         </ul>
       </section>
       {neutral.length > 0 ? (

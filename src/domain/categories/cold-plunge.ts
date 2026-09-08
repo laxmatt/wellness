@@ -174,6 +174,10 @@ export const coldPlunge = CategoryDefinition.parse({
       { key: "min_temp_f", weight: 1 },
       { key: "fits_height_in", weight: 0.5 },
     ],
+    label: "Capability score",
+    meaning:
+      "How much of the work the product does for you: temperature control, insulation, sanitation and the warranty behind it. A tub with no chiller scores lower because you supply the ice, not because it is built worse.",
+    segmentKey: "chiller_included",
     completenessFloor: 0.75,
   },
   // 0.50 / 0.50 by review decision: at 0.65 / 0.35 a $9,599 tub won Best Value.

@@ -40,6 +40,11 @@ export const AttributeDefinition = z.object({
   // Manufacturer claims for this attribute are commonly disputed; UI must
   // always render the verification tag next to the value.
   alwaysShowVerification: z.boolean().default(false),
+  // Names the attribute that states the conditions this measurement was taken
+  // under (e.g. irradiance is only comparable at a stated distance). When any
+  // product in a comparison is missing that condition, or the conditions
+  // differ, no winner is marked for this attribute.
+  comparabilityKey: z.string().optional(),
   // Upper bound applied to the numeric value inside scoring only. Display and
   // filters keep the real value. Example: warranty_years capped at 5 so
   // lifetime warranties do not dominate normalization.

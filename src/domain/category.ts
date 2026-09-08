@@ -29,6 +29,16 @@ export const ScoringCriterion = z.object({
 
 export const ScoringConfig = z.object({
   criteria: z.array(ScoringCriterion).min(1),
+  // What the number measures, in the UI's words. Never "quality" unless the
+  // criteria genuinely measure build quality: a weighted sum over capability
+  // attributes ranks suitability for the category's dominant use, and a
+  // smaller product is not a worse one.
+  label: z.string().default("Capability score"),
+  // One sentence shown wherever the number appears.
+  meaning: z.string(),
+  // Segments that share a scale. Products in different segments are compared
+  // on the same axis, so the copy must say what the axis rewards.
+  segmentKey: z.string().optional(),
   // Share of required attributes a product must have to be badge-eligible.
   completenessFloor: z.number().min(0).max(1).default(0.6),
 });

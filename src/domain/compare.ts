@@ -22,6 +22,9 @@ export type CompareRow = {
   cells: CompareCell[];
   // Every product states the same value. The UI can fold these away.
   same: boolean;
+  // Set when no winner is marked because the values are not comparable, e.g.
+  // one product states irradiance without the distance it was measured at.
+  notComparable?: string;
 };
 
 export type CompareGroup = { label: string; rows: CompareRow[] };
@@ -42,10 +45,43 @@ export type CompareModel = {
   groups: CompareGroup[];
 };
 
+function isDemoValue(view: ProductView, key: string): boolean {
+  return view.provenance[`attributes.${key}`]?.verification === "demo";
+}
+
+// A winner is only marked when the numbers mean the same thing. Three ways a
+// row fails that test: the attribute has no better-or-worse direction, some
+// value is a placeholder, or the attribute was measured under conditions that
+// are missing or differ between products (irradiance at an unstated distance).
+function comparability(items: RecommendedProduct[], cat: CategoryDefinition, key: string): { ok: true } | { ok: false; reason?: string } {
+  const def = key === "price" ? undefined : attributeDef(cat, key);
+  const dir = key === "price" ? "lower_better" : (def?.preferenceDirection ?? "neutral");
+  if (dir === "neutral") return { ok: false };
+
+  if (key !== "price" && items.some((it) => isDemoValue(it.view, key))) {
+    return { ok: false, reason: "Not ranked: at least one value here is placeholder data." };
+  }
+  if (key === "price" && items.some((it) => it.view.price.isDemo)) {
+    return { ok: false, reason: "Not ranked: at least one price here is a placeholder." };
+  }
+
+  const condKey = def?.comparabilityKey;
+  if (condKey) {
+    const stated = items.map((it) => it.view.attributes[condKey]);
+    const condLabel = (attributeDef(cat, condKey)?.shortLabel ?? condKey).toLowerCase();
+    if (stated.some((v) => v === undefined)) {
+      return { ok: false, reason: `Not ranked: ${condLabel} is not stated for every product, so these figures are not comparable.` };
+    }
+    if (new Set(stated.map((v) => JSON.stringify(v))).size > 1) {
+      return { ok: false, reason: `Not ranked: these figures were measured at a different ${condLabel}.` };
+    }
+  }
+  return { ok: true };
+}
+
 function bestIndexes(items: RecommendedProduct[], cat: CategoryDefinition, key: string): Set<number> {
-  // "price" is not an attribute definition; cheaper is better by convention.
+  if (!comparability(items, cat, key).ok) return new Set();
   const dir = key === "price" ? "lower_better" : (attributeDef(cat, key)?.preferenceDirection ?? "neutral");
-  if (dir === "neutral") return new Set();
   const vals = items.map((it) => comparable(it.view, cat, key));
   const present = vals.filter((v): v is number => v !== undefined);
   if (present.length < 2) return new Set();
@@ -72,6 +108,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
   }));
 
   const priceBest = bestIndexes(items, cat, "price");
+  const priceComparable = comparability(items, cat, "price");
   const scores = items.map((it) => it.score);
   const topScore = Math.max(...scores);
 
@@ -83,10 +120,11 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         label: "Price",
         cells: items.map((it, i) => ({ text: formatMoney(it.view.price.money), best: priceBest.has(i) })),
         same: new Set(items.map((it) => it.view.price.money.amountMinor)).size === 1,
+        notComparable: priceComparable.ok ? undefined : priceComparable.reason,
       },
       {
         key: "score",
-        label: "Quality score",
+        label: cat.scoring.label,
         cells: items.map((it) => ({ text: `${it.score} / 100`, best: it.score === topScore && new Set(scores).size > 1 })),
         same: new Set(scores).size === 1,
       },
@@ -99,7 +137,8 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "tradeoff",
         label: "Tradeoff",
-        cells: items.map((it) => ({ text: primaryTradeoff(it.view, cat) ?? "None flagged", best: false })),
+        // No rule fired is not evidence of no tradeoff. Say what we did.
+        cells: items.map((it) => ({ text: primaryTradeoff(it.view, cat) ?? "Tradeoffs not assessed", best: false })),
         same: false,
       },
     ],
@@ -110,10 +149,12 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     rows: g.keys.map((key) => {
       const specs = items.map((it) => it.view.specs.find((s) => s.key === key));
       const best = bestIndexes(items, cat, key);
+      const comp = comparability(items, cat, key);
       const texts = specs.map((s) => s?.formatted ?? "Not stated");
       return {
         key,
         label: specs.find(Boolean)?.shortLabel ?? key,
+        notComparable: comp.ok ? undefined : comp.reason,
         cells: specs.map((s, i) => ({
           text: texts[i],
           verification: s?.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo") ? s.provenance.verification : undefined,

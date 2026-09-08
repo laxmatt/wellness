@@ -2,7 +2,7 @@ import type { CategoryDefinition } from "../category";
 import type { ProductView } from "../view";
 import { assignBadges, type Badge, type RecommendationSet } from "./badges";
 import { deriveInsights, type Insight } from "./insights";
-import { toScoringInput } from "./score";
+import { toScoringInput, type ScoreResult } from "./score";
 
 export * from "./badges";
 export * from "./insights";
@@ -12,6 +12,7 @@ export * from "./value";
 export type RecommendedProduct = {
   view: ProductView;
   score: number;
+  scoreResult: ScoreResult;
   eligible: boolean;
   badges: Badge[];
   badgeReasons: string[];
@@ -26,6 +27,7 @@ export function recommendCategory(views: ProductView[], cat: CategoryDefinition)
     .map((view) => ({
       view,
       score: set.scores[view.id]?.score ?? 0,
+      scoreResult: set.scores[view.id],
       eligible: set.scores[view.id]?.eligible ?? false,
       badges: set.badgesByProduct[view.id] ?? [],
       badgeReasons: set.badges.filter((b) => b.productId === view.id).map((b) => b.reason),

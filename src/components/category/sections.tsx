@@ -92,9 +92,12 @@ export function RankingTransparency({ cat }: { cat: CategoryDefinition }) {
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="rounded-card border border-edge bg-surface-raised p-6">
         <p className="eyebrow">How we rank {cat.name.toLowerCase()}</p>
-        <div className="mt-3 grid gap-6 md:grid-cols-2">
+        <p className="mt-2 max-w-3xl text-sm text-fg-soft">
+          <span className="font-semibold text-fg">{cat.scoring.label}:</span> {cat.scoring.meaning}
+        </p>
+        <div className="mt-4 grid gap-6 md:grid-cols-2">
           <div>
-            <p className="text-sm text-fg-soft">Quality score weights. Higher weight, more influence. Missing values score zero.</p>
+            <p className="text-sm text-fg-soft">Criteria and weights. A value we do not hold, or hold as placeholder data, scores zero.</p>
             <ul className="mt-3 divide-y divide-edge">
               {cat.scoring.criteria.map((c) => {
                 const def = attributeDef(cat, c.key);
@@ -109,10 +112,10 @@ export function RankingTransparency({ cat }: { cat: CategoryDefinition }) {
           </div>
           <div className="text-sm text-fg-soft">
             <p>
-              <span className="font-semibold text-fg">{BADGE_LABELS.best_overall}</span> is the top quality score. <span className="font-semibold text-fg">{BADGE_LABELS.best_value}</span> blends quality ({Math.round(cat.value.qualityWeight * 100)}%) with affordability ({Math.round(cat.value.affordabilityWeight * 100)}%).{" "}
+              <span className="font-semibold text-fg">{BADGE_LABELS.best_overall}</span> is the top {cat.scoring.label.toLowerCase()}. <span className="font-semibold text-fg">{BADGE_LABELS.best_value}</span> blends that score ({Math.round(cat.value.qualityWeight * 100)}%) with affordability ({Math.round(cat.value.affordabilityWeight * 100)}%).{" "}
               <span className="font-semibold text-fg">{BADGE_LABELS.best_budget}</span> and <span className="font-semibold text-fg">{BADGE_LABELS.best_premium}</span> are the top scores under {cat.priceTiers[0].label.toLowerCase()} and in the {cat.priceTiers[cat.priceTiers.length - 1].label.toLowerCase()} tier, awarded only when at least {cat.badges.minQualifying} products qualify.
             </p>
-            <p className="mt-3">Retailer relationships are not an input. Maker-reported numbers are labeled as such. Full rules on the How We Choose page.</p>
+            <p className="mt-3">Retailer relationships are not an input. Maker-reported numbers are labeled as such. Placeholder data never scores and never wins a price-based pick. Full rules on the How We Choose page.</p>
             <Link href="/how-we-choose" className="mt-3 inline-flex text-sm font-semibold text-accent-strong hover:underline">
               Read the full method
             </Link>

@@ -89,6 +89,11 @@ export function CompareView({ model, ids }: { model: CompareModel; ids: string[]
                   <tr key={`${g.label}-${r.key}`}>
                     <th scope="row" className={cn("sticky left-0 z-10 bg-surface p-2 text-left align-top text-xs font-semibold", r.same ? "text-fg-muted" : "text-fg-soft")}>
                       {r.label}
+                      {r.notComparable ? (
+                        <span className="mt-0.5 block font-normal text-[10px] leading-tight text-fg-muted" title={r.notComparable}>
+                          {r.notComparable.replace(/^Not ranked: /, "Not ranked. ")}
+                        </span>
+                      ) : null}
                     </th>
                     {r.cells.map((cell, i) => (
                       <td key={model.columns[i].id} className={cn("snap-start border-b border-edge p-2 align-top", r.same && "text-fg-muted")}>

@@ -5,6 +5,7 @@ import { CompareToggle } from "@/components/compare/CompareToggle";
 import { InsightsPanel, OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
 import { Gallery } from "@/components/product/Gallery";
 import { MiniCard } from "@/components/product/MiniCard";
+import { ScoreBreakdown } from "@/components/product/ScoreBreakdown";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { Badge } from "@/components/ui/Badge";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
@@ -128,6 +129,8 @@ export default async function ProductPage({ params }: Props) {
               <InsightsPanel insights={item.insights} view={view} />
             </div>
           </section>
+
+          <ScoreBreakdown cat={cat} result={item.scoreResult} />
 
           <section>
             <h2 className="font-display text-3xl">Specifications</h2>

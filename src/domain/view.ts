@@ -40,6 +40,9 @@ export type PriceView = {
   basis: "lowest_offer" | "reference";
   checkedAt: string;
   offerCount: number;
+  // The price shown is a placeholder, not a real observed price. Price-based
+  // claims (Best Value, Best Budget, Best Premium) must not be made about it.
+  isDemo: boolean;
 };
 
 export type SpecView = {
@@ -101,6 +104,7 @@ export function derivePrice(product: Product): PriceView {
       basis: "lowest_offer",
       checkedAt: best.lastChecked,
       offerCount: product.offers.length,
+      isDemo: best.source.kind === "demo",
     };
   }
   if (!product.referencePrice) throw new Error(`Product ${product.id} has no offers and no referencePrice`);
@@ -109,13 +113,17 @@ export function derivePrice(product: Product): PriceView {
     basis: "reference",
     checkedAt: product.referencePrice.source.retrievedAt ?? product.lastUpdated,
     offerCount: 0,
+    isDemo: product.referencePrice.source.kind === "demo",
   };
 }
 
 export function completeness(product: Product, category: CategoryDefinition): number {
   const required = category.attributeDefinitions.filter((a) => a.required);
   if (required.length === 0) return 1;
-  const present = required.filter((a) => product.attributes[a.key] !== undefined).length;
+  const present = required.filter((a) => {
+    const sv = product.attributes[a.key];
+    return sv !== undefined && sv.verification !== "demo";
+  }).length;
   return present / required.length;
 }
 
