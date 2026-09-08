@@ -9,7 +9,7 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { composeReply } from "@/domain/reply-composer";
+import { clarifyingQuestion, composeReply } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
@@ -409,7 +409,11 @@ export async function POST(req: Request) {
       outcome: shown,
       totalProducts: views.length,
       proposals,
-      question: intent.question,
+      // Composed from the category's own filters and labels. The model's own
+      // question text and options are not displayed: they are free text on the
+      // way to the screen, and a question can carry a claim as easily as a
+      // sentence can.
+      question: intent.question ? clarifyingQuestion(cat, [...shown.hard.map((c) => c.key), ...shown.soft.map((p) => p.key)]) : undefined,
       medicalRedirect: intent.medicalIntent,
       notice: undefined,
     }),

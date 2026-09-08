@@ -19,9 +19,46 @@ import type { HardConstraint, SoftPreference } from "./personalization";
 // data by the templates below.
 
 // Shown when someone asks something the catalogue cannot answer. Fixed text,
-// not a generated apology, so it cannot drift into an explanation.
+// not a generated apology, so it cannot drift into an explanation. It ends in
+// a question because a dead end is not an answer.
 export const FIXED_LIMITATION =
-  "I can only compare the products on this site using the specifications it holds: price, size, coverage, setup and the rest of the fields on each product page. I cannot explain what a product does for you, and this site does not publish claims about that. Tell me what matters to you and I will narrow the list.";
+  "I can only compare the products on this site using the specifications it holds: price, size, coverage, setup and the rest of the fields on each product page. I cannot explain what a product does for you, and this site does not publish claims about that. What would you like to narrow by instead?";
+
+// The invitation, when nothing was understood and nothing was asked. Also a
+// question, so a shopper is never left with a statement they cannot act on.
+export const FIXED_INVITATION = "What matters most to you here?";
+
+export type ComposedQuestion = { text: string; options: string[] };
+
+/**
+ * A clarifying question built from the category's own filters.
+ *
+ * The model used to write both the question and its options. They were free
+ * text on the way to the screen, which is the same exposure as its prose: a
+ * question can carry a claim as easily as a sentence can. So the wording is
+ * fixed here and the options are the category's own labels, which the catalogue
+ * defines and this site already shows on its filter chips.
+ */
+export function clarifyingQuestion(cat: CategoryDefinition, constrainedKeys: string[]): ComposedQuestion | undefined {
+  const taken = new Set(constrainedKeys);
+
+  const price = cat.filters.find((f) => f.key === "price" && !taken.has("price"));
+  if (price) {
+    const options = (price.presets ?? []).map((p) => p.label).slice(0, 5);
+    if (options.length > 0) return { text: "What is your budget?", options };
+  }
+
+  for (const f of cat.filters) {
+    if (taken.has(f.key)) continue;
+    const def = cat.attributeDefinitions.find((a) => a.key === f.key);
+    const options = (def?.enumOptions ?? []).map((o) => o.label).slice(0, 5);
+    if (options.length > 0) return { text: `Which ${(def?.shortLabel ?? f.label).toLowerCase()} suits you?`, options };
+  }
+
+  const remaining = cat.filters.filter((f) => !taken.has(f.key)).slice(0, 5);
+  if (remaining.length === 0) return undefined;
+  return { text: FIXED_INVITATION, options: remaining.map((f) => f.label) };
+}
 
 export type ComposeInput = {
   cat: CategoryDefinition;
@@ -83,15 +120,22 @@ export function composeReply(input: ComposeInput): string {
     if (hardText) parts.push(hardText);
     if (softText) parts.push(softText);
     parts.push(engineSummary(matchCount, totalProducts));
-    if (unmapped.length > 0) parts.push(`This site does not compare ${unmapped.join(", ")}.`);
+    // The count, never the words. `unmapped` is free text the model wrote, and
+    // echoing it back puts an unvalidated sentence on the screen for the sake
+    // of a phrase the shopper already typed.
+    if (unmapped.length > 0) {
+      parts.push(unmapped.length === 1 ? "One thing you mentioned is not something this site compares." : `${unmapped.length} things you mentioned are not something this site compares.`);
+    }
     return parts.join(" ");
   }
 
   // Nothing was understood as a preference. If they asked a question, say what
-  // this site can and cannot answer; otherwise invite the preference.
+  // this site can and cannot answer; otherwise invite the preference. Both end
+  // in a question, because a shopper who has said nothing usable needs
+  // somewhere to go next.
   if (looksLikeQuestion(input.lastUserText)) return FIXED_LIMITATION;
 
-  parts.push("Tell me what matters to you and I will narrow the list: a budget, a size, or how you want to use it.");
+  parts.push(FIXED_INVITATION);
   parts.push(engineSummary(matchCount, totalProducts));
   return parts.join(" ");
 }

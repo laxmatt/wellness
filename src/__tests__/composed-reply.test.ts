@@ -3,7 +3,7 @@ import { POST } from "@/app/api/assistant/route";
 import { categoryById } from "@/domain/categories";
 import { matchesAll } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { FIXED_LIMITATION, composeReply, looksLikeQuestion } from "@/domain/reply-composer";
+import { FIXED_INVITATION, FIXED_LIMITATION, composeReply, looksLikeQuestion } from "@/domain/reply-composer";
 import { getCatalog } from "@/providers";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, type MeterConfig } from "@/providers/usage/UsageMeter";
@@ -116,10 +116,11 @@ describe("what the shopper reads instead", () => {
     expect(body.text).toMatch(/this site does not publish claims about that/i);
   });
 
-  it("invites a preference when nothing was understood and nothing was asked", async () => {
+  it("invites a preference, as a question, when nothing was understood", async () => {
     vi.stubGlobal("fetch", modelSays({ reply: "Hello there.", hard: [], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] }));
     const body = await (await POST(ask("hi"))).json();
-    expect(body.text).toMatch(/Tell me what matters to you/i);
+    expect(body.text).toContain(FIXED_INVITATION);
+    expect(body.text).toMatch(/\?/);
   });
 
   it("keeps the medical redirect, which is decided before any model call", async () => {
@@ -129,7 +130,7 @@ describe("what the shopper reads instead", () => {
     expect(body.text).toMatch(/that is a question for a clinician/i);
   });
 
-  it("says what it cannot compare, from the model's unmapped list", async () => {
+  it("counts what it cannot compare without quoting the model's words", async () => {
     vi.stubGlobal(
       "fetch",
       modelSays({
@@ -142,7 +143,8 @@ describe("what the shopper reads instead", () => {
       }),
     );
     const body = await (await POST(ask("under 500 and tasty"))).json();
-    expect(body.text).toMatch(/does not compare how it tastes/i);
+    expect(body.text).toMatch(/One thing you mentioned is not something this site compares/);
+    expect(body.text).not.toContain("how it tastes");
   });
 });
 
