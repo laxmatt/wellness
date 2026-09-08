@@ -36,7 +36,12 @@ export default async function CategoryPage({ params }: Props) {
   const ids = products.map((p) => p.view.id);
 
   return (
-    <Shell current={`/${cat.slug}`} trayCategoryId={cat.id}>
+    <Shell
+      current={`/${cat.slug}`}
+      trayCategoryId={cat.id}
+      assistantCategoryId={cat.id}
+      compareSeeds={products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
+    >
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: cat.name }]} />
       </Container>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { CompareToggle } from "@/components/compare/CompareToggle";
 import { InsightsPanel, OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
 import { Gallery } from "@/components/product/Gallery";
@@ -75,7 +76,12 @@ export default async function ProductPage({ params }: Props) {
   };
 
   return (
-    <Shell current={`/${cat.slug}`} trayCategoryId={cat.id}>
+    <Shell
+      current={`/${cat.slug}`}
+      trayCategoryId={cat.id}
+      assistantCategoryId={cat.id}
+      compareSeeds={page.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
+    >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: `${view.brand.name} ${view.name}` }]} />
@@ -118,6 +124,10 @@ export default async function ProductPage({ params }: Props) {
                 {primaryStrength(view, cat)}
               </p>
             ) : null}
+            <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
+              <AssistantLauncher />
+              <p className="text-xs text-fg-muted">Optional. Ask how this compares to the alternatives.</p>
+            </div>
           </div>
         </div>
 

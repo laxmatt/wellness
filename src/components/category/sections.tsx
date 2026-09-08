@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { DemoArt } from "@/components/ui/DemoArt";
 import type { CategoryDefinition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
@@ -26,32 +27,19 @@ export function CategoryHero({ cat, title, description, count }: { cat: Category
   );
 }
 
-// Phase 2: rendered, inert. Phase 4 wires it to the matcher.
+// Optional entry point to the assistant. Browsing, filtering and comparing all
+// work without ever opening it, so this is an offer, not a gate.
 export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
-  const example = cat.id === "red-light"
-    ? "a full-body panel under $700 that fits a small apartment"
-    : cat.id === "cold-plunge"
-      ? "a tub with a chiller under $5,000 for a garage"
-      : "sugar-free electrolytes under $2 per serving";
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="rounded-card border border-edge bg-surface-raised p-4 shadow-card sm:p-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-          <label className="flex-1">
-            <span className="eyebrow">Tell us what matters to you</span>
-            <input
-              type="text"
-              disabled
-              aria-disabled="true"
-              placeholder={`e.g. ${example}`}
-              className="tap mt-2 w-full rounded-pill border border-edge-strong bg-surface px-5 text-base text-fg placeholder:text-fg-muted disabled:cursor-not-allowed"
-            />
-          </label>
-          <button type="button" disabled className="tap inline-flex items-center justify-center rounded-pill bg-fg px-6 text-sm font-semibold text-fg-inverse opacity-60 disabled:cursor-not-allowed">
-            Find my match
-          </button>
+      <div className="flex flex-col gap-3 rounded-card border border-edge bg-surface-raised p-4 shadow-card sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <div>
+          <p className="font-display text-xl">Not sure which {cat.navLabel.toLowerCase()} suits you?</p>
+          <p className="mt-1 text-sm text-fg-soft">
+            Answer a few questions and we will narrow the list. Or skip it: the filters and comparison below do the same job.
+          </p>
         </div>
-        <p className="mt-2 text-xs text-fg-muted">The matcher arrives in the next build. The filters and comparison below work now.</p>
+        <AssistantLauncher size="lg" className="shrink-0" />
       </div>
     </section>
   );

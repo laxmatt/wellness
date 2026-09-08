@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buttonStyles } from "@/components/ui/Button";
 import Link from "next/link";
+import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { CompareView } from "@/components/compare/CompareView";
 import { buildCompareModel } from "@/domain/compare";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
@@ -24,7 +25,12 @@ export default async function ComparePage({ searchParams }: Props) {
   const items = page ? sameCat.map((v) => page.products.find((p) => p.view.id === v.id)).filter((p): p is NonNullable<typeof p> => p !== undefined) : [];
 
   return (
-    <Shell current="/compare" tray={false}>
+    <Shell
+      current="/compare"
+      tray={false}
+      assistantCategoryId={cat?.id}
+      compareSeeds={(page?.products ?? []).map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: p.view.categoryId }))}
+    >
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Compare" }]} />
         {items.length === 0 || !cat || !page ? (
@@ -56,9 +62,15 @@ export default async function ComparePage({ searchParams }: Props) {
               </Link>
             </div>
             {views.length !== sameCat.length ? <p className="mt-2 text-sm text-fg-muted">Products from other categories were left out. Compare one category at a time.</p> : null}
-            <div className="mt-8">
-              <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} />
-            </div>
+            <>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <AssistantLauncher />
+                <p className="text-sm text-fg-muted">Optional. Ask what the differences mean for you.</p>
+              </div>
+              <div className="mt-6">
+                <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} />
+              </div>
+            </>
           </>
         )}
       </Container>

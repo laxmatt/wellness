@@ -50,6 +50,16 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
 
   return (
     <div>
+      {f.fromAssistant ? (
+        <div className="mb-3 flex flex-wrap items-center gap-2 rounded-card border border-edge bg-surface-raised px-4 py-2 text-sm">
+          <span className="eyebrow">From your answers</span>
+          <span className="text-fg">{f.fromAssistant.labels.join("; ") || "Your stated preferences"}</span>
+          <button type="button" onClick={f.clearAssistant} className="tap ml-auto font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
+            Remove
+          </button>
+        </div>
+      ) : null}
+
       <div className="mb-4 flex items-center gap-3 text-sm text-fg-muted">
         <span aria-live="polite">
           {f.visible.size} of {f.ids.length} shown
@@ -63,8 +73,10 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
 
       {f.visible.size === 0 ? (
         <div className="rounded-card border border-edge bg-surface-raised p-8 text-center">
-          <p className="font-display text-2xl">No product matches every filter.</p>
-          <p className="mt-2 text-fg-soft">Drop one filter to see the closest options.</p>
+          <p className="font-display text-2xl">No product matches everything.</p>
+          <p className="mt-2 text-fg-soft">
+            {f.fromAssistant ? "Your answers and the filters together rule everything out. Remove one of them to see the closest options." : "Drop one filter to see the closest options."}
+          </p>
           <button type="button" onClick={f.dropLast} className="tap mt-4 inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover">
             Remove the last filter
           </button>

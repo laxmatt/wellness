@@ -2,7 +2,7 @@
 
 Premium wellness storefront plus comparison tool. Launch categories: red light therapy, cold plunges, functional wellness drinks. This repository is the standalone product. Nothing here depends on the printer site.
 
-Status: Phase 3 complete. Phase 2 reviewed and approved. Storefront homepage, category and facet pages, product detail pages, compare table with sticky headers, brands, explore, How We Choose. Comparison engine, filters, matcher engine and no-match relaxation are done and tested. The matcher input stays inert until Phase 4 wires it to the UI. The visual language is provisional: see docs/DESIGN.md before restyling.
+Status: Phase 4 complete. An optional shopping assistant sits alongside the browsing experience; every task works without it. Storefront homepage, category and facet pages, product detail pages, compare table with sticky headers, brands, explore, How We Choose. Comparison engine, filters, matcher engine and no-match relaxation are done and tested. The assistant runs against OpenAI when a key is present and a labelled scripted stand-in when it is not: see docs/ASSISTANT.md, including where to put the key. The visual language is provisional: see docs/DESIGN.md before restyling.
 
 ## Run
 
@@ -51,6 +51,7 @@ src/providers/           Replaceable interfaces plus prototype implementations.
   index.ts               Composition root. Swap implementations here only.
 src/components/ui/       Design primitives. Button (buttonStyles recipe), Chip, Badge, VerificationTag, PriceDisplay, SpecRow, ImageFrame, DemoArt.
 docs/DESIGN.md           Token layers and how to reskin without touching product logic.
+docs/ASSISTANT.md        Assistant behaviour, key placement, spend caps, launch checks.
 src/components/product/  ProductCard.
 src/app/                 Next.js App Router. page.tsx is the Phase 1 smoke route.
 ```
@@ -95,7 +96,7 @@ Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader reject
 1. Done. Architecture, model, tokens, catalog, engine, tests.
 2. Done. Homepage, category and facet pages, product detail, compare table, supporting pages.
 3. Done. Compare differences, filters, matcher engine, relaxation, similarity.
-4. Matcher in the UI with the mock provider, then a real AIProvider behind a flag.
+4. Done. Optional assistant, OpenAI server-side, spend caps, proposal-based actions.
 5. Cold Plunge and Wellness Drinks through the same components.
 6. Admin and merchandising on Postgres via the Prisma mapping in docs/DATA-MODEL.md.
 7. Production integrations.

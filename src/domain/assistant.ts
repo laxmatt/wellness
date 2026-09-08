@@ -1,0 +1,105 @@
+import { z } from "zod";
+import { HardConstraint, SoftPreference } from "./personalization";
+
+// The assistant is a way to express preferences in words. It is never the only
+// way: filters, comparison and product pages do the same work without it.
+
+export const AssistantRole = z.enum(["user", "assistant"]);
+
+export const AssistantMessage = z.object({
+  role: AssistantRole,
+  text: z.string().max(2000),
+});
+export type AssistantMessage = z.infer<typeof AssistantMessage>;
+
+// Slots the assistant tries to fill. Each maps to real category filters, so an
+// answer given in chat is the same object the filter chips produce.
+export const SLOTS = ["budget", "use", "space", "preferences"] as const;
+export type Slot = (typeof SLOTS)[number];
+
+export const SLOT_LABELS: Record<Slot, string> = {
+  budget: "Budget",
+  use: "Intended use",
+  space: "Space",
+  preferences: "Other preferences",
+};
+
+// A change the assistant would like to make. Nothing is applied until the
+// shopper accepts it.
+export const ProposedAction = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("apply_preferences"),
+    summary: z.string(),
+    hard: z.array(HardConstraint).default([]),
+    soft: z.array(SoftPreference).default([]),
+    // Exactly the products these constraints admit, computed by the engine
+    // for THESE constraints, so applying delivers what the summary promised.
+    matchingIds: z.array(z.string()).default([]),
+    matchCount: z.number().int().nonnegative().default(0),
+  }),
+  z.object({
+    kind: z.literal("add_to_compare"),
+    summary: z.string(),
+    productIds: z.array(z.string()).min(1).max(4),
+  }),
+  z.object({
+    kind: z.literal("relax_constraint"),
+    summary: z.string(),
+    // The constraint to drop, by filter key.
+    key: z.string(),
+  }),
+]);
+export type ProposedAction = z.infer<typeof ProposedAction>;
+
+export type EvidenceTier = "sourced" | "manufacturer_claim" | "not_stated";
+
+export type AssistantProductRef = {
+  productId: string;
+  slug: string;
+  name: string;
+  brand: string;
+  price: string;
+  priceIsPlaceholder: boolean;
+  fits: string[];
+  misses: string[];
+};
+
+export type AssistantReply = {
+  // Prose shown to the shopper. Never contains a ranking the engine did not make.
+  text: string;
+  // Whether a real model produced this reply or the built-in scripted stand-in.
+  mode: "live" | "prototype" | "unavailable";
+  // Question the assistant is waiting on, if any.
+  question?: { text: string; options: string[] };
+  products: AssistantProductRef[];
+  // Every product satisfying the agreed hard constraints, in personalized
+  // order. The page filters by this rather than approximating it with chips.
+  matchingIds: string[];
+  proposals: ProposedAction[];
+  // Constraints currently held for this session, in words, each removable.
+  activeConstraints: { key: string; label: string }[];
+  medicalRedirect: boolean;
+  notice?: string;
+  usage?: { sessionTurns: number; sessionTurnLimit: number; monthlySpendUsd: number; monthlyCapUsd: number };
+};
+
+export const AssistantRequest = z.object({
+  sessionId: z.string().min(8).max(64),
+  categoryId: z.string(),
+  messages: z.array(AssistantMessage).max(40),
+  hard: z.array(HardConstraint).default([]),
+  soft: z.array(SoftPreference).default([]),
+});
+export type AssistantRequest = z.infer<typeof AssistantRequest>;
+
+// What the model is allowed to return. Anything outside this shape is dropped.
+export const ModelIntent = z.object({
+  reply: z.string().max(1200),
+  hard: z.array(HardConstraint).max(8).default([]),
+  soft: z.array(SoftPreference).max(8).default([]),
+  unmapped: z.array(z.string()).max(6).default([]),
+  question: z.object({ text: z.string().max(300), options: z.array(z.string().max(60)).max(5).default([]) }).optional(),
+  medicalIntent: z.boolean().default(false),
+  suggestCompare: z.array(z.string()).max(4).default([]),
+});
+export type ModelIntent = z.infer<typeof ModelIntent>;

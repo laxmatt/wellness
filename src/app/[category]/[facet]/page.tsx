@@ -39,7 +39,12 @@ export default async function FacetPage({ params }: Props) {
   const filterGroups = buildFilterGroups(fp.products.map((p) => p.view), cat);
 
   return (
-    <Shell current={`/${cat.slug}`} trayCategoryId={cat.id}>
+    <Shell
+      current={`/${cat.slug}`}
+      trayCategoryId={cat.id}
+      assistantCategoryId={cat.id}
+      compareSeeds={fp.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
+    >
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: fp.facet.title }]} />
       </Container>
