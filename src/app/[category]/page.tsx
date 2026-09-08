@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CategoryHero, FacetChips, MatcherInput, RankingTransparency, WinnersRow } from "@/components/category/sections";
+import { CategoryHero, FacetChips, MatcherInput, RankingTransparency } from "@/components/category/sections";
+import { WinnersRow } from "@/components/category/WinnersRow";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
@@ -38,14 +39,18 @@ export default async function CategoryPage({ params }: Props) {
       <div className="mt-8 flex flex-col gap-10">
         <MatcherInput cat={cat} />
         <FacetChips cat={cat} />
+      </div>
+      <div className="mt-10">
         <WinnersRow products={products} cat={cat} />
+      </div>
+      <div className="mt-12 flex flex-col gap-10">
         <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="eyebrow">All {cat.navLabel.toLowerCase()}</p>
               <h2 className="font-display mt-1 text-3xl">Ranked by quality score.</h2>
             </div>
-            <p className="text-sm text-ink-mute">{products.length} products</p>
+            <p className="text-sm text-fg-muted">{products.length} products</p>
           </div>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((item, i) => (

@@ -3,11 +3,11 @@ import { BADGE_LABELS } from "@/domain/recommend/badges";
 import { cn } from "@/lib/cn";
 
 const styles: Record<BadgeKind | "best_match", string> = {
-  best_overall: "bg-ink text-paper",
-  best_value: "bg-moss text-paper",
-  best_budget: "bg-honey text-ink",
-  best_premium: "bg-plum text-paper",
-  best_match: "bg-ember text-paper",
+  best_overall: "bg-badge-overall text-fg-inverse",
+  best_value: "bg-badge-value text-fg-inverse",
+  best_budget: "bg-badge-budget text-fg",
+  best_premium: "bg-badge-premium text-fg-inverse",
+  best_match: "bg-badge-match text-fg-inverse",
 };
 
 export function Badge({ kind, className }: { kind: BadgeKind | "best_match"; className?: string }) {

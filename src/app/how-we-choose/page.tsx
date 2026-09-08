@@ -15,7 +15,7 @@ export default function HowWeChoosePage() {
         <div className="mt-6 max-w-3xl">
           <p className="eyebrow">How we choose</p>
           <h1 className="font-display mt-2 text-5xl leading-none">Rules you can read. Numbers you can check.</h1>
-          <p className="mt-4 text-lg text-ink-soft">Every badge on this site comes from a rule on this page. Every spec carries its source. Nothing ranks higher because a retailer pays us.</p>
+          <p className="mt-4 text-lg text-fg-soft">Every badge on this site comes from a rule on this page. Every spec carries its source. Nothing ranks higher because a retailer pays us.</p>
         </div>
 
         <section className="mt-12 grid gap-4 md:grid-cols-2">
@@ -49,28 +49,28 @@ export default function HowWeChoosePage() {
 
         <section className="mt-14">
           <h2 className="font-display text-3xl">Weights by category</h2>
-          <p className="mt-1 text-sm text-ink-soft">Quality score criteria and their share of the score. Values are normalized within the category. Missing values score zero. Products missing too many required specs are not badge-eligible.</p>
+          <p className="mt-1 text-sm text-fg-soft">Quality score criteria and their share of the score. Values are normalized within the category. Missing values score zero. Products missing too many required specs are not badge-eligible.</p>
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
             {categories.map((cat) => {
               const total = cat.scoring.criteria.reduce((s, c) => s + c.weight, 0);
               return (
-                <div key={cat.id} className="rounded-card border border-line bg-paper p-5">
+                <div key={cat.id} className="rounded-card border border-edge bg-surface-raised p-5">
                   <p className="eyebrow">{cat.name}</p>
-                  <ul className="mt-3 divide-y divide-line">
+                  <ul className="mt-3 divide-y divide-edge">
                     {cat.scoring.criteria.map((c) => {
                       const def = attributeDef(cat, c.key);
                       return (
                         <li key={c.key} className="flex items-center justify-between py-2 text-sm">
                           <span>
                             {def?.label ?? c.key}
-                            {def?.scoreCap !== undefined ? <span className="text-ink-mute"> (capped at {def.scoreCap})</span> : null}
+                            {def?.scoreCap !== undefined ? <span className="text-fg-muted"> (capped at {def.scoreCap})</span> : null}
                           </span>
                           <span className="tabular font-semibold">{Math.round((c.weight / total) * 100)}%</span>
                         </li>
                       );
                     })}
                   </ul>
-                  <dl className="mt-4 grid grid-cols-2 gap-2 text-xs text-ink-soft">
+                  <dl className="mt-4 grid grid-cols-2 gap-2 text-xs text-fg-soft">
                     <dt>Value blend</dt>
                     <dd className="tabular text-right">{Math.round(cat.value.qualityWeight * 100)}% quality, {Math.round(cat.value.affordabilityWeight * 100)}% affordability</dd>
                     <dt>Budget line</dt>
@@ -88,7 +88,7 @@ export default function HowWeChoosePage() {
 
         <section className="mt-14 max-w-3xl">
           <h2 className="font-display text-3xl">Prototype status</h2>
-          <p className="mt-3 text-ink-soft">Every product here is demo data. Maker figures were relayed from public search summaries and carry a &ldquo;relayed, not fetched&rdquo; mark until we verify them against the source page. Prices show the date checked. Rankings are provisional until pricing is verified.</p>
+          <p className="mt-3 text-fg-soft">Every product here is demo data. Maker figures were relayed from public search summaries and carry a &ldquo;relayed, not fetched&rdquo; mark until we verify them against the source page. Prices show the date checked. Rankings are provisional until pricing is verified.</p>
         </section>
       </Container>
     </Shell>
@@ -97,8 +97,8 @@ export default function HowWeChoosePage() {
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-card border border-line bg-paper p-5 text-sm text-ink-soft">
-      <h2 className="font-display text-xl text-ink">{title}</h2>
+    <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
+      <h2 className="font-display text-xl text-fg">{title}</h2>
       <div className="mt-3">{children}</div>
     </section>
   );

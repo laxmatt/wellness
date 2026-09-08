@@ -1,19 +1,15 @@
 import Link from "next/link";
 import { NAV, SITE_NAME } from "@/lib/site";
+import { MobileMenu } from "./MobileMenu";
 
 export function SiteHeader({ current }: { current?: string }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-ivory/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-col px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-        <div className="flex h-14 items-center justify-between">
-          <Link href="/" className="font-display text-xl tracking-tight">
-            {SITE_NAME}
-          </Link>
-          <Link href="/compare" className="tap inline-flex items-center rounded-pill border border-line-strong px-4 text-sm font-semibold lg:hidden">
-            Compare
-          </Link>
-        </div>
-        <nav aria-label="Primary" className="-mx-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:px-0 lg:pb-0">
+    <header className="sticky top-0 z-30 h-14 border-b border-edge bg-surface/90 backdrop-blur">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="font-display text-xl tracking-tight">
+          {SITE_NAME}
+        </Link>
+        <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-1 whitespace-nowrap">
             {NAV.map((n) => {
               const active = current === n.href;
@@ -22,7 +18,7 @@ export function SiteHeader({ current }: { current?: string }) {
                   <Link
                     href={n.href}
                     aria-current={active ? "page" : undefined}
-                    className={`tap inline-flex items-center rounded-pill px-3.5 text-sm font-semibold transition-colors ${active ? "bg-ink text-paper" : "text-ink-soft hover:bg-ivory-deep hover:text-ink"}`}
+                    className={`tap inline-flex items-center rounded-pill px-3.5 text-sm font-semibold transition-colors ${active ? "bg-fg text-fg-inverse" : "text-fg-soft hover:bg-surface-sunken hover:text-fg"}`}
                   >
                     {n.label}
                   </Link>
@@ -31,6 +27,12 @@ export function SiteHeader({ current }: { current?: string }) {
             })}
           </ul>
         </nav>
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link href="/compare" className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-4 text-sm font-semibold">
+            Compare
+          </Link>
+          <MobileMenu current={current} />
+        </div>
       </div>
     </header>
   );

@@ -20,15 +20,15 @@ export function CompareToggle({ item, className, size = "md" }: { item: CompareI
         className={cn(
           "tap inline-flex w-full items-center justify-center gap-2 rounded-pill border font-semibold transition-colors",
           size === "lg" ? "h-13 px-6 text-base" : "h-11 px-4 text-sm",
-          selected ? "border-tide bg-tide text-paper" : "border-line-strong bg-paper text-ink hover:border-ink",
+          selected ? "border-secondary bg-secondary text-fg-inverse" : "border-edge-strong bg-surface-raised text-fg hover:border-fg",
         )}
       >
-        <span aria-hidden className={cn("inline-block h-4 w-4 rounded-sm border", selected ? "border-paper bg-paper/20" : "border-ink-mute")}>
+        <span aria-hidden className={cn("inline-block h-4 w-4 rounded-sm border", selected ? "border-surface-raised bg-surface-raised/20" : "border-fg-muted")}>
           {selected ? <svg viewBox="0 0 16 16" className="h-full w-full"><path d="M3.5 8.5l3 3 6-6" fill="none" stroke="currentColor" strokeWidth="2" /></svg> : null}
         </span>
         {selected ? "Comparing" : "Compare"}
       </button>
-      {note ? <span className="mt-1 text-xs text-ember-deep">{note}</span> : null}
+      {note ? <span className="mt-1 text-xs text-accent-strong">{note}</span> : null}
     </div>
   );
 }

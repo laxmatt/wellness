@@ -1,49 +1,115 @@
 @import "tailwindcss";
 
-/* Warm tech. Ivory ground, warm charcoal ink, terracotta accent, tide teal
-   secondary. Single committed look; no dark theme in the prototype. */
-@theme {
-  --color-ivory: #f5efe4;
-  --color-ivory-deep: #ebe2d2;
-  --color-paper: #fcf9f3;
-  --color-ink: #1f1a16;
-  --color-ink-soft: #57504a;
-  --color-ink-mute: #8a8178;
-  --color-line: #e2d8c7;
-  --color-line-strong: #cfc2ad;
-  --color-ember: #c2542b;
-  --color-ember-deep: #9b3f1c;
-  --color-ember-soft: #f3d9cc;
-  --color-tide: #2f5d62;
-  --color-tide-soft: #d3e3e2;
-  --color-moss: #3e5c4a;
-  --color-moss-soft: #d8e3d9;
-  --color-honey: #d3a04a;
-  --color-honey-soft: #f3e4c4;
-  --color-plum: #5a3b5c;
-  --color-plum-soft: #e5d9e6;
+/*
+  Design tokens. Two layers.
 
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  1. Palette (raw). Named by hue. Never referenced by components.
+  2. Semantic (@theme inline). Named by role. The only names components use.
 
-  --radius-card: 1.25rem;
-  --radius-pill: 999px;
+  To reskin: change the palette values and the type, radius and shadow
+  tokens below. Components and product logic stay untouched. A test in
+  src/__tests__/design-tokens.test.ts fails if a component uses a palette
+  name or a hex color directly.
 
-  --shadow-card: 0 1px 2px rgb(31 26 22 / 0.05), 0 14px 34px -16px rgb(31 26 22 / 0.22);
-  --shadow-float: 0 2px 6px rgb(31 26 22 / 0.08), 0 24px 48px -20px rgb(31 26 22 / 0.3);
-}
+  Current look is provisional ("warm tech" v0). The final brand is expected
+  to read more modern and product-intelligence driven.
+*/
 
 :root {
   color-scheme: light;
+
+  /* Palette */
+  --palette-ivory: #f5efe4;
+  --palette-ivory-deep: #ebe2d2;
+  --palette-paper: #fcf9f3;
+  --palette-ink: #1f1a16;
+  --palette-ink-soft: #57504a;
+  --palette-ink-mute: #8a8178;
+  --palette-line: #e2d8c7;
+  --palette-line-strong: #cfc2ad;
+  --palette-ember: #c2542b;
+  --palette-ember-deep: #9b3f1c;
+  --palette-ember-soft: #f3d9cc;
+  --palette-tide: #2f5d62;
+  --palette-tide-soft: #d3e3e2;
+  --palette-moss: #3e5c4a;
+  --palette-moss-soft: #d8e3d9;
+  --palette-honey: #d3a04a;
+  --palette-honey-soft: #f3e4c4;
+  --palette-plum: #5a3b5c;
+  --palette-plum-soft: #e5d9e6;
+
+  /* Type */
+  --type-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --type-body: var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --type-display-settings: "opsz" 144, "SOFT" 40;
+  --type-display-tracking: -0.02em;
+
+  /* Shape and depth */
+  --shape-card: 1.25rem;
+  --shape-control: 999px;
+  --depth-card: 0 1px 2px rgb(31 26 22 / 0.05), 0 14px 34px -16px rgb(31 26 22 / 0.22);
+  --depth-float: 0 2px 6px rgb(31 26 22 / 0.08), 0 24px 48px -20px rgb(31 26 22 / 0.3);
+}
+
+@theme inline {
+  /* Surfaces */
+  --color-surface: var(--palette-ivory);
+  --color-surface-sunken: var(--palette-ivory-deep);
+  --color-surface-raised: var(--palette-paper);
+
+  /* Text */
+  --color-fg: var(--palette-ink);
+  --color-fg-soft: var(--palette-ink-soft);
+  --color-fg-muted: var(--palette-ink-mute);
+  --color-fg-inverse: var(--palette-paper);
+
+  /* Edges */
+  --color-edge: var(--palette-line);
+  --color-edge-strong: var(--palette-line-strong);
+
+  /* Roles */
+  --color-accent: var(--palette-ember);
+  --color-accent-strong: var(--palette-ember-deep);
+  --color-accent-soft: var(--palette-ember-soft);
+  --color-secondary: var(--palette-tide);
+  --color-secondary-soft: var(--palette-tide-soft);
+  --color-positive: var(--palette-moss);
+  --color-positive-soft: var(--palette-moss-soft);
+  --color-warm: var(--palette-honey);
+  --color-warm-soft: var(--palette-honey-soft);
+  --color-tertiary: var(--palette-plum);
+  --color-tertiary-soft: var(--palette-plum-soft);
+
+  /* Badges */
+  --color-badge-overall: var(--palette-ink);
+  --color-badge-value: var(--palette-moss);
+  --color-badge-budget: var(--palette-honey);
+  --color-badge-premium: var(--palette-plum);
+  --color-badge-match: var(--palette-ember);
+
+  /* Controls */
+  --color-control: var(--palette-ink);
+  --color-control-hover: var(--palette-ember-deep);
+  --color-control-fg: var(--palette-paper);
+
+  --font-display: var(--type-display);
+  --font-sans: var(--type-body);
+
+  --radius-card: var(--shape-card);
+  --radius-pill: var(--shape-control);
+
+  --shadow-card: var(--depth-card);
+  --shadow-float: var(--depth-float);
 }
 
 html {
-  background: var(--color-ivory);
+  background: var(--color-surface);
 }
 
 body {
-  background: var(--color-ivory);
-  color: var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -51,8 +117,8 @@ body {
 
 .font-display {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 144, "SOFT" 40;
-  letter-spacing: -0.02em;
+  font-variation-settings: var(--type-display-settings);
+  letter-spacing: var(--type-display-tracking);
 }
 
 .tabular {
@@ -64,7 +130,7 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--color-ink-mute);
+  color: var(--color-fg-muted);
 }
 
 /* Tap targets: every interactive control clears 44px. */

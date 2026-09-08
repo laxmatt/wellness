@@ -20,16 +20,16 @@ export function Container({ children, className = "" }: { children: ReactNode; c
 
 export function Breadcrumbs({ items }: { items: { href?: string; label: string }[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="text-xs text-ink-mute">
+    <nav aria-label="Breadcrumb" className="text-xs text-fg-muted">
       <ol className="flex flex-wrap items-center gap-1.5">
         {items.map((it, i) => (
           <li key={i} className="flex items-center gap-1.5">
             {it.href ? (
-              <a href={it.href} className="hover:text-ink">
+              <a href={it.href} className="hover:text-fg">
                 {it.label}
               </a>
             ) : (
-              <span className="text-ink-soft">{it.label}</span>
+              <span className="text-fg-soft">{it.label}</span>
             )}
             {i < items.length - 1 ? <span aria-hidden>/</span> : null}
           </li>

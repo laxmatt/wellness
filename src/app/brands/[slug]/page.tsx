@@ -28,9 +28,9 @@ export default async function BrandPage({ params }: Props) {
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: "/brands", label: "Brands" }, { label: brand.name }]} />
         <p className="eyebrow mt-6">Brand</p>
         <h1 className="font-display mt-2 text-5xl leading-none">{brand.name}</h1>
-        {brand.description ? <p className="mt-3 max-w-xl text-lg text-ink-soft">{brand.description}</p> : null}
+        {brand.description ? <p className="mt-3 max-w-xl text-lg text-fg-soft">{brand.description}</p> : null}
         {brand.websiteUrl ? (
-          <a href={brand.websiteUrl} target="_blank" rel="noopener nofollow" className="mt-2 inline-flex text-sm font-semibold text-ember-deep hover:underline">
+          <a href={brand.websiteUrl} target="_blank" rel="noopener nofollow" className="mt-2 inline-flex text-sm font-semibold text-accent-strong hover:underline">
             {brand.websiteUrl.replace(/^https?:\/\//, "")}
           </a>
         ) : null}

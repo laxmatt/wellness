@@ -22,7 +22,7 @@ export function Gallery({ images, name }: { images: ImageAsset[]; name: string }
               aria-selected={i === idx}
               aria-label={img.alt}
               onClick={() => setIdx(i)}
-              className={cn("tap w-20 shrink-0 overflow-hidden rounded-xl border-2", i === idx ? "border-ink" : "border-transparent")}
+              className={cn("tap w-20 shrink-0 overflow-hidden rounded-xl border-2", i === idx ? "border-fg" : "border-transparent")}
             >
               <ImageFrame image={img} ratio="1/1" />
             </button>

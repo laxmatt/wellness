@@ -14,14 +14,14 @@ export default async function ExplorePage() {
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Explore" }]} />
         <p className="eyebrow mt-6">Explore</p>
         <h1 className="font-display mt-2 text-5xl leading-none">Three categories. One method.</h1>
-        <p className="mt-3 max-w-xl text-lg text-ink-soft">Start with a category, or jump straight to a filter.</p>
+        <p className="mt-3 max-w-xl text-lg text-fg-soft">Start with a category, or jump straight to a filter.</p>
       </Container>
       <div className="mt-10 flex flex-col gap-16">
         <CategoryTiles pages={pages} />
         <DiscoveryModules pages={pages} />
         <BrandStrip brands={brands} />
         <Container>
-          <Link href="/how-we-choose" className="text-sm font-semibold text-ember-deep hover:underline">
+          <Link href="/how-we-choose" className="text-sm font-semibold text-accent-strong hover:underline">
             How we choose
           </Link>
         </Container>

@@ -6,45 +6,42 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "@/domain/recommend";
 
-// Phase 2 comparison: aligned columns, sticky attribute labels, horizontal
-// scroll on narrow screens. Difference highlighting and the mobile carousel
-// treatment arrive in Phase 3.
+// The wrapper is the scroll container on both axes, so product headers stick
+// to its top and attribute labels stick to its left while the body scrolls.
 export function CompareTable({ items, cat, ids }: { items: RecommendedProduct[]; cat: CategoryDefinition; ids: string[] }) {
   const removeHref = (id: string) => `/compare?ids=${ids.filter((x) => x !== id).join(",")}`;
   return (
-    <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-      <table className="w-full table-fixed border-separate border-spacing-0 text-sm" style={{ minWidth: `${176 + items.length * 230}px` }}>
+    <div className="-mx-4 max-h-[calc(100dvh-5rem)] overflow-auto rounded-card border border-edge bg-surface sm:mx-0">
+      <table className="w-full table-fixed border-separate border-spacing-0 text-sm" style={{ minWidth: `${160 + items.length * 220}px` }}>
         <colgroup>
-          <col style={{ width: 176 }} />
+          <col style={{ width: 160 }} />
           {items.map((it) => (
             <col key={it.view.id} />
           ))}
         </colgroup>
         <thead>
           <tr>
-            <th className="sticky left-0 z-10 w-36 bg-ivory p-2 text-left align-bottom sm:w-44">
+            <th className="sticky left-0 top-0 z-30 border-b border-edge-strong bg-surface p-2 text-left align-bottom">
               <span className="eyebrow">Product</span>
             </th>
             {items.map((it) => (
-              <th key={it.view.id} className="p-2 text-left align-bottom font-normal">
-                <div className="overflow-hidden rounded-card bg-paper shadow-card">
-                  <Link href={`/products/${it.view.slug}`} className="relative block">
+              <th key={it.view.id} className="sticky top-0 z-20 border-b border-edge-strong bg-surface p-2 text-left align-bottom font-normal">
+                <div className="flex gap-3 rounded-xl bg-surface-raised p-2 shadow-card">
+                  <Link href={`/products/${it.view.slug}`} className="relative block w-16 shrink-0 overflow-hidden rounded-lg">
                     <ImageFrame image={primaryImage(it.view.images)} ratio="1/1" />
-                    {it.badges[0] ? (
-                      <div className="absolute left-2 top-2">
-                        <Badge kind={it.badges[0]} />
-                      </div>
-                    ) : null}
                   </Link>
-                  <div className="p-3">
-                    <p className="eyebrow">{it.view.brand.name}</p>
-                    <Link href={`/products/${it.view.slug}`} className="font-display text-lg leading-tight hover:underline">
+                  <div className="min-w-0">
+                    {it.badges[0] ? <Badge kind={it.badges[0]} className="mb-1" /> : null}
+                    <p className="eyebrow truncate">{it.view.brand.name}</p>
+                    <Link href={`/products/${it.view.slug}`} className="block truncate font-display text-base leading-tight hover:underline">
                       {it.view.name}
                     </Link>
-                    <p className="tabular mt-1 text-lg font-semibold">{formatMoney(it.view.price.money)}</p>
-                    <Link href={removeHref(it.view.id)} className="tap mt-1 inline-flex items-center text-xs font-semibold text-ink-mute hover:text-ink">
-                      Remove
-                    </Link>
+                    <div className="flex items-baseline gap-2">
+                      <p className="tabular font-semibold">{formatMoney(it.view.price.money)}</p>
+                      <Link href={removeHref(it.view.id)} className="text-xs font-semibold text-fg-muted hover:text-fg">
+                        Remove
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </th>
@@ -56,7 +53,7 @@ export function CompareTable({ items, cat, ids }: { items: RecommendedProduct[];
             {items.map((it) => (
               <Cell key={it.view.id}>
                 <span className="tabular font-semibold">{it.score}</span>
-                <span className="text-ink-mute"> / 100</span>
+                <span className="text-fg-muted"> / 100</span>
               </Cell>
             ))}
           </Row>
@@ -77,7 +74,7 @@ export function CompareTable({ items, cat, ids }: { items: RecommendedProduct[];
             {items.map((it) => (
               <Cell key={it.view.id}>
                 {it.view.offers.length === 0 ? "None listed" : `${it.view.offers.length}, from ${formatMoney(it.view.price.money)}`}
-                <Link href={`/products/${it.view.slug}#retailers`} className="ml-2 font-semibold text-ember-deep hover:underline">
+                <Link href={`/products/${it.view.slug}#retailers`} className="ml-2 font-semibold text-accent-strong hover:underline">
                   See
                 </Link>
               </Cell>
@@ -89,10 +86,10 @@ export function CompareTable({ items, cat, ids }: { items: RecommendedProduct[];
   );
 }
 
-function Row({ label, children, group = false }: { label: string; children: React.ReactNode; group?: boolean }) {
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <tr>
-      <th scope="row" className={`sticky left-0 z-10 bg-ivory p-2 text-left align-top text-xs font-semibold ${group ? "pt-6 text-ink-mute uppercase tracking-[0.12em]" : "text-ink-soft"}`}>
+      <th scope="row" className="sticky left-0 z-10 bg-surface p-2 text-left align-top text-xs font-semibold text-fg-soft">
         {label}
       </th>
       {children}
@@ -101,14 +98,14 @@ function Row({ label, children, group = false }: { label: string; children: Reac
 }
 
 function Cell({ children }: { children: React.ReactNode }) {
-  return <td className="border-b border-line p-2 align-top">{children}</td>;
+  return <td className="border-b border-edge p-2 align-top">{children}</td>;
 }
 
 function GroupRows({ label, keys, items }: { label: string; keys: string[]; items: RecommendedProduct[] }) {
   return (
     <>
       <tr>
-        <th scope="rowgroup" colSpan={items.length + 1} className="sticky left-0 bg-ivory px-2 pb-1 pt-6 text-left">
+        <th scope="rowgroup" colSpan={items.length + 1} className="sticky left-0 z-10 bg-surface px-2 pb-1 pt-6 text-left">
           <span className="eyebrow">{label}</span>
         </th>
       </tr>

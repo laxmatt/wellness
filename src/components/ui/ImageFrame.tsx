@@ -20,7 +20,7 @@ export function ImageFrame({
   const aspect = { "1/1": "aspect-square", "4/5": "aspect-[4/5]", "4/3": "aspect-[4/3]", "16/9": "aspect-video", "3/4": "aspect-[3/4]", "21/9": "aspect-[21/9]" }[ratio];
   const v = variant ?? (image?.role === "lifestyle" ? "scene" : "product");
   return (
-    <div className={cn("relative overflow-hidden bg-ivory-deep", aspect, className)}>
+    <div className={cn("relative overflow-hidden bg-surface-sunken", aspect, className)}>
       {!image ? (
         <DemoArt seed="default" variant={v} className="absolute inset-0 h-full w-full" />
       ) : image.src.startsWith("demo:") ? (

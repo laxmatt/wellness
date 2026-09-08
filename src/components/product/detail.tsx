@@ -1,11 +1,11 @@
-import { SpecRow } from "@/components/ui/SpecRow";
 import { VerificationTag } from "@/components/ui/VerificationTag";
+import { buttonStyles } from "@/components/ui/Button";
 import type { CategoryDefinition } from "@/domain/category";
-import { attributeDef } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
-import type { Provenance } from "@/domain/provenance";
+import type { Provenance, Verification } from "@/domain/provenance";
 import type { OfferView, ProductView } from "@/domain/view";
+import { cn } from "@/lib/cn";
 
 const affiliateCopy: Record<OfferView["affiliateStatus"], string> = {
   affiliate: "Affiliate link. We may earn a commission.",
@@ -29,29 +29,29 @@ function shortDate(iso: string): string {
 export function OfferList({ view }: { view: ProductView }) {
   if (view.offers.length === 0) {
     return (
-      <div className="rounded-card border border-line bg-paper p-5 text-sm text-ink-soft">
+      <div className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
         No retailer listed yet. Reference price {formatMoney(view.price.money)} from the maker, checked {shortDate(view.price.checkedAt)}.
       </div>
     );
   }
   return (
-    <ul className="divide-y divide-line overflow-hidden rounded-card border border-line bg-paper">
+    <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
       {view.offers.map((o, i) => (
         <li key={o.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <p className="font-semibold">{o.merchant.name}</p>
-              {i === 0 && view.offers.length > 1 ? <span className="rounded-pill bg-moss-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-moss">Lowest</span> : null}
+              {i === 0 && view.offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
             </div>
-            <p className="mt-0.5 text-xs text-ink-mute">
+            <p className="mt-0.5 text-xs text-fg-muted">
               {availabilityCopy[o.availability]} · checked {shortDate(o.lastChecked)} · {affiliateCopy[o.affiliateStatus]}
             </p>
             {o.discountCodes.length > 0 ? (
               <ul className="mt-2 flex flex-wrap gap-2">
                 {o.discountCodes.map((d) => (
-                  <li key={d.code} className="inline-flex items-center gap-2 rounded-lg border border-dashed border-line-strong bg-ivory px-2.5 py-1 text-xs">
+                  <li key={d.code} className="inline-flex items-center gap-2 rounded-lg border border-dashed border-edge-strong bg-surface px-2.5 py-1 text-xs">
                     <code className="font-semibold">{d.code}</code>
-                    <span className="text-ink-soft">{d.description}</span>
+                    <span className="text-fg-soft">{d.description}</span>
                   </li>
                 ))}
               </ul>
@@ -60,9 +60,9 @@ export function OfferList({ view }: { view: ProductView }) {
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <div className="text-right">
               <p className="tabular text-xl font-semibold">{formatMoney(o.price)}</p>
-              {o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? <p className="tabular text-xs text-ink-mute line-through">{formatMoney(o.listPrice)}</p> : null}
+              {o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p> : null}
             </div>
-            <a href={o.url} target="_blank" rel="sponsored nofollow noopener" className="tap inline-flex items-center rounded-pill bg-ink px-5 text-sm font-semibold text-paper hover:bg-ember-deep">
+            <a href={o.url} target="_blank" rel="sponsored nofollow noopener" className={buttonStyles("primary", "md")}>
               Visit {o.merchant.name.replace(/\s*\(direct\)$/, "")}
             </a>
           </div>
@@ -72,61 +72,76 @@ export function OfferList({ view }: { view: ProductView }) {
   );
 }
 
-export function SpecGroups({ view, cat }: { view: ProductView; cat: CategoryDefinition }) {
+const groupAccent = ["bg-accent", "bg-secondary", "bg-warm", "bg-positive", "bg-tertiary"];
+
+function SpecBlock({ label, value, verification, muted = false }: { label: string; value: string; verification?: Verification; muted?: boolean }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      {cat.compareGroups.map((g) => {
-        const specs = g.keys.map((k) => view.specs.find((s) => s.key === k)).filter((s): s is NonNullable<typeof s> => s !== undefined);
-        const tooltips = g.keys.map((k) => attributeDef(cat, k)).filter((d) => d?.tooltip);
-        return (
-          <section key={g.label} className="rounded-card border border-line bg-paper p-5">
-            <h3 className="eyebrow">{g.label}</h3>
-            <div className="mt-2 divide-y divide-line">
-              {specs.map((s) => (
-                <SpecRow key={s.key} spec={s} />
-              ))}
+    <div className="min-w-0">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-fg-muted">{label}</p>
+      <p className={cn("mt-0.5 flex flex-wrap items-center gap-1.5 text-base", muted ? "text-fg-muted" : "font-semibold text-fg")}>
+        <span className="tabular">{value}</span>
+        {verification ? <VerificationTag verification={verification} /> : null}
+      </p>
+    </div>
+  );
+}
+
+// Specs read as labeled facts grouped under a titled card, not as rows in a
+// ledger. Each group gets an accent mark; footnotes collect at the end.
+export function SpecGroups({ view, cat }: { view: ProductView; cat: CategoryDefinition }) {
+  const footnotes = cat.attributeDefinitions.filter((d) => d.tooltip && view.attributes[d.key] !== undefined);
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        {cat.compareGroups.map((g, gi) => {
+          const specs = g.keys.map((k) => view.specs.find((s) => s.key === k)).filter((s): s is NonNullable<typeof s> => s !== undefined);
+          return (
+            <section key={g.label} className="rounded-card bg-surface-raised p-5 shadow-card">
+              <div className="flex items-center gap-2.5">
+                <span className={cn("h-2.5 w-2.5 rounded-full", groupAccent[gi % groupAccent.length])} aria-hidden />
+                <h3 className="font-display text-xl">{g.label}</h3>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
+                {specs.map((s) => {
+                  const missing = s.raw === undefined;
+                  const showTag = !missing && s.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo");
+                  return <SpecBlock key={s.key} label={s.shortLabel} value={s.formatted} verification={showTag ? s.provenance?.verification : undefined} muted={missing} />;
+                })}
+              </div>
+            </section>
+          );
+        })}
+        {view.dimensions || view.weight ? (
+          <section className="rounded-card bg-surface-raised p-5 shadow-card">
+            <div className="flex items-center gap-2.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-fg-muted" aria-hidden />
+              <h3 className="font-display text-xl">Size and weight</h3>
             </div>
-            {tooltips.length > 0 ? (
-              <details className="mt-3 text-xs text-ink-mute">
-                <summary className="tap flex cursor-pointer items-center font-semibold text-ink-soft">About these specs</summary>
-                <ul className="mt-2 flex flex-col gap-1.5">
-                  {tooltips.map((d) => (
-                    <li key={d!.key}>
-                      <span className="font-semibold text-ink-soft">{d!.label}: </span>
-                      {d!.tooltip}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ) : null}
+            <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
+              {view.dimensions ? (
+                <SpecBlock
+                  label="Dimensions"
+                  value={`${[view.dimensions.length, view.dimensions.width, view.dimensions.height].filter((n) => n !== undefined).join(" × ")} ${view.dimensions.unit}`}
+                  verification={view.provenance.dimensions?.verification === "demo" ? "demo" : undefined}
+                />
+              ) : null}
+              {view.weight ? <SpecBlock label="Weight" value={`${view.weight.value} ${view.weight.unit}`} /> : null}
+            </div>
           </section>
-        );
-      })}
-      {view.dimensions || view.weight ? (
-        <section className="rounded-card border border-line bg-paper p-5">
-          <h3 className="eyebrow">Size and weight</h3>
-          <div className="mt-2 divide-y divide-line text-sm">
-            {view.dimensions ? (
-              <div className="flex items-baseline justify-between gap-3 py-1.5">
-                <span className="text-ink-soft">Dimensions</span>
-                <span className="flex items-center gap-1.5">
-                  <span className="tabular font-semibold">
-                    {[view.dimensions.length, view.dimensions.width, view.dimensions.height].filter((n) => n !== undefined).join(" × ")} {view.dimensions.unit}
-                  </span>
-                  {view.provenance.dimensions ? <VerificationTag verification={view.provenance.dimensions.verification} /> : null}
-                </span>
-              </div>
-            ) : null}
-            {view.weight ? (
-              <div className="flex items-baseline justify-between gap-3 py-1.5">
-                <span className="text-ink-soft">Weight</span>
-                <span className="tabular font-semibold">
-                  {view.weight.value} {view.weight.unit}
-                </span>
-              </div>
-            ) : null}
-          </div>
-        </section>
+        ) : null}
+      </div>
+      {footnotes.length > 0 ? (
+        <details className="rounded-card border border-edge bg-surface px-5 py-3 text-xs text-fg-muted">
+          <summary className="tap flex cursor-pointer items-center font-semibold text-fg-soft">How to read these specs</summary>
+          <ul className="mt-2 flex flex-col gap-1.5 pb-1">
+            {footnotes.map((d) => (
+              <li key={d.key}>
+                <span className="font-semibold text-fg-soft">{d.label}: </span>
+                {d.tooltip}
+              </li>
+            ))}
+          </ul>
+        </details>
       ) : null}
     </div>
   );
@@ -138,22 +153,22 @@ export function InsightsPanel({ insights, view }: { insights: Insight[]; view: P
   const neutral = insights.filter((i) => i.tone === "neutral").map((i) => i.text);
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <section className="rounded-card bg-moss-soft/60 p-5">
-        <h3 className="eyebrow text-moss">Strengths</h3>
+      <section className="rounded-card bg-positive-soft/60 p-5">
+        <h3 className="eyebrow text-positive">Strengths</h3>
         <ul className="mt-2 flex flex-col gap-2 text-sm">
-          {strengths.length === 0 ? <li className="text-ink-mute">No standout strengths under our rules.</li> : strengths.map((t) => <li key={t}>{t}</li>)}
+          {strengths.length === 0 ? <li className="text-fg-muted">No standout strengths under our rules.</li> : strengths.map((t) => <li key={t}>{t}</li>)}
         </ul>
       </section>
-      <section className="rounded-card bg-ember-soft/60 p-5">
-        <h3 className="eyebrow text-ember-deep">Tradeoffs</h3>
+      <section className="rounded-card bg-accent-soft/60 p-5">
+        <h3 className="eyebrow text-accent-strong">Tradeoffs</h3>
         <ul className="mt-2 flex flex-col gap-2 text-sm">
-          {tradeoffs.length === 0 ? <li className="text-ink-mute">No tradeoffs flagged under our rules.</li> : tradeoffs.map((t) => <li key={t}>{t}</li>)}
+          {tradeoffs.length === 0 ? <li className="text-fg-muted">No tradeoffs flagged under our rules.</li> : tradeoffs.map((t) => <li key={t}>{t}</li>)}
         </ul>
       </section>
       {neutral.length > 0 ? (
-        <section className="rounded-card border border-line bg-paper p-5 md:col-span-2">
+        <section className="rounded-card border border-edge bg-surface-raised p-5 md:col-span-2">
           <h3 className="eyebrow">Worth knowing</h3>
-          <ul className="mt-2 flex flex-col gap-2 text-sm text-ink-soft">
+          <ul className="mt-2 flex flex-col gap-2 text-sm text-fg-soft">
             {neutral.map((t) => (
               <li key={t}>{t}</li>
             ))}
@@ -175,25 +190,25 @@ export function ProvenanceBlock({ view }: { view: ProductView }) {
   }
   const demoCount = entries.filter(([, p]) => p.verification === "demo").length;
   return (
-    <section className="rounded-card border border-line bg-paper p-5 text-sm">
+    <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm">
       <h3 className="eyebrow">Sources and updates</h3>
-      <p className="mt-2 text-ink-soft">
+      <p className="mt-2 text-fg-soft">
         Last updated {shortDate(view.lastUpdated)}. {demoCount > 0 ? `${demoCount} field${demoCount === 1 ? "" : "s"} carry demo values, marked on the page.` : ""} Maker-reported figures are not independently verified here.
       </p>
       <ul className="mt-3 flex flex-col gap-2">
         {[...byUrl.values()].map((s, i) => (
-          <li key={i} className="flex flex-col gap-0.5 rounded-xl bg-ivory px-3 py-2">
+          <li key={i} className="flex flex-col gap-0.5 rounded-xl bg-surface px-3 py-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-semibold capitalize">{s.kind.replace(/_/g, " ")}</span>
               {s.url ? (
-                <a href={s.url} target="_blank" rel="noopener nofollow" className="truncate text-ember-deep hover:underline">
+                <a href={s.url} target="_blank" rel="noopener nofollow" className="truncate text-accent-strong hover:underline">
                   {s.url.replace(/^https?:\/\//, "")}
                 </a>
               ) : null}
-              {s.retrievedAt ? <span className="text-xs text-ink-mute">retrieved {shortDate(s.retrievedAt)}</span> : null}
-              {s.method === "secondhand" ? <span className="rounded-pill border border-line-strong px-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-soft">Relayed, not fetched</span> : null}
+              {s.retrievedAt ? <span className="text-xs text-fg-muted">retrieved {shortDate(s.retrievedAt)}</span> : null}
+              {s.method === "secondhand" ? <span className="rounded-pill border border-edge-strong px-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-fg-soft">Relayed, not fetched</span> : null}
             </div>
-            <p className="text-xs text-ink-mute">{s.fields.join(", ")}</p>
+            <p className="text-xs text-fg-muted">{s.fields.join(", ")}</p>
           </li>
         ))}
       </ul>

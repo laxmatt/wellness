@@ -18,12 +18,12 @@ export default async function BrandsPage() {
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {brands.map((b) => (
             <li key={b.id}>
-              <Link href={`/brands/${b.slug}`} className="lift flex items-center justify-between gap-3 rounded-card bg-paper p-4 shadow-card hover:-translate-y-0.5 hover:shadow-float">
+              <Link href={`/brands/${b.slug}`} className="lift flex items-center justify-between gap-3 rounded-card bg-surface-raised p-4 shadow-card hover:-translate-y-0.5 hover:shadow-float">
                 <div>
                   <p className="font-display text-xl">{b.name}</p>
-                  <p className="text-xs text-ink-mute">{catsFor(b.id).join(" · ")}</p>
+                  <p className="text-xs text-fg-muted">{catsFor(b.id).join(" · ")}</p>
                 </div>
-                <span className="tabular text-sm font-semibold text-ink-soft">{countFor(b.id)}</span>
+                <span className="tabular text-sm font-semibold text-fg-soft">{countFor(b.id)}</span>
               </Link>
             </li>
           ))}

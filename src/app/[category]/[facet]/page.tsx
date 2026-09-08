@@ -49,15 +49,15 @@ export default async function FacetPage({ params }: Props) {
               <p className="eyebrow">{fp.facet.title}</p>
               <h2 className="font-display mt-1 text-3xl">Ranked by quality score.</h2>
             </div>
-            <p className="text-sm text-ink-mute">
+            <p className="text-sm text-fg-muted">
               {fp.products.length} of {page.products.length}
             </p>
           </div>
           {fp.products.length === 0 ? (
-            <div className="mt-6 rounded-card border border-line bg-paper p-8 text-center">
+            <div className="mt-6 rounded-card border border-edge bg-surface-raised p-8 text-center">
               <p className="font-display text-2xl">Nothing in our set fits this filter yet.</p>
-              <p className="mt-2 text-ink-soft">Badges are awarded across the whole category, so the closest picks are on the main page.</p>
-              <Link href={`/${cat.slug}`} className="tap mt-4 inline-flex items-center rounded-pill bg-ink px-5 text-sm font-semibold text-paper">
+              <p className="mt-2 text-fg-soft">Badges are awarded across the whole category, so the closest picks are on the main page.</p>
+              <Link href={`/${cat.slug}`} className="tap mt-4 inline-flex items-center rounded-pill bg-fg px-5 text-sm font-semibold text-fg-inverse">
                 See all {cat.navLabel.toLowerCase()}
               </Link>
             </div>
@@ -68,7 +68,7 @@ export default async function FacetPage({ params }: Props) {
               ))}
             </div>
           )}
-          <p className="mt-4 text-xs text-ink-mute">Badges are decided across all {page.products.length} {cat.name.toLowerCase()} we track, not within this filter.</p>
+          <p className="mt-4 text-xs text-fg-muted">Badges are decided across all {page.products.length} {cat.name.toLowerCase()} we track, not within this filter.</p>
         </section>
         <RankingTransparency cat={cat} />
       </div>

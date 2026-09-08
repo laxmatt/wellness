@@ -9,7 +9,7 @@ export function MiniCard({ item, note }: { item: RecommendedProduct; note?: stri
   const { view } = item;
   const badge = item.badges[0];
   return (
-    <Link href={`/products/${view.slug}`} className="lift group flex flex-col overflow-hidden rounded-card bg-paper shadow-card hover:-translate-y-0.5 hover:shadow-float">
+    <Link href={`/products/${view.slug}`} className="lift group flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
       <div className="relative">
         <ImageFrame image={primaryImage(view.images)} ratio="1/1" />
         {badge ? (
@@ -22,7 +22,7 @@ export function MiniCard({ item, note }: { item: RecommendedProduct; note?: stri
         <p className="eyebrow">{view.brand.name}</p>
         <p className="font-display text-lg leading-tight group-hover:underline">{view.name}</p>
         <p className="tabular text-sm font-semibold">{formatMoney(view.price.money)}</p>
-        {note ? <p className="mt-1 text-xs text-ink-soft">{note}</p> : null}
+        {note ? <p className="mt-1 text-xs text-fg-soft">{note}</p> : null}
       </div>
     </Link>
   );

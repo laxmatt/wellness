@@ -2,7 +2,7 @@
 
 Premium wellness storefront plus comparison tool. Launch categories: red light therapy, cold plunges, functional wellness drinks. This repository is the standalone product. Nothing here depends on the printer site.
 
-Status: Phase 2 complete. Storefront homepage, category and facet pages, product detail pages, compare table, brands, explore, How We Choose. Matcher rendered but inert until Phase 4.
+Status: Phase 2 complete and reviewed. Storefront homepage, category and facet pages, product detail pages, compare table with sticky headers, brands, explore, How We Choose. Matcher rendered but inert until Phase 4. The visual language is provisional: see docs/DESIGN.md before restyling.
 
 ## Run
 
@@ -45,7 +45,8 @@ src/providers/           Replaceable interfaces plus prototype implementations.
   email/                 EmailProvider, Noop.
   analytics/             AnalyticsProvider, Console, Memory.
   index.ts               Composition root. Swap implementations here only.
-src/components/ui/       Design primitives. Button, Chip, Badge, VerificationTag, PriceDisplay, SpecRow, ImageFrame, DemoArt.
+src/components/ui/       Design primitives. Button (buttonStyles recipe), Chip, Badge, VerificationTag, PriceDisplay, SpecRow, ImageFrame, DemoArt.
+docs/DESIGN.md           Token layers and how to reskin without touching product logic.
 src/components/product/  ProductCard.
 src/app/                 Next.js App Router. page.tsx is the Phase 1 smoke route.
 ```

@@ -2,10 +2,10 @@ import type { Verification } from "@/domain/provenance";
 import { cn } from "@/lib/cn";
 
 const copy: Record<Verification, { label: string; className: string }> = {
-  manufacturer_reported: { label: "Maker reported", className: "text-ink-soft border-line-strong" },
-  independently_verified: { label: "Verified", className: "text-moss border-moss" },
-  demo: { label: "Demo data", className: "text-ember-deep border-ember" },
-  unknown: { label: "Unverified", className: "text-ink-mute border-line" },
+  manufacturer_reported: { label: "Maker reported", className: "text-fg-soft border-edge-strong" },
+  independently_verified: { label: "Verified", className: "text-positive border-positive" },
+  demo: { label: "Demo data", className: "text-accent-strong border-accent" },
+  unknown: { label: "Unverified", className: "text-fg-muted border-edge" },
 };
 
 export function VerificationTag({ verification, className }: { verification: Verification; className?: string }) {
