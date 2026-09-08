@@ -66,9 +66,9 @@ Verification levels: `manufacturer_reported`, `independently_verified`, `demo`, 
 
 Scoring: per-category weighted criteria, min-max normalized across published products in the category, direction from each attribute's `preferenceDirection`. Missing values contribute zero. Products under the completeness floor are ineligible for badges.
 
-Value: `qualityWeight * scoreRatio - priceWeight * relPrice`. `scoreRatio` is score over the category best. `relPrice` is log- or linear-relative price across admitted products. Products under `minScoreShare` of the best score are excluded. `priceBasis` is `price` or `attribute:<key>` (drinks use per-serving cost).
+Value (Phase 1 placeholder, not final): `qualityWeight * quality + affordabilityWeight * affordability`. Quality is the 0 to 100 score. Affordability is 100 for the cheapest eligible product and 0 for the priciest, linear in between. Default weights 0.65 and 0.35, set per category in `value`. `priceBasis` is `price` or `attribute:<key>` (drinks use per-serving cost). `minQualityShare` is an optional guard, off by default.
 
-Badges, in order: Best Overall (top score), Best Value (top value, stacks with Overall when the same product), Best Budget and Best Premium (top score in tier, at least `minQualifying` products in tier, never to a product already badged). Ties break on `tieBreak` keys then id.
+Badges, in order: Best Overall (top score), Best Value (top value; when the same product wins both, the card shows Best Overall plus an "also the strongest value" note), Best Budget and Best Premium (top score in tier, at least `minQualifying` products in tier, never to a product already badged). Ties break on `tieBreak` keys then id.
 
 `ScoringInput` carries `id`, `priceMinor`, `attributes`. No offers. A test flips every offer's affiliate status and asserts identical ranking and badges.
 

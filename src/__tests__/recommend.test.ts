@@ -39,37 +39,38 @@ describe("value formula", () => {
     miniProduct("junk", 5000, { power: 10, noise: 90, size: "s", wifi: false }),
   ];
 
-  it("keeps the cheapest admitted product at its full score ratio and charges the best for price", () => {
+  it("scores affordability 100 for the cheapest and 0 for the priciest, then blends by weight", () => {
     const ins = inputs(ps);
     const scores = scoreProducts(ins, miniCategory);
     const v = Object.fromEntries(computeValue(ins, scores, miniCategory).map((x) => [x.id, x]));
-    expect(v.cheap.relPrice).toBe(0);
-    expect(v.cheap.value).toBeCloseTo(v.cheap.scoreRatio, 3);
-    expect(v.best.relPrice).toBe(1);
-    expect(v.best.value).toBeCloseTo(v.best.scoreRatio - 1, 3);
+    expect(v.junk.affordability).toBe(100);
+    expect(v.best.affordability).toBe(0);
+    expect(v.best.value).toBeCloseTo(0.65 * 100, 1);
+    expect(v.cheap.value).toBeCloseTo(0.65 * v.cheap.quality + 0.35 * v.cheap.affordability, 0);
   });
 
-  it("excludes products below minScoreShare so cheapness alone cannot win", () => {
-    const ins = inputs(ps);
-    const scores = scoreProducts(ins, miniCategory);
-    const v = Object.fromEntries(computeValue(ins, scores, miniCategory).map((x) => [x.id, x]));
-    expect(v.junk.eligible).toBe(false);
-    expect(v.junk.reason).toMatch(/below 50%/);
-  });
-
-  it("is tunable: raising priceWeight moves the winner toward the cheaper product", () => {
+  it("is tunable: shifting weight to affordability moves the winner toward the cheaper product", () => {
     const ins = inputs(ps);
     const scores = scoreProducts(ins, miniCategory);
     const winner = (override: Parameters<typeof computeValue>[3]) =>
       computeValue(ins, scores, miniCategory, override)
         .filter((x) => x.eligible)
         .sort((a, b) => b.value - a.value)[0].id;
-    expect(winner({ priceWeight: 0 })).toBe("best");
-    expect(winner({ priceWeight: 3 })).toBe("cheap");
+    expect(winner({ qualityWeight: 1, affordabilityWeight: 0 })).toBe("best");
+    expect(winner({ qualityWeight: 0.4, affordabilityWeight: 0.6 })).toBe("cheap");
+  });
+
+  it("optional minQualityShare guard excludes weak products when enabled", () => {
+    const ins = inputs(ps);
+    const scores = scoreProducts(ins, miniCategory);
+    const off = computeValue(ins, scores, miniCategory).find((x) => x.id === "junk")!;
+    expect(off.eligible).toBe(true);
+    const on = computeValue(ins, scores, miniCategory, { minQualityShare: 0.5 }).find((x) => x.id === "junk")!;
+    expect(on.eligible).toBe(false);
   });
 
   it("supports an attribute price basis", () => {
-    const cat = { ...miniCategory, value: { ...miniCategory.value, priceBasis: "attribute:noise", priceScale: "linear" as const } };
+    const cat = { ...miniCategory, value: { ...miniCategory.value, priceBasis: "attribute:noise" } };
     const ins = inputs(ps);
     const scores = scoreProducts(ins, cat);
     const v = computeValue(ins, scores, cat);

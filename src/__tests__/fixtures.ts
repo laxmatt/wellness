@@ -59,7 +59,7 @@ export const miniCategory: CategoryDefinition = CategorySchema.parse({
   compareGroups: [{ label: "g", keys: ["power", "noise", "size", "wifi"] }],
   filters: [],
   scoring: { criteria: [{ key: "power", weight: 2 }, { key: "noise", weight: 1 }, { key: "size", weight: 1 }, { key: "wifi", weight: 1 }], completenessFloor: 0.5 },
-  value: { qualityWeight: 1, priceWeight: 1, priceScale: "log", priceBasis: "price", minScoreShare: 0.5 },
+  value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "price" },
   badges: { priceBasis: "price", budgetMaxMinor: 20000, premiumMinMinor: 80000, minQualifying: 2, tieBreak: ["power"] },
   insightRules: [{ id: "cheap", when: [{ key: "price", op: "lt", value: 20000 }], text: "Under $200 with {power} of power.", tone: "strength" }],
   relaxationOrder: ["price", "size"],

@@ -34,19 +34,17 @@ export const ScoringConfig = z.object({
 });
 export type ScoringConfig = z.infer<typeof ScoringConfig>;
 
-// Normalized value formula:
-//   value = qualityWeight * normScore - priceWeight * normPrice
-// normPrice uses linear or log scaling over the category's price basis.
-// minScoreShare excludes products whose score is below that fraction of the
-// category's best score so a weak product cannot win on cheapness alone.
+// Placeholder value formula, tunable per category, not final:
+//   value = qualityWeight * quality(0..100) + affordabilityWeight * affordability(0..100)
+// affordability is the inverse of linearly normalized price within the category.
+// minQualityShare is an optional guard, off by default.
 export const ValueFormulaConfig = z.object({
-  qualityWeight: z.number().min(0).default(1),
-  priceWeight: z.number().min(0).default(1),
-  priceScale: z.enum(["linear", "log"]).default("log"),
+  qualityWeight: z.number().min(0).default(0.65),
+  affordabilityWeight: z.number().min(0).default(0.35),
   // "price" uses the product's current price. "attribute:<key>" uses a
   // numeric attribute such as price_per_serving_minor.
   priceBasis: z.string().default("price"),
-  minScoreShare: z.number().min(0).max(1).default(0.5),
+  minQualityShare: z.number().min(0).max(1).default(0),
 });
 export type ValueFormulaConfig = z.infer<typeof ValueFormulaConfig>;
 

@@ -175,7 +175,7 @@ export const redLight = CategoryDefinition.parse({
     ],
     completenessFloor: 0.75,
   },
-  value: { qualityWeight: 1, priceWeight: 1, priceScale: "log", priceBasis: "price", minScoreShare: 0.5 },
+  value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "price" },
   badges: {
     priceBasis: "price",
     budgetMaxMinor: 40000,

@@ -50,7 +50,8 @@ export function rankByScore(inputs: ScoringInput[], scores: Map<string, ScoreRes
 // Rules, in order:
 //   Best Overall: highest score among eligible products.
 //   Best Value:   highest value-formula result among eligible products. May be
-//                 the same product as Best Overall; the two badges stack.
+//                 the same product as Best Overall; both are recorded, and the
+//                 UI shows Overall with a value note rather than two badges.
 //   Best Budget:  highest score among products at or under budgetMaxMinor,
 //                 awarded only when at least minQualifying products sit in the
 //                 tier, and never to a product already holding a badge.

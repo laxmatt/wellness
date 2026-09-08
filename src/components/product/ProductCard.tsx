@@ -8,15 +8,17 @@ import type { RecommendedProduct } from "@/domain/recommend";
 // Phase 1 card: static. Compare toggle and retailer CTA become live in Phase 2.
 export function ProductCard({ item, strength, tradeoff }: { item: RecommendedProduct; strength?: string; tradeoff?: string }) {
   const { view } = item;
+  // One badge per card. When Overall and Value coincide, Overall shows and the
+  // value win becomes a note instead of a second competing badge.
+  const primaryBadge = item.badges[0];
+  const alsoStrongestValue = item.badges.includes("best_overall") && item.badges.includes("best_value");
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-paper shadow-card hover:-translate-y-0.5 hover:shadow-float">
       <div className="relative">
         <ImageFrame image={primaryImage(view.images)} ratio="4/5" />
-        {item.badges.length > 0 ? (
-          <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-            {item.badges.map((b) => (
-              <Badge key={b} kind={b} />
-            ))}
+        {primaryBadge ? (
+          <div className="absolute left-3 top-3">
+            <Badge kind={primaryBadge} />
           </div>
         ) : null}
         {view.flags.demo ? (
@@ -37,6 +39,7 @@ export function ProductCard({ item, strength, tradeoff }: { item: RecommendedPro
           ))}
         </div>
         <div className="flex flex-col gap-1 text-sm">
+          {alsoStrongestValue ? <p className="text-xs font-semibold text-moss">Also the strongest value in this category.</p> : null}
           {strength ? <p className="text-ink"><span className="font-semibold text-moss">Why: </span>{strength}</p> : null}
           {tradeoff ? <p className="text-ink-soft"><span className="font-semibold text-ember-deep">Tradeoff: </span>{tradeoff}</p> : null}
         </div>

@@ -220,13 +220,7 @@ export const wellnessDrinks = CategoryDefinition.parse({
     ],
     completenessFloor: 0.75,
   },
-  value: {
-    qualityWeight: 1,
-    priceWeight: 1.2,
-    priceScale: "linear",
-    priceBasis: "attribute:price_per_serving_minor",
-    minScoreShare: 0.4,
-  },
+  value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "attribute:price_per_serving_minor" },
   badges: {
     priceBasis: "attribute:price_per_serving_minor",
     budgetMaxMinor: 100,
