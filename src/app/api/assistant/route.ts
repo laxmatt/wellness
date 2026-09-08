@@ -5,6 +5,7 @@ import { categoryById } from "@/domain/categories";
 import type { CategoryDefinition, Condition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
 import { resolveClientIdentity } from "@/domain/client-identity";
+import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { formatMoney } from "@/domain/money";
@@ -122,9 +123,29 @@ export async function POST(req: Request) {
     return NextResponse.json(reply({ text: MEDICAL_REDIRECT, mode: "live", cat, outcome: agreed, proposals: [], medicalRedirect: true }));
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
   const meter = getMeter();
-  const provider: ConversationProvider = apiKey ? new OpenAIConversationProvider(apiKey) : new ScriptedConversationProvider(cat);
+  const credential = resolveCredential();
+
+  // A misconfigured credential is never resolved by falling back to something
+  // that might work. It stops here, with the reason on screen for the operator.
+  if (credential.mode === "misconfigured") {
+    return NextResponse.json(
+      reply({
+        text: CAPPED_TEXT,
+        mode: "unavailable",
+        cat,
+        outcome: agreed,
+        proposals: [],
+        medicalRedirect: false,
+        notice: `The assistant is not configured correctly, so it has not been enabled. ${credential.reason}`,
+      }),
+    );
+  }
+
+  const provider: ConversationProvider =
+    credential.mode === "none"
+      ? new ScriptedConversationProvider(cat)
+      : new OpenAIConversationProvider(credential.mode === "proxy" ? null : credential.apiKey, undefined, credential.baseUrl);
 
   // A live model may only run against a ledger shared by every instance,
   // otherwise each instance would enforce its own private cap.

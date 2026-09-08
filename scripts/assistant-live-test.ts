@@ -16,7 +16,7 @@
  * Nothing here proves the assistant is ready. It gives numbers to judge it by.
  */
 
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
 
 // The same file the app reads, parsed the same way: KEY=value, one per line,
@@ -88,7 +88,13 @@ type Reply = {
   notice?: string;
 };
 
-type Usage = { spentUsd: number; uncertainUsd: number; store: string; uncertainCharges: { reservationId: string; reason: string; heldUsd: number }[] };
+type Usage = {
+  spentUsd: number;
+  uncertainUsd: number;
+  store: string;
+  credential: { mode: string; baseUrl?: string };
+  uncertainCharges: { reservationId: string; reason: string; heldUsd: number }[];
+};
 
 async function usage(): Promise<Usage | null> {
   if (!ADMIN_KEY) return null;
@@ -96,7 +102,13 @@ async function usage(): Promise<Usage | null> {
   const res = await fetch(`${BASE}/api/admin/assistant-usage`, { headers: { "x-admin-key": ADMIN_KEY } });
   if (!res.ok) return null;
   const j = (await res.json()) as Usage & { ledger: { store: string } };
-  return { spentUsd: j.spentUsd, uncertainUsd: j.uncertainUsd, store: j.ledger.store, uncertainCharges: j.uncertainCharges ?? [] };
+  return {
+    spentUsd: j.spentUsd,
+    uncertainUsd: j.uncertainUsd,
+    store: j.ledger.store,
+    credential: j.credential ?? { mode: "unknown" },
+    uncertainCharges: j.uncertainCharges ?? [],
+  };
 }
 
 async function main() {
@@ -106,6 +118,9 @@ async function main() {
 
   let pass = 0;
   const failures: string[] = [];
+  // Kept for the written report. The container this runs in is disposable, so
+  // the result has to end up in the repository to be worth anything later.
+  const records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[] = [];
 
   for (const [i, c] of CASES.entries()) {
     const sessionId = `s_livetest_${Date.now()}_${i}`;
@@ -146,6 +161,8 @@ async function main() {
     if (!proposal && r.products.some((p) => !r.matchingIds.includes(p.productId))) problems.push("a card is not in the matching set");
     if (r.unconfirmedPrice.some((p) => r.matchingIds.includes(p.productId))) problems.push("a product is both matching and unconfirmed");
 
+    records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems, shown: r.matchingIds.length });
+
     if (problems.length === 0) {
       pass++;
       console.log(`ok   ${c.category} | ${c.note}`);
@@ -177,8 +194,75 @@ async function main() {
     }
   }
 
-  console.log("\nThis measures extraction and cost. It does not measure whether the wording is good; read the replies above.");
+  const reportPath = writeReport({ pass, records, before, after });
+  console.log(`\nReport written to ${reportPath}. Commit it: the container this ran in is disposable.`);
+  console.log("This measures extraction and cost. It does not measure whether the wording is good; read the replies above.");
   process.exit(failures.length === 0 ? 0 : 1);
+}
+
+// Written into the repository, not just printed, so the numbers survive the
+// session that produced them.
+function writeReport(args: {
+  pass: number;
+  records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[];
+  before: Usage | null;
+  after: Usage | null;
+}): string {
+  const { pass, records, before, after } = args;
+  const stamp = new Date().toISOString().replace(/:/g, "-").slice(0, 16);
+  const dir = "docs/live-test-results";
+  mkdirSync(dir, { recursive: true });
+
+  const spent = before && after ? after.spentUsd - before.spentUsd : null;
+  const newlyUncertain = before && after ? after.uncertainCharges.filter((u) => !before.uncertainCharges.some((b) => b.reservationId === u.reservationId)) : [];
+
+  const lines: string[] = [
+    `# Live assistant test, ${new Date().toISOString()}`,
+    "",
+    `Model: \`${process.env.OPENAI_MODEL ?? "gpt-4o-mini"}\`. Credential mode: \`${after?.credential.mode ?? "unknown"}\`. Ledger: \`${after?.store ?? "unknown"}\`.`,
+    "",
+    "## Extraction",
+    "",
+    `${pass} of ${records.length} cases matched the constraints a careful person would have entered.`,
+    "",
+    "| Category | Case | Result | Products shown |",
+    "| --- | --- | --- | --- |",
+    ...records.map((r) => `| ${r.category} | ${r.note} | ${r.problems.length === 0 ? "ok" : r.problems.join("; ")} | ${r.shown} |`),
+    "",
+    "## Cost",
+    "",
+    spent === null
+      ? "Not measured: no admin key was available to read the ledger."
+      : [
+          `Measured spend for ${records.length} single-turn conversations: **$${spent.toFixed(4)}**.`,
+          "",
+          `Observed cost per conversation: **$${(spent / records.length).toFixed(5)}**.`,
+          "",
+          "A real conversation runs several turns. Multiply by expected turns per session before setting the cap.",
+        ].join("\n"),
+    "",
+  ];
+
+  if (newlyUncertain.length > 0) {
+    lines.push(
+      "## Unconfirmed charges",
+      "",
+      `${newlyUncertain.length} call(s) ended without a confirmed cost, holding $${(after?.uncertainUsd ?? 0).toFixed(4)} against the cap. The measured spend above is a lower bound until these are reconciled against the provider's usage record.`,
+      "",
+      "| Reservation | Held | Reason |",
+      "| --- | --- | --- |",
+      ...newlyUncertain.map((u) => `| \`${u.reservationId}\` | $${u.heldUsd.toFixed(5)} | ${u.reason} |`),
+      "",
+    );
+  }
+
+  lines.push("## Replies, verbatim", "", "Read these. No script judges whether the wording is right for the site.", "");
+  for (const r of records) lines.push(`**${r.category}** | "${r.text}"`, "", `> ${r.reply.replace(/\n/g, " ")}`, "");
+
+  const path = `${dir}/${stamp}.md`;
+  writeFileSync(path, lines.join("\n"));
+  writeFileSync(`${dir}/latest.md`, lines.join("\n"));
+  return path;
 }
 
 main().catch((e) => {

@@ -54,6 +54,8 @@ beforeEach(() => {
   meter = new UsageMeter(store, config);
   resetMeterForTests(meter);
   process.env.OPENAI_API_KEY = "sk-test-key";
+  delete process.env.ASSISTANT_CREDENTIAL_MODE;
+  delete process.env.OPENAI_BASE_URL;
   process.env.ASSISTANT_ALLOW_UNSHARED_LEDGER = "1";
   process.env.ASSISTANT_TRUSTED_IP_HEADER = "x-forwarded-for";
   process.env.ASSISTANT_CLIENT_SALT = "a-long-enough-test-salt";
@@ -230,5 +232,120 @@ describe("the route never calls the provider when it must not", () => {
     expect(body.matchingIds.length).toBeGreaterThan(0);
     expect(fetchMock).not.toHaveBeenCalled();
     expect(store.records).toHaveLength(0);
+  });
+});
+
+describe("proxy-credential mode keeps every control in place", () => {
+  // The credential lives outside this process. Nothing else about the route
+  // changes: the ledger, the client limit and the bounds all still apply.
+  function proxyMode() {
+    delete process.env.OPENAI_API_KEY;
+    process.env.ASSISTANT_CREDENTIAL_MODE = "proxy";
+  }
+
+  it("runs live with no key present, and sends no authorization header", async () => {
+    proxyMode();
+    const fetchMock = openAiReply({ ...INTENT, usage: { prompt_tokens: 800, completion_tokens: 60 } });
+    vi.stubGlobal("fetch", fetchMock);
+    const body = await (await POST(ask("something for my knees under $700"))).json();
+
+    expect(body.mode).toBe("live");
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe("https://api.openai.com/v1/chat/completions");
+    const headers = init.headers as Record<string, string>;
+    expect(headers.authorization).toBeUndefined();
+  });
+
+  it("still reserves and settles against the ledger", async () => {
+    proxyMode();
+    vi.stubGlobal("fetch", openAiReply({ ...INTENT, usage: { prompt_tokens: 800, completion_tokens: 60 } }));
+    await POST(ask("under $700"));
+    expect(store.records[0].outcome).toEqual({ kind: "billed", model: "gpt-4o-mini", inputTokens: 800, outputTokens: 60 });
+    expect((await meter.snapshot("s_livetestabc")).spentUsd).toBeCloseTo(meter.costOf(800, 60), 8);
+  });
+
+  it("still holds an uncertain charge when usage is missing", async () => {
+    proxyMode();
+    vi.stubGlobal("fetch", openAiReply(INTENT));
+    await POST(ask("under $700"));
+    expect(store.records[0].outcome.kind).toBe("uncertain");
+    expect((await meter.snapshot("s_livetestabc")).uncertainUsd).toBeCloseTo(meter.worstCaseUsd, 8);
+  });
+
+  it("still stops at the monthly cap without calling out", async () => {
+    proxyMode();
+    resetMeterForTests(new UsageMeter(store, { ...config, monthlyCapUsd: 0 }));
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    expect((await (await POST(ask("under $700"))).json()).mode).toBe("unavailable");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("still refuses without a trustworthy client address", async () => {
+    proxyMode();
+    delete process.env.ASSISTANT_TRUSTED_IP_HEADER;
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    expect((await (await POST(ask("under $700"))).json()).mode).toBe("unavailable");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("still refuses without a private salt", async () => {
+    proxyMode();
+    delete process.env.ASSISTANT_CLIENT_SALT;
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    expect((await (await POST(ask("under $700"))).json()).mode).toBe("unavailable");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("still enforces the per-connection hourly limit", async () => {
+    proxyMode();
+    resetMeterForTests(new UsageMeter(store, { ...config, clientHourlyLimit: 1, sessionTurnLimit: 100 }));
+    vi.stubGlobal("fetch", openAiReply({ ...INTENT, usage: { prompt_tokens: 10, completion_tokens: 10 } }));
+    expect((await (await POST(ask("hi"))).json()).mode).toBe("live");
+    const blocked = await (await POST(ask("hi"))).json();
+    expect(blocked.mode).toBe("unavailable");
+    expect(blocked.notice).toMatch(/connection/i);
+  });
+
+  it("still answers a medical question without calling out", async () => {
+    proxyMode();
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    const body = await (await POST(ask("will this cure my arthritis?"))).json();
+    expect(body.medicalRedirect).toBe(true);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("refuses when proxy mode is pointed away from OpenAI", async () => {
+    proxyMode();
+    process.env.OPENAI_BASE_URL = "https://evil.example/v1";
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    const body = await (await POST(ask("under $700"))).json();
+    expect(body.mode).toBe("unavailable");
+    expect(body.notice).toMatch(/api\.openai\.com/);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(store.records).toHaveLength(0);
+  });
+
+  it("refuses when a key is set as well, rather than choosing", async () => {
+    process.env.ASSISTANT_CREDENTIAL_MODE = "proxy";
+    process.env.OPENAI_API_KEY = "sk-test-key";
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    const body = await (await POST(ask("under $700"))).json();
+    expect(body.mode).toBe("unavailable");
+    expect(body.notice).toMatch(/Remove one/);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("an unrecognised mode disables the assistant instead of guessing", async () => {
+    process.env.ASSISTANT_CREDENTIAL_MODE = "definitely-not-a-mode";
+    const fetchMock = openAiReply(INTENT);
+    vi.stubGlobal("fetch", fetchMock);
+    expect((await (await POST(ask("under $700"))).json()).mode).toBe("unavailable");
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

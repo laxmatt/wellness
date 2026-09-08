@@ -4,7 +4,13 @@ Optional throughout. Browsing, filtering, product pages and comparison never cal
 
 ## Where to put the API key
 
-Never paste a key into a chat, an issue, a commit or a screenshot. Two places, both outside the repository:
+Never paste a key into a chat, an issue, a commit or a screenshot.
+
+There are two ways for the application to authenticate, set by `ASSISTANT_CREDENTIAL_MODE`. The default is unchanged from before this option existed.
+
+### `api_key` mode (default)
+
+This application reads `OPENAI_API_KEY` and sends it as a bearer token. Put the key in one of these places, all outside the repository:
 
 **Local development.** Create `.env.local` in the project root, which `.gitignore` already excludes:
 
@@ -17,6 +23,24 @@ Copy `.env.example` for the full list of optional settings. Restart `npm run dev
 **Vercel.** Project → Settings → Environment Variables → Add. Name `OPENAI_API_KEY`, value the key, scope Production and Preview. Mark it sensitive so it is write-only afterwards. Redeploy for it to take effect.
 
 **Anywhere else** (Fly, Render, a container): set it as a process environment variable through that platform's secret store. Never in a Dockerfile, never in `next.config.ts`, never in a `NEXT_PUBLIC_` variable.
+
+### `proxy` mode
+
+For running inside a Claude Code cloud environment on a Pro or Max plan. The key is stored as an **API credential** on the environment, and Anthropic's agent proxy attaches it to requests bound for `api.openai.com` after they leave the session. Per Anthropic's documentation the key never reaches the session's environment variables, its files, or the agent working in it.
+
+Set `ASSISTANT_CREDENTIAL_MODE=proxy` and leave `OPENAI_API_KEY` unset. The application then sends no authorization header of its own and lets the proxy supply one.
+
+Three refusals, all deliberate:
+
+- **A host other than `https://api.openai.com`** is rejected. The proxy attaches credentials by hostname, so any other host would receive an unauthenticated request, or an authenticated one the operator did not intend. The provider re-checks this before every send and fails as `not_billed`.
+- **Both a key and proxy mode** is rejected. Which credential paid for a request is not a question to answer by preference.
+- **An unrecognised mode** is rejected rather than falling back to something that might work.
+
+Everything else is unchanged in proxy mode: the shared ledger, the monthly cap, reservations, the session turn limit, the per-connection hourly limit, the trusted client address, the medical boundary and the request bounds all apply exactly as they do with a key. There are route-level tests for each of those under proxy mode.
+
+`GET /api/admin/assistant-usage` reports the active mode and base URL, never the credential.
+
+### In either mode
 
 The key is read only inside `src/app/api/assistant/route.ts`, which runs on the server. It is never sent to the browser and never logged. The provider's error bodies are discarded rather than truncated: a failed call produces only a status code and a fixed sentence, so a key echoed back in an error body has nowhere to go.
 
@@ -191,12 +215,17 @@ openssl rand -hex 24      # run it again; use this output as ASSISTANT_CLIENT_SA
 
 The two values must be different. Nobody needs to see them, including me.
 
-**Step 2. Get the third secret from OpenAI.** Create a project, create an API key scoped to that project and to the one model you will use, and set a project hard spend limit with the "Enforce a hard limit" toggle on. Copy the key when it is shown; it is not shown again.
+**Step 2. Get the key from OpenAI.** Create a project, create an API key scoped to that project and to the one model you will use, and set a project hard spend limit with the "Enforce a hard limit" toggle on. Copy the key when it is shown; it is not shown again.
 
-**Step 3. Create `.env.local` in the project folder.** These are settings, not commands. Paste the values you collected, one per line, no quotes:
+**Step 3. Decide where the key lives.**
+
+*Running inside a Claude Code cloud environment (Pro or Max):* add the key as an **API credential** on the environment, scoped to `api.openai.com`, and set `ASSISTANT_CREDENTIAL_MODE=proxy` in the environment variables. Leave `OPENAI_API_KEY` unset. The key stays outside the session.
+
+*Running on your own machine:* put `OPENAI_API_KEY` in `.env.local` and leave the credential mode alone.
+
+**Step 4. Set the remaining values.** In `.env.local` on your own machine, or in the environment variables box for a cloud environment. Settings, not commands, one per line, no quotes:
 
 ```
-OPENAI_API_KEY=sk-...
 DATABASE_URL=postgres://...
 ADMIN_ACCESS_KEY=<first openssl output>
 ASSISTANT_CLIENT_SALT=<second openssl output>
@@ -207,15 +236,17 @@ ASSISTANT_OUTPUT_USD_PER_MTOK=<from OpenAI's price list today>
 ASSISTANT_PRICES_VERIFIED=1
 ```
 
+Never put `ADMIN_ACCESS_KEY` or `ASSISTANT_CLIENT_SALT` anywhere public. On a cloud environment, anyone using that environment can read the environment variables; only an API credential is hidden from the session.
+
 `ASSISTANT_ALLOW_UNIDENTIFIED_CLIENTS=1` is correct here and wrong anywhere else: a local run has no edge to supply a trustworthy client address. Remove it before deploying.
 
-**Step 4. Start the site.** A command, in one terminal. A production build, not `next dev`, so the test exercises the code that will ship:
+**Step 5. Start the site.** A command, in one terminal. A production build, not `next dev`, so the test exercises the code that will ship:
 
 ```
 npm run build && npm start
 ```
 
-**Step 5. Run the test.** A command, in a second terminal:
+**Step 6. Run the test.** A command, in a second terminal:
 
 ```
 ASSISTANT_TEST_BASE_URL=http://localhost:3000 npm run assistant:livetest
@@ -223,7 +254,9 @@ ASSISTANT_TEST_BASE_URL=http://localhost:3000 npm run assistant:livetest
 
 It reads `ADMIN_ACCESS_KEY` from the same `.env.local`, so the secret is not retyped and never appears in your shell history.
 
-**Step 6. Read three things.** The pass count. The measured cost per conversation, multiplied by your expected turns per session. And any uncertain charges it lists: reconcile each against OpenAI's usage page before treating the cost figure as final.
+**Step 7. Read three things.** The pass count. The measured cost per conversation, multiplied by your expected turns per session. And any uncertain charges it lists: reconcile each against OpenAI's usage page before treating the cost figure as final.
+
+**Step 8. Commit the report.** The run writes `docs/live-test-results/<timestamp>.md` and `latest.md`, containing the per-case results, the measured cost, any unconfirmed charges and every reply verbatim. Commit it. A run inside a cloud session is on disposable infrastructure, and an uncommitted result is gone when the session ends.
 
 Keep the deployed site without `OPENAI_API_KEY` until you have reviewed the extraction results, the reply wording and the measured cost. With no key set, visitors get the labelled scripted stand-in and every other feature works unchanged.
 

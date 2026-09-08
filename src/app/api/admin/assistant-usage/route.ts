@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { authorizeAdmin } from "@/domain/admin-auth";
+import { resolveCredential } from "@/domain/credential";
 import { DEFAULT_METER_CONFIG } from "@/providers/usage/UsageMeter";
 import { getMeter } from "@/providers/usage";
 
@@ -21,6 +22,8 @@ export async function GET(req: Request) {
     const uncertain = await meter.listUncertain();
     return NextResponse.json({
       ledger: { store: meter.storeName, shared: meter.isShared },
+      // Which credential the next request would use. Never the value itself.
+      credential: credentialSummary(),
       month: snapshot.month,
       spentUsd: round(snapshot.spentUsd),
       // Held for requests that started but have not reconciled yet.
@@ -89,4 +92,13 @@ export async function POST(req: Request) {
 
 function round(n: number) {
   return Number(n.toFixed(6));
+}
+
+// Reports the mode and, in api_key mode, only that a key is present. The key
+// itself is never read into a response body.
+function credentialSummary(): { mode: string; baseUrl?: string; reason?: string } {
+  const c = resolveCredential();
+  if (c.mode === "misconfigured") return { mode: c.mode, reason: c.reason };
+  if (c.mode === "none") return { mode: c.mode };
+  return { mode: c.mode, baseUrl: c.baseUrl };
 }

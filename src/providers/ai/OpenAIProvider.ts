@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ModelIntent } from "@/domain/assistant";
+import { DEFAULT_BASE_URL, OPENAI_HOST } from "@/domain/credential";
 import { estimateTokens } from "@/providers/usage/UsageMeter";
 
 // Called over plain fetch. No SDK dependency to pin, patch or audit.
@@ -78,10 +79,12 @@ export class OpenAIConversationProvider implements ConversationProvider {
   readonly name = "openai";
   readonly isLive = true;
 
+  // `apiKey` is null in proxy-credential mode: the agent proxy attaches the
+  // credential outside this process, so no authorization header is sent.
   constructor(
-    private readonly apiKey: string,
+    private readonly apiKey: string | null,
     private readonly model = process.env.OPENAI_MODEL ?? "gpt-4o-mini",
-    private readonly baseUrl = process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
+    private readonly baseUrl = process.env.OPENAI_BASE_URL ?? DEFAULT_BASE_URL,
     private readonly maxOutputTokens = Number(process.env.ASSISTANT_MAX_OUTPUT_TOKENS ?? 500),
     private readonly timeoutMs = Number(process.env.ASSISTANT_TIMEOUT_MS ?? 20000),
   ) {}
@@ -128,11 +131,20 @@ export class OpenAIConversationProvider implements ConversationProvider {
   }
 
   private async exchange(input: ConverseInput, signal: AbortSignal): Promise<ConverseResult> {
+    // Second guard behind the credential resolver. An unauthenticated request
+    // must only ever leave for the one host whose credential the proxy holds.
+    if (this.apiKey === null && !isOpenAiHost(this.baseUrl)) {
+      throw new ProviderCallError("The assistant is misconfigured and no request was made.", "not_billed");
+    }
+
+    const headers: Record<string, string> = { "content-type": "application/json" };
+    if (this.apiKey !== null) headers.authorization = `Bearer ${this.apiKey}`;
+
     let res: Response;
     try {
       res = await fetch(`${this.baseUrl}/chat/completions`, {
         method: "POST",
-        headers: { "content-type": "application/json", authorization: `Bearer ${this.apiKey}` },
+        headers,
         signal,
         body: JSON.stringify({
           model: this.model,
@@ -185,6 +197,15 @@ export class OpenAIConversationProvider implements ConversationProvider {
       usage: readUsage(json.usage),
       model: this.model,
     };
+  }
+}
+
+function isOpenAiHost(baseUrl: string): boolean {
+  try {
+    const u = new URL(baseUrl);
+    return u.protocol === "https:" && u.hostname.toLowerCase() === OPENAI_HOST;
+  } catch {
+    return false;
   }
 }
 
