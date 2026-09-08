@@ -36,16 +36,45 @@ export interface AIProvider {
   answerFactualQuestion(input: FactualQuestionInput): Promise<FactualAnswer>;
 }
 
+// Matched on whole words, not substrings. A plain `includes` test declined
+// "which one is healthiest?" because "heal" sits inside it, and would decline a
+// "secure lid" for "cure" and a "reconditioned panel" for "condition". Refusing
+// ordinary shopping language is not a safer failure: it teaches shoppers the
+// assistant is broken and tells them nothing about the boundary it is guarding.
+// Whole-word matching means every inflection that should trigger is listed here
+// on purpose rather than caught by accident.
 export const MEDICAL_TERMS = [
-  "treat", "treats", "treatment", "cure", "cures", "heal", "heals", "diagnose", "diagnosis",
-  "arthritis", "cancer", "depression", "anxiety", "diabetes", "thyroid", "eczema", "psoriasis",
-  "inflammation", "pain relief", "chronic pain", "injury", "disease", "disorder", "condition",
-  "prescription", "doctor said", "symptoms", "fibromyalgia", "neuropathy", "migraine",
+  // Claims about what a product does to a body.
+  "treat", "treats", "treated", "treating", "treatment", "treatments",
+  "cure", "cures", "cured", "curing",
+  "heal", "heals", "healed", "healing",
+  "diagnose", "diagnoses", "diagnosed", "diagnosing", "diagnosis",
+  // Named conditions and their vocabulary.
+  "arthritis", "cancer", "depression", "anxiety", "diabetes", "thyroid",
+  "eczema", "psoriasis", "fibromyalgia", "neuropathy", "migraine", "migraines",
+  "inflammation", "injury", "injuries", "disease", "diseases",
+  "disorder", "disorders", "symptom", "symptoms",
+  "prescription", "prescriptions",
+  // Phrases. "condition" alone is ordinary shopping language here: a cold
+  // plunge buyer asks about cold conditions, a panel buyer about the condition
+  // of a refurbished unit. Only the medical senses are listed.
+  "pain relief", "chronic pain", "medical condition", "medical conditions",
+  "health condition", "health conditions", "skin condition", "skin conditions",
+  "chronic condition", "chronic conditions", "my condition", "doctor said",
 ];
 
+// The net under the list above. Every word ending in -itis is a named
+// inflammatory condition and no shopping word is, so tendonitis, bursitis and
+// plantar fasciitis are caught without naming each one.
+const CONDITION_SUFFIX = /\b\w+itis\b/i;
+
+const MEDICAL_PATTERN = new RegExp(
+  `\\b(?:${MEDICAL_TERMS.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\b`,
+  "i",
+);
+
 export function detectMedicalIntent(text: string): boolean {
-  const t = text.toLowerCase();
-  return MEDICAL_TERMS.some((term) => t.includes(term));
+  return MEDICAL_PATTERN.test(text) || CONDITION_SUFFIX.test(text);
 }
 
 // Prototype extractor: budget parsing, vocabulary lookup, zero/none patterns.

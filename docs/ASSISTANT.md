@@ -66,6 +66,16 @@ Set `DATABASE_URL` to a Postgres instance. The tables are created on first use. 
 
 Cost is computed from `ASSISTANT_INPUT_USD_PER_MTOK` and `ASSISTANT_OUTPUT_USD_PER_MTOK`, dollars per million tokens. **These defaults are a planning assumption, not a quote.** Set them from the provider's current price list, then set `ASSISTANT_PRICES_VERIFIED=1` so the admin endpoint reports that they were checked.
 
+#### Price verification record
+
+| Checked | Model | Input, USD per Mtok | Output, USD per Mtok | Source |
+| --- | --- | --- | --- | --- |
+| 2026-09-08 | `gpt-4o-mini` | 0.15 | 0.60 | OpenAI's official model pricing page |
+
+Checked by the operator against OpenAI's own page, not by anything in this repository. A Claude Code cloud container has no egress to `openai.com`, so a run inside one cannot confirm these numbers and must not claim to. `ASSISTANT_PRICES_VERIFIED=1` records that a person checked, on the date above, and nothing more.
+
+It goes stale the moment OpenAI changes a price. Re-check before any run whose cost figure you intend to rely on, and update the row.
+
 ### What the reservation is, and is not
 
 Two different things, and the difference matters:
@@ -190,7 +200,7 @@ Its output is parsed by `ModelIntent` and anything outside that shape is dropped
 
 Nothing it suggests is applied automatically. Preference changes and comparison additions arrive as proposals with an Apply and a No thanks, and the proposal states how many products would remain. Applying narrows the grid by the engine's answer for exactly those constraints, not by an approximate chip match.
 
-The medical boundary is enforced in the route before any model call, so it holds even when the model is unavailable or wrong. Chat text is never persisted, never sent to analytics and never used to build a profile.
+The medical boundary is enforced in the route before any model call, so it holds even when the model is unavailable or wrong. It matches whole words, not substrings: a shopper asking which drink is healthiest gets an answer, and one asking what will treat, diagnose, cure or heal something gets the redirect. Any word ending in -itis is treated as a named condition, so tendonitis and bursitis are caught without listing every one. Refusing ordinary shopping language is not the safe side of that line; it just looks broken. Chat text is never persisted, never sent to analytics and never used to build a profile.
 
 ## The private live test
 
