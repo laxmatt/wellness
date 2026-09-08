@@ -8,8 +8,8 @@ import { resolveClientIdentity } from "@/domain/client-identity";
 import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
-import { engineSummary, screenModelClaims } from "@/domain/match-claims";
-import { approvedFigures, limitationText, verifyReply } from "@/domain/reply-verification";
+import { engineSummary } from "@/domain/match-claims";
+import { composeReply } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
@@ -30,6 +30,8 @@ export const dynamic = "force-dynamic";
 
 const MEDICAL_REDIRECT =
   "I can compare these products by size, coverage, price, setup and the other specifications on this page, but I cannot determine which will treat a medical condition. That is a question for a clinician.";
+
+const UNREADABLE_TEXT = "I could not read that reliably. Could you say it another way?";
 
 const CAPPED_TEXT =
   "The assistant is not available right now. Everything else on this page still works: use the filters and the comparison table to narrow things down.";
@@ -291,7 +293,7 @@ export async function POST(req: Request) {
   if (unreadable) {
     return NextResponse.json(
       reply({
-        text: intent.reply,
+        text: UNREADABLE_TEXT,
         mode: provider.isLive ? "live" : "prototype",
         cat,
         outcome: agreed,
@@ -326,7 +328,7 @@ export async function POST(req: Request) {
     );
     return NextResponse.json(
       reply({
-        text: "I could not read that reliably. Could you say it another way?",
+        text: UNREADABLE_TEXT,
         mode: provider.isLive ? "live" : "prototype",
         cat,
         outcome: agreed,
@@ -382,24 +384,26 @@ export async function POST(req: Request) {
   // shown. A reply that says nothing matches while the cards show a match is
   // replaced by the engine's sentence: what the shopper reads and what the
   // shopper sees now come from the same computation.
-  // Prose is verified against the approved data before the count screen runs.
-  // A figure the data does not hold, or a sentence explaining what a product
-  // does to a body, is replaced by a limitation: the site says less rather than
-  // publishing something it cannot support.
-  const approved = approvedFigures(
-    shortlist.map((v) => ground(v, cat)),
-    [shown.matching.length, views.length, ...proposedHard.map((c) => (typeof c.value === "number" ? c.value / 100 : 0))],
-  );
-  const verdict = intent.medicalIntent ? ({ ok: true } as const) : verifyReply(intent.reply, approved);
-  const verifiedText = verdict.ok ? intent.reply : limitationText(verdict.reason);
-
-  const screened = intent.medicalIntent
-    ? { text: MEDICAL_REDIRECT, replaced: false, reason: null as null | "availability" | "count" }
-    : screenModelClaims(verifiedText, shown.matching.length, views.length);
+  // The shopper reads this site's own words, composed from the catalogue and
+  // the engine's result. The model's prose is not displayed: its job is to turn
+  // a sentence into preferences, and everything factual is rendered here.
+  const composed = intent.medicalIntent
+    ? MEDICAL_REDIRECT
+    : composeReply({
+        cat,
+        hard: shown.hard,
+        soft: shown.soft,
+        unmapped: intent.unmapped,
+        matchCount: shown.matching.length,
+        totalProducts: views.length,
+        changed,
+        clearing,
+        lastUserText: lastUser,
+      });
 
   return NextResponse.json(
     reply({
-      text: screened.text,
+      text: composed,
       mode: provider.isLive ? "live" : "prototype",
       cat,
       outcome: shown,
@@ -407,15 +411,7 @@ export async function POST(req: Request) {
       proposals,
       question: intent.question,
       medicalRedirect: intent.medicalIntent,
-      notice: !verdict.ok
-        ? verdict.reason === "unsupported_claim"
-          ? "The assistant's answer made a claim this site does not publish, so it was not shown. The specifications below come from the site's own records."
-          : "The assistant's answer quoted a figure this site does not hold, so it was not shown. The specifications below come from the site's own records."
-        : screened.replaced
-        ? "The assistant described the results differently from the site's own count, so the count shown here is the site's."
-        : intent.unmapped.length > 0
-          ? `Not something this site compares: ${intent.unmapped.join(", ")}.`
-          : undefined,
+      notice: undefined,
     }),
   );
 }

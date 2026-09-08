@@ -18,6 +18,7 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
+import { checkReply, type CheckableReply, type ExpectedCase } from "../src/domain/livetest-expectations";
 
 // The same file the app reads, parsed the same way: KEY=value, one per line,
 // blank lines and # comments skipped, existing environment variables win.
@@ -45,45 +46,7 @@ loadEnvLocal();
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
 const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";
 
-// A key on its own is far too weak. `price gte 5000000` and `price lte 50000`
-// both "contain price", and a run that only compared key names scored the first
-// as a pass for "under $500". So each expectation names the operator and the
-// direction of the value, and the resulting product set is checked against the
-// site's own engine.
-type ExpectedConstraint = {
-  key: string;
-  // Operators any of which would be a correct reading of the sentence.
-  ops: string[];
-  // Money is checked in dollars, as the model now sends it. The engine's cents
-  // are code's business, not the model's.
-  dollars?: number;
-  // Non-money values.
-  value?: number | string | boolean;
-  atMost?: number;
-  atLeast?: number;
-};
-
-type Expected = {
-  hard?: ExpectedConstraint[];
-  soft?: { key: string; directions?: string[] }[];
-  medicalIntent?: boolean;
-  mustAskQuestion?: boolean;
-  // The engine's own count for the proposed constraints. "someMatch" means the
-  // reply must not be able to claim emptiness; "noneMatch" the opposite.
-  engine?: "someMatch" | "noneMatch";
-  // Keys a careful person could justifiably read into the sentence without
-  // being wrong. They are neither required nor counted as invented.
-  //
-  // This is not a way to make failures go away. It exists because "cheap as
-  // possible" really does imply a price preference and "small" really does
-  // imply footprint, and scoring those as inventions measured the test's
-  // imagination rather than the model's accuracy. Every hard budget, every
-  // negation and every factual case below stays strict: nothing that could
-  // hide a wrong number or an inverted operator is listed here.
-  alsoReasonable?: string[];
-};
-
-type Case = { category: string; text: string; expect: Expected; note: string };
+type Case = { category: string; text: string; expect: ExpectedCase; note: string };
 
 const CASES: Case[] = [
   // Red light. Prices are in integer cents, which is what the filter uses.
@@ -91,7 +54,7 @@ const CASES: Case[] = [
     category: "red-light",
     text: "I need a full-body panel under $700 that won't take over my apartment.",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], dollars: 700 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 70000 }],
       soft: [{ key: "coverage" }, { key: "footprint", directions: ["prefer_low"] }],
       alsoReasonable: ["mounting"],
     },
@@ -114,7 +77,7 @@ const CASES: Case[] = [
     text: "under 500",
     // The engine matches at least one product under $500. A reply that says
     // otherwise is the failure this case exists to catch.
-    expect: { hard: [{ key: "price", ops: ["lt", "lte"], dollars: 500 }], engine: "someMatch" },
+    expect: { hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 50000 }], engine: "someMatch" },
     note: "bare number, and the count must match the engine",
   },
   { category: "red-light", text: "I have no idea where to start", expect: { mustAskQuestion: true }, note: "must ask, not guess" },
@@ -123,7 +86,7 @@ const CASES: Case[] = [
     category: "cold-plunge",
     text: "A tub with a chiller for my garage, up to $5,000",
     expect: {
-      hard: [{ key: "price", ops: ["lt", "lte"], dollars: 5000 }],
+      hard: [{ key: "price", ops: ["lt", "lte"], minorUnits: 500000 }],
       soft: [{ key: "chiller_included" }, { key: "placement" }],
       alsoReasonable: ["tub_type"],
     },
@@ -139,7 +102,7 @@ const CASES: Case[] = [
     expect: {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
-        { key: "price_per_serving_minor", ops: ["lt", "lte"], dollars: 2 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], minorUnits: 200 },
       ],
       soft: [{ key: "function" }],
       alsoReasonable: ["format", "electrolytes_mg"],
@@ -202,30 +165,6 @@ async function usage(): Promise<Usage | null> {
   };
 }
 
-function describeWant(w: ExpectedConstraint): string {
-  if (w.dollars !== undefined) return `$${w.dollars}, sent as {"amount": ${w.dollars}, "currency": "USD"}`;
-  if (w.value !== undefined) return `exactly ${JSON.stringify(w.value)}`;
-  if (w.atMost !== undefined) return `at most ${w.atMost}`;
-  if (w.atLeast !== undefined) return `at least ${w.atLeast}`;
-  return "any value";
-}
-
-function valueFits(got: unknown, w: ExpectedConstraint): boolean {
-  if (w.dollars !== undefined) {
-    // The money contract: an object in whole dollars. A bare number is the
-    // defect this test exists to catch, so it fails here rather than being
-    // interpreted.
-    if (typeof got !== "object" || got === null) return false;
-    const m = got as { amount?: unknown; currency?: unknown };
-    return m.currency === "USD" && typeof m.amount === "number" && Math.abs(m.amount - w.dollars) < 1e-9;
-  }
-  if (w.value !== undefined) return got === w.value;
-  if (typeof got !== "number") return false;
-  if (w.atMost !== undefined) return got <= w.atMost;
-  if (w.atLeast !== undefined) return got >= w.atLeast;
-  return true;
-}
-
 async function main() {
   const before = await usage();
   if (!before) console.warn("! ADMIN_ACCESS_KEY not set, so cost cannot be measured. Accuracy only.\n");
@@ -267,73 +206,9 @@ async function main() {
       continue;
     }
 
-    const proposal = r.proposals.find((p) => p.kind === "apply_preferences");
-    const gotHard = proposal?.hard ?? [];
-    const gotSoft = proposal?.soft ?? [];
-    const problems: string[] = [];
-
-    // Each expected constraint must be present with an operator that reads the
-    // sentence correctly and a value in the right place. A matching key with
-    // the wrong operator is a wrong answer, not a partial one.
-    for (const want of c.expect.hard ?? []) {
-      const found = gotHard.filter((h) => h.key === want.key);
-      if (found.length === 0) {
-        problems.push(`missing hard ${want.key}`);
-        continue;
-      }
-      const right = found.filter((h) => want.ops.includes(h.op));
-      if (right.length === 0) {
-        problems.push(`hard ${want.key} used op ${found.map((h) => h.op).join("/")}, expected one of ${want.ops.join("/")}`);
-        continue;
-      }
-      const valued = right.filter((h) => valueFits(h.value, want));
-      if (valued.length === 0) {
-        problems.push(`hard ${want.key} value ${JSON.stringify(right[0].value)} does not fit ${describeWant(want)}`);
-      }
-    }
-
-    for (const want of c.expect.soft ?? []) {
-      const found = gotSoft.filter((sp) => sp.key === want.key);
-      const alsoHard = gotHard.some((h) => h.key === want.key);
-      if (found.length === 0 && !alsoHard) {
-        problems.push(`missing soft ${want.key}`);
-        continue;
-      }
-      if (want.directions && found.length > 0 && !found.some((sp) => want.directions!.includes(sp.direction))) {
-        problems.push(`soft ${want.key} pointed ${found.map((sp) => sp.direction).join("/")}, expected ${want.directions.join("/")}`);
-      }
-    }
-
-    if (c.expect.medicalIntent && !r.medicalRedirect) problems.push("medical question was not declined");
-    if (!c.expect.medicalIntent && r.medicalRedirect) problems.push("declined a question that was not medical");
-    if (c.expect.mustAskQuestion && !/\?/.test(r.text)) problems.push("did not ask a clarifying question");
-
-    // The engine decides what matches. The reply must not contradict it.
-    if (c.expect.engine === "someMatch") {
-      const count = proposal?.matchCount ?? r.matchingIds.length;
-      if (count === 0) problems.push("the engine matched nothing, but this sentence has matching products");
-      if (/\bno (?:products?|options?|matches)\b/i.test(r.text) && count > 0) {
-        problems.push(`reply claims nothing matches while the engine matched ${count}`);
-      }
-    }
-
-    // Invented constraints are worse than missing ones: they silently filter.
-    const allowed = new Set([
-      ...(c.expect.hard ?? []).map((h) => h.key),
-      ...(c.expect.soft ?? []).map((sp) => sp.key),
-      ...(c.expect.alsoReasonable ?? []),
-    ]);
-    for (const k of [...gotHard.map((h) => h.key), ...gotSoft.map((sp) => sp.key)]) {
-      if (!allowed.has(k)) problems.push(`invented constraint ${k}`);
-    }
-
-    // The three surfaces must agree, whatever the model said.
-    if (proposal && proposal.matchCount !== (proposal.matchingIds ?? []).length) problems.push("proposal count disagrees with its own set");
-    if (!proposal && r.products.some((p) => !r.matchingIds.includes(p.productId))) problems.push("a card is not in the matching set");
-    if (r.unconfirmedPrice.some((p) => r.matchingIds.includes(p.productId))) problems.push("a product is both matching and unconfirmed");
-
-    records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems, shown: r.matchingIds.length });
-
+    // The same function a non-paid test exercises against a real route
+    // response, so the assertions cannot drift from what the route returns.
+    const problems = checkReply(r as CheckableReply, c.expect);
     if (problems.length === 0) {
       pass++;
       console.log(`ok   ${c.category} | ${c.note}`);

@@ -251,7 +251,7 @@ function ProductLine({ p }: { p: AssistantProductRef }) {
       <Link href={`/products/${p.slug}`} className="font-semibold hover:underline">
         {p.brand} {p.name}
       </Link>
-      <span className="text-fg-soft"> · {p.price}</span>
+      <span className="text-fg-soft"> · {p.priceIsPlaceholder ? "price not stated" : p.price}</span>
       {p.facts.length > 0 ? (
         <ul className="mt-1 flex flex-col gap-0.5">
           {p.facts.map((f) => (

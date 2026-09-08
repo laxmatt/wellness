@@ -3,7 +3,7 @@ import { POST } from "@/app/api/assistant/route";
 import { categoryById } from "@/domain/categories";
 import type { Condition } from "@/domain/category";
 import { evaluateCondition, matchesAll } from "@/domain/conditions";
-import { detectMatchClaim, engineSentence, reconcileMatchClaim } from "@/domain/match-claims";
+import { engineSummary } from "@/domain/match-claims";
 import { PreferenceSet } from "@/domain/personalization";
 import { applyPreferences } from "@/domain/personalization/match";
 import type { ProductView } from "@/domain/view";
@@ -167,44 +167,15 @@ describe("malformed model output is rejected, never a successful empty answer", 
 });
 
 describe("what the shopper reads about matches comes from the engine", () => {
-  it("detects the exact sentence the live run produced", () => {
-    expect(detectMatchClaim("There are no products listed under $500 in the catalogue.")).toBe("none");
+  it("the site writes the count itself, from the engine", () => {
+    expect(engineSummary(1, 8)).toContain("1 of the 8");
+    expect(engineSummary(0, 8)).toMatch(/No products match/i);
+    expect(engineSummary(8, 8)).toMatch(/All 8/);
   });
 
-  it("leaves ordinary constraint language alone", () => {
-    for (const text of [
-      "No caffeine in this one, and it is under $30.",
-      "I can compare these on price and coverage.",
-      "This one has no sugar at all.",
-      "Would you like to set a budget?",
-    ]) {
-      expect(detectMatchClaim(text)).toBeNull();
-    }
-  });
-
-  it("replaces a no-match claim when the engine matched something", () => {
-    const r = reconcileMatchClaim("There are no products listed under $500 in the catalogue.", 1, 8);
-    expect(r.replaced).toBe(true);
-    expect(r.text).toBe(engineSentence(1, 8));
-    expect(r.text).toContain("1 of the 8");
-  });
-
-  it("replaces a match claim when the engine matched nothing", () => {
-    const r = reconcileMatchClaim("Here are a few options that fit.", 0, 8);
-    expect(r.replaced).toBe(true);
-    expect(r.text).toBe(engineSentence(0, 8));
-    expect(r.text).toMatch(/No products match/i);
-  });
-
-  it("leaves an agreeing reply untouched", () => {
-    const r = reconcileMatchClaim("There are no products listed under $500 in the catalogue.", 0, 8);
-    expect(r.replaced).toBe(false);
-  });
-
-  it("the route rewrites the contradictory reply rather than passing it through", async () => {
+  it("the contradictory sentence from the live run cannot be shown at all now", async () => {
     const { cat, views } = await redLight();
     const under500: Condition[] = [{ key: "price", op: "lte", value: 50000 }];
-    // As the model sends it now: dollars, converted to cents by code.
     const under500Model = [{ key: "price", op: "lte", value: { amount: 500, currency: "USD" } }];
     const engineCount = views.filter((v) => matchesAll(v, cat, under500)).length;
     expect(engineCount).toBeGreaterThan(0);
@@ -222,9 +193,9 @@ describe("what the shopper reads about matches comes from the engine", () => {
     );
     const body = await (await POST(ask("under 500"))).json();
 
+    // The model's sentence is not displayed, so there is nothing to screen.
     expect(body.text).not.toMatch(/no products listed under/i);
-    expect(body.text).toContain(`${engineCount} of the ${views.length}`);
-    expect(body.notice).toMatch(/the count shown here is the site's/i);
+    expect(body.matchSummary).toBe(engineSummary(engineCount, views.length));
     expect(body.matchingIds.length).toBe(engineCount);
   });
 });
