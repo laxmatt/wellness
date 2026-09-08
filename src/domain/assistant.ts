@@ -75,12 +75,16 @@ export type AssistantReply = {
   // Every product satisfying the agreed hard constraints, in personalized
   // order. The page filters by this rather than approximating it with chips.
   matchingIds: string[];
+  // Products that could not be confirmed against a price constraint because
+  // their price is unverified. Shown apart, with the reason.
+  unconfirmedPrice: AssistantProductRef[];
   proposals: ProposedAction[];
   // Constraints currently held for this session, in words, each removable.
   activeConstraints: { key: string; label: string }[];
   medicalRedirect: boolean;
+  // A short, non-financial explanation when the assistant is unavailable.
+  // Spend figures are operator information and never reach the customer.
   notice?: string;
-  usage?: { sessionTurns: number; sessionTurnLimit: number; monthlySpendUsd: number; monthlyCapUsd: number };
 };
 
 export const AssistantRequest = z.object({

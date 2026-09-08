@@ -3,65 +3,130 @@ import { AssistantRequest, ModelIntent } from "@/domain/assistant";
 import { categoryById } from "@/domain/categories";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
 import { ScriptedConversationProvider } from "@/providers/ai/ScriptedProvider";
-import { MemoryUsageStore, UsageMeter, type MeterConfig } from "@/providers/usage/UsageMeter";
+import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
+import { UsageMeter, type MeterConfig, type UsageStore } from "@/providers/usage/UsageMeter";
 import { viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
 
-const config: MeterConfig = { monthlyCapUsd: 25, sessionTurnLimit: 3, inputUsdPerMillion: 0.15, outputUsdPerMillion: 0.6 };
+const config: MeterConfig = {
+  monthlyCapUsd: 25,
+  sessionTurnLimit: 3,
+  inputUsdPerMillion: 0.15,
+  outputUsdPerMillion: 0.6,
+  maxInputTokens: 6000,
+  maxOutputTokens: 500,
+};
+
+const meterWith = (over: Partial<MeterConfig> = {}) => {
+  const store = new MemoryUsageStore();
+  return { store, meter: new UsageMeter(store, { ...config, ...over }) };
+};
 
 describe("spend control", () => {
-  it("allows spend under both limits", () => {
-    const m = new UsageMeter(new MemoryUsageStore(), config);
-    expect(m.check("s1").allowed).toBe(true);
+  it("reserves the worst case a request could cost, not the average", async () => {
+    const { meter } = meterWith();
+    // 6000 in + 500 out at the configured rates.
+    expect(meter.worstCaseUsd).toBeCloseTo(0.0009 + 0.0003, 6);
+    const r = await meter.reserve("s1");
+    expect(r.ok).toBe(true);
   });
 
-  it("stops a session at its turn limit without affecting other sessions", () => {
-    const m = new UsageMeter(new MemoryUsageStore(), config);
-    for (let i = 0; i < 3; i++) m.record("s1", "test", 1000, 200);
-    const blocked = m.check("s1");
-    expect(blocked.allowed).toBe(false);
-    if (!blocked.allowed) expect(blocked.kind).toBe("session_limit");
-    expect(m.check("s2").allowed).toBe(true);
+  it("reconciles the reservation against what was actually used", async () => {
+    const { meter } = meterWith();
+    const r = await meter.reserve("s1");
+    if (!r.ok) throw new Error("expected a reservation");
+    let snap = await meter.snapshot("s1");
+    expect(snap.reservedUsd).toBeCloseTo(meter.worstCaseUsd, 6);
+    expect(snap.spentUsd).toBe(0);
+
+    await meter.settle(r.reservation, "test", 1000, 100);
+    snap = await meter.snapshot("s1");
+    expect(snap.reservedUsd).toBe(0);
+    expect(snap.spentUsd).toBeCloseTo(meter.costOf(1000, 100), 6);
   });
 
-  it("stops every session once the monthly cap is reached", () => {
-    const m = new UsageMeter(new MemoryUsageStore(), { ...config, monthlyCapUsd: 0.01, sessionTurnLimit: 1000 });
-    // 100k output tokens at $0.60/M is $0.06, over a $0.01 cap.
-    m.record("s1", "test", 0, 100_000);
-    const blocked = m.check("s2");
-    expect(blocked.allowed).toBe(false);
-    if (!blocked.allowed) expect(blocked.kind).toBe("monthly_cap");
+  it("concurrent requests cannot both take the last of the budget", async () => {
+    // Room for exactly two worst-case requests.
+    const probe = new UsageMeter(new MemoryUsageStore(), config);
+    const cap = probe.worstCaseUsd * 2;
+    const { meter } = meterWith({ monthlyCapUsd: cap, sessionTurnLimit: 100 });
+
+    // Ten requests started together, before any of them settles.
+    const results = await Promise.all(Array.from({ length: 10 }, (_, i) => meter.reserve(`s${i}`)));
+    const granted = results.filter((r) => r.ok);
+    expect(granted.length).toBe(2);
+
+    const snap = await meter.snapshot("s0");
+    expect(snap.reservedUsd).toBeLessThanOrEqual(cap);
+    for (const r of results) if (!r.ok) expect(r.kind).toBe("monthly_cap");
+  });
+
+  it("releases the reservation when the call fails, so nothing is lost to the cap", async () => {
+    const probe = new UsageMeter(new MemoryUsageStore(), config);
+    const { meter } = meterWith({ monthlyCapUsd: probe.worstCaseUsd, sessionTurnLimit: 100 });
+    const first = await meter.reserve("s1");
+    if (!first.ok) throw new Error("expected a reservation");
+    expect((await meter.reserve("s2")).ok).toBe(false);
+
+    // The call failed: settle with zero spend.
+    await meter.settle(first.reservation, "failed", 0, 0);
+    expect((await meter.reserve("s3")).ok).toBe(true);
+  });
+
+  it("settling twice never double-counts", async () => {
+    const { meter, store } = meterWith();
+    const r = await meter.reserve("s1");
+    if (!r.ok) throw new Error("expected a reservation");
+    await meter.settle(r.reservation, "test", 1000, 100);
+    await meter.settle(r.reservation, "test", 1000, 100);
+    expect(store.records.length).toBe(1);
+    const snap = await meter.snapshot("s1");
+    expect(snap.spentUsd).toBeCloseTo(meter.costOf(1000, 100), 6);
+  });
+
+  it("stops a session at its turn limit without affecting other sessions", async () => {
+    const { meter } = meterWith();
+    for (let i = 0; i < 3; i++) {
+      const r = await meter.reserve("s1");
+      if (r.ok) await meter.settle(r.reservation, "test", 10, 10);
+    }
+    const blocked = await meter.reserve("s1");
+    expect(blocked.ok).toBe(false);
+    if (!blocked.ok) expect(blocked.kind).toBe("session_limit");
+    expect((await meter.reserve("s2")).ok).toBe(true);
   });
 
   it("computes cost from configured per-million rates", () => {
-    const m = new UsageMeter(new MemoryUsageStore(), config);
-    expect(m.costOf(1_000_000, 0)).toBeCloseTo(0.15, 6);
-    expect(m.costOf(0, 1_000_000)).toBeCloseTo(0.6, 6);
-    expect(m.costOf(500_000, 500_000)).toBeCloseTo(0.375, 6);
+    const { meter } = meterWith();
+    expect(meter.costOf(1_000_000, 0)).toBeCloseTo(0.15, 6);
+    expect(meter.costOf(0, 1_000_000)).toBeCloseTo(0.6, 6);
+    expect(meter.costOf(500_000, 500_000)).toBeCloseTo(0.375, 6);
   });
 
-  it("fails closed when usage cannot be counted", () => {
-    const broken = {
-      read() {
-        throw new Error("store offline");
+  it("fails closed when the ledger cannot be reached", async () => {
+    const broken: UsageStore = {
+      name: "broken",
+      isShared: true,
+      async init() {
+        throw new Error("ledger offline");
       },
-      append() {},
+      async reserve() {
+        throw new Error("ledger offline");
+      },
+      async settle() {},
+      async snapshot() {
+        throw new Error("ledger offline");
+      },
     };
     const m = new UsageMeter(broken, config);
-    const d = m.check("s1");
-    expect(d.allowed).toBe(false);
-    if (!d.allowed) expect(d.kind).toBe("store_error");
+    const d = await m.reserve("s1");
+    expect(d.ok).toBe(false);
+    if (!d.ok) expect(d.kind).toBe("store_error");
   });
 
-  it("reports the numbers the UI shows", () => {
-    const m = new UsageMeter(new MemoryUsageStore(), config);
-    m.record("s1", "test", 1000, 500);
-    const snap = m.snapshot("s1");
-    expect(snap.sessionTurns).toBe(1);
-    expect(snap.sessionTurnLimit).toBe(3);
-    expect(snap.monthlyCapUsd).toBe(25);
-    expect(snap.monthlySpendUsd).toBeGreaterThan(0);
+  it("marks an in-process ledger as not shared, which gates live use", () => {
+    expect(new MemoryUsageStore().isShared).toBe(false);
   });
 });
 

@@ -23,7 +23,18 @@ export function conditionTarget(cat: CategoryDefinition, key: string, value: unk
   return enumRank(cat, key, value);
 }
 
+// True when this condition asserts something about price that an unverified
+// price cannot support.
+export function isUnconfirmedPriceClaim(view: ProductView, cat: CategoryDefinition, c: Condition): boolean {
+  if (c.op === "exists" || c.op === "missing") return false;
+  if (c.key === "price") return view.price.isDemo;
+  // Per-serving cost is derived from the pack price, so it inherits its doubt.
+  if (attributeDef(cat, c.key)?.unit === "USD_minor") return view.price.isDemo;
+  return false;
+}
+
 export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c: Condition): boolean {
+  if (isUnconfirmedPriceClaim(view, cat, c)) return false;
   const raw: AttributePrimitive | number | undefined = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
   switch (c.op) {
     case "exists":
@@ -55,4 +66,17 @@ export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c:
 
 export function matchesAll(view: ProductView, cat: CategoryDefinition, conditions: Condition[]): boolean {
   return conditions.every((c) => evaluateCondition(view, cat, c));
+}
+
+// Products excluded solely because their price is unverified. They are not
+// failures to hide: they may well qualify, and the UI says so separately.
+export function unconfirmedByPrice(views: ProductView[], cat: CategoryDefinition, conditions: Condition[]): ProductView[] {
+  const priceClaims = conditions.filter((c) => c.key === "price" || attributeDef(cat, c.key)?.unit === "USD_minor");
+  if (priceClaims.length === 0) return [];
+  return views.filter((v) => {
+    if (matchesAll(v, cat, conditions)) return false;
+    if (!priceClaims.some((c) => isUnconfirmedPriceClaim(v, cat, c))) return false;
+    // Must pass everything that does not depend on the doubtful price.
+    return conditions.filter((c) => !isUnconfirmedPriceClaim(v, cat, c)).every((c) => evaluateCondition(v, cat, c));
+  });
 }

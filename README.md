@@ -14,7 +14,7 @@ npm run typecheck
 npm run catalog:check  # validate catalog JSON and print rankings and badges
 ```
 
-Node 22. No database. No environment variables.
+Node 22. No database and no environment variables are needed for the site itself. The optional assistant needs both: see docs/ASSISTANT.md.
 
 ## Layout
 

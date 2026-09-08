@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { categories, categoryById } from "@/domain/categories";
 import { buildCompareModel } from "@/domain/compare";
+import { evaluateCondition, unconfirmedByPrice } from "@/domain/conditions";
 import { assignBadges, recommendCategory, scoreProducts, toScoringInput } from "@/domain/recommend";
 import { catalog, viewsFor } from "./fixtures";
 
@@ -160,5 +161,46 @@ describe("catalogue integrity after the guards", () => {
       expect(flipped.ranking).toEqual(base.ranking);
       expect(flipped.badges).toEqual(base.badges);
     }
+  });
+});
+
+describe("a placeholder price is not budget evidence", () => {
+  const budget = [{ key: "price", op: "lte" as const, value: 70000 }];
+
+  it("cannot confirm an unverified price meets a budget", () => {
+    const views = viewsFor("red-light");
+    const pro = views.find((v) => v.id === "hooga-pro1500")!;
+    // Listed at $649, which is under $700, but the price is a placeholder.
+    expect(pro.price.money.amountMinor).toBeLessThan(70000);
+    expect(pro.price.isDemo).toBe(true);
+    expect(evaluateCondition(pro, redLight, budget[0])).toBe(false);
+  });
+
+  it("surfaces those products separately rather than hiding them", () => {
+    const views = viewsFor("red-light");
+    const apart = unconfirmedByPrice(views, redLight, budget);
+    expect(apart.map((v) => v.id)).toContain("hooga-pro1500");
+    // Everything listed apart genuinely has an unverified price.
+    for (const v of apart) expect(v.price.isDemo).toBe(true);
+  });
+
+  it("still matches products whose price is verified", () => {
+    const views = viewsFor("red-light");
+    const mitomin = views.find((v) => v.id === "mito-mitomin-2")!;
+    expect(mitomin.price.isDemo).toBe(false);
+    expect(evaluateCondition(mitomin, redLight, budget[0])).toBe(true);
+  });
+
+  it("applies the same doubt to per-serving cost, which is derived from price", () => {
+    const drinks = categoryById("wellness-drinks")!;
+    const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
+    expect(olipop.price.isDemo).toBe(true);
+    expect(evaluateCondition(olipop, drinks, { key: "price_per_serving_minor", op: "lte", value: 1000 })).toBe(false);
+  });
+
+  it("leaves non-price conditions untouched", () => {
+    const views = viewsFor("red-light");
+    const pro = views.find((v) => v.id === "hooga-pro1500")!;
+    expect(evaluateCondition(pro, redLight, { key: "coverage", op: "eq", value: "full_body" })).toBe(true);
   });
 });

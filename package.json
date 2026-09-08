@@ -10,10 +10,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "catalog:check": "tsx scripts/check-catalog.ts"
+    "catalog:check": "tsx scripts/check-catalog.ts",
+    "assistant:livetest": "tsx scripts/assistant-live-test.ts"
   },
   "dependencies": {
+    "@types/pg": "^8.23.1",
     "next": "16.3.4",
+    "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "zod": "^4.5.4"

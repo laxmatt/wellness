@@ -2,29 +2,32 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AssistantRequest, type AssistantProductRef, type AssistantReply, type ProposedAction } from "@/domain/assistant";
 import { categoryById } from "@/domain/categories";
+import type { CategoryDefinition, Condition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
+import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { formatMoney } from "@/domain/money";
+import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
 import { applyPreferences } from "@/domain/personalization/match";
-import { PreferenceSet } from "@/domain/personalization";
 import type { ProductView } from "@/domain/view";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
 import { OpenAIConversationProvider, type ConversationProvider, type GroundedProduct } from "@/providers/ai/OpenAIProvider";
 import { ScriptedConversationProvider } from "@/providers/ai/ScriptedProvider";
-import { FileUsageStore, USAGE_FILE, UsageMeter } from "@/providers/usage/UsageMeter";
+import { getMeter } from "@/providers/usage";
 import { getCatalog } from "@/providers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const meter = new UsageMeter(new FileUsageStore(USAGE_FILE));
-
 const MEDICAL_REDIRECT =
   "I can compare these products by size, coverage, price, setup and the other specifications on this page, but I cannot determine which will treat a medical condition. That is a question for a clinician.";
 
+const CAPPED_TEXT =
+  "The assistant is not available right now. Everything else on this page still works: use the filters and the comparison table to narrow things down.";
+
 // Only sourced facts are ever sent to the model. Placeholder values are not
 // evidence, so they are withheld entirely rather than labelled and included.
-function ground(view: ProductView, cat: NonNullable<ReturnType<typeof categoryById>>): GroundedProduct {
+function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
   const facts: GroundedProduct["facts"] = [];
   const notStated: string[] = [];
   for (const def of cat.attributeDefinitions) {
@@ -51,16 +54,42 @@ function ground(view: ProductView, cat: NonNullable<ReturnType<typeof categoryBy
   };
 }
 
-function vocabulary(cat: NonNullable<ReturnType<typeof categoryById>>): string {
-  const parts = cat.filters.map((f) => {
-    const def = attributeDef(cat, f.key);
-    if (def?.type === "enum") return `${f.key} (one of ${def.enumOptions?.map((o) => o.value).join("|")})`;
-    if (def?.type === "boolean") return `${f.key} (true|false)`;
-    if (def?.type === "list") return `${f.key} (list; use op "includes")`;
-    if (f.key === "price") return "price (integer cents, use op lte)";
-    return `${f.key} (number${def?.unit ? `, ${def.unit}` : ""})`;
-  });
-  return parts.join("; ");
+function vocabulary(cat: CategoryDefinition): string {
+  return cat.filters
+    .map((f) => {
+      const def = attributeDef(cat, f.key);
+      if (def?.type === "enum") return `${f.key} (one of ${def.enumOptions?.map((o) => o.value).join("|")})`;
+      if (def?.type === "boolean") return `${f.key} (true|false)`;
+      if (def?.type === "list") return `${f.key} (list; use op "includes")`;
+      if (f.key === "price") return "price (integer cents, use op lte)";
+      return `${f.key} (number${def?.unit ? `, ${def.unit}` : ""})`;
+    })
+    .join("; ");
+}
+
+// One computation. The reply text, the product cards, the proposal and the
+// applied filter all read from this, so the panel cannot show three different
+// answers to the same question.
+type Outcome = {
+  hard: HardConstraint[];
+  soft: SoftPreference[];
+  result: ReturnType<typeof applyPreferences>;
+  matching: ProductView[];
+  // Products excluded only because their price is not verified. They may
+  // qualify; we cannot say they do, so they are listed apart.
+  unconfirmed: ProductView[];
+};
+
+function evaluate(views: ProductView[], cat: CategoryDefinition, hard: HardConstraint[], soft: SoftPreference[], unmapped: string[] = []): Outcome {
+  const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped, medicalIntent: false }));
+  const order = new Map((result.bestMatchId ? [result.bestMatchId, ...result.alternativeIds] : []).map((id, i) => [id, i]));
+  // Hard constraints decide what matches. Soft preferences only order the
+  // result: treating an unmet preference as a miss would quietly turn "I would
+  // prefer full body" into a filter and hide products the shopper asked to see.
+  const matching = views
+    .filter((v) => matchesAll(v, cat, hard as Condition[]))
+    .sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99));
+  return { hard, soft, result, matching, unconfirmed: unconfirmedByPrice(views, cat, hard as Condition[]) };
 }
 
 export async function POST(req: Request) {
@@ -81,61 +110,51 @@ export async function POST(req: Request) {
   if (!cat) return NextResponse.json({ error: "Unknown category." }, { status: 404 });
 
   const views = await getCatalog().listProductViews({ categoryId: cat.id, status: ["published"] });
+  const agreed = evaluate(views, cat, hard, soft);
   const lastUser = [...messages].reverse().find((m) => m.role === "user")?.text ?? "";
 
   // The medical boundary is enforced here, before and independently of any
   // model call, so it holds even when the model is unavailable or wrong.
   if (detectMedicalIntent(lastUser)) {
-    const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped: [], medicalIntent: true }));
-    return NextResponse.json(
-      buildReply({
-        text: MEDICAL_REDIRECT,
-        mode: "live",
-        views,
-        cat,
-        hard,
-        soft,
-        result,
-        proposals: [],
-        medicalRedirect: true,
-        usage: meter.snapshot(sessionId),
-      }) satisfies AssistantReply,
-    );
+    return NextResponse.json(reply({ text: MEDICAL_REDIRECT, mode: "live", cat, outcome: agreed, proposals: [], medicalRedirect: true }));
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
+  const meter = getMeter();
   const provider: ConversationProvider = apiKey ? new OpenAIConversationProvider(apiKey) : new ScriptedConversationProvider(cat);
 
-  // Spend is checked before the call, never after, and only for a live model.
+  // A live model may only run against a ledger shared by every instance,
+  // otherwise each instance would enforce its own private cap.
+  if (provider.isLive && !meter.isShared && process.env.ASSISTANT_ALLOW_UNSHARED_LEDGER !== "1") {
+    return NextResponse.json(
+      reply({
+        text: CAPPED_TEXT,
+        mode: "unavailable",
+        cat,
+        outcome: agreed,
+        proposals: [],
+        medicalRedirect: false,
+        notice: "The assistant is not configured for shared spend tracking, so it has not been enabled.",
+      }),
+    );
+  }
+
+  // Budget is reserved before the call and reconciled after it, so requests
+  // arriving together cannot both spend the same headroom.
+  let reservation = null as Awaited<ReturnType<typeof meter.reserve>> | null;
   if (provider.isLive) {
-    const decision = meter.check(sessionId);
-    if (!decision.allowed) {
-      const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped: [], medicalIntent: false }));
+    reservation = await meter.reserve(sessionId);
+    if (!reservation.ok) {
       return NextResponse.json(
-        buildReply({
-          text: "The assistant is paused, but everything else on the page still works: use the filters and the comparison table to narrow things down.",
-          mode: "unavailable",
-          views,
-          cat,
-          hard,
-          soft,
-          result,
-          proposals: [],
-          medicalRedirect: false,
-          notice: decision.reason,
-          usage: meter.snapshot(sessionId),
-        }) satisfies AssistantReply,
+        reply({ text: CAPPED_TEXT, mode: "unavailable", cat, outcome: agreed, proposals: [], medicalRedirect: false, notice: reservation.reason }),
       );
     }
   }
 
-  // The model sees only the shortlist it needs, sourced facts only.
-  const priorResult = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped: [], medicalIntent: false }));
-  const shortlistIds = priorResult.bestMatchId ? [priorResult.bestMatchId, ...priorResult.alternativeIds] : views.slice(0, 5).map((v) => v.id);
-  const shortlist = views.filter((v) => shortlistIds.includes(v.id)).slice(0, 6);
+  // The model sees only a shortlist, sourced facts only.
+  const shortlist = (agreed.matching.length > 0 ? agreed.matching : views).slice(0, 6);
 
   let intent;
-  let notice: string | undefined;
   try {
     const res = await provider.converse({
       categoryName: cat.name,
@@ -145,140 +164,106 @@ export async function POST(req: Request) {
       activeConstraints: hard.map((c) => describeConstraint(cat, c)),
     });
     intent = res.intent;
-    if (provider.isLive) meter.record(sessionId, res.model, res.inputTokens, res.outputTokens);
+    if (reservation?.ok) await meter.settle(reservation.reservation, res.model, res.inputTokens, res.outputTokens);
   } catch {
-    const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped: [], medicalIntent: false }));
+    // The reservation is released with nothing spent; the call never landed.
+    if (reservation?.ok) await meter.settle(reservation.reservation, "failed", 0, 0);
     return NextResponse.json(
-      buildReply({
+      reply({
         text: "I could not reach the assistant just now. The filters and comparison on this page are unaffected.",
         mode: "unavailable",
-        views,
         cat,
-        hard,
-        soft,
-        result,
+        outcome: agreed,
         proposals: [],
         medicalRedirect: false,
         notice: "Assistant temporarily unavailable.",
-        usage: meter.snapshot(sessionId),
-      }) satisfies AssistantReply,
+      }),
     );
   }
 
-  // Constraints the model proposes are validated against real filter keys and
-  // are never applied here. They travel back as proposals for the shopper.
   const validKeys = new Set<string>([...cat.attributeDefinitions.map((a) => a.key), "price"]);
   const proposedHard = intent.hard.filter((c) => validKeys.has(c.key));
   const proposedSoft = intent.soft.filter((s) => validKeys.has(s.key));
+  const changed = JSON.stringify(proposedHard) !== JSON.stringify(hard) || JSON.stringify(proposedSoft) !== JSON.stringify(soft);
 
-  const changed =
-    JSON.stringify(proposedHard) !== JSON.stringify(hard) || JSON.stringify(proposedSoft) !== JSON.stringify(soft);
+  // When the model proposes new constraints, everything shown describes those
+  // constraints. Showing the old ranking next to a new proposal is what made
+  // the reply, the cards and the proposal disagree.
+  const shown = changed && (proposedHard.length > 0 || proposedSoft.length > 0) ? evaluate(views, cat, proposedHard, proposedSoft, intent.unmapped) : agreed;
 
   const proposals: ProposedAction[] = [];
-  if (changed && (proposedHard.length > 0 || proposedSoft.length > 0)) {
-    // Run the engine against the proposed constraints so the shopper is told
-    // how many products would remain before deciding to apply anything.
-    const preview = applyPreferences(views, cat, PreferenceSet.parse({ hard: proposedHard, soft: proposedSoft, unmapped: [], medicalIntent: false }));
-    const matchingIds = views.filter((v) => (preview.explanations[v.id]?.misses.length ?? 0) === 0).map((v) => v.id);
+  if (shown !== agreed) {
     const constraintText = proposedHard.length > 0 ? proposedHard.map((c) => describeConstraint(cat, c)).join(", ") : "what I am ranking for";
     proposals.push({
       kind: "apply_preferences",
-      summary: `Narrow to ${constraintText} (${matchingIds.length} of ${views.length} products)`,
+      summary: `Narrow to ${constraintText} (${shown.matching.length} of ${views.length} products)`,
       hard: proposedHard,
       soft: proposedSoft,
-      matchingIds,
-      matchCount: matchingIds.length,
+      matchingIds: shown.matching.map((v) => v.id),
+      matchCount: shown.matching.length,
     });
   }
-  const compareIds = intent.suggestCompare.filter((id) => views.some((v) => v.id === id));
+
+  const compareIds = intent.suggestCompare.filter((id) => shown.matching.some((v) => v.id === id));
   if (compareIds.length > 1) {
-    proposals.push({
-      kind: "add_to_compare",
-      summary: `Compare ${compareIds.length} of these side by side`,
-      productIds: compareIds.slice(0, 4),
-    });
+    proposals.push({ kind: "add_to_compare", summary: `Compare ${compareIds.length} of these side by side`, productIds: compareIds.slice(0, 4) });
   }
 
-  // Results shown alongside the reply come from the engine, using the
-  // constraints already agreed, not the ones just proposed.
-  const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped: intent.unmapped, medicalIntent: false }));
-
-  if (result.bestMatchId === null && hard.length > 0 && result.relaxations.length > 0) {
-    for (const r of result.relaxations.slice(0, 2)) {
+  if (shown.matching.length === 0 && shown.hard.length > 0 && shown.result.relaxations.length > 0) {
+    for (const r of shown.result.relaxations.slice(0, 2)) {
       proposals.push({ kind: "relax_constraint", summary: `Set aside ${r.keptLabel} and show the closest option`, key: r.keptKey });
     }
   }
 
-  if (intent.unmapped.length > 0) {
-    notice = `Not something this site compares: ${intent.unmapped.join(", ")}.`;
-  }
-
   return NextResponse.json(
-    buildReply({
+    reply({
       text: intent.medicalIntent ? MEDICAL_REDIRECT : intent.reply,
       mode: provider.isLive ? "live" : "prototype",
-      views,
       cat,
-      hard,
-      soft,
-      result,
+      outcome: shown,
       proposals,
       question: intent.question,
       medicalRedirect: intent.medicalIntent,
-      notice,
-      usage: meter.snapshot(sessionId),
-    }) satisfies AssistantReply,
+      notice: intent.unmapped.length > 0 ? `Not something this site compares: ${intent.unmapped.join(", ")}.` : undefined,
+    }),
   );
 }
 
-function buildReply(args: {
+function toRef(v: ProductView, outcome: Outcome): AssistantProductRef {
+  return {
+    productId: v.id,
+    slug: v.slug,
+    name: v.name,
+    brand: v.brand.name,
+    price: formatMoney(v.price.money),
+    priceIsPlaceholder: v.price.isDemo,
+    fits: outcome.result.explanations[v.id]?.fits ?? [],
+    misses: outcome.result.explanations[v.id]?.misses ?? [],
+  };
+}
+
+function reply(args: {
   text: string;
   mode: AssistantReply["mode"];
-  views: ProductView[];
-  cat: NonNullable<ReturnType<typeof categoryById>>;
-  hard: AssistantRequest["hard"];
-  soft: AssistantRequest["soft"];
-  result: ReturnType<typeof applyPreferences>;
+  cat: CategoryDefinition;
+  outcome: Outcome;
   proposals: ProposedAction[];
   question?: { text: string; options: string[] };
   medicalRedirect: boolean;
   notice?: string;
-  usage: ReturnType<UsageMeter["snapshot"]>;
 }): AssistantReply {
-  const byId = new Map(args.views.map((v) => [v.id, v]));
-  const ids = args.result.bestMatchId ? [args.result.bestMatchId, ...args.result.alternativeIds] : [];
-  const matchingIds = args.views
-    .filter((v) => (args.result.explanations[v.id]?.misses.length ?? 0) === 0)
-    .map((v) => v.id);
-  const products: AssistantProductRef[] = ids
-    .map((id) => byId.get(id))
-    .filter((v): v is ProductView => v !== undefined)
-    .map((v) => ({
-      productId: v.id,
-      slug: v.slug,
-      name: v.name,
-      brand: v.brand.name,
-      price: formatMoney(v.price.money),
-      priceIsPlaceholder: v.price.isDemo,
-      fits: args.result.explanations[v.id]?.fits ?? [],
-      misses: args.result.explanations[v.id]?.misses ?? [],
-    }));
-
+  const { outcome } = args;
   return {
     text: args.text,
     mode: args.mode,
     question: args.question,
-    products,
-    matchingIds,
+    // Cards, matching set and proposal all come from one evaluation.
+    products: outcome.matching.slice(0, 3).map((v) => toRef(v, outcome)),
+    matchingIds: outcome.matching.map((v) => v.id),
+    unconfirmedPrice: outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome)),
     proposals: args.proposals,
-    activeConstraints: args.result.constraintLabels,
+    activeConstraints: outcome.result.constraintLabels,
     medicalRedirect: args.medicalRedirect,
     notice: args.notice,
-    usage: {
-      sessionTurns: args.usage.sessionTurns,
-      sessionTurnLimit: args.usage.sessionTurnLimit,
-      monthlySpendUsd: args.usage.monthlySpendUsd,
-      monthlyCapUsd: args.usage.monthlyCapUsd,
-    },
   };
 }

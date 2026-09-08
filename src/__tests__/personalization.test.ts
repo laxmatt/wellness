@@ -22,11 +22,12 @@ describe("matcher engine", () => {
       hard: [{ key: "price", op: "lte", value: 70000 }],
       soft: [{ key: "coverage", direction: "prefer_high", value: "full_body", weight: 0.8 }],
     }));
-    const under700 = views.filter((v) => v.price.money.amountMinor <= 70000).map((v) => v.id);
-    expect(under700).toContain(r.bestMatchId!);
-    // The full-body panel under budget beats the targeted ones.
-    expect(r.bestMatchId).toBe("hooga-pro1500");
-    expect(r.explanations["hooga-pro1500"].fits.some((f) => f.includes("under your limit"))).toBe(true);
+    // A budget claim needs a verified price. PRO1500 lists $649 but that price
+    // is a placeholder, so it cannot be confirmed under $700 and is excluded.
+    const eligible = views.filter((v) => v.price.money.amountMinor <= 70000 && !v.price.isDemo).map((v) => v.id);
+    expect(eligible).toContain(r.bestMatchId!);
+    expect(r.bestMatchId).toBe("mito-mitomin-2");
+    expect(r.explanations["mito-mitomin-2"].fits.some((f) => f.includes("under your limit"))).toBe(true);
     expect(r.relaxations).toEqual([]);
   });
 
@@ -105,7 +106,8 @@ describe("end to end with the mock extractor", () => {
     const ai = new MockAIProvider();
     const p = await ai.extractPreferences({ text: "I need a full-body panel under $700 that won't take over my apartment.", category: redLight });
     const r = applyPreferences(viewsFor("red-light"), redLight, p);
-    expect(r.bestMatchId).toBe("hooga-pro1500");
+    // The cheapest panel with a price we can stand behind.
+    expect(r.bestMatchId).toBe("mito-mitomin-2");
     expect(r.explanations[r.bestMatchId!].fits.length).toBeGreaterThan(0);
   });
 
