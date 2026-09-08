@@ -5,8 +5,12 @@ Commit: `53697fc`. Application cap: $1.00.
 
 **The run aborted on the first case. No conversation completed and no
 extraction was measured.** The script writes this report itself on a completed
-run; this one was written by hand from the ledger and the run log, because the
+run; this one was written by hand from the ledger and the run logs, because the
 script exits before its report step when the endpoint is not in `live` mode.
+
+This file separates what was observed from what was inferred. An earlier
+revision of it stated a cause for the failure that the evidence does not
+support. That claim is listed under **Withdrawn** below.
 
 ## Result
 
@@ -16,11 +20,6 @@ script exits before its report step when the endpoint is not in `live` mode.
 | Cases completed | 0 |
 | Exit code | 2 (`mode` was `unavailable`, not `live`) |
 | Model calls that returned a reply | 0 |
-
-The first request reached OpenAI and came back `403`. The route recorded the
-outcome, released the reservation and replied in `unavailable` mode. The script
-aborts on any mode other than `live`, by design, so it cannot be mistaken for a
-pass against the scripted stand-in. It stopped there and was not repeated.
 
 ## Cost
 
@@ -35,62 +34,117 @@ pass against the scripted stand-in. It stopped there and was not repeated.
 | --- | --- | --- |
 | `r_2026-09_1788893470513_izs521g0` | $0.00156 | The provider returned 403. |
 
-The held amount is the reservation estimate, not a measured charge. A `403`
-arrives before inference runs, so the true cost of this call is almost certainly
-$0.00. It is held rather than released because of the classification detail in
-the finding below. Close it out against OpenAI's usage record:
+The held amount is the reservation estimate, not a measured charge. It remains
+held and unreconciled on purpose: closing it out requires the provider's usage
+record for this timestamp, which nothing in this container can read.
 
-```
-curl -X POST http://localhost:3000/api/admin/assistant-usage \
-  -H "x-admin-key: $ADMIN_ACCESS_KEY" \
-  -H "content-type: application/json" \
-  -d '{"action":"reconcile","reservationId":"r_2026-09_1788893470513_izs521g0","actualUsd":0}'
-```
+## Confirmed
 
-## Credential injection: confirmed working
+1. The application sent one `POST https://api.openai.com/v1/chat/completions`
+   and received HTTP **403**. The route settled the call as `uncertain`, held
+   the reservation estimate, and replied in `unavailable` mode. The live test
+   aborted rather than score against the scripted stand-in.
+2. **The 403 response body was not retained.** `statusError` in
+   `src/providers/ai/OpenAIProvider.ts` reads the body only to test its shape,
+   then discards it; the stored reason is the status code and a fixed sentence.
+   This is the documented behaviour: a failed call is meant to produce a status
+   code and nothing else, so a credential echoed in an error body has nowhere to
+   go. Searched and empty: the application's stdout, the live-test log, the
+   Postgres log, `/var/log`, `/root/.ccr`, and the CLI's own debug log. The body
+   is unrecoverable.
+3. One property of that body survives, as an inference from the classification
+   it produced: it did **not** parse as JSON whose `error` field is an object.
+   That is all. It is equally consistent with a JSON body whose `error` is a
+   string, a plain-text body, an HTML body, or an empty body.
+4. A separate, zero-cost `GET https://api.openai.com/v1/models`, sent twice from
+   this container with no key in the environment and no authorization header of
+   the application's own, returned **403** both times with identical bodies:
 
-The proxy attached a credential and OpenAI recognised it. The `403` is an
-authorization failure at OpenAI, not a missing or rejected credential.
+   ```
+   {"error":"You have insufficient permissions for this operation. Missing
+   scopes: api.model.read. Check that you have the correct role in your
+   organization (Reader, Writer, Owner) and project (Viewer, Member, Owner),
+   and if you're using a restricted API key, that it has the necessary scopes."}
+   ```
 
-Evidence, from a zero-cost `GET https://api.openai.com/v1/models` made from this
-container with no key in the environment and no authorization header of our own:
+5. **That GET response came from OpenAI.** Its headers carry OpenAI's own
+   markers, which an intermediary would not manufacture:
 
-```
-http_status=403
-{"error":"You have insufficient permissions for this operation. Missing scopes:
-api.model.read. Check that you have the correct role in your organization
-(Reader, Writer, Owner) and project (Viewer, Member, Owner), and if you're using
-a restricted API key, that it has the necessary scopes."}
-```
+   ```
+   Openai-Processing-Ms: 386
+   Openai-Version: 2020-10-01
+   X-Openai-Proxy-Wasm: v0.1
+   X-Request-Id: 69df17a9-fcb5-4e32-a3be-72c4e3068839
+   Cf-Ray: a380325a1c41be7d-IAD
+   Server: cloudflare
+   ```
 
-The response describes the scopes and roles of a specific key. OpenAI can only
-answer that way about a credential it has identified, so a credential was
-attached to a request this application sent with no authorization header of its
-own. That is the proxy doing its job, and the key never enters this session.
+6. The same response also carried a header from Anthropic's agent proxy, naming
+   the credential it used and attributing the refusal upstream:
 
-The same reading applies to the `403` on `POST /v1/chat/completions`: the key is
-a restricted key whose scopes do not include model inference. Fix it at the
-provider, on the key, not in this repository:
+   ```
+   X-Proxy-Error: upstream denied the request: connection "OpenAI wellness
+   test", host "api.openai.com"
+   ```
 
-- Give the key the `model.request` scope, or issue an unrestricted project key
-- Confirm the key's project has access to `gpt-4o-mini`
-- Confirm the role on the organization and the project is at least Member
+7. **Credential injection works on that request.** A credential was attached
+   after the request left this session, OpenAI evaluated it, and answered about
+   that specific key's scopes. The key never entered the session.
 
-## Finding: a real OpenAI refusal was recorded as uncertain
+## Not established
 
-`statusError` in `src/providers/ai/OpenAIProvider.ts` settles a 4xx as
-`not_billed` only when the body parses as JSON whose `error` field is an
-**object**. The reasoning is sound: an error object is OpenAI's shape, and a 4xx
-from an intermediary in front of it carries no such evidence.
+1. **Why the POST returned 403.** The scope the GET names, `api.model.read`,
+   governs listing models. It does not govern chat completions. The operator
+   reports that the chat completions permission on this key is set to Request.
+   Nothing observed here contradicts that, and nothing observed here explains
+   the POST.
+2. **Whether the POST's 403 came from OpenAI or from an intermediary.** The
+   headers and body that would answer it were discarded before anything recorded
+   them.
+3. **Whether a credential was attached to the POST.** Confirmed for
+   `GET /v1/models`. Not tested for `POST /v1/chat/completions`, which is a
+   different path and method.
 
-OpenAI's scope errors break that assumption. They return `error` as a **string**,
-as the body above shows. So a refusal that provably ran no inference was
-classified `uncertain` and held $0.00156 against the cap.
+## Withdrawn
 
-This fails in the safe direction, holding budget rather than spending it, and it
-is wrong. A run of these would throttle the assistant against charges that never
-happened. Accept a string `error` as provider evidence alongside an object, and
-keep the intermediary case as it is.
+An earlier revision of this file claimed the POST failed because the key lacks a
+model inference scope, and listed provider-side permission changes as the fix.
+That was an assumption carried over from the GET, and it is withdrawn. The GET
+establishes only that model listing is denied.
+
+Also withdrawn: the argument that a JSON body whose `error` field is a string is
+evidence of OpenAI origin. It is not. An intermediary can return that shape. The
+GET's origin is established by its headers, not by its body.
+
+## Finding, at the confidence the evidence supports
+
+`statusError` accepts a 4xx as `not_billed` only when the body parses as JSON
+whose `error` field is an object, on the reasoning that an error object is
+OpenAI's shape and an intermediary's 4xx carries no such evidence.
+
+The GET above is a response OpenAI produced, on header evidence, whose `error`
+field is a **string**. So OpenAI returns string-shaped error bodies on at least
+one endpoint, and a response of that shape would be settled as `uncertain`
+rather than `not_billed`.
+
+Whether that is what happened to the POST is **unknown**, because its body was
+not retained. The accounting classification is therefore unchanged, and no code
+was modified in response to this run. Changing it on the strength of one
+observation from a different endpoint would be the same mistake this file
+withdraws above.
+
+## What would answer the open questions
+
+Neither is done, and neither should be done without a decision:
+
+- **Retain evidence on failure.** Record the response status, selected headers
+  (`x-request-id`, `openai-processing-ms`, `x-proxy-error`) and a bounded,
+  credential-scrubbed body excerpt for non-2xx responses. This is a change to
+  the rule that error bodies are discarded entirely, so it needs a deliberate
+  decision about what is safe to keep.
+- **One controlled POST.** A single `POST /v1/chat/completions` with a one-word
+  prompt and `max_tokens: 1`, capturing headers. A 403 costs nothing and names
+  the reason. A success costs roughly $0.0003 and proves the permission is live.
 
 ## Extraction
 
