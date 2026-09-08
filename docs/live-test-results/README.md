@@ -18,5 +18,9 @@ discards provider error bodies, so nothing recorded what it said. A second run a
 purchased, `2026-09-08T19-20.md`, aborted the same way and established the
 cause: the server's requests never leave for OpenAI, because Node's built-in
 fetch does not use HTTPS_PROXY and the credential is only attached on the
-proxied path. Both reports separate what was observed from what was inferred,
-and list the claims earlier revisions got wrong.
+proxied path. The third run, `2026-09-08T19-29.md`, completed all 15 cases for
+$0.0038 with no new uncertain charges. It scored 8 of 15, but seven of the
+failures returned the schema-parse fallback rather than a model reply, so the
+assistant produced usable constraints on one of the eight cases that called for
+them. The reports separate what was observed from what was inferred, and list
+the claims earlier revisions got wrong.

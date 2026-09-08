@@ -33,13 +33,53 @@ Set `ASSISTANT_CREDENTIAL_MODE=proxy` and leave `OPENAI_API_KEY` unset. The appl
 **Start the server with `NODE_USE_ENV_PROXY=1`.** The proxy attaches the
 credential only to requests that go through it by `CONNECT`, and Node's built-in
 `fetch` ignores `HTTPS_PROXY` unless this is set. Without it the request is
-intercepted and refused with a plain-text `403` before it reaches OpenAI, which
-this application cannot tell apart from a refusal by OpenAI itself, so it holds
-the reservation as an uncertain charge. Two live-test runs failed this way
-before the cause was found; see `docs/live-test-results/2026-09-08T19-20.md`.
-Verify with `NODE_USE_ENV_PROXY=1 node -e "fetch('https://api.openai.com/v1/models').then(r=>console.log(r.status))"`:
-a JSON body from OpenAI means the credential is being attached, a plain-text
-allowlist message means it is not.
+intercepted and refused with a `403` before it reaches OpenAI, which this
+application cannot tell apart from a refusal by OpenAI itself, so it holds the
+reservation as an uncertain charge. Two live-test runs failed this way before
+the cause was found; see `docs/live-test-results/2026-09-08T19-20.md`.
+
+Set it on the process that starts the server, not in `.env.local`: Node reads it
+at startup, before any file the application loads. Confirm the running server
+actually has it, rather than the shell you typed it in:
+
+```
+tr '\0' '\n' < /proc/$(pgrep -f next-server | head -1)/environ | grep NODE_USE_ENV_PROXY
+```
+
+**Verifying that the credential is attached.** Both failure modes answer `403`,
+so a status code alone tells you nothing. Print the headers and the body:
+
+```
+NODE_USE_ENV_PROXY=1 node -e "
+fetch('https://api.openai.com/v1/models').then(async r => {
+  console.log('status', r.status);
+  for (const h of ['openai-processing-ms','x-request-id','x-proxy-error','content-type'])
+    if (r.headers.get(h)) console.log(h + ':', r.headers.get(h));
+  console.log('body:', (await r.text()).slice(0, 200));
+});"
+```
+
+Three specific pieces of evidence, in order of what each one proves:
+
+1. **`openai-processing-ms` and `x-request-id`.** OpenAI's edge sets these. Their
+   presence means the request left the proxy and OpenAI produced the response.
+   Without them, whatever answered was not OpenAI.
+2. **`x-proxy-error: upstream denied the request: connection "<name>", host
+   "api.openai.com"`.** The agent proxy writes this when it relayed a request
+   that the upstream refused, and it names the credential connection it used.
+   That is the direct statement that a credential was attached, and which one.
+3. **A body that answers about a specific credential**, such as a message naming
+   the key's missing scopes or the account's billing state. A response evaluated
+   against a key is a response to an authenticated request.
+
+A JSON body on its own proves nothing: any intermediary can return JSON, with an
+`error` field of any shape. The headers, not the body's format, are what
+separate an answer from OpenAI from an answer from something in front of it.
+
+The failure to look for is `content-type: text/plain` with a body beginning
+`Host not in allowlist: api.openai.com`, and none of the headers above. That is
+the interceptor refusing the request before it ever left, with no credential
+attached.
 
 Three refusals, all deliberate:
 
