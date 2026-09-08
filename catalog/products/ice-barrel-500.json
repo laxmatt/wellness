@@ -5,7 +5,7 @@
   "lastUpdated": "2026-09-08",
   "flags": {
     "demo": true,
-    "newArrival": false
+    "newArrival": true
   },
   "editorial": {
     "strengths": [
@@ -173,7 +173,7 @@
         "ref": "Editorial classification",
         "retrievedAt": "2026-09-08",
         "method": "direct",
-        "note": "Limited lifetime warranty scored as 10 years for comparison."
+        "note": "Limited lifetime warranty. Recorded as 10 years; scoring caps warranty at 5."
       },
       "verification": "unknown"
     }

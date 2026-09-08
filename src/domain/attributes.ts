@@ -40,6 +40,13 @@ export const AttributeDefinition = z.object({
   // Manufacturer claims for this attribute are commonly disputed; UI must
   // always render the verification tag next to the value.
   alwaysShowVerification: z.boolean().default(false),
+  // Upper bound applied to the numeric value inside scoring only. Display and
+  // filters keep the real value. Example: warranty_years capped at 5 so
+  // lifetime warranties do not dominate normalization.
+  scoreCap: z.number().optional(),
+  // When set, the product's universal text field (warranty, returnPolicy) is
+  // shown in place of the formatted numeric. The numeric stays for scoring.
+  displayField: z.enum(["warranty", "returnPolicy"]).optional(),
 });
 export type AttributeDefinition = z.infer<typeof AttributeDefinition>;
 

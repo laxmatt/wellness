@@ -137,6 +137,8 @@ export const coldPlunge = CategoryDefinition.parse({
       preferenceDirection: "higher_better",
       required: true,
       showOnCard: true,
+      scoreCap: 5,
+      displayField: "warranty",
     },
   ],
   cardSpecKeys: ["chiller_included", "min_temp_f", "warranty_years"],
@@ -174,7 +176,9 @@ export const coldPlunge = CategoryDefinition.parse({
     ],
     completenessFloor: 0.75,
   },
-  value: { qualityWeight: 0.65, affordabilityWeight: 0.35, priceBasis: "price" },
+  // 0.50 / 0.50 by review decision: at 0.65 / 0.35 a $9,599 tub won Best Value.
+  // Revisit with verified products.
+  value: { qualityWeight: 0.5, affordabilityWeight: 0.5, priceBasis: "price" },
   badges: {
     priceBasis: "price",
     budgetMaxMinor: 150000,
@@ -191,8 +195,8 @@ export const coldPlunge = CategoryDefinition.parse({
     { id: "insulated", when: [{ key: "insulated", op: "eq", value: true }], text: "Insulated shell holds temperature longer between sessions.", tone: "strength" },
     { id: "sanitation", when: [{ key: "sanitation_system", op: "eq", value: true }], text: "Built-in sanitation: {sanitation_methods}.", tone: "strength" },
     { id: "manual-water", when: [{ key: "sanitation_system", op: "eq", value: false }], text: "No filtration. Plan on regular water changes.", tone: "tradeoff" },
-    { id: "warranty-long", when: [{ key: "warranty_years", op: "gte", value: 3 }], text: "{warranty_years} warranty.", tone: "strength" },
-    { id: "warranty-short", when: [{ key: "warranty_years", op: "lte", value: 1 }], text: "Warranty limited to {warranty_years}.", tone: "tradeoff" },
+    { id: "warranty-long", when: [{ key: "warranty_years", op: "gte", value: 3 }], text: "{warranty}", tone: "strength" },
+    { id: "warranty-short", when: [{ key: "warranty_years", op: "lte", value: 1 }], text: "Short warranty: {warranty}", tone: "tradeoff" },
     { id: "under-500", when: [{ key: "price", op: "lt", value: 50000 }], text: "Under $500.", tone: "strength" },
   ],
   relaxationOrder: ["price", "chiller_included", "tub_type", "placement"],

@@ -5,7 +5,7 @@
   "lastUpdated": "2026-09-08",
   "flags": {
     "demo": true,
-    "newArrival": false
+    "newArrival": true
   },
   "editorial": {
     "strengths": [],
@@ -116,13 +116,13 @@
     },
     "irradiance_mw_cm2": {
       "value": 79,
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "url": "https://infraredi.com/products/infraredi-flex-max",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Brand reports 167 mW/cm² by solar meter and an average of 79 mW/cm² by spectrometer. Using the spectrometer figure. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Brand reports 167 mW/cm\u00b2 by solar meter and an average of 79 mW/cm\u00b2 by spectrometer. Using the spectrometer figure. Relayed via search summary; manufacturer page not fetched directly."
       },
       "verification": "manufacturer_reported"
     },

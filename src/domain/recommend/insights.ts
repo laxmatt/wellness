@@ -10,6 +10,10 @@ export type Insight = { id: string; text: string; tone: "strength" | "tradeoff" 
 function fill(template: string, view: ProductView, cat: CategoryDefinition): string {
   return template.replace(/\{([a-z0-9_]+)\}/g, (_, key: string) => {
     if (key === "price") return formatMoney(view.price.money);
+    // Universal text fields take priority so "Lifetime warranty" reads as the
+    // product states it, not as the capped scoring number.
+    if (key === "warranty") return view.warranty ?? (typeof view.attributes.warranty_years === "number" ? `${view.attributes.warranty_years}-year warranty` : "warranty not stated");
+    if (key === "return_policy") return view.returnPolicy ?? "return policy not stated";
     const def = attributeDef(cat, key);
     if (!def) return `{${key}}`;
     const raw = view.attributes[key];

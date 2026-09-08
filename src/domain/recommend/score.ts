@@ -48,17 +48,24 @@ export function completenessOf(input: ScoringInput, cat: CategoryDefinition): nu
   return required.filter((a) => input.attributes[a.key] !== undefined).length / required.length;
 }
 
+// Scoring-only view of a value: applies the attribute's scoreCap.
+export function scoringValue(input: ScoringInput, cat: CategoryDefinition, key: string): number | undefined {
+  const raw = numericFor(input, cat, key);
+  const cap = attributeDef(cat, key)?.scoreCap;
+  return raw !== undefined && cap !== undefined ? Math.min(raw, cap) : raw;
+}
+
 export function scoreProducts(inputs: ScoringInput[], cat: CategoryDefinition): ScoreResult[] {
   const ranges = new Map<string, { min: number; max: number }>();
   for (const c of cat.scoring.criteria) {
-    const values = inputs.map((i) => numericFor(i, cat, c.key)).filter((v): v is number => v !== undefined);
+    const values = inputs.map((i) => scoringValue(i, cat, c.key)).filter((v): v is number => v !== undefined);
     if (values.length > 0) ranges.set(c.key, { min: Math.min(...values), max: Math.max(...values) });
   }
   const totalWeight = cat.scoring.criteria.reduce((s, c) => s + c.weight, 0);
 
   return inputs.map((input) => {
     const criteria: CriterionContribution[] = cat.scoring.criteria.map((c) => {
-      const raw = numericFor(input, cat, c.key);
+      const raw = scoringValue(input, cat, c.key);
       const range = ranges.get(c.key);
       let normalized = 0;
       if (raw !== undefined && range) {

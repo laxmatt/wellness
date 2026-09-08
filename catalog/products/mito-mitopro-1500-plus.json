@@ -5,7 +5,7 @@
   "lastUpdated": "2026-09-08",
   "flags": {
     "demo": true,
-    "newArrival": false
+    "newArrival": true
   },
   "editorial": {
     "strengths": [],
@@ -133,7 +133,7 @@
     },
     "irradiance_mw_cm2": {
       "value": 76.5,
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "url": "https://mitoredlight.com/products/mitopro-series",

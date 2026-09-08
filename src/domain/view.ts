@@ -121,13 +121,14 @@ export function completeness(product: Product, category: CategoryDefinition): nu
 
 function specFor(def: AttributeDefinition, product: Product): SpecView {
   const sv = product.attributes[def.key];
+  const displayText = def.displayField ? product[def.displayField]?.value : undefined;
   return {
     key: def.key,
     label: def.label,
     shortLabel: def.shortLabel ?? def.label,
     group: def.group,
     raw: sv?.value,
-    formatted: formatAttribute(def, sv?.value),
+    formatted: displayText ?? formatAttribute(def, sv?.value),
     unit: sv?.unit ?? def.unit,
     provenance: sv ? provenanceOf(sv) : undefined,
     alwaysShowVerification: def.alwaysShowVerification,

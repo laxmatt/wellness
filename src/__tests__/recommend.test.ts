@@ -142,6 +142,30 @@ describe("affiliate neutrality", () => {
   });
 });
 
+describe("review decisions", () => {
+  it("caps warranty at 5 years inside scoring while the card shows the product's own warranty text", () => {
+    const cat = categoryById("cold-plunge")!;
+    const views = viewsFor("cold-plunge");
+    const ib400 = views.find((v) => v.id === "ice-barrel-400")!;
+    const renu = views.find((v) => v.id === "renu-cold-stoic-2")!;
+    const scores = scoreProducts(views.map(toScoringInput), cat);
+    const w = (id: string) => scores.find((s) => s.id === id)!.criteria.find((c) => c.key === "warranty_years")!;
+    expect(w("ice-barrel-400").raw).toBe(5);
+    expect(w("ice-barrel-400").normalized).toBe(w("renu-cold-stoic-2").normalized);
+    expect(ib400.attributes.warranty_years).toBe(10);
+    expect(ib400.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("Lifetime warranty");
+    expect(renu.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("5-year limited warranty");
+  });
+
+  it("cold plunge value weights are 0.50 / 0.50 and Best Value no longer lands on the priciest tub", () => {
+    const cat = categoryById("cold-plunge")!;
+    expect(cat.value.qualityWeight).toBe(0.5);
+    expect(cat.value.affordabilityWeight).toBe(0.5);
+    const set = assignBadges(viewsFor("cold-plunge").map(toScoringInput), cat);
+    expect(set.badges.find((b) => b.badge === "best_value")!.productId).not.toBe("renu-cold-stoic-2");
+  });
+});
+
 describe("real catalog badges", () => {
   it("awards Best Overall in every category and withholds Best Budget in drinks (no product under $1 per serving)", () => {
     const c = catalog();
