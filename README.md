@@ -2,7 +2,7 @@
 
 Premium wellness storefront plus comparison tool. Launch categories: red light therapy, cold plunges, functional wellness drinks. This repository is the standalone product. Nothing here depends on the printer site.
 
-Status: Phase 2 complete and reviewed. Storefront homepage, category and facet pages, product detail pages, compare table with sticky headers, brands, explore, How We Choose. Matcher rendered but inert until Phase 4. The visual language is provisional: see docs/DESIGN.md before restyling.
+Status: Phase 3 complete. Phase 2 reviewed and approved. Storefront homepage, category and facet pages, product detail pages, compare table with sticky headers, brands, explore, How We Choose. Comparison engine, filters, matcher engine and no-match relaxation are done and tested. The matcher input stays inert until Phase 4 wires it to the UI. The visual language is provisional: see docs/DESIGN.md before restyling.
 
 ## Run
 
@@ -35,7 +35,11 @@ src/domain/              Pure TypeScript. No React, no IO.
   categories/            red-light, cold-plunge, wellness-drinks definitions.
   view.ts                toProductView: plain values plus a provenance map for the UI.
   conditions.ts          Condition evaluation used by filters, facets, insights.
-  personalization.ts     PreferenceSet, MatchResult (Phase 3 and 4 fill these in).
+  personalization.ts     PreferenceSet, MatchResult, Relaxation types.
+  personalization/       match (hard constraints, soft scoring, relaxation),
+                         describe (constraint and gap copy), similar (attribute distance).
+  compare.ts             Serializable compare model with difference and best-in-row marks.
+  filters.ts             Server-built filter options carrying matching product ids.
   analytics.ts           Typed event union.
   recommend/             score, value, badges, insights. Deterministic.
 src/providers/           Replaceable interfaces plus prototype implementations.
@@ -73,6 +77,15 @@ Badges, in order: Best Overall (top score), Best Value (top value; when the same
 
 `ScoringInput` carries `id`, `priceMinor`, `attributes`. No offers. A test flips every offer's affiliate status and asserts identical ranking and badges.
 
+## No-match handling
+
+`relaxationSearch` never returns an empty result. For every hard constraint it
+produces one route that honours that constraint and names what the route costs
+against the others. When nothing in the catalogue satisfies a constraint, the
+route reports the closest product and sets `keptSatisfied: false` rather than
+implying the constraint was met. Routes are ordered by the category's
+`relaxationOrder` and prefer a different product each.
+
 ## Adding a product
 
 Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader rejects unknown attribute keys, wrong attribute types, unknown brands or merchants, missing primary images, duplicate ids or slugs, and unsupported verification claims.
@@ -81,7 +94,7 @@ Add `catalog/products/<id>.json`. Run `npm run catalog:check`. The loader reject
 
 1. Done. Architecture, model, tokens, catalog, engine, tests.
 2. Done. Homepage, category and facet pages, product detail, compare table, supporting pages.
-3. Compare views, relaxation search, personalization core.
+3. Done. Compare differences, filters, matcher engine, relaxation, similarity.
 4. Matcher in the UI with the mock provider, then a real AIProvider behind a flag.
 5. Cold Plunge and Wellness Drinks through the same components.
 6. Admin and merchandising on Postgres via the Prisma mapping in docs/DATA-MODEL.md.

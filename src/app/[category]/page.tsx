@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CategoryHero, FacetChips, MatcherInput, RankingTransparency } from "@/components/category/sections";
 import { WinnersRow } from "@/components/category/WinnersRow";
+import { FilterableGrid } from "@/components/category/FilterBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
+import { buildFilterGroups } from "@/domain/filters";
 import { getCategoryPage } from "@/lib/queries";
 
 type Props = { params: Promise<{ category: string }> };
@@ -29,6 +31,7 @@ export default async function CategoryPage({ params }: Props) {
   const page = await getCategoryPage(category);
   if (!page) notFound();
   const { cat, products } = page;
+  const filterGroups = buildFilterGroups(products.map((p) => p.view), cat);
 
   return (
     <Shell current={`/${cat.slug}`} trayCategoryId={cat.id}>
@@ -52,10 +55,12 @@ export default async function CategoryPage({ params }: Props) {
             </div>
             <p className="text-sm text-fg-muted">{products.length} products</p>
           </div>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((item, i) => (
-              <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
-            ))}
+          <div className="mt-6">
+            <FilterableGrid groups={filterGroups} ids={products.map((p) => p.view.id)}>
+              {products.map((item, i) => (
+                <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
+              ))}
+            </FilterableGrid>
           </div>
         </section>
         <RankingTransparency cat={cat} />

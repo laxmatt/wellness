@@ -1,0 +1,112 @@
+"use client";
+
+import Link from "next/link";
+import { Fragment, useState } from "react";
+import { Badge } from "@/components/ui/Badge";
+import { ImageFrame } from "@/components/ui/ImageFrame";
+import { VerificationTag } from "@/components/ui/VerificationTag";
+import type { CompareModel } from "@/domain/compare";
+import { cn } from "@/lib/cn";
+
+// One table, two behaviours. Wide screens see every column at once. Narrow
+// screens scroll horizontally with snap points on each product column while
+// the attribute labels stay pinned to the left edge.
+export function CompareView({ model, ids }: { model: CompareModel; ids: string[] }) {
+  const [diffOnly, setDiffOnly] = useState(false);
+  const removeHref = (id: string) => `/compare?ids=${ids.filter((x) => x !== id).join(",")}`;
+  const groups = model.groups
+    .map((g) => ({ ...g, rows: diffOnly ? g.rows.filter((r) => !r.same) : g.rows }))
+    .filter((g) => g.rows.length > 0);
+  const hidden = model.groups.reduce((n, g) => n + g.rows.filter((r) => r.same).length, 0);
+
+  return (
+    <div>
+      <div className="mb-3 flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          aria-pressed={diffOnly}
+          onClick={() => setDiffOnly((v) => !v)}
+          className={cn(
+            "tap inline-flex items-center gap-2 rounded-pill border px-4 text-sm font-semibold transition-colors",
+            diffOnly ? "border-fg bg-fg text-fg-inverse" : "border-edge-strong bg-surface-raised text-fg hover:border-fg",
+          )}
+        >
+          Differences only
+          {hidden > 0 ? <span className={cn("tabular text-xs", diffOnly ? "text-fg-inverse/70" : "text-fg-muted")}>{hidden} identical</span> : null}
+        </button>
+        <p className="text-sm text-fg-muted">
+          <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-positive align-middle" aria-hidden />
+          Marks the strongest value in a row where higher or lower is better.
+        </p>
+      </div>
+
+      <div className="-mx-4 max-h-[calc(100dvh-6rem)] snap-x snap-proximity overflow-auto rounded-card border border-edge bg-surface sm:mx-0">
+        <table className="w-full table-fixed border-separate border-spacing-0 text-sm" style={{ minWidth: `${152 + model.columns.length * 200}px` }}>
+          <colgroup>
+            <col style={{ width: 152 }} />
+            {model.columns.map((c) => (
+              <col key={c.id} />
+            ))}
+          </colgroup>
+          <thead>
+            <tr>
+              <th className="sticky left-0 top-0 z-30 border-b border-edge-strong bg-surface p-2 text-left align-bottom">
+                <span className="eyebrow">Product</span>
+              </th>
+              {model.columns.map((c) => (
+                <th key={c.id} className="sticky top-0 z-20 snap-start border-b border-edge-strong bg-surface p-2 text-left align-bottom font-normal">
+                  <div className="flex gap-3 rounded-xl bg-surface-raised p-2 shadow-card">
+                    <Link href={`/products/${c.slug}`} className="relative block w-14 shrink-0 overflow-hidden rounded-lg">
+                      <ImageFrame image={c.image} ratio="1/1" />
+                    </Link>
+                    <div className="min-w-0">
+                      {c.badge ? <Badge kind={c.badge} className="mb-1" /> : null}
+                      <p className="eyebrow truncate">{c.brand}</p>
+                      <Link href={`/products/${c.slug}`} className="block truncate font-display text-base leading-tight hover:underline">
+                        {c.name}
+                      </Link>
+                      <div className="flex items-baseline gap-2">
+                        <p className="tabular font-semibold">{c.price}</p>
+                        <Link href={removeHref(c.id)} className="text-xs font-semibold text-fg-muted hover:text-fg">
+                          Remove
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {groups.map((g) => (
+              <Fragment key={g.label}>
+                <tr>
+                  <th scope="rowgroup" colSpan={model.columns.length + 1} className="sticky left-0 z-10 bg-surface px-2 pb-1 pt-6 text-left">
+                    <span className="eyebrow">{g.label}</span>
+                  </th>
+                </tr>
+                {g.rows.map((r) => (
+                  <tr key={`${g.label}-${r.key}`}>
+                    <th scope="row" className={cn("sticky left-0 z-10 bg-surface p-2 text-left align-top text-xs font-semibold", r.same ? "text-fg-muted" : "text-fg-soft")}>
+                      {r.label}
+                    </th>
+                    {r.cells.map((cell, i) => (
+                      <td key={model.columns[i].id} className={cn("snap-start border-b border-edge p-2 align-top", r.same && "text-fg-muted")}>
+                        <span className="flex flex-wrap items-center gap-1.5">
+                          {cell.best ? <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-positive" aria-label="Strongest in this row" /> : null}
+                          <span className={cn("tabular", cell.best ? "font-bold" : "font-semibold")}>{cell.text}</span>
+                          {cell.verification ? <VerificationTag verification={cell.verification} /> : null}
+                        </span>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-xs text-fg-muted sm:hidden">Swipe the table sideways to see every product.</p>
+    </div>
+  );
+}

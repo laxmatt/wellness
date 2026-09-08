@@ -23,11 +23,18 @@ export const PreferenceSet = z.object({
 });
 export type PreferenceSet = z.infer<typeof PreferenceSet>;
 
+// One route out of a no-match. Each keeps a single constraint intact and
+// states plainly what that costs against the others.
 export type Relaxation = {
-  relaxedKey: string;
+  // The constraint this route honours, e.g. "price".
+  keptKey: string;
+  // That constraint in words, e.g. "price of $100 or less".
+  keptLabel: string;
   productId: string;
-  // Human-readable distance from the constraint, e.g. "$180 over budget".
-  distance: string;
+  // True when the product actually satisfies the kept constraint.
+  keptSatisfied: boolean;
+  // What this product gives up, closest first.
+  misses: string[];
 };
 
 export type ProductExplanation = {
@@ -43,4 +50,6 @@ export type MatchResult = {
   explanations: Record<string, ProductExplanation>;
   relaxations: Relaxation[];
   medicalRedirect: boolean;
+  // Extracted constraints, for editable chips in the UI.
+  constraintLabels: { key: string; label: string }[];
 };

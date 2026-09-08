@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { buttonStyles } from "@/components/ui/Button";
 import Link from "next/link";
-import { CompareTable } from "@/components/compare/CompareTable";
+import { CompareView } from "@/components/compare/CompareView";
+import { buildCompareModel } from "@/domain/compare";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories, categoryById } from "@/domain/categories";
 import { getCategoryPage, getProductViewsByIds } from "@/lib/queries";
@@ -56,7 +57,7 @@ export default async function ComparePage({ searchParams }: Props) {
             </div>
             {views.length !== sameCat.length ? <p className="mt-2 text-sm text-fg-muted">Products from other categories were left out. Compare one category at a time.</p> : null}
             <div className="mt-8">
-              <CompareTable items={items} cat={cat} ids={items.map((i) => i.view.id)} />
+              <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} />
             </div>
           </>
         )}

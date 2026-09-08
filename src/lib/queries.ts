@@ -3,6 +3,7 @@ import { categories, categoryBySlug } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
 import type { Brand } from "@/domain/product";
+import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory, type RecommendedProduct, type RecommendationSet } from "@/domain/recommend";
 import type { ProductView } from "@/domain/view";
 import { getCatalog } from "@/providers";
@@ -48,14 +49,12 @@ export const getProductPage = cache(async (slug: string): Promise<ProductPage | 
   if (!cat) return null;
   const page = await getCategoryPage(cat.slug);
   if (!page) return null;
-  const idx = page.products.findIndex((p) => p.view.id === view.id);
-  const item = page.products[idx];
+  const item = page.products.find((p) => p.view.id === view.id);
   if (!item) return null;
-  // Similar: ranking neighbors first, then fill from the rest.
-  const neighbors = [idx - 1, idx + 1, idx - 2, idx + 2, idx - 3, idx + 3]
-    .filter((i) => i >= 0 && i < page.products.length)
-    .map((i) => page.products[i]);
-  const similar = neighbors.slice(0, 3);
+  const byId = new Map(page.products.map((p) => [p.view.id, p]));
+  const similar = similarProducts(view, page.products.map((p) => p.view), cat, 3)
+    .map((v) => byId.get(v.id))
+    .filter((p): p is RecommendedProduct => p !== undefined);
   return { item, page, similar };
 });
 

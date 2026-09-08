@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CategoryHero, FacetChips, MatcherInput, RankingTransparency } from "@/components/category/sections";
+import { FilterableGrid } from "@/components/category/FilterBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
+import { buildFilterGroups } from "@/domain/filters";
 import { facetProducts, getCategoryPage } from "@/lib/queries";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
@@ -33,6 +35,7 @@ export default async function FacetPage({ params }: Props) {
   const fp = facetProducts(page, facet);
   if (!fp) notFound();
   const { cat } = page;
+  const filterGroups = buildFilterGroups(fp.products.map((p) => p.view), cat);
 
   return (
     <Shell current={`/${cat.slug}`} trayCategoryId={cat.id}>
@@ -62,10 +65,12 @@ export default async function FacetPage({ params }: Props) {
               </Link>
             </div>
           ) : (
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {fp.products.map((item, i) => (
-                <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
-              ))}
+            <div className="mt-6">
+              <FilterableGrid groups={filterGroups} ids={fp.products.map((p) => p.view.id)} emptyHref={`/${cat.slug}`} emptyLabel={`See all ${cat.navLabel.toLowerCase()}`}>
+                {fp.products.map((item, i) => (
+                  <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
+                ))}
+              </FilterableGrid>
             </div>
           )}
           <p className="mt-4 text-xs text-fg-muted">Badges are decided across all {page.products.length} {cat.name.toLowerCase()} we track, not within this filter.</p>
