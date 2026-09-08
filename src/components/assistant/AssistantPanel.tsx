@@ -286,6 +286,17 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
         </div>
       ) : null}
 
+      {/* The site's own count, not the assistant's. Rendered on every reply,
+          including the ones with nothing to show and the ones where the
+          assistant's answer could not be read, because those are exactly the
+          cases where the prose above is least trustworthy. */}
+      {reply.matchSummary ? (
+        <p data-testid="match-summary" className="rounded-card border border-edge bg-surface px-3.5 py-2.5 text-sm leading-snug">
+          <span className="font-semibold">{reply.matchSummary}</span>{" "}
+          <span className="text-fg-soft">Counted by this site, not by the assistant.</span>
+        </p>
+      ) : null}
+
       {reply.products.length > 0 ? (
         <div className="rounded-card border border-edge bg-surface px-3.5 py-3">
           <p className="text-sm font-semibold text-fg-soft">Matching products, from the site&apos;s ranking</p>

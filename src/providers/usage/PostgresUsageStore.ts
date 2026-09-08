@@ -262,7 +262,14 @@ export class PostgresUsageStore implements UsageStore {
       // abandoned and the real outcome has now turned up late. A late outcome
       // is the better information and must not vanish: it replaces the
       // operator's estimate and the budget is corrected by the difference.
-      const closedByOperator = row.outcome !== "billed" && row.outcome !== "not_billed" ? await wasClosedByOperator(client, reservation.id) : false;
+      //
+      // Decided by the reason this code wrote, never by the outcome. Closing
+      // with a confirmed amount produces outcome 'billed', so a guard that
+      // skipped billed rows skipped exactly the case an operator is most
+      // likely to have got wrong. An ordinary settlement carries either no
+      // reason or the provider's, neither of which matches these markers, so
+      // duplicate settlements stay idempotent.
+      const closedByOperator = await wasClosedByOperator(client, reservation.id);
       if (!closedByOperator) {
         await client.query("COMMIT");
         return;
@@ -270,12 +277,18 @@ export class PostgresUsageStore implements UsageStore {
 
       const previouslyHeld = Number(row.cost_usd);
       const wasUncertain = row.outcome === "uncertain";
+      // reconciled_at marks a charge as settled with the provider. A late
+      // outcome that is itself uncertain has settled nothing: stamping it
+      // dropped the charge out of listUncertain and out of reconcile's WHERE
+      // clause, leaving money held against the cap that no operator could ever
+      // close. Unresolved uncertainty stays unreconciled.
+      const stillUncertain = outcome.kind === "uncertain";
       await client.query(
         `UPDATE assistant_usage
             SET outcome = $2,
                 reason = $3,
                 model = $4, input_tokens = $5, output_tokens = $6, cost_usd = $7,
-                settled_at = now(), reconciled_at = now()
+                settled_at = now(), reconciled_at = CASE WHEN $8::boolean THEN NULL ELSE now() END
           WHERE reservation_id = $1`,
         [
           reservation.id,
@@ -285,6 +298,7 @@ export class PostgresUsageStore implements UsageStore {
           outcome.kind === "billed" ? outcome.inputTokens : 0,
           outcome.kind === "billed" ? outcome.outputTokens : 0,
           costUsd,
+          stillUncertain,
         ],
       );
       await client.query(

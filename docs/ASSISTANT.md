@@ -228,6 +228,10 @@ Two refusals: a reservation younger than ten minutes returns 409, because closin
 
 **A late outcome corrects the books rather than vanishing.** If a settlement arrives after an operator has closed the reservation, it replaces the held estimate with the provider's own figures and the row records that it settled late. Both paths lock the row first, so a settlement and a close racing each other cannot both reach the budget.
 
+That applies to a confirmed close as much as an unknown one. A confirmed close writes `outcome = 'billed'`, and an operator's figure is exactly the kind that a late outcome should correct, so the decision is made from the reason this code wrote, never from the outcome. An ordinary settlement carries no such reason, so duplicate settlements stay idempotent.
+
+**A late outcome that is itself uncertain stays reconcilable.** `reconciled_at` means a charge has been settled against the provider's record, so a late outcome that resolved nothing does not get stamped with it. Stamping it dropped the charge out of `listUncertain` and out of `reconcile`'s `WHERE` clause, leaving money held against the cap that nobody could ever close.
+
 Do this at least monthly, before reading month-to-date spend as fact. A month with a large `uncertainUsd` has not been measured; it has been bounded.
 
 ### The provider's own limit
@@ -305,7 +309,9 @@ Its output is parsed by `ModelIntent` and anything outside that shape is dropped
 
 **The model is told what it cannot see.** The `CATALOGUE` block is a shortlist of at most six products, chosen before the model replies, out of a category that holds more. It is labelled with both numbers and the model is forbidden from claiming a product does not exist, that nothing meets a constraint, or that a count is complete. Without that, it reported "there are no products listed under $500" while the engine matched one that was ranked just outside the six it was shown.
 
-**Counts and availability are authored by this code, not by the model.** Every reply carries `matchSummary`, written from the engine's own count over every product, beside the cards it describes. It is true by construction, because nothing the model said goes into it. That is the guarantee.
+**Counts and availability are authored by this code, not by the model.** Every reply carries `matchSummary`, written from the engine's own count over every product, and the panel renders it beside the cards it describes, attributed to the site rather than to the assistant. It is true by construction, because nothing the model said goes into it. That is the guarantee.
+
+It is drawn on every reply, including the ones with no products to show and the ones where the assistant's answer could not be read, because those are the cases where the prose above it is least trustworthy. A rendered test covers all three: returning the field without drawing it is not the same thing, and for one commit that is exactly what happened.
 
 The model's prose is also screened against the engine, in `screenModelClaims`: an availability claim pointing the wrong way, or a stated product count that is neither the number that matched nor the size of the category, replaces the text with the authored sentence and sets a notice. **That screen is a heuristic backstop, not enforcement.** It is pattern matching over English, and a paraphrase nobody anticipated will get past it. What makes such a miss survivable is the authored summary sitting beside the prose, not the screen catching everything. Do not describe it as a guarantee.
 

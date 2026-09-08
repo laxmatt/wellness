@@ -254,6 +254,104 @@ suite("shared postgres store", () => {
     expect((await meter.snapshot("s_pg5")).uncertainUsd).toBeCloseTo(r.reservation.estimateUsd, 9);
   });
 
+  it("a late settlement corrects an operator's confirmed amount", async () => {
+    // The confirmed close writes outcome 'billed'. A guard that skipped billed
+    // rows skipped exactly this case, so the operator's guess stood and the
+    // provider's own figures were dropped.
+    const meter = new UsageMeter(store(), config);
+    const r = await meter.reserve("s_pg7", "c_pg7");
+    if (!r.ok) throw new Error("reserve failed");
+
+    await meter.closeOpen(r.reservation.id, { kind: "confirmed", actualUsd: 0.01 }, 0);
+    expect((await meter.snapshot("s_pg7")).spentUsd).toBeCloseTo(0.01, 9);
+
+    await meter.settle(r.reservation, { kind: "billed", model: "gpt-4o-mini", inputTokens: 1000, outputTokens: 100 });
+
+    const real = meter.costOf(1000, 100);
+    const snap = await meter.snapshot("s_pg7");
+    expect(snap.spentUsd).toBeCloseTo(real, 9);
+    expect(snap.spentUsd).not.toBeCloseTo(0.01 + real, 9);
+
+    const row = await admin.query<{ outcome: string; reason: string; cost_usd: string }>(
+      "SELECT outcome, reason, cost_usd FROM assistant_usage WHERE reservation_id = $1",
+      [r.reservation.id],
+    );
+    expect(row.rows[0].outcome).toBe("billed");
+    expect(Number(row.rows[0].cost_usd)).toBeCloseTo(real, 9);
+    expect(row.rows[0].reason).toMatch(/after an operator had closed it/i);
+  });
+
+  it("an ordinary duplicate settlement is still a no-op", async () => {
+    const meter = new UsageMeter(store(), config);
+    const r = await meter.reserve("s_pg8", "c_pg8");
+    if (!r.ok) throw new Error("reserve failed");
+
+    await meter.settle(r.reservation, { kind: "billed", model: "m", inputTokens: 1000, outputTokens: 100 });
+    const once = await meter.snapshot("s_pg8");
+    await meter.settle(r.reservation, { kind: "billed", model: "m", inputTokens: 1000, outputTokens: 100 });
+    await meter.settle(r.reservation, { kind: "billed", model: "m", inputTokens: 9999, outputTokens: 9999 });
+
+    const twice = await meter.snapshot("s_pg8");
+    expect(twice.spentUsd).toBeCloseTo(once.spentUsd, 9);
+    expect(twice.uncertainUsd).toBeCloseTo(once.uncertainUsd, 9);
+  });
+
+  it("a late uncertain settlement stays reconcilable, end to end", async () => {
+    const meter = new UsageMeter(store(), config);
+    const r = await meter.reserve("s_pg9", "c_pg9");
+    if (!r.ok) throw new Error("reserve failed");
+    const estimate = r.reservation.estimateUsd;
+
+    // 1. Operator gives up on it: the estimate is held, not forgiven.
+    expect(await meter.closeOpen(r.reservation.id, { kind: "unknown" }, 0)).toMatchObject({ ok: true, movedTo: "uncertain" });
+    expect((await meter.listUncertain()).map((u) => u.reservationId)).toContain(r.reservation.id);
+
+    // 2. The outcome turns up late, and it is itself uncertain: the call went
+    // dark rather than reporting anything. Nothing has been settled with the
+    // provider, so it must not be stamped as reconciled.
+    await meter.settle(r.reservation, { kind: "uncertain", reason: "The provider returned 502." });
+
+    const held = await meter.snapshot("s_pg9");
+    expect(held.uncertainUsd).toBeCloseTo(estimate, 9);
+    expect(held.spentUsd).toBeCloseTo(0, 9);
+
+    // 3. It is still listed, which is what makes it closable at all.
+    const listed = await meter.listUncertain();
+    expect(listed.map((u) => u.reservationId)).toContain(r.reservation.id);
+    expect(listed.find((u) => u.reservationId === r.reservation.id)?.reason).toMatch(/502/);
+
+    const stamped = await admin.query<{ reconciled_at: Date | null }>("SELECT reconciled_at FROM assistant_usage WHERE reservation_id = $1", [
+      r.reservation.id,
+    ]);
+    expect(stamped.rows[0].reconciled_at).toBeNull();
+
+    // 4. The operator reads the provider's record: it was charged $0.0004.
+    expect(await meter.reconcile(r.reservation.id, 0.0004)).toBe(true);
+
+    // 5. The held estimate is gone and the real figure is spend.
+    const after = await meter.snapshot("s_pg9");
+    expect(after.uncertainUsd).toBeCloseTo(0, 9);
+    expect(after.spentUsd).toBeCloseTo(0.0004, 9);
+    expect((await meter.listUncertain()).map((u) => u.reservationId)).not.toContain(r.reservation.id);
+    // Reconciling twice changes nothing.
+    expect(await meter.reconcile(r.reservation.id, 0.0004)).toBe(false);
+  });
+
+  it("a late billed settlement is stamped reconciled, because it is resolved", async () => {
+    const meter = new UsageMeter(store(), config);
+    const r = await meter.reserve("s_pg10", "c_pg10");
+    if (!r.ok) throw new Error("reserve failed");
+
+    await meter.closeOpen(r.reservation.id, { kind: "unknown" }, 0);
+    await meter.settle(r.reservation, { kind: "billed", model: "m", inputTokens: 500, outputTokens: 50 });
+
+    const stamped = await admin.query<{ reconciled_at: Date | null }>("SELECT reconciled_at FROM assistant_usage WHERE reservation_id = $1", [
+      r.reservation.id,
+    ]);
+    expect(stamped.rows[0].reconciled_at).not.toBeNull();
+    expect((await meter.listUncertain()).map((u) => u.reservationId)).not.toContain(r.reservation.id);
+  });
+
   it("lists an open reservation only once it is older than the filter", async () => {
     const s = store();
     const meter = new UsageMeter(s, config);
