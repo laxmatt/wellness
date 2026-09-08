@@ -82,6 +82,16 @@ export type AssistantReply = {
   // Constraints currently held for this session, in words, each removable.
   activeConstraints: { key: string; label: string }[];
   medicalRedirect: boolean;
+  // Written by the site's own code from the engine's count, on every reply,
+  // beside the cards it describes. True by construction: it is not derived
+  // from anything the model said. The prose above it is screened against this,
+  // but the screen is a heuristic and this sentence is the guarantee.
+  matchSummary: string;
+  // Set when the model answered and nothing usable came back. The reply then
+  // carries the shopper's existing preferences unchanged and proposes nothing,
+  // because a reply that could not be read is not a request to change
+  // anything.
+  failure?: "unreadable_reply";
   // A short, non-financial explanation when the assistant is unavailable.
   // Spend figures are operator information and never reach the customer.
   notice?: string;

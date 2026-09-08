@@ -192,7 +192,8 @@ describe("what the shopper reads about matches comes from the engine", () => {
   it("replaces a match claim when the engine matched nothing", () => {
     const r = reconcileMatchClaim("Here are a few options that fit.", 0, 8);
     expect(r.replaced).toBe(true);
-    expect(r.text).toMatch(/Nothing in the catalogue matches/);
+    expect(r.text).toBe(engineSentence(0, 8));
+    expect(r.text).toMatch(/No products match/i);
   });
 
   it("leaves an agreeing reply untouched", () => {
@@ -257,7 +258,7 @@ describe("a reservation is recorded before the call, not only at settlement", ()
     expect(await store.listOpen(monthKey(), 0)).toHaveLength(0);
   });
 
-  it("an operator can release budget held by a reservation nothing will settle", async () => {
+  it("closing an orphan holds the estimate rather than treating it as free", async () => {
     const meter = new UsageMeter(store, config);
     const r = await meter.reserve("s_crash", "client-2");
     if (!r.ok) return;
@@ -265,11 +266,14 @@ describe("a reservation is recorded before the call, not only at settlement", ()
     const before = await meter.snapshot("s_crash");
     expect(before.reservedUsd).toBeGreaterThan(0);
 
-    expect(await meter.releaseOpen(r.reservation.id)).toBe(true);
+    const closed = await meter.closeOpen(r.reservation.id, { kind: "unknown" }, 0);
+    expect(closed).toMatchObject({ ok: true, movedTo: "uncertain" });
+
     const after = await meter.snapshot("s_crash");
     expect(after.reservedUsd).toBe(0);
-    // Not silently reversible twice.
-    expect(await meter.releaseOpen(r.reservation.id)).toBe(false);
+    // The money did not disappear: it moved from reserved to held.
+    expect(after.uncertainUsd).toBeCloseTo(before.reservedUsd, 9);
+    expect(await meter.closeOpen(r.reservation.id, { kind: "unknown" }, 0)).toMatchObject({ ok: false });
   });
 
   it("does not list a reservation that is younger than the age filter", async () => {

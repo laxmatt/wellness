@@ -75,11 +75,15 @@ const Reconcile = z.object({
 });
 
 // Closes an orphaned reservation: budget taken by a request that died before
-// recording any outcome. The row stays in the ledger marked abandoned, so the
-// history shows that it happened rather than the budget quietly reappearing.
+// recording any outcome. A missing outcome is not a zero cost, so the operator
+// must say which it is. Without `actualUsd` the estimate moves into held
+// uncertainty and keeps counting against the cap; with it, the figure the
+// operator read from the provider's record is recorded as spend, which may be
+// zero but only as a statement.
 const Release = z.object({
   action: z.literal("release"),
   reservationId: z.string().min(1).max(200),
+  actualUsd: z.number().min(0).max(1000).optional(),
 });
 
 const AdminAction = z.discriminatedUnion("action", [Reconcile, Release]);
@@ -102,9 +106,27 @@ export async function POST(req: Request) {
 
   try {
     if (parsed.data.action === "release") {
-      const released = await getMeter().releaseOpen(parsed.data.reservationId);
-      if (!released) return NextResponse.json({ error: "No open reservation with that id." }, { status: 404 });
-      return NextResponse.json({ released: parsed.data.reservationId });
+      const resolution = parsed.data.actualUsd === undefined ? ({ kind: "unknown" } as const) : ({ kind: "confirmed", actualUsd: parsed.data.actualUsd } as const);
+      const result = await getMeter().closeOpen(parsed.data.reservationId, resolution);
+      if (!result.ok) {
+        const status = result.reason === "too_recent" ? 409 : 404;
+        const error =
+          result.reason === "too_recent"
+            ? "That reservation is recent enough to still be in flight. Wait for it to settle rather than closing its accounting underneath it."
+            : result.reason === "already_settled"
+              ? "That reservation already recorded an outcome."
+              : "No open reservation with that id.";
+        return NextResponse.json({ error }, { status });
+      }
+      return NextResponse.json({
+        released: parsed.data.reservationId,
+        movedTo: result.movedTo,
+        amountUsd: round(result.amountUsd),
+        note:
+          result.movedTo === "uncertain"
+            ? "Held as an uncertain charge, not written off. Reconcile it against the provider's record."
+            : "Recorded as spend at the amount you confirmed.",
+      });
     }
     const done = await getMeter().reconcile(parsed.data.reservationId, parsed.data.actualUsd);
     if (!done) return NextResponse.json({ error: "No unreconciled charge with that reservation id." }, { status: 404 });

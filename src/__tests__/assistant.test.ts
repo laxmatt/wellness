@@ -214,7 +214,7 @@ describe("spend control", () => {
       async listOpen() {
         throw new Error("ledger offline");
       },
-      async releaseOpen(): Promise<boolean> {
+      async closeOpen(): Promise<never> {
         throw new Error("ledger offline");
       },
       async reconcile() {

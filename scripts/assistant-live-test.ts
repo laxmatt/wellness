@@ -143,6 +143,10 @@ const CASES: Case[] = [
 type Reply = {
   mode: string;
   text: string;
+  // Set when the model answered and nothing usable came back.
+  failure?: string;
+  // Written by the site's engine, not the model.
+  matchSummary?: string;
   products: { productId: string; brand: string; name: string }[];
   matchingIds: string[];
   unconfirmedPrice: { productId: string }[];
@@ -223,6 +227,17 @@ async function main() {
       console.error(`\nAborting: the endpoint replied in "${r.mode}" mode, not "live".`);
       console.error(r.notice ?? "Check OPENAI_API_KEY and that the ledger is shared (DATABASE_URL).");
       process.exit(2);
+    }
+
+    // An unreadable reply is its own failure, and a distinct one: the model was
+    // called and charged for, and nothing came back to score.
+    if (r.failure) {
+      const line = `${c.category} | "${c.text}"\n       the reply could not be read (${r.failure}); nothing was extracted`;
+      failures.push(line);
+      records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems: [`unreadable reply (${r.failure})`], shown: r.matchingIds.length });
+      console.log(`FAIL ${c.category} | ${c.note}  [unreadable reply]`);
+      await sleep(400);
+      continue;
     }
 
     const proposal = r.proposals.find((p) => p.kind === "apply_preferences");

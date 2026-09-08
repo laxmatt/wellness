@@ -208,6 +208,26 @@ curl -X POST https://your-host/api/admin/assistant-usage \
 
 `actualUsd` is `0` when the provider did not charge. The held amount is removed and the real figure moves to `spent_usd`. Reconciling the same id twice returns 404 and changes nothing.
 
+### Reservations that never settled
+
+A request that dies between reserving budget and recording an outcome leaves an `open` row. `GET /api/admin/assistant-usage` lists these under `openReservations`, excluding anything young enough to still be in flight.
+
+**A missing outcome is not a zero cost.** The request may have reached the provider and been charged, and nothing in this application can tell. So closing one is the same operator judgement as reconciling a timeout:
+
+```
+# You cannot tell whether it was charged: hold the estimate.
+-d '{"action":"release","reservationId":"r_..."}'
+
+# You read the provider's record and it says $0.0004, or says nothing was charged.
+-d '{"action":"release","reservationId":"r_...","actualUsd":0.0004}'
+```
+
+Without `actualUsd` the estimate moves from `reserved_usd` into `uncertain_usd`, where it keeps counting against the cap until it is reconciled like any other uncertain charge. With it, the figure you confirmed is recorded as spend; zero is allowed, but only as a statement, never as an assumption.
+
+Two refusals: a reservation younger than ten minutes returns 409, because closing a live request's accounting out from under it is how a real charge goes unrecorded, and an id that already settled returns 404.
+
+**A late outcome corrects the books rather than vanishing.** If a settlement arrives after an operator has closed the reservation, it replaces the held estimate with the provider's own figures and the row records that it settled late. Both paths lock the row first, so a settlement and a close racing each other cannot both reach the budget.
+
 Do this at least monthly, before reading month-to-date spend as fact. A month with a large `uncertainUsd` has not been measured; it has been bounded.
 
 ### The provider's own limit
@@ -279,9 +299,15 @@ It sees only a shortlist of at most six products, and only sourced facts. Placeh
 
 Its output is parsed by `ModelIntent` and anything outside that shape is dropped. Constraints are checked against real filter keys before they are offered.
 
+**A reply nothing could be read from is a failure, and it changes nothing.** The route marks it `failure: "unreadable_reply"`, keeps the shopper's existing preferences exactly as they were, and returns no proposals. The placeholder intent's empty `hard` and `soft` mean "nothing was understood", not "the shopper asked for nothing": read the second way, a malformed reply offered to clear every filter the shopper had set.
+
 **The contract it is given is generated from the schema that validates it.** `CONDITION_OPS`, `SOFT_DIRECTIONS`, `SOFT_WEIGHT_RANGE` and `INTENT_LIMITS` are named once and used twice: to build the enums Zod enforces, and to write the instructions the model receives. They drifted apart once. The prompt described `{"key","op","value"}` without ever naming the ten operators or the three directions that validation requires, and a live run had seven of fifteen replies rejected whole, each one charged for and replaced with an error sentence. Validation was not the problem and was not loosened; the instructions were incomplete. A test fails if either list changes without the other.
 
-**The model is told what it cannot see.** The `CATALOGUE` block is a shortlist of at most six products, chosen before the model replies, out of a category that holds more. It is now labelled with both numbers and the model is forbidden from claiming a product does not exist, that nothing meets a constraint, or that a count is complete. Without that, it reported "there are no products listed under $500" while the engine matched one that was ranked just outside the six it was shown. What the shopper sees beside the reply always comes from the engine over every product, so the cards and the count were right; the prose was not.
+**The model is told what it cannot see.** The `CATALOGUE` block is a shortlist of at most six products, chosen before the model replies, out of a category that holds more. It is labelled with both numbers and the model is forbidden from claiming a product does not exist, that nothing meets a constraint, or that a count is complete. Without that, it reported "there are no products listed under $500" while the engine matched one that was ranked just outside the six it was shown.
+
+**Counts and availability are authored by this code, not by the model.** Every reply carries `matchSummary`, written from the engine's own count over every product, beside the cards it describes. It is true by construction, because nothing the model said goes into it. That is the guarantee.
+
+The model's prose is also screened against the engine, in `screenModelClaims`: an availability claim pointing the wrong way, or a stated product count that is neither the number that matched nor the size of the category, replaces the text with the authored sentence and sets a notice. **That screen is a heuristic backstop, not enforcement.** It is pattern matching over English, and a paraphrase nobody anticipated will get past it. What makes such a miss survivable is the authored summary sitting beside the prose, not the screen catching everything. Do not describe it as a guarantee.
 
 **Three evidence tiers, not two.** `sourced` is independently verified, `manufacturer_claim` is what the maker reported and must be attributed when used, and `unattributed` covers a value the catalogue records without recording where it came from. That third tier used to be folded into `manufacturer_claim`, which invented an attribution the catalogue never made. Placeholder values are still withheld entirely.
 

@@ -46,6 +46,12 @@ export type ConverseResult = {
   // Null when the provider answered but did not report usable token counts.
   // The caller must then treat the cost as unknown rather than as zero.
   usage: TokenUsage | null;
+  // "unreadable" means the provider answered and nothing usable came back. The
+  // intent is a placeholder, NOT an answer: its empty `hard` and `soft` say
+  // that nothing was understood, not that the shopper asked for nothing. A
+  // caller that treats them as an answer proposes clearing the shopper's
+  // filters on the strength of a reply it could not read.
+  status: "ok" | "unreadable";
 };
 
 // Carries whether the provider could have charged for the attempt. Anything
@@ -238,7 +244,7 @@ export class OpenAIConversationProvider implements ConversationProvider {
         { code: "custom", path: ["(body)"], message: `The reply was not JSON. finish_reason=${finishReason ?? "unknown"}.`, input: raw },
       ]);
       captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: failure, rawContent: raw }));
-      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model, status: "unreadable" };
     }
 
     const parsed = ModelIntent.safeParse(normalize(parsedJson));
@@ -247,7 +253,7 @@ export class OpenAIConversationProvider implements ConversationProvider {
     // nothing. Under the private test's diagnostics flag, record why.
     if (!parsed.success) {
       captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: parsed.error, rawContent: raw }));
-      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model, status: "unreadable" };
     }
 
     // An empty reply is not an answer. It is what a truncated or hollow payload
@@ -258,7 +264,7 @@ export class OpenAIConversationProvider implements ConversationProvider {
         { code: "custom", path: ["reply"], message: `The reply was empty. finish_reason=${finishReason ?? "unknown"}.`, input: raw },
       ]);
       captureRejectedIntent(buildRejection({ model: this.model, finishReason, error: failure, rawContent: raw }));
-      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model };
+      return { intent: unreadable(), usage: readUsage(json.usage), model: this.model, status: "unreadable" };
     }
 
     return {
@@ -267,6 +273,7 @@ export class OpenAIConversationProvider implements ConversationProvider {
       // makes the caller hold the reservation instead of releasing it.
       usage: readUsage(json.usage),
       model: this.model,
+      status: "ok",
     };
   }
 }

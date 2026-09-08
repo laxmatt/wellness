@@ -8,7 +8,7 @@ import { resolveClientIdentity } from "@/domain/client-identity";
 import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
-import { reconcileMatchClaim } from "@/domain/match-claims";
+import { engineSummary, screenModelClaims } from "@/domain/match-claims";
 import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
@@ -130,7 +130,7 @@ export async function POST(req: Request) {
   // The medical boundary is enforced here, before and independently of any
   // model call, so it holds even when the model is unavailable or wrong.
   if (detectMedicalIntent(lastUser)) {
-    return NextResponse.json(reply({ text: MEDICAL_REDIRECT, mode: "live", cat, outcome: agreed, proposals: [], medicalRedirect: true }));
+    return NextResponse.json(reply({ text: MEDICAL_REDIRECT, mode: "live", cat, outcome: agreed, totalProducts: views.length, proposals: [], medicalRedirect: true }));
   }
 
   const meter = getMeter();
@@ -145,6 +145,7 @@ export async function POST(req: Request) {
         mode: "unavailable",
         cat,
         outcome: agreed,
+        totalProducts: views.length,
         proposals: [],
         medicalRedirect: false,
         notice: `The assistant is not configured correctly, so it has not been enabled. ${credential.reason}`,
@@ -166,6 +167,7 @@ export async function POST(req: Request) {
         mode: "unavailable",
         cat,
         outcome: agreed,
+        totalProducts: views.length,
         proposals: [],
         medicalRedirect: false,
         notice: "The assistant is not configured for shared spend tracking, so it has not been enabled.",
@@ -195,6 +197,7 @@ export async function POST(req: Request) {
         mode: provider.isLive ? "live" : "prototype",
         cat,
         outcome: agreed,
+        totalProducts: views.length,
         proposals: [],
         medicalRedirect: false,
         notice: "The message was too long to send.",
@@ -217,6 +220,7 @@ export async function POST(req: Request) {
           mode: "unavailable",
           cat,
           outcome: agreed,
+          totalProducts: views.length,
           proposals: [],
           medicalRedirect: false,
           notice: `The assistant is not configured for rate limiting, so it has not been enabled. ${client.reason}`,
@@ -226,15 +230,17 @@ export async function POST(req: Request) {
     reservation = await meter.reserve(sessionId, client.key);
     if (!reservation.ok) {
       return NextResponse.json(
-        reply({ text: CAPPED_TEXT, mode: "unavailable", cat, outcome: agreed, proposals: [], medicalRedirect: false, notice: reservation.reason }),
+        reply({ text: CAPPED_TEXT, mode: "unavailable", cat, outcome: agreed, totalProducts: views.length, proposals: [], medicalRedirect: false, notice: reservation.reason }),
       );
     }
   }
 
   let intent;
+  let unreadable = false;
   try {
     const res = await provider.converse(bounded);
     intent = res.intent;
+    unreadable = res.status === "unreadable";
     if (reservation?.ok) {
       // A reply with no usable token counts is not a free reply. The estimate
       // stays held rather than being released on an assumption.
@@ -258,9 +264,31 @@ export async function POST(req: Request) {
         mode: "unavailable",
         cat,
         outcome: agreed,
+        totalProducts: views.length,
         proposals: [],
         medicalRedirect: false,
         notice: "Assistant temporarily unavailable.",
+      }),
+    );
+  }
+
+  // A reply the provider sent but nothing could be read from is a failure, not
+  // an answer. Its empty `hard` and `soft` mean "nothing was understood", and
+  // treating them as the shopper's new preferences proposed clearing every
+  // filter they had set, on the strength of a reply we could not read. So the
+  // agreed preferences stand, nothing is proposed, and the failure is named.
+  if (unreadable) {
+    return NextResponse.json(
+      reply({
+        text: intent.reply,
+        mode: provider.isLive ? "live" : "prototype",
+        cat,
+        outcome: agreed,
+        totalProducts: views.length,
+        proposals: [],
+        medicalRedirect: false,
+        failure: "unreadable_reply",
+        notice: "The assistant's answer could not be read, so nothing has been changed. Your filters are as you left them.",
       }),
     );
   }
@@ -309,20 +337,21 @@ export async function POST(req: Request) {
   // shown. A reply that says nothing matches while the cards show a match is
   // replaced by the engine's sentence: what the shopper reads and what the
   // shopper sees now come from the same computation.
-  const reconciled = intent.medicalIntent
-    ? { text: MEDICAL_REDIRECT, replaced: false }
-    : reconcileMatchClaim(intent.reply, shown.matching.length, views.length);
+  const screened = intent.medicalIntent
+    ? { text: MEDICAL_REDIRECT, replaced: false, reason: null as null | "availability" | "count" }
+    : screenModelClaims(intent.reply, shown.matching.length, views.length);
 
   return NextResponse.json(
     reply({
-      text: reconciled.text,
+      text: screened.text,
       mode: provider.isLive ? "live" : "prototype",
       cat,
       outcome: shown,
+      totalProducts: views.length,
       proposals,
       question: intent.question,
       medicalRedirect: intent.medicalIntent,
-      notice: reconciled.replaced
+      notice: screened.replaced
         ? "The assistant described the results differently from the site's own count, so the count shown here is the site's."
         : intent.unmapped.length > 0
           ? `Not something this site compares: ${intent.unmapped.join(", ")}.`
@@ -352,11 +381,17 @@ function reply(args: {
   proposals: ProposedAction[];
   question?: { text: string; options: string[] };
   medicalRedirect: boolean;
+  failure?: AssistantReply["failure"];
+  totalProducts: number;
   notice?: string;
 }): AssistantReply {
   const { outcome } = args;
   return {
     text: args.text,
+    // Authored here, from the same evaluation the cards come from, on every
+    // reply including the ones the model never reached.
+    matchSummary: engineSummary(outcome.matching.length, args.totalProducts),
+    failure: args.failure,
     mode: args.mode,
     question: args.question,
     // Cards, matching set and proposal all come from one evaluation.
