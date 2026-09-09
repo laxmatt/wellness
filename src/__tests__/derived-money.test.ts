@@ -53,11 +53,15 @@ describe("a value computed from a price is worth what the price is worth", () =>
     expect(v.attributes.shipping_minor).toBe(499);
   });
 
-  it("marks the catalogue's own six per-serving costs as derived", () => {
-    for (const v of viewsFor("wellness-drinks")) {
-      const p = v.provenance["attributes.price_per_serving_minor"];
-      expect(p?.derivedFrom, v.id).toBe("price");
-    }
+  it("marks a per-serving cost as derived only where it was computed here", () => {
+    // Five of the six are the pack price divided by servings. LMNT's is not:
+    // its maker states $1.50 a stick on the product page, read on 2026-09-09,
+    // so it stands on that source rather than on the pack price.
+    const derived = viewsFor("wellness-drinks").filter((v) => v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === "price");
+    const stated = viewsFor("wellness-drinks").filter((v) => v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === undefined);
+    expect(derived.length).toBe(5);
+    expect(stated.map((v) => v.id)).toEqual(["lmnt-citrus-salt-30"]);
+    expect(stated[0].provenance["attributes.price_per_serving_minor"]?.verification).toBe("manufacturer_reported");
   });
 });
 

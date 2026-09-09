@@ -51,8 +51,24 @@ describe("the partner showcase checklist", () => {
   it("never calls a recorded price a verified one", () => {
     const doc = committed();
     expect(doc).toContain("Recorded is not verified");
-    expect(doc).toMatch(/Verified today: 0/);
+    expect(doc).toContain("Independently measured: 0");
     expect(doc).not.toMatch(/confirmed price|verified price/i);
+  });
+
+  it("counts readings instead of claiming none exist", () => {
+    const doc = committed();
+    // The document used to say "nothing was fetched" and "0 read from the
+    // source" as sentences. One reading has since arrived, and a sentence
+    // would have been wrong the moment it did.
+    expect(doc).toMatch(/Records whose source was read: \*\*\d+ of \d+\*\*/);
+    expect(doc).toContain("lmnt-citrus-salt-30");
+    expect(doc).not.toMatch(/no product's shown price was read/i);
+  });
+
+  it("says who read a page, since this repository cannot", () => {
+    const doc = committed();
+    expect(doc).toContain("Nothing here was fetched by this repository's tooling");
+    expect(doc).toContain("docs/source-checks/");
   });
 
   it("separates the site having no programme from an offer record saying so", () => {
@@ -61,7 +77,10 @@ describe("the partner showcase checklist", () => {
     expect(doc).toContain("unrecorded, not checked and found to be none");
   });
 
-  it("says no source was fetched to produce it", () => {
-    expect(committed()).toContain("No manufacturer page was fetched");
+  it("keeps the LMNT reading attributed to whoever made it", () => {
+    const doc = committed();
+    const at = doc.indexOf("`lmnt-citrus-salt-30`");
+    const entry = doc.slice(Math.max(0, at - 1500), at + 500);
+    expect(entry).toContain("read from the page (Read by Codex");
   });
 });

@@ -26,10 +26,12 @@ site.
 | Merchants | 16 files, each with `websiteUrl` and market |
 
 **Attribute provenance, verified.** Every attribute carries a source and a
-verification tier. Across all 20 products, 196 attributes: **123
-manufacturer-reported, 46 unknown, 24 demo, 3 not stated**. By retrieval
-method: 72 direct, 124 secondhand. Five of the manufacturer-reported figures
-are bounds rather than exact values, and are marked as bounds.
+verification tier. Across all 20 products, 196 attributes: **124
+manufacturer-reported, 45 unknown, 24 demo, 3 not stated**. By retrieval
+method: 77 direct, 119 secondhand. Five of the manufacturer-reported figures
+are bounds rather than exact values, and are marked as bounds. These counts
+move as readings arrive; `docs/PARTNER-SHOWCASE-CHECKLIST.md` computes the
+current ones.
 
 **Nothing is independently verified, and that is a smaller problem than the
 first draft implied.** (Corrected.) A manufacturer's own figure is legitimate
@@ -40,10 +42,11 @@ buy a panel and meter it to launch.
 
 The real gap is the quality of the sourcing, not the absence of a lab:
 
-- **124 of 196 attributes are secondhand**, carrying the note "relayed via
+- **119 of 196 attributes are secondhand**, carrying the note "relayed via
   search summary; manufacturer page not fetched directly". The claim is
-  attributed to the maker, but the maker's page was never read.
-- **46 attributes record no source at all** (`unknown`). The site shows
+  attributed to the maker, but the maker's page was never read. It was 124
+  before the LMNT reading of 2026-09-09.
+- **45 attributes record no source at all** (`unknown`). The site shows
   "source not recorded", which is honest and unusable.
 
 Fetching the manufacturer pages directly would move most of that first number
@@ -287,13 +290,17 @@ drifts from the catalogue.
 
 It reports evidence on three independent dimensions and makes no launch
 selection: which products to publish, and in what order, is not a question the
-catalogue answers. Its findings: an amount is on record for 12 of 20; **not one
-of the 20 had its shown price read from the merchant's own page** rather than
-relayed from a search summary; no product has every required specification both
-usable and sourced; and no product has a real image.
+catalogue answers. Its figures are computed, so they move when the data does;
+as of the LMNT reading below, an amount is on record for 12 of 20, one product
+has its shown price read from the maker's page rather than relayed, no product
+has every required specification both usable and sourced, and no product has a
+real image.
 
-An amount on record is not a verified price. Nothing in this repository was
-re-checked against a live source, here or anywhere else in this session.
+An amount on record is not a verified price, and a reading is not a
+measurement. `docs/source-checks/` holds one file per reading: who read the
+page, when, what it said, and what was deliberately left alone. This
+repository's tooling fetched none of them; its network policy refuses outbound
+HTTPS to everything but the model provider.
 
 ## What would hold a launch back
 
@@ -307,10 +314,12 @@ What actually holds it back, in the order that matters:
 
 1. **Images.** 24 of 24 are procedural placeholders. Nothing to license, and
    nothing showing the products. This is the one a partner sees first.
-2. **Sourcing.** 124 of 196 attribute records and 13 of 26 offer prices are
-   marked `secondhand`: the URL was recorded from a search summary and the page
-   was never opened. No product's shown price was read from the merchant. The
-   URLs are already on file, which makes this the cheapest large improvement
+2. **Sourcing.** Most records are marked `secondhand`: the URL was recorded
+   from a search summary and the page was never opened. One product, LMNT
+   Citrus Salt, has since had its price and five specifications read from the
+   maker's page and supplied by Codex. The current counts are in
+   `docs/PARTNER-SHOWCASE-CHECKLIST.md`, which computes them; the URLs are
+   already on file, which makes this the cheapest large improvement
    available.
 3. **Prototype specifications.** 24 values across 14 products are demo data.
    Each is marked on the page, which is honest and still reads as unfinished.

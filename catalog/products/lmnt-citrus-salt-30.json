@@ -56,13 +56,14 @@
         }
       ],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page lists the one-time price for the Citrus Salt 30-count box at $45.00. Subscription and bundle prices were not recorded from this reading. Availability is not inferred from an add-to-cart control. Previously recorded as relayed via a search summary on 2026-09-08."
       }
     },
     {
@@ -126,10 +127,11 @@
       "value": 30,
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page offers \"One box (30ct)\" for this variant. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -137,24 +139,25 @@
       "value": 150,
       "unit": "USD_minor",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Pack price divided by servings."
+        "note": "Product page states $1.50 per stick for the one-time 30-count box. Recorded here as the maker's own figure rather than as the pack price divided by servings, which is how it was carried until 2026-09-09. The arithmetic agrees: $45.00 over 30 sticks."
       },
-      "verification": "unknown",
-      "derivedFrom": "price"
+      "verification": "manufacturer_reported"
     },
     "sugar_g": {
       "value": 0,
       "unit": "g",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page for the Citrus Salt 30-count variant states \"zero sugar\". Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -199,10 +202,11 @@
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page states 1000 mg sodium per stick. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -211,10 +215,11 @@
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page states 200 mg potassium per stick. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -223,10 +228,11 @@
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page states 60 mg magnesium per stick. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
