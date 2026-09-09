@@ -127,6 +127,15 @@ function renderPanel() {
   );
 }
 
+// The constraint chip's own remove control, found by the label it renders.
+function removeChip(label: RegExp): HTMLElement {
+  const chip = screen
+    .getAllByRole("button")
+    .find((b) => label.test(b.textContent ?? "") && /Remove this constraint/.test(b.textContent ?? ""));
+  expect(chip).toBeTruthy();
+  return chip!;
+}
+
 async function ask(text: string) {
   const input = await screen.findByPlaceholderText(/what matters to you/i);
   fireEvent.change(input, { target: { value: text } });
@@ -372,6 +381,116 @@ describe("what answering the question does not do", () => {
     });
     expect(screen.queryByText(/Did you want to drop/)).toBeNull();
     expect(screen.queryByText(/Set aside/)).toBeNull();
+  });
+
+  it("does not let Apply take the constraints the reply just kept", async () => {
+    // Apply used to run every proposal in the reply, and the mixed answer's
+    // reply carries the merge plus one relax_constraint per kept constraint.
+    // Pressing the affirmative button therefore did exactly the thing the
+    // question was asking permission for, on both constraints at once.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    await ask("electrolytes, and forget the budget");
+    await waitFor(() => expect(posted).toHaveLength(2));
+    await waitFor(() => expect(screen.getByText(/Did you want to drop/)).toBeTruthy());
+
+    // The real click on the real button.
+    fireEvent.click(screen.getAllByRole("button", { name: "Apply" }).at(-1)!);
+
+    // A third message shows what the application is actually holding.
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    expect(posted[2].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "price_per_serving_minor", op: "lt", value: 200 },
+      { key: "function", op: "includes", value: "electrolytes" },
+    ]);
+  });
+
+  it("sets aside exactly the one alternative pressed", async () => {
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    await ask("electrolytes, and forget the budget");
+    await waitFor(() => expect(screen.getByText(/Did you want to drop/)).toBeTruthy());
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Apply" }).at(-1)!);
+    fireEvent.click(screen.getByRole("button", { name: /Set aside price per serving under \$2/ }));
+
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    const keys = (posted[2].hard as { key: string }[]).map((c) => c.key);
+    expect(keys).toContain("sugar_g");
+    expect(keys).toContain("function");
+    expect(keys).not.toContain("price_per_serving_minor");
+  });
+
+  it("keeps a removed budget removed when the chip answers the question", async () => {
+    // The pending proposal is a snapshot of what the assistant offered. Taking
+    // a constraint off afterwards does not rewrite that snapshot, so answering
+    // the question used to carry the removed constraint back in and quietly
+    // undo a deliberate act.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+
+    // The shopper takes the budget off, on the constraint chip's own control.
+    fireEvent.click(removeChip(/price per serving/i));
+
+    fireEvent.click(screen.getByRole("button", { name: "Electrolytes" }));
+    await waitFor(() => expect(posted).toHaveLength(2));
+    expect(posted[1].hard).toEqual([{ key: "sugar_g", op: "eq", value: 0 }]);
+
+    const summary = screen.getAllByText(/Narrow to/).at(-1)!;
+    expect(summary.textContent).toContain("zero total sugar");
+    expect(summary.textContent).toContain("function includes Electrolytes");
+    expect(summary.textContent).not.toContain("price per serving");
+  });
+
+  it("keeps a removed budget removed when the answer is typed", async () => {
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    fireEvent.click(removeChip(/price per serving/i));
+
+    await ask("electrolytes");
+    await waitFor(() => expect(posted).toHaveLength(2));
+    expect(posted[1].hard).toEqual([{ key: "sugar_g", op: "eq", value: 0 }]);
+
+    const summary = screen.getAllByText(/Narrow to/).at(-1)!;
+    expect(summary.textContent).toContain("zero total sugar");
+    expect(summary.textContent).toContain("function includes Electrolytes");
+    expect(summary.textContent).not.toContain("price per serving");
+  });
+
+  it("brings a constraint back when the shopper accepts a proposal naming it", async () => {
+    // A removal stands until the shopper asks for it again. Accepting a
+    // proposal that names the key is asking for it again.
+    wireRoute([TURN_ONE, TURN_TWO_REPEATING]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    fireEvent.click(removeChip(/price per serving/i));
+
+    fireEvent.click(screen.getByRole("button", { name: "Electrolytes" }));
+    await waitFor(() => expect(posted).toHaveLength(2));
+    // The model repeats the budget, so the proposal offers it back.
+    await waitFor(() => expect(screen.getAllByText(/Narrow to/).at(-1)!.textContent).toContain("price per serving under $2"));
+    fireEvent.click(screen.getAllByRole("button", { name: "Apply" }).at(-1)!);
+
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    expect((posted[2].hard as { key: string }[]).map((c) => c.key)).toContain("price_per_serving_minor");
   });
 
   it("still lets an ordinary message drop a constraint", async () => {

@@ -269,6 +269,17 @@ function ProductLine({ p }: { p: AssistantProductRef }) {
 
 function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number; a: NonNullable<ReturnType<typeof useAssistant>> }) {
   const dismissed = a.dismissed.includes(index);
+  // Each is its own decision, taken on its own button, and it stays available
+  // after Apply: applying what the assistant proposed is not a reason to
+  // withdraw the choice it was asking about.
+  const [primaryDone, setPrimaryDone] = useState(false);
+  const [setAside, setSetAside] = useState<string[]>([]);
+  const alternatives = reply.proposals
+    .filter((p): p is Extract<ProposedAction, { kind: "relax_constraint" }> => p.kind === "relax_constraint")
+    .filter((p) => !setAside.includes(p.key));
+  const primary = reply.proposals.filter((p) => p.kind !== "relax_constraint");
+  const showPrimary = !dismissed && !primaryDone && primary.length > 0;
+  const showAlternatives = !dismissed && alternatives.length > 0;
   return (
     <div className="flex w-full flex-col gap-2.5">
       {reply.medicalRedirect ? (
@@ -338,36 +349,69 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
 
       {reply.notice ? <p className="text-sm leading-snug text-fg-soft">{reply.notice}</p> : null}
 
-      {reply.proposals.length > 0 && !dismissed ? (
+      {showPrimary || showAlternatives ? (
         <div className="rounded-card border border-dashed border-edge-strong bg-surface px-3.5 py-3">
-          <p className="text-sm font-semibold text-fg-soft">Apply this to the page?</p>
-          <ul className="mt-1.5 flex flex-col gap-1">
-            {reply.proposals.map((p, i) => (
-              <li key={i} className="text-base leading-snug">
-                {p.summary}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-3 flex gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                reply.proposals.forEach((p: ProposedAction) => a.accept(p));
-                a.dismiss(index);
-              }}
-              className="tap inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover"
-            >
-              Apply
-            </button>
-            <button
-              type="button"
-              onClick={() => a.dismiss(index)}
-              className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-5 text-sm font-semibold hover:border-fg"
-            >
-              No thanks
-            </button>
-          </div>
-          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing changes on the page until you choose Apply.</p>
+          {/* Two kinds of action, and they must not travel together. Apply runs
+              what the assistant is proposing to do. Setting a constraint aside
+              is an alternative to that, offered one at a time: a reply that
+              kept two constraints and asked about both used to hand Apply the
+              power to remove both, so pressing the affirmative button silently
+              did the thing the question was asking permission for. */}
+          {showPrimary ? (
+            <>
+              <p className="text-sm font-semibold text-fg-soft">Apply this to the page?</p>
+              <ul className="mt-1.5 flex flex-col gap-1">
+                {primary.map((p, i) => (
+                  <li key={i} className="text-base leading-snug">
+                    {p.summary}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    primary.forEach((p: ProposedAction) => a.accept(p));
+                    setPrimaryDone(true);
+                    if (alternatives.length === 0) a.dismiss(index);
+                  }}
+                  className="tap inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover"
+                >
+                  Apply
+                </button>
+                <button
+                  type="button"
+                  onClick={() => a.dismiss(index)}
+                  className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-5 text-sm font-semibold hover:border-fg"
+                >
+                  No thanks
+                </button>
+              </div>
+            </>
+          ) : null}
+
+          {showAlternatives ? (
+            <div className={showPrimary ? "mt-3 border-t border-edge pt-3" : ""}>
+              <p className="text-sm font-semibold text-fg-soft">Or set one aside:</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {alternatives.map((p) => (
+                  <button
+                    key={p.key}
+                    type="button"
+                    onClick={() => {
+                      a.accept(p);
+                      setSetAside((prev) => [...prev, p.key]);
+                    }}
+                    className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg"
+                  >
+                    {p.summary}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing changes on the page until you choose.</p>
         </div>
       ) : null}
     </div>

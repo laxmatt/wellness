@@ -65,6 +65,13 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   const [soft, setSoft] = useState<SoftPreference[]>([]);
   const [applied, setApplied] = useState<AppliedPreferences | null>(null);
   const [dismissed, setDismissed] = useState<number[]>([]);
+  // Keys the shopper has explicitly taken off. A pending proposal is a snapshot
+  // of what the assistant offered at the time, and removing a constraint after
+  // it arrived does not rewrite that snapshot: answering the question would
+  // otherwise carry the removed constraint back in and undo a deliberate act.
+  // A removal stands until the shopper accepts a proposal that names the key
+  // again, which is them asking for it back.
+  const [removed, setRemoved] = useState<string[]>([]);
   const sessionId = useRef<string | null>(null);
   const nonce = useRef(0);
 
@@ -124,6 +131,23 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
    * route asks rather than assuming. Text that names no option is an ordinary
    * message and replaces.
    */
+  /**
+   * What an answer carries: the constraints of the reply that asked, minus
+   * anything the shopper has since taken off, and the applied state when that
+   * reply proposed nothing.
+   */
+  const carryFor = useCallback(
+    (asking: AssistantReply | undefined) => {
+      const pending = asking?.proposals.find((p) => p.kind === "apply_preferences");
+      if (pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)) {
+        const keep = { hard: pending.hard.filter((c) => !removed.includes(c.key)), soft: pending.soft.filter((p) => !removed.includes(p.key)) };
+        if (keep.hard.length > 0 || keep.soft.length > 0) return keep;
+      }
+      return { hard, soft };
+    },
+    [hard, removed, soft],
+  );
+
   const send = useCallback(
     (text: string) => {
       const question = latest?.question;
@@ -136,18 +160,14 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         .sort((a, b) => b - a)
         .map((i) => replies[i])
         .find((r) => r.question?.key === question.key);
-      const pending = asking?.proposals.find((p) => p.kind === "apply_preferences");
-      const carry =
-        pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)
-          ? { hard: pending.hard, soft: pending.soft }
-          : { hard, soft };
+      const carry = carryFor(asking);
       // "electrolytes" leaves no room for a second meaning; "electrolytes, and
       // forget the budget" does.
       const bare = text.trim().replace(/[.,!?;:]+$/, "").toLowerCase();
       const exact = question.options.some((o) => o.trim().toLowerCase() === bare);
       return post(text, carry, { key: question.key, via: exact ? "option" : "typed" });
     },
-    [hard, latest, post, replies, soft],
+    [carryFor, hard, latest, post, replies, soft],
   );
 
   /**
@@ -163,14 +183,10 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
    */
   const answerQuestion = useCallback(
     (option: string, question: { key?: string }, replyIndex: number) => {
-      const pending = replies[replyIndex]?.proposals.find((p) => p.kind === "apply_preferences");
-      const carry =
-        pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)
-          ? { hard: pending.hard, soft: pending.soft }
-          : { hard, soft };
+      const carry = carryFor(replies[replyIndex]);
       return post(option, carry, question.key ? { key: question.key, via: "option" } : undefined);
     },
-    [hard, post, replies, soft],
+    [carryFor, post, replies],
   );
 
   // Nothing here changes the page until the shopper presses Apply.
@@ -184,6 +200,9 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       if (action.kind === "apply_preferences") {
         setHard(action.hard);
         setSoft(action.soft);
+        // Accepting a proposal that names a key is asking for it back.
+        const named = new Set([...action.hard.map((c) => c.key), ...action.soft.map((p) => p.key)]);
+        setRemoved((prev) => prev.filter((k) => !named.has(k)));
         // The engine's answer for these exact constraints, not a chip
         // approximation and not the previous turn's answer.
         publish(action.hard, action.soft, action.matchingIds, [action.summary]);
@@ -193,6 +212,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
           if (seed && !compare.has(seed.id)) compare.toggle(seed);
         }
       } else if (action.kind === "relax_constraint") {
+        setRemoved((prev) => (prev.includes(action.key) ? prev : [...prev, action.key]));
         setHard((prev) => {
           const nextHard = prev.filter((c) => c.key !== action.key);
           // Relaxing widens the set, so the page returns to unfiltered until
@@ -207,6 +227,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
 
   const removeConstraint = useCallback(
     (key: string) => {
+      setRemoved((prev) => (prev.includes(key) ? prev : [...prev, key]));
       setHard((prev) => {
         const nextHard = prev.filter((c) => c.key !== key);
         publish(nextHard, soft, null, []);
@@ -222,6 +243,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     setHard([]);
     setSoft([]);
     setDismissed([]);
+    setRemoved([]);
     setError(null);
     publish([], [], null, []);
   }, [publish]);
