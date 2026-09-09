@@ -132,7 +132,12 @@ describe("a superlative is a preference, not a budget", () => {
   it("tells the model which words are requirements and which are preferences", async () => {
     await ask(intentOf({}), "hello", "cold-plunge");
     expect(prompt()).toMatch(/A requirement is "hard"\. A preference is "soft"\./);
-    expect(prompt()).toMatch(/"Cheapest", "smallest", "best", "prefer", "ideally" and every comparative or superlative are preferences/);
+    // A comparing word is not what makes something a preference: "under $2" is
+    // a comparison and a requirement. The line the shopper named is the test.
+    expect(prompt()).toMatch(/The test is whether the shopper named the line, not whether they used a comparing word/);
+    expect(prompt()).toMatch(/"Under \$2", "less than 90 cents", "no more than 200mg", "only inflatable", "zero sugar" all name the line/);
+    expect(prompt()).toMatch(/comparing words included/);
+    expect(prompt()).toMatch(/"Cheapest", "smallest", "best", "as cheap as possible", "ideally light" name no line/);
   });
 
   it("forbids taking a number out of the catalogue and making it a limit", async () => {
@@ -254,5 +259,113 @@ describe("the model is no longer asked to write the shopper's words", () => {
   it("still discards a reply with an empty one, which is what truncation looks like", async () => {
     const body = await ask(intentOf({ reply: "" }), "hello");
     expect(body.failure).toBe("unreadable_reply");
+  });
+});
+
+describe("what the scorer would otherwise let through", () => {
+  const reply = (hard: unknown[], soft: unknown[], text = "") =>
+    ({ text, medicalRedirect: false, matchingIds: [], proposals: [{ kind: "apply_preferences", hard, soft }] }) as CheckableReply;
+
+  it("counts a constraint the case neither required nor allowed", () => {
+    // Right answer plus an invention. `allowed` was declared and never read,
+    // so this passed: a budget on a key the case forgot to forbid is exactly
+    // the shape of C4's failure moved one key sideways.
+    const v = scoreCase(reply([{ key: "chiller_included", op: "eq", value: true }, { key: "tub_type", op: "eq", value: "barrel" }], []), {
+      requiredHard: [{ key: "chiller_included", ops: ["eq"], value: true }],
+    });
+    expect(v.extras).toEqual(["tub_type"]);
+    expect(v.problems).toEqual(["unexpected hard tub_type: the sentence did not ask for it and the case does not allow it"]);
+  });
+
+  it("counts an unexpected preference too", () => {
+    const v = scoreCase(reply([{ key: "chiller_included", op: "eq", value: true }], [{ key: "placement", direction: "prefer_high", weight: 0.5 }]), {
+      requiredHard: [{ key: "chiller_included", ops: ["eq"], value: true }],
+    });
+    expect(v.extras).toEqual(["placement"]);
+  });
+
+  it("says nothing about a key the case allowed", () => {
+    const v = scoreCase(reply([{ key: "chiller_included", op: "eq", value: true }], [{ key: "tub_type", direction: "prefer_high", weight: 0.5 }]), {
+      requiredHard: [{ key: "chiller_included", ops: ["eq"], value: true }],
+      allowed: ["tub_type"],
+    });
+    expect(v.problems).toEqual([]);
+  });
+
+  it("says nothing about a key the case forbade, beyond the invention itself", () => {
+    const v = scoreCase(reply([{ key: "price", op: "lte", value: 549000 }], []), {
+      forbiddenHard: [{ key: "price", because: "the shopper named no amount" }],
+    });
+    expect(v.extras).toEqual([]);
+    expect(v.problems).toHaveLength(1);
+    expect(v.problems[0]).toMatch(/invented hard price/);
+  });
+
+  it("catches a preference pointed at the wrong target", () => {
+    // Direction right, target wrong. The ranking puts barrels on top of a
+    // search for something packable, and a direction-only check calls it good.
+    const v = scoreCase(reply([], [{ key: "tub_type", direction: "prefer_value", value: "barrel", weight: 0.5 }]), {
+      requiredSoft: [{ key: "tub_type", directions: ["prefer_value", "prefer_high"], value: "inflatable" }],
+    });
+    expect(v.problems).toEqual(['soft tub_type targets "barrel", expected "inflatable"']);
+  });
+
+  it("catches a preference with no target where the sentence named one", () => {
+    const v = scoreCase(reply([], [{ key: "tub_type", direction: "prefer_value", weight: 0.5 }]), {
+      requiredSoft: [{ key: "tub_type", directions: ["prefer_value"], value: "inflatable" }],
+    });
+    expect(v.problems).toEqual(['soft tub_type targets no value, expected "inflatable"']);
+  });
+
+  it("accepts a preference that names no target where the case names none", () => {
+    const v = scoreCase(reply([], [{ key: "price", direction: "prefer_low", weight: 0.5 }]), {
+      requiredSoft: [{ key: "price", directions: ["prefer_low"] }],
+    });
+    expect(v.problems).toEqual([]);
+  });
+});
+
+describe("a requirement the sentence genuinely states either way", () => {
+  const reply = (hard: unknown[], soft: unknown[]) =>
+    ({ text: "", medicalRedirect: false, matchingIds: [], proposals: [{ kind: "apply_preferences", hard, soft }] }) as CheckableReply;
+  const either = { requiredEither: [{ key: "plumbing", ops: ["eq", "lte"], value: "none" }] };
+
+  it("accepts the constraint form", () => {
+    expect(scoreCase(reply([{ key: "plumbing", op: "eq", value: "none" }], []), either).problems).toEqual([]);
+  });
+
+  it("accepts the preference form", () => {
+    expect(scoreCase(reply([], [{ key: "plumbing", direction: "prefer_low", value: "none", weight: 0.5 }]), either).problems).toEqual([]);
+  });
+
+  it("still refuses absence", () => {
+    expect(scoreCase(reply([], []), either).problems).toEqual(["missing plumbing, in either form"]);
+  });
+});
+
+describe("a sentence naming something the category cannot filter on", () => {
+  const reply = (hard: unknown[], text: string) =>
+    ({ text, medicalRedirect: false, matchingIds: [], proposals: [{ kind: "apply_preferences", hard, soft: [] }] }) as CheckableReply;
+  // Cold plunge holds water capacity and height, and neither is filterable, so
+  // "the smallest one" has nowhere to go. Saying so is the right answer.
+  const expect_ = { mustNameOrAsk: { because: "cold plunge has no size filter" }, forbiddenHard: [{ key: "price", because: "the shopper named no amount" }] };
+
+  it("accepts saying it cannot be compared", () => {
+    expect(scoreCase(reply([], "One thing you mentioned is not something this site compares."), expect_).problems).toEqual([]);
+  });
+
+  it("accepts asking about it", () => {
+    expect(scoreCase(reply([], "Which tub type suits you?"), expect_).problems).toEqual([]);
+  });
+
+  it("refuses silence", () => {
+    const v = scoreCase(reply([], "All 6 products in this category match."), expect_);
+    expect(v.problems).toEqual(["nothing was said about what could not be filtered: cold plunge has no size filter"]);
+  });
+
+  it("refuses a budget invented in its place", () => {
+    const v = scoreCase(reply([{ key: "price", op: "lte", value: 13999 }], "One thing you mentioned is not something this site compares."), expect_);
+    expect(v.problems).toHaveLength(1);
+    expect(v.problems[0]).toMatch(/invented hard price/);
   });
 });

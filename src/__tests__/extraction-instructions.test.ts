@@ -143,6 +143,9 @@ describe("the instruction to extract everything in the sentence", () => {
     expect(prompt).toMatch(/One sentence often states several things at once/);
     expect(prompt).toMatch(/Extract every one of them, not only the budget/);
     expect(prompt).toMatch(/A requirement is "hard"\. A preference is "soft"\./);
+    // Stated so a comparison against a named amount is not mistaken for a
+    // preference: "under $2" compares, and it is a requirement.
+    expect(prompt).toMatch(/comparing words included/);
     // If this ever fails, someone taught the prompt the test suite's sentences.
     expect(prompt.toLowerCase()).not.toContain("zero sugar electrolytes");
   });

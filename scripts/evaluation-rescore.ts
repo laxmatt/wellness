@@ -60,6 +60,10 @@ const EXPECT: Record<string, CaseExpectation> = {
     requiredSoft: [{ key: "coverage" }, { key: "footprint" }],
     allowed: ["mounting"],
   },
+  // R1 and R3 named preferences and were scored by a checker that accepted a
+  // constraint. The form they came back in differs from the plan's wording,
+  // and the scoring in force on the day allowed it. Flagged below as a
+  // stricter future expectation, not as a defect established on the day.
   "R2 1": {
     requiredHard: [
       { key: "price", ops: ["lte", "lt"], admitsAtMost: 120000 },
@@ -85,9 +89,13 @@ const EXPECT: Record<string, CaseExpectation> = {
       { key: "chiller_included", ops: ["eq"], value: true },
     ],
   },
+  // The frozen plan said "hard or soft `plumbing` at `none`", in those words.
+  // Re-scoring it as a preference would invent a rule after the fact and call
+  // a permitted answer a defect. "I don't want to deal with an electrician"
+  // reads as a requirement at least as fairly as a preference.
   "C2 1": {
-    requiredSoft: [{ key: "plumbing" }],
-    allowed: ["tub_type"],
+    requiredEither: [{ key: "plumbing", ops: ["eq", "lte", "lt"], directions: ["prefer_low", "prefer_value"] }],
+    allowed: ["tub_type", "placement"],
   },
   "C3 1": {
     requiredSoft: [{ key: "tub_type" }],
@@ -150,7 +158,12 @@ for (const t of turns) {
   } as CheckableReply;
   const v = scoreCase(reply, expect);
   if (v.problems.length === 0) passed++;
-  rows.push(`| ${key} | ${v.problems.length === 0 ? "ok" : v.problems.join("; ")} | ${t.result === "ok" ? "ok" : "failed"} |`);
+  // Only R1 and R3 are affected: the plan named a preference, the scoring in
+  // force accepted a constraint, and the difference is a choice being made now
+  // rather than a defect the run established.
+  const stricterNow = ["R1/M2 1", "R3 1"].includes(key) && v.wrongForm.length > 0 && v.problems.length === v.wrongForm.length;
+  const shown = v.problems.length === 0 ? "ok" : `${v.problems.join("; ")}${stricterNow ? " — **stricter expectation chosen now**, permitted by the scoring in force on the day" : ""}`;
+  rows.push(`| ${key} | ${shown} | ${t.result === "ok" ? "ok" : "failed"} |`);
   console.log(`${v.problems.length === 0 ? "ok  " : "FAIL"} ${key}  ${v.problems.join("; ")}`);
 }
 
@@ -166,6 +179,15 @@ const body = [
   "**The original score and every original observation above stand unchanged.**",
   "A second reading of the same evidence is not a reason to rewrite the first,",
   "and the difference between the two readings is the point.",
+  "",
+  "Two kinds of difference appear below and they are not the same thing.",
+  "C4 and D4 are defects in what was observed: an invented budget and a decimal",
+  "off by a hundred, both wrong under the plan as it was frozen. R1 and R3 are",
+  "a **stricter expectation chosen now**: the plan named preferences, the",
+  "scoring in force accepted constraints, and calling that a failure of the run",
+  "would be inventing a rule after the fact. C2 is neither. Its frozen",
+  "expectation said \"hard or soft plumbing\" in those words, so the constraint",
+  "it returned was permitted and stays permitted here.",
   "",
   `Re-scored: **${passed} of ${turns.filter((t) => EXPECT[`${t.id} ${t.turn}`]).length} turns pass**, against 11 of 16 on the day.`,
   "",
