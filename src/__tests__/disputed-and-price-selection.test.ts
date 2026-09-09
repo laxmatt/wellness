@@ -5,6 +5,7 @@ import { evaluateCondition } from "@/domain/conditions";
 import { buildCompareModel } from "@/domain/compare";
 import { recommendCategory } from "@/domain/recommend";
 import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
+import { applyPreferences } from "@/domain/personalization/match";
 import { derivePrice, toProductView } from "@/domain/view";
 import { miniCategory, miniProduct, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
 
@@ -188,5 +189,73 @@ describe("the shown price comes from the offers whose amounts are real", () => {
     expect(derivePrice(p).money.amountMinor).toBe(12345);
     expect(derivePrice(p).isDemo).toBe(false);
     expect(derivePrice(p).offerCount).toBe(1);
+  });
+});
+
+describe("a prototype amount cannot make a product look cheap", () => {
+  // PRO1500 was ranked cheapest of eight panels on a prototype $649. The
+  // amount was already excluded from price claims and from the affordability
+  // formula; the preference ranking still read it.
+  const view = (id: string, amount: number, demoPrice: boolean) =>
+    toProductView(miniProduct(id, amount, { power: 50, size: "m" }, "unknown", [], demoPrice), {
+      category: miniCategory,
+      brands: [testBrand],
+      merchants: [testMerchant],
+    });
+
+  const rank = (views: ReturnType<typeof view>[], direction: "prefer_low" | "prefer_high" | "prefer_value", value?: number) =>
+    applyPreferences(views, miniCategory, {
+      hard: [],
+      soft: [{ key: "price", direction, value, weight: 1 }],
+      unmapped: [],
+      medicalIntent: false,
+    });
+
+  const real = () => [view("cheap", 20000, false), view("dear", 60000, false)];
+
+  it("keeps the ordering of real prices", () => {
+    const r = rank(real(), "prefer_low");
+    expect(r.rankedIds).toEqual(["cheap", "dear"]);
+    expect(r.explanations.cheap.softScore).toBeGreaterThan(r.explanations.dear.softScore);
+  });
+
+  it("does not let an extreme prototype amount move a real product's score", () => {
+    const without = rank(real(), "prefer_low");
+    const withLow = rank([...real(), view("invented-low", 1, true)], "prefer_low");
+    const withHigh = rank([...real(), view("invented-high", 9_000_000, true)], "prefer_low");
+    for (const id of ["cheap", "dear"]) {
+      expect(withLow.explanations[id].softScore, id).toBe(without.explanations[id].softScore);
+      expect(withHigh.explanations[id].softScore, id).toBe(without.explanations[id].softScore);
+    }
+  });
+
+  it("does the same for a preference pointing the other way", () => {
+    const without = rank(real(), "prefer_high");
+    const withHigh = rank([...real(), view("invented-high", 9_000_000, true)], "prefer_high");
+    for (const id of ["cheap", "dear"]) {
+      expect(withHigh.explanations[id].softScore, id).toBe(without.explanations[id].softScore);
+    }
+  });
+
+  it("gives the prototype-priced product no credit, in either direction", () => {
+    const low = rank([...real(), view("invented-low", 1, true)], "prefer_low");
+    expect(low.explanations["invented-low"].softScore).toBe(0);
+    expect(low.rankedIds[low.rankedIds.length - 1]).toBe("invented-low");
+    const high = rank([...real(), view("invented-high", 9_000_000, true)], "prefer_high");
+    expect(high.explanations["invented-high"].softScore).toBe(0);
+  });
+
+  it("refuses a named amount against a price nobody recorded", () => {
+    const r = rank([view("invented", 20000, true), view("cheap", 20000, false)], "prefer_value", 20000);
+    expect(r.explanations.cheap.softScore).toBeGreaterThan(0);
+    expect(r.explanations.invented.softScore).toBe(0);
+    expect(r.explanations.invented.misses.join(" ")).toContain("not confirmed");
+  });
+
+  it("says the price is not confirmed rather than quoting the placeholder", () => {
+    const r = rank([view("invented", 124900, true), view("cheap", 20000, false)], "prefer_low");
+    const misses = r.explanations.invented.misses.join(" ");
+    expect(misses).toContain("not confirmed");
+    expect(misses).not.toContain("$1,249");
   });
 });

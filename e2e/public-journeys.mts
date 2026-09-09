@@ -438,8 +438,16 @@ async function run(browser: Browser) {
     }, money);
     ok("an amount can be put into the page", injected);
 
-    const dirty = (await page.locator("body").textContent()) ?? "";
-    ok("and the check then fails, which is what makes it worth running", dirty.includes(money), money);
+    // Read back through the same scoped predicate the real check uses, on the
+    // same block. Reading the whole body could pass on a source note that
+    // quotes an amount, which is provenance and not a price, so the proof
+    // would not have been a proof.
+    const dirty = await priceBlock(page, money);
+    ok(
+      "and the same check then fails, which is what makes it worth running",
+      dirty.found && dirty.text.includes(money) && !dirty.text.includes("Check current price"),
+      dirty,
+    );
     await page.reload({ waitUntil: "domcontentloaded" });
     const restored = await priceBlock(page, "Check current price");
     ok("the real page quotes nothing where the price goes", restored.found && !restored.text.includes(money), restored);

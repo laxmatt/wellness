@@ -1,6 +1,6 @@
 import type { CategoryDefinition, Condition } from "../category";
 import { attributeDef } from "../category";
-import { comparable, evaluateCondition, matchesAll } from "../conditions";
+import { comparable, evaluateCondition, isUnconfirmedPriceClaim, matchesAll } from "../conditions";
 import type { MatchResult, PreferenceSet, ProductExplanation, Relaxation, SoftPreference } from "../personalization";
 import { toScoringInput, scoreProducts } from "../recommend/score";
 import type { Bound } from "../provenance";
@@ -17,11 +17,20 @@ export const MEDICAL_REDIRECT =
 // it "prefer cheaper" cannot mean anything: a single product has no cheaper.
 export type SoftRanges = Map<string, { min: number; max: number }>;
 
+// A preference reads a value the same way a constraint does, so it inherits
+// the same doubt: an amount nobody recorded cannot make a product cheap, and
+// it cannot set the range other products are measured against either. Hooga's
+// PRO1500 was ranked cheapest of eight panels on a prototype $649.
+function usableFor(view: ProductView, cat: CategoryDefinition, key: string): number | undefined {
+  if (isUnconfirmedPriceClaim(view, cat, { key, op: "lte", value: 0 })) return undefined;
+  return comparable(view, cat, key);
+}
+
 export function softRanges(views: ProductView[], cat: CategoryDefinition, soft: SoftPreference[]): SoftRanges {
   const ranges: SoftRanges = new Map();
   for (const p of soft) {
     if (p.value !== undefined) continue;
-    const values = views.map((v) => comparable(v, cat, p.key)).filter((n): n is number => n !== undefined);
+    const values = views.map((v) => usableFor(v, cat, p.key)).filter((n): n is number => n !== undefined);
     if (values.length === 0) continue;
     ranges.set(p.key, { min: Math.min(...values), max: Math.max(...values) });
   }
@@ -86,6 +95,10 @@ function softScore(
           const want = def.enumOptions?.find((o) => o.value === p.value)?.rank;
           const have = comparable(view, cat, p.key);
           hit = want !== undefined && have !== undefined ? (p.direction === "prefer_low" ? have <= want : have >= want) : raw === p.value;
+        } else if (isUnconfirmedPriceClaim(view, cat, { key: p.key, op: "eq", value: p.value })) {
+          // A named amount against a price nobody recorded: the same refusal
+          // the hard constraint makes.
+          hit = false;
         } else if (bound !== undefined && typeof raw === "number" && typeof p.value === "number") {
           // "Less than 1 g" is not 1 g. It meets "prefer under 2 g" and it
           // cannot meet "prefer exactly 1 g", which is the same rule the hard
@@ -96,7 +109,7 @@ function softScore(
         }
       }
     } else {
-      const n = comparable(view, cat, p.key);
+      const n = usableFor(view, cat, p.key);
       const range = ranges.get(p.key);
       if (n === undefined) {
         // Unknown is not a fit. It cannot be the cheapest if nobody recorded
@@ -139,6 +152,9 @@ function describeSoft(view: ProductView, cat: CategoryDefinition, p: SoftPrefere
   const label = labelFor(cat, p.key);
   const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
   if (met) return describeFit(view, cat, { key: p.key, op: "eq", value: p.value });
+  // Saying "price is $1,249" about an amount nobody recorded quotes the
+  // placeholder the rest of this refuses to use.
+  if (isUnconfirmedPriceClaim(view, cat, { key: p.key, op: "eq", value: p.value })) return `${label} not confirmed`;
   if (raw === undefined) return `${label} not stated`;
   return describeGap(view, cat, { key: p.key, op: "eq", value: p.value }).text;
 }
