@@ -38,12 +38,22 @@ const TURNS = [
   intent([{ key: "function", op: "includes", value: "electrolytes" }]),
 ];
 
+// Two bounds on one key, plus one on another. Removing the unrelated one must
+// leave both bounds standing: an entry per constraint rather than per key kept
+// only the first, and the page then showed everything above $1.40.
+const RANGE_TURN = intent([
+  { key: "price_per_serving_minor", op: "gte", value: usd(1.4) },
+  { key: "price_per_serving_minor", op: "lt", value: usd(1.6) },
+  { key: "sugar_g", op: "eq", value: 0 },
+]);
+
 let turn = 0;
+let script = TURNS;
 const stub = createServer((req, res) => {
   let body = "";
   req.on("data", (c) => (body += c));
   req.on("end", () => {
-    const chosen = TURNS[Math.min(turn++, TURNS.length - 1)];
+    const chosen = script[Math.min(turn++, script.length - 1)];
     res.writeHead(200, { "content-type": "application/json" });
     res.end(
       JSON.stringify({
@@ -112,13 +122,25 @@ const SLUG = {
 };
 const ALL_SIX = Object.values(SLUG).sort();
 
-async function open() {
+async function open(withScript = TURNS) {
   turn = 0;
+  script = withScript;
   const page = await browser.newPage();
   page.on("pageerror", (e) => console.log(`  page error: ${e.message}`));
   await page.goto(`${BASE}/wellness-drinks`, { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: "Help me choose" }).first().click();
-  return page;
+  // The launcher renders before React hydrates, so a click can land on a
+  // button that is not listening yet. Click until the panel's input appears.
+  const launcher = page.getByRole("button", { name: "Help me choose" }).first();
+  for (let attempt = 0; attempt < 5; attempt++) {
+    await launcher.click();
+    try {
+      await page.getByPlaceholder(/what matters to you/i).waitFor({ timeout: 3000 });
+      return page;
+    } catch {
+      await page.waitForTimeout(500);
+    }
+  }
+  throw new Error("the assistant panel never opened");
 }
 
 const inputOf = (page) => page.getByPlaceholder(/what matters to you/i);
@@ -240,6 +262,28 @@ try {
     await report(page, "chip removal of the last constraint");
     check("returns to unfiltered when nothing is left", await shownCount(page), "6 of 6 shown");
     check("shows every product", await cardHrefs(page), ALL_SIX);
+    await page.close();
+  }
+  // 5. Two constraints on one key, and an unrelated removal.
+  {
+    scenario = "two bounds on one key";
+    const page = await open([RANGE_TURN]);
+    await say(page, "Something between $1.40 and $1.60 a serving with no sugar");
+    await page.getByRole("button", { name: "Apply", exact: true }).first().waitFor({ timeout: 20000 });
+    await page.getByRole("button", { name: "Apply", exact: true }).first().click();
+    await page.waitForTimeout(300);
+    await report(page, "Apply two price bounds and zero sugar");
+    check("counts all three constraints", await shownCount(page), "1 of 6 shown");
+    check("shows the one product inside both bounds", await cardHrefs(page), [SLUG.lmnt]);
+
+    // Zero sugar is on a different key, so removing it must not touch either
+    // bound. Keeping only the first would admit everything at or above $1.40.
+    await page.getByRole("button", { name: /Remove this constraint/ }).filter({ hasText: /zero total sugar/ }).click();
+    await page.waitForTimeout(300);
+    await report(page, "chip removal of the unrelated zero-sugar constraint");
+    check("keeps both bounds after an unrelated removal", await shownCount(page), "1 of 6 shown");
+    check("still shows only the product inside both bounds", await cardHrefs(page), [SLUG.lmnt]);
+    check("names both bounds as one entry", await band(page), "From your answersprice per serving of $1.40 or more, price per serving under $1.60Remove");
     await page.close();
   }
 } finally {

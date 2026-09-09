@@ -426,13 +426,24 @@ export async function POST(req: Request) {
       // Computed with the same predicate that decided `matching`, so the
       // placeholder-price treatment and every other rule come with it rather
       // than being restated.
-      matchesByKey: proposedHard.map((c) => ({
-        key: c.key,
-        // The site's own words for the constraint, so the band can name what
-        // is left after a removal without the browser composing text.
-        label: describeConstraint(cat, c as Condition),
-        matchIds: views.filter((v) => evaluateCondition(v, cat, c as Condition)).map((v) => v.id),
-      })),
+      // One entry per key, not per constraint, because a key is the unit a
+      // shopper removes: the chip and the alternative both drop every
+      // constraint on that key at once. A shopper can hold two on one key,
+      // "between $1.40 and $1.60" being two bounds on the same one, and an
+      // entry per constraint would have let an unrelated removal keep the
+      // first bound and quietly lose the second.
+      matchesByKey: [...new Set(proposedHard.map((c) => c.key))].map((key) => {
+        const onKey = proposedHard.filter((c) => c.key === key);
+        return {
+          key,
+          // The site's own words, so the band can name what is left after a
+          // removal without the browser composing text.
+          label: onKey.map((c) => describeConstraint(cat, c as Condition)).join(", "),
+          // Every constraint on the key, together: what the key admits is what
+          // survives all of them.
+          matchIds: views.filter((v) => onKey.every((c) => evaluateCondition(v, cat, c as Condition))).map((v) => v.id),
+        };
+      }),
       matchCount: shown.matching.length,
     });
   }

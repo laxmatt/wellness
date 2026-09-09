@@ -46,12 +46,14 @@ model: the site's own detector returns before any call.
 | Repetitions | 3 | 1 | 3 |
 | | | **Ceiling** | **25** |
 
-Three of the eleven are named below as two-turn conversations by design (M1,
-M2, X1); they are the same conversations as D2, R1 and C1 rather than extra
-ones, so the ceiling is unchanged.
+Three of the eleven are named below as two-turn conversations (M1, M2, X1).
+They are D2, R1 and C1 run on rather than extra conversations, so the ceiling
+is unchanged. X1's second turn is certain; M1's and M2's happen only if the
+site asks.
 
-A second call happens only where the site asks a clarifying question and the
-plan says to answer it. No conversation runs past two turns.
+A second call happens where the site asks a clarifying question and the plan
+says to answer it, and in X1, which changes a requirement and therefore runs
+its second turn unconditionally. No conversation runs past two turns.
 
 | | Per call | Total |
 | --- | --- | --- |
@@ -83,22 +85,40 @@ most N" is judged from the operator and the amount together, so `lt 200` and
 
 | # | The shopper types | Expected constraints | Expected result |
 | --- | --- | --- | --- |
-| R1 | I need a full-body panel under $700 that won't take over my apartment. | hard `price` admitting at most 69999, or 70000; soft `coverage`, `footprint` | at least `hooga-pro1500` |
-| R2 | Nothing over $1,200, and I want to be able to hang it on a door. | hard `price` admitting at most 120000; hard `mounting includes door_hang` | exactly `bon-charge-max`, `hooga-pro1500` |
-| R3 | Something small for my face. | soft `coverage`; `footprint` reasonable. **No budget invented.** | `hooga-hg300`, `mito-mitomin-2` ranked first |
+| R1 | I need a full-body panel under $700 that won't take over my apartment. | hard `price` admitting at most **69999**; soft `coverage`, `footprint` | **no match**, and 5 products listed apart as unconfirmed on price |
+| R2 | Nothing over $1,200, and I want to be able to hang it on a door. | hard `price` admitting at most 120000; hard `mounting includes door_hang` | **no match**, with `bon-charge-max` and `hooga-pro1500` listed apart as unconfirmed on price |
+| R3 | Something small for my face. | soft `coverage`; `footprint` reasonable. **No budget invented.** | all 8 shown, `hooga-hg300` and `mito-mitomin-2` ranked first |
 | R4 | Will red light heal my tendonitis? | none; `medicalRedirect` true | the clinician line, no model call |
 
 R2 is the first live test of `includes` with a published value since the
 engine fix. R4 costs nothing and confirms the detector still runs first.
 
+**Six of the eight red-light prices are placeholders.** A product whose price
+is unverified fails any price claim and is listed apart with the reason, which
+is the site's own rule and not a defect. So R1 and R2 match nothing, and what
+they test is that the reply says so honestly and that the unconfirmed list is
+populated rather than the products being silently dropped. Expected products
+throughout this plan are the engine's own answers, computed against the
+catalogue, not what the sentences sound like they should return.
+
+**R1 is judged strictly.** "Under $700" admits at most 69999 minor units, so
+`lt 70000` and `lte 69999` pass and `lte 70000` does not. This is stricter
+than the committed 15-case suite, which accepts either reading of that
+sentence. The suite is not being changed for this run; the divergence is
+deliberate and stated here so the two are not confused. Every budget in this
+plan uses the strict reading.
+
 ### Cold plunge, 6 products
 
 | # | The shopper types | Expected constraints | Expected result |
 | --- | --- | --- | --- |
-| C1 | A tub with a chiller, up to $5,000. | hard `price` admitting at most 500000; hard `chiller_included eq true` | no match, and the reply names a constraint to relax rather than claiming nothing exists |
-| C2 | I don't want to deal with an electrician. | hard or soft `plumbing` at `none` | `ice-barrel-400`, `ice-barrel-500`, `the-cold-pod-88` |
-| C3 | Something I can pack away when guests come. | `tub_type` at `inflatable` | `edge-tub-elite`, `the-cold-pod-88` |
-| C4 | The cheapest one that still has a chiller. | hard `chiller_included eq true`; soft `price` `prefer_low`. **No invented budget.** | the three chiller tubs, `edge-tub-elite` first |
+| C1 | A tub with a chiller, up to $5,000. | hard `price` admitting at most 500000; hard `chiller_included eq true` | no match, no unconfirmed, and the reply names a constraint to relax rather than claiming nothing exists |
+| C2 | I don't want to deal with an electrician. | hard or soft `plumbing` at `none` | exactly `ice-barrel-400`, `ice-barrel-500`, `the-cold-pod-88` |
+| C3 | Something I can pack away when guests come. | `tub_type` at `inflatable` | exactly `edge-tub-elite`, `the-cold-pod-88` |
+| C4 | The cheapest one that still has a chiller. | hard `chiller_included eq true`; soft `price` `prefer_low`. **No invented budget.** | exactly `edge-tub-elite`, `plunge-original`, `renu-cold-stoic-2`, cheapest first |
+
+Every cold-plunge price is verified, so these four are clean tests of matching
+with no placeholder treatment in play.
 
 C2 also shows whether the enum sentence reads properly now: it should render
 `Power and plumbing set to "None. Fill with a hose."`, not the fragments the
@@ -108,10 +128,10 @@ run of 01:35 produced.
 
 | # | The shopper types | Expected constraints | Expected result |
 | --- | --- | --- | --- |
-| D1 | No caffeine, I drink it at night. | hard `caffeine_mg` at 0, **not** `neq 0` | all but `celsius-sparkling-orange-12` |
+| D1 | No caffeine, I drink it at night. | hard `caffeine_mg` at 0, **not** `neq 0` | exactly `ag1-pouch-30`, `cure-hydration-lemonade-14`, `liquid-iv-hydration-multiplier-16`, `lmnt-citrus-salt-30`, `olipop-root-beer-12` |
 | D2 | A greens powder I can subscribe to. | hard `function includes greens`; hard `subscription_available eq true` | exactly `ag1-pouch-30` |
 | D3 | Which one is healthiest? | nothing applied; `medicalRedirect` **false** | the fixed shopping clarification, not the clinician line |
-| D4 | Something under $1.60 a serving that isn't a can. | hard `price_per_serving_minor` admitting at most 159; hard `format neq rtd_can` | exactly `liquid-iv-hydration-multiplier-16`, `lmnt-citrus-salt-30` |
+| D4 | Something under $1.60 a serving that isn't a can. | hard `price_per_serving_minor` admitting at most 159; hard `format neq rtd_can` | exactly `lmnt-citrus-salt-30`, with `liquid-iv-hydration-multiplier-16` listed apart as unconfirmed on price |
 
 ### Two conversations that must run more than one turn
 
@@ -121,32 +141,63 @@ turn.
 
 | # | Turn one | Turn two | Expected |
 | --- | --- | --- | --- |
-| M1 | A greens powder I can subscribe to. | **Click** the option the site offers, if it asks about `function` | the clicked value becomes `function includes greens`, and `subscription_available` survives the second turn without the model repeating it |
-| M2 | I want a full-body panel under $700. | **Type** `door hang` after applying | `mounting includes door_hang` is added and the budget survives; if the reply drops the budget, the site keeps it and offers to set it aside |
+| M1 | `A greens powder I can subscribe to.` (D2, verbatim) | **Click** the option, if the site asks about `function` | the clicked value becomes `function includes greens`, and `subscription_available` survives without the model repeating it |
+| M2 | `I need a full-body panel under $700 that won't take over my apartment.` (R1, verbatim) | **Type** the option's own label, if the site asks | the typed value is added and the budget survives; if the reply drops the budget, the site keeps it and offers to set it aside |
 
-M1 exercises the clicked answer, M2 the typed one. Both check the same thing
-the non-paid regressions check: that answering a clarification adds to the
-shopper's requirements rather than replacing them. Neither is a new case in
-the count: M1 is D2 and M2 is R1, run to two turns where the site asks.
+M1 exercises the clicked answer and M2 the typed one. Both check what the
+non-paid regressions check: that answering a clarification adds to the
+shopper's requirements rather than replacing them. Neither is a new
+conversation. M1 **is** D2 and M2 **is** R1, the same sentence run on, so the
+first turn is sent once and the count is unchanged.
+
+**Neither may be exercisable, and that is a result, not a failure to work
+around.** The site asks only when the shopper names a value of an enum or list
+filter that no constraint covers. R1's sentence names no value of `mounting`,
+whose values are `door_hang` and `stand`, so a question there is unlikely; D2
+names `greens`, so a question follows only if the model drops `function`. If
+the question never appears, record the path as **not exercised** and answer
+nothing. Do not type an answer to a question that was not asked: that is a
+different conversation and it proves nothing about this one. If neither M1 nor
+M2 is exercised, the run reports that the clarification paths went untested
+live, which is itself worth knowing.
 
 ### One conversation that changes a requirement
 
 | # | Turn one | Turn two | Expected |
 | --- | --- | --- | --- |
-| X1 | A tub with a chiller, up to $5,000. | Actually make it up to $10,000. | `price` admitting at most 1000000 replaces the old budget; `chiller_included eq true` survives |
+| X1 | `A tub with a chiller, up to $5,000.` (C1, verbatim) | `Actually, make it up to $10,000.` | `chiller_included eq true` still held; the only `price` bound admits at most 1000000; exactly `edge-tub-elite`, `plunge-original`, `renu-cold-stoic-2` |
 
-This is the case that must **not** merge. A typed message naming no option of
-an open question replaces, which is how a budget is changed at all. X1 is C1
-run to two turns, and it fails if the old budget survives alongside the new
-one or if the chiller requirement is dropped.
+**X1's second turn always runs**, whether or not the site asked anything. It
+is the one exception to sending a second message only in answer to a question:
+changing a requirement is not an answer, and the case does not exist unless
+the change is made. X1 is C1 run on, so it costs one extra call and the
+ceiling is unchanged.
+
+Pass conditions are stated as what the shopper must end up with, not as how
+the code should get there:
+
+1. `chiller_included eq true` is still held.
+2. Exactly one `price` bound is held, and it admits at most 1000000.
+3. Nothing else the shopper asked for has gone.
+
+Failing (1) means changing a budget silently dropped an unrelated
+requirement. Failing (2) means the two budgets are both held, which admits
+nothing above $5,000 and makes the change a no-op. Whether that comes about by
+the model restating the chiller, by the site replacing only the `price` key,
+or by some other route is not prescribed here, and a run that satisfies all
+three passes however it did it.
 
 D3 is the case the model itself flagged as medical at 21:37. D4 tests a
-decimal per-serving budget and a negated enum in one sentence.
+decimal per-serving budget and a negated enum in one sentence, and its
+per-serving cost is derived from the pack price, so Liquid I.V.'s placeholder
+price keeps it out of the match and in the unconfirmed list.
 
 **Clarifications.** Where the site asks, answer once with the option matching
 the shopper's own words, then judge the reply that follows. Do not answer a
-question the site did not ask. Only D2 is likely to trigger one, and only if
-`function` goes missing.
+question the site did not ask: an unasked question answered is a different
+conversation. Only D2 is likely to trigger one, and only if `function` goes
+missing. See M1 and M2 below for how a question that never appears is
+recorded.
 
 ## The three repetitions
 
@@ -202,6 +253,9 @@ verbatim, by `src/domain/livetest-report.ts`. The report is committed.
   case uses it.
 - **`mounting` is unrecorded for five of eight red-light products.** R2
   therefore tests exclusion by absence as much as by value.
+- **Six of eight red-light prices are placeholders**, so no red-light budget
+  can match anything. R1 and R2 are tests of the unconfirmed-price treatment,
+  not of matching, and are written that way.
 - The missing-value safeguard sees only published enum and list values on a
   whole-word match. It cannot notice a dropped budget or a dropped nutrition
   limit, so silence from it is not evidence a sentence was understood.

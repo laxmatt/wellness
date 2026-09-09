@@ -219,7 +219,9 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   const admittedBy = useCallback(
     (keys: string[], breakdown: { key: string; label: string; matchIds: string[] }[]): string[] | null => {
       if (keys.length === 0) return null;
-      const sets = keys.map((k) => breakdown.find((m) => m.key === k));
+      // By key, once each: the breakdown holds one entry per key covering every
+      // constraint on it, so a key named twice is the same set twice.
+      const sets = [...new Set(keys)].map((k) => breakdown.find((m) => m.key === k));
       if (sets.some((m) => m === undefined)) return null;
       return sets.reduce<string[]>((acc, m, i) => (i === 0 ? [...m!.matchIds] : acc.filter((id) => m!.matchIds.includes(id))), []);
     },
@@ -240,9 +242,10 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         // removals it took to get here. The page used to go back to unfiltered
         // on the first one, showing every product while the panel held two
         // constraints.
-        const keys = nextHard.map((c) => c.key);
+        const keys = [...new Set(nextHard.map((c) => c.key))];
         const ids = admittedBy(keys, breakdown);
-        // Named by the site, from the labels it sent with the proposal.
+        // Named by the site, from the labels it sent with the proposal. One
+        // label per key, so two bounds on one key read as one entry.
         const labels = keys.map((k) => breakdown.find((m) => m.key === k)?.label).filter((l): l is string => l !== undefined);
         publish(nextHard, nextSoft, ids, labels);
       };
