@@ -329,6 +329,13 @@ One question remains open and cannot be answered without a request: whether this
 
 It asks; it does not filter. Naming a value is not asking for it, and "no caffeine" names caffeine while asking for the opposite. Extracting from the shopper's words in code would be a second extractor with none of the model's ability to read a negation, so the remedy for a dropped constraint is a question, never a guessed filter.
 
+**This is a limited safeguard, and it proves nothing about a request being understood.** It fires only for values this category publishes for an enum or list filter, and only on a whole-word match. A budget, a nutrition limit, a negation, a phrasing that never names a catalogue value, and every requirement in a category whose filters are all numeric are outside it entirely. Silence from this check means it found nothing to say, not that the sentence was read correctly.
+
+`src/__tests__/clarification-flow.test.tsx` runs the whole flow through the real panel, the real provider and the real route with only the model replaced, clicking the option chip rather than simulating the submission. It records two things worth knowing about answering a question:
+
+- The provider holds constraints only after the shopper presses Apply. The option chip sits above that button, so a shopper who answers first sends a request carrying no constraints at all, and only the model repeating them from the conversation keeps them.
+- A proposal replaces rather than merges, on purpose: that is how "forget the budget" works. So a turn that answers only the question drops what it does not mention, and the instruction to repeat every constraint that still applies is the only thing preventing it.
+
 **A preference on a list attribute was inert.** `softScore` compared the attribute to the preference value directly, and a list attribute holds an array: `["electrolytes"]` is not `"electrolytes"`, so every product scored a miss and a preference for electrolyte drinks ranked the energy drink exactly as high. The array form of the same preference always worked, which is how it survived. `placement` and `sanitation_methods` are list attributes too.
 
 **Hard or soft** is decided by the category's own rules, not by how the sentence sounds. `function` in wellness drinks is a `list` filter whose chips intersect rather than reorder; its attribute declares `preferenceDirection: "neutral"`, so there is no direction to prefer along; and it is the scoring `segmentKey` while appearing in none of the scoring criteria, so it divides the catalogue rather than ranking within it. Naming a function is a requirement. A soft preference could not deliver it in any case: preferences do not exclude, so an energy drink stays in the results of a search for electrolytes.
