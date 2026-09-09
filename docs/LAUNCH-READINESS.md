@@ -1,10 +1,14 @@
 # Launch readiness, read-only inventory
 
-Taken from the repository at 4e3a1ba. Nothing was deployed, contacted, changed
+Taken from the repository at 58ecd85. Nothing was deployed, contacted, changed
 or purchased to produce it. Every line below is either **verified** against a
-file in this repository or **missing**, meaning the evidence a launch would
-need is not here. "Missing" is not a claim that the work was not done
-somewhere; it is a claim that this repository does not show it.
+file in this repository or **not evidenced here**, meaning this repository does
+not carry the evidence a launch would need. "Not evidenced here" is a claim
+about the repository, never a claim that the work was not done somewhere else.
+
+Corrected on 2026-09-09 after review: the brand count, the placeholder-price
+count, the provenance figures, and three sections whose earlier wording turned
+an absence of evidence into a positive finding. Each correction is marked.
 
 The assistant is deliberately out of scope: it has its own record in
 `docs/ASSISTANT.md` and `docs/live-test-results/`. This is the rest of the
@@ -15,31 +19,76 @@ site.
 | | |
 | --- | --- |
 | Products | 20, across 3 categories |
-| Brands | 14 files |
-| Merchants | present, with `websiteUrl` and market |
+| Brands | **17 files** (was recorded as 14; `ls catalog/brands` and `catalog:check` both say 17) |
+| Merchants | 16 files, each with `websiteUrl` and market |
 
 **Attribute provenance, verified.** Every attribute carries a source and a
-verification tier. Across all 20 products: **124 manufacturer-reported, 48
-unknown, 24 demo**. By retrieval method: 72 direct, 124 secondhand.
+verification tier. Across all 20 products, 196 attributes: **123
+manufacturer-reported, 46 unknown, 24 demo, 3 not stated**. By retrieval
+method: 72 direct, 124 secondhand.
 
-**Not one attribute is independently verified.** The tier
-`independently_verified` exists in the code and is used by nothing in the
-catalogue. Every figure a shopper reads is either the maker's claim, a value
-whose source is unrecorded, or demo data.
+**Nothing is independently verified, and that is a smaller problem than the
+first draft implied.** (Corrected.) A manufacturer's own figure is legitimate
+evidence when it is faithfully sourced and attributed, which is what the site
+does: every spec shows who said it, and `independently_verified` exists as a
+tier for the day a figure is checked against something else. Nobody needs to
+buy a panel and meter it to launch.
 
-**14 of 20 products carry demo attributes**, 24 fields in total. Six product
-prices are placeholders (all six red-light panels the assistant sees, plus two
-drinks). The site handles this correctly and visibly: placeholder prices are
-withheld from price claims, listed apart as unconfirmed, excluded from
-price-based badges, and marked with a "Demo data" tag. The handling is
-verified. What is missing is the real data.
+The real gap is the quality of the sourcing, not the absence of a lab:
 
-**One product is ineligible for badges** (OLIPOP, 5 demo fields), which the
-catalogue check reports.
+- **124 of 196 attributes are secondhand**, carrying the note "relayed via
+  search summary; manufacturer page not fetched directly". The claim is
+  attributed to the maker, but the maker's page was never read.
+- **46 attributes record no source at all** (`unknown`). The site shows
+  "source not recorded", which is honest and unusable.
+
+Fetching the manufacturer pages directly would move most of that first number
+without any independent testing. That is the cheap fix and it is not done.
+
+**14 of 20 products carry demo attributes**, 24 fields in total.
+
+**Eight of the twenty selected-view prices are placeholders** (corrected: the
+earlier "six" counted the red-light panels and then described two drinks as
+well, which is eight). Computed from `toProductView(...).price.isDemo`, the
+same value the page renders: `bon-charge-max`, `hooga-hg300`, `hooga-pro1500`,
+`infraredi-flex-max`, `joovv-solo-3`, `platinumled-biomax-900`,
+`liquid-iv-hydration-multiplier-16`, `olipop-root-beer-12`. Twelve prices are
+real.
+
+The site handles placeholders correctly and visibly: they are withheld from
+price claims, listed apart as unconfirmed, excluded from price-based badges,
+and marked with a "Demo data" tag. The handling is verified. What is missing is
+the real data.
+
+**Four products are ineligible for badges**: Infraredi Flex Max, AG1, Cure
+Hydration and OLIPOP. Two of those four became ineligible in 58ecd85, when
+unsupported zero values were removed from AG1 and Cure rather than left
+standing as facts. Deleting a number the label does not state lowers
+completeness, and it should: the site now knows less than it claimed to.
+
+### Two data questions for a person to settle
+
+Neither is a code defect. Both are judgement calls about what a number means,
+and no automated check can make them.
+
+1. **AG1 sugar is recorded as `1` g while its own note says "less than 1 g".**
+   A floor recorded as an exact value. It reads correctly to a shopper (1 g is
+   not a lie about something under 1 g) and it is wrong as data, in the same
+   family as the caffeine zeros that were removed. It was left alone because
+   the alternative is inventing 0.5, and "less than 1" has no honest single
+   number.
+2. **Four irradiance figures record a manufacturer's floor as an exact value**:
+   BON CHARGE Max 142, Hooga HG300 73, Hooga PRO1500 189, Joovv Solo 3.0 100,
+   each noted as "greater than" or "over" that figure. Ranking treats them as
+   exact. A second problem sits on top of it: five of the seven irradiance
+   figures state no measurement distance (BON CHARGE, Hooga PRO1500, Joovv,
+   Mito MitoPRO, Infraredi), and irradiance without a distance is not
+   comparable between brands. Infraredi also records the lower of two figures
+   its maker reports by two instruments.
 
 ## Offers and affiliate readiness
 
-| | Verified | Missing |
+| | Verified | Not evidenced here |
 | --- | --- | --- |
 | Offer records | 26, each with merchant, market, currency, price, URL | — |
 | Availability | — | all 26 are `unknown`; none says in stock |
@@ -64,32 +113,48 @@ Those prices are the ones a shopper is quoted.
 across the catalogue are `kind: "demo_placeholder"` with `src: "demo:<seed>"`,
 rendered procedurally by `ImageFrame`. There are zero image files in `public/`.
 
-The schema is ready for the real thing: `affiliate_feed`,
-`approved_creative`, `licensed_upload` are defined alongside
-`demo_placeholder`, and each image can carry a source. Nothing uses them.
+The schema is ready for the real thing: `affiliate_feed`, `approved_creative`
+and `licensed_upload` are defined alongside `demo_placeholder`, and each image
+can carry a source. Nothing uses them.
 
 Launching with procedural placeholders is a decision, not an accident, and it
 is the single most visible gap on a shopping site.
 
 ## Deployment configuration
 
-| | |
+(Corrected. The earlier version read the absence of these files as a statement
+about how the site would deploy. It is not. Hosting settings live in a
+provider's dashboard as often as in a repository, so what follows says only
+what this repository does and does not carry.)
+
+| | In the repository |
 | --- | --- |
 | `next.config.ts` | present and **empty**: no image domains, no headers, no redirects |
-| Host config | **missing**: no `vercel.json`, `Dockerfile`, `netlify.toml` or `fly.toml` |
-| CI | **missing**: no `.github/workflows` |
-| `robots.txt` | **missing** |
-| `sitemap.xml` | **missing** |
-| `manifest` | **missing** |
+| Host config | none: no `vercel.json`, `Dockerfile`, `netlify.toml` or `fly.toml` |
+| CI | none: no `.github/workflows` |
+| `robots.txt` | none |
+| `sitemap.xml` | none |
+| `manifest` | none |
 | `NEXT_PUBLIC_SITE_URL` | read by `src/lib/site.ts`, defaults to `http://localhost:3000` |
 
-**A deploy would publish canonical URLs pointing at localhost** unless
-`NEXT_PUBLIC_SITE_URL` is set. Nothing in the repository sets it, and nothing
-fails if it is missing.
+What follows from that, and only this much: **a deploy that does not set
+`NEXT_PUBLIC_SITE_URL` out of band publishes canonical URLs pointing at
+localhost**, and nothing in the code fails if it is unset. Whether a host
+already sets it is not answerable from here. Someone with access to the
+hosting account has to say.
 
-**Nothing runs the test suite automatically.** 585 tests, 46 browser checks, a
-catalogue check and a typecheck all exist and all pass, and every one of them
-has to be run by hand.
+The same applies to CI: **this repository automates nothing**, and that does
+not tell you whether checks run somewhere else.
+
+Everything that does exist passes, run by hand today at 58ecd85:
+
+- **599 tests** in 37 files: 578 pass, 21 skip. The skips are the Postgres
+  ledger suites, which need `TEST_DATABASE_URL`.
+- **46 browser checks** in `e2e/set-aside-updates-page.mjs`, all passing
+  against a real build with a stubbed model. Re-run after the catalogue change,
+  not carried over from an earlier run.
+- `npm run catalog:check`, `npm run lint`, `npm run typecheck` and
+  `npm run build`.
 
 Environment variables the code reads: `ADMIN_ACCESS_KEY`, `DATABASE_URL`,
 `NEXT_PUBLIC_SITE_URL`, `OPENAI_*`, and the `ASSISTANT_*` family. Only the
@@ -101,16 +166,23 @@ Ten routes exist: `/`, `/[category]`, `/[category]/[facet]`, `/brands`,
 `/brands/[slug]`, `/compare`, `/disclosure`, `/explore`, `/how-we-choose`,
 `/products/[slug]`.
 
-**Verified by the build and the test suite**: every route prerenders,
-category filtering and the comparison table work without the assistant, badge
-and value selection are computed and explained by `catalog:check`, and
-`/how-we-choose` documents the ranking.
+**Verified by the build and the test suite**: every route prerenders, category
+filtering and the comparison table work without the assistant, badge and value
+selection are computed and explained by `catalog:check`, and `/how-we-choose`
+documents the ranking.
 
-**Not verified anywhere**: no browser check covers any journey except the
-assistant's effect on the category page. Filtering by chip, the comparison
+**Not covered by any committed harness**: filtering by chip, the comparison
 table, brand pages, product pages and `/explore` have unit coverage and no
-end-to-end coverage. There is no accessibility audit, no performance
-measurement, no mobile-viewport check and no analytics.
+end-to-end coverage. The only committed browser harness is the assistant's
+effect on the category page. There is no committed accessibility audit, no
+performance measurement, no mobile-viewport check and no analytics.
+
+(Corrected. The earlier version said these journeys were "not verified
+anywhere". That overstates it. Browser and keyboard journeys are reported in
+earlier working threads; what this repository lacks is a committed harness that
+would re-run them. An uncommitted check that passed once is worth less than a
+committed one and more than nothing, and the honest statement is that the
+evidence is not here to re-run.)
 
 ## What would block a launch
 
@@ -120,13 +192,14 @@ In the order that matters:
    nothing showing the products.
 2. **Affiliate.** No programme, no tracking, no revenue path, and a disclosure
    page describing a relationship that does not exist.
-3. **Prices.** Six placeholders shown as unconfirmed, and 13 of 26 real ones
-   never fetched from the merchant.
-4. **`NEXT_PUBLIC_SITE_URL` and a host config.** Canonicals would point at
-   localhost.
+3. **Prices.** Eight of twenty shown as unconfirmed placeholders, and 13 of 26
+   real ones never fetched from the merchant.
+4. **`NEXT_PUBLIC_SITE_URL` and a host config**, unless the hosting account
+   already carries them. Canonicals point at localhost by default.
 5. **No robots or sitemap**, on a site whose whole purpose is search traffic.
-6. **No CI.** Every check is manual.
+6. **No CI in the repository.** Every check here is run by hand.
 
-Independent verification of even one attribute per product would also change
-what the site can honestly claim; today the answer to "who says so" is the
-manufacturer for 124 fields and nobody for 48.
+Sourcing is the quieter one. 124 of 196 attributes and 13 of 26 prices are
+relayed from search summaries rather than read from the maker's page. Fetching
+those pages is ordinary work, needs no lab, and would move the site from
+"attributed to the maker" to "attributed to the maker and actually read".
