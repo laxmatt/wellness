@@ -68,3 +68,13 @@ same sentence and the same prompt, so no single request settles extraction; and
 the model answered with `function includes ["electrolytes"]`, an array, which
 the engine's `includes` never matches, so the shopper was told nothing matched
 when one product did.
+
+The tenth report, `2026-09-09T03-31.md`, is one pass of the evaluation plan:
+12 varied conversations and 3 repetitions, 15 model calls for $0.007263
+against a $0.05 allowance, no retries and no new uncertain charges. 11 of 16
+turns passed. Two new extraction defects: a superlative became a hard budget
+priced to the cent from the catalogue, and "$1.60 a serving" was read as $160.
+The missing-value safeguard ran live for the first time, firing four times and
+producing one false positive on the word "tub". Both clarification paths went
+unexercised because the site had nothing to ask on the cases that would have
+answered them.
