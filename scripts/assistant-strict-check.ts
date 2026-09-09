@@ -47,7 +47,16 @@ const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";
 // One named case per authorized request. Each is judged by the same
 // `checkReply` the 15-case suite uses, against the same expectation, so a
 // single request cannot be scored more leniently than the suite would score it.
-type Named = { category: string; text: string; note: string; expect: ExpectedCase };
+type Named = {
+  category: string;
+  text: string;
+  note: string;
+  expect: ExpectedCase;
+  // When the site asks a clarifying question, answer it with the option whose
+  // label matches this, and judge the conversation on the reply that follows.
+  // The answer is only sent if the question actually appears.
+  answerWith?: string;
+};
 
 const CASES: Record<string, Named> = {
   chiller: {
@@ -68,6 +77,7 @@ const CASES: Record<string, Named> = {
     category: "wellness-drinks",
     text: "Zero sugar electrolytes under $2 a serving",
     note: "strict structured outputs, zero sugar plus function plus budget",
+    answerWith: "electrolytes",
     expect: {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
@@ -86,6 +96,9 @@ if (!SELECTED) {
   process.exit(2);
 }
 const { category: CATEGORY, text: TEXT } = SELECTED;
+// One session for the whole conversation, so the turn limit and the ledger see
+// it as one shopper rather than two.
+const SESSION = `s_strictcheck_${Date.now()}`;
 
 type Constraint = { key: string; op?: string; direction?: string; value?: unknown; weight?: number };
 
@@ -95,7 +108,8 @@ type Reply = {
   failure?: string;
   matchSummary?: string;
   matchingIds: string[];
-  proposals: { kind: string; hard?: Constraint[]; soft?: Constraint[] }[];
+  question?: { text: string; options: string[] };
+  proposals: { kind: string; hard?: Constraint[]; soft?: Constraint[]; matchingIds?: string[] }[];
   medicalRedirect: boolean;
   notice?: string;
 };
@@ -140,7 +154,7 @@ async function main() {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      sessionId: `s_strictcheck_${Date.now()}`,
+      sessionId: SESSION,
       categoryId: CATEGORY,
       messages: [{ role: "user", text: TEXT }],
       hard: [],
@@ -166,36 +180,102 @@ async function main() {
   }
 
   const r = (await res.json()) as Reply;
-  console.log(`mode: ${r.mode}${r.failure ? `  failure: ${r.failure}` : ""}`);
-  console.log(`reply: ${r.text}`);
-  console.log(`match summary: ${r.matchSummary ?? "(none)"}`);
-  const applied = r.proposals.find((p) => p.kind === "apply_preferences");
-  console.log(`hard: ${JSON.stringify(applied?.hard ?? [])}`);
-  console.log(`soft: ${JSON.stringify(applied?.soft ?? [])}`);
-  // The engine's own answer for those constraints, named rather than counted,
-  // so each product can be checked against the sentence by hand.
-  console.log(`matching: ${JSON.stringify(r.matchingIds)}`);
+  show("turn 1", r);
 
-  const problems = r.failure ? [`the reply could not be used (${r.failure}); nothing was extracted`] : judge(r);
-  const record: CaseRecord = {
-    category: CATEGORY,
-    note: SELECTED.note,
-    text: TEXT,
-    reply: r.text,
-    problems,
-    shown: r.matchingIds.length,
-  };
+  const records: CaseRecord[] = [
+    {
+      category: CATEGORY,
+      note: `${SELECTED.note} (turn 1)`,
+      text: TEXT,
+      reply: r.text,
+      problems: r.failure ? [`the reply could not be used (${r.failure}); nothing was extracted`] : judge(r),
+      shown: r.matchingIds.length,
+    },
+  ];
 
-  console.log(`\n${problems.length === 0 ? "ok" : `FAIL: ${problems.join("; ")}`}`);
-  if (spent !== null) console.log(`Measured cost of this request: $${spent.toFixed(6)}`);
-  if (newlyUncertain.length > 0) {
-    console.log(`\n${newlyUncertain.length} charge(s) could not be measured and hold budget:`);
-    for (const u of newlyUncertain) console.log(`  ${u.reservationId}  $${u.heldUsd.toFixed(6)}  ${u.reason}`);
+  // The clarification is answered only if it was actually asked, with the
+  // option the site itself offered. No question, no second turn.
+  const option = SELECTED.answerWith
+    ? (r.question?.options ?? []).find((o) => o.toLowerCase().includes(SELECTED.answerWith!.toLowerCase()))
+    : undefined;
+
+  let final = r;
+  if (option && !r.failure) {
+    // A charge that could not be measured stops the conversation before it
+    // holds any more budget.
+    const mid = await usage();
+    if (mid && mid.uncertainUsd > before.uncertainUsd + 1e-9) {
+      console.error("\nStopping after turn 1: a charge could not be measured.");
+      writeReport({ records, plannedCases: 2, before, after: mid, stoppedEarly: { reason: "a charge could not be measured" } });
+      process.exit(3);
+    }
+
+    // What the shopper pressing Apply would have left the panel holding, so
+    // the second turn goes out with the first turn's constraints, as the
+    // provider sends them.
+    const held = r.proposals.find((p) => p.kind === "apply_preferences");
+    console.log(`\nThe site asked: "${r.question?.text}". Answering with "${option}", holding ${JSON.stringify(held?.hard ?? [])}\n`);
+
+    const res2 = await fetch(`${BASE}/api/assistant`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        sessionId: SESSION,
+        categoryId: CATEGORY,
+        messages: [
+          { role: "user", text: TEXT },
+          { role: "assistant", text: r.text },
+          { role: "user", text: option },
+        ],
+        hard: held?.hard ?? [],
+        soft: held?.soft ?? [],
+      }),
+    });
+    if (!res2.ok) {
+      console.error(`HTTP ${res2.status} from the application on turn 2.`);
+      writeReport({ records, plannedCases: 2, before, after: await usage(), stoppedEarly: { reason: `turn 2 returned HTTP ${res2.status}` } });
+      process.exit(3);
+    }
+    final = (await res2.json()) as Reply;
+    show("turn 2", final);
+    records.push({
+      category: CATEGORY,
+      note: `${SELECTED.note} (turn 2, answered "${option}")`,
+      text: option,
+      reply: final.text,
+      problems: final.failure ? [`the reply could not be used (${final.failure}); nothing was extracted`] : judge(final),
+      shown: final.matchingIds.length,
+    });
+  } else if (SELECTED.answerWith) {
+    console.log("\nNo clarifying question was asked, so nothing was answered.");
   }
 
-  const path = writeReport({ records: [record], plannedCases: 1, before, after });
+  const afterAll = await usage();
+  const spentAll = afterAll ? afterAll.spentUsd - before.spentUsd : null;
+  const uncertainAll = afterAll ? afterAll.uncertainCharges.filter((u) => !before.uncertainCharges.some((b) => b.reservationId === u.reservationId)) : [];
+
+  const problems = records[records.length - 1].problems;
+  console.log(`\n${problems.length === 0 ? "ok" : `FAIL: ${problems.join("; ")}`}`);
+  if (spentAll !== null) console.log(`Measured cost of this conversation: $${spentAll.toFixed(6)} over ${records.length} turn(s)`);
+  if (uncertainAll.length > 0) {
+    console.log(`\n${uncertainAll.length} charge(s) could not be measured and hold budget:`);
+    for (const u of uncertainAll) console.log(`  ${u.reservationId}  $${u.heldUsd.toFixed(6)}  ${u.reason}`);
+  }
+
+  const path = writeReport({ records, plannedCases: records.length, before, after: afterAll });
   console.log(`\nReport written to ${path}.`);
   process.exit(problems.length === 0 ? 0 : 1);
+}
+
+function show(label: string, r: Reply) {
+  const applied = r.proposals.find((p) => p.kind === "apply_preferences");
+  console.log(`--- ${label}`);
+  console.log(`mode: ${r.mode}${r.failure ? `  failure: ${r.failure}` : ""}`);
+  console.log(`reply: ${r.text}`);
+  if (r.question) console.log(`question: ${r.question.text} [${r.question.options.join(" | ")}]`);
+  console.log(`hard: ${JSON.stringify(applied?.hard ?? [])}`);
+  console.log(`soft: ${JSON.stringify(applied?.soft ?? [])}`);
+  console.log(`matching: ${JSON.stringify(applied?.matchingIds ?? r.matchingIds)}`);
 }
 
 function writeReport(args: Parameters<typeof buildReport>[0]): string {

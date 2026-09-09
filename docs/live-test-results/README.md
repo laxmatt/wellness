@@ -59,3 +59,12 @@ The electrolyte preference was still not extracted, so an energy drink sits in
 the results with nothing marking it as the wrong kind of product. The prompt
 corrections that preceded it are recorded as plausible causes, not established
 ones: two single samples do not separate an improvement from variation.
+
+The ninth report, `2026-09-09T02-12.md`, is one two-turn conversation for
+$0.001022. The site asked for the function it did not get, the shopper answered
+with the option offered, and the budget from turn 1 survived into turn 2. Two
+findings against it: "zero sugar" was extracted at 01:50 and not here, from the
+same sentence and the same prompt, so no single request settles extraction; and
+the model answered with `function includes ["electrolytes"]`, an array, which
+the engine's `includes` never matches, so the shopper was told nothing matched
+when one product did.
