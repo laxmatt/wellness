@@ -18,6 +18,7 @@
  */
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { checkReply, type CheckableReply, type ExpectedCase } from "../src/domain/livetest-expectations";
 import { buildReport, reportStamp, type CaseRecord } from "../src/domain/livetest-report";
 
 function loadEnvLocal(path = ".env.local") {
@@ -43,13 +44,48 @@ loadEnvLocal();
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
 const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";
 
-const CATEGORY = "cold-plunge";
-const TEXT = "A tub with a chiller, up to $5,000";
+// One named case per authorized request. Each is judged by the same
+// `checkReply` the 15-case suite uses, against the same expectation, so a
+// single request cannot be scored more leniently than the suite would score it.
+type Named = { category: string; text: string; note: string; expect: ExpectedCase };
 
-// What the operator asked to see: the chiller asserted as true, and a budget
-// admitting no more than $5,000. Both are judged from the composed reply's
-// proposal, in the units the engine compares, not from the model's own words.
-const BUDGET_CENTS = 500000;
+const CASES: Record<string, Named> = {
+  chiller: {
+    category: "cold-plunge",
+    text: "A tub with a chiller, up to $5,000",
+    note: "strict structured outputs, chiller plus budget",
+    expect: {
+      hard: [
+        { key: "chiller_included", ops: ["eq"], value: true },
+        { key: "price", ops: ["lt", "lte"], admitsAtMost: 500000, orAtMost: 499999 },
+      ],
+    },
+  },
+  // Copied from the 15-case suite unchanged. "Under $2 a serving" admits at
+  // most 199 minor units, so lt 200 and lte 199 are the same request and lte
+  // 200 is a different one.
+  drinks: {
+    category: "wellness-drinks",
+    text: "Zero sugar electrolytes under $2 a serving",
+    note: "strict structured outputs, zero sugar plus function plus budget",
+    expect: {
+      hard: [
+        { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 },
+      ],
+      soft: [{ key: "function" }],
+      alsoReasonable: ["format", "electrolytes_mg"],
+    },
+  },
+};
+
+const CASE_NAME = process.argv[2] ?? "chiller";
+const SELECTED = CASES[CASE_NAME];
+if (!SELECTED) {
+  console.error(`Unknown case "${CASE_NAME}". Known: ${Object.keys(CASES).join(", ")}`);
+  process.exit(2);
+}
+const { category: CATEGORY, text: TEXT } = SELECTED;
 
 type Constraint = { key: string; op?: string; direction?: string; value?: unknown; weight?: number };
 
@@ -86,42 +122,9 @@ async function usage(): Promise<Usage | null> {
   };
 }
 
-// A budget is judged by operator and amount together, because `lt 500000` and
-// `lte 499999` admit the same set and `lt 499999` does not.
-function admittedMaximum(op: string | undefined, value: unknown): number | null {
-  if (typeof value !== "number") return null;
-  if (op === "lte") return value;
-  if (op === "lt") return value - 1;
-  return null;
-}
-
+// The suite's own checker, so this cannot drift from how the suite scores.
 function judge(r: Reply): string[] {
-  const problems: string[] = [];
-  const applied = r.proposals.find((p) => p.kind === "apply_preferences");
-  const hard = applied?.hard ?? [];
-  const soft = applied?.soft ?? [];
-
-  const chillerHard = hard.find((c) => c.key === "chiller_included");
-  if (!chillerHard) {
-    const chillerSoft = soft.find((c) => c.key === "chiller_included");
-    problems.push(
-      chillerSoft
-        ? `chiller_included came back as a preference (${chillerSoft.direction}), not as chiller = true`
-        : "no chiller_included constraint at all",
-    );
-  } else if (!(chillerHard.op === "eq" && chillerHard.value === true)) {
-    problems.push(`chiller_included is ${chillerHard.op} ${JSON.stringify(chillerHard.value)}, not eq true`);
-  }
-
-  const price = hard.find((c) => c.key === "price");
-  if (!price) problems.push("no price constraint");
-  else {
-    const max = admittedMaximum(price.op, price.value);
-    if (max === null) problems.push(`price is ${price.op} ${JSON.stringify(price.value)}, which sets no upper bound in cents`);
-    else if (max > BUDGET_CENTS) problems.push(`price admits up to ${max} cents, above the ${BUDGET_CENTS} asked for`);
-  }
-
-  return problems;
+  return checkReply(r as CheckableReply, SELECTED.expect);
 }
 
 async function main() {
@@ -169,11 +172,14 @@ async function main() {
   const applied = r.proposals.find((p) => p.kind === "apply_preferences");
   console.log(`hard: ${JSON.stringify(applied?.hard ?? [])}`);
   console.log(`soft: ${JSON.stringify(applied?.soft ?? [])}`);
+  // The engine's own answer for those constraints, named rather than counted,
+  // so each product can be checked against the sentence by hand.
+  console.log(`matching: ${JSON.stringify(r.matchingIds)}`);
 
   const problems = r.failure ? [`the reply could not be used (${r.failure}); nothing was extracted`] : judge(r);
   const record: CaseRecord = {
     category: CATEGORY,
-    note: "strict structured outputs, chiller plus budget",
+    note: SELECTED.note,
     text: TEXT,
     reply: r.text,
     problems,

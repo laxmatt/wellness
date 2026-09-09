@@ -50,3 +50,12 @@ extraction, discarded because `suggestCompare` carried more ids than
 `ModelIntent` allows and the schema does not express that bound. Interpretation
 was right on 14 of 15. The single real extraction failure dropped "zero sugar"
 and read "under $2" as `lte 200`, which admits exactly $2.00.
+
+The eighth report, `2026-09-09T01-50.md`, is one request re-running the drinks
+sentence that failed at 01:35, scored against the same unchanged expectation.
+It met two of three requirements for $0.000538: `sugar_g eq 0` and
+`price_per_serving_minor lt 200`, the strict reading of "under $2 a serving".
+The electrolyte preference was still not extracted, so an energy drink sits in
+the results with nothing marking it as the wrong kind of product. The prompt
+corrections that preceded it are recorded as plausible causes, not established
+ones: two single samples do not separate an improvement from variation.
