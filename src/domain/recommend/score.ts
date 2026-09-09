@@ -16,6 +16,10 @@ export type ScoringInput = {
   // Attributes withheld because their value is a placeholder. They score zero
   // and count against completeness, exactly like a missing value.
   demoKeys: string[];
+  // Attributes withheld because their own source states them two ways. They
+  // score zero as well, and the breakdown says which of the two reasons
+  // applies rather than calling both "not stated".
+  disputedKeys: string[];
 };
 
 // Demo values never reach the score. A placeholder is not evidence, so it is
@@ -30,8 +34,11 @@ export function toScoringInput(view: ProductView): ScoringInput {
   const demoKeys = Object.entries(view.provenance)
     .filter(([field, p]) => field.startsWith("attributes.") && !isUsable(p.verification))
     .map(([field]) => field.slice("attributes.".length));
-  for (const key of demoKeys) delete attributes[key];
-  return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys };
+  const disputedKeys = Object.entries(view.provenance)
+    .filter(([field, p]) => field.startsWith("attributes.") && p.disputed === true)
+    .map(([field]) => field.slice("attributes.".length));
+  for (const key of [...demoKeys, ...disputedKeys]) delete attributes[key];
+  return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys, disputedKeys };
 }
 
 export type CriterionContribution = {
@@ -52,6 +59,9 @@ export type ScoreResult = {
   criteria: CriterionContribution[];
   // Scoring criteria whose value was withheld as demo data.
   demoCriteria: string[];
+  // Scoring criteria whose value was withheld because the source disagrees
+  // with itself.
+  disputedCriteria: string[];
 };
 
 export function numericFor(input: ScoringInput, cat: CategoryDefinition, key: string): number | undefined {
@@ -100,6 +110,7 @@ export function scoreProducts(inputs: ScoringInput[], cat: CategoryDefinition): 
     const score = Math.round(criteria.reduce((s, c) => s + c.contribution, 0) * 1000) / 10;
     const completeness = completenessOf(input, cat);
     const demoCriteria = cat.scoring.criteria.map((c) => c.key).filter((k) => input.demoKeys.includes(k));
-    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria, demoCriteria };
+    const disputedCriteria = cat.scoring.criteria.map((c) => c.key).filter((k) => input.disputedKeys.includes(k));
+    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria, demoCriteria, disputedCriteria };
   });
 }

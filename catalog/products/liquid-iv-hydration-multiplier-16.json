@@ -125,14 +125,14 @@
       "verification": "manufacturer_reported"
     },
     "price_per_serving_minor": {
-      "value": 156,
+      "value": 175,
       "unit": "USD_minor",
       "source": {
         "kind": "editorial",
         "ref": "Editorial classification",
         "retrievedAt": "2026-09-08",
         "method": "direct",
-        "note": "Pack price divided by servings."
+        "note": "Pack price divided by servings. Recomputed on 2026-09-09 as $27.99 over 16 servings, after the shown price stopped being a prototype $24.99 and became the manufacturer's own $27.99. Carried 156 until then, which was the prototype amount divided by the same 16."
       },
       "verification": "unknown",
       "derivedFrom": "price"

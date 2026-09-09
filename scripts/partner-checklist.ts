@@ -249,7 +249,13 @@ push(`**Comparison facts.** All required specifications usable and sourced: ${ta
 push();
 push(`**Price evidence.** An amount on record: ${tally.price.partial.length}. No amount on record: ${tally.price.missing.length}. Amount read from the merchant rather than relayed: ${readPrices.length}${readPrices.length > 0 ? ` (${readPrices.map((p) => p.id).join(", ")})` : ""}. Independently measured: 0, on all 20; every figure is its maker's own.`);
 push();
-push(`Shown prices that are prototype data: ${cat.products.filter((p) => viewOf(p).price.isDemo).length}. One of those, \`hooga-hg300\`, has a real amount on record that the page does not show, because the shown price is the lowest offer and a prototype amount is lower. \`docs/source-checks/2026-09-09-hooga-hg300.md\` records it.`);
+const hidden = cat.products.filter((p) => viewOf(p).price.isDemo && p.offers.some((o) => o.source.kind !== "demo"));
+push(
+  `Shown prices that are prototype data: ${cat.products.filter((p) => viewOf(p).price.isDemo).length}, every one of them a product with no real amount anywhere on its record.` +
+    (hidden.length > 0
+      ? ` ${hidden.length} product${hidden.length === 1 ? " has" : "s have"} a real amount the page does not show: ${hidden.map((p) => p.id).join(", ")}.`
+      : " No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real."),
+);
 push();
 push(`**Image readiness.** A real image with a recorded licence: ${tally.images.complete.length}. A real image without one: ${tally.images.partial.length}. Placeholders only: ${tally.images.missing.length}.`);
 push();

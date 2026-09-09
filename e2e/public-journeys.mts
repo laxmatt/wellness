@@ -551,9 +551,9 @@ async function run(browser: Browser) {
     const after = await page.evaluate(() => [...document.querySelectorAll("tbody tr")].filter((tr) => tr.querySelector("td")).length);
     check("differences only hides exactly the identical rows", rows.length - after, sameRows);
 
-    // A pair whose figures were taken at the same distance, so the reason the
-    // row is unranked is the bound itself and nothing else.
-    scenario = "compare, a bounded figure";
+    // Hooga's figure is disputed by its own page, so the row shows it and
+    // ranks nothing on it, for that reason rather than any other.
+    scenario = "compare, a disputed figure";
     const pair = ["hooga-hg300", "platinumled-biomax-900"];
     await goto(page, `/compare?ids=${pair.join(",")}`);
     const pairRows = await page.evaluate(() =>
@@ -566,9 +566,9 @@ async function run(browser: Browser) {
         })),
     );
     const irradiance = pairRows.find((r) => r.label.startsWith("Irradiance"))!;
-    ok("the bounded figure keeps its qualifier", irradiance.cells.some((t) => t.includes("more than 73 mW/cm²")), irradiance.cells);
+    ok("the disputed figure is shown and marked", irradiance.cells.some((t) => t.includes("73 mW/cm², disputed")), irradiance.cells);
     check("and that row marks no winner", irradiance.dots, 0);
-    ok("and says a bound is why", /stated bound/.test(irradiance.label), irradiance.label);
+    ok("and says the source states it two ways", /states its figure two ways/.test(irradiance.label), irradiance.label);
     const leds = pairRows.find((r) => r.label.startsWith("LED"))!;
     check("while an exact row still marks one winner", leds.dots, 1);
 

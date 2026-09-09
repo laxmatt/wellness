@@ -75,6 +75,9 @@ export type SpecView = {
   // `formatted` says to check the price rather than quoting a figure derived
   // from an invented one.
   moneyWithheld?: boolean;
+  // Set when the source states the figure two ways. It is shown, marked, and
+  // matched on by nothing.
+  disputed?: boolean;
   // Set when the source states a bound rather than an exact value. `formatted`
   // already carries the qualifier; this is for a screen that needs to know.
   bound?: Bound;
@@ -120,10 +123,23 @@ export type ViewContext = {
   merchants: Merchant[];
 };
 
+// Offers whose amount is a real one somebody recorded. A prototype amount is
+// not a cheaper offer; it is not an offer at all for pricing purposes.
+export function pricedOffers(offers: MerchantOffer[]): MerchantOffer[] {
+  return offers.filter((o) => o.availability !== "discontinued" && o.source.kind !== "demo");
+}
+
+// The offer a price is taken from. Real amounts first, and only when there is
+// no real amount at all does a prototype one stand in, marked unconfirmed.
+//
+// Sorting every offer together let an invented figure win: Hooga's HG300 had
+// $199 read from its maker's own page and a prototype $149 on an Amazon
+// record, and the page showed "Check current price" because the invented
+// number was lower.
 export function lowestOffer(offers: MerchantOffer[]): MerchantOffer | undefined {
-  return offers
-    .filter((o) => o.availability !== "discontinued")
-    .sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  const live = offers.filter((o) => o.availability !== "discontinued");
+  const real = pricedOffers(offers);
+  return (real.length > 0 ? real : live).sort((a, b) => a.priceMinor - b.priceMinor)[0];
 }
 
 export function derivePrice(product: Product): PriceView {
@@ -133,7 +149,9 @@ export function derivePrice(product: Product): PriceView {
       money: { amountMinor: best.priceMinor, currency: best.currency },
       basis: "lowest_offer",
       checkedAt: best.lastChecked,
-      offerCount: product.offers.length,
+      // The count belongs to the same set the price came from: "lowest of 2
+      // retailers" must not count a retailer whose amount is prototype data.
+      offerCount: (pricedOffers(product.offers).length || product.offers.length),
       isDemo: best.source.kind === "demo",
     };
   }
@@ -168,15 +186,21 @@ function specFor(def: AttributeDefinition, product: Product, moneyWithheld = fal
   // A bound only qualifies a value that can be used as fact. A demo or
   // not-stated entry shows what it always showed.
   const bound = sv && sv.value !== undefined && isUsable(sv.verification) ? sv.bound : undefined;
+  const disputed = sv?.disputed === true && sv.value !== undefined;
   return {
     key: def.key,
     label: def.label,
     shortLabel: def.shortLabel ?? def.label,
     group: def.group,
-    raw: moneyWithheld ? undefined : sv?.value,
+    raw: moneyWithheld || disputed ? undefined : sv?.value,
     bound,
     moneyWithheld: moneyWithheld || undefined,
-    formatted: moneyWithheld ? PRICE_UNCONFIRMED : (displayText ?? formatAttribute(def, sv?.value, bound)),
+    disputed: disputed || undefined,
+    formatted: moneyWithheld
+      ? PRICE_UNCONFIRMED
+      : disputed
+        ? `${formatAttribute(def, sv?.value)}, disputed`
+        : (displayText ?? formatAttribute(def, sv?.value, bound)),
     unit: sv?.unit ?? def.unit,
     provenance: sv ? provenanceOf(sv) : undefined,
     alwaysShowVerification: def.alwaysShowVerification,
@@ -217,7 +241,11 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     // for as long as it has existed. An attribute the source does not state
     // keeps its provenance so the page can say "not stated" and show why, and
     // neither kind becomes something to match on.
-    if (sv.value !== undefined && isUsable(sv.verification) && !derivedKeys.has(key)) {
+    // A figure its own source states two ways is not a fact this catalogue can
+    // match on. It stays visible, with both statements in its note, and
+    // answers no question: "over 73" would satisfy a search for more than 73,
+    // and the same page says 73 exactly.
+    if (sv.value !== undefined && isUsable(sv.verification) && !derivedKeys.has(key) && !sv.disputed) {
       attributes[key] = sv.value;
       if (sv.bound) bounds[key] = sv.bound;
     }

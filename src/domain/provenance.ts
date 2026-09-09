@@ -62,6 +62,7 @@ export const Provenance = z.object({
   unit: z.string().optional(),
   bound: Bound.optional(),
   derivedFrom: DerivedFrom.optional(),
+  disputed: z.boolean().optional(),
 });
 export type Provenance = z.infer<typeof Provenance>;
 
@@ -83,6 +84,13 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     // Set when this value was computed from the product's price, so it is
     // worth exactly what that price is worth.
     derivedFrom: DerivedFrom.optional(),
+    // Set when the source states this figure in two ways that do not agree.
+    // The value and the note stay, so a reader sees both statements and the
+    // conflict; nothing matches or scores on it, because the source has not
+    // settled what the figure is. Hooga's HG300 page says "over 73 mW/cm2" in
+    // its highlights and "73" in its specification table, and recording either
+    // one as the answer picks a passage.
+    disputed: z.boolean().optional(),
   });
 }
 
@@ -93,6 +101,7 @@ export type Sourced<T> = {
   verification: Verification;
   bound?: Bound;
   derivedFrom?: DerivedFrom;
+  disputed?: boolean;
 };
 
 export const DEMO_SOURCE: Source = {
@@ -136,7 +145,7 @@ export function stripProvenance<T>(s: Sourced<T>): T | undefined {
 }
 
 export function provenanceOf<T>(s: Sourced<T>): Provenance {
-  return { source: s.source, verification: s.verification, unit: s.unit, bound: s.bound, derivedFrom: s.derivedFrom };
+  return { source: s.source, verification: s.verification, unit: s.unit, bound: s.bound, derivedFrom: s.derivedFrom, disputed: s.disputed };
 }
 
 // The direction a bound points, as text a person can read: the qualifier the

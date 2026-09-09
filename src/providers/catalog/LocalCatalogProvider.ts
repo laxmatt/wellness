@@ -92,6 +92,19 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
           issues.push({ file, message: `attribute "${key}" says it is derived from the price with no note saying how.` });
         }
       }
+      // A disputed figure keeps its value so both statements stay visible, and
+      // it needs the note that says what the two statements were.
+      if (sv.disputed) {
+        if (sv.value === undefined) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed with no value. The point of the marker is to keep the figure visible.` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed with no note saying what the source states.` });
+        }
+        if (sv.bound) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed and also carries a bound. A bound is a claim the dispute has not settled.` });
+        }
+      }
       if (sv.bound) {
         if (typeof sv.value !== "number") {
           issues.push({ file, message: `attribute "${key}" carries a bound but its value is not a number. A bound qualifies an amount.` });

@@ -81,11 +81,13 @@ describe("the partner showcase checklist", () => {
     const doc = committed();
     const at = doc.indexOf("`hooga-hg300`");
     const entry = doc.slice(Math.max(0, at - 1500), at + 400);
-    // $199 is on record and the page shows "Check current price", because the
-    // shown price is the lowest offer and a prototype amount is lower. Saying
-    // "no amount on record" here would have been false.
+    // $199 is on record and, since the price selection was fixed, it is also
+    // what the page shows. The document reports the record either way.
     expect(entry).toContain("$199 on record");
-    expect(entry).toContain("The page still shows Check current price");
+    expect(entry).not.toContain("The page still shows Check current price");
+    // A product whose only amounts are prototype data still says so.
+    const olipop = doc.indexOf("`olipop-root-beer-12`");
+    expect(doc.slice(Math.max(0, olipop - 1500), olipop + 400)).toContain("no amount on record");
   });
 
   it("keeps the LMNT reading attributed to whoever made it", () => {

@@ -43,7 +43,6 @@ describe("the catalogue records the bound, not a number nobody stated", () => {
     expect(bounded.sort()).toEqual([
       "ag1-pouch-30.sugar_g less_than 1",
       "bon-charge-max.irradiance_mw_cm2 greater_than 142",
-      "hooga-hg300.irradiance_mw_cm2 greater_than 73",
       "hooga-pro1500.irradiance_mw_cm2 greater_than 189",
       "joovv-solo-3.irradiance_mw_cm2 greater_than 100",
     ]);

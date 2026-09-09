@@ -72,7 +72,10 @@ describe("demo data never counts as evidence", () => {
   it("says which badges were withheld rather than quietly showing fewer picks", () => {
     const set = assignBadges(viewsFor("red-light").map(toScoringInput), redLight);
     const withheldBadges = set.withheld.map((w) => w.badge);
-    expect(withheldBadges).toContain("best_budget");
+    // Best Budget is awarded again: HG300's real $199, read on 2026-09-09,
+    // sits under the budget line where a prototype $149 used to sit and count
+    // for nothing. Best Premium is still withheld, and still says why.
+    expect(set.badges.map((b) => b.badge)).toContain("best_budget");
     expect(withheldBadges).toContain("best_premium");
     for (const w of set.withheld) expect(w.reason.length).toBeGreaterThan(20);
   });
@@ -106,15 +109,16 @@ describe("comparison dots require comparable measurements", () => {
     expect(row.notComparable).toMatch(/not stated for every product/);
   });
 
-  it("suppresses the irradiance winner when one figure is a floor, even at the same distance", () => {
+  it("suppresses the irradiance winner when one source states its figure two ways", () => {
     // HG300 and BIOMAX 900 both report at 6 in, so the distance rule is
-    // satisfied. HG300's figure is "over 73", which the maker states as a
-    // floor: BIOMAX's 185 looks like the winner and the real HG300 number is
-    // not known. A row nobody can rank is left unranked.
+    // satisfied. Hooga's page says "over 73" in its highlights and 73 in its
+    // table, so its figure is disputed: the row shows it, marked, and ranks
+    // nothing.
     const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
     const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
     expect(row.cells.every((c) => !c.best)).toBe(true);
-    expect(row.notComparable).toMatch(/a stated bound, not an exact value/);
+    expect(row.notComparable).toMatch(/states its figure two ways/);
+    expect(row.cells.some((c) => c.text.includes("73 mW/cm², disputed"))).toBe(true);
   });
 
   it("still marks a winner on a row of exact figures", () => {

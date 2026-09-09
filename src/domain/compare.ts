@@ -79,6 +79,12 @@ function comparability(items: RecommendedProduct[], cat: CategoryDefinition, key
     }
   }
 
+  // A figure its own source states two ways cannot be ranked against one that
+  // is stated once. The value is shown, marked, and left out of the ordering.
+  if (key !== "price" && items.some((it) => it.view.provenance[`attributes.${key}`]?.disputed === true)) {
+    return { ok: false, reason: "Not ranked: at least one source states its figure two ways, and this table does not pick one." };
+  }
+
   // Last, because the conditions a figure was taken under are the more useful
   // thing to say when both are wrong. A bound is not an exact value: "more than
   // 189 mW/cm2" beats a stated 185, and against a stated 200 nobody knows, so
@@ -181,15 +187,18 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "retailers",
         label: "Retailers",
-        cells: items.map((it) => ({
-          text:
-            it.view.offers.length === 0
-              ? "None listed"
-              : it.view.price.isDemo
-                ? `${it.view.offers.length}, price not confirmed`
-                : `${it.view.offers.length}, from ${formatMoney(it.view.price.money)}`,
-          best: false,
-        })),
+        // The count and the amount come from the same set: retailers whose
+        // amount is real. Retailers carrying only a prototype amount are named
+        // separately rather than folded into a "from $X" that they had no part
+        // in setting.
+        cells: items.map((it) => {
+          const priced = it.view.offers.filter((o) => !o.priceIsDemo).length;
+          const unpriced = it.view.offers.length - priced;
+          const tail = unpriced > 0 ? `, ${unpriced} with no amount on record` : "";
+          if (it.view.offers.length === 0) return { text: "None listed", best: false };
+          if (priced === 0) return { text: `${it.view.offers.length}, none with an amount on record`, best: false };
+          return { text: `${priced}, from ${formatMoney(it.view.price.money)}${tail}`, best: false };
+        }),
         same: new Set(items.map((it) => it.view.offers.length)).size === 1,
       },
     ],

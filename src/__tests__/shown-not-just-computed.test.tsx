@@ -34,20 +34,31 @@ describe("a placeholder amount is not shown at all", () => {
   });
 
   it("does the same on a card, where most shoppers meet the price", () => {
-    const liquidIv = viewsFor("wellness-drinks").find((v) => v.id === "liquid-iv-hydration-multiplier-16")!;
-    render(<PriceDisplay price={liquidIv.price} compact />);
+    const bonCharge = viewsFor("red-light").find((v) => v.id === "bon-charge-max")!;
+    expect(bonCharge.price.isDemo).toBe(true);
+    render(<PriceDisplay price={bonCharge.price} compact />);
     expect(screen.getByText("Check current price")).toBeTruthy();
-    expect(screen.queryByText("$24.99")).toBeNull();
+    expect(screen.queryByText("$1,099")).toBeNull();
   });
 
   it("withholds a money figure computed from a placeholder price", () => {
-    // Price per serving was the demo pack price divided by servings, recorded
-    // as an editorial calculation and shown as a fact.
-    const liquidIv = viewsFor("wellness-drinks").find((v) => v.id === "liquid-iv-hydration-multiplier-16")!;
-    expect(liquidIv.attributes.price_per_serving_minor).toBeUndefined();
-    const spec = liquidIv.specs.find((s) => s.key === "price_per_serving_minor")!;
+    // OLIPOP's price per serving is its prototype pack price divided by cans,
+    // recorded as an editorial calculation and shown as a fact.
+    const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
+    expect(olipop.price.isDemo).toBe(true);
+    expect(olipop.attributes.price_per_serving_minor).toBeUndefined();
+    const spec = olipop.specs.find((s) => s.key === "price_per_serving_minor")!;
     expect(spec.formatted).toBe("Check current price");
     expect(spec.moneyWithheld).toBe(true);
+  });
+
+  it("shows a real price once one is on record, even when a lower prototype exists", () => {
+    // Hooga's HG300 carries the maker's $199 and an Amazon record whose $149
+    // is prototype data. The lower invented number is not a cheaper offer.
+    const hg300 = viewsFor("red-light").find((v) => v.id === "hooga-hg300")!;
+    render(<PriceDisplay price={hg300.price} />);
+    expect(screen.getByText("$199")).toBeTruthy();
+    expect(screen.queryByText("Check current price")).toBeNull();
   });
 
   it("still shows a real price", () => {

@@ -342,9 +342,20 @@ describe("what the model is allowed to see", () => {
   });
 
   it("passes real manufacturer figures through", () => {
+    const mito = views.find((v) => v.id === "mito-mitopro-1500-plus")!;
+    const g = ground(mito);
+    expect(g.facts).toContain("irradiance_mw_cm2");
+    expect(g.facts).toContain("warranty_years");
+  });
+
+  it("withholds a figure whose own source states it two ways", () => {
+    // Hooga's page says "over 73 mW/cm2" in its highlights and 73 in its
+    // table. The model is told the figure is not stated rather than handed
+    // whichever reading someone typed in first.
     const hg300 = views.find((v) => v.id === "hooga-hg300")!;
     const g = ground(hg300);
-    expect(g.facts).toContain("irradiance_mw_cm2");
+    expect(g.facts).not.toContain("irradiance_mw_cm2");
+    expect(g.notStated).toContain("irradiance_mw_cm2");
     expect(g.facts).toContain("warranty_years");
   });
 });

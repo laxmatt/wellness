@@ -100,3 +100,18 @@ describe("a placeholder price cannot move a real product's affordability", () =>
     expect(v.reason).toMatch(/placeholder/);
   });
 });
+
+describe("a value derived from the price agrees with the price it is derived from", () => {
+  it("holds for every drink whose per-serving cost is computed here", () => {
+    // Liquid I.V. carried $1.56 a serving, computed from a prototype $24.99,
+    // long after its real $27.99 became the shown price. A derived figure that
+    // disagrees with its own basis is a wrong number with a citation.
+    for (const v of viewsFor("wellness-drinks")) {
+      const pps = v.attributes.price_per_serving_minor as number | undefined;
+      const servings = v.attributes.servings_per_pack as number | undefined;
+      const derived = v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === "price";
+      if (!derived || pps === undefined || servings === undefined) continue;
+      expect(pps, v.id).toBe(Math.round(v.price.money.amountMinor / servings));
+    }
+  });
+});

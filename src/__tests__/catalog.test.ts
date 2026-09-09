@@ -54,26 +54,22 @@ describe("local catalog", () => {
         if (v.flags.completeness < cat.scoring.completenessFloor) short.push(v.id);
       }
     }
-    expect(short.sort()).toEqual([
-      "ag1-pouch-30",
-      "cure-hydration-lemonade-14",
-      "infraredi-flex-max",
-      "liquid-iv-hydration-multiplier-16",
-      "olipop-root-beer-12",
-    ]);
+    // Liquid I.V. left this list when its shown price became the real $27.99
+    // rather than a prototype $24.99: its per-serving cost is computed from
+    // the price, so a real price restores it.
+    expect(short.sort()).toEqual(["ag1-pouch-30", "cure-hydration-lemonade-14", "infraredi-flex-max", "olipop-root-beer-12"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {
     const v = viewsFor("red-light").find((x) => x.id === "hooga-hg300")!;
     expect(v.attributes.wavelengths_nm).toEqual([660, 850]);
     expect(v.provenance["attributes.wavelengths_nm"].verification).toBe("manufacturer_reported");
-    // The shown price is still the lowest offer, and the lowest offer is still
-    // the Amazon listing's prototype $149. The maker's own $199, read from its
-    // page on 2026-09-09, sits on the other offer and is not what the page
-    // shows. See docs/source-checks/2026-09-09-hooga-hg300.md.
-    expect(v.price.money.amountMinor).toBe(14900);
-    expect(v.price.isDemo).toBe(true);
-    expect(v.offers.find((o) => o.merchant.id === "hooga-store")!.price.amountMinor).toBe(19900);
+    // The shown price is the lowest offer whose amount is real: the maker's
+    // own $199, read on 2026-09-09. Amazon's prototype $149 is lower and is
+    // not a price. See docs/source-checks/2026-09-09-hooga-hg300.md.
+    expect(v.price.money.amountMinor).toBe(19900);
+    expect(v.price.isDemo).toBe(false);
+    expect(v.price.offerCount).toBe(1);
     expect(v.price.basis).toBe("lowest_offer");
     expect(v.offers.length).toBe(2);
     expect(v.cardSpecs.map((s) => s.key)).toEqual(["coverage", "wavelengths_nm", "warranty_years"]);

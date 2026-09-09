@@ -66,18 +66,30 @@ describe("the sources block", () => {
 
 describe("the comparison table", () => {
   it("prints the qualifier and marks no winner in that row", () => {
-    // Both state a distance of 6 in, so the distance rule is satisfied and the
-    // bound is the only thing left standing between these two figures.
-    const items = recommendCategory(viewsFor("red-light"), redLight).products.filter((p) =>
-      ["hooga-hg300", "platinumled-biomax-900"].includes(p.view.id),
+    // AG1's sugar is "less than 1 g"; LMNT's is an exact 0. A row holding a
+    // bound is shown and left unranked.
+    const cat = wellnessDrinks;
+    const items = recommendCategory(viewsFor("wellness-drinks"), cat).products.filter((p) =>
+      ["ag1-pouch-30", "lmnt-citrus-salt-30"].includes(p.view.id),
     );
-    const model = buildCompareModel(items, redLight);
+    const model = buildCompareModel(items, cat);
     render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
-    const cell = screen.getByText("more than 73 mW/cm²");
+    const cell = screen.getByText("less than 1 g");
     const row = cell.closest("tr")!;
     expect(within(row).getByText(/a stated bound, not an exact value/)).toBeTruthy();
     expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
     // Elsewhere in the same table, exact figures still get a winner.
     expect(screen.queryAllByLabelText("Strongest in this row").length).toBeGreaterThan(0);
+  });
+
+  it("shows a disputed figure and ranks nothing on it", () => {
+    const items = recommendCategory(viewsFor("red-light"), redLight).products.filter((p) =>
+      ["hooga-hg300", "platinumled-biomax-900"].includes(p.view.id),
+    );
+    const model = buildCompareModel(items, redLight);
+    render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
+    const row = screen.getByText("73 mW/cm², disputed").closest("tr")!;
+    expect(within(row).getByText(/states its figure two ways/)).toBeTruthy();
+    expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
   });
 });

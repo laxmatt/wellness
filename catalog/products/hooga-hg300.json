@@ -184,10 +184,10 @@
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The page states this figure two ways and they disagree: the highlights say over 73 mW/cm2 at 6 inches, the specification table says 73 exactly. Recorded as the floor, which both readings support, rather than choosing the passage that would rank better. Not resolved here. Previously recorded as relayed via a search summary on 2026-09-08."
+        "note": "The page states this figure two ways and they disagree: the highlights say \"over 73 mW/cm2\" at 6 inches, the specification table says 73 exactly. Recorded as disputed and withheld from matching and scoring: reading it as a floor would answer \"more than 73\" with a page that also says 73, and reading it as exact would answer \"73\" with a page that also says more. Previously recorded as relayed via a search summary on 2026-09-08, and carried as a floor until 2026-09-09."
       },
       "verification": "manufacturer_reported",
-      "bound": "greater_than"
+      "disputed": true
     },
     "irradiance_distance_in": {
       "value": 6,
