@@ -29,8 +29,17 @@ export function conditionTarget(cat: CategoryDefinition, key: string, value: unk
 export function isUnconfirmedPriceClaim(view: ProductView, cat: CategoryDefinition, c: Condition): boolean {
   if (c.op === "exists" || c.op === "missing") return false;
   if (c.key === "price") return view.price.isDemo;
-  // Per-serving cost is derived from the pack price, so it inherits its doubt.
-  if (attributeDef(cat, c.key)?.unit === "USD_minor") return view.price.isDemo;
+  // A money figure inherits the price's doubt when it was computed from the
+  // price, and only then. `derivedFrom` records that, one relationship, on the
+  // records that state it in their own notes.
+  //
+  // This used to doubt every attribute in the category's money unit, which is
+  // the assumption the view layer already stopped making: a per-serving amount
+  // a merchant states itself is worth what its own source is worth, whatever
+  // the pack price is. LMNT's is exactly that.
+  if (attributeDef(cat, c.key)?.unit === "USD_minor") {
+    return view.price.isDemo && view.provenance[`attributes.${c.key}`]?.derivedFrom === "price";
+  }
   return false;
 }
 

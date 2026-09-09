@@ -3,6 +3,8 @@ import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { computeValue } from "@/domain/recommend/value";
 import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
 import { manufacturer } from "@/domain/provenance";
+import { evaluateCondition } from "@/domain/conditions";
+import { applyPreferences } from "@/domain/personalization/match";
 import { toProductView } from "@/domain/view";
 import { miniCategory, miniProduct, testBrand, testMerchant, viewsFor } from "./fixtures";
 
@@ -113,5 +115,63 @@ describe("a value derived from the price agrees with the price it is derived fro
       if (!derived || pps === undefined || servings === undefined) continue;
       expect(pps, v.id).toBe(Math.round(v.price.money.amountMinor / servings));
     }
+  });
+});
+
+describe("the money boundary follows provenance, not the unit", () => {
+  // Same prototype pack price on both. One money figure says it was computed
+  // from that price; the other stands on its own source. The first is
+  // withheld, the second is a fact and stays one.
+  const subject = () => {
+    const p = miniProduct("prototype-priced", 10000, { power: 50, size: "m" }, "unknown", [], true);
+    const src = { url: "https://example.com", retrievedAt: "2026-09-09", unit: "USD_minor" };
+    p.attributes.cost_per_use_minor = { ...manufacturer(120, { ...src, note: "Pack price divided by uses." }), derivedFrom: "price" as const };
+    p.attributes.shipping_minor = manufacturer(499, { ...src, note: "Flat shipping, stated by the merchant." });
+    return toProductView(p, { category: money, brands: [testBrand], merchants: [testMerchant] });
+  };
+
+  it("keeps the independently sourced amount matchable", () => {
+    const v = subject();
+    expect(v.price.isDemo).toBe(true);
+    expect(evaluateCondition(v, money, { key: "shipping_minor", op: "lte", value: 500 })).toBe(true);
+    expect(evaluateCondition(v, money, { key: "shipping_minor", op: "eq", value: 499 })).toBe(true);
+  });
+
+  it("still withholds the one computed from the prototype price", () => {
+    const v = subject();
+    expect(evaluateCondition(v, money, { key: "cost_per_use_minor", op: "lte", value: 500 })).toBe(false);
+    expect(evaluateCondition(v, money, { key: "cost_per_use_minor", op: "exists" })).toBe(false);
+  });
+
+  it("lets a preference rank on the independently sourced amount", () => {
+    const cheapShipping = subject();
+    const dearShipping = (() => {
+      const p = miniProduct("dear-shipping", 10000, { power: 50, size: "m" }, "unknown", [], true);
+      p.attributes.shipping_minor = manufacturer(1999, { url: "https://example.com", retrievedAt: "2026-09-09", unit: "USD_minor", note: "Flat shipping, stated by the merchant." });
+      return toProductView(p, { category: money, brands: [testBrand], merchants: [testMerchant] });
+    })();
+    const rank = (views: ReturnType<typeof subject>[]) =>
+      applyPreferences(views, money, {
+        hard: [],
+        soft: [{ key: "shipping_minor", direction: "prefer_low", weight: 1 }],
+        unmapped: [],
+        medicalIntent: false,
+      });
+    const without = rank([cheapShipping, dearShipping]);
+    expect(without.rankedIds).toEqual(["prototype-priced", "dear-shipping"]);
+    expect(without.explanations["prototype-priced"].softScore).toBeGreaterThan(0);
+
+    // An extreme prototype price on a third product changes nothing about the
+    // amounts that stand on their own sources.
+    const extreme = (() => {
+      const p = miniProduct("invented", 9_000_000, { power: 50, size: "m" }, "unknown", [], true);
+      p.attributes.cost_per_use_minor = { ...manufacturer(1, { url: "https://example.com", retrievedAt: "2026-09-09", unit: "USD_minor", note: "Pack price divided by uses." }), derivedFrom: "price" as const };
+      return toProductView(p, { category: money, brands: [testBrand], merchants: [testMerchant] });
+    })();
+    const withExtreme = rank([cheapShipping, dearShipping, extreme]);
+    for (const id of ["prototype-priced", "dear-shipping"]) {
+      expect(withExtreme.explanations[id].softScore, id).toBe(without.explanations[id].softScore);
+    }
+    expect(withExtreme.explanations.invented.softScore).toBe(0);
   });
 });

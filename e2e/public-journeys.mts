@@ -354,12 +354,18 @@ async function run(browser: Browser) {
     // product whose price is prototype data, a note quoting an amount has to
     // say so, or the number is back on the page by the side door.
     if (view.price.isDemo) {
-      const notesWithAmounts = Object.values(view.provenance)
+      // The risk is this product's own unconfirmed amount reappearing as a
+      // price. A note quoting some other figure, a fee on a policy page or a
+      // price another source reported, is provenance: Joovv's returns note
+      // carries the Joovv Go's $50 fee precisely to say it is not this
+      // product's.
+      const own = money.replace(/^\$/, "");
+      const notesWithOwnAmount = Object.values(view.provenance)
         .map((pr) => pr.source.note)
-        .filter((n): n is string => Boolean(n) && /\$\d/.test(n!));
-      for (const note of notesWithAmounts) {
+        .filter((n): n is string => Boolean(n) && n!.includes(own));
+      for (const note of notesWithOwnAmount) {
         if (!body.includes(note.slice(0, 40))) continue;
-        ok("an amount quoted in a note says it is prototype data", /demo|placeholder|unconfirmed/i.test(note), note);
+        ok("a note quoting this product's own amount says it is prototype data", /demo|placeholder|unconfirmed/i.test(note), note);
       }
     }
 
