@@ -124,12 +124,14 @@ describe("list filters carry their values", () => {
   });
 
   it("takes them from the catalogue, not from a hard-coded list", async () => {
-    // Every cold-plunge `placement` value is demo data, so the catalogue holds
-    // none and the model is offered none. A list of values invented by this
-    // project is not a vocabulary; it is a suggestion to filter on nothing.
+    // The model is offered the values the catalogue holds and no others. Cold
+    // plunge held none for `placement` until the Ice Barrel 500's page was
+    // read; it now holds "outdoor" and still holds no "indoor", which exists
+    // only as prototype data.
     const cold = (await promptFor("cold-plunge")).split("\n").find((l) => l.startsWith("FILTERS:"))!;
     expect(cold).toMatch(/placement \(list; use op "includes"/);
-    expect(cold).not.toMatch(/placement \([^)]*values include/);
+    expect(cold).toMatch(/placement \([^)]*values include [^)]*outdoor/);
+    expect(cold).not.toMatch(/placement \([^)]*indoor/);
 
     // Where the catalogue does hold values, they are offered.
     const drinks = (await promptFor("wellness-drinks")).split("\n").find((l) => l.startsWith("FILTERS:"))!;

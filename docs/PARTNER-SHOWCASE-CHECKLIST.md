@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **60 of 255**, across 5 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **70 of 257**, across 6 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -263,7 +263,7 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- |
 | Record | `platinumled-biomax-900`, `/products/platinumled-biomax-900` |
 | Offers | PlatinumLED (direct) ($1,299, unknown, affiliate status not recorded) |
-| Links | https://platinumtherapylights.com/products/biomax-900 |
+| Links | https://platinumtherapylights.com/products/biomax-rlt |
 | Sources on file | https://platinumtherapylights.com/products/biomax-rlt |
 | Retrieval | 0 of 12 recorded fields were relayed rather than read from the source |
 | Ranking | score 78.6, completeness 75%, badges: best_premium |
@@ -350,33 +350,28 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 3 with no recorded source |
-| Price evidence | partly | $1,499.99 on record from Ice Barrel (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
+| Price evidence | partly | $1,749.99 on record from Ice Barrel (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `ice-barrel-500`, `/products/ice-barrel-500` |
-| Offers | Ice Barrel (direct) ($1,499.99, unknown, affiliate status not recorded) |
+| Offers | Ice Barrel (direct) ($1,749.99, unknown, affiliate status not recorded) |
 | Links | https://icebarrel.com/products/ice-barrel-500 |
 | Sources on file | https://icebarrel.com/products/ice-barrel-500 |
-| Retrieval | 6 of 11 recorded fields were relayed rather than read from the source |
+| Retrieval | 0 of 13 recorded fields were relayed rather than read from the source |
 | Ranking | score 38.9, completeness 100%, badges: best_value |
 
 Specifications that are missing, unsupported or relayed:
 
-- `chiller_included` (required): relayed, maker's page not fetched
 - `min_temp_f`: **absent from the record**
 - `heating`: **absent from the record**
 - `tub_type` (required): source not recorded
-- `water_capacity_gal`: relayed, maker's page not fetched
-- `fits_height_in`: relayed, maker's page not fetched
-- `insulated`: relayed, maker's page not fetched
-- `placement`: prototype value `["indoor","outdoor"]`
 - `plumbing`: source not recorded
 - `sanitation_system` (required): source not recorded
 - `sanitation_methods`: **absent from the record**
-- `warranty_years` (required): source not recorded
+- `warranty_years` (required): bound: Limited lifetime warranty
 
 ### Plunge Plunge Original
 
@@ -393,7 +388,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://plunge.com/products/plunge |
 | Sources on file | https://plunge.com/products/plunge |
 | Retrieval | 12 of 14 recorded fields were relayed rather than read from the source |
-| Ranking | score 51.9, completeness 100%, badges: best_premium |
+| Ranking | score 53.7, completeness 100%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -457,7 +452,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.amazon.com/dp/B0CPKYNJ9Q |
 | Sources on file | https://www.amazon.com/dp/B0CPKYNJ9Q |
 | Retrieval | 6 of 10 recorded fields were relayed rather than read from the source |
-| Ranking | score 17.6, completeness 75%, badges: best_budget |
+| Ranking | score 18.5, completeness 75%, badges: best_budget |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -697,14 +692,14 @@ Specifications that are missing, unsupported or relayed:
 | Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
-| Cold Plunges | 6 | 6 | 0 | 0 | 0 |
+| Cold Plunges | 6 | 6 | 1 | 0 | 0 |
 | Wellness Drinks | 6 | 5 | 1 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 5 (bon-charge-max, hooga-hg300, hooga-pro1500, lmnt-citrus-salt-30, platinumled-biomax-900). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 6 (bon-charge-max, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, platinumled-biomax-900). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 3, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -716,7 +711,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 124 of 255 records and 12 of 26 offer prices are
+1. **Read the pages already on file.** 118 of 257 records and 11 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

@@ -24,7 +24,7 @@ history rather than carried forward.
 ## What the 900 row of the page's model table states
 
 $1,299 USD. 35.83 x 11.81 x 2.76 in. 300 LEDs. 33 lb. A 3-year warranty. Full
-Body. And, under a combined "Number of LEDs / Power Consumption" heading,
+Body. And, under separate "Number of LEDs" and "Power Consumption" headings,
 380 W and 490 W.
 
 The price comes from that row, so it does not depend on whichever model the
@@ -32,7 +32,9 @@ page's selector happens to be showing.
 
 ## What was recorded
 
-- The **direct offer** carries $1,299.00, read from the 900 row. It held the
+- The **direct offer** carries $1,299.00, read from the 900 row, and its link
+  now points at the page that was read. It pointed at
+  `/products/biomax-900`, which nobody read; the old URL is kept in the note. It held the
   same amount as prototype data, with a note that sources reported $1,149,
   $1,299 and promotions near $799.
 - **led_count 300**, **warranty_years 3** and the **warranty text**: same
@@ -51,8 +53,8 @@ relayed on 2026-09-08 for a BIOMAX 900 of unrecorded generation. It is not
 carried onto a ninth-generation record: both fields are now `not_stated`, with
 the old figures written into their notes as history.
 
-**Power consumption.** The row shows 380 W and 490 W and does not settle which
-applies. The record carried 186 W, relayed, which agrees with neither. No
+**Power consumption.** The row shows 380 W and 490 W, under their own headings,
+and nothing on the page settles which applies to this model. The record carried 186 W, relayed, which agrees with neither. No
 figure is recorded.
 
 That last one is recorded as `not_stated` rather than `disputed`, and the tier

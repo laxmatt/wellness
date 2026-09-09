@@ -44,31 +44,34 @@
       "merchantId": "ice-barrel-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 149999,
+      "priceMinor": 174999,
       "url": "https://icebarrel.com/products/ice-barrel-500",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
-      }
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a base price of $1,749.99 USD for the Ice Barrel 500. The chiller is a separate option at $3,999.99 and is not added here. The heading reads Large Cold Plunge Tub, and the page identifies the model as the 500. Availability is not recorded from this reading. The record carried $1,499.99, relayed on 2026-09-08."
+      },
+      "shippingNote": "Page shows $300 to the contiguous US and, elsewhere, shipping calculated at checkout. No single delivered price is established."
     }
   ],
   "warranty": {
     "value": "Limited lifetime warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://icebarrel.com/products/ice-barrel-500",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a limited lifetime warranty. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -77,10 +80,11 @@
       "value": false,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Chiller ports built in; chiller sold separately. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page sells the chiller as a separate option at $3,999.99, so none is included at the base price. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -100,22 +104,24 @@
       "unit": "gal",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "356 L. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 94 gallons, 356 litres. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
     "fits_height_in": {
-      "value": 84,
+      "value": 81,
       "unit": "in",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Fits most body types up to 7 ft. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a maximum user height of 6 ft 9 in, which is 81 inches. The record carried 84, relayed. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -123,25 +129,27 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Polyurethane foam insulation in barrel and lid. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states polyurethane insulation in the barrel and the lid. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
     "placement": {
       "value": [
-        "indoor",
         "outdoor"
       ],
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Placement rating not confirmed from the source. Demo value."
+        "note": "Page states weatherproofing and UV protection, which support outdoor use. No indoor rating was read, so none is recorded. The record carried indoor and outdoor together as prototype data."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "plumbing": {
       "value": "none",
@@ -166,16 +174,18 @@
       "verification": "unknown"
     },
     "warranty_years": {
-      "value": 10,
+      "value": 5,
       "unit": "yr",
+      "bound": "greater_than",
+      "verification": "manufacturer_reported",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://icebarrel.com/products/ice-barrel-500",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Limited lifetime warranty. Recorded as 10 years; scoring caps warranty at 5."
-      },
-      "verification": "unknown"
+        "note": "Page states a limited lifetime warranty, which names no number of years. This category scores warranty with a five-year cap, so the record says more than five years, which a lifetime term satisfies and which claims no figure of its own. The record carried 10 years, which no source stated. The warranty text on the page is what a shopper sees."
+      }
     }
   },
   "source": {
@@ -184,5 +194,35 @@
     "retrievedAt": "2026-09-08",
     "method": "direct",
     "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  },
+  "dimensions": {
+    "value": {
+      "length": 57.6,
+      "width": 30.7,
+      "height": 42.1
+    },
+    "unit": "in",
+    "verification": "manufacturer_reported",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://icebarrel.com/products/ice-barrel-500",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 30.7 in wide, 42.1 in high, 57.6 in long."
+    }
+  },
+  "weight": {
+    "value": 104,
+    "unit": "lb",
+    "verification": "manufacturer_reported",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://icebarrel.com/products/ice-barrel-500",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 104 lb empty."
+    }
   }
 }

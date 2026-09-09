@@ -135,13 +135,24 @@ describe("finding a named value nothing covers", () => {
     expect(namedButUnconstrained(coldPlunge, cold, "an inflatable one", [], [])).toContain("tub_type");
   });
 
-  it("offers nothing for a filter whose every value is placeholder data", () => {
-    // Cold plunge holds no real `placement` value at all, so the site cannot
-    // ask about it and must not: the options would be values this project
-    // made up.
+  it("offers only the values the catalogue actually holds", () => {
+    // Cold plunge held no real `placement` value at all until the Ice Barrel
+    // 500's page was read on 2026-09-09: it states weatherproofing and UV
+    // protection, so "outdoor" is a value somebody claimed. "indoor" still
+    // exists only as prototype data on other tubs, and is still not offered.
     const cold = viewsFor("cold-plunge");
-    expect(namedValues(coldPlunge, cold).has("placement")).toBe(false);
-    expect(namedButUnconstrained(coldPlunge, cold, "an outdoor tub", [], [])).not.toContain("placement");
+    const placement = namedValues(coldPlunge, cold).get("placement") ?? [];
+    expect(placement.map((v) => v.value)).toEqual(["outdoor"]);
+    const holders = cold.filter((v) => (v.attributes.placement as string[] | undefined)?.includes("outdoor"));
+    expect(holders.map((v) => v.id)).toEqual(["ice-barrel-500"]);
+  });
+
+  it("offers nothing for a filter whose every value is placeholder data", () => {
+    // The rule itself, on a key where it still bites: no tub states an indoor
+    // rating, so nothing may suggest one.
+    const cold = viewsFor("cold-plunge");
+    const placement = namedValues(coldPlunge, cold).get("placement") ?? [];
+    expect(placement.map((v) => v.value)).not.toContain("indoor");
   });
 });
 

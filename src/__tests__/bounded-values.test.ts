@@ -47,9 +47,13 @@ describe("the catalogue records the bound, not a number nobody stated", () => {
     // Two panels left. Hooga's HG300 and PRO1500 both left this list when
     // their own pages turned out to state the figure twice, once as a floor
     // and once as exact: those are disputed now, not bounded.
+    // The fourth is a warranty with no numeric term: Ice Barrel's page states a
+    // limited lifetime warranty, and this category caps warranty scoring at
+    // five years, so the record says more than five and claims no figure.
     expect(bounded.sort()).toEqual([
       "ag1-pouch-30.sugar_g less_than 1",
       "bon-charge-max.irradiance_mw_cm2 greater_than 142",
+      "ice-barrel-500.warranty_years greater_than 5",
       "joovv-solo-3.irradiance_mw_cm2 greater_than 100",
     ]);
   });

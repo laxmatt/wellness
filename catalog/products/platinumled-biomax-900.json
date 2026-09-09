@@ -38,7 +38,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 129900,
-      "url": "https://platinumtherapylights.com/products/biomax-900",
+      "url": "https://platinumtherapylights.com/products/biomax-rlt",
       "affiliate": {
         "status": "unknown"
       },
@@ -51,7 +51,7 @@
         "url": "https://platinumtherapylights.com/products/biomax-rlt",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The 900 row states $1,299 USD, independently of whichever model the page's selector happens to show. Availability is not recorded from this reading. The record carried the same amount as prototype data, with a note that sources reported $1,149, $1,299 and promotions near $799."
+        "note": "The 900 row states $1,299 USD, independently of whichever model the page's selector happens to show. Availability is not recorded from this reading. The record carried the same amount as prototype data, with a note that sources reported $1,149, $1,299 and promotions near $799. The link pointed at https://platinumtherapylights.com/products/biomax-900 until 2026-09-09, which was never read; it now points at the page that was."
       }
     }
   ],
@@ -184,7 +184,7 @@
         "url": "https://platinumtherapylights.com/products/biomax-rlt",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The 900 row shows two consumption figures, 380 W and 490 W, under a combined Number of LEDs and Power Consumption heading, and does not settle which applies. No single figure is recorded. The record carried 186 W, relayed on 2026-09-08 for a BIOMAX 900 of unrecorded generation, which agrees with neither."
+        "note": "The 900 row shows two consumption figures, 380 W and 490 W, under separate Number of LEDs and Power Consumption headings, and nothing on the page settles which applies to this model. No single figure is recorded. The record carried 186 W, relayed on 2026-09-08 for a BIOMAX 900 of unrecorded generation, which agrees with neither."
       },
       "verification": "not_stated"
     },
