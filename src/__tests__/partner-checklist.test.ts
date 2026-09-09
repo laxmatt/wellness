@@ -77,6 +77,17 @@ describe("the partner showcase checklist", () => {
     expect(doc).toContain("unrecorded, not checked and found to be none");
   });
 
+  it("separates an amount on record from the amount the page shows", () => {
+    const doc = committed();
+    const at = doc.indexOf("`hooga-hg300`");
+    const entry = doc.slice(Math.max(0, at - 1500), at + 400);
+    // $199 is on record and the page shows "Check current price", because the
+    // shown price is the lowest offer and a prototype amount is lower. Saying
+    // "no amount on record" here would have been false.
+    expect(entry).toContain("$199 on record");
+    expect(entry).toContain("The page still shows Check current price");
+  });
+
   it("keeps the LMNT reading attributed to whoever made it", () => {
     const doc = committed();
     const at = doc.indexOf("`lmnt-citrus-salt-30`");

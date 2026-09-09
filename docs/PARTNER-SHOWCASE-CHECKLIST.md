@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **7 of 249**, across 1 product whose shown price was read rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **18 of 250**, across 2 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -89,32 +89,26 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Price evidence | partly | $199 on record from Hooga (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since. The page still shows Check current price: a lower prototype amount is the selected offer |
 | Image readiness | no | 2 procedural placeholders, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `hooga-hg300`, `/products/hooga-hg300` |
-| Offers | Hooga (direct) (no amount on record, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
-| Links | https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel<br>https://www.amazon.com/s?k=hooga+hg300 |
+| Offers | Amazon (no amount on record, unknown, affiliate status not recorded); Hooga (direct) ($199, unknown, affiliate status not recorded) |
+| Links | https://www.amazon.com/s?k=hooga+hg300<br>https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel |
 | Sources on file | https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel |
-| Retrieval | 11 of 14 recorded fields were relayed rather than read from the source |
+| Retrieval | 1 of 15 recorded fields were relayed rather than read from the source |
 | Ranking | score 28.6, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
 - `coverage` (required): source not recorded
 - `footprint` (required): source not recorded
-- `wavelengths_nm` (required): relayed, maker's page not fetched
-- `irradiance_mw_cm2`: bound: more than 73 mW/cm²; relayed, maker's page not fetched
-- `irradiance_distance_in`: relayed, maker's page not fetched
-- `led_count`: relayed, maker's page not fetched
-- `power_w`: **absent from the record**
+- `irradiance_mw_cm2`: bound: more than 73 mW/cm²
 - `mounting`: relayed, maker's page not fetched
 - `app_control`: **absent from the record**
 - `pulsing`: **absent from the record**
-- `warranty_years` (required): relayed, maker's page not fetched
-- `return_window_days`: relayed, maker's page not fetched
 
 ### Hooga PRO1500
 
@@ -217,7 +211,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | partly | $249 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $249 on record from Mito Red Light (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -249,7 +243,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | partly | $1,169 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $1,169 on record from Mito Red Light (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -315,7 +309,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 3 of 4 required specifications carry a usable value; 1 prototype; 1 with no recorded source |
-| Price evidence | partly | $5,490 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $5,490 on record from Edge Theory Labs (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -347,7 +341,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 3 with no recorded source |
-| Price evidence | partly | $1,199.99 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $1,199.99 on record from Ice Barrel (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -379,7 +373,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 3 with no recorded source |
-| Price evidence | partly | $1,499.99 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $1,499.99 on record from Ice Barrel (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -411,7 +405,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
-| Price evidence | partly | $6,990 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $6,990 on record from Plunge (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 2 procedural placeholders, no rights evidence |
 
 | | |
@@ -443,7 +437,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
-| Price evidence | partly | $9,599 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $9,599 on record from Renu Therapy (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 2 procedural placeholders, no rights evidence |
 
 | | |
@@ -475,7 +469,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 3 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | partly | $139.99 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $139.99 on record from Amazon, relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -509,7 +503,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 5 of 7 required specifications carry a usable value; 1 prototype; 2 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | partly | $99 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $99 on record from AG1 (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -546,7 +540,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 7 of 7 required specifications carry a usable value; 4 with no recorded source |
-| Price evidence | partly | $16.12 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $16.12 on record from Amazon, relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -583,7 +577,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 5 of 7 required specifications carry a usable value; 1 prototype; 2 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | partly | $22.99 recorded 2026-09-08, relayed from a search summary rather than read from the merchant, not re-checked since |
+| Price evidence | partly | $22.99 on record from Cure Hydration (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -620,7 +614,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 5 of 7 required specifications carry a usable value; 2 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Price evidence | partly | $27.99 on record from Amazon, relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since. The page still shows Check current price: a lower prototype amount is the selected offer |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -657,7 +651,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 7 of 7 required specifications carry a usable value; 1 with no recorded source |
-| Price evidence | partly | $45 recorded 2026-09-09, read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here), not re-checked since |
+| Price evidence | partly | $45 on record from LMNT (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -722,17 +716,19 @@ Specifications that are missing, unsupported or relayed:
 
 ## By category
 
-| Category | Products | Amount on record | Shown price read from the source | Required specs all usable and sourced | Real images |
+| Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |
 | --- | --- | --- | --- | --- | --- |
-| Red Light Therapy | 8 | 2 | 0 | 0 | 0 |
+| Red Light Therapy | 8 | 3 | 1 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 0 | 0 | 0 |
-| Wellness Drinks | 6 | 4 | 1 | 0 | 0 |
+| Wellness Drinks | 6 | 5 | 1 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 12. No amount on record: 8. Amount read from the source rather than relayed: 1 (lmnt-citrus-salt-30). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 14. No amount on record: 6. Amount read from the merchant rather than relayed: 2 (hooga-hg300, lmnt-citrus-salt-30). Independently measured: 0, on all 20; every figure is its maker's own.
+
+Shown prices that are prototype data: 8. One of those, `hooga-hg300`, has a real amount on record that the page does not show, because the shown price is the lowest offer and a prototype amount is lower. `docs/source-checks/2026-09-09-hooga-hg300.md` records it.
 
 **Image readiness.** A real image with a recorded licence: 0. A real image without one: 0. Placeholders only: 20.
 
@@ -742,7 +738,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 163 of 249 records and 12 of 26 offer prices are
+1. **Read the pages already on file.** 153 of 250 records and 12 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

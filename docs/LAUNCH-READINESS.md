@@ -26,9 +26,10 @@ site.
 | Merchants | 16 files, each with `websiteUrl` and market |
 
 **Attribute provenance, verified.** Every attribute carries a source and a
-verification tier. Across all 20 products, 196 attributes: **124
-manufacturer-reported, 45 unknown, 24 demo, 3 not stated**. By retrieval
-method: 77 direct, 119 secondhand. Five of the manufacturer-reported figures
+verification tier. Attributes are counted in
+`docs/PARTNER-SHOWCASE-CHECKLIST.md`, which computes them; as of the readings
+of 2026-09-09 the tiers run manufacturer-reported, unknown, demo and not
+stated, and most records are still relayed rather than read. Five of the manufacturer-reported figures
 are bounds rather than exact values, and are marked as bounds. These counts
 move as readings arrive; `docs/PARTNER-SHOWCASE-CHECKLIST.md` computes the
 current ones.
@@ -42,10 +43,11 @@ buy a panel and meter it to launch.
 
 The real gap is the quality of the sourcing, not the absence of a lab:
 
-- **119 of 196 attributes are secondhand**, carrying the note "relayed via
-  search summary; manufacturer page not fetched directly". The claim is
-  attributed to the maker, but the maker's page was never read. It was 124
-  before the LMNT reading of 2026-09-09.
+- **Most attributes are secondhand**, carrying the note "relayed via search
+  summary; manufacturer page not fetched directly". The claim is attributed to
+  the maker, but the maker's page was never read. It was 124 of 196 before the
+  readings of 2026-09-09; `docs/PARTNER-SHOWCASE-CHECKLIST.md` computes the
+  current count, and `docs/source-checks/` records each reading.
 - **45 attributes record no source at all** (`unknown`). The site shows
   "source not recorded", which is honest and unusable.
 
@@ -315,9 +317,10 @@ What actually holds it back, in the order that matters:
 1. **Images.** 24 of 24 are procedural placeholders. Nothing to license, and
    nothing showing the products. This is the one a partner sees first.
 2. **Sourcing.** Most records are marked `secondhand`: the URL was recorded
-   from a search summary and the page was never opened. One product, LMNT
-   Citrus Salt, has since had its price and five specifications read from the
-   maker's page and supplied by Codex. The current counts are in
+   from a search summary and the page was never opened. Two products, LMNT
+   Citrus Salt and Hooga HG300, have since had their price and specifications
+   read from the maker's page, both supplied by Codex and recorded in
+   `docs/source-checks/`. The current counts are in
    `docs/PARTNER-SHOWCASE-CHECKLIST.md`, which computes them; the URLs are
    already on file, which makes this the cheapest large improvement
    available.

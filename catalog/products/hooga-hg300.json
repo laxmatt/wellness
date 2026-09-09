@@ -44,19 +44,21 @@
       "merchantId": "hooga-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 13900,
+      "priceMinor": 19900,
       "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Price not found in sources. Demo value."
+        "note": "Page listed $199. Availability is not recorded from this reading: the page showed both a Sold out label and an Add to cart control, which do not agree. Previously carried $139 as prototype data, with the note that no price had been found."
       }
     },
     {
@@ -83,15 +85,17 @@
   "dimensions": {
     "value": {
       "length": 12.2,
-      "width": 8.2
+      "width": 8.2,
+      "height": 2.5
     },
     "unit": "in",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 12.2 x 8.2 x 2.5 inches. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -100,10 +104,11 @@
     "unit": "lb",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 6 lb. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -111,21 +116,23 @@
     "value": "3-year warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "returnPolicy": {
-    "value": "60-day return window from delivery",
+    "value": "60-day return window from delivery, return shipping deducted",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 60 days from delivery, with return shipping deducted from the refund. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -137,7 +144,7 @@
         "ref": "Editorial classification",
         "retrievedAt": "2026-09-08",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up. Page read 2026-09-09 describes the panel both as one for targeted sessions and as half-body; the two conflict, so nothing maker-reported is recorded from it and this stays an editorial class."
       },
       "verification": "unknown"
     },
@@ -160,10 +167,11 @@
       "unit": "nm",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 660 nm and 850 nm. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -172,10 +180,11 @@
       "unit": "mW/cm²",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Brand states over 73 mW/cm² at 6 inches. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states this figure two ways and they disagree: the highlights say over 73 mW/cm2 at 6 inches, the specification table says 73 exactly. Recorded as the floor, which both readings support, rather than choosing the passage that would rank better. Not resolved here. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported",
       "bound": "greater_than"
@@ -185,10 +194,11 @@
       "unit": "in",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page qualifies its irradiance figure at 6 inches. The figure itself is stated two ways on the same page; see irradiance_mw_cm2. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -196,10 +206,11 @@
       "value": 60,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 60 LEDs. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -221,10 +232,11 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -233,10 +245,24 @@
       "unit": "days",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a 60-day return window starting at delivery, with return shipping deducted from the refund. Previously recorded as relayed via a search summary on 2026-09-08."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 80,
+      "unit": "W",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 80 W actual consumption. The product name's 300 W is the LED rating, not draw; the figure recorded here is the draw."
       },
       "verification": "manufacturer_reported"
     }

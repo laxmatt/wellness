@@ -67,7 +67,13 @@ describe("local catalog", () => {
     const v = viewsFor("red-light").find((x) => x.id === "hooga-hg300")!;
     expect(v.attributes.wavelengths_nm).toEqual([660, 850]);
     expect(v.provenance["attributes.wavelengths_nm"].verification).toBe("manufacturer_reported");
-    expect(v.price.money.amountMinor).toBe(13900);
+    // The shown price is still the lowest offer, and the lowest offer is still
+    // the Amazon listing's prototype $149. The maker's own $199, read from its
+    // page on 2026-09-09, sits on the other offer and is not what the page
+    // shows. See docs/source-checks/2026-09-09-hooga-hg300.md.
+    expect(v.price.money.amountMinor).toBe(14900);
+    expect(v.price.isDemo).toBe(true);
+    expect(v.offers.find((o) => o.merchant.id === "hooga-store")!.price.amountMinor).toBe(19900);
     expect(v.price.basis).toBe("lowest_offer");
     expect(v.offers.length).toBe(2);
     expect(v.cardSpecs.map((s) => s.key)).toEqual(["coverage", "wavelengths_nm", "warranty_years"]);

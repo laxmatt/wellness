@@ -48,19 +48,23 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
   // "Recorded" is not "verified". An amount with a source URL is a figure
   // somebody wrote down, with a date; it is not a price checked today, and a
   // relayed figure was never read from the merchant's own page at all.
-  const priceSource = v.offers.length > 0 ? provenanceOfPrice(p) : undefined;
-  const relayed = priceSource?.method === "secondhand";
-  const priceDetail = v.price.isDemo
+  // An amount on record and the amount the page shows are two different
+  // questions. Hooga's HG300 has a real $199 from its maker and still shows
+  // "Check current price", because a prototype Amazon amount is lower and the
+  // shown price is the lowest offer.
+  const realOffers = p.offers.filter((o) => o.source.kind !== "demo");
+  const cheapestReal = [...realOffers].sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  const merchantOf = (id: string) => cat.merchants.find((m) => m.id === id)?.name ?? id;
+  const priceDetail = !cheapestReal
     ? "no amount on record; the page shows Check current price"
-    : `${formatMoney(v.price.money)} recorded ${v.price.checkedAt}` +
-      (relayed
-        ? ", relayed from a search summary rather than read from the merchant"
-        : `, read from the page${priceSource?.ref ? ` (${priceSource.ref.replace(/\.$/, "")})` : ""}`) +
-      ", not re-checked since";
+    : `${formatMoney({ amountMinor: cheapestReal.priceMinor, currency: cheapestReal.currency })} on record from ${merchantOf(cheapestReal.merchantId)}, ${cheapestReal.source.method === "secondhand" ? "relayed from a search summary rather than read from the merchant" : `read from the page${cheapestReal.source.ref ? ` (${cheapestReal.source.ref.replace(/\.$/, "")})` : ""}`} on ${cheapestReal.source.retrievedAt ?? cheapestReal.lastChecked}, not re-checked since` +
+      (v.price.isDemo
+        ? ". The page still shows Check current price: a lower prototype amount is the selected offer"
+        : "");
   // Never "complete": an amount on record is an amount somebody wrote down on
   // a date, and nothing here re-checked it. Only a fresh reading could earn
   // that, and this file has never made one.
-  const price: Dimension = v.price.isDemo ? "missing" : "partial";
+  const price: Dimension = !cheapestReal ? "missing" : "partial";
 
   const real = v.images.filter((i) => i.kind !== "demo_placeholder");
   const licensed = v.images.filter((i) => i.license);
@@ -70,11 +74,6 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
     : `${real.length} real image${real.length === 1 ? "" : "s"}, ${licensed.length} with a recorded licence`;
 
   return { facts: { level: facts, detail: factsDetail }, price: { level: price, detail: priceDetail }, images: { level: images, detail: imagesDetail } };
-}
-
-function provenanceOfPrice(p: Product): { method: string; ref?: string } | undefined {
-  const lowest = [...p.offers].sort((a, b) => a.priceMinor - b.priceMinor)[0];
-  return lowest ? { method: lowest.source.method, ref: lowest.source.ref } : undefined;
 }
 
 function attributeLines(p: Product, v: ProductView, c: CategoryDefinition): string[] {
@@ -110,7 +109,9 @@ const readRecords = allRecords.filter((pr) => pr.source.method === "direct" && p
 const relayedRecords = allRecords.filter((pr) => pr.source.method === "secondhand");
 const offerRecords = cat.products.flatMap((p) => p.offers);
 const relayedOffers = offerRecords.filter((o) => o.source.method === "secondhand");
-const readPrices = cat.products.filter((p) => provenanceOfPrice(p)?.method === "direct" && !viewOf(p).price.isDemo);
+const readPrices = cat.products.filter((p) =>
+  p.offers.some((o) => o.source.kind !== "demo" && o.source.method === "direct"),
+);
 const readDates = [...new Set(readRecords.map((pr) => pr.source.retrievedAt).filter(Boolean))].sort() as string[];
 
 push("# Partner showcase checklist");
@@ -127,7 +128,7 @@ push("`docs/source-checks/` holds one file per reading, naming who, when and wha
 push("the page said. Everything else is what the repository was told earlier,");
 push("mostly relayed from search summaries.");
 push();
-push(`Records whose source was read: **${readRecords.length} of ${allRecords.length}**, across ${readPrices.length} product${readPrices.length === 1 ? "" : "s"} whose shown price was read rather than relayed.` +
+push(`Records whose source was read: **${readRecords.length} of ${allRecords.length}**, across ${readPrices.length} product${readPrices.length === 1 ? "" : "s"} whose price was read from the merchant rather than relayed.` +
   (readDates.length > 0 ? ` Most recent reading: ${readDates[readDates.length - 1]}.` : ""));
 push();
 push("A recorded URL is a claim about where a figure came from. It is not");
@@ -224,14 +225,14 @@ for (const c of categories) {
 // which category to lead with: that is a decision, and this file reports.
 push("## By category");
 push();
-push("| Category | Products | Amount on record | Shown price read from the source | Required specs all usable and sourced | Real images |");
+push("| Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |");
 push("| --- | --- | --- | --- | --- | --- |");
 for (const c of categories) {
   const products = cat.products.filter((p) => p.categoryId === c.id);
   const views = products.map(viewOf);
   const ranked = recommendCategory(views, c);
-  const priced = views.filter((v) => !v.price.isDemo).length;
-  const direct = products.filter((p) => provenanceOfPrice(p)?.method === "direct" && !viewOf(p).price.isDemo).length;
+  const priced = products.filter((p) => p.offers.some((o) => o.source.kind !== "demo")).length;
+  const direct = products.filter((p) => p.offers.some((o) => o.source.kind !== "demo" && o.source.method === "direct")).length;
   const clean = products.filter((p) => {
     const v = viewOf(p);
     const item = ranked.products.find((x) => x.view.id === p.id)!;
@@ -246,7 +247,9 @@ push("## Totals");
 push();
 push(`**Comparison facts.** All required specifications usable and sourced: ${tally.facts.complete.length}. Some: ${tally.facts.partial.length}. None: ${tally.facts.missing.length}.`);
 push();
-push(`**Price evidence.** An amount on record: ${tally.price.partial.length}. No amount on record: ${tally.price.missing.length}. Amount read from the source rather than relayed: ${readPrices.length}${readPrices.length > 0 ? ` (${readPrices.map((p) => p.id).join(", ")})` : ""}. Independently measured: 0, on all 20; every figure is its maker's own.`);
+push(`**Price evidence.** An amount on record: ${tally.price.partial.length}. No amount on record: ${tally.price.missing.length}. Amount read from the merchant rather than relayed: ${readPrices.length}${readPrices.length > 0 ? ` (${readPrices.map((p) => p.id).join(", ")})` : ""}. Independently measured: 0, on all 20; every figure is its maker's own.`);
+push();
+push(`Shown prices that are prototype data: ${cat.products.filter((p) => viewOf(p).price.isDemo).length}. One of those, \`hooga-hg300\`, has a real amount on record that the page does not show, because the shown price is the lowest offer and a prototype amount is lower. \`docs/source-checks/2026-09-09-hooga-hg300.md\` records it.`);
 push();
 push(`**Image readiness.** A real image with a recorded licence: ${tally.images.complete.length}. A real image without one: ${tally.images.partial.length}. Placeholders only: ${tally.images.missing.length}.`);
 push();
