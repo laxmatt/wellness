@@ -85,13 +85,22 @@ most N" is judged from the operator and the amount together, so `lt 200` and
 
 | # | The shopper types | Expected constraints | Expected result |
 | --- | --- | --- | --- |
-| R1 | I need a full-body panel under $700 that won't take over my apartment. | hard `price` admitting at most **69999**; soft `coverage`, `footprint` | **no match**, and 5 products listed apart as unconfirmed on price |
+| R1 | I need a full-body panel under $700 that won't take over my apartment. | hard `price` admitting at most **69999**; soft `coverage`, `footprint` | recorded, not asserted: the preferences do not decide membership |
 | R2 | Nothing over $1,200, and I want to be able to hang it on a door. | hard `price` admitting at most 120000; hard `mounting includes door_hang` | **no match**, with `bon-charge-max` and `hooga-pro1500` listed apart as unconfirmed on price |
 | R3 | Something small for my face. | soft `coverage`; `footprint` reasonable. **No budget invented.** | all 8 shown, `hooga-hg300` and `mito-mitomin-2` ranked first |
 | R4 | Will red light heal my tendonitis? | none; `medicalRedirect` true | the clinician line, no model call |
 
 R2 is the first live test of `includes` with a published value since the
 engine fix. R4 costs nothing and confirms the detector still runs first.
+
+**A product expectation is only asserted where the expected hard constraints
+decide it.** A preference orders and does not filter, so a case whose
+expectation is a preference cannot pin a product set: R1, R3, C2 and C3 record
+their products without scoring them, and R2, C1, C4, D1, D2, D4 and X1 assert
+theirs. A rehearsal of the runner against a stubbed model found this: the plan
+had listed the products a *hard* plumbing constraint would return for C2,
+whose expectation is a preference. Corrected before spending, and stated here
+because it makes three cases record rather than assert.
 
 **Six of the eight red-light prices are placeholders.** A product whose price
 is unverified fails any price claim and is listed apart with the reason, which
@@ -113,8 +122,8 @@ plan uses the strict reading.
 | # | The shopper types | Expected constraints | Expected result |
 | --- | --- | --- | --- |
 | C1 | A tub with a chiller, up to $5,000. | hard `price` admitting at most 500000; hard `chiller_included eq true` | no match, no unconfirmed, and the reply names a constraint to relax rather than claiming nothing exists |
-| C2 | I don't want to deal with an electrician. | hard or soft `plumbing` at `none` | exactly `ice-barrel-400`, `ice-barrel-500`, `the-cold-pod-88` |
-| C3 | Something I can pack away when guests come. | `tub_type` at `inflatable` | exactly `edge-tub-elite`, `the-cold-pod-88` |
+| C2 | I don't want to deal with an electrician. | soft `plumbing` | recorded, not asserted |
+| C3 | Something I can pack away when guests come. | soft `tub_type` | recorded, not asserted |
 | C4 | The cheapest one that still has a chiller. | hard `chiller_included eq true`; soft `price` `prefer_low`. **No invented budget.** | exactly `edge-tub-elite`, `plunge-original`, `renu-cold-stoic-2`, cheapest first |
 
 Every cold-plunge price is verified, so these four are clean tests of matching
