@@ -51,19 +51,16 @@ nothing. Summing to 400 would have been arithmetic on an unresolved term.
 `power_w` is recorded. The two Hooga panels state their draw explicitly and
 carry one; this does not.
 
-**Coverage.** The catalogue's own class rule, computed from panel height, says
-full body for a 35.8-inch panel. The maker calls it targeted half-body with
-flexibility for small full-body sessions. Those do not agree, and the enum has
-no value for "half body, sometimes more". Marked `disputed`: the value stays
-visible and matches nothing, so the panel no longer answers a full-body filter
-its maker does not claim.
-
-That last one is a judgement call with the largest consequence in this file,
-and the alternative is worth stating: recording `half_body`, the maker's own
-first word, would keep the panel scoring on coverage at rank 2 instead of
-withholding the criterion. It was not taken because the sentence names three
-levels and picking one is the thing this project keeps refusing to do. If the
-call should go the other way, it is one field and one note.
+**Coverage, corrected on review.** The catalogue's own class rule, computed
+from panel height, said full body for a 35.8-inch panel. The maker calls it
+targeted half-body, with flexibility for small full-body sessions. This file
+first marked the field disputed, on the reading that the sentence named three
+levels and none could be picked. That was wrong: "targeted half-body" is a
+primary description, and the full-body flexibility is the maker's qualifier on
+it, not a competing class. The record now says **half_body**,
+`manufacturer_reported`, with the whole sentence in its note along with the
+height rule it replaces. The panel no longer answers a full-body filter, and it
+does answer a half-body one, which is what its maker says.
 
 **Stock.** A "Sold out" label, an "In Stock" line and an "Add to cart" control
 on the same page. Availability stays `unknown`.
@@ -75,15 +72,31 @@ right is claimed or implied.
 
 | | Before | After |
 | --- | --- | --- |
-| BON CHARGE score | 59.8 | **8.6** |
+| BON CHARGE score | 59.8 | **30.1** |
 | BON CHARGE shown price | Check current price ($1,099 prototype) | $999 |
+| BON CHARGE coverage | Full body, from panel height | **Half body**, the maker's own word |
 | Best Overall | PlatinumLED BIOMAX 900 | unchanged |
 | Best Value / Budget / Premium | MitoPRO / HG300 / PRO1500 | unchanged |
 | Panels with a prototype price | 3 of 7 eligible | 2 of 7 |
 
-The score falls because the two criteria it fell hardest on are now unresolved:
-coverage carries a weight of 3 of 7 and LED count 1 of 7, and both are withheld.
-It gains a little back from the 30-day return window, which the record did not
-have before. No badge moved. The panel is still listed, still comparable on
-what it does state, and its page says which figures its own maker left
-unsettled.
+The score falls for two reasons that are both the evidence rather than the
+formula: coverage drops a rank, from full body to the half body its maker
+describes, and the LED count is withheld as unresolved. It gains a little from
+the 30-day return window the record did not have. No badge moved. The panel is
+still listed, still comparable on what it does state, and its page says which
+figures its own maker left unsettled.
+
+## A defect this reading exposed
+
+The generated checklist read "3 of 4 required specifications carry a usable
+value" and "completeness 100%" for this product at the same time. Both figures
+were computed, and they disagreed. `completeness()` asked only whether a
+required attribute held a usable verification tier, so a field withheld as
+disputed still counted toward completeness and toward badge eligibility, while
+every screen and every filter treated it as absent.
+
+Fixed: completeness counts a required value only when it survives into
+`attributes`, which now means not a placeholder, not unstated, not computed
+from a prototype price and not disputed. A synthetic regression holds it, since
+no live product currently has a disputed required field. No other product's
+completeness or eligibility changed.

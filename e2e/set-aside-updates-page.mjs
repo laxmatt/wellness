@@ -121,9 +121,6 @@ const gridCards = (page) =>
 
 const cardHrefs = async (page) => [...(await gridCards(page))].sort();
 
-// The grid in the order it renders, not as a set.
-const gridOrder = (page) => gridCards(page);
-
 const band = async (page) => {
   const el = page.getByText("From your answers");
   return (await el.count()) === 0 ? null : ((await el.locator("xpath=..").textContent()) ?? "").replace(/\s+/g, " ").trim();
@@ -390,16 +387,27 @@ try {
     // The grid's own order, cheapest first. Ordering by the four ids the
     // engine names left everything from the fifth in catalogue order, and a
     // panel scoring 0 sat above one scoring 24.3.
-    check("the grid is in the engine's order, all the way down", await gridOrder(page), [
-      "/products/hooga-hg300",
-      "/products/mito-red-light-mitomin-2-0",
-      "/products/hooga-pro1500",
-      "/products/bon-charge-max",
-      "/products/mito-red-light-mitopro-1500-plus",
-      "/products/infraredi-flex-max",
-      "/products/platinumled-biomax-900",
-      "/products/joovv-solo-3-0",
-    ]);
+    // The property, not a list of ids. This held a fixed order and had to be
+    // retyped every time a real price replaced a prototype one, which tests
+    // the catalogue rather than the grid. Cheapest first means the amounts the
+    // cards actually show never go down as you read.
+    const shownPrices = await page.evaluate(() => {
+      const grids = [...document.querySelectorAll("div")].filter((d) => d.querySelectorAll(":scope > article").length > 0);
+      const grid = grids.sort((a, b) => b.querySelectorAll(":scope > article").length - a.querySelectorAll(":scope > article").length)[0];
+      return [...grid.querySelectorAll(":scope > article")].map((card) => {
+        const link = card.querySelector('a[href^="/products/"]');
+        const money = [...card.querySelectorAll("span")]
+          .map((s) => (s.textContent ?? "").trim())
+          .find((t) => /^\$[\d,.]+$/.test(t));
+        return { slug: link ? new URL(link.href).pathname : "", amount: money ? Number(money.replace(/[$,]/g, "")) : null };
+      });
+    });
+    check("all eight are in the grid", shownPrices.length, 8);
+    const confirmed = shownPrices.filter((p) => p.amount !== null);
+    const ascending = confirmed.every((p, i) => i === 0 || p.amount >= confirmed[i - 1].amount);
+    check("the confirmed prices never go down as the grid is read", ascending, true);
+    if (!ascending) console.log(`       order was ${JSON.stringify(shownPrices)}`);
+    check("and the cheapest confirmed price is first among them", confirmed[0]?.amount, Math.min(...confirmed.map((p) => p.amount)));
     await page.close();
   }
 } finally {

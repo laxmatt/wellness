@@ -424,8 +424,11 @@ async function run(browser: Browser) {
     scenario = `price check, proved sensitive on ${demoPriced.slug}`;
     await goto(page, `/products/${demoPriced.slug}`);
     const money = formatMoney(demoPriced.price.money);
-    const clean = (await page.locator("body").textContent()) ?? "";
-    ok("the page quotes no amount to begin with", !clean.includes(money), money);
+    // Scoped to the price block. A source note may quote what a source
+    // reported, and one on this product does; the claim under test is that
+    // nothing presents the amount as this product's price.
+    const clean = await priceBlock(page, "Check current price");
+    ok("the page quotes no amount where the price goes", clean.found && !clean.text.includes(money), clean);
 
     const injected = await page.evaluate((money) => {
       const el = [...document.querySelectorAll("span")].find((s) => (s.textContent ?? "").trim() === "Check current price");
@@ -438,9 +441,9 @@ async function run(browser: Browser) {
     const dirty = (await page.locator("body").textContent()) ?? "";
     ok("and the check then fails, which is what makes it worth running", dirty.includes(money), money);
     await page.reload({ waitUntil: "domcontentloaded" });
-    const restored = (await page.locator("body").textContent()) ?? "";
-    ok("the real page quotes nothing", !restored.includes(money), money);
-    ok("and offers to check instead", restored.includes("Check current price"));
+    const restored = await priceBlock(page, "Check current price");
+    ok("the real page quotes nothing where the price goes", restored.found && !restored.text.includes(money), restored);
+    ok("and offers to check instead", restored.text.includes("Check current price"), restored.text);
   }
 
   // ------------------------------------------------------------ compare

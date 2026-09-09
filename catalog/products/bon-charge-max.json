@@ -73,29 +73,29 @@
     "verification": "manufacturer_reported"
   },
   "warranty": {
-    "value": "One-year manufacturer's warranty from date of purchase",
+    "value": "One-year manufacturer's warranty",
     "source": {
       "kind": "manufacturer",
       "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://boncharge.com/products/max-red-light-device",
       "retrievedAt": "2026-09-09",
       "method": "direct",
-      "note": "Page states a one-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
+      "note": "Page states a one-year warranty. The words 'from date of purchase' were in this record before and are not in the reading, so they are gone. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "attributes": {
     "coverage": {
-      "value": "full_body",
+      "value": "half_body",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up. Page read 2026-09-09 describes the panel as targeted half-body, with flexibility for small full-body sessions, which does not agree with the full-body class this catalogue's height rule produces. Recorded as disputed rather than silently keeping either: the value stays visible and matches nothing."
+        "note": "Page describes the panel as targeted half-body, with flexibility for small full-body sessions. Recorded as half body, the description's own primary class; the full-body flexibility is the maker's qualifier and does not change what the panel is sold as. Carried as full_body until 2026-09-09, from this catalogue's editorial class by panel height (targeted under 20 in, half body 20 to 35 in, full body 35 in and over), which put this 35.8-inch panel one class above its maker's own description."
       },
-      "verification": "unknown",
-      "disputed": true
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "standard",

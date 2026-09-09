@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **43 of 255**, across 4 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **44 of 255**, across 4 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -56,7 +56,7 @@ Two things apply to all 20 and are not repeated in each entry:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 3 of 4 required specifications carry a usable value; 2 with no recorded source |
+| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
 | Price evidence | partly | $999 on record from BON CHARGE (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
@@ -67,11 +67,10 @@ Two things apply to all 20 and are not repeated in each entry:
 | Links | https://boncharge.com/products/max-red-light-device |
 | Sources on file | https://boncharge.com/products/max-red-light-device |
 | Retrieval | 0 of 13 recorded fields were relayed rather than read from the source |
-| Ranking | score 8.6, completeness 100%, badges: none |
+| Ranking | score 30.1, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
-- `coverage` (required): source not recorded
 - `footprint` (required): source not recorded
 - `irradiance_mw_cm2`: bound: more than 142 mW/cm²
 - `irradiance_distance_in`: **absent from the record**

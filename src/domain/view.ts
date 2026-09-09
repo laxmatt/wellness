@@ -168,14 +168,19 @@ export function derivePrice(product: Product): PriceView {
 export function completeness(product: Product, category: CategoryDefinition): number {
   const required = category.attributeDefinitions.filter((a) => a.required);
   if (required.length === 0) return 1;
-  // A value withheld because it was computed from a placeholder price counts as
-  // missing, exactly like the placeholder itself. Completeness is a measure of
-  // what is actually known.
+  // Completeness measures what is actually known, so every reason a value is
+  // withheld from `attributes` counts here too: a placeholder, a figure the
+  // source does not state, a figure computed from a placeholder price, and a
+  // figure whose own source states it two ways. The last one was missing, so a
+  // product could hold a required field it answers nothing on and still read
+  // 100 per cent complete.
   const priceIsDemo = derivePrice(product).isDemo;
   const present = required.filter((a) => {
     const sv = product.attributes[a.key];
-    if (priceIsDemo && sv?.derivedFrom === "price") return false;
-    return sv !== undefined && isUsable(sv.verification);
+    if (sv === undefined || sv.value === undefined) return false;
+    if (sv.disputed) return false;
+    if (priceIsDemo && sv.derivedFrom === "price") return false;
+    return isUsable(sv.verification);
   }).length;
   return present / required.length;
 }

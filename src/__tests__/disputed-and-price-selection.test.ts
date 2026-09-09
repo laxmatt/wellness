@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { redLight } from "@/domain/categories";
+import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { evaluateCondition } from "@/domain/conditions";
 import { buildCompareModel } from "@/domain/compare";
 import { recommendCategory } from "@/domain/recommend";
@@ -64,6 +65,56 @@ describe("a figure its own source states two ways answers nothing", () => {
       .find((r) => r.key === "irradiance_mw_cm2")!;
     expect(row.cells.every((c) => !c.best)).toBe(true);
     expect(row.notComparable).toMatch(/states its figure two ways/);
+  });
+});
+
+describe("a disputed required field is missing, as far as completeness is concerned", () => {
+  // The checklist read "3 of 4 required specifications carry a usable value"
+  // beside "completeness 100%" on the same product. Both were computed, and
+  // they disagreed: the completeness sum counted a required field that answers
+  // nothing, because it only asked whether the record had a usable tier.
+  const withDisputedRequired = () => {
+    const p = miniProduct("disputed-required", 20000, { power: 50, size: "m" });
+    // `size` is required in this category, and this one's source says two
+    // things.
+    p.attributes.size!.disputed = true;
+    p.attributes.size!.source.note = "Stated as m in one place and l in another.";
+    return p;
+  };
+
+  it("does not count toward completeness", () => {
+    const before = toProductView(miniProduct("plain", 20000, { power: 50, size: "m" }), {
+      category: miniCategory,
+      brands: [testBrand],
+      merchants: [testMerchant],
+    });
+    const after = toProductView(withDisputedRequired(), { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+    expect(before.flags.completeness).toBe(1);
+    // Two required attributes in this category, power and size.
+    expect(after.flags.completeness).toBe(0.5);
+    expect(after.attributes.size).toBeUndefined();
+  });
+
+  it("can cost a product its eligibility, the same way a placeholder does", () => {
+    // A category that asks for three quarters of its required specifications,
+    // as the live ones do. Half is not enough.
+    const strict = CategorySchema.parse({
+      ...JSON.parse(JSON.stringify(miniCategory)),
+      scoring: { ...JSON.parse(JSON.stringify(miniCategory.scoring)), completenessFloor: 0.75 },
+    });
+    const inputs = [withDisputedRequired(), miniProduct("plain", 20000, { power: 50, size: "m" })].map((p) =>
+      toScoringInput(toProductView(p, { category: strict, brands: [testBrand], merchants: [testMerchant] })),
+    );
+    const scored = scoreProducts(inputs, strict);
+    expect(scored.find((r) => r.id === "disputed-required")!.eligible).toBe(false);
+    expect(scored.find((r) => r.id === "plain")!.eligible).toBe(true);
+  });
+
+  it("counts the same as a value the source does not state", () => {
+    const notStated = miniProduct("not-stated", 20000, { power: 50, size: "m" });
+    notStated.attributes.size = { unit: undefined, source: { kind: "manufacturer", method: "direct", note: "Silent." }, verification: "not_stated" };
+    const v = toProductView(notStated, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+    expect(v.flags.completeness).toBe(0.5);
   });
 });
 
