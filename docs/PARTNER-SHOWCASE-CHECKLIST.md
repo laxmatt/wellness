@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **44 of 255**, across 4 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **50 of 255**, across 4 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -172,8 +172,8 @@ Specifications that are missing, unsupported or relayed:
 | Record | `joovv-solo-3`, `/products/joovv-solo-3-0` |
 | Offers | Joovv (direct) (no amount on record, unknown, affiliate status not recorded) |
 | Links | https://joovv.com/products/joovv-solo-3-0 |
-| Sources on file | https://joovv.com/products/joovv-solo-3-0 |
-| Retrieval | 11 of 14 recorded fields were relayed rather than read from the source |
+| Sources on file | https://joovv.com/products/joovv-solo-3-0<br>https://joovv.com/pages/warranty<br>https://joovv.com/pages/returns |
+| Retrieval | 5 of 14 recorded fields were relayed rather than read from the source |
 | Ranking | score 69.2, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
@@ -186,10 +186,6 @@ Specifications that are missing, unsupported or relayed:
 - `led_count`: relayed, maker's page not fetched
 - `power_w`: **absent from the record**
 - `mounting`: **absent from the record**
-- `app_control`: relayed, maker's page not fetched
-- `pulsing`: relayed, maker's page not fetched
-- `warranty_years` (required): relayed, maker's page not fetched
-- `return_window_days`: relayed, maker's page not fetched
 
 ### Mito Red Light MitoMIN 2.0
 
@@ -723,7 +719,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 138 of 255 records and 12 of 26 offer prices are
+1. **Read the pages already on file.** 132 of 255 records and 12 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.
