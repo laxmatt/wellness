@@ -363,27 +363,35 @@ function unreadable(): ModelIntent {
 //
 //   - every object needs `additionalProperties: false`;
 //   - every property must appear in `required`, so an optional field is
-//     expressed by allowing null rather than by leaving it out;
-//   - size and length keywords are not supported. `maxItems`, `minLength`,
-//     `maxLength`, `minimum` and `maximum` all have to go.
+//     expressed by allowing null rather than by leaving it out.
+//
+// Size and length keywords are a separate matter, and the blanket claim that
+// they are unsupported was wrong: OpenAI documents additional restrictions for
+// fine-tuned models, so support is not uniform across models and no single
+// statement covers it. This schema declines to use them anyway, because it
+// costs nothing to: `ModelIntent` enforces every count and range on every
+// reply, whatever response_format was sent.
 //
 // So this schema carries the shape and the closed enumerations, which is what
-// the model kept getting wrong, and the counts and ranges stay in Zod, which
-// validates every reply either way. Losing `maxItems` here costs nothing: an
-// over-long array is still refused after the fact.
+// the model kept getting wrong, and the counts and ranges stay in Zod.
 //
 // IMPORTANT: the official documentation could not be read from this container
 // (platform.openai.com and developers.openai.com are both blocked by the egress
 // policy), so the rules above come from secondary sources. See
 // docs/ASSISTANT.md for what that means and what remains unverified.
-const NULLABLE_VALUE = {
+const MONEY_BRANCH = {
+  type: "object",
+  properties: { amount: { type: "number" }, currency: { type: "string", enum: [MONEY_CURRENCY] } },
+  required: ["amount", "currency"],
+  additionalProperties: false,
+};
+
+// A hard constraint's value, matching ModelHardConstraint exactly. `null` is
+// how strict mode expresses "no value here", because every property must be
+// present; `normalize` turns it back into an absent field before validation.
+const HARD_VALUE = {
   anyOf: [
-    {
-      type: "object",
-      properties: { amount: { type: "number" }, currency: { type: "string", enum: [MONEY_CURRENCY] } },
-      required: ["amount", "currency"],
-      additionalProperties: false,
-    },
+    MONEY_BRANCH,
     { type: "number" },
     { type: "string" },
     { type: "boolean" },
@@ -391,6 +399,13 @@ const NULLABLE_VALUE = {
     { type: "array", items: { type: "number" } },
     { type: "null" },
   ],
+};
+
+// A soft preference's value, matching ModelSoftPreference exactly. It has no
+// numeric-array branch, and neither does this: offering the model a shape the
+// validator refuses is how a reply gets discarded for following instructions.
+const SOFT_VALUE = {
+  anyOf: [MONEY_BRANCH, { type: "number" }, { type: "string" }, { type: "boolean" }, { type: "array", items: { type: "string" } }, { type: "null" }],
 };
 
 export function intentJsonSchema(): Record<string, unknown> {
@@ -402,7 +417,7 @@ export function intentJsonSchema(): Record<string, unknown> {
         type: "array",
         items: {
           type: "object",
-          properties: { key: { type: "string" }, op: { type: "string", enum: [...CONDITION_OPS] }, value: NULLABLE_VALUE },
+          properties: { key: { type: "string" }, op: { type: "string", enum: [...CONDITION_OPS] }, value: HARD_VALUE },
           required: ["key", "op", "value"],
           additionalProperties: false,
         },
@@ -414,7 +429,7 @@ export function intentJsonSchema(): Record<string, unknown> {
           properties: {
             key: { type: "string" },
             direction: { type: "string", enum: [...SOFT_DIRECTIONS] },
-            value: NULLABLE_VALUE,
+            value: SOFT_VALUE,
             weight: { type: "number" },
           },
           required: ["key", "direction", "value", "weight"],
@@ -430,8 +445,10 @@ export function intentJsonSchema(): Record<string, unknown> {
   };
 }
 
-// Keywords strict mode does not accept. Exported so a test can walk the schema
-// and fail if one is ever reintroduced.
+// Keywords this schema declines to use. Not a claim about what the API rejects:
+// support varies by model and fine-tuned models carry further restrictions.
+// Exported so a test can walk the schema and fail if one is reintroduced,
+// because a schema strict mode will not compile is a 400 before inference.
 export const STRICT_UNSUPPORTED_KEYWORDS = ["maxItems", "minItems", "minLength", "maxLength", "minimum", "maximum", "pattern", "format", "default"];
 
 // Unchanged unless an operator opts in, because the capability is unverified
@@ -452,8 +469,24 @@ function normalize(v: unknown): unknown {
     if (!Array.isArray(q.options)) q.options = [];
   }
   for (const k of ["hard", "soft", "unmapped", "suggestCompare"]) if (!Array.isArray(o[k])) o[k] = [];
+
+  // Strict structured outputs cannot omit a property: every one must be
+  // present, so "no value" arrives as `value: null`. The validator accepts an
+  // absent value, not a null one, so a null is turned back into an absence
+  // here. Without this, every preference with no target value would be
+  // rejected the moment the schema was switched on, which is precisely the
+  // shape of reply the schema exists to make more reliable.
+  const dropNullValue = (entry: Record<string, unknown>) => {
+    if (entry.value !== null) return entry;
+    const rest = { ...entry };
+    delete rest.value;
+    return rest;
+  };
+  if (Array.isArray(o.hard)) {
+    o.hard = (o.hard as Record<string, unknown>[]).map((h) => (h && typeof h === "object" ? dropNullValue(h) : h));
+  }
   if (Array.isArray(o.soft)) {
-    o.soft = (o.soft as Record<string, unknown>[]).map((s) => ({ weight: 0.5, direction: "prefer_high", ...s }));
+    o.soft = (o.soft as Record<string, unknown>[]).map((s) => (s && typeof s === "object" ? dropNullValue({ weight: 0.5, direction: "prefer_high", ...s }) : s));
   }
   if (typeof o.reply !== "string") o.reply = "";
   return o;

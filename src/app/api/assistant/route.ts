@@ -11,7 +11,7 @@ import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
 import { FIXED_LIMITATION, clarifyingQuestion, composeReply } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
-import { moneyContractText } from "@/domain/money-contract";
+import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
@@ -336,7 +336,12 @@ export async function POST(req: Request) {
         proposals: [],
         medicalRedirect: false,
         failure: "unconvertible_constraint",
-        notice: "The assistant did not state a budget in a form this site can use, so nothing has been changed. Your filters are as you left them.",
+        // Named by what actually failed. Every conversion failure used to be
+        // reported as a budget, which is wrong the moment a non-money
+        // comparison arrives with no value to compare against.
+        notice: converted.problems.some((p) => isMoneyKey(cat, p.key))
+          ? "The assistant did not state a budget in a form this site can use, so nothing has been changed. Your filters are as you left them."
+          : "The assistant did not state a filter in a form this site can use, so nothing has been changed. Your filters are as you left them.",
       }),
     );
   }

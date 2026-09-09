@@ -16,6 +16,15 @@ export type ConversionResult =
   | { ok: true; hard: HardConstraint[]; soft: SoftPreference[] }
   | { ok: false; problems: ConstraintProblem[] };
 
+// The two operators that assert nothing about a value. Every other operator
+// compares against one, and a comparison with no target is not a weak
+// constraint: `evaluateCondition` reads the missing target as undefined and
+// returns false for every product, so the shopper is told nothing matched a
+// request that was never actually made. Strict structured outputs make this
+// reachable, because they cannot omit a property and send `value: null`
+// instead, which `normalize` turns into an absence.
+const OPS_WITHOUT_VALUE = new Set<string>(["exists", "missing"]);
+
 export function toEngineConstraints(
   cat: CategoryDefinition,
   modelHard: ModelHardConstraint[],
@@ -26,6 +35,15 @@ export function toEngineConstraints(
   const soft: SoftPreference[] = [];
 
   modelHard.forEach((c, index) => {
+    if (!OPS_WITHOUT_VALUE.has(c.op) && c.value === undefined) {
+      problems.push({
+        where: "hard",
+        index,
+        key: c.key,
+        reason: `"${c.key}" with op "${c.op}" carries no value. A comparison with no target matches nothing, so it is refused rather than searched for.`,
+      });
+      return;
+    }
     if (!isMoneyKey(cat, c.key)) {
       hard.push(c as Condition);
       return;

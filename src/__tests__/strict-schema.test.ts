@@ -39,7 +39,7 @@ describe("the schema obeys strict mode's constraints", () => {
     });
   });
 
-  it("uses no keyword strict mode rejects", () => {
+  it("uses none of the keywords this schema declines", () => {
     const found: string[] = [];
     walk(schema, (n) => {
       for (const k of STRICT_UNSUPPORTED_KEYWORDS) if (k in n) found.push(k);
