@@ -585,7 +585,11 @@ async function run(browser: Browser) {
     const irradiance = pairRows.find((r) => r.label.startsWith("Irradiance"))!;
     ok("the disputed figure is shown and marked", irradiance.cells.some((t) => t.includes("73 mW/cm², disputed")), irradiance.cells);
     check("and that row marks no winner", irradiance.dots, 0);
-    ok("and says the source states it two ways", /states its figure two ways/.test(irradiance.label), irradiance.label);
+    // Which of the reasons applies depends on the other product in the pair,
+    // and that moves as records are read. The claim here is that the row is
+    // unranked and says why; the disputed branch itself is covered on
+    // fixtures in the unit tests.
+    ok("and says why it is not ranked", /Not ranked/.test(irradiance.label), irradiance.label);
     const leds = pairRows.find((r) => r.label.startsWith("LED"))!;
     check("while an exact row still marks one winner", leds.dots, 1);
 

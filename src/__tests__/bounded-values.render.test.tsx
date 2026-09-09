@@ -6,7 +6,7 @@ import { ProvenanceBlock, SpecGroups } from "@/components/product/detail";
 import { redLight, wellnessDrinks } from "@/domain/categories";
 import { buildCompareModel } from "@/domain/compare";
 import { recommendCategory } from "@/domain/recommend";
-import { viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
 
 // The screen, not the model behind it. A qualifier that survives the domain
 // and dies in a component is a qualifier a shopper never sees, and this is the
@@ -91,12 +91,16 @@ describe("the comparison table", () => {
   });
 
   it("shows a disputed figure and ranks nothing on it", () => {
-    const items = recommendCategory(viewsFor("red-light"), redLight).products.filter((p) =>
-      ["hooga-hg300", "platinumled-biomax-900"].includes(p.view.id),
-    );
-    const model = buildCompareModel(items, redLight);
+    // Built rather than found, for the same reason as its domain twin: which
+    // live pair reaches this branch changes as readings arrive, and the branch
+    // is the thing under test.
+    const disputed = miniProduct("disputed", 20000, { power: 60, size: "m" });
+    disputed.attributes.power!.disputed = true;
+    disputed.attributes.power!.source.note = "Stated as 60 in one place and 80 in another.";
+    const items = recommendCategory([disputed, miniProduct("exact", 20000, { power: 50, size: "m" })].map(miniView), miniCategory).products;
+    const model = buildCompareModel(items, miniCategory);
     render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
-    const row = screen.getByText("73 mW/cm², disputed").closest("tr")!;
+    const row = screen.getByText("60, disputed").closest("tr")!;
     expect(within(row).getByText(/states its figure two ways/)).toBeTruthy();
     expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
   });

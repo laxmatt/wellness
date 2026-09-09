@@ -17,11 +17,11 @@
   },
   "id": "platinumled-biomax-900",
   "slug": "platinumled-biomax-900",
-  "name": "BIOMAX 900",
+  "name": "BIOMAX 900, ninth generation",
   "brandId": "platinumled",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "Seven-wavelength full-height panel spanning 480 to 1060 nm, with a three-year warranty.",
+  "description": "Ninth-generation full-body panel: 300 LEDs, 35.83 inches tall, three-year warranty. The maker states seven wavelengths; the individual peaks were not read.",
   "images": [
     {
       "id": "platinumled-biomax-900-primary",
@@ -44,28 +44,31 @@
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Sources report $1,149, $1,299 and promotional prices near $799. Using $1,299. Demo value."
+        "note": "The 900 row states $1,299 USD, independently of whichever model the page's selector happens to show. Availability is not recorded from this reading. The record carried the same amount as prototype data, with a note that sources reported $1,149, $1,299 and promotions near $799."
       }
     }
   ],
   "dimensions": {
     "value": {
-      "length": 36,
-      "width": 12,
-      "height": 3
+      "length": 35.83,
+      "width": 11.81,
+      "height": 2.76
     },
     "unit": "in",
     "source": {
       "kind": "manufacturer",
-      "url": "https://platinumtherapylights.com/products/biomax-900",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://platinumtherapylights.com/products/biomax-rlt",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The 900 row states 35.83 x 11.81 x 2.76 in. The record carried 36 x 12 x 3, relayed and rounded. The page read is explicitly the ninth generation, and this record is now scoped to it."
     },
     "verification": "manufacturer_reported"
   },
@@ -74,10 +77,11 @@
     "unit": "lb",
     "source": {
       "kind": "manufacturer",
-      "url": "https://platinumtherapylights.com/products/biomax-900",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://platinumtherapylights.com/products/biomax-rlt",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The 900 row states 33 lb. The page read is explicitly the ninth generation, and this record is now scoped to it."
     },
     "verification": "manufacturer_reported"
   },
@@ -85,10 +89,11 @@
     "value": "3-year warranty",
     "source": {
       "kind": "manufacturer",
-      "url": "https://platinumtherapylights.com/products/biomax-900",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://platinumtherapylights.com/products/biomax-rlt",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The 900 row states a 3-year warranty. The page read is explicitly the ninth generation, and this record is now scoped to it."
     },
     "verification": "manufacturer_reported"
   },
@@ -96,13 +101,14 @@
     "coverage": {
       "value": "full_body",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+        "note": "The 900 row states Full Body, which is what this catalogue's editorial class by panel height already said. Recorded as the maker's own description. The page read is explicitly the ninth generation, and this record is now scoped to it."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "standard",
@@ -130,66 +136,68 @@
         "kind": "demo",
         "ref": "Prototype demo value",
         "method": "direct",
-        "note": "Brand reports seven wavelengths spanning 480 to 1060 nm. Individual peaks not confirmed from the source. Demo list."
+        "note": "Prototype spectrum. The maker states seven wavelengths; the ninth-generation page's exact peaks were not read, so the list here is still made up and still marked as such. Not a measurement, and not the maker's list."
       },
       "verification": "demo"
     },
     "irradiance_mw_cm2": {
-      "value": 185,
       "unit": "mW/cm²",
       "source": {
         "kind": "manufacturer",
-        "url": "https://platinumtherapylights.com/products/biomax-900",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Reported at 6 inches. Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The ninth-generation page gives irradiance only in a chart, which was not read, so no figure is recorded. The record carried 185 mW/cm² at 6 inches, relayed from a search summary on 2026-09-08 for a BIOMAX 900 whose generation was never recorded. That figure is kept here as history and is not carried forward onto a ninth-generation record."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "irradiance_distance_in": {
-      "value": 6,
       "unit": "in",
       "source": {
         "kind": "manufacturer",
-        "url": "https://platinumtherapylights.com/products/biomax-900",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "No distance is recorded, because no irradiance figure is. The 6 inches carried before belonged to the relayed 185 mW/cm² above."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "led_count": {
       "value": 300,
       "source": {
         "kind": "manufacturer",
-        "url": "https://platinumtherapylights.com/products/biomax-900",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The 900 row of the page's model table states 300 LEDs. The page read is explicitly the ninth generation, and this record is now scoped to it."
       },
       "verification": "manufacturer_reported"
     },
     "power_w": {
-      "value": 186,
       "unit": "W",
       "source": {
         "kind": "manufacturer",
-        "url": "https://platinumtherapylights.com/products/biomax-900",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The 900 row shows two consumption figures, 380 W and 490 W, under a combined Number of LEDs and Power Consumption heading, and does not settle which applies. No single figure is recorded. The record carried 186 W, relayed on 2026-09-08 for a BIOMAX 900 of unrecorded generation, which agrees with neither."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "warranty_years": {
       "value": 3,
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
-        "url": "https://platinumtherapylights.com/products/biomax-900",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The 900 row states a 3-year warranty. The page read is explicitly the ninth generation, and this record is now scoped to it."
       },
       "verification": "manufacturer_reported"
     }

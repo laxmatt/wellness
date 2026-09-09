@@ -109,21 +109,27 @@ describe("comparison dots require comparable measurements", () => {
     expect(row.notComparable).toMatch(/not stated for every product/);
   });
 
-  it("suppresses the irradiance winner when one source states its figure two ways", () => {
-    // HG300 and BIOMAX 900 both report at 6 in, so the distance rule is
-    // satisfied. Hooga's page says "over 73" in its highlights and 73 in its
-    // table, so its figure is disputed: the row shows it, marked, and ranks
-    // nothing.
-    const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
-    const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
+  it("suppresses the winner when one source states its figure two ways", () => {
+    // Built rather than found. No live pair reaches this branch any more: the
+    // reason a row is unranked is checked in order, and the only two panels
+    // that stated a measurement distance no longer both do. The rule is the
+    // thing under test, not which products happen to trip it.
+    const disputed = miniProduct("disputed", 20000, { power: 60, size: "m" });
+    disputed.attributes.power!.disputed = true;
+    disputed.attributes.power!.source.note = "Stated as 60 in one place and 80 in another.";
+    const exact = miniProduct("exact", 20000, { power: 50, size: "m" });
+    const model = buildCompareModel(
+      recommendCategory([disputed, exact].map(miniView), miniCategory).products,
+      miniCategory,
+    );
+    const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "power")!;
     expect(row.cells.every((c) => !c.best)).toBe(true);
     expect(row.notComparable).toMatch(/states its figure two ways/);
-    expect(row.cells.some((c) => c.text.includes("73 mW/cm², disputed"))).toBe(true);
+    expect(row.cells.some((c) => c.text.includes("60, disputed"))).toBe(true);
   });
 
   it("still marks a winner on a row of exact figures", () => {
-    // The bound rule is not a blanket refusal to rank. LED count is stated
-    // exactly by both, and BIOMAX's 300 wins it.
+    // Not a blanket refusal to rank: LED count is stated exactly by both.
     const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
     const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "led_count")!;
     expect(row.notComparable).toBeUndefined();
@@ -132,10 +138,19 @@ describe("comparison dots require comparable measurements", () => {
   });
 
   it("never marks a winner in a row containing placeholder data", () => {
+    // The spec half stays on the live catalogue, where BIOMAX's spectrum is
+    // still prototype data. The price half is built, because which products
+    // carry a prototype price changes as readings arrive.
     const model = buildCompareModel(items(["hooga-pro1500", "platinumled-biomax-900"]), redLight);
     const wavelengths = model.groups.flatMap((g) => g.rows).find((r) => r.key === "wavelengths_nm")!;
+    // A neutral row carries no reason, because there is no better or worse
+    // to withhold; it simply marks nothing.
     expect(wavelengths.cells.every((c) => !c.best)).toBe(true);
-    const price = model.groups[0].rows.find((r) => r.key === "price")!;
+
+    const priced = miniView(miniProduct("real", 30000, { power: 50, size: "m" }));
+    const unpriced = miniView(miniProduct("prototype", 10000, { power: 50, size: "m" }, "unknown", [], true));
+    const built = buildCompareModel(recommendCategory([priced, unpriced], miniCategory).products, miniCategory);
+    const price = built.groups[0].rows.find((r) => r.key === "price")!;
     expect(price.cells.every((c) => !c.best)).toBe(true);
     expect(price.notComparable).toMatch(/placeholder/);
   });

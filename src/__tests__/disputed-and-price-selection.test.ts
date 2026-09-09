@@ -58,6 +58,11 @@ describe("a figure its own source states two ways answers nothing", () => {
   });
 
   it("ranks nothing on it in a comparison", () => {
+    // The live pair that used to reach this branch no longer does: BIOMAX's
+    // irradiance is withheld on its ninth-generation record, so the row is
+    // unranked for that reason first. The branch itself is exercised on
+    // fixtures in semantics.test.ts; here the live claim is the narrower one,
+    // that HG300's disputed figure is shown and wins nothing.
     const items = recommendCategory(viewsFor("red-light"), redLight).products.filter((p) =>
       ["hooga-hg300", "platinumled-biomax-900"].includes(p.view.id),
     );
@@ -65,7 +70,8 @@ describe("a figure its own source states two ways answers nothing", () => {
       .groups.flatMap((g) => g.rows)
       .find((r) => r.key === "irradiance_mw_cm2")!;
     expect(row.cells.every((c) => !c.best)).toBe(true);
-    expect(row.notComparable).toMatch(/states its figure two ways/);
+    expect(row.cells.some((c) => c.text.includes("73 mW/cm², disputed"))).toBe(true);
+    expect(row.notComparable).toBeTruthy();
   });
 });
 

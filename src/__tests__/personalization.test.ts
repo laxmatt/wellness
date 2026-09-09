@@ -176,7 +176,16 @@ describe("compare model", () => {
   });
 
   it("does not mark a price winner while any price in the set is a placeholder", () => {
-    const price = model.groups[0].rows.find((r) => r.key === "price")!;
+    // Built: all three panels above have real prices now, and which products
+    // carry a prototype one changes as readings arrive.
+    const built = buildCompareModel(
+      recommendCategory(
+        [miniView(miniProduct("real", 30000, { power: 50, size: "m" })), miniView(miniProduct("prototype", 10000, { power: 50, size: "m" }, "unknown", [], true))],
+        miniCategory,
+      ).products,
+      miniCategory,
+    );
+    const price = built.groups[0].rows.find((r) => r.key === "price")!;
     expect(price.cells.every((c) => !c.best)).toBe(true);
     expect(price.notComparable).toMatch(/placeholder/);
   });
@@ -188,8 +197,13 @@ describe("compare model", () => {
   });
 
   it("carries verification tags into cells", () => {
+    // Irradiance always shows its tag, and the three panels now say three
+    // different things: two report a figure, and BIOMAX's ninth-generation
+    // record states none.
     const irradiance = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
-    expect(irradiance.cells.every((c) => c.verification === "manufacturer_reported")).toBe(true);
+    expect(irradiance.cells.every((c) => c.verification !== undefined)).toBe(true);
+    expect(irradiance.cells.filter((c) => c.verification === "manufacturer_reported").length).toBe(2);
+    expect(irradiance.cells.filter((c) => c.verification === "not_stated").length).toBe(1);
   });
 });
 
