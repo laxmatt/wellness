@@ -86,7 +86,7 @@ describe("the boundary refuses to guess a unit", () => {
     const text = moneyContractText(categoryById("wellness-drinks")!);
     expect(text).toContain("price_per_serving_minor");
     expect(text).toContain('"currency": "USD"');
-    expect(text).toMatch(/never as a bare number/i);
+    expect(text).toMatch(/never a bare number/i);
   });
 });
 

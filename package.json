@@ -14,6 +14,7 @@
     "assistant:livetest": "tsx scripts/assistant-live-test.ts",
     "assistant:strictcheck": "tsx scripts/assistant-strict-check.ts",
     "assistant:evaluate": "tsx scripts/assistant-evaluation.ts",
+    "assistant:rescore": "tsx scripts/evaluation-rescore.ts",
     "e2e:setaside": "node e2e/set-aside-updates-page.mjs",
     "ledger:restore": "tsx scripts/ledger-restore.ts"
   },

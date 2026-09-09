@@ -90,13 +90,40 @@ export function moneyValueToMinorUnits(value: unknown, key: string): MoneyConver
 // constants the converter uses.
 export function moneyContractText(cat: CategoryDefinition): string {
   const keys = moneyKeys(cat).filter((k) => cat.filters.some((f) => f.key === k) || k === "price");
+  // A worked example for each money key, at that key's own magnitude. The
+  // block used to show two examples, both on `price`, both at 700, and a
+  // per-serving budget of "$1.60" came back as {"amount": 160}: the shopper's
+  // decimal, sent as minor units in a field the contract says is dollars. One
+  // example per key, and a decimal wherever amounts are small, so the shape is
+  // shown at the size the shopper will use it.
+  const lines = keys.map((key) => {
+    const small = /per_serving|_minor$/.test(key);
+    const under = small ? 1.6 : 700;
+    const orLess = small ? 2 : 700;
+    // The amount as JSON, and the amount as a person writes it. "$1.6" is
+    // nobody's budget.
+    const written = (n: number) => (Number.isInteger(n) ? `$${n.toLocaleString("en-US")}` : `$${n.toFixed(2)}`);
+    return [
+      `- {"key": "${key}", "op": "lt", "value": {"amount": ${under}, "currency": "${MONEY_CURRENCY}"}} means "under ${written(under)}", which excludes ${written(under)} exactly.`,
+      `- {"key": "${key}", "op": "lte", "value": {"amount": ${orLess}, "currency": "${MONEY_CURRENCY}"}} means "${written(orLess)} or less", which includes ${written(orLess)} exactly.`,
+    ].join("\n");
+  });
+  // A key named "_minor" says how this site stores the number, not what you
+  // send. Nothing in this contract is ever in minor units.
+  const minorNamed = keys.filter((k) => k.endsWith("_minor"));
+  const minorNote =
+    minorNamed.length > 0
+      ? `The name "${minorNamed[0]}" describes how this site stores the value internally. It does not change what you send: the amount is always in whole dollars, so $1.60 is {"amount": 1.6}, never {"amount": 160}.`
+      : "";
   return [
     `MONEY: ${keys.join(", ")} ${keys.length === 1 ? "is" : "are"} money.`,
-    `Send money as an object in whole dollars, never as a number of cents and never as a bare number:`,
-    `- {"key": "${keys[0]}", "op": "lt", "value": {"amount": 700, "currency": "${MONEY_CURRENCY}"}} means "under $700", which excludes $700 exactly.`,
-    `- {"key": "${keys[0]}", "op": "lte", "value": {"amount": 700, "currency": "${MONEY_CURRENCY}"}} means "$700 or less", which includes $700 exactly.`,
-    `Choose between them by what the shopper said. "Under", "below" and "less than" are lt. "Up to", "at most", "no more than" and "or less" are lte. A budget written one way is not the other.`,
-    `Cents work the same way: {"amount": 1.99, ...} is $1.99, not 199.`,
+    `Send money as an object with the amount in dollars, exactly as the shopper says it. Never a number of cents, never a bare number, and never rescaled:`,
+    ...lines,
+    `Choose the operator by what the shopper said. "Under", "below" and "less than" are lt. "Up to", "at most", "no more than" and "or less" are lte. A budget written one way is not the other.`,
+    `Decimals stay decimals: "$1.99" is {"amount": 1.99}, not 199. "$1.60 a serving" is {"amount": 1.6}, not 160.`,
+    minorNote,
     `A bare number for one of these keys is rejected outright, because "500" cannot be told apart from "$5.00".`,
-  ].join("\n");
+  ]
+    .filter((l) => l !== "")
+    .join("\n");
 }

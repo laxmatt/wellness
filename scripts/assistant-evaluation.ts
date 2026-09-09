@@ -542,11 +542,13 @@ function writeReport(before: Usage, after: Usage) {
   const lines: string[] = [
     buildReport({
       records,
-      plannedCases: CASES.length + 3,
+      plannedCases: turns.length,
       before: snapshot(before),
       after: snapshot(after),
       stoppedEarly: stopped ? { reason: stopped } : undefined,
       model: process.env.OPENAI_MODEL ?? "gpt-4o-mini",
+      unit: { one: "turn", many: "turns" },
+      conversations: CASES.length + 3,
     }),
     "",
     "## Every turn, as it happened",

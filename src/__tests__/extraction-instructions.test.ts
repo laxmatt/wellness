@@ -140,8 +140,9 @@ describe("list filters carry their values", () => {
 describe("the instruction to extract everything in the sentence", () => {
   it("is present, and names no particular sentence", async () => {
     const prompt = await promptFor("wellness-drinks");
-    expect(prompt).toMatch(/One sentence often states several constraints at once/);
+    expect(prompt).toMatch(/One sentence often states several things at once/);
     expect(prompt).toMatch(/Extract every one of them, not only the budget/);
+    expect(prompt).toMatch(/A requirement is "hard"\. A preference is "soft"\./);
     // If this ever fails, someone taught the prompt the test suite's sentences.
     expect(prompt.toLowerCase()).not.toContain("zero sugar electrolytes");
   });

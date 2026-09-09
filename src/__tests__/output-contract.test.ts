@@ -15,8 +15,8 @@ const input = (over: Partial<ConverseInput> = {}): ConverseInput => ({
   categoryName: "Red light therapy",
   filterVocabulary: "price (integer cents, use op lte); coverage (one of full_body|targeted)",
   products: [
-    { id: "p1", name: "One", brand: "B", price: "$100", priceIsPlaceholder: false, facts: [], notStated: [] },
-    { id: "p2", name: "Two", brand: "B", price: "$200", priceIsPlaceholder: false, facts: [], notStated: [] },
+    { id: "p1", name: "One", brand: "B", facts: [], notStated: [] },
+    { id: "p2", name: "Two", brand: "B", facts: [], notStated: [] },
   ],
   catalogueSize: 8,
   moneyContract: "MONEY: price is money.",
@@ -104,11 +104,12 @@ describe("the shortlist is described as partial", () => {
     expect(text).toContain("You cannot see the other 6");
   });
 
-  it("forbids claiming that nothing exists, which is what produced the $500 answer", () => {
-    const text = promptText(input());
-    expect(text).toMatch(/Never say that no product exists/i);
-    expect(text).toMatch(/the site's engine searches every product/i);
-  });
+  // Retired, not weakened. The instruction forbidding "nothing exists" existed
+  // because the model's prose reached the shopper. It does not: every sentence
+  // is composed by reply-composer.ts, and engineSummary states the count from
+  // the engine's own result. The guarantee moved from an instruction the model
+  // could ignore to a sentence it cannot write. See shortlist-claims.test.ts,
+  // which asserts the rendered count rather than the request for one.
 
   it("does not go negative when the shortlist is the whole category", () => {
     const text = promptText(input({ catalogueSize: 2 }));
@@ -116,13 +117,28 @@ describe("the shortlist is described as partial", () => {
   });
 });
 
-describe("evidence tiers are described to the model", () => {
-  it("names all three, and says what each one licenses", () => {
+describe("what the model is no longer given", () => {
+  // Evidence tiers told the model how to attribute a figure it quoted. It
+  // quotes nothing now, so the tiers grounded nothing and are gone, along with
+  // the prices. Attribution still reaches the shopper: the route renders it on
+  // the product cards from the same provenance records.
+  it("carries no evidence tier", () => {
     const text = promptText(input());
-    expect(text).toContain("sourced");
-    expect(text).toContain("manufacturer_claim");
-    expect(text).toContain("unattributed");
-    expect(text).toMatch(/source is not recorded/i);
-    expect(text).toMatch(/Say whose claim it is/i);
+    expect(text).not.toMatch(/\[sourced\]|\[manufacturer_claim\]|\[unattributed\]/);
+  });
+
+  it("carries no price, at any provenance", () => {
+    // The catalogue block alone. The MONEY block quotes amounts on purpose:
+    // that is the contract for how a budget is sent.
+    const text = promptText(input());
+    const catalogue = text.slice(text.indexOf("CATALOGUE:"));
+    expect(catalogue).not.toMatch(/\bprice \$/);
+    expect(catalogue).not.toMatch(/\$\d/);
+  });
+
+  it("says its reply is not displayed, so it does not write one", () => {
+    const text = promptText(input());
+    expect(text).toMatch(/is not displayed to anyone/i);
+    expect(text).toMatch(/do not describe products, quote figures/i);
   });
 });

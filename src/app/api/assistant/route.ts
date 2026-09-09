@@ -45,55 +45,21 @@ function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
   for (const def of cat.attributeDefinitions) {
     const spec = view.specs.find((s) => s.key === def.key);
     const p = view.provenance[`attributes.${def.key}`];
+    // Demo data is withheld, not labelled. Labels are advice; withholding is
+    // not, and the model quoted a labelled placeholder to a shopper once.
     if (!spec || spec.raw === undefined || p?.verification === "demo") {
       notStated.push(def.shortLabel ?? def.label);
       continue;
     }
-    facts.push({
-      label: def.shortLabel ?? def.label,
-      value: spec.formatted,
-      // Only what the manufacturer actually reported is labelled as their
-      // claim. A value whose provenance is recorded as unknown, or not
-      // recorded at all, is neither verified nor claimed by anyone, and
-      // calling it a manufacturer claim invents an attribution.
-      evidence:
-        p?.verification === "independently_verified"
-          ? "sourced"
-          : p?.verification === "manufacturer_reported"
-            ? "manufacturer_claim"
-            : "unattributed",
-    });
+    facts.push({ label: def.shortLabel ?? def.label, value: spec.formatted });
   }
-  // A placeholder price is demo data. It used to be sent with a warning label
-  // and the model quoted it to a shopper as "$139" anyway. Labels are advice;
-  // withholding is not. It is listed as not stated, like any other value the
-  // catalogue does not really have.
-  const priceIsPlaceholder = view.price.isDemo;
-  if (priceIsPlaceholder) notStated.push("price");
-  return {
-    id: view.id,
-    name: view.name,
-    brand: view.brand.name,
-    price: priceIsPlaceholder ? null : formatMoney(view.price.money),
-    priceIsPlaceholder,
-    facts,
-    notStated,
-  };
+  // No price, at any provenance. The model's job is to read the shopper's
+  // sentence, and a price in front of it is only ever material for inventing a
+  // budget nobody asked for. Every price a shopper sees is rendered by the
+  // site from its own records.
+  return { id: view.id, name: view.name, brand: view.brand.name, facts, notStated };
 }
 
-// What the model is told it may filter on.
-//
-// An enum key has always carried its allowed values. A list key did not, so
-// "electrolytes" had no visible home: the model was shown `function (list; use
-// op "includes")` and no indication that "electrolytes" was one of the values
-// it could take. The site's own filter chips derive those values from the
-// products, in src/domain/filters.ts, and this now does the same, from the same
-// views the shortlist is drawn from.
-//
-// The price line used to read "integer cents, use op lte", which contradicted
-// the MONEY block twice over: money crosses this boundary in dollars, not
-// cents, and "lte" is not the operator for every budget. The MONEY block owns
-// that contract, so this says nothing about it.
 function vocabulary(cat: CategoryDefinition, views: ProductView[]): string {
   const listValues = (key: string): string[] => {
     const values = new Set<string>();

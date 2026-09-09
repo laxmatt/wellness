@@ -113,15 +113,25 @@ describe("what the model is told about the shortlist", () => {
     expect(catalogue).toMatch(/Do not describe this list as the catalogue/);
   });
 
-  it("labels an unattributed value as unattributed, not as a manufacturer claim", async () => {
+  it("sends no provenance label and no price to the model", async () => {
     vi.stubGlobal("fetch", modelProposing([]));
     await POST(ask("hello"));
-    const catalogue = sent.find((c) => c.includes("CATALOGUE:")) ?? "";
+    // The catalogue block alone: the MONEY block above it quotes amounts on
+    // purpose, since that is the contract for a budget.
+    const context = sent.find((c) => c.includes("CATALOGUE:")) ?? "";
+    const catalogue = context.slice(context.indexOf("CATALOGUE:"));
 
-    // The red-light catalogue carries values whose provenance is recorded as
-    // unknown. Presenting those as a maker's claim invents an attribution.
-    expect(catalogue).toContain("[unattributed]");
-    expect(catalogue).toContain("[manufacturer_claim]");
+    // Both existed to ground prose the model wrote. It writes none: the site
+    // composes every sentence, and attribution reaches the shopper on the
+    // product cards, rendered by the route from the same provenance records.
+    // A price in front of the model is only ever material for inventing a
+    // budget, which is what "the cheapest one that still has a chiller"
+    // produced at 03:31.
+    expect(catalogue).not.toMatch(/\[unattributed\]|\[manufacturer_claim\]|\[sourced\]/);
+    expect(catalogue).not.toMatch(/\$\d/);
+    // The values themselves are still there: they are how a phrase maps to a
+    // filter.
+    expect(catalogue).toMatch(/Coverage: /);
   });
 });
 

@@ -11,20 +11,23 @@ import { estimateTokens } from "@/providers/usage/UsageMeter";
 // The key is read from the environment on the server only and never reaches a
 // response body, a log line or the browser bundle.
 
-// Three tiers, not two. A value whose provenance is recorded as unknown is not
-// a manufacturer's claim, and presenting it as one invents an attribution the
-// catalogue never made. Placeholder values are still withheld entirely.
-export const EVIDENCE_TIERS = ["sourced", "manufacturer_claim", "unattributed"] as const;
-export type Evidence = (typeof EVIDENCE_TIERS)[number];
-export type GroundedFact = { label: string; value: string; evidence: Evidence };
+// What the model is shown about a product: enough to map a phrase onto a
+// filter value, and no more.
+//
+// It used to carry each product's price and an evidence tier per fact, because
+// the model wrote the prose a shopper read and had to ground it. That prose is
+// no longer displayed: `reply-composer.ts` writes every sentence from the
+// catalogue and the engine's own result. So the tiers grounded nothing, and
+// the prices were worse than useless. Asked for "the cheapest one that still
+// has a chiller", the model read the cheapest price out of this block and
+// returned it as a hard budget of $5,490, excluding the tubs the shopper might
+// have traded up to. Prices are not the model's business now, so it does not
+// get them.
+export type GroundedFact = { label: string; value: string };
 export type GroundedProduct = {
   id: string;
   name: string;
   brand: string;
-  // Null when the catalogue's price is a placeholder: it is withheld, not
-  // labelled, so it cannot be quoted.
-  price: string | null;
-  priceIsPlaceholder: boolean;
   facts: GroundedFact[];
   notStated: string[];
 };
@@ -90,28 +93,23 @@ export interface ConversationProvider {
 const OPS = CONDITION_OPS.join(" | ");
 const DIRECTIONS = SOFT_DIRECTIONS.join(" | ");
 
-const SYSTEM = `You help someone choose between products on a comparison site.
+const SYSTEM = `You turn what a shopper says into structured filters for a product comparison site.
 
-Your job is to understand what they need and turn it into structured filters. You do NOT decide which product is best: the site's own ranking engine does that and its result is shown alongside your reply. Never claim a product is best, top-rated or recommended by you.
+That is your whole job. The sentences the shopper reads are written by the site itself from its own catalogue and its own search result: your "reply" field is not displayed to anyone. So do not describe products, quote figures, or write an answer. Read the sentence and say what it asks for.
 
 Rules you must follow:
-1. Only ever refer to products and figures given to you in the CATALOGUE block. Never introduce a product, brand, price or specification that is not there. If asked something the catalogue does not answer, say the information is not stated.
-2. Distinguish evidence, every time you use a figure.
-   - "sourced" was independently verified. State it plainly.
-   - "manufacturer_claim" is what the maker says, not a measurement. Say whose claim it is when you rely on it, for example "the maker reports 189 mW/cm2".
-   - "unattributed" means the value is recorded but its source is not. Say that its source is not recorded, or do not use it.
-   - a field under "not stated" is unknown. Never estimate it.
-3. The CATALOGUE block is a SHORTLIST, not the catalogue. It holds at most the products listed, out of a larger category, and it was chosen before you replied. So you cannot see what is missing from it. Never say that no product exists, that nothing meets a constraint, that something is unavailable, or that a count is complete. If nothing in the shortlist fits, say that about the shortlist only, and still put the constraint in "hard": the site's engine searches every product and reports the real count beside your reply.
-4. Ask about budget, intended use, space and preferences when they are still unknown, one question at a time, and offer a few concrete options.
-5. If a constraint the shopper gave cannot be met, do NOT silently drop it. Say what does not fit and ask whether they want to relax it.
-6. These are wellness products. Help with the shopping decision only. Never say or imply a product treats, cures, prevents, diagnoses or relieves any medical condition, and never give personalized medical advice. If asked, set medicalIntent true, say plainly that you cannot answer that, and offer to compare on specifications instead.
-7. Be brief. Two or three sentences.
+1. Only what the shopper actually said becomes a constraint. Never invent a limit they did not state, and never take a number out of the CATALOGUE block and turn it into one. The catalogue is there to tell you which values exist, not to supply the shopper's requirements.
+2. A requirement is "hard". A preference is "soft". "Must", "needs", "only", "no", "zero" and a stated limit are requirements. "Cheapest", "smallest", "best", "prefer", "ideally" and every comparative or superlative are preferences: they say how to order the results, not what to exclude. Getting this wrong either hides products the shopper asked to see or shows ones they ruled out.
+3. One sentence often states several things at once. Extract every one of them, not only the budget: a shopper who names a nutrition limit, an ingredient and a price has given you three, and dropping two narrows their search to something they did not ask for.
+4. Repeat every constraint that still applies, not just new ones.
+5. Use "unmapped" for anything the shopper cares about that the filters cannot express. Never approximate it with a filter that means something else.
+6. These are wellness products. If the shopper asks whether something treats, cures, prevents, diagnoses or relieves a medical condition, set medicalIntent true and extract nothing.
 
-OUTPUT CONTRACT. Reply with a single JSON object and nothing else. Every field below is validated exactly as written. A reply that breaks any one of these rules is discarded whole and the shopper sees an error instead of your answer, so follow them literally.
+OUTPUT CONTRACT. Reply with a single JSON object and nothing else. Every field below is validated exactly as written. A reply that breaks any one of these rules is discarded whole, so follow them literally.
 
 {"reply": string, "hard": [{"key","op","value"}], "soft": [{"key","direction","value","weight"}], "unmapped": [string], "question": {"text","options":[string]} | null, "medicalIntent": boolean, "suggestCompare": [productId]}
 
-- reply: required string, at most ${INTENT_LIMITS.replyChars} characters.
+- reply: required, non-empty, at most ${INTENT_LIMITS.replyChars} characters. One short line naming what you extracted. It is not shown to the shopper, so do not write prose, prices or product descriptions in it.
 - hard: array of at most ${INTENT_LIMITS.hard} entries.
   - key: one of the keys listed in FILTERS. No other key.
   - op: EXACTLY one of these words: ${OPS}. Not a symbol, not a synonym, not "less_than", not "<", not "under".
@@ -120,15 +118,11 @@ OUTPUT CONTRACT. Reply with a single JSON object and nothing else. Every field b
   - key: one of the keys listed in FILTERS.
   - direction: EXACTLY one of these words: ${DIRECTIONS}. Not "low", not "lower", not "minimize", not "cheap".
   - weight: a number from ${SOFT_WEIGHT_RANGE.min} to ${SOFT_WEIGHT_RANGE.max} inclusive. Use ${SOFT_WEIGHT_RANGE.default} if you have no reason to prefer another.
-  - value: optional, same types as above.
+  - value: optional, same types as above. Omit it for a plain "cheaper is better" preference.
 - unmapped: at most ${INTENT_LIMITS.unmapped} strings.
 - question: null, or {"text": at most ${INTENT_LIMITS.questionChars} characters, "options": at most ${INTENT_LIMITS.questionOptions} strings of at most ${INTENT_LIMITS.questionOptionChars} characters each}.
 - medicalIntent: boolean.
-- suggestCompare: at most ${INTENT_LIMITS.suggestCompare} product ids taken from the CATALOGUE.
-
-One sentence often states several constraints at once. Extract every one of them, not only the budget: a shopper who names a nutrition limit, an ingredient and a price has given you three, and dropping two of them narrows their search to something they did not ask for.
-
-Repeat every constraint that still applies, not just new ones. Use "unmapped" for anything the shopper cares about that the filters cannot express.`;
+- suggestCompare: at most ${INTENT_LIMITS.suggestCompare} product ids taken from the CATALOGUE.`;
 
 export class OpenAIConversationProvider implements ConversationProvider {
   readonly name = "openai";
@@ -147,10 +141,9 @@ export class OpenAIConversationProvider implements ConversationProvider {
   private buildMessages(input: ConverseInput) {
     const catalogue = input.products
       .map((p) => {
-        const facts = p.facts.map((f) => `    ${f.label}: ${f.value} [${f.evidence}]`).join("\n");
+        const facts = p.facts.map((f) => `    ${f.label}: ${f.value}`).join("\n");
         const missing = p.notStated.length > 0 ? `\n    not stated: ${p.notStated.join(", ")}` : "";
-        const price = p.price === null ? "not stated" : `${p.price} [sourced]`;
-        return `  ${p.id} | ${p.brand} ${p.name} | price ${price}\n${facts}${missing}`;
+        return `  ${p.id} | ${p.brand} ${p.name}\n${facts}${missing}`;
       })
       .join("\n");
 

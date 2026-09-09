@@ -33,6 +33,12 @@ export type ReportInput = {
   stoppedEarly?: { reason: string };
   model?: string;
   now?: Date;
+  // What one record is. The 15-case suite records one conversation per case;
+  // an evaluation run records a turn, and a conversation can have two, so the
+  // counts differ and the heading has to say which it is counting.
+  unit?: { one: string; many: string };
+  // Conversations attempted, when that differs from the number of records.
+  conversations?: number;
 };
 
 export function passCount(records: CaseRecord[]): number {
@@ -45,6 +51,10 @@ export function reportStamp(now = new Date()): string {
 
 export function buildReport(input: ReportInput): string {
   const { records, plannedCases, before, after } = input;
+  // Absent, the wording is the 15-case suite's, unchanged: its reports are
+  // one conversation per record and they say so.
+  const unit = input.unit;
+  const many = unit?.many ?? "cases";
   const now = input.now ?? new Date();
   const pass = passCount(records);
   const spent = before && after ? after.spentUsd - before.spentUsd : null;
@@ -60,7 +70,7 @@ export function buildReport(input: ReportInput): string {
 
   if (input.stoppedEarly) {
     lines.push(
-      `**This run stopped early: ${input.stoppedEarly.reason}** ${records.length} of ${plannedCases} cases ran. The figures below cover only those.`,
+      `**This run stopped early: ${input.stoppedEarly.reason}** ${records.length} of ${plannedCases} ${many} ran. The figures below cover only those.`,
       "",
     );
   }
@@ -68,10 +78,11 @@ export function buildReport(input: ReportInput): string {
   lines.push(
     "## Extraction",
     "",
-    `${pass} of ${records.length} cases matched the constraints a careful person would have entered.` +
-      (records.length === plannedCases ? "" : ` ${plannedCases} were planned.`),
+    `${pass} of ${records.length} ${many} matched the constraints a careful person would have entered.` +
+      (records.length === plannedCases ? "" : ` ${plannedCases} were planned.`) +
+      (input.conversations !== undefined ? ` They come from ${input.conversations} conversations: a conversation runs more than one ${unit?.one ?? "turn"} when the site asks something or the shopper changes a requirement.` : ""),
     "",
-    "| Category | Case | Result | Products shown |",
+    `| Category | ${unit ? `${unit.one[0].toUpperCase()}${unit.one.slice(1)}` : "Case"} | Result | Products shown |`,
     "| --- | --- | --- | --- |",
     ...records.map((r) => `| ${r.category} | ${r.note} | ${r.problems.length === 0 ? "ok" : r.problems.join("; ")} | ${r.shown} |`),
     "",
@@ -80,9 +91,11 @@ export function buildReport(input: ReportInput): string {
     spent === null
       ? "Not measured: no admin key was available to read the ledger."
       : [
-          `Measured spend for ${records.length} single-turn conversations: **$${spent.toFixed(4)}**.`,
+          `Measured spend for ${records.length} ${unit ? unit.many : "single-turn conversations"}: **$${spent.toFixed(4)}**.`,
           "",
-          records.length > 0 ? `Observed cost per conversation: **$${(spent / records.length).toFixed(5)}**.` : "No conversation completed.",
+          records.length > 0
+            ? `Observed cost per ${unit?.one ?? "conversation"}: **$${(spent / records.length).toFixed(5)}**.`
+            : `No ${unit?.one ?? "conversation"} completed.`,
           "",
           "A real conversation runs several turns. Multiply by expected turns per session before setting the cap.",
         ].join("\n"),
