@@ -47,11 +47,21 @@ export type Source = z.infer<typeof Source>;
 export const Bound = z.enum(["less_than", "greater_than"]);
 export type Bound = z.infer<typeof Bound>;
 
+// What a value was computed from, when it was computed rather than observed.
+// Only one relationship is modelled, because only one exists in the data: a
+// per-serving cost is the pack price divided by servings, and every one of the
+// six records says so in its own note. Anything else stands on its own source
+// until somebody records otherwise; this is not a dependency system and must
+// not be used as a guess.
+export const DerivedFrom = z.enum(["price"]);
+export type DerivedFrom = z.infer<typeof DerivedFrom>;
+
 export const Provenance = z.object({
   source: Source,
   verification: Verification,
   unit: z.string().optional(),
   bound: Bound.optional(),
+  derivedFrom: DerivedFrom.optional(),
 });
 export type Provenance = z.infer<typeof Provenance>;
 
@@ -70,6 +80,9 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     // one whose verification cannot support a fact, and one pointing the
     // flattering way for its attribute's direction.
     bound: Bound.optional(),
+    // Set when this value was computed from the product's price, so it is
+    // worth exactly what that price is worth.
+    derivedFrom: DerivedFrom.optional(),
   });
 }
 
@@ -79,6 +92,7 @@ export type Sourced<T> = {
   source: Source;
   verification: Verification;
   bound?: Bound;
+  derivedFrom?: DerivedFrom;
 };
 
 export const DEMO_SOURCE: Source = {
@@ -122,7 +136,7 @@ export function stripProvenance<T>(s: Sourced<T>): T | undefined {
 }
 
 export function provenanceOf<T>(s: Sourced<T>): Provenance {
-  return { source: s.source, verification: s.verification, unit: s.unit, bound: s.bound };
+  return { source: s.source, verification: s.verification, unit: s.unit, bound: s.bound, derivedFrom: s.derivedFrom };
 }
 
 // The direction a bound points, as text a person can read: the qualifier the

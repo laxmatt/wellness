@@ -110,7 +110,8 @@
         "method": "direct",
         "note": "Pack price divided by cans."
       },
-      "verification": "unknown"
+      "verification": "unknown",
+      "derivedFrom": "price"
     },
     "sugar_g": {
       "value": 2,

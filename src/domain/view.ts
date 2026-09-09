@@ -71,8 +71,9 @@ export type SpecView = {
   group: string;
   raw: AttributePrimitive | undefined;
   formatted: string;
-  // Set when this is a money figure derived from a placeholder price, so
-  // `formatted` says to check the price rather than quoting one.
+  // Set when this value was computed from a price that is prototype data, so
+  // `formatted` says to check the price rather than quoting a figure derived
+  // from an invented one.
   moneyWithheld?: boolean;
   // Set when the source states a bound rather than an exact value. `formatted`
   // already carries the qualifier; this is for a screen that needs to know.
@@ -149,13 +150,13 @@ export function derivePrice(product: Product): PriceView {
 export function completeness(product: Product, category: CategoryDefinition): number {
   const required = category.attributeDefinitions.filter((a) => a.required);
   if (required.length === 0) return 1;
-  // A money figure withheld because it came from a placeholder price counts as
+  // A value withheld because it was computed from a placeholder price counts as
   // missing, exactly like the placeholder itself. Completeness is a measure of
   // what is actually known.
   const priceIsDemo = derivePrice(product).isDemo;
   const present = required.filter((a) => {
     const sv = product.attributes[a.key];
-    if (priceIsDemo && a.unit === "USD_minor") return false;
+    if (priceIsDemo && sv?.derivedFrom === "price") return false;
     return sv !== undefined && isUsable(sv.verification);
   }).length;
   return present / required.length;
@@ -191,13 +192,21 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   const bounds: Record<string, Bound> = {};
 
   const price = derivePrice(product);
-  // A money figure computed from a placeholder price is that placeholder,
-  // divided. Liquid I.V.'s price per serving was the demo pack price over 16,
-  // recorded as an editorial calculation, shown as a fact, and used to rank
-  // it. Every amount in the category's own currency unit is withheld here when
-  // the price it came from is prototype data.
-  const moneyKeys = new Set(
-    price.isDemo ? ctx.category.attributeDefinitions.filter((a) => a.unit === "USD_minor").map((a) => a.key) : [],
+  // A value computed from a placeholder price is that placeholder, divided.
+  // Liquid I.V.'s price per serving was the demo pack price over 16, recorded
+  // as an editorial calculation, shown as a fact, and used to rank it.
+  //
+  // Only values that say they came from the price are withheld. An earlier
+  // version withheld every attribute in the category's money unit, which
+  // assumed a derivation nobody had recorded: a price a merchant states per
+  // serving, or a shipping charge with its own source, would have been thrown
+  // away because a different figure on the same product was prototype data.
+  const derivedKeys = new Set(
+    price.isDemo
+      ? Object.entries(product.attributes)
+          .filter(([, sv]) => sv.derivedFrom === "price")
+          .map(([key]) => key)
+      : [],
   );
   for (const [key, sv] of Object.entries(product.attributes)) {
     // Only values that can be used as fact become attributes. A demo value is
@@ -208,7 +217,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     // for as long as it has existed. An attribute the source does not state
     // keeps its provenance so the page can say "not stated" and show why, and
     // neither kind becomes something to match on.
-    if (sv.value !== undefined && isUsable(sv.verification) && !moneyKeys.has(key)) {
+    if (sv.value !== undefined && isUsable(sv.verification) && !derivedKeys.has(key)) {
       attributes[key] = sv.value;
       if (sv.bound) bounds[key] = sv.bound;
     }
@@ -246,7 +255,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
 
   const specs = [...ctx.category.attributeDefinitions]
     .sort((a, b) => a.compareOrder - b.compareOrder)
-    .map((def) => specFor(def, product, moneyKeys.has(def.key)));
+    .map((def) => specFor(def, product, derivedKeys.has(def.key)));
   const cardSpecs = ctx.category.cardSpecKeys
     .map((k) => specs.find((s) => s.key === k))
     .filter((s): s is SpecView => s !== undefined);

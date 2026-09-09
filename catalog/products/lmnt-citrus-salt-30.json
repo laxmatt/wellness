@@ -143,7 +143,8 @@
         "method": "direct",
         "note": "Pack price divided by servings."
       },
-      "verification": "unknown"
+      "verification": "unknown",
+      "derivedFrom": "price"
     },
     "sugar_g": {
       "value": 0,

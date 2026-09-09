@@ -81,6 +81,17 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
       // sanitation note that records a removal. A heuristic that forces true
       // values to be deleted is worse than no heuristic: the exact checks are
       // the ones that hold.
+      // A recorded derivation has to be recorded, not inferred: it needs a
+      // note saying how the figure was computed, and it only makes sense on a
+      // number in the category's money unit.
+      if (sv.derivedFrom === "price") {
+        if (def.unit !== "USD_minor") {
+          issues.push({ file, message: `attribute "${key}" says it is derived from the price but is not a money figure (unit "${def.unit ?? "none"}").` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" says it is derived from the price with no note saying how.` });
+        }
+      }
       if (sv.bound) {
         if (typeof sv.value !== "number") {
           issues.push({ file, message: `attribute "${key}" carries a bound but its value is not a number. A bound qualifies an amount.` });

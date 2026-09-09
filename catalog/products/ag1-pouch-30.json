@@ -110,7 +110,8 @@
         "method": "direct",
         "note": "One-time pack price divided by servings. Subscription is $2.63 per serving."
       },
-      "verification": "unknown"
+      "verification": "unknown",
+      "derivedFrom": "price"
     },
     "sugar_g": {
       "value": 1,

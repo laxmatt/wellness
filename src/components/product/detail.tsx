@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { isUsable } from "@/domain/provenance";
 import { VerificationTag } from "@/components/ui/VerificationTag";
 import { buttonStyles } from "@/components/ui/Button";
@@ -8,13 +9,15 @@ import type { Provenance, Verification } from "@/domain/provenance";
 import { displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
-// What the shopper is told about the link they are about to follow. "unknown"
-// is the honest state of every offer here: no programme has been joined, so
-// the link is an ordinary one and earns nothing.
+// What the shopper is told about the link they are about to follow, per
+// offer. `unknown` means the record does not say, and it keeps meaning that:
+// reading it as "no commission" would quietly answer for an imported offer
+// nobody has checked. The site-wide fact, that no programme exists at all, is
+// stated once above the list where it belongs, by whoever can confirm it.
 const affiliateCopy: Record<OfferView["affiliateStatus"], string> = {
   affiliate: "Affiliate link. We may earn a commission.",
   non_affiliate: "Ordinary link. No commission.",
-  unknown: "Ordinary link. No commission.",
+  unknown: "Affiliate status not recorded for this offer.",
 };
 
 const availabilityCopy: Record<OfferView["availability"], string> = {
@@ -41,7 +44,18 @@ export function OfferList({ view }: { view: ProductView }) {
     );
   }
   return (
-    <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
+    <>
+      {/* One statement, at the top, about the site rather than about a record:
+          nothing here is an affiliate link today. Per-offer status stays as
+          whatever each record actually says. */}
+      <p className="mb-2 text-xs text-fg-muted">
+        No affiliate programme is in place for this site, so none of these links earns a commission.{" "}
+        <Link href="/disclosure" className="underline-offset-2 hover:underline">
+          How this site is paid
+        </Link>
+        .
+      </p>
+      <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
       {view.offers.map((o, i) => (
         <li key={o.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
@@ -76,7 +90,8 @@ export function OfferList({ view }: { view: ProductView }) {
           </div>
         </li>
       ))}
-    </ul>
+      </ul>
+    </>
   );
 }
 

@@ -21,28 +21,44 @@ describe("the partner showcase checklist", () => {
     for (const p of catalog().products) expect(doc, p.id).toContain(`\`${p.id}\``);
   });
 
-  it("quotes no amount for a product whose price is prototype data", () => {
+  it("quotes no amount for a product with none on record", () => {
     const doc = committed();
     for (const c of categories) {
       for (const p of catalog().products.filter((x) => x.categoryId === c.id)) {
         const view = toProductView(p, { category: categoryById(c.id)!, brands: catalog().brands, merchants: catalog().merchants });
         if (!view.price.isDemo) continue;
-        const entry = doc.slice(doc.indexOf(`\`${p.id}\``), doc.indexOf(`\`${p.id}\``) + 1200);
+        const at = doc.indexOf(`\`${p.id}\``);
+        const entry = doc.slice(Math.max(0, at - 1200), at + 1200);
         expect(entry, p.id).not.toContain(formatMoney(view.price.money));
-        expect(entry, p.id).toContain("no confirmed price");
+        expect(entry, p.id).toContain("no amount on record");
       }
     }
   });
 
-  it("holds back every product without a confirmed price", () => {
+  it("reports evidence rather than deciding what to launch", () => {
     const doc = committed();
-    const hold = doc.slice(doc.indexOf("**Hold it back:"));
-    for (const c of categories) {
-      for (const p of catalog().products.filter((x) => x.categoryId === c.id)) {
-        const view = toProductView(p, { category: categoryById(c.id)!, brands: catalog().brands, merchants: catalog().merchants });
-        if (view.price.isDemo) expect(hold, p.id).toContain(view.name);
-      }
-    }
+    // The earlier version sorted products into "show it" and "hold it back",
+    // which made an amount on record a prerequisite for publishing. It is not:
+    // the page says "Check current price" and the product is publishable
+    // behind it.
+    expect(doc).not.toMatch(/Hold it back|Show it, with the gaps/);
+    expect(doc).toContain("This is an evidence inventory, not a launch list");
+    expect(doc).toContain("Comparison facts");
+    expect(doc).toContain("Price evidence");
+    expect(doc).toContain("Image readiness");
+  });
+
+  it("never calls a recorded price a verified one", () => {
+    const doc = committed();
+    expect(doc).toContain("Recorded is not verified");
+    expect(doc).toMatch(/Verified today: 0/);
+    expect(doc).not.toMatch(/confirmed price|verified price/i);
+  });
+
+  it("separates the site having no programme from an offer record saying so", () => {
+    const doc = committed();
+    expect(doc).toContain("affiliate status not recorded");
+    expect(doc).toContain("unrecorded, not checked and found to be none");
   });
 
   it("says no source was fetched to produce it", () => {
