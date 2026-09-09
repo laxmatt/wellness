@@ -278,7 +278,12 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
     .filter((p): p is Extract<ProposedAction, { kind: "relax_constraint" }> => p.kind === "relax_constraint")
     .filter((p) => !setAside.includes(p.key));
   const primary = reply.proposals.filter((p) => p.kind !== "relax_constraint");
-  const showPrimary = !dismissed && !primaryDone && primary.length > 0;
+  const proposed = reply.proposals.find((p): p is Extract<ProposedAction, { kind: "apply_preferences" }> => p.kind === "apply_preferences");
+  // Once a constraint has been set aside, the original Apply would put it back:
+  // it still carries the proposal as first offered. It is retired rather than
+  // left standing, because the alternative has already applied the same
+  // proposal without that constraint.
+  const showPrimary = !dismissed && !primaryDone && setAside.length === 0 && primary.length > 0;
   const showAlternatives = !dismissed && alternatives.length > 0;
   return (
     <div className="flex w-full flex-col gap-2.5">
@@ -399,8 +404,18 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
                     key={p.key}
                     type="button"
                     onClick={() => {
-                      a.accept(p);
-                      setSetAside((prev) => [...prev, p.key]);
+                      // The alternative applies the proposal it was offered
+                      // beside, without this constraint and without any set
+                      // aside before it. Its other requirements are kept: the
+                      // choice was about one constraint, not about the answer.
+                      const dropped = [...setAside, p.key];
+                      a.setAside(
+                        p.key,
+                        proposed
+                          ? { hard: proposed.hard.filter((c) => !dropped.includes(c.key)), soft: proposed.soft.filter((sp) => !dropped.includes(sp.key)) }
+                          : undefined,
+                      );
+                      setSetAside(dropped);
                     }}
                     className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg"
                   >

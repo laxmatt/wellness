@@ -3,12 +3,15 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { useEffect } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/assistant/route";
+import { wellnessDrinks } from "@/domain/categories";
+import { matchesAll } from "@/domain/conditions";
 import { AssistantPanel } from "@/components/assistant/AssistantPanel";
 import { AssistantProvider, useAssistant } from "@/components/assistant/AssistantProvider";
 import { CompareProvider } from "@/components/compare/CompareProvider";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, type MeterConfig } from "@/providers/usage/UsageMeter";
 import { resetMeterForTests } from "@/providers/usage";
+import { viewsFor } from "./fixtures";
 
 // The whole clarification flow, end to end, with only the model replaced.
 //
@@ -134,6 +137,18 @@ function removeChip(label: RegExp): HTMLElement {
     .find((b) => label.test(b.textContent ?? "") && /Remove this constraint/.test(b.textContent ?? ""));
   expect(chip).toBeTruthy();
   return chip!;
+}
+
+type HardShape = { key: string; op: string; value?: unknown };
+
+// The engine's own answer for a set of constraints: the same predicate the
+// route filters with, so a claim about matching products is the site's own
+// computation rather than a list written into the test.
+function matchesFor(hard: HardShape[]): string[] {
+  return viewsFor("wellness-drinks")
+    .filter((v) => matchesAll(v, wellnessDrinks, hard as never))
+    .map((v) => v.id)
+    .sort();
 }
 
 async function ask(text: string) {
@@ -408,6 +423,7 @@ describe("what answering the question does not do", () => {
       { key: "price_per_serving_minor", op: "lt", value: 200 },
       { key: "function", op: "includes", value: "electrolytes" },
     ]);
+    expect(matchesFor(posted[2].hard as HardShape[])).toEqual(["lmnt-citrus-salt-30"]);
   });
 
   it("sets aside exactly the one alternative pressed", async () => {
@@ -428,6 +444,7 @@ describe("what answering the question does not do", () => {
     expect(keys).toContain("sugar_g");
     expect(keys).toContain("function");
     expect(keys).not.toContain("price_per_serving_minor");
+    expect(matchesFor(posted[2].hard as HardShape[])).toEqual(["lmnt-citrus-salt-30"]);
   });
 
   it("keeps a removed budget removed when the chip answers the question", async () => {
@@ -491,6 +508,83 @@ describe("what answering the question does not do", () => {
     await ask("anything else?");
     await waitFor(() => expect(posted).toHaveLength(3));
     expect((posted[2].hard as { key: string }[]).map((c) => c.key)).toContain("price_per_serving_minor");
+  });
+
+  it("sets aside before Apply, keeping the rest of the same proposal", async () => {
+    // The other permitted order. The alternative used to filter the applied
+    // state, which held nothing yet, while the proposal still carried the
+    // budget: pressing Apply afterwards put it straight back.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    await ask("electrolytes, and forget the budget");
+    await waitFor(() => expect(screen.getByText(/Did you want to drop/)).toBeTruthy());
+
+    // Set aside first, without touching Apply.
+    fireEvent.click(screen.getByRole("button", { name: /Set aside price per serving under \$2/ }));
+
+    // Apply is gone, so it cannot restore what was just set aside.
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Apply" })).toBeNull());
+
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    expect(posted[2].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "function", op: "includes", value: "electrolytes" },
+    ]);
+
+    // The engine's own answer for what is actually held: zero sugar
+    // electrolytes at any price.
+    // Zero sugar electrolytes at any price.
+    expect(matchesFor(posted[2].hard as HardShape[])).toEqual(["lmnt-citrus-salt-30"]);
+  });
+
+  it("sets aside before Apply with nothing applied beforehand", async () => {
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+
+    // No Apply at any point: the answer is typed straight into the open
+    // question, and the alternative is pressed on the reply that follows.
+    await ask("electrolytes, and forget the budget");
+    await waitFor(() => expect(screen.getByText(/Did you want to drop/)).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: /Set aside price per serving under \$2/ }));
+
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    expect(posted[2].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "function", op: "includes", value: "electrolytes" },
+    ]);
+    // Zero sugar electrolytes at any price.
+    expect(matchesFor(posted[2].hard as HardShape[])).toEqual(["lmnt-citrus-salt-30"]);
+  });
+
+  it("sets both aside, one press at a time, without restoring the first", async () => {
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    await ask("electrolytes, and forget the budget");
+    await waitFor(() => expect(screen.getByText(/Did you want to drop/)).toBeTruthy());
+
+    fireEvent.click(screen.getByRole("button", { name: /Set aside price per serving under \$2/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Set aside zero total sugar/ }));
+
+    await ask("anything else?");
+    await waitFor(() => expect(posted).toHaveLength(3));
+    expect(posted[2].hard).toEqual([{ key: "function", op: "includes", value: "electrolytes" }]);
+
+    // Every electrolyte drink, since nothing else is being asked for.
+    expect(matchesFor(posted[2].hard as HardShape[])).toEqual([
+      "cure-hydration-lemonade-14",
+      "liquid-iv-hydration-multiplier-16",
+      "lmnt-citrus-salt-30",
+    ]);
   });
 
   it("still lets an ordinary message drop a constraint", async () => {

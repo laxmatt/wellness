@@ -29,6 +29,12 @@ export type AssistantState = {
   // route the message answers a question rather than replacing an answer.
   answerQuestion: (option: string, question: { key?: string }, replyIndex: number) => Promise<void>;
   accept: (action: ProposedAction) => void;
+  // Setting one constraint aside. `from` is the proposal the alternative was
+  // offered beside, already reduced: the choice applies that proposal without
+  // the constraint, so the other requirements it carried are kept rather than
+  // being left behind unapplied. Without it, the applied state is filtered
+  // instead, which is what an alternative offered on its own can do.
+  setAside: (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[] }) => void;
   dismiss: (index: number) => void;
   dismissed: number[];
   removeConstraint: (key: string) => void;
@@ -195,6 +201,29 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     setApplied({ hard: h, soft: s, matchingIds, labels, nonce: nonce.current });
   }, []);
 
+  const setAside = useCallback(
+    (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[] }) => {
+      setRemoved((prev) => (prev.includes(key) ? prev : [...prev, key]));
+      if (from) {
+        const nextHard = from.hard.filter((c) => c.key !== key);
+        const nextSoft = from.soft.filter((p) => p.key !== key);
+        setHard(nextHard);
+        setSoft(nextSoft);
+        // Relaxing widens the set, so the count returns to unknown until the
+        // next reply reports what now qualifies. The site does not publish a
+        // number it has not computed.
+        publish(nextHard, nextSoft, null, []);
+        return;
+      }
+      setHard((prev) => {
+        const nextHard = prev.filter((c) => c.key !== key);
+        publish(nextHard, soft, null, []);
+        return nextHard;
+      });
+    },
+    [publish, soft],
+  );
+
   const accept = useCallback(
     (action: ProposedAction) => {
       if (action.kind === "apply_preferences") {
@@ -212,17 +241,10 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
           if (seed && !compare.has(seed.id)) compare.toggle(seed);
         }
       } else if (action.kind === "relax_constraint") {
-        setRemoved((prev) => (prev.includes(action.key) ? prev : [...prev, action.key]));
-        setHard((prev) => {
-          const nextHard = prev.filter((c) => c.key !== action.key);
-          // Relaxing widens the set, so the page returns to unfiltered until
-          // the next reply reports what now qualifies.
-          publish(nextHard, soft, null, []);
-          return nextHard;
-        });
+        setAside(action.key);
       }
     },
-    [compare, compareSeeds, publish, soft],
+    [compare, compareSeeds, publish, setAside],
   );
 
   const removeConstraint = useCallback(
@@ -264,13 +286,14 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       send,
       answerQuestion,
       accept,
+      setAside,
       dismiss: (i) => setDismissed((prev) => [...prev, i]),
       dismissed,
       removeConstraint,
       reset,
       categoryId,
     }),
-    [accept, answerQuestion, applied, categoryId, dismissed, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, soft],
+    [accept, answerQuestion, applied, categoryId, dismissed, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, setAside, soft],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
