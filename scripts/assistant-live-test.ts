@@ -100,13 +100,25 @@ const CASES: Case[] = [
   {
     category: "wellness-drinks",
     text: "Zero sugar electrolytes under $2 a serving",
+    // "Electrolytes" names the kind of product, so it is a requirement, not a
+    // ranking nudge. The site's own rules say so in four places: the filter is
+    // `kind: "list"`, and its chips intersect rather than reorder; the model's
+    // FILTERS line tells it to use `includes`, a hard operator; the attribute
+    // declares `preferenceDirection: "neutral"`, so there is no direction to
+    // prefer along; and `function` is the scoring `segmentKey` and appears in
+    // none of the scoring criteria, so it divides the catalogue rather than
+    // ranking within it. A soft preference cannot deliver what was asked
+    // either: it does not exclude, so an energy drink stays in the results.
+    //
+    // This expectation is stricter than the one it replaces, which accepted a
+    // preference or a constraint. It does not make any recorded run pass.
     expect: {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
         { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 },
+        { key: "function", ops: ["includes", "in", "eq"], value: "electrolytes" },
       ],
-      soft: [{ key: "function" }],
-      alsoReasonable: ["format", "electrolytes_mg"],
+      alsoReasonable: ["format"],
     },
     note: "two hard constraints, both with real values",
   },

@@ -60,6 +60,21 @@ export function clarifyingQuestion(cat: CategoryDefinition, constrainedKeys: str
   return { text: FIXED_INVITATION, options: remaining.map((f) => f.label) };
 }
 
+/**
+ * The question to ask when the shopper named a value of a filter and nothing
+ * was extracted for it.
+ *
+ * Same wording as `clarifyingQuestion`, and the options are the category's own
+ * labels for values the catalogue actually holds. Nothing the shopper wrote is
+ * echoed: the site asks about its own filter, in its own words.
+ */
+export function questionForKey(cat: CategoryDefinition, key: string, options: string[]): ComposedQuestion | undefined {
+  if (options.length === 0) return undefined;
+  const def = cat.attributeDefinitions.find((a) => a.key === key);
+  const label = (def?.shortLabel ?? def?.label ?? cat.filters.find((f) => f.key === key)?.label ?? key).toLowerCase();
+  return { text: `Which ${label} suits you?`, options: options.slice(0, 5) };
+}
+
 export type ComposeInput = {
   cat: CategoryDefinition;
   hard: HardConstraint[];
@@ -73,6 +88,10 @@ export type ComposeInput = {
   // The shopper's own last message, used only to tell a question from a
   // statement. Never echoed back.
   lastUserText: string;
+  // Filter keys the shopper named a value of that nothing was extracted for.
+  // Said plainly rather than passed over: a reply that lists what was applied
+  // and stays silent about what was not reads as though everything was.
+  unaddressed?: string[];
 };
 
 // A question this site cannot answer from its own fields. Deliberately crude:
@@ -104,6 +123,16 @@ function softList(cat: CategoryDefinition, soft: SoftPreference[]): string {
  * not hold, because nothing here reads anything but the catalogue and the
  * engine's count.
  */
+// One sentence per filter the shopper named and the site did not apply. The
+// label is the category's own; the shopper's wording never appears.
+function unaddressedSentences(cat: CategoryDefinition, keys: string[]): string[] {
+  return keys.slice(0, 2).map((key) => {
+    const def = cat.attributeDefinitions.find((a) => a.key === key);
+    const label = (def?.shortLabel ?? def?.label ?? key).toLowerCase();
+    return `I have not filtered by ${label}.`;
+  });
+}
+
 export function composeReply(input: ComposeInput): string {
   const { cat, hard, soft, unmapped, matchCount, totalProducts, changed, clearing } = input;
   const parts: string[] = [];
@@ -126,6 +155,7 @@ export function composeReply(input: ComposeInput): string {
     if (unmapped.length > 0) {
       parts.push(unmapped.length === 1 ? "One thing you mentioned is not something this site compares." : `${unmapped.length} things you mentioned are not something this site compares.`);
     }
+    parts.push(...unaddressedSentences(cat, input.unaddressed ?? []));
     return parts.join(" ");
   }
 

@@ -9,8 +9,9 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { FIXED_LIMITATION, clarifyingQuestion, composeReply } from "@/domain/reply-composer";
+import { FIXED_LIMITATION, clarifyingQuestion, composeReply, questionForKey } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
+import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
 import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
@@ -432,6 +433,12 @@ export async function POST(req: Request) {
   // clarification, so a sentence one of them found troubling never turns into a
   // filter.
   const modelFlaggedOnly = intent.medicalIntent;
+  // A value of one of this category's own filters, named by the shopper, that
+  // nothing was extracted for. The site says so and asks, rather than applying
+  // a filter nobody asked for: "no caffeine" names caffeine while asking for
+  // the opposite, so a mention is a reason to ask, never a reason to filter.
+  const unaddressed = namedButUnconstrained(cat, views, lastUser, shown.hard, shown.soft);
+
   const composed = modelFlaggedOnly
     ? FIXED_LIMITATION
     : composeReply({
@@ -444,6 +451,7 @@ export async function POST(req: Request) {
         changed,
         clearing,
         lastUserText: lastUser,
+        unaddressed,
       });
 
   return NextResponse.json(
@@ -458,7 +466,18 @@ export async function POST(req: Request) {
       // question text and options are not displayed: they are free text on the
       // way to the screen, and a question can carry a claim as easily as a
       // sentence can.
-      question: intent.question && !modelFlaggedOnly ? clarifyingQuestion(cat, [...shown.hard.map((c) => c.key), ...shown.soft.map((p) => p.key)]) : undefined,
+      // An unaddressed filter the shopper named is asked about first: it is a
+      // question the site knows the shopper cares about, rather than the next
+      // unfilled slot. Failing that, the model's request to ask something is
+      // honoured with the site's own wording; its text and options are never
+      // displayed, because a question can carry a claim as easily as a
+      // sentence can.
+      question:
+        unaddressed.length > 0 && !modelFlaggedOnly
+          ? questionForKey(cat, unaddressed[0], (namedValues(cat, views).get(unaddressed[0]) ?? []).map((v) => v.label))
+          : intent.question && !modelFlaggedOnly
+            ? clarifyingQuestion(cat, [...shown.hard.map((c) => c.key), ...shown.soft.map((p) => p.key)])
+            : undefined,
       // False here always: the only path that sets it is the detector's, which
       // returned before the model was called.
       medicalRedirect: false,

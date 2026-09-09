@@ -301,7 +301,7 @@ It never ranks. It reads the conversation and returns structured preferences; th
 
 It sees only a shortlist of at most six products, and only sourced facts. Placeholder values are withheld entirely rather than labelled, so demo data cannot become evidence. Every fact is marked `manufacturer_claim` or `sourced`, and unknown fields are listed as not stated.
 
-Its output is parsed by `ModelIntent` and anything outside that shape is dropped. Constraints are checked against real filter keys before they are offered.
+Its output is parsed by `ModelIntent` and anything outside that shape is dropped. Constraints are checked against real filter keys before they are offered, and a constraint on a key this category does not hold is discarded silently, with no record: the diagnostics file captures rejected replies, not filtered entries. So a reply's raw content is only recoverable when it failed. When it succeeded and something is missing from it, nothing distinguishes "the model never said it" from "the route dropped it".
 
 **Schema-constrained output is prepared and off.** `ASSISTANT_RESPONSE_FORMAT=json_schema` sends the intent's schema with `strict: true`, so the provider refuses a bad shape during generation rather than this application discarding it afterwards. It targets the one error that has now repeated twice: `{"key":"chiller_included","op":"true","value":true}`, the value written into the operator field.
 
@@ -322,6 +322,16 @@ The counts and ranges stay in Zod, which validates every reply either way and is
 **What could not be verified here, and what it would cost.** The official documentation is unreachable from a Claude Code container: `platform.openai.com` and `developers.openai.com` are both refused by the egress policy. The constraints above come from secondary sources and are encoded as tests, not as belief.
 
 One question remains open and cannot be answered without a request: whether this account and `gpt-4o-mini` accept this schema. The check is cheap and asymmetric. A schema strict mode will not compile comes back as a 400 before inference, which `statusError` settles as `not_billed`, so it costs nothing. A schema it accepts costs one ordinary call, about $0.0004. Send one request with the flag set before running anything longer with it.
+
+**A value the shopper named, that nothing was extracted for, is said out loud.** The run of 2026-09-09T01:50 read "zero sugar electrolytes under $2 a serving" as two constraints. "Electrolytes" is a value of the `function` filter, listed in the model's own instructions and shown on the site's filter chips, and it produced nothing: no constraint, no preference, no question. The reply named what had been applied and stayed silent about what had not, which reads as though everything was.
+
+`src/domain/named-values.ts` derives each filterable key's values from the products, exactly as `buildFilterGroups` derives the filter chips. When the shopper's message names one of them on a whole-word match and no constraint or preference covers that key, the reply says "I have not filtered by function." and the site asks about it, using its own label and the catalogue's own option labels.
+
+It asks; it does not filter. Naming a value is not asking for it, and "no caffeine" names caffeine while asking for the opposite. Extracting from the shopper's words in code would be a second extractor with none of the model's ability to read a negation, so the remedy for a dropped constraint is a question, never a guessed filter.
+
+**A preference on a list attribute was inert.** `softScore` compared the attribute to the preference value directly, and a list attribute holds an array: `["electrolytes"]` is not `"electrolytes"`, so every product scored a miss and a preference for electrolyte drinks ranked the energy drink exactly as high. The array form of the same preference always worked, which is how it survived. `placement` and `sanitation_methods` are list attributes too.
+
+**Hard or soft** is decided by the category's own rules, not by how the sentence sounds. `function` in wellness drinks is a `list` filter whose chips intersect rather than reorder; its attribute declares `preferenceDirection: "neutral"`, so there is no direction to prefer along; and it is the scoring `segmentKey` while appearing in none of the scoring criteria, so it divides the catalogue rather than ranking within it. Naming a function is a requirement. A soft preference could not deliver it in any case: preferences do not exclude, so an energy drink stays in the results of a search for electrolytes.
 
 **A reply nothing could be read from is a failure, and it changes nothing.** The route marks it `failure: "unreadable_reply"`, keeps the shopper's existing preferences exactly as they were, and returns no proposals. The placeholder intent's empty `hard` and `soft` mean "nothing was understood", not "the shopper asked for nothing": read the second way, a malformed reply offered to clear every filter the shopper had set.
 

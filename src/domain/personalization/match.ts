@@ -51,7 +51,15 @@ function softScore(
         hit = Array.isArray(raw) ? p.value.some((v) => (raw as string[]).includes(v)) : p.value.includes(raw as string);
       } else {
         const def = attributeDef(cat, p.key);
-        if (def?.type === "enum") {
+        if (def?.type === "list") {
+          // A list attribute holds several values and a preference names one of
+          // them. Comparing the array to the string made every product a miss,
+          // so a preference for electrolyte drinks scored the electrolyte drink
+          // exactly as it scored the energy drink: `["electrolytes"]` is not
+          // `"electrolytes"`. The array form of the same preference already
+          // worked, which is how this survived.
+          hit = Array.isArray(raw) && (raw as unknown[]).includes(p.value);
+        } else if (def?.type === "enum") {
           // Ordinal enums count as met at or above the asked rank.
           const want = def.enumOptions?.find((o) => o.value === p.value)?.rank;
           const have = comparable(view, cat, p.key);

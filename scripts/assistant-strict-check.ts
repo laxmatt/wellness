@@ -72,9 +72,9 @@ const CASES: Record<string, Named> = {
       hard: [
         { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
         { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 },
+        { key: "function", ops: ["includes", "in", "eq"], value: "electrolytes" },
       ],
-      soft: [{ key: "function" }],
-      alsoReasonable: ["format", "electrolytes_mg"],
+      alsoReasonable: ["format"],
     },
   },
 };
