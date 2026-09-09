@@ -53,7 +53,7 @@ export type SpecView = {
   group: string;
   raw: AttributePrimitive | undefined;
   formatted: string;
-  // Set when the source states a bound rather than a measurement. `formatted`
+  // Set when the source states a bound rather than an exact value. `formatted`
   // already carries the qualifier; this is for a screen that needs to know.
   bound?: Bound;
   unit?: string;
@@ -80,7 +80,7 @@ export type ProductView = {
   dimensions?: Dimensions & { unit: string };
   weight?: { value: number; unit: string };
   attributes: Record<string, AttributePrimitive>;
-  // Keys whose value is a stated bound, not a measurement. Matching reads this
+  // Keys whose value is a stated bound, not an exact value. Matching reads this
   // and answers only what the bound settles; everything else is unknown, and
   // unknown never matches.
   bounds: Record<string, Bound>;
@@ -163,13 +163,14 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   const attributes: Record<string, AttributePrimitive> = {};
   const bounds: Record<string, Bound> = {};
   for (const [key, sv] of Object.entries(product.attributes)) {
-    // Only values that can be used as fact become attributes. `specs` already
-    // withheld demo values from every screen and from the assistant, while
-    // `attributes` kept them, and `evaluateCondition` reads `attributes`: a
-    // demo zero for OLIPOP's caffeine qualified a search for zero caffeine for
-    // as long as it has existed. An attribute the source does not state keeps
-    // its provenance so the page can say "not stated" and show why, and never
-    // becomes something to match on.
+    // Only values that can be used as fact become attributes. A demo value is
+    // still shown, labelled "Demo data" by every component that renders a spec,
+    // and it is withheld from the assistant entirely. What it must never do is
+    // answer a question as a fact, and it did: `evaluateCondition` reads
+    // `attributes`, so OLIPOP's demo zero qualified a search for zero caffeine
+    // for as long as it has existed. An attribute the source does not state
+    // keeps its provenance so the page can say "not stated" and show why, and
+    // neither kind becomes something to match on.
     if (sv.value !== undefined && isUsable(sv.verification)) {
       attributes[key] = sv.value;
       if (sv.bound) bounds[key] = sv.bound;

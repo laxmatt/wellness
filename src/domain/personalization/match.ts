@@ -3,6 +3,7 @@ import { attributeDef } from "../category";
 import { comparable, evaluateCondition, matchesAll } from "../conditions";
 import type { MatchResult, PreferenceSet, ProductExplanation, Relaxation, SoftPreference } from "../personalization";
 import { toScoringInput, scoreProducts } from "../recommend/score";
+import type { Bound } from "../provenance";
 import type { ProductView } from "../view";
 import { describeConstraint, describeFit, describeGap, labelFor } from "./describe";
 
@@ -27,6 +28,22 @@ export function softRanges(views: ProductView[], cat: CategoryDefinition, soft: 
   return ranges;
 }
 
+// Which way a bound leaves the value open. `less_than 1` says the value is
+// somewhere below 1, so it is open towards low.
+function openTowards(bound: Bound): SoftPreference["direction"] {
+  return bound === "less_than" ? "prefer_low" : "prefer_high";
+}
+
+// A preference naming an amount, against a value stated only as a bound. The
+// bound answers it only when it settles it, which is the side the source
+// closed: `less_than 1` meets a target of 1 or more for a shopper who wants
+// less, and settles nothing for a shopper who wants more or who named an
+// amount without saying which way they want it.
+function boundedSoftHit(bound: Bound, stated: number, direction: SoftPreference["direction"], target: number): boolean {
+  if (direction !== openTowards(bound)) return false;
+  return bound === "less_than" ? target >= stated : target <= stated;
+}
+
 function softScore(
   view: ProductView,
   cat: CategoryDefinition,
@@ -40,6 +57,11 @@ function softScore(
   for (const p of soft) {
     total += p.weight;
     const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
+    // A value the source states only as a bound is not an amount, so a
+    // preference naming an amount cannot be met by it, and a preference with
+    // no amount can only use the endpoint when the endpoint is the worse end
+    // for what the shopper wants. See `boundedSoftHit`.
+    const bound = p.key === "price" ? undefined : view.bounds[p.key];
     let hit = false;
     // Credit for a directional preference with no target is proportional, not
     // binary. Scoring it as "has the attribute" gave the most expensive product
@@ -64,6 +86,11 @@ function softScore(
           const want = def.enumOptions?.find((o) => o.value === p.value)?.rank;
           const have = comparable(view, cat, p.key);
           hit = want !== undefined && have !== undefined ? (p.direction === "prefer_low" ? have <= want : have >= want) : raw === p.value;
+        } else if (bound !== undefined && typeof raw === "number" && typeof p.value === "number") {
+          // "Less than 1 g" is not 1 g. It meets "prefer under 2 g" and it
+          // cannot meet "prefer exactly 1 g", which is the same rule the hard
+          // constraints follow.
+          hit = boundedSoftHit(bound, raw, p.direction, p.value);
         } else {
           hit = raw === p.value;
         }
@@ -74,6 +101,12 @@ function softScore(
       if (n === undefined) {
         // Unknown is not a fit. It cannot be the cheapest if nobody recorded
         // what it costs.
+        hit = false;
+      } else if (bound !== undefined && openTowards(bound) !== p.direction) {
+        // The endpoint is the flattering end for what this shopper wants:
+        // "over 189" ranked as 189 for someone who wants the lowest figure
+        // would score the best case of a range whose worst case nobody stated.
+        // Nothing is known, so nothing is credited.
         hit = false;
       } else if (!range || range.max === range.min) {
         // Nothing to rank against: every candidate is equal on this key.

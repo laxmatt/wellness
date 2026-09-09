@@ -44,7 +44,7 @@ describe("the sources block", () => {
     // and the wrong one.
     expect(text).toMatch(/2 fields carry demo data/);
     expect(text).toMatch(/1 field is not stated by the source/);
-    expect(text).toMatch(/1 figure is a bound the maker stated/);
+    expect(text).toMatch(/1 figure is a bound the source states/);
     expect(text).not.toMatch(/3 fields carry demo/);
   });
 
@@ -75,7 +75,7 @@ describe("the comparison table", () => {
     render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
     const cell = screen.getByText("more than 73 mW/cm²");
     const row = cell.closest("tr")!;
-    expect(within(row).getByText(/bound its maker stated/)).toBeTruthy();
+    expect(within(row).getByText(/a stated bound, not an exact value/)).toBeTruthy();
     expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
     // Elsewhere in the same table, exact figures still get a winner.
     expect(screen.queryAllByLabelText("Strongest in this row").length).toBeGreaterThan(0);

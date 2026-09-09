@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
-import { getCategoryPage } from "@/lib/queries";
+import { getCategoryPage, liveFacets } from "@/lib/queries";
 
 type Props = { params: Promise<{ category: string }> };
 
@@ -49,7 +49,7 @@ export default async function CategoryPage({ params }: Props) {
       <CategoryFilterProvider groups={filterGroups} ids={ids}>
         <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
-          <FacetChips cat={cat} />
+          <FacetChips cat={cat} available={liveFacets(page)} />
         </div>
         <div className="mt-10">
           <WinnersRow products={products} cat={cat} set={set} />

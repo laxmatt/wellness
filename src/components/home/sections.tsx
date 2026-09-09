@@ -3,7 +3,7 @@ import { buttonStyles } from "@/components/ui/Button";
 import { DemoArt } from "@/components/ui/DemoArt";
 import type { Brand } from "@/domain/product";
 import { BADGE_LABELS } from "@/domain/recommend";
-import type { CategoryPage } from "@/lib/queries";
+import { liveFacets, type CategoryPage } from "@/lib/queries";
 
 export function Hero({ pages }: { pages: CategoryPage[] }) {
   const total = pages.reduce((n, p) => n + p.products.length, 0);
@@ -99,7 +99,7 @@ export function DiscoveryModules({ pages }: { pages: CategoryPage[] }) {
           <div key={p.cat.id} className="rounded-card border border-edge bg-surface-raised p-5">
             <p className="eyebrow">{p.cat.navLabel}</p>
             <ul className="mt-3 flex flex-wrap gap-2">
-              {p.cat.facets.map((f) => (
+              {p.cat.facets.filter((f) => liveFacets(p).includes(f.slug)).map((f) => (
                 <li key={f.slug}>
                   <Link href={`/${p.cat.slug}/${f.slug}`} className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-medium hover:border-fg">
                     {f.label}

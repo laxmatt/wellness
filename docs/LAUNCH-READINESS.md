@@ -26,7 +26,7 @@ site.
 verification tier. Across all 20 products, 196 attributes: **123
 manufacturer-reported, 46 unknown, 24 demo, 3 not stated**. By retrieval
 method: 72 direct, 124 secondhand. Five of the manufacturer-reported figures
-are bounds rather than measurements, and are marked as bounds.
+are bounds rather than exact values, and are marked as bounds.
 
 **Nothing is independently verified, and that is a smaller problem than the
 first draft implied.** (Corrected.) A manufacturer's own figure is legitimate
@@ -56,10 +56,10 @@ same value the page renders: `bon-charge-max`, `hooga-hg300`, `hooga-pro1500`,
 `liquid-iv-hydration-multiplier-16`, `olipop-root-beer-12`. Twelve prices are
 real.
 
-The site handles placeholders correctly and visibly: they are withheld from
-price claims, listed apart as unconfirmed, excluded from price-based badges,
-and marked with a "Demo data" tag. The handling is verified. What is missing is
-the real data.
+The site withholds them from price claims, lists them apart as unconfirmed,
+excludes them from price-based badges, and, since the public-journey harness
+caught that it did not, tags them "Demo data" wherever the price is shown. The
+handling is verified. What is missing is the real data.
 
 **Four products are ineligible for badges**: Infraredi Flex Max, AG1, Cure
 Hydration and OLIPOP. Two of those four became ineligible in 58ecd85, when
@@ -70,7 +70,7 @@ completeness, and it should: the site now knows less than it claimed to.
 ### Bounds, and what is left for a person
 
 Five figures in the catalogue are bounds their sources state rather than
-measurements, and until 2026-09-09 they were stored as exact numbers: AG1's
+exact values, and until 2026-09-09 they were stored as exact numbers: AG1's
 sugar, recorded as `1` against a label that says "less than 1 g", and the
 irradiance floors of BON CHARGE Max (142), Hooga HG300 (73), Hooga PRO1500
 (189) and Joovv Solo 3.0 (100), each stated by its maker as "over" or "greater
@@ -155,12 +155,12 @@ not tell you whether checks run somewhere else.
 
 Everything that does exist passes, run by hand today at 58ecd85:
 
-- **623 tests** in 39 files, all passing, including the two Postgres ledger
+- **634 tests** in 40 files, all passing, including the two Postgres ledger
   suites run against the disposable test database. They skip without
   `TEST_DATABASE_URL`, and a skip is not a pass.
-- **46 browser checks** in `e2e/set-aside-updates-page.mjs`, all passing
-  against a real build with a stubbed model. Re-run after the catalogue change,
-  not carried over from an earlier run.
+- **46 browser checks** in `e2e/set-aside-updates-page.mjs` and **419** in
+  `e2e/public-journeys.mts`, all passing against a production build. The first
+  stubs the model; the second needs no model at all.
 - `npm run catalog:check`, `npm run lint`, `npm run typecheck` and
   `npm run build`.
 
@@ -174,23 +174,38 @@ Ten routes exist: `/`, `/[category]`, `/[category]/[facet]`, `/brands`,
 `/brands/[slug]`, `/compare`, `/disclosure`, `/explore`, `/how-we-choose`,
 `/products/[slug]`.
 
-**Verified by the build and the test suite**: every route prerenders, category
-filtering and the comparison table work without the assistant, badge and value
-selection are computed and explained by `catalog:check`, and `/how-we-choose`
-documents the ranking.
+**Covered by a committed browser harness**: `e2e/public-journeys.mts`, 419
+checks against a production build with no model and nothing leaving localhost.
+It compares the page to the engine rather than to numbers typed into the test:
+the grid against `recommendCategory`'s order, each filter chip against its own
+`matchIds`, each comparison row against `buildCompareModel`, each facet against
+`matchesAll`. It covers the home page, all three categories, every facet, all
+20 product pages, the comparison table, the remaining routes, keyboard
+operation of the filters, and a 390x844 phone.
 
-**Not covered by any committed harness**: filtering by chip, the comparison
-table, brand pages, product pages and `/explore` have unit coverage and no
-end-to-end coverage. The only committed browser harness is the assistant's
-effect on the category page. There is no committed accessibility audit, no
-performance measurement, no mobile-viewport check and no analytics.
+What it checks that a count cannot: that every outbound offer link carries
+`rel="sponsored nofollow noopener"`, `target="_blank"` and the merchant URL the
+catalogue records; that every image has alt text; that every value the source
+does not support is labelled where it is shown; that a bounded figure keeps its
+qualifier; that a placeholder price says so; and that a chip which would leave
+nothing is disabled rather than dead.
 
-(Corrected. The earlier version said these journeys were "not verified
-anywhere". That overstates it. Browser and keyboard journeys are reported in
-earlier working threads; what this repository lacks is a committed harness that
-would re-run them. An uncommitted check that passed once is worth less than a
-committed one and more than nothing, and the honest statement is that the
-evidence is not here to re-run.)
+**Two defects it found, both fixed:**
+
+1. **A placeholder price was shown as a price.** Eight of twenty products show
+   one. Every placeholder *spec* carried a "Demo data" tag; the price, the
+   number a shopper actually decides on, carried nothing. `PriceDisplay` now
+   tags it, on the card and on the product page.
+2. **An empty facet was still offered.** Removing the assumed `placement`
+   values left `/cold-plunge/indoor` matching nothing, while the category page
+   and the home page both still linked it. The page itself was honest ("nothing
+   in our set fits this filter yet"); the link was not. Facets are filtered by
+   `liveFacets` now, and the active one is still shown so a shopper arriving by
+   URL can see where they are.
+
+**Still not covered**: no accessibility audit beyond alt text, one h1 per page
+and keyboard operation of the filters (an audit needs tooling this environment
+cannot fetch), no performance measurement, and no analytics.
 
 ## What would block a launch
 

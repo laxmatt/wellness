@@ -4,6 +4,7 @@ import type { CategoryDefinition, Condition } from "@/domain/category";
 import { buildCompareModel } from "@/domain/compare";
 import { evaluateCondition } from "@/domain/conditions";
 import { buildFilterGroups } from "@/domain/filters";
+import { applyPreferences } from "@/domain/personalization/match";
 import { describeFit, describeGap } from "@/domain/personalization/describe";
 import { deriveInsights } from "@/domain/recommend/insights";
 import { recommendCategory } from "@/domain/recommend";
@@ -212,5 +213,58 @@ describe("scoring reads the stated end, and the catalogue check keeps it that wa
     delete hooga.attributes.irradiance_mw_cm2!.source.note;
     const noteIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "hooga-pro1500"), hooga] });
     expect(noteIssues.map((i) => i.message).join(" ")).toMatch(/bound with no source note/);
+  });
+});
+
+describe("a preference cannot read a bound as an amount either", () => {
+  const prefer = (view: string, soft: { key: string; direction: "prefer_high" | "prefer_low" | "prefer_value"; value?: number; weight?: number }) => {
+    const result = applyPreferences(drinks(), wellnessDrinks, {
+      hard: [],
+      soft: [{ weight: 0.5, ...soft }],
+      unmapped: [],
+      medicalIntent: false,
+    });
+    return result.explanations[view];
+  };
+
+  it("does not count a bound as meeting a named amount", () => {
+    // "Ideally 1 g of sugar" against a label that says less than 1 g. The
+    // shopper named an amount; the source did not.
+    const e = prefer("ag1-pouch-30", { key: "sugar_g", direction: "prefer_value", value: 1 });
+    expect(e.misses.join(" ")).toContain("less than 1 g");
+    expect(e.fits).toEqual([]);
+    expect(e.softScore).toBe(0);
+  });
+
+  it("counts a bound as meeting an amount the bound settles", () => {
+    // "Ideally under 5 g" is settled by "less than 1 g".
+    const e = prefer("ag1-pouch-30", { key: "sugar_g", direction: "prefer_low", value: 5 });
+    expect(e.fits.join(" ")).toContain("less than 1 g");
+    expect(e.softScore).toBeGreaterThan(0);
+  });
+
+  it("declines an amount on the side the bound leaves open", () => {
+    const e = prefer("ag1-pouch-30", { key: "sugar_g", direction: "prefer_low", value: 0.5 });
+    expect(e.fits).toEqual([]);
+    expect(e.softScore).toBe(0);
+  });
+
+  it("ranks a bound by its endpoint only when the endpoint is the worse end", () => {
+    // "Prefer less sugar", no amount. AG1's endpoint is 1, and the real figure
+    // is below it, so ranking by 1 can only understate the product.
+    const low = prefer("ag1-pouch-30", { key: "sugar_g", direction: "prefer_low" });
+    expect(low.softScore).toBeGreaterThan(0);
+
+    // "Prefer more sugar", no amount. The endpoint is the best case of a range
+    // whose bottom nobody stated, so nothing is credited.
+    const high = prefer("ag1-pouch-30", { key: "sugar_g", direction: "prefer_high" });
+    expect(high.softScore).toBe(0);
+    expect(high.fits).toEqual([]);
+  });
+
+  it("leaves an exact value ranked as before", () => {
+    const lmnt = prefer("lmnt-citrus-salt-30", { key: "sugar_g", direction: "prefer_value", value: 0 });
+    expect(lmnt.fits.join(" ")).toContain("Total sugar");
+    expect(lmnt.softScore).toBeGreaterThan(0);
   });
 });

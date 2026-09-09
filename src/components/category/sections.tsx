@@ -45,7 +45,11 @@ export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
   );
 }
 
-export function FacetChips({ cat, active }: { cat: CategoryDefinition; active?: string }) {
+// `available` names the facets that still match something. The active facet is
+// always shown, so a shopper who arrives at an empty one by link or by URL can
+// still see where they are.
+export function FacetChips({ cat, active, available }: { cat: CategoryDefinition; active?: string; available?: string[] }) {
+  const facets = available ? cat.facets.filter((f) => available.includes(f.slug) || f.slug === active) : cat.facets;
   return (
     <nav aria-label="Narrow by" className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
@@ -58,7 +62,7 @@ export function FacetChips({ cat, active }: { cat: CategoryDefinition; active?: 
             All {cat.navLabel.toLowerCase()}
           </Link>
         </li>
-        {cat.facets.map((f) => (
+        {facets.map((f) => (
           <li key={f.slug} className="shrink-0">
             <Link
               href={`/${cat.slug}/${f.slug}`}

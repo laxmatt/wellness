@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
-import { facetProducts, getCategoryPage } from "@/lib/queries";
+import { facetProducts, getCategoryPage, liveFacets } from "@/lib/queries";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
 
@@ -51,7 +51,7 @@ export default async function FacetPage({ params }: Props) {
       <CategoryHero cat={cat} title={fp.facet.title} description={fp.facet.description} count={fp.products.length} />
       <div className="mt-8 flex flex-col gap-10">
         <MatcherInput cat={cat} />
-        <FacetChips cat={cat} active={fp.facet.slug} />
+        <FacetChips cat={cat} active={fp.facet.slug} available={liveFacets(page)} />
         <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between gap-4">
             <div>

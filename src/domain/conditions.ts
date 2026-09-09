@@ -63,7 +63,7 @@ export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c:
   const bound = c.key === "price" ? undefined : view.bounds[c.key];
   if (bound !== undefined && typeof raw === "number") {
     // `exists` and `missing` ask whether the catalogue holds anything at all,
-    // which a bound answers exactly as a measurement does.
+    // which a bound answers exactly as an exact value does.
     if (c.op === "exists") return true;
     if (c.op === "missing") return false;
     const target = conditionTarget(cat, c.key, c.value);

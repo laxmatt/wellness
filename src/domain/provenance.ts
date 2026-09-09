@@ -65,7 +65,7 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     unit: z.string().optional(),
     source: Source,
     verification: Verification,
-    // Present when the source states a bound rather than a measurement. The
+    // Present when the source states a bound rather than an exact value. The
     // value is the bound. `check-catalog` refuses one that is not a number,
     // one whose verification cannot support a fact, and one pointing the
     // flattering way for its attribute's direction.

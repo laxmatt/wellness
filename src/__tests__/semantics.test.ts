@@ -114,7 +114,7 @@ describe("comparison dots require comparable measurements", () => {
     const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
     const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
     expect(row.cells.every((c) => !c.best)).toBe(true);
-    expect(row.notComparable).toMatch(/bound its maker stated/);
+    expect(row.notComparable).toMatch(/a stated bound, not an exact value/);
   });
 
   it("still marks a winner on a row of exact figures", () => {

@@ -225,7 +225,7 @@ export function ProvenanceBlock({ view }: { view: ProductView }) {
   const sentences = [
     demoCount > 0 ? `${plural(demoCount, "field carries", "fields carry")} demo data, marked on the page.` : null,
     notStatedCount > 0 ? `${plural(notStatedCount, "field is", "fields are")} not stated by the source, so no value is recorded and none is guessed.` : null,
-    boundCount > 0 ? `${plural(boundCount, "figure is", "figures are")} a bound the maker stated rather than a measurement, shown with the words the maker used.` : null,
+    boundCount > 0 ? `${plural(boundCount, "figure is", "figures are")} a bound the source states rather than an exact value, shown in the words the source used.` : null,
   ].filter(Boolean);
   return (
     <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm">

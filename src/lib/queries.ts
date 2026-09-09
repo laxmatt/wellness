@@ -36,6 +36,15 @@ export function facetProducts(page: CategoryPage, facetSlug: string): { facet: C
   return { facet, products: page.products.filter((p) => matchesAll(p.view, page.cat, facet.conditions)) };
 }
 
+// Facets whose filter still matches something. A facet that matches nothing is
+// a chip that leads to a page saying "nothing fits this filter yet", and the
+// category's own filter chips already refuse to offer a dead end. Removing the
+// assumed `placement` values left `/cold-plunge/indoor` empty and still linked
+// from the category page and the home page.
+export function liveFacets(page: CategoryPage): string[] {
+  return page.cat.facets.filter((f) => page.products.some((p) => matchesAll(p.view, page.cat, f.conditions))).map((f) => f.slug);
+}
+
 export type ProductPage = {
   item: RecommendedProduct;
   page: CategoryPage;
