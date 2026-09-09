@@ -479,6 +479,13 @@ export async function POST(req: Request) {
   // the opposite, so a mention is a reason to ask, never a reason to filter.
   const unaddressed = namedButUnconstrained(cat, views, lastUser, shown.hard, shown.soft);
 
+  // Whether any single removal admits a product. The no-match sentence says so
+  // rather than promising that one will do.
+  const oneRelaxationIsEnough =
+    shown.matching.length === 0 && shown.hard.length > 0
+      ? shown.hard.some((dropped) => views.some((v) => matchesAll(v, cat, shown.hard.filter((c) => c !== dropped) as Condition[])))
+      : undefined;
+
   const composed = modelFlaggedOnly
     ? FIXED_LIMITATION
     : composeReply({
@@ -493,6 +500,7 @@ export async function POST(req: Request) {
         lastUserText: lastUser,
         unaddressed,
         revoked,
+        oneRelaxationIsEnough,
       });
 
   return NextResponse.json(
@@ -502,6 +510,7 @@ export async function POST(req: Request) {
       cat,
       outcome: shown,
       totalProducts: views.length,
+      oneRelaxationIsEnough,
       proposals,
       // Composed from the category's own filters and labels. The model's own
       // question text and options are not displayed: they are free text on the
@@ -575,6 +584,9 @@ function reply(args: {
   medicalRedirect: boolean;
   failure?: AssistantReply["failure"];
   totalProducts: number;
+  // True when dropping a single constraint admits a product; undefined when
+  // there is nothing to relax.
+  oneRelaxationIsEnough?: boolean;
   notice?: string;
 }): AssistantReply {
   const { outcome } = args;
@@ -582,7 +594,7 @@ function reply(args: {
     text: args.text,
     // Authored here, from the same evaluation the cards come from, on every
     // reply including the ones the model never reached.
-    matchSummary: engineSummary(outcome.matching.length, args.totalProducts),
+    matchSummary: engineSummary(outcome.matching.length, args.totalProducts, args.oneRelaxationIsEnough),
     failure: args.failure,
     mode: args.mode,
     question: args.question,

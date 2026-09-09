@@ -14,6 +14,11 @@ type FilterState = {
   clear: () => void;
   // Narrowing accepted from the assistant, applied on top of the chips.
   fromAssistant: { labels: string[]; count: number } | null;
+  // The order the engine ranked those products in. The grid rendered `ids` in
+  // the page's own order and used the assistant's answer only for membership,
+  // so a reply saying "Ranking for lower price" changed which products were
+  // shown and never the order they were shown in.
+  assistantOrder: string[] | null;
   clearAssistant: () => void;
   dropLast: () => void;
   countFor: (group: FilterGroup, optionId: string) => number;
@@ -57,6 +62,7 @@ export function CategoryFilterProvider({ groups, ids, children }: { groups: Filt
       visible,
       active: selected.length > 0 || assistantIds !== null,
       fromAssistant: assistantIds ? { labels: assistantLabels, count: assistantIds.length } : null,
+      assistantOrder: assistantIds,
       clearAssistant: () => {
         setAssistantIds(null);
         setAssistantLabels([]);

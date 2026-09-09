@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/assistant/route";
-import { coldPlunge, redLight } from "@/domain/categories";
+import { coldPlunge, redLight, wellnessDrinks } from "@/domain/categories";
 import { PreferenceSet } from "@/domain/personalization";
 import { applyPreferences } from "@/domain/personalization/match";
 import { toEngineConstraints } from "@/domain/model-constraints";
@@ -231,5 +231,113 @@ describe("what the shopper reads never names a column", () => {
     const body = await ask(intentOf({ soft: [{ key: "plumbing", direction: "prefer_low", weight: 0.5 }] }), "simple setup", "cold-plunge");
     expect(body.text).not.toContain("plumbing,");
     expect(body.text).toMatch(/Ranking for lower power and plumbing/i);
+  });
+});
+
+describe("a preference's target has to be a thing the key can hold", () => {
+  // The directional branch returned as soon as an ordinal basis existed, so a
+  // target on that branch was never looked at, and prefer_value with an empty
+  // list passed vacuously: nothing in it was unknown, and nothing in it was
+  // anything to prefer either.
+
+  it("refuses a string target on a number", () => {
+    const r = toEngineConstraints(redLight, [], [{ key: "footprint", direction: "prefer_low", value: "small", weight: 1 }]);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.problems[0].reason).toMatch(/has no option "small"/);
+  });
+
+  it("refuses a string target on price", () => {
+    const r = toEngineConstraints(coldPlunge, [], [{ key: "price", direction: "prefer_low", value: "cheap", weight: 1 }]);
+    expect(r.ok).toBe(false);
+  });
+
+  it("refuses an unknown option on a ranked enum, whichever direction", () => {
+    const r = toEngineConstraints(redLight, [], [{ key: "coverage", direction: "prefer_high", value: "enormous", weight: 1 }]);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.problems[0].reason).toMatch(/has no option "enormous"/);
+  });
+
+  it("refuses an empty list to rank towards", () => {
+    const r = toEngineConstraints(coldPlunge, [], [{ key: "tub_type", direction: "prefer_value", value: [], weight: 0.5 }]);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.problems[0].reason).toMatch(/empty list to rank towards/);
+  });
+
+  it("keeps a rank target on a ranked enum", () => {
+    expect(toEngineConstraints(redLight, [], [{ key: "coverage", direction: "prefer_high", value: "full_body", weight: 1 }]).ok).toBe(true);
+  });
+
+  it("keeps a money target on a money key, judged by the money converter", () => {
+    const ok = toEngineConstraints(coldPlunge, [], [{ key: "price", direction: "prefer_low", value: { amount: 500, currency: "USD" }, weight: 1 }]);
+    expect(ok.ok).toBe(true);
+    if (ok.ok) expect(ok.soft[0].value).toBe(50000);
+    // And a bare number for money is still the money converter's refusal, in
+    // its own words, not a shape complaint from here.
+    const bad = toEngineConstraints(coldPlunge, [], [{ key: "price", direction: "prefer_low", value: 500, weight: 1 }]);
+    expect(bad.ok).toBe(false);
+    if (!bad.ok) expect(bad.problems[0].reason).toMatch(/must be sent as/);
+  });
+
+  it("keeps a numeric target on a number, and a name on a list", () => {
+    // `footprint` is a ranked enum, so its target is an option value, not a
+    // rank number: the engine looks the value up among the options.
+    expect(toEngineConstraints(wellnessDrinks, [], [{ key: "caffeine_mg", direction: "prefer_low", value: 0, weight: 1 }]).ok).toBe(true);
+    expect(toEngineConstraints(coldPlunge, [], [{ key: "placement", direction: "prefer_value", value: "outdoor", weight: 1 }]).ok).toBe(true);
+  });
+
+  it("refuses a rank number where the enum wants one of its option values", () => {
+    const r = toEngineConstraints(redLight, [], [{ key: "footprint", direction: "prefer_low", value: 1, weight: 1 }]);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.problems[0].reason).toMatch(/has no option 1/);
+  });
+
+  it("keeps a directional preference with no target at all", () => {
+    expect(toEngineConstraints(coldPlunge, [], [{ key: "price", direction: "prefer_low", weight: 1 }]).ok).toBe(true);
+  });
+});
+
+describe("the no-match sentence does not promise a way out that is not there", () => {
+  // Every pair of these is empty, so no single removal admits anything: no
+  // chiller tub costs under $50 or runs without plumbing, and nothing at all
+  // costs under $50.
+  const three = [
+    { key: "chiller_included", op: "eq" as const, value: true },
+    { key: "price", op: "lte" as const, value: 5000 },
+    { key: "plumbing", op: "eq" as const, value: "none" },
+  ];
+
+  it("says one would do, when one would", async () => {
+    const body = await ask(
+      intentOf({ hard: [{ key: "chiller_included", op: "eq", value: true }, { key: "price", op: "lte", value: usd(5000) }] }),
+      "A tub with a chiller, up to $5,000.",
+      "cold-plunge",
+    );
+    expect(body.matchSummary).toMatch(/so one of them would have to be relaxed/);
+  });
+
+  it("says more than one, when one will not", async () => {
+    // No chiller tub is under $5,000 and none needs no plumbing, so dropping
+    // any single constraint still leaves nothing.
+    const views = viewsFor("cold-plunge");
+    for (const dropped of three) {
+      const rest = three.filter((c) => c !== dropped);
+      expect(views.some((v) => matchesAll(v, coldPlunge, rest))).toBe(false);
+    }
+
+    const body = await ask(
+      intentOf({
+        hard: [
+          { key: "chiller_included", op: "eq", value: true },
+          { key: "price", op: "lte", value: usd(50) },
+          { key: "plumbing", op: "eq", value: "none" },
+        ],
+      }),
+      "A tub with a chiller under $50 that needs no plumbing.",
+      "cold-plunge",
+    );
+    expect(body.matchingIds).toEqual([]);
+    expect(body.matchSummary).toMatch(/Setting aside any single one of them still leaves nothing/);
+    expect(body.matchSummary).not.toMatch(/so one of them would have to be relaxed/);
+    expect(body.text).toMatch(/Setting aside any single one of them still leaves nothing/);
   });
 });

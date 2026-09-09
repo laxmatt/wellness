@@ -38,6 +38,24 @@ const TURNS = [
   intent([{ key: "function", op: "includes", value: "electrolytes" }]),
 ];
 
+// A no-match search. The relaxation offer used to name the constraint each
+// route KEPT, so pressing it removed the only one the route's product met.
+const NO_MATCH_TURN = intent([
+  { key: "chiller_included", op: "eq", value: true },
+  { key: "price", op: "lte", value: usd(5000) },
+]);
+
+// Three constraints where no single removal admits anything: no chiller tub is
+// under $50 or runs without plumbing, and nothing at all is under $50.
+const NO_SINGLE_WAY_OUT_TURN = intent([
+  { key: "chiller_included", op: "eq", value: true },
+  { key: "price", op: "lte", value: usd(50) },
+  { key: "plumbing", op: "eq", value: "none" },
+]);
+
+// Eight red-light panels, ranked by price alone.
+const CHEAPEST_TURN = { ...intent([]), soft: [{ key: "price", direction: "prefer_low", weight: 1 }] };
+
 // Two bounds on one key, plus one on another. Removing the unrelated one must
 // leave both bounds standing: an entry per constraint rather than per key kept
 // only the first, and the page then showed everything above $1.40.
@@ -49,6 +67,7 @@ const RANGE_TURN = intent([
 
 let turn = 0;
 let script = TURNS;
+let categoryPath = "wellness-drinks";
 const stub = createServer((req, res) => {
   let body = "";
   req.on("data", (c) => (body += c));
@@ -83,18 +102,27 @@ const shownCount = (page) => page.getByText(/^\d+ of \d+ shown$/).first().textCo
 // row and the ranking sections, which are not what the filters govern, and
 // counting those made a correct grid look wrong. Anchored to the "N of M
 // shown" control, which sits in the same block as the grid it describes.
-const cardHrefs = (page) =>
+const gridCards = (page) =>
   page.evaluate(() => {
-    const grid = [...document.querySelectorAll("div")].find(
-      (d) => d.className.includes("lg:grid-cols-4") && d.className.includes("gap-5"),
-    );
+    // Some category pages carry a second grid with the same classes for the
+    // winners row, whose children are links rather than product cards. The
+    // product grid is the one built out of <article> cards.
+    const grid = [...document.querySelectorAll("div")]
+      .filter((d) => d.className.includes("lg:grid-cols-4") && d.className.includes("gap-5"))
+      .sort((a, b) => b.querySelectorAll(":scope > article").length - a.querySelectorAll(":scope > article").length)[0];
     if (!grid) return ["(no grid found)"];
-    return [
-      ...new Set(
-        [...grid.querySelectorAll("a[href^='/products/']")].map((a) => a.getAttribute("href")).filter((h) => h && !h.includes("#")),
-      ),
-    ].sort();
+    // One href per card, in the order the cards render. A card links to its own
+    // product more than once, and scraping the grid's links flat mixed a card's
+    // repeats into what looked like extra products.
+    return [...grid.children]
+      .map((card) => card.querySelector("a[href^='/products/']")?.getAttribute("href"))
+      .filter((h) => typeof h === "string" && !h.includes("#"));
   });
+
+const cardHrefs = async (page) => [...(await gridCards(page))].sort();
+
+// The grid in the order it renders, not as a set.
+const gridOrder = (page) => gridCards(page);
 
 const band = async (page) => {
   const el = page.getByText("From your answers");
@@ -122,12 +150,13 @@ const SLUG = {
 };
 const ALL_SIX = Object.values(SLUG).sort();
 
-async function open(withScript = TURNS) {
+async function open(withScript = TURNS, category = "wellness-drinks") {
   turn = 0;
   script = withScript;
+  categoryPath = category;
   const page = await browser.newPage();
   page.on("pageerror", (e) => console.log(`  page error: ${e.message}`));
-  await page.goto(`${BASE}/wellness-drinks`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE}/${categoryPath}`, { waitUntil: "domcontentloaded" });
   // The launcher renders before React hydrates, so a click can land on a
   // button that is not listening yet. Click until the panel's input appears.
   const launcher = page.getByRole("button", { name: "Help me choose" }).first();
@@ -284,6 +313,93 @@ try {
     check("keeps both bounds after an unrelated removal", await shownCount(page), "1 of 6 shown");
     check("still shows only the product inside both bounds", await cardHrefs(page), [SLUG.lmnt]);
     check("names both bounds as one entry", await band(page), "From your answersprice per serving of $1.40 or more, price per serving under $1.60Remove");
+    await page.close();
+  }
+  // 6. The relaxation offer, pressed before Apply and after it.
+  const COLD = {
+    edge: "/products/edge-theory-labs-edge-tub-elite",
+    plunge: "/products/plunge-original",
+    renu: "/products/renu-therapy-cold-stoic-2-0",
+    ice400: "/products/ice-barrel-400",
+    ice500: "/products/ice-barrel-500",
+    pod: "/products/the-cold-pod-88-gallon",
+  };
+
+  for (const order of ["before Apply", "after Apply"]) {
+    scenario = `no-match alternative ${order}`;
+    const page = await open([NO_MATCH_TURN], "cold-plunge");
+    await say(page, "A tub with a chiller, up to $5,000.");
+    await page.getByText(/No products match/).first().waitFor({ timeout: 20000 });
+    await report(page, "the no-match reply");
+    // Nothing has been applied yet, so the page is still whole.
+    check("the page is untouched until something is applied", await shownCount(page), "6 of 6 shown");
+
+    if (order === "after Apply") {
+      await page.getByRole("button", { name: "Apply", exact: true }).first().click();
+      await page.waitForTimeout(300);
+      await report(page, "Apply the no-match proposal");
+      check("applying a no-match proposal shows nothing", await shownCount(page), "0 of 6 shown");
+      check("and no products", await cardHrefs(page), []);
+    }
+
+    // Set aside the budget. The route that keeps the chiller is the one this
+    // comes from, and its product fails the budget, so dropping the budget is
+    // what admits it.
+    await setAside(page, "price of \\$5,000 or less");
+    await report(page, `set aside the budget, ${order}`);
+    check("the chiller requirement is what remains", await shownCount(page), "3 of 6 shown");
+    check("and the chiller tubs are what is shown", await cardHrefs(page), [COLD.edge, COLD.plunge, COLD.renu].sort());
+    check("the band names the constraint still standing", await band(page), "From your answerschiller includedRemove");
+    await page.close();
+  }
+
+  // 7. Three constraints, where dropping one still leaves nothing.
+  {
+    scenario = "no single way out";
+    const page = await open([NO_SINGLE_WAY_OUT_TURN], "cold-plunge");
+    await say(page, "A tub with a chiller under $50 that needs no plumbing.");
+    await page.getByText(/No products match/).first().waitFor({ timeout: 20000 });
+    await report(page, "the three-constraint no-match reply");
+
+    const said = await page.getByText(/Setting aside any single one of them still leaves nothing/).count();
+    check("the reply does not promise that one removal is enough", said > 0, true);
+    const promised = await page.getByText(/so one of them would have to be relaxed/).count();
+    check("and does not say the opposite", promised, 0);
+
+    await page.getByRole("button", { name: "Apply", exact: true }).first().click();
+    await page.waitForTimeout(300);
+    await setAside(page, "price of \\$50 or less");
+    await report(page, "set aside the budget, two constraints left");
+    // Honest: still nothing, because the other two admit nothing together.
+    check("still nothing, as the reply said", await shownCount(page), "0 of 6 shown");
+    check("and no products", await cardHrefs(page), []);
+    check("the band names both constraints still standing", await band(page), "From your answerschiller included; Power and plumbing set to \"None. Fill with a hose\"Remove");
+    await page.close();
+  }
+
+  // 8. Eight products, ranked by the preference, on the page.
+  {
+    scenario = "cheapest ordering on the page";
+    const page = await open([CHEAPEST_TURN], "red-light");
+    await say(page, "Whichever red light panel is least expensive.");
+    await page.getByRole("button", { name: "Apply", exact: true }).first().waitFor({ timeout: 20000 });
+    await page.getByRole("button", { name: "Apply", exact: true }).first().click();
+    await page.waitForTimeout(300);
+    await report(page, "Apply a price preference over eight panels");
+    check("all eight are shown", await shownCount(page), "8 of 8 shown");
+    // The grid's own order, cheapest first. Ordering by the four ids the
+    // engine names left everything from the fifth in catalogue order, and a
+    // panel scoring 0 sat above one scoring 24.3.
+    check("the grid is in the engine's order, all the way down", await gridOrder(page), [
+      "/products/hooga-hg300",
+      "/products/mito-red-light-mitomin-2-0",
+      "/products/hooga-pro1500",
+      "/products/bon-charge-max",
+      "/products/mito-red-light-mitopro-1500-plus",
+      "/products/infraredi-flex-max",
+      "/products/platinumled-biomax-900",
+      "/products/joovv-solo-3-0",
+    ]);
     await page.close();
   }
 } finally {

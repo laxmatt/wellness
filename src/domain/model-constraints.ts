@@ -87,16 +87,52 @@ function softProblem(cat: CategoryDefinition, p: ModelSoftPreference): string | 
       const named = def?.type === "list" ? "a list of values" : def?.type === "enum" ? "an unordered set of options" : "not something with an order";
       return `"${p.key}" is ${named}, so "${p.direction}" says nothing about it. Use "prefer_value" with the value to rank towards, or send it as a constraint.`;
     }
-    return null;
+    // A direction may name the point to rank towards, and it used to be waved
+    // through the moment a basis existed: `price prefer_low "cheap"` and
+    // `coverage prefer_high "enormous"` both passed, the first ranking against
+    // a string and the second against a rank nothing has.
+    return targetProblem(cat, p);
   }
 
   // prefer_value has to name the value it prefers.
   if (p.value === undefined) return `"${p.key}" was given "prefer_value" with no value to prefer.`;
+  return targetProblem(cat, p);
+}
+
+/**
+ * Whether a preference's target is a thing this key can hold, or null when it
+ * is. Money is not judged here: `moneyValueToMinorUnits` owns that shape and
+ * says so in its own words.
+ */
+function targetProblem(cat: CategoryDefinition, p: ModelSoftPreference): string | null {
+  if (p.value === undefined) return null;
+  if (Array.isArray(p.value) && p.value.length === 0) {
+    // Passed vacuously before: an empty list has nothing unknown in it, and
+    // nothing to prefer either.
+    return `"${p.key}" was given an empty list to rank towards.`;
+  }
+  if (isMoneyKey(cat, p.key)) return null;
+
+  const def = attributeDef(cat, p.key);
+  const wanted = Array.isArray(p.value) ? p.value : [p.value];
+
   if (def?.type === "enum") {
     const options = (def.enumOptions ?? []).map((o) => o.value);
-    const wanted = Array.isArray(p.value) ? p.value : [p.value];
     const unknown = wanted.filter((v) => !options.includes(v as string));
     if (unknown.length > 0) return `"${p.key}" has no option ${unknown.map((v) => JSON.stringify(v)).join(", ")}. Its options are ${options.join("|")}.`;
+    return null;
+  }
+  if (def?.type === "list") {
+    if (!wanted.every((v) => typeof v === "string" && v.length > 0)) return `"${p.key}" is a list of names, so it can only be ranked towards a name or names.`;
+    return null;
+  }
+  if (def?.type === "boolean") {
+    if (typeof p.value !== "boolean") return `"${p.key}" is true or false, and ${JSON.stringify(p.value)} is neither.`;
+    return null;
+  }
+  // Numbers, and price, which is a number the engine holds in minor units.
+  if (!wanted.every((v) => typeof v === "number" && Number.isFinite(v))) {
+    return `"${p.key}" is a number, so it can only be ranked towards a number, not ${JSON.stringify(p.value)}.`;
   }
   return null;
 }

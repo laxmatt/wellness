@@ -88,6 +88,10 @@ export type ComposeInput = {
   // The shopper's own last message, used only to tell a question from a
   // statement. Never echoed back.
   lastUserText: string;
+  // True when dropping a single constraint admits at least one product. Passed
+  // through so the no-match sentence does not promise a way out that does not
+  // exist.
+  oneRelaxationIsEnough?: boolean;
   // Filter keys the shopper named a value of that nothing was extracted for.
   // Said plainly rather than passed over: a reply that lists what was applied
   // and stays silent about what was not reads as though everything was.
@@ -147,7 +151,7 @@ export function composeReply(input: ComposeInput): string {
 
   if (clearing) {
     parts.push("Clearing every filter.");
-    parts.push(engineSummary(matchCount, totalProducts));
+    parts.push(engineSummary(matchCount, totalProducts, input.oneRelaxationIsEnough));
     return parts.join(" ");
   }
 
@@ -156,7 +160,7 @@ export function composeReply(input: ComposeInput): string {
     const softText = soft.length > 0 ? `Ranking for ${softList(cat, soft)}.` : "";
     if (hardText) parts.push(hardText);
     if (softText) parts.push(softText);
-    parts.push(engineSummary(matchCount, totalProducts));
+    parts.push(engineSummary(matchCount, totalProducts, input.oneRelaxationIsEnough));
     // The count, never the words. `unmapped` is free text the model wrote, and
     // echoing it back puts an unvalidated sentence on the screen for the sake
     // of a phrase the shopper already typed.
@@ -185,6 +189,6 @@ export function composeReply(input: ComposeInput): string {
   if (looksLikeQuestion(input.lastUserText)) return FIXED_LIMITATION;
 
   parts.push(FIXED_INVITATION);
-  parts.push(engineSummary(matchCount, totalProducts));
+  parts.push(engineSummary(matchCount, totalProducts, input.oneRelaxationIsEnough));
   return parts.join(" ");
 }

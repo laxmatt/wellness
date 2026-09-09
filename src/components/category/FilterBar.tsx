@@ -90,7 +90,9 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
         </div>
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {f.ids.map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+          {/* The assistant's order when it has one, the page's otherwise. A
+              preference that reorders nothing is not a preference. */}
+          {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
         </div>
       )}
     </div>

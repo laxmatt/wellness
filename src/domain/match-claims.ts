@@ -7,10 +7,22 @@
 // was never a guarantee, and removing the thing it was guarding is a better
 // answer than a longer pattern list.
 
-export function engineSummary(matchCount: number, total: number): string {
+/**
+ * @param oneRelaxationIsEnough true when dropping a single constraint admits at
+ * least one product. Undefined when the caller has not worked it out, and the
+ * sentence then says nothing about how many would have to go.
+ *
+ * It used to promise "so one of them would have to be relaxed" whatever the
+ * truth. With a chiller, a $5,000 budget and no plumbing, no single removal
+ * admits anything, and the site told the shopper otherwise.
+ */
+export function engineSummary(matchCount: number, total: number, oneRelaxationIsEnough?: boolean): string {
   if (total === 0) return "There are no products in this category yet.";
   if (matchCount === 0) {
-    return `No products match. This category has ${total} ${total === 1 ? "product" : "products"}, and none of them meet every constraint, so one of them would have to be relaxed.`;
+    const head = `No products match. This category has ${total} ${total === 1 ? "product" : "products"}, and none of them meet every constraint`;
+    if (oneRelaxationIsEnough === true) return `${head}, so one of them would have to be relaxed.`;
+    if (oneRelaxationIsEnough === false) return `${head}. Setting aside any single one of them still leaves nothing, so more than one would have to go.`;
+    return `${head}.`;
   }
   if (matchCount === total) {
     return `All ${total} ${total === 1 ? "product" : "products"} in this category match.`;
