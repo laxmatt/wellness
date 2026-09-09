@@ -1,6 +1,6 @@
 # Launch readiness, read-only inventory
 
-Taken from the repository at 58ecd85. Nothing was deployed, contacted, changed
+Taken from the repository at 58ecd85, updated through the bounded-value pass. Nothing was deployed, contacted, changed
 or purchased to produce it. Every line below is either **verified** against a
 file in this repository or **not evidenced here**, meaning this repository does
 not carry the evidence a launch would need. "Not evidenced here" is a claim
@@ -25,7 +25,8 @@ site.
 **Attribute provenance, verified.** Every attribute carries a source and a
 verification tier. Across all 20 products, 196 attributes: **123
 manufacturer-reported, 46 unknown, 24 demo, 3 not stated**. By retrieval
-method: 72 direct, 124 secondhand.
+method: 72 direct, 124 secondhand. Five of the manufacturer-reported figures
+are bounds rather than measurements, and are marked as bounds.
 
 **Nothing is independently verified, and that is a smaller problem than the
 first draft implied.** (Corrected.) A manufacturer's own figure is legitimate
@@ -66,25 +67,31 @@ unsupported zero values were removed from AG1 and Cure rather than left
 standing as facts. Deleting a number the label does not state lowers
 completeness, and it should: the site now knows less than it claimed to.
 
-### Two data questions for a person to settle
+### Bounds, and what is left for a person
 
-Neither is a code defect. Both are judgement calls about what a number means,
-and no automated check can make them.
+Five figures in the catalogue are bounds their sources state rather than
+measurements, and until 2026-09-09 they were stored as exact numbers: AG1's
+sugar, recorded as `1` against a label that says "less than 1 g", and the
+irradiance floors of BON CHARGE Max (142), Hooga HG300 (73), Hooga PRO1500
+(189) and Joovv Solo 3.0 (100), each stated by its maker as "over" or "greater
+than" that figure.
 
-1. **AG1 sugar is recorded as `1` g while its own note says "less than 1 g".**
-   A floor recorded as an exact value. It reads correctly to a shopper (1 g is
-   not a lie about something under 1 g) and it is wrong as data, in the same
-   family as the caffeine zeros that were removed. It was left alone because
-   the alternative is inventing 0.5, and "less than 1" has no honest single
-   number.
-2. **Four irradiance figures record a manufacturer's floor as an exact value**:
-   BON CHARGE Max 142, Hooga HG300 73, Hooga PRO1500 189, Joovv Solo 3.0 100,
-   each noted as "greater than" or "over" that figure. Ranking treats them as
-   exact. A second problem sits on top of it: five of the seven irradiance
-   figures state no measurement distance (BON CHARGE, Hooga PRO1500, Joovv,
-   Mito MitoPRO, Infraredi), and irradiance without a distance is not
-   comparable between brands. Infraredi also records the lower of two figures
-   its maker reports by two instruments.
+They now carry the bound with the value. The qualifier is shown wherever the
+figure is shown, matching answers only what the bound settles, no comparison
+row holding a bound marks a winner, and scoring reads the stated end, which is
+the end that cannot flatter the product. `docs/ASSISTANT.md` records the
+capability that costs.
+
+Two things remain for a person, because no check settles them:
+
+1. **Five of the seven irradiance figures state no measurement distance**
+   (BON CHARGE, Hooga PRO1500, Joovv, Mito MitoPRO, Infraredi). Irradiance
+   without a distance is not comparable between brands. The comparison table
+   refuses to rank those rows and the ranking still scores them, which is the
+   honest limit of what the data supports.
+2. **Infraredi reports two irradiance figures by two instruments**, 167 by
+   solar meter and 79 by spectrometer, and the catalogue records 79. That is a
+   choice about which instrument to believe, not a bound.
 
 ## Offers and affiliate readiness
 
@@ -148,8 +155,9 @@ not tell you whether checks run somewhere else.
 
 Everything that does exist passes, run by hand today at 58ecd85:
 
-- **599 tests** in 37 files: 578 pass, 21 skip. The skips are the Postgres
-  ledger suites, which need `TEST_DATABASE_URL`.
+- **623 tests** in 39 files, all passing, including the two Postgres ledger
+  suites run against the disposable test database. They skip without
+  `TEST_DATABASE_URL`, and a skip is not a pass.
 - **46 browser checks** in `e2e/set-aside-updates-page.mjs`, all passing
   against a real build with a stubbed model. Re-run after the catalogue change,
   not carried over from an earlier run.

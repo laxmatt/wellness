@@ -1,0 +1,216 @@
+import { describe, expect, it } from "vitest";
+import { redLight, wellnessDrinks } from "@/domain/categories";
+import type { CategoryDefinition, Condition } from "@/domain/category";
+import { buildCompareModel } from "@/domain/compare";
+import { evaluateCondition } from "@/domain/conditions";
+import { buildFilterGroups } from "@/domain/filters";
+import { describeFit, describeGap } from "@/domain/personalization/describe";
+import { deriveInsights } from "@/domain/recommend/insights";
+import { recommendCategory } from "@/domain/recommend";
+import { validateCatalog } from "@/providers/catalog/LocalCatalogProvider";
+import { CategoryDefinition as CategorySchema } from "@/domain/category";
+import { toProductView } from "@/domain/view";
+import { catalog, miniCategory, miniProduct, testBrand, testMerchant, viewsFor } from "./fixtures";
+
+// A source that states a bound has not stated an amount.
+//
+// AG1's label says "less than 1 g total sugar" and the catalogue recorded 1.
+// Four red-light panels state irradiance as "over" or "greater than" a figure
+// and the catalogue recorded the figure. Every screen then printed an exact
+// number nobody claimed, and every filter matched it as one: a shopper asking
+// for exactly 1 g of sugar was shown AG1 as a product that has exactly 1 g.
+//
+// The bound is now carried with the value, through display and through
+// matching. What a bound settles, it answers. What it does not settle, it
+// declines, the same way a missing value declines.
+
+const drinks = () => viewsFor("wellness-drinks");
+const panels = () => viewsFor("red-light");
+const ag1 = () => drinks().find((v) => v.id === "ag1-pouch-30")!;
+const pro1500 = () => panels().find((v) => v.id === "hooga-pro1500")!;
+
+const ask = (view: ReturnType<typeof ag1>, cat: CategoryDefinition, c: Condition) => evaluateCondition(view, cat, c);
+
+describe("the catalogue records the bound, not a number nobody stated", () => {
+  it("carries AG1's sugar as a bound and the four irradiance floors as bounds", () => {
+    const bounded: string[] = [];
+    for (const p of catalog().products) {
+      for (const [key, sv] of Object.entries(p.attributes)) {
+        if (sv.bound) bounded.push(`${p.id}.${key} ${sv.bound} ${sv.value}`);
+      }
+    }
+    expect(bounded.sort()).toEqual([
+      "ag1-pouch-30.sugar_g less_than 1",
+      "bon-charge-max.irradiance_mw_cm2 greater_than 142",
+      "hooga-hg300.irradiance_mw_cm2 greater_than 73",
+      "hooga-pro1500.irradiance_mw_cm2 greater_than 189",
+      "joovv-solo-3.irradiance_mw_cm2 greater_than 100",
+    ]);
+  });
+
+  it("keeps the whole catalogue valid", () => {
+    expect(validateCatalog(catalog())).toEqual([]);
+  });
+});
+
+describe("what a bound settles, and what it declines", () => {
+  it("never answers a question about the exact amount", () => {
+    // The defect, in one line: AG1 answered "sugar of exactly 1 g" as a fact.
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "eq", value: 1 })).toBe(false);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "eq", value: 0 })).toBe(false);
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "eq", value: 189 })).toBe(false);
+  });
+
+  it("answers the side of the bound the source settled", () => {
+    // "Less than 1 g" is under 1 g, and under anything above 1 g.
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 1 })).toBe(true);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lte", value: 1 })).toBe(true);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 5 })).toBe(true);
+    // "Over 189" is over 189, and over anything below it.
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 189 })).toBe(true);
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gte", value: 189 })).toBe(true);
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 100 })).toBe(true);
+  });
+
+  it("declines the side the source left open", () => {
+    // Somewhere below 1 g could be 0.9 or 0.1. Neither of these is known.
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 0.5 })).toBe(false);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "gt", value: 0 })).toBe(false);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "gte", value: 1 })).toBe(false);
+    // Somewhere above 189 could be 190 or 400.
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 200 })).toBe(false);
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "lt", value: 300 })).toBe(false);
+    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "lte", value: 189 })).toBe(false);
+  });
+
+  it("says a value differs only when the bound proves it differs", () => {
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "neq", value: 1 })).toBe(true);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "neq", value: 4 })).toBe(true);
+    // It could be 0.5. "Not 0.5" is not established.
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "neq", value: 0.5 })).toBe(false);
+  });
+
+  it("still knows the figure exists", () => {
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "exists" })).toBe(true);
+    expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "missing" })).toBe(false);
+  });
+
+  it("leaves exact values alone", () => {
+    const lmnt = drinks().find((v) => v.id === "lmnt-citrus-salt-30")!;
+    expect(lmnt.attributes.sugar_g).toBe(0);
+    expect(ask(lmnt, wellnessDrinks, { key: "sugar_g", op: "eq", value: 0 })).toBe(true);
+    expect(ask(lmnt, wellnessDrinks, { key: "sugar_g", op: "lt", value: 1 })).toBe(true);
+  });
+});
+
+describe("the qualifier survives to every screen", () => {
+  it("formats the spec with the words the source used", () => {
+    const sugar = ag1().specs.find((s) => s.key === "sugar_g")!;
+    expect(sugar.formatted).toBe("less than 1 g");
+    expect(sugar.bound).toBe("less_than");
+    const irradiance = pro1500().specs.find((s) => s.key === "irradiance_mw_cm2")!;
+    expect(irradiance.formatted).toBe("more than 189 mW/cm²");
+  });
+
+  it("never renders the bare number as the value", () => {
+    for (const v of [...drinks(), ...panels()]) {
+      for (const key of Object.keys(v.bounds)) {
+        const spec = v.specs.find((s) => s.key === key)!;
+        expect(spec.formatted, `${v.id}.${key}`).toMatch(/^(less|more) than /);
+      }
+    }
+  });
+
+  it("marks no winner in a comparison row holding a bound", () => {
+    const items = recommendCategory(panels(), redLight).products.filter((p) =>
+      ["hooga-pro1500", "platinumled-biomax-900"].includes(p.view.id),
+    );
+    const model = buildCompareModel(items, redLight);
+    const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
+    expect(row.cells.map((c) => c.text)).toContain("more than 189 mW/cm²");
+    expect(row.cells.every((c) => !c.best)).toBe(true);
+    expect(row.notComparable).toBeTruthy();
+  });
+
+  it("does not offer a bound as an exact filter chip", () => {
+    // No numeric attribute in the live catalogue is chip-filtered without
+    // presets, so this is built rather than found: a range filter with no
+    // presets lists the distinct stated values, and `=== value` would assert
+    // an amount a bound does not state. Presets go through the same matching
+    // as everything else and need no special case.
+    const cat = CategorySchema.parse({
+      ...JSON.parse(JSON.stringify(miniCategory)),
+      filters: [{ key: "power", label: "Power", kind: "range" }],
+    });
+    const exact = miniProduct("exact", 10000, { power: 50, size: "m" });
+    const floor = miniProduct("floor", 10000, { power: 50, size: "m" });
+    floor.attributes.power!.bound = "greater_than";
+    floor.attributes.power!.source.note = "Brand states over 50 W.";
+    const views = [exact, floor].map((p) => toProductView(p, { category: cat, brands: [testBrand], merchants: [testMerchant] }));
+
+    const group = buildFilterGroups(views, cat).find((g) => g.key === "power");
+    // One product states 50 exactly and one states a floor of 50. A chip for
+    // "50 W" may match the first and must not match the second.
+    expect(group?.options.flatMap((o) => o.matchIds)).not.toContain("floor");
+    expect(group?.options.some((o) => o.matchIds.includes("exact"))).toBe(true);
+  });
+
+  it("keeps the qualifier in the fit and gap sentences, and invents no distance from a limit", () => {
+    const fit = describeFit(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 5 });
+    expect(fit).toContain("less than 1 g");
+    expect(fit).not.toMatch(/\b4 g under\b/);
+    const gap = describeGap(ag1(), wellnessDrinks, { key: "sugar_g", op: "eq", value: 0 });
+    expect(gap.text).toContain("less than 1 g");
+  });
+
+  it("keeps the qualifier in derived editorial copy", () => {
+    for (const v of panels()) {
+      for (const insight of deriveInsights(v, redLight)) {
+        if (v.bounds.irradiance_mw_cm2 !== undefined && /mW\/cm²/.test(insight.text)) {
+          expect(insight.text, `${v.id}: ${insight.text}`).toMatch(/more than/);
+        }
+      }
+    }
+  });
+});
+
+describe("scoring reads the stated end, and the catalogue check keeps it that way", () => {
+  it("scores the bound itself, which is the end that cannot flatter", () => {
+    // "Over 189" scores as 189. The real figure is higher, so the product is
+    // ranked no better than the maker's own floor. The reverse, a floor on a
+    // lower-is-better figure, would rank a product on the best case of a range
+    // whose worst case nobody stated, and the catalogue check refuses it.
+    const ranked = recommendCategory(panels(), redLight).products;
+    const before = ranked.find((p) => p.view.id === "hooga-pro1500")!.score;
+    expect(before).toBe(100);
+    expect(pro1500().attributes.irradiance_mw_cm2).toBe(189);
+  });
+
+  it("refuses a bound pointing the flattering way", () => {
+    const c = catalog();
+    const product = structuredClone(c.products.find((p) => p.id === "ag1-pouch-30")!);
+    // Sugar is lower_better. "More than 1 g" would score as 1 g, the best case
+    // of a range with no stated top.
+    product.attributes.sugar_g!.bound = "greater_than";
+    const issues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "ag1-pouch-30"), product] });
+    expect(issues.map((i) => i.message).join(" ")).toMatch(/flattering end/);
+  });
+
+  it("refuses a bound on a value that is not a fact, not a number, or has no note", () => {
+    const c = catalog();
+    const olipop = structuredClone(c.products.find((p) => p.id === "olipop-root-beer-12")!);
+    olipop.attributes.caffeine_mg!.bound = "less_than";
+    const demoIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "olipop-root-beer-12"), olipop] });
+    expect(demoIssues.map((i) => i.message).join(" ")).toMatch(/bound on a "demo" value/);
+
+    const lmnt = structuredClone(c.products.find((p) => p.id === "lmnt-citrus-salt-30")!);
+    lmnt.attributes.function!.bound = "less_than";
+    const shapeIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "lmnt-citrus-salt-30"), lmnt] });
+    expect(shapeIssues.map((i) => i.message).join(" ")).toMatch(/value is not a number/);
+
+    const hooga = structuredClone(c.products.find((p) => p.id === "hooga-pro1500")!);
+    delete hooga.attributes.irradiance_mw_cm2!.source.note;
+    const noteIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "hooga-pro1500"), hooga] });
+    expect(noteIssues.map((i) => i.message).join(" ")).toMatch(/bound with no source note/);
+  });
+});

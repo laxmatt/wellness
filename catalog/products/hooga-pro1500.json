@@ -159,7 +159,8 @@
         "method": "secondhand",
         "note": "Brand states over 189 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "bound": "greater_than"
     },
     "led_count": {
       "value": 300,

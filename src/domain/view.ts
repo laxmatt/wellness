@@ -15,7 +15,7 @@ import type {
   ProductStatus,
 } from "./product";
 import { deriveAffiliateStatus } from "./product";
-import type { Provenance } from "./provenance";
+import type { Bound, Provenance } from "./provenance";
 import { provenanceOf } from "./provenance";
 
 // ProductView is what components consume: plain values, plus a provenance map
@@ -53,6 +53,9 @@ export type SpecView = {
   group: string;
   raw: AttributePrimitive | undefined;
   formatted: string;
+  // Set when the source states a bound rather than a measurement. `formatted`
+  // already carries the qualifier; this is for a screen that needs to know.
+  bound?: Bound;
   unit?: string;
   provenance?: Provenance;
   alwaysShowVerification: boolean;
@@ -77,6 +80,10 @@ export type ProductView = {
   dimensions?: Dimensions & { unit: string };
   weight?: { value: number; unit: string };
   attributes: Record<string, AttributePrimitive>;
+  // Keys whose value is a stated bound, not a measurement. Matching reads this
+  // and answers only what the bound settles; everything else is unknown, and
+  // unknown never matches.
+  bounds: Record<string, Bound>;
   specs: SpecView[];
   cardSpecs: SpecView[];
   editorial: { strengths: string[]; tradeoffs: string[] };
@@ -131,13 +138,17 @@ export function completeness(product: Product, category: CategoryDefinition): nu
 function specFor(def: AttributeDefinition, product: Product): SpecView {
   const sv = product.attributes[def.key];
   const displayText = def.displayField ? product[def.displayField]?.value : undefined;
+  // A bound only qualifies a value that can be used as fact. A demo or
+  // not-stated entry shows what it always showed.
+  const bound = sv && sv.value !== undefined && isUsable(sv.verification) ? sv.bound : undefined;
   return {
     key: def.key,
     label: def.label,
     shortLabel: def.shortLabel ?? def.label,
     group: def.group,
     raw: sv?.value,
-    formatted: displayText ?? formatAttribute(def, sv?.value),
+    bound,
+    formatted: displayText ?? formatAttribute(def, sv?.value, bound),
     unit: sv?.unit ?? def.unit,
     provenance: sv ? provenanceOf(sv) : undefined,
     alwaysShowVerification: def.alwaysShowVerification,
@@ -150,6 +161,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
 
   const provenance: Record<string, Provenance> = {};
   const attributes: Record<string, AttributePrimitive> = {};
+  const bounds: Record<string, Bound> = {};
   for (const [key, sv] of Object.entries(product.attributes)) {
     // Only values that can be used as fact become attributes. `specs` already
     // withheld demo values from every screen and from the assistant, while
@@ -158,7 +170,10 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     // as long as it has existed. An attribute the source does not state keeps
     // its provenance so the page can say "not stated" and show why, and never
     // becomes something to match on.
-    if (sv.value !== undefined && isUsable(sv.verification)) attributes[key] = sv.value;
+    if (sv.value !== undefined && isUsable(sv.verification)) {
+      attributes[key] = sv.value;
+      if (sv.bound) bounds[key] = sv.bound;
+    }
     provenance[`attributes.${key}`] = provenanceOf(sv);
   }
   if (product.warranty) provenance.warranty = provenanceOf(product.warranty);
@@ -219,6 +234,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     dimensions: product.dimensions?.value ? { ...product.dimensions.value, unit: product.dimensions.unit ?? "in" } : undefined,
     weight: product.weight?.value !== undefined ? { value: product.weight.value, unit: product.weight.unit ?? "lb" } : undefined,
     attributes,
+    bounds,
     specs,
     cardSpecs,
     editorial: {

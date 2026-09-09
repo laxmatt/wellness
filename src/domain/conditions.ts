@@ -1,6 +1,7 @@
 import type { AttributePrimitive } from "./attributes";
 import type { CategoryDefinition, Condition } from "./category";
 import { attributeDef } from "./category";
+import type { Bound } from "./provenance";
 import type { ProductView } from "./view";
 import { numericValue } from "./view";
 
@@ -33,9 +34,42 @@ export function isUnconfirmedPriceClaim(view: ProductView, cat: CategoryDefiniti
   return false;
 }
 
+// A value the source states only as a bound answers some questions and not
+// others. "Less than 1 g of sugar" settles "under 2 g" and settles "not 4 g";
+// it cannot settle "exactly 1 g", "under 0.5 g", or anything asking how much
+// there is. Unanswerable is answered false, the same way a missing value is,
+// because a question this catalogue cannot settle must not admit a product.
+//
+// Capability given up, deliberately: an exact query against a bounded value
+// never matches, and a range query strictly inside the bound never matches
+// either. AG1 is no longer returned for "1 g of sugar" and never was for
+// "zero sugar"; it is returned for "under 5 g", which its label does settle.
+function evaluateBounded(bound: Bound, stated: number, op: Condition["op"], target: number): boolean {
+  if (bound === "less_than") {
+    // The real value is somewhere below `stated`.
+    if (op === "lt" || op === "lte") return target >= stated;
+    if (op === "neq") return target >= stated;
+    return false;
+  }
+  // The real value is somewhere above `stated`.
+  if (op === "gt" || op === "gte") return target <= stated;
+  if (op === "neq") return target <= stated;
+  return false;
+}
+
 export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c: Condition): boolean {
   if (isUnconfirmedPriceClaim(view, cat, c)) return false;
   const raw: AttributePrimitive | number | undefined = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const bound = c.key === "price" ? undefined : view.bounds[c.key];
+  if (bound !== undefined && typeof raw === "number") {
+    // `exists` and `missing` ask whether the catalogue holds anything at all,
+    // which a bound answers exactly as a measurement does.
+    if (c.op === "exists") return true;
+    if (c.op === "missing") return false;
+    const target = conditionTarget(cat, c.key, c.value);
+    if (target === undefined) return false;
+    return evaluateBounded(bound, raw, c.op, target);
+  }
   switch (c.op) {
     case "exists":
       return raw !== undefined;

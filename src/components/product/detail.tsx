@@ -190,19 +190,48 @@ export function InsightsPanel({ insights, view }: { insights: Insight[]; view: P
 
 export function ProvenanceBlock({ view }: { view: ProductView }) {
   const entries = Object.entries(view.provenance) as [string, Provenance][];
-  const byUrl = new Map<string, { url?: string; kind: string; retrievedAt?: string; method: string; fields: string[]; note?: string }>();
+  const fieldName = (path: string) => path.replace(/^attributes\./, "").replace(/_/g, " ");
+  type Group = {
+    url?: string;
+    kind: string;
+    retrievedAt?: string;
+    method: string;
+    fields: string[];
+    // One entry per distinct note, with the fields that carry it. The notes
+    // were being collected and never rendered, so the reason a figure is a
+    // bound, or absent, or relayed, existed in the file and nowhere a reader
+    // could see it.
+    notes: { note: string; fields: string[] }[];
+  };
+  const byUrl = new Map<string, Group>();
   for (const [path, p] of entries) {
     const key = p.source.url ?? `${p.source.kind}:${p.source.ref ?? ""}`;
-    const cur = byUrl.get(key) ?? { url: p.source.url, kind: p.source.kind, retrievedAt: p.source.retrievedAt, method: p.source.method, fields: [], note: undefined };
-    cur.fields.push(path.replace(/^attributes\./, "").replace(/_/g, " "));
+    const cur = byUrl.get(key) ?? { url: p.source.url, kind: p.source.kind, retrievedAt: p.source.retrievedAt, method: p.source.method, fields: [], notes: [] };
+    cur.fields.push(fieldName(path));
+    if (p.source.note) {
+      const existing = cur.notes.find((n) => n.note === p.source.note);
+      if (existing) existing.fields.push(fieldName(path));
+      else cur.notes.push({ note: p.source.note, fields: [fieldName(path)] });
+    }
     byUrl.set(key, cur);
   }
-  const demoCount = entries.filter(([, p]) => !isUsable(p.verification)).length;
+  // Three different things, counted and named separately. Lumping them under
+  // "demo values" called a figure nobody stated an invention, which is a
+  // different accusation and the wrong one.
+  const demoCount = entries.filter(([, p]) => p.verification === "demo").length;
+  const notStatedCount = entries.filter(([, p]) => p.verification === "not_stated").length;
+  const boundCount = entries.filter(([, p]) => p.bound !== undefined).length;
+  const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+  const sentences = [
+    demoCount > 0 ? `${plural(demoCount, "field carries", "fields carry")} demo data, marked on the page.` : null,
+    notStatedCount > 0 ? `${plural(notStatedCount, "field is", "fields are")} not stated by the source, so no value is recorded and none is guessed.` : null,
+    boundCount > 0 ? `${plural(boundCount, "figure is", "figures are")} a bound the maker stated rather than a measurement, shown with the words the maker used.` : null,
+  ].filter(Boolean);
   return (
     <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm">
       <h3 className="eyebrow">Sources and updates</h3>
       <p className="mt-2 text-fg-soft">
-        Last updated {shortDate(view.lastUpdated)}. {demoCount > 0 ? `${demoCount} field${demoCount === 1 ? "" : "s"} carry demo values, marked on the page.` : ""} Maker-reported figures are not independently verified here.
+        Last updated {shortDate(view.lastUpdated)}. {sentences.join(" ")} Maker-reported figures are not independently verified here.
       </p>
       <ul className="mt-3 flex flex-col gap-2">
         {[...byUrl.values()].map((s, i) => (
@@ -218,6 +247,15 @@ export function ProvenanceBlock({ view }: { view: ProductView }) {
               {s.method === "secondhand" ? <span className="rounded-pill border border-edge-strong px-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-fg-soft">Relayed, not fetched</span> : null}
             </div>
             <p className="text-xs text-fg-muted">{s.fields.join(", ")}</p>
+            {s.notes.length > 0 ? (
+              <ul className="mt-1 flex flex-col gap-1">
+                {s.notes.map((n, j) => (
+                  <li key={j} className="text-xs text-fg-soft">
+                    <span className="font-semibold">{n.fields.join(", ")}:</span> {n.note}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </li>
         ))}
       </ul>

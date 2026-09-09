@@ -5,6 +5,7 @@ import { validateAttributeAgainstDefinition } from "@/domain/attributes";
 import { categories, categoryById } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { Brand, Merchant, Product } from "@/domain/product";
+import { isUsable } from "@/domain/provenance";
 import { toProductView, type ProductView } from "@/domain/view";
 import type { CatalogProvider, ProductQuery } from "./CatalogProvider";
 
@@ -78,9 +79,33 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
       // irradiance figures whose notes say the measurement DISTANCE is not
       // stated, which is a different fact from the figure itself, and the
       // sanitation note that records a removal. A heuristic that forces true
-      // values to be deleted is worse than no heuristic: the exact check above
-      // is the one that holds, and the bounds recorded as values are listed in
-      // docs/LAUNCH-READINESS.md for a human to judge.
+      // values to be deleted is worse than no heuristic: the exact checks are
+      // the ones that hold.
+      if (sv.bound) {
+        if (typeof sv.value !== "number") {
+          issues.push({ file, message: `attribute "${key}" carries a bound but its value is not a number. A bound qualifies an amount.` });
+        }
+        if (!isUsable(sv.verification)) {
+          issues.push({ file, message: `attribute "${key}" carries a bound on a "${sv.verification}" value. A bound qualifies a fact; this is not one.` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" carries a bound with no source note. The note is where the wording that justifies it lives.` });
+        }
+        // Scoring reads the number, so a bound must point at the end that
+        // cannot flatter the product. "More than 189" on a higher-is-better
+        // figure scores 189 and understates it. The reverse, a floor on a
+        // lower-is-better figure, would score the best case of a range whose
+        // top nobody stated.
+        const flattering =
+          (sv.bound === "greater_than" && def.preferenceDirection === "lower_better") ||
+          (sv.bound === "less_than" && def.preferenceDirection === "higher_better");
+        if (flattering) {
+          issues.push({
+            file,
+            message: `attribute "${key}" records a "${sv.bound}" bound on a ${def.preferenceDirection} figure, so scoring would read the flattering end of a range nobody stated.`,
+          });
+        }
+      }
     }
     for (const o of p.offers) {
       if (!merchantIds.has(o.merchantId)) issues.push({ file, message: `offer ${o.id} has unknown merchantId ${o.merchantId}` });

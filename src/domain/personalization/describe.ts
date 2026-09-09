@@ -3,15 +3,20 @@ import type { CategoryDefinition, Condition } from "../category";
 import { attributeDef } from "../category";
 import { comparable, conditionTarget } from "../conditions";
 import { formatMoney } from "../money";
+import { BOUND_WORDS, type Bound } from "../provenance";
 import type { ProductView } from "../view";
 
 // Human phrasing for constraints and for how far a product sits from one.
 // Templates only. No model text reaches these strings.
 
-export function formatValueFor(cat: CategoryDefinition, key: string, value: unknown): string {
+// `bound` qualifies a value a product states as a bound. It is passed when
+// formatting what a product holds, never when formatting what a shopper asked
+// for: "under 5 g" is the shopper's limit, and it is exact.
+export function formatValueFor(cat: CategoryDefinition, key: string, value: unknown, bound?: Bound): string {
   if (key === "price") return formatMoney({ amountMinor: Number(value), currency: "USD" });
   const def = attributeDef(cat, key);
   if (!def) return String(value);
+  if (bound && typeof value === "number") return `${BOUND_WORDS[bound]} ${formatValueFor(cat, key, value)}`;
   if (def.unit === "USD_minor") return formatMoney({ amountMinor: Number(value), currency: "USD" });
   if (Array.isArray(value)) return value.map((v) => humanize(String(v))).join(", ");
   return formatAttribute(def, value as never);
@@ -75,9 +80,20 @@ export function describeGap(view: ProductView, cat: CategoryDefinition, c: Condi
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
   const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const bound = c.key === "price" ? undefined : view.bounds[c.key];
 
   if (actualRaw === undefined) {
     return { text: `${label} not stated`, magnitude: Number.MAX_SAFE_INTEGER / 2 };
+  }
+
+  // How far a bound sits from a limit is not a number anybody stated. The
+  // distance still orders alternatives, but the sentence says only what the
+  // source says. Magnitude uses the stated end, which is the near end.
+  if (bound && typeof actualRaw === "number") {
+    const left = comparable(view, cat, c.key);
+    const right = conditionTarget(cat, c.key, c.value);
+    const gap = left !== undefined && right !== undefined ? Math.abs(left - right) || 1 : 1;
+    return { text: `${label} is ${formatValueFor(cat, c.key, actualRaw, bound).toLowerCase()}`, magnitude: gap };
   }
 
   const left = comparable(view, cat, c.key);
@@ -112,9 +128,14 @@ export function describeFit(view: ProductView, cat: CategoryDefinition, c: Condi
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
   const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
-  const actual = actualRaw === undefined ? "" : formatValueFor(cat, c.key, actualRaw);
+  const bound = c.key === "price" ? undefined : view.bounds[c.key];
+  const actual = actualRaw === undefined ? "" : formatValueFor(cat, c.key, actualRaw, bound);
 
   if (def?.type === "enum" && actualRaw !== undefined) return `${label}: ${actual}`;
+
+  // A bound met the limit or it would not be a fit, and by how much is not
+  // known. The qualifier is the whole answer.
+  if (bound && actualRaw !== undefined) return `${label}: ${actual}`;
 
   if ((c.op === "lt" || c.op === "lte") && actualRaw !== undefined) {
     const left = comparable(view, cat, c.key);

@@ -37,10 +37,21 @@ export const Source = z.object({
 });
 export type Source = z.infer<typeof Source>;
 
+// A value the source states only as a bound: "less than 1 g of sugar",
+// "over 189 mW/cm2". The number recorded is the bound itself, and it is the
+// only number anybody stated. Recording it bare made the site assert an exact
+// amount nobody claimed: AG1's label says less than 1 g and the page said 1 g.
+//
+// Strict, both of them, because that is what the five sources say. A value
+// carrying `less_than: 1` is somewhere below 1 and nowhere else.
+export const Bound = z.enum(["less_than", "greater_than"]);
+export type Bound = z.infer<typeof Bound>;
+
 export const Provenance = z.object({
   source: Source,
   verification: Verification,
   unit: z.string().optional(),
+  bound: Bound.optional(),
 });
 export type Provenance = z.infer<typeof Provenance>;
 
@@ -54,6 +65,11 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     unit: z.string().optional(),
     source: Source,
     verification: Verification,
+    // Present when the source states a bound rather than a measurement. The
+    // value is the bound. `check-catalog` refuses one that is not a number,
+    // one whose verification cannot support a fact, and one pointing the
+    // flattering way for its attribute's direction.
+    bound: Bound.optional(),
   });
 }
 
@@ -62,6 +78,7 @@ export type Sourced<T> = {
   unit?: string;
   source: Source;
   verification: Verification;
+  bound?: Bound;
 };
 
 export const DEMO_SOURCE: Source = {
@@ -105,5 +122,12 @@ export function stripProvenance<T>(s: Sourced<T>): T | undefined {
 }
 
 export function provenanceOf<T>(s: Sourced<T>): Provenance {
-  return { source: s.source, verification: s.verification, unit: s.unit };
+  return { source: s.source, verification: s.verification, unit: s.unit, bound: s.bound };
 }
+
+// The direction a bound points, as text a person can read: the qualifier the
+// display and the phrasing layers both put in front of the number.
+export const BOUND_WORDS: Record<Bound, string> = {
+  less_than: "less than",
+  greater_than: "more than",
+};

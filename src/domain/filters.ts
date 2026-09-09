@@ -45,9 +45,12 @@ export function buildFilterGroups(views: ProductView[], cat: CategoryDefinition)
       }
     } else if (spec.kind === "range" && def) {
       // No presets: offer the distinct stated values, useful for small sets.
-      const values = [...new Set(views.map((v) => v.attributes[spec.key]).filter((x) => x !== undefined))];
+      // A bounded value is not an exact figure, so it is neither offered as a
+      // chip nor matched by one: `=== value` would assert the amount the
+      // source declined to state.
+      const values = [...new Set(views.filter((v) => v.bounds[spec.key] === undefined).map((v) => v.attributes[spec.key]).filter((x) => x !== undefined))];
       for (const value of values.slice(0, 4)) {
-        const matchIds = views.filter((v) => v.attributes[spec.key] === value).map((v) => v.id);
+        const matchIds = views.filter((v) => v.bounds[spec.key] === undefined && v.attributes[spec.key] === value).map((v) => v.id);
         if (matchIds.length > 0 && matchIds.length < views.length) options.push({ id: `${spec.key}:${String(value)}`, label: formatAttribute(def, value as never), matchIds });
       }
     }

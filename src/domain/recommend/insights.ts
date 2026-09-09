@@ -19,6 +19,10 @@ function fill(template: string, view: ProductView, cat: CategoryDefinition): str
     const raw = view.attributes[key];
     if (raw === undefined) return "not stated";
     if (def.type === "list" && Array.isArray(raw)) return (raw as string[]).map((v) => v.replace(/_/g, " ")).join(", ");
+    // A bound keeps its qualifier through every shortcut below it. A rule that
+    // fires on "over 189 mW/cm2" must not print "189 mW/cm2".
+    const bound = view.bounds[key];
+    if (bound) return formatAttribute(def, raw, bound);
     if (def.unit === "yr" && typeof raw === "number") return `${raw}-year`;
     if (def.unit === "%" && typeof raw === "number") return `${raw}%`;
     return formatAttribute(def, raw);

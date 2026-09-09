@@ -177,7 +177,8 @@
         "method": "secondhand",
         "note": "Brand states over 73 mW/cm² at 6 inches. Relayed via search summary; manufacturer page not fetched directly."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "bound": "greater_than"
     },
     "irradiance_distance_in": {
       "value": 6,

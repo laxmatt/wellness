@@ -122,7 +122,8 @@
         "method": "secondhand",
         "note": "Label states less than 1 g total sugar; no added sugar. Relayed via search summary; manufacturer page not fetched directly."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "bound": "less_than"
     },
     "added_sugar_g": {
       "value": 0,

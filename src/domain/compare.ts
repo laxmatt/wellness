@@ -78,6 +78,14 @@ function comparability(items: RecommendedProduct[], cat: CategoryDefinition, key
       return { ok: false, reason: `Not ranked: these figures were measured at a different ${condLabel}.` };
     }
   }
+
+  // Last, because the conditions a figure was taken under are the more useful
+  // thing to say when both are wrong. A bound is not a measurement: "more than
+  // 189 mW/cm2" beats a stated 185, and against a stated 200 nobody knows, so
+  // no winner is marked in a row where any figure is a bound.
+  if (key !== "price" && items.some((it) => it.view.bounds[key] !== undefined)) {
+    return { ok: false, reason: "Not ranked: at least one figure here is a bound its maker stated, not a measurement." };
+  }
   return { ok: true };
 }
 

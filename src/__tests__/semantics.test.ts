@@ -106,12 +106,25 @@ describe("comparison dots require comparable measurements", () => {
     expect(row.notComparable).toMatch(/not stated for every product/);
   });
 
-  it("marks a winner when every product states the same measurement conditions", () => {
-    // HG300 and BIOMAX 900 both report at 6 in.
+  it("suppresses the irradiance winner when one figure is a floor, even at the same distance", () => {
+    // HG300 and BIOMAX 900 both report at 6 in, so the distance rule is
+    // satisfied. HG300's figure is "over 73", which the maker states as a
+    // floor: BIOMAX's 185 looks like the winner and the real HG300 number is
+    // not known. A row nobody can rank is left unranked.
     const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
     const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
+    expect(row.cells.every((c) => !c.best)).toBe(true);
+    expect(row.notComparable).toMatch(/bound its maker stated/);
+  });
+
+  it("still marks a winner on a row of exact figures", () => {
+    // The bound rule is not a blanket refusal to rank. LED count is stated
+    // exactly by both, and BIOMAX's 300 wins it.
+    const model = buildCompareModel(items(["hooga-hg300", "platinumled-biomax-900"]), redLight);
+    const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "led_count")!;
     expect(row.notComparable).toBeUndefined();
     expect(row.cells.filter((c) => c.best).length).toBe(1);
+    expect(row.cells.findIndex((c) => c.best)).toBe(model.columns.findIndex((c) => c.id === "platinumled-biomax-900"));
   });
 
   it("never marks a winner in a row containing placeholder data", () => {
