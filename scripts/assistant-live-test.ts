@@ -185,7 +185,20 @@ async function main() {
       body: JSON.stringify({ sessionId, categoryId: c.category, messages: [{ role: "user", text: c.text }], hard: [], soft: [] }),
     });
     if (!res.ok) {
+      // Recorded, not just counted. A case the application refused is a case
+      // that was attempted, and a report that omits it says the run was
+      // shorter than it was.
       failures.push(`${c.text} -> HTTP ${res.status}`);
+      records.push({
+        category: c.category,
+        note: c.note,
+        text: c.text,
+        reply: `(no reply: the application returned HTTP ${res.status})`,
+        problems: [`the application returned HTTP ${res.status}`],
+        shown: 0,
+      });
+      console.log(`FAIL ${c.category} | ${c.note}  [HTTP ${res.status}]`);
+      await sleep(400);
       continue;
     }
     const r = (await res.json()) as Reply;
@@ -193,6 +206,15 @@ async function main() {
     if (r.mode !== "live") {
       console.error(`\nAborting: the endpoint replied in "${r.mode}" mode, not "live".`);
       console.error(r.notice ?? "Check OPENAI_API_KEY and that the ledger is shared (DATABASE_URL).");
+      // Whatever ran before this point was still paid for. Write it down
+      // before leaving: an abort used to discard every record it had.
+      writeReport({
+        records,
+        plannedCases: CASES.length,
+        before,
+        after: await usage(),
+        stoppedEarly: { reason: `the endpoint replied in "${r.mode}" mode, not "live"` },
+      });
       process.exit(2);
     }
 

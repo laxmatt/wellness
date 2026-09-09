@@ -42,3 +42,11 @@ recorded no uncertain charge. That is the extraction that failed twice before,
 once with the value written into the operator field. `npm run
 assistant:strictcheck` sends it; `ASSISTANT_RESPONSE_FORMAT=json_schema` is
 still off by default.
+
+The seventh run, `2026-09-09T01-35.md`, is the 15-case suite with strict
+structured outputs on. It scored 12 of 15 for $0.0062 with no new uncertain
+charges. Two of the three failures were schema-valid replies with correct
+extraction, discarded because `suggestCompare` carried more ids than
+`ModelIntent` allows and the schema does not express that bound. Interpretation
+was right on 14 of 15. The single real extraction failure dropped "zero sugar"
+and read "under $2" as `lte 200`, which admits exactly $2.00.
