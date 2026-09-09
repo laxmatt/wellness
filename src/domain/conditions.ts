@@ -51,7 +51,20 @@ export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c:
     case "in":
       return Array.isArray(c.value) && (c.value as unknown[]).includes(raw as unknown);
     case "includes":
-      return Array.isArray(raw) && (raw as unknown[]).includes(c.value as unknown);
+      // "includes" asks whether a product's list holds a value. A scalar names
+      // one value; an array names alternatives and matches a product holding
+      // any of them, which is how this site's own list filter chips behave:
+      // options within a group are OR.
+      //
+      // It used to compare the value to the array's members directly, so an
+      // array value could only ever match a product whose list held that same
+      // array. A live model answered `function includes ["electrolytes"]`,
+      // every product failed, and the shopper was told nothing matched when an
+      // electrolyte drink was sitting in the catalogue at $1.50 a serving.
+      if (!Array.isArray(raw)) return false;
+      return Array.isArray(c.value)
+        ? (c.value as unknown[]).some((v) => (raw as unknown[]).includes(v))
+        : (raw as unknown[]).includes(c.value as unknown);
     case "lt":
     case "lte":
     case "gt":

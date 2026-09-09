@@ -74,8 +74,10 @@ export type AssistantReply = {
   text: string;
   // Whether a real model produced this reply or the built-in scripted stand-in.
   mode: "live" | "prototype" | "unavailable";
-  // Question the assistant is waiting on, if any.
-  question?: { text: string; options: string[] };
+  // Question the assistant is waiting on, if any. `key` is the filter it is
+  // about, so an answer can be attributed to it rather than guessed at from
+  // the option text.
+  question?: { text: string; options: string[]; key?: string };
   products: AssistantProductRef[];
   // Every product satisfying the agreed hard constraints, in personalized
   // order. The page filters by this rather than approximating it with chips.
@@ -108,6 +110,16 @@ export const AssistantRequest = z.object({
   messages: z.array(AssistantMessage).max(40),
   hard: z.array(HardConstraint).default([]),
   soft: z.array(SoftPreference).default([]),
+  // Set when this message answers a clarifying question the site asked, naming
+  // the filter it was about. It changes one thing: the reply's constraints are
+  // merged into the ones already held rather than replacing them.
+  //
+  // Replacement is right for an ordinary message, because that is how "forget
+  // the budget" drops a constraint. It is wrong for an answer to a question the
+  // site asked: pressing "Electrolytes" is not a request to forget anything,
+  // and a model that answers only the question it was asked would otherwise
+  // take the shopper's other requirements with it.
+  answering: z.object({ key: z.string() }).optional(),
 });
 export type AssistantRequest = z.infer<typeof AssistantRequest>;
 

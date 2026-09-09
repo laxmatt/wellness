@@ -112,7 +112,9 @@ function vocabulary(cat: CategoryDefinition, views: ProductView[]): string {
       if (def?.type === "list") {
         const values = listValues(f.key);
         const shown = values.length > 0 ? `; values include ${values.join("|")}` : "";
-        return `${f.key} (list; use op "includes"${shown})`;
+        // The value shape is stated because both are accepted and they mean
+        // different things: one value, or several as alternatives.
+        return `${f.key} (list; use op "includes" with the value as a string, or an array of strings for alternatives${shown})`;
       }
       if (isMoneyKey(cat, f.key)) return `${f.key} (money; see the MONEY block)`;
       return `${f.key} (number${def?.unit ? `, ${def.unit}` : ""})`;
@@ -373,8 +375,20 @@ export async function POST(req: Request) {
     );
   }
 
-  const proposedHard = converted.hard;
-  const proposedSoft = converted.soft;
+  // An answer to a question the site asked adds to what the shopper already
+  // has; it never silently drops it. Constraints the reply names win on their
+  // own key, so the model can still correct a budget it is told about, and
+  // everything it does not mention is carried through untouched.
+  //
+  // Only this path merges. An ordinary message replaces, which is what lets
+  // "forget the budget" drop a constraint.
+  const answeringKey = parsed.data.answering?.key;
+  const mergeInto = <T extends { key: string }>(held: T[], incoming: T[]): T[] => {
+    const named = new Set(incoming.map((c) => c.key));
+    return [...held.filter((c) => !named.has(c.key)), ...incoming];
+  };
+  const proposedHard = answeringKey !== undefined ? mergeInto(hard, converted.hard) : converted.hard;
+  const proposedSoft = answeringKey !== undefined ? mergeInto(soft, converted.soft) : converted.soft;
   const changed = JSON.stringify(proposedHard) !== JSON.stringify(hard) || JSON.stringify(proposedSoft) !== JSON.stringify(soft);
 
   // When the model proposes new constraints, everything shown describes those

@@ -285,7 +285,7 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
               <button
                 key={o}
                 type="button"
-                onClick={() => void a.send(o)}
+                onClick={() => void a.answerQuestion(o, reply.question!, index)}
                 className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg"
               >
                 {o}

@@ -28,7 +28,7 @@ export const FIXED_LIMITATION =
 // question, so a shopper is never left with a statement they cannot act on.
 export const FIXED_INVITATION = "What matters most to you here?";
 
-export type ComposedQuestion = { text: string; options: string[] };
+export type ComposedQuestion = { text: string; options: string[]; key?: string };
 
 /**
  * A clarifying question built from the category's own filters.
@@ -72,7 +72,7 @@ export function questionForKey(cat: CategoryDefinition, key: string, options: st
   if (options.length === 0) return undefined;
   const def = cat.attributeDefinitions.find((a) => a.key === key);
   const label = (def?.shortLabel ?? def?.label ?? cat.filters.find((f) => f.key === key)?.label ?? key).toLowerCase();
-  return { text: `Which ${label} suits you?`, options: options.slice(0, 5) };
+  return { text: `Which ${label} suits you?`, options: options.slice(0, 5), key };
 }
 
 export type ComposeInput = {

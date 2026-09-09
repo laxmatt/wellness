@@ -57,7 +57,9 @@ export function describeConstraint(cat: CategoryDefinition, c: Condition): strin
     case "in":
       return `${label}: ${val}`;
     case "includes":
-      return `${label} includes ${val}`;
+      // Several values are alternatives, so the sentence has to say so. "sugar
+      // includes A, B" reads as both; the engine matches either.
+      return Array.isArray(c.value) && c.value.length > 1 ? `${label} includes any of ${val}` : `${label} includes ${val}`;
     case "exists":
       return `${label} stated`;
     case "missing":

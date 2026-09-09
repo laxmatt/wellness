@@ -23,6 +23,10 @@ export type AssistantState = {
   // Set only when the shopper accepts a proposal. Filters watch this.
   applied: AppliedPreferences | null;
   send: (text: string) => Promise<void>;
+  // Answering a question the site asked. Distinct from `send` because it
+  // carries the constraints the shopper has not applied yet, and tells the
+  // route the message answers a question rather than replacing an answer.
+  answerQuestion: (option: string, question: { key?: string }, replyIndex: number) => Promise<void>;
   accept: (action: ProposedAction) => void;
   dismiss: (index: number) => void;
   dismissed: number[];
@@ -68,8 +72,12 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     return keys.length === 0 ? null : replies[Math.max(...keys)];
   }, [replies]);
 
-  const send = useCallback(
-    async (text: string) => {
+  const post = useCallback(
+    async (
+      text: string,
+      carry: { hard: HardConstraint[]; soft: SoftPreference[] },
+      answering?: { key: string },
+    ) => {
       const trimmed = text.trim();
       if (!trimmed || sending) return;
       sessionId.current ??= newSessionId();
@@ -81,7 +89,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         const res = await fetch("/api/assistant", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ sessionId: sessionId.current, categoryId, messages: next, hard, soft }),
+          body: JSON.stringify({ sessionId: sessionId.current, categoryId, messages: next, hard: carry.hard, soft: carry.soft, answering }),
         });
         if (!res.ok) throw new Error(String(res.status));
         const reply = (await res.json()) as AssistantReply;
@@ -96,7 +104,32 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         setSending(false);
       }
     },
-    [categoryId, hard, messages, sending, soft],
+    [categoryId, messages, sending],
+  );
+
+  const send = useCallback((text: string) => post(text, { hard, soft }), [hard, post, soft]);
+
+  /**
+   * Answering a clarifying question the site asked.
+   *
+   * Two things differ from an ordinary message. The constraints of the reply
+   * that asked are sent even though the shopper has not pressed Apply: they are
+   * what the question is about, and losing them for want of a button press is
+   * how "zero sugar, electrolytes, under $2" became "electrolytes". And the
+   * route is told this answers a question, so the reply is merged into them
+   * rather than replacing them, which is what stops a model that answers only
+   * the question from taking the rest with it.
+   */
+  const answerQuestion = useCallback(
+    (option: string, question: { key?: string }, replyIndex: number) => {
+      const pending = replies[replyIndex]?.proposals.find((p) => p.kind === "apply_preferences");
+      const carry =
+        pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)
+          ? { hard: pending.hard, soft: pending.soft }
+          : { hard, soft };
+      return post(option, carry, question.key ? { key: question.key } : undefined);
+    },
+    [hard, post, replies, soft],
   );
 
   // Nothing here changes the page until the shopper presses Apply.
@@ -166,6 +199,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       latest,
       applied,
       send,
+      answerQuestion,
       accept,
       dismiss: (i) => setDismissed((prev) => [...prev, i]),
       dismissed,
@@ -173,7 +207,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       reset,
       categoryId,
     }),
-    [accept, applied, categoryId, dismissed, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, soft],
+    [accept, answerQuestion, applied, categoryId, dismissed, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, soft],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

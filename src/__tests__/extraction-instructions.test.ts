@@ -120,15 +120,15 @@ describe("list filters carry their values", () => {
   it("names the values a list key can take, as enum keys already did", async () => {
     const prompt = await promptFor("wellness-drinks");
     const filters = prompt.split("\n").find((l) => l.startsWith("FILTERS:"))!;
-    expect(filters).toMatch(/function \(list; use op "includes"; values include [^)]*electrolytes/);
+    expect(filters).toMatch(/function \(list; use op "includes" with the value as a string, or an array of strings for alternatives; values include [^)]*electrolytes/);
   });
 
   it("takes them from the catalogue, not from a hard-coded list", async () => {
     // cold-plunge's `placement` is a list too, and carries its own values.
     const prompt = await promptFor("cold-plunge");
     const filters = prompt.split("\n").find((l) => l.startsWith("FILTERS:"))!;
-    expect(filters).toMatch(/placement \(list; use op "includes"; values include \w/);
-    expect(filters).not.toMatch(/placement \(list; use op "includes"; values include [^)]*electrolytes/);
+    expect(filters).toMatch(/placement \(list; use op "includes"[^)]*; values include \w/);
+    expect(filters).not.toMatch(/placement \([^)]*electrolytes/);
   });
 
   it("still describes a list key with no stated values", async () => {

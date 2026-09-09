@@ -1,4 +1,4 @@
-import type { CategoryDefinition, Condition } from "./category";
+import { attributeDef, type CategoryDefinition, type Condition } from "./category";
 import type { ModelHardConstraint, ModelSoftPreference } from "./assistant";
 import { isMoneyKey, moneyValueToMinorUnits } from "./money-contract";
 import type { HardConstraint, SoftPreference } from "./personalization";
@@ -25,6 +25,29 @@ export type ConversionResult =
 // instead, which `normalize` turns into an absence.
 const OPS_WITHOUT_VALUE = new Set<string>(["exists", "missing"]);
 
+/**
+ * Why an `includes` constraint cannot be searched for, or null when it can.
+ *
+ * `includes` holds one meaning: does this product's list contain the named
+ * value. So it needs a list attribute and a value that names one or more
+ * members of such a list. Anything else evaluates to false for every product,
+ * which is not a narrow search but a silent empty one, and the shopper is told
+ * nothing matched a question that was never asked.
+ */
+function includesProblem(cat: CategoryDefinition, key: string, value: unknown): string | null {
+  const def = attributeDef(cat, key);
+  if (def?.type !== "list") {
+    return `"${key}" is not a list, so "includes" says nothing about it. Use "eq" for a single value.`;
+  }
+  if (typeof value === "string") return value.length > 0 ? null : `"${key}" was given an empty value to look for.`;
+  if (Array.isArray(value)) {
+    if (value.length === 0) return `"${key}" was given an empty list to look for, which no product can contain.`;
+    if (value.every((v) => typeof v === "string" && v.length > 0)) return null;
+    return `"${key}" accepts a value or a list of values, each a string.`;
+  }
+  return `"${key}" is a list. "includes" takes the value to look for, or a list of values, as strings.`;
+}
+
 export function toEngineConstraints(
   cat: CategoryDefinition,
   modelHard: ModelHardConstraint[],
@@ -42,6 +65,15 @@ export function toEngineConstraints(
         key: c.key,
         reason: `"${c.key}" with op "${c.op}" carries no value. A comparison with no target matches nothing, so it is refused rather than searched for.`,
       });
+      return;
+    }
+    if (c.op === "includes") {
+      const problem = includesProblem(cat, c.key, c.value);
+      if (problem) {
+        problems.push({ where: "hard", index, key: c.key, reason: problem });
+        return;
+      }
+      hard.push(c as Condition);
       return;
     }
     if (!isMoneyKey(cat, c.key)) {

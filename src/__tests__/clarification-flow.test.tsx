@@ -18,12 +18,21 @@ import { resetMeterForTests } from "@/providers/usage";
 // constraints the provider is holding at that moment, which is the part of this
 // flow that decides whether the shopper's earlier requirements survive.
 //
-// What this does NOT establish: that a live model asks for what it needs, or
-// repeats what it already knows. Both are stubbed here. The missing-value check
-// is a limited safeguard against one failure, a supported value the shopper
-// named going nowhere. It is not evidence that a request was understood: it
-// only fires for values this category publishes and only matches whole words,
-// so a requirement phrased any other way still passes unnoticed.
+// An earlier version of this file proved less than its names suggested. Its
+// happy path used a model that repeated every constraint, so it showed the flow
+// working when the model cooperates, not that the application preserves
+// anything. Its other two tests recorded failures rather than fixing them: a
+// request sent with no constraints, and a second reply that dropped what it did
+// not mention. Both are now the application's job and both are asserted here
+// against a model that answers only the question it was asked.
+//
+// What this still does NOT establish: that a live model asks for what it needs,
+// or extracts everything in the sentence. Both are stubbed. The missing-value
+// check is a limited safeguard against one failure, a supported value the
+// shopper named going nowhere. It only fires for values this category publishes
+// and only matches whole words, so a requirement phrased any other way still
+// passes unnoticed, and "zero sugar" is one: it went missing in the live run of
+// 02:12 and nothing here would have caught it.
 
 const config: MeterConfig = {
   monthlyCapUsd: 25,
@@ -67,7 +76,7 @@ const TURN_TWO_FORGETFUL = {
   hard: [{ key: "function", op: "includes", value: "electrolytes" }],
 };
 
-type Body = { messages: { role: string; text: string }[]; hard: unknown[]; soft: unknown[] };
+type Body = { messages: { role: string; text: string }[]; hard: unknown[]; soft: unknown[]; answering?: { key: string } };
 let posted: Body[] = [];
 
 // Routes the panel's own request into the real handler, and answers the
@@ -228,34 +237,42 @@ describe("what answering the question does not do", () => {
 
     // Both survive into the second turn's proposal, alongside the new one.
     await waitFor(() => {
-      const summary = screen.getByText(/Narrow to zero total sugar/);
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
       expect(summary.textContent).toContain("price per serving under $2");
       expect(summary.textContent).toContain("function includes Electrolytes");
     });
   });
 
-  it("carries nothing forward when the shopper answers without applying", async () => {
+  it("carries the pending requirements when the shopper answers without applying", async () => {
     // The option chip sits above the Apply button, so this order is available
-    // to a shopper. The provider only holds constraints once Apply is pressed,
-    // so the second request goes out with none.
-    wireRoute([TURN_ONE, TURN_TWO_REPEATING]);
+    // to a shopper, and it used to send a request with no constraints at all.
+    // The reply that asked the question is what the question is about, so its
+    // constraints go out even though nothing has been applied to the page.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
     renderPanel();
     await ask(SENTENCE);
     await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
     fireEvent.click(screen.getByRole("button", { name: "Electrolytes" }));
 
     await waitFor(() => expect(posted).toHaveLength(2));
-    expect(posted[1].hard).toEqual([]);
-    // The conversation still carries the sentence, so the model is the only
-    // thing standing between the shopper and a lost requirement.
-    expect(posted[1].messages.map((m) => m.text)).toContain(SENTENCE);
+    expect(posted[1].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "price_per_serving_minor", op: "lt", value: 200 },
+    ]);
+    expect(posted[1].answering).toEqual({ key: "function" });
+
+    // Nothing was applied to the page, and the answer still lands on all three.
+    await waitFor(() => {
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+      expect(summary.textContent).toContain("price per serving under $2");
+      expect(summary.textContent).toContain("function includes Electrolytes");
+    });
   });
 
-  it("loses the earlier requirements when the model answers only the question", async () => {
-    // Recorded, not endorsed. A proposal replaces rather than merges, on
-    // purpose: that is how "forget the budget" works. The cost is that a turn
-    // which does not repeat drops what it does not mention, and the only thing
-    // preventing it is the instruction to repeat.
+  it("keeps the earlier requirements when the model answers only the question", async () => {
+    // The model returns the clarified function and nothing else. The site is
+    // answering its own question, so it merges rather than replaces, and the
+    // shopper keeps what they already had without the model repeating it.
     wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
     renderPanel();
     await ask(SENTENCE);
@@ -264,7 +281,27 @@ describe("what answering the question does not do", () => {
     fireEvent.click(screen.getByRole("button", { name: "Electrolytes" }));
     await waitFor(() => expect(posted).toHaveLength(2));
 
-    await waitFor(() => expect(screen.getByText(/Narrow to function includes Electrolytes/)).toBeTruthy());
-    expect(screen.queryByText(/Narrow to zero total sugar/)).toBeNull();
+    await waitFor(() => {
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+      expect(summary.textContent).toContain("price per serving under $2");
+      expect(summary.textContent).toContain("function includes Electrolytes");
+    });
+  });
+
+  it("still lets an ordinary message drop a constraint", async () => {
+    // Merging is only for an answer to the site's own question. A typed
+    // message replaces, which is the whole mechanism behind relaxing.
+    wireRoute([TURN_ONE, { ...TURN_ONE, reply: "Budget dropped.", hard: [{ key: "sugar_g", op: "eq", value: 0 }] }]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+
+    await ask("forget the budget");
+    await waitFor(() => expect(posted).toHaveLength(2));
+    expect(posted[1].answering).toBeUndefined();
+
+    await waitFor(() => expect(screen.getByText(/Narrow to zero total sugar \(/)).toBeTruthy());
+    expect(screen.queryByText(/price per serving under \$2 \(/)).toBeNull();
   });
 });
