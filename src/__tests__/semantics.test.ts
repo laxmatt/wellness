@@ -3,7 +3,7 @@ import { categories, categoryById } from "@/domain/categories";
 import { buildCompareModel } from "@/domain/compare";
 import { evaluateCondition, unconfirmedByPrice } from "@/domain/conditions";
 import { assignBadges, recommendCategory, scoreProducts, toScoringInput } from "@/domain/recommend";
-import { catalog, viewsFor } from "./fixtures";
+import { catalog, miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
 
@@ -186,31 +186,29 @@ describe("catalogue integrity after the guards", () => {
 });
 
 describe("a placeholder price is not budget evidence", () => {
-  const budget = [{ key: "price", op: "lte" as const, value: 70000 }];
+  // Built rather than found. This used whichever catalogue product still had a
+  // prototype price, and moved every time a real one arrived, which tested the
+  // catalogue rather than the rule.
+  const priced = miniView(miniProduct("real", 30000, { power: 50, size: "m" }));
+  const unpriced = miniView(miniProduct("prototype", 10000, { power: 50, size: "m" }, "unknown", [], true));
+  const budget = { key: "price", op: "lte" as const, value: 20000 };
 
   it("cannot confirm an unverified price meets a budget", () => {
-    const views = viewsFor("red-light");
-    // BON CHARGE is listed at $1,099 as prototype data. PRO1500 used to be the
-    // example here at a prototype $649; its maker's $1,199 was read on
-    // 2026-09-09 and it is a real price now.
-    const boncharge = views.find((v) => v.id === "bon-charge-max")!;
-    expect(boncharge.price.isDemo).toBe(true);
-    expect(evaluateCondition(boncharge, redLight, { key: "price", op: "lte", value: 200000 })).toBe(false);
+    // $100 is under the $200 limit, and it is not a price.
+    expect(unpriced.price.money.amountMinor).toBeLessThan(budget.value);
+    expect(unpriced.price.isDemo).toBe(true);
+    expect(evaluateCondition(unpriced, miniCategory, budget)).toBe(false);
   });
 
   it("surfaces those products separately rather than hiding them", () => {
-    const views = viewsFor("red-light");
-    const apart = unconfirmedByPrice(views, redLight, [{ key: "price", op: "lte" as const, value: 200000 }]);
-    expect(apart.map((v) => v.id)).toContain("bon-charge-max");
-    // Everything listed apart genuinely has an unverified price.
+    const apart = unconfirmedByPrice([priced, unpriced], miniCategory, [budget]);
+    expect(apart.map((v) => v.id)).toEqual(["prototype"]);
     for (const v of apart) expect(v.price.isDemo).toBe(true);
   });
 
-  it("still matches products whose price is verified", () => {
-    const views = viewsFor("red-light");
-    const mitomin = views.find((v) => v.id === "mito-mitomin-2")!;
-    expect(mitomin.price.isDemo).toBe(false);
-    expect(evaluateCondition(mitomin, redLight, budget[0])).toBe(true);
+  it("still matches products whose price is real", () => {
+    expect(priced.price.isDemo).toBe(false);
+    expect(evaluateCondition(priced, miniCategory, { key: "price", op: "lte", value: 40000 })).toBe(true);
   });
 
   it("applies the same doubt to per-serving cost, which is derived from price", () => {

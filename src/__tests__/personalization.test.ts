@@ -7,7 +7,7 @@ import { applyPreferences, relaxationSearch } from "@/domain/personalization/mat
 import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory } from "@/domain/recommend";
 import { MockAIProvider } from "@/providers/ai/AIProvider";
-import { viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
 const drinks = categoryById("wellness-drinks")!;
@@ -126,19 +126,24 @@ describe("end to end with the mock extractor", () => {
 
 describe("similar products", () => {
   it("prefers products of comparable size and price over ranking neighbours", () => {
+    // Built rather than found. This asserted an ordering of named catalogue
+    // products and had to be rewritten every time a real price or a disputed
+    // figure changed one of them, which tests the catalogue rather than the
+    // function.
+    const target = miniView(miniProduct("target", 20000, { power: 40, size: "s", wifi: false }));
+    const near = miniView(miniProduct("near", 22000, { power: 42, size: "s", wifi: false }));
+    const far = miniView(miniProduct("far", 90000, { power: 95, size: "l", wifi: true }));
+    const similar = similarProducts(target, [target, near, far], miniCategory, 2);
+    expect(similar[0].id).toBe("near");
+    expect(similar.map((s) => s.id)).not.toContain("target");
+  });
+
+  it("keeps the target out of its own neighbours in the live catalogue", () => {
     const views = viewsFor("red-light");
     const hg300 = views.find((v) => v.id === "hooga-hg300")!;
     const similar = similarProducts(hg300, views, redLight, 3);
-    // The other compact, cheap, targeted panel comes first.
-    expect(similar[0].id).toBe("mito-mitomin-2");
+    expect(similar.length).toBe(3);
     expect(similar.map((s) => s.id)).not.toContain("hooga-hg300");
-    // Among the full-body panels that must fill the remaining slots, the
-    // cheapest one ranks above panels costing nearly twice as much.
-    const ids = similar.map((s) => s.id);
-    const pro = ids.indexOf("hooga-pro1500");
-    const flex = ids.indexOf("infraredi-flex-max");
-    expect(pro).toBeGreaterThanOrEqual(0);
-    if (flex >= 0) expect(pro).toBeLessThan(flex);
   });
 
   it("returns at most the requested count and never the target itself", () => {

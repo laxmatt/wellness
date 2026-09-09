@@ -11,7 +11,7 @@ import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { coldPlunge, redLight } from "@/domain/categories";
 import { recommendCategory } from "@/domain/recommend";
 import { liveFacets } from "@/lib/queries";
-import { viewsFor } from "./fixtures";
+import { miniProduct, miniView, viewsFor } from "./fixtures";
 
 // Two findings from the public-journey harness. Both are the same shape: the
 // domain knew something and the page did not say it.
@@ -34,9 +34,11 @@ describe("a placeholder amount is not shown at all", () => {
   });
 
   it("does the same on a card, where most shoppers meet the price", () => {
-    const bonCharge = viewsFor("red-light").find((v) => v.id === "bon-charge-max")!;
-    expect(bonCharge.price.isDemo).toBe(true);
-    render(<PriceDisplay price={bonCharge.price} compact />);
+    // Built rather than found: this named whichever catalogue product still
+    // had a prototype price, and moved each time a real one was read.
+    const view = miniView(miniProduct("prototype-priced", 109900, { power: 50, size: "m" }, "unknown", [], true));
+    expect(view.price.isDemo).toBe(true);
+    render(<PriceDisplay price={view.price} compact />);
     expect(screen.getByText("Check current price")).toBeTruthy();
     expect(screen.queryByText("$1,099")).toBeNull();
   });
