@@ -18,7 +18,8 @@
     "assistant:batch": "tsx scripts/assistant-batch.ts",
     "e2e:setaside": "node e2e/set-aside-updates-page.mjs",
     "ledger:restore": "tsx scripts/ledger-restore.ts",
-    "e2e:public": "tsx e2e/public-journeys.mts"
+    "e2e:public": "tsx e2e/public-journeys.mts",
+    "partner:checklist": "tsx scripts/partner-checklist.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

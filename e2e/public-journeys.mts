@@ -103,21 +103,6 @@ async function settled(page: Page, expected: number) {
 
 const shownCount = (page: Page) => page.getByText(/^\d+ of \d+ shown$/).first().textContent().then((t) => (t ?? "").trim());
 
-// The text of the block that shows a product's price on its card: the element
-// holding the money, and its parent, which is where a qualifier would go.
-async function priceBlockText(page: Page, slug: string, money: string): Promise<string> {
-  return page.evaluate(
-    ({ slug, money }) => {
-      const card = document.querySelector(`article:has(a[href="/products/${slug}"])`);
-      if (!card) return "";
-      const el = [...card.querySelectorAll("span")].find((s) => (s.textContent ?? "").trim() === money);
-      const block = el?.closest("div");
-      return (block?.textContent ?? "").trim();
-    },
-    { slug, money },
-  );
-}
-
 // The text of the smallest block holding a rendered value, so a check can ask
 // what is shown beside it. Null when the value is not on the page at all.
 async function valueBlockText(page: Page, label: string, value: string): Promise<string | null> {
