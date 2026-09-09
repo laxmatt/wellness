@@ -15,9 +15,21 @@ export function AssistantPanel() {
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [keyboardInset, setKeyboardInset] = useState(0);
+  // Whoever opened the panel gets focus back when it closes. Without this,
+  // closing with Escape dropped focus onto the body: a keyboard shopper who
+  // opened the assistant from the middle of a category page had to tab from
+  // the top of the document again to get back to where they were.
+  const openerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (a?.open) inputRef.current?.focus();
+    if (a?.open) {
+      openerRef.current = document.activeElement as HTMLElement | null;
+      inputRef.current?.focus();
+      return;
+    }
+    const opener = openerRef.current;
+    openerRef.current = null;
+    if (opener?.isConnected) opener.focus();
   }, [a?.open]);
 
   useEffect(() => {

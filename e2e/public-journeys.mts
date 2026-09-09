@@ -139,6 +139,63 @@ async function valueBlockText(page: Page, label: string, value: string): Promise
   );
 }
 
+// Every button and link needs a name a screen reader can announce. This is
+// not a full accessibility audit and is not offered as one: it is the one
+// mechanical part of a name check, run on the pages a shopper actually uses.
+async function namelessControls(page: Page): Promise<string[]> {
+  // Written without inner named functions: tsx compiles those with a helper
+  // that does not exist inside the page.
+  return page.evaluate(() =>
+    [...document.querySelectorAll("button, a[href], [role='button']")]
+      .filter((el) => (el as HTMLElement).offsetParent !== null)
+      .filter((el) => {
+        const byId = el.getAttribute("aria-labelledby");
+        const referenced = byId
+          ? byId
+              .split(/\s+/)
+              .map((id) => document.getElementById(id)?.textContent ?? "")
+              .join(" ")
+          : "";
+        const img = el.querySelector("img")?.getAttribute("alt") ?? "";
+        const name = (el.getAttribute("aria-label") ?? "") + referenced + (el.textContent ?? "") + (el.getAttribute("title") ?? "") + img;
+        return name.trim() === "";
+      })
+      .map((el) => el.outerHTML.slice(0, 120)),
+  );
+}
+
+// Is the focused control actually visible, or is the sticky header sitting on
+// top of it? Asked of the page, not of the CSS.
+async function focusIsCovered(page: Page): Promise<{ covered: boolean; by?: string }> {
+  return page.evaluate(() => {
+    const el = document.activeElement as HTMLElement | null;
+    if (!el || el === document.body) return { covered: true, by: "nothing focused" };
+    const r = el.getBoundingClientRect();
+    const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    if (!top) return { covered: true, by: "outside the viewport" };
+    if (el.contains(top) || top.contains(el)) return { covered: false };
+    return { covered: true, by: (top as HTMLElement).outerHTML.slice(0, 120) };
+  });
+}
+
+// The price block on a product page: the element holding the amount, and what
+// is rendered with it. Scoped so a demo tag three sections away cannot stand
+// in for a tag on the price.
+async function priceBlock(page: Page, money: string): Promise<{ found: boolean; text: string }> {
+  return page.evaluate((money) => {
+    const leaves = [...document.querySelectorAll("span")].filter(
+      (el) => (el.textContent ?? "").trim() === money && el.querySelectorAll("*").length === 0,
+    );
+    for (const leaf of leaves) {
+      const block = leaf.parentElement;
+      if (!block) continue;
+      // PriceDisplay is a column: the amount, an optional tag, the basis line.
+      if (/retailer|Reference/i.test(block.textContent ?? "")) return { found: true, text: (block.textContent ?? "").trim() };
+    }
+    return { found: false, text: "" };
+  }, money);
+}
+
 async function headingCount(page: Page): Promise<number> {
   return page.evaluate(() => document.querySelectorAll("h1").length);
 }
@@ -271,9 +328,15 @@ async function run(browser: Browser) {
     check("exactly one h1", await headingCount(page), 1);
 
     const body = (await page.locator("body").textContent()) ?? "";
-    ok("shows the price the engine computed", body.includes(formatMoney(view.price.money)), formatMoney(view.price.money));
+    const money = formatMoney(view.price.money);
+    const block = await priceBlock(page, money);
+    ok("shows the price the engine computed, in its own block", block.found, money);
     if (view.price.isDemo) {
-      ok("marks a placeholder price", /Demo data|placeholder|unconfirmed/i.test(body), body.slice(0, 120));
+      // Scoped to the block holding the amount. Searching the whole page let
+      // an unrelated demo spec answer for the price.
+      ok("marks a placeholder price beside the price itself", block.text.includes("Demo data"), block.text);
+    } else {
+      ok("does not call a real price placeholder data", !block.text.includes("Demo data"), block.text);
     }
 
     // Every unusable value is labelled where it is shown, and every bound
@@ -326,28 +389,104 @@ async function run(browser: Browser) {
     ok("every image has alt text", alts.every((a) => a !== null && a.trim() !== ""), alts);
   }
 
+  // ------------------------------------------- the price check, proved
+  {
+    // A check that cannot fail proves nothing. The tag is removed from the
+    // price block in the page and the same predicate is asked again: it has
+    // to notice. The page is reloaded afterwards.
+    const demoPriced = cat.products
+      .map((p) => viewsOf(p.categoryId).find((v) => v.id === p.id)!)
+      .find((v) => v.price.isDemo)!;
+    scenario = `price tag, proved sensitive on ${demoPriced.slug}`;
+    await goto(page, `/products/${demoPriced.slug}`);
+    const money = formatMoney(demoPriced.price.money);
+    const before = await priceBlock(page, money);
+    ok("the tag is there to begin with", before.text.includes("Demo data"), before.text);
+
+    const removed = await page.evaluate((money) => {
+      const leaves = [...document.querySelectorAll("span")].filter(
+        (el) => (el.textContent ?? "").trim() === money && el.querySelectorAll("*").length === 0,
+      );
+      for (const leaf of leaves) {
+        const block = leaf.parentElement;
+        if (!block || !/retailer|Reference/i.test(block.textContent ?? "")) continue;
+        const tag = [...block.querySelectorAll("span")].find((el) => (el.textContent ?? "").trim() === "Demo data");
+        if (tag) {
+          tag.remove();
+          return true;
+        }
+      }
+      return false;
+    }, money);
+    ok("the tag can be taken out of the page", removed);
+
+    const after = await priceBlock(page, money);
+    ok("and the check then fails, which is what makes it worth running", after.found && !after.text.includes("Demo data"), after);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    const restored = await priceBlock(page, money);
+    ok("the real page still has it", restored.text.includes("Demo data"), restored.text);
+  }
+
   // ------------------------------------------------------------ compare
   {
     const c = categories.find((x) => x.id === "red-light")!;
     const views = viewsOf(c.id);
     const ranked = recommendCategory(views, c);
-    const pick = ["hooga-hg300", "platinumled-biomax-900"];
+    // Three, which is what a shopper comparing panels actually does, and it
+    // puts a bounded figure, an exact one and a third column in the same row.
+    const pick = ["hooga-hg300", "platinumled-biomax-900", "hooga-pro1500"];
+    const slugOf = (id: string) => views.find((v) => v.id === id)!.slug;
+    const toggleFor = (id: string) => page.locator(`article:has(a[href="/products/${slugOf(id)}"]) button[aria-pressed]`).first();
     scenario = "compare";
     await goto(page, `/${c.slug}`);
+
     for (const id of pick) {
-      const view = views.find((v) => v.id === id)!;
-      await page.locator(`article:has(a[href="/products/${view.slug}"]) button[aria-pressed]`).first().click();
+      const toggle = toggleFor(id);
+      await toggle.click();
+      await toggle.and(page.locator('[aria-pressed="true"]')).waitFor({ timeout: 5000 }).catch(() => undefined);
+      check(`${id} is selected`, await toggle.getAttribute("aria-pressed"), "true");
     }
     const tray = page.locator('a[href^="/compare?ids="]').first();
-    ok("the compare tray offers the comparison", (await tray.count()) > 0);
-    await tray.click();
+    check("the tray counts three", ((await tray.textContent()) ?? "").trim(), "Compare 3");
+
+    // Removing from the tray is the shopper's undo, and the tray is the only
+    // place it exists.
+    const dropped = pick[2];
+    await page.getByRole("button", { name: `Remove ${views.find((v) => v.id === dropped)!.name}` }).click();
+    await page.waitForFunction(() => (document.querySelector('a[href^="/compare?ids="]')?.textContent ?? "").includes("2"), undefined, { timeout: 5000 }).catch(() => undefined);
+    check("the tray counts two after a removal", ((await tray.textContent()) ?? "").trim(), "Compare 2");
+    check("and the removed card is no longer selected", await toggleFor(dropped).getAttribute("aria-pressed"), "false");
+    check("and the link carries only the two", new URL((await tray.getAttribute("href")) ?? "", BASE).searchParams.get("ids"), [pick[0], pick[1]].join(","));
+
+    await toggleFor(dropped).click();
+    await page.waitForFunction(() => (document.querySelector('a[href^="/compare?ids="]')?.textContent ?? "").includes("3"), undefined, { timeout: 5000 }).catch(() => undefined);
+    check("re-selecting restores three", ((await tray.textContent()) ?? "").trim(), "Compare 3");
+
+    // The selection lives in the browser, so it has to survive a page the
+    // shopper wanders off to.
+    await goto(page, "/how-we-choose");
+    await goto(page, `/${c.slug}`);
+    await page.locator('a[href^="/compare?ids="]').first().waitFor({ timeout: 5000 }).catch(() => undefined);
+    check("the selection survives leaving the page", ((await page.locator('a[href^="/compare?ids="]').first().textContent()) ?? "").trim(), "Compare 3");
+    for (const id of pick) check(`${id} is still selected`, await toggleFor(id).getAttribute("aria-pressed"), "true");
+
+    await page.locator('a[href^="/compare?ids="]').first().click();
     await page.waitForURL(/\/compare/);
 
-    const model = buildCompareModel(ranked.products.filter((p) => pick.includes(p.view.id)), c);
+    // The page lays the columns out in the order the tray passed, so the model
+    // is built in that order too. Comparing a differently ordered model to the
+    // page would fail for a reason that is not a defect.
     const columns = await page.evaluate(() =>
       [...document.querySelectorAll("thead th a[href^='/products/']")].map((a) => new URL((a as HTMLAnchorElement).href).pathname.replace("/products/", "")),
     );
-    check("the columns are the products chosen", [...new Set(columns)].sort(), model.columns.map((x) => x.slug).sort());
+    const drawnSlugs = [...new Set(columns)];
+    check("the columns are the three chosen", [...drawnSlugs].sort(), pick.map((id) => slugOf(id)).sort());
+    // The page lays them out in the catalogue's order rather than the order
+    // they were picked in. That is deterministic and it is what the model is
+    // built from here, so a cell mismatch means a wrong cell, not a wrong
+    // column order.
+    const inPageOrder = drawnSlugs.map((slug) => ranked.products.find((p) => p.view.slug === slug)!);
+    const model = buildCompareModel(inPageOrder, c);
 
     const rows = await page.evaluate(() =>
       [...document.querySelectorAll("tbody tr")]
@@ -358,17 +497,67 @@ async function run(browser: Browser) {
           dots: tr.querySelectorAll('[aria-label="Strongest in this row"]').length,
         })),
     );
-    const irradiance = rows.find((r) => r.label.startsWith("Irradiance"))!;
-    ok("the bounded figure keeps its qualifier", irradiance.cells.some((t) => t.includes("more than 73 mW/cm²")), irradiance.cells);
-    check("and that row marks no winner", irradiance.dots, 0);
-    ok("and says why it is not ranked", /stated bound/.test(irradiance.label), irradiance.label);
-    const rankedRow = rows.find((r) => r.label.startsWith("LEDs") || r.label.startsWith("LED"))!;
-    check("an exact row still marks one winner", rankedRow.dots, 1);
+    const modelRows = model.groups.flatMap((g) => g.rows);
+    check("every row is drawn", rows.length, modelRows.length);
+    // A drawn cell is the model's text plus, when the model says the value
+    // needs one, its verification tag. Both halves are checked: a missing tag
+    // and a wrong value fail differently.
+    const TAGS: Record<string, string> = {
+      manufacturer_reported: "Maker reported",
+      independently_verified: "Verified",
+      demo: "Demo data",
+      not_stated: "Not stated",
+      unknown: "Unverified",
+    };
+    const cellProblems: string[] = [];
+    modelRows.forEach((r, i) => {
+      r.cells.forEach((cell, j) => {
+        const drawn = rows[i]?.cells[j] ?? "";
+        const tag = cell.verification ? TAGS[cell.verification] : "";
+        const expected = `${cell.text}${tag}`;
+        if (drawn !== expected) cellProblems.push(`${r.key}[${j}]: ${JSON.stringify(drawn)} not ${JSON.stringify(expected)}`);
+      });
+    });
+    check("every cell holds what the model computed, with its tag", cellProblems, []);
+    check(
+      "every winner dot is where the model puts one",
+      rows.map((r) => r.dots),
+      modelRows.map((r) => r.cells.filter((cell) => cell.best).length),
+    );
+    for (const r of modelRows.filter((x) => x.notComparable)) {
+      const drawn = rows.find((x) => x.label.startsWith(r.label))!;
+      ok(`${r.key} says why it is not ranked`, drawn.label.includes(r.notComparable!.replace(/^Not ranked: /, "")), drawn.label);
+      check(`${r.key} marks no winner`, drawn.dots, 0);
+    }
 
-    const sameRows = model.groups.flatMap((g) => g.rows).filter((r) => r.same).length;
+    const sameRows = modelRows.filter((r) => r.same).length;
     await page.getByRole("button", { name: /Differences only/ }).click();
     const after = await page.evaluate(() => [...document.querySelectorAll("tbody tr")].filter((tr) => tr.querySelector("td")).length);
     check("differences only hides exactly the identical rows", rows.length - after, sameRows);
+
+    // A pair whose figures were taken at the same distance, so the reason the
+    // row is unranked is the bound itself and nothing else.
+    scenario = "compare, a bounded figure";
+    const pair = ["hooga-hg300", "platinumled-biomax-900"];
+    await goto(page, `/compare?ids=${pair.join(",")}`);
+    const pairRows = await page.evaluate(() =>
+      [...document.querySelectorAll("tbody tr")]
+        .filter((tr) => tr.querySelector("td"))
+        .map((tr) => ({
+          label: (tr.querySelector("th")?.textContent ?? "").trim(),
+          cells: [...tr.querySelectorAll("td")].map((td) => (td.textContent ?? "").trim()),
+          dots: tr.querySelectorAll('[aria-label="Strongest in this row"]').length,
+        })),
+    );
+    const irradiance = pairRows.find((r) => r.label.startsWith("Irradiance"))!;
+    ok("the bounded figure keeps its qualifier", irradiance.cells.some((t) => t.includes("more than 73 mW/cm²")), irradiance.cells);
+    check("and that row marks no winner", irradiance.dots, 0);
+    ok("and says a bound is why", /stated bound/.test(irradiance.label), irradiance.label);
+    const leds = pairRows.find((r) => r.label.startsWith("LED"))!;
+    check("while an exact row still marks one winner", leds.dots, 1);
+
+    scenario = "names";
+    check("every visible control on the comparison has a name", await namelessControls(page), []);
   }
 
   // ------------------------------------------------------- other routes
@@ -415,9 +604,57 @@ async function run(browser: Browser) {
     const expected = ranked.products.filter((p) => target.matchIds.includes(p.view.id)).map((p) => p.view.slug);
     await settled(page, expected.length);
     check("Enter applies the filter", await shownSlugs(page), expected);
+    check("the focused chip is not hidden behind the header", await focusIsCovered(page), { covered: false });
     await page.keyboard.press("Enter");
     await settled(page, ranked.products.length);
     check("Enter again removes it", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
+
+    // The compare toggle, by keyboard alone.
+    const firstSlug = ranked.products[0].view.slug;
+    const toggle = page.locator(`article:has(a[href="/products/${firstSlug}"]) button[aria-pressed]`).first();
+    await toggle.focus();
+    check("the toggle starts unselected", await toggle.getAttribute("aria-pressed"), "false");
+    check("and is not hidden behind the header when focused", await focusIsCovered(page), { covered: false });
+    await page.keyboard.press("Enter");
+    await page.waitForFunction((slug) => document.querySelector(`article:has(a[href="/products/${slug}"]) button[aria-pressed]`)?.getAttribute("aria-pressed") === "true", firstSlug, { timeout: 5000 }).catch(() => undefined);
+    check("Enter selects it for comparison", await toggle.getAttribute("aria-pressed"), "true");
+    ok("and the tray appears", (await page.locator('a[href^="/compare?ids="]').count()) > 0);
+    await page.keyboard.press("Enter");
+    await page.waitForFunction((slug) => document.querySelector(`article:has(a[href="/products/${slug}"]) button[aria-pressed]`)?.getAttribute("aria-pressed") === "false", firstSlug, { timeout: 5000 }).catch(() => undefined);
+    check("Enter again deselects it", await toggle.getAttribute("aria-pressed"), "false");
+
+    // The assistant opens, closes and gives focus back. Nothing is sent: no
+    // message is typed and no request is made.
+    const launcher = page.getByRole("button", { name: "Help me choose" }).first();
+    await launcher.focus();
+    check("the launcher says it is closed", await launcher.getAttribute("aria-expanded"), "false");
+    await page.keyboard.press("Enter");
+    await page.locator("#assistant-panel").waitFor({ timeout: 5000 });
+    check("Enter opens the panel", await page.locator("#assistant-panel").count(), 1);
+    check(
+      "and focus moves into it",
+      await page.evaluate(() => Boolean(document.querySelector("#assistant-panel")?.contains(document.activeElement))),
+      true,
+    );
+    await page.keyboard.press("Escape");
+    await page.locator("#assistant-panel").waitFor({ state: "detached", timeout: 5000 }).catch(() => undefined);
+    check("Escape closes it", await page.locator("#assistant-panel").count(), 0);
+    check(
+      "and focus returns to the button that opened it",
+      await page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        return (el?.textContent ?? "").trim();
+      }),
+      "Help me choose",
+    );
+    ok("nothing was sent", true);
+  }
+
+  // -------------------------------------------------------------- names
+  for (const path of ["/", `/${categories[0].slug}`, `/products/${viewsOf(categories[0].id)[0].slug}`]) {
+    scenario = `names ${path}`;
+    await goto(page, path);
+    check("every visible control has a name", await namelessControls(page), []);
   }
 
   await context.close();
@@ -426,7 +663,19 @@ async function run(browser: Browser) {
   const mobile = await browser.newContext({ viewport: MOBILE, hasTouch: true, isMobile: true });
   const mp = await mobile.newPage();
   watch(mp);
-  const mobilePaths = ["/", `/${categories[0].slug}`, `/products/${viewsOf(categories[0].id)[0].slug}`, "/compare", "/explore"];
+
+  const rl = categories.find((x) => x.id === "red-light")!;
+  const rlViews = viewsOf(rl.id);
+  const trio = ["hooga-hg300", "platinumled-biomax-900", "hooga-pro1500"];
+  const mobilePaths = [
+    "/",
+    `/${categories[0].slug}`,
+    `/products/${viewsOf(categories[0].id)[0].slug}`,
+    // An empty comparison proves nothing about a comparison table. Three real
+    // ids, by URL, so the page has something to lay out.
+    `/compare?ids=${trio.join(",")}`,
+    "/explore",
+  ];
   for (const path of mobilePaths) {
     scenario = `mobile ${path}`;
     const res = await mp.goto(`${BASE}${path}`, { waitUntil: "domcontentloaded" });
@@ -438,22 +687,77 @@ async function run(browser: Browser) {
     ok("no sideways scrolling", overflow.scroll <= overflow.inner + 1, overflow);
   }
 
+  scenario = "mobile compare";
+  {
+    // The loop above ends somewhere else, so the page under test is opened
+    // again here rather than assumed.
+    await mp.goto(`${BASE}/compare?ids=${trio.join(",")}`, { waitUntil: "domcontentloaded" });
+    const columns = await mp.evaluate(() =>
+      [...document.querySelectorAll("thead th a[href^='/products/']")].map((a) => new URL((a as HTMLAnchorElement).href).pathname.replace("/products/", "")),
+    );
+    check("all three products are laid out", [...new Set(columns)].sort(), trio.map((id) => rlViews.find((v) => v.id === id)!.slug).sort());
+
+    // A wide table on a narrow phone has to scroll inside its own box. If the
+    // page scrolls sideways instead, the header and the rest of the layout go
+    // with it.
+    const table = await mp.evaluate(() => {
+      const t = document.querySelector("table");
+      const box = t?.closest("div");
+      if (!t || !box) return null;
+      return {
+        tableWider: t.scrollWidth > box.clientWidth,
+        boxScrolls: getComputedStyle(box).overflowX,
+        boxWithinViewport: box.getBoundingClientRect().width <= window.innerWidth + 1,
+        page: document.documentElement.scrollWidth <= window.innerWidth + 1,
+      };
+    });
+    ok("the table is wider than the phone", table?.tableWider === true, table);
+    ok("its own container scrolls", table?.boxScrolls === "auto" || table?.boxScrolls === "scroll", table);
+    ok("the container stays inside the viewport", table?.boxWithinViewport === true, table);
+    ok("and the page itself does not scroll sideways", table?.page === true, table);
+
+    // Scrolling the container must not drag the page with it.
+    const scrolled = await mp.evaluate(() => {
+      const box = document.querySelector("table")?.closest("div") as HTMLElement | undefined;
+      if (!box) return null;
+      box.scrollLeft = box.scrollWidth;
+      return { boxLeft: box.scrollLeft, pageLeft: window.scrollX };
+    });
+    ok("the table scrolls within its box", (scrolled?.boxLeft ?? 0) > 0, scrolled);
+    check("and the page stays put", scrolled?.pageLeft ?? 0, 0);
+  }
+
   scenario = "mobile filters";
   await mp.goto(`${BASE}/wellness-drinks`, { waitUntil: "domcontentloaded" });
   const mobileChip = mp.getByRole("button", { name: /^Electrolytes\s/ }).first();
   if ((await mobileChip.count()) > 0) {
     const box = await mobileChip.boundingBox();
     ok("a filter chip is a usable tap target", (box?.height ?? 0) >= 44, box);
-    await mobileChip.tap();
     const views = viewsOf("wellness-drinks");
     const groups = buildFilterGroups(views, categoryById("wellness-drinks")!);
     const option = groups.flatMap((g) => g.options).find((o) => o.label === "Electrolytes")!;
     const ranked = recommendCategory(views, categoryById("wellness-drinks")!);
-    check(
-      "tapping it filters the grid",
-      await shownSlugs(mp),
-      ranked.products.filter((p) => option.matchIds.includes(p.view.id)).map((p) => p.view.slug),
-    );
+    const expected = ranked.products.filter((p) => option.matchIds.includes(p.view.id)).map((p) => p.view.slug);
+
+    // Hydration is not announced by the load event, so the tap is repeated
+    // until the page's own state says it took, rather than trusted once.
+    const pressed = async () => (await mobileChip.getAttribute("aria-pressed")) === "true";
+    for (let i = 0; i < 4 && !(await pressed()); i++) {
+      await mobileChip.tap();
+      await mp
+        .waitForFunction(
+          (n) => {
+            const chip = [...document.querySelectorAll("button")].find((b) => (b.textContent ?? "").trim().startsWith("Electrolytes"));
+            return chip?.getAttribute("aria-pressed") === "true" && (document.body.textContent ?? "").includes(`${n} of 6 shown`);
+          },
+          expected.length,
+          { timeout: 2500, polling: 100 },
+        )
+        .catch(() => undefined);
+    }
+    check("tapping it selects the chip", await mobileChip.getAttribute("aria-pressed"), "true");
+    check("and filters the grid", await shownSlugs(mp), expected);
+    check("every visible control on the phone has a name", await namelessControls(mp), []);
   } else {
     ok("the electrolytes chip exists on a phone", false);
   }

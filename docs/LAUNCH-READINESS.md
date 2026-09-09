@@ -155,10 +155,10 @@ not tell you whether checks run somewhere else.
 
 Everything that does exist passes, run by hand today at 58ecd85:
 
-- **634 tests** in 40 files, all passing, including the two Postgres ledger
+- **635 tests** in 40 files, all passing, including the two Postgres ledger
   suites run against the disposable test database. They skip without
   `TEST_DATABASE_URL`, and a skip is not a pass.
-- **46 browser checks** in `e2e/set-aside-updates-page.mjs` and **419** in
+- **46 browser checks** in `e2e/set-aside-updates-page.mjs` and **485** in
   `e2e/public-journeys.mts`, all passing against a production build. The first
   stubs the model; the second needs no model at all.
 - `npm run catalog:check`, `npm run lint`, `npm run typecheck` and
@@ -174,23 +174,39 @@ Ten routes exist: `/`, `/[category]`, `/[category]/[facet]`, `/brands`,
 `/brands/[slug]`, `/compare`, `/disclosure`, `/explore`, `/how-we-choose`,
 `/products/[slug]`.
 
-**Covered by a committed browser harness**: `e2e/public-journeys.mts`, 419
+**Covered by a committed browser harness**: `e2e/public-journeys.mts`, 485
 checks against a production build with no model and nothing leaving localhost.
 It compares the page to the engine rather than to numbers typed into the test:
 the grid against `recommendCategory`'s order, each filter chip against its own
-`matchIds`, each comparison row against `buildCompareModel`, each facet against
-`matchesAll`. It covers the home page, all three categories, every facet, all
-20 product pages, the comparison table, the remaining routes, keyboard
-operation of the filters, and a 390x844 phone.
+`matchIds`, each comparison cell, tag and winner dot against
+`buildCompareModel`, each facet against `matchesAll`. It covers the home page,
+all three categories, every facet, all 20 product pages, the comparison table,
+the remaining routes, keyboard operation, and a 390x844 phone.
 
-What it checks that a count cannot: that every outbound offer link carries
-`rel="sponsored nofollow noopener"`, `target="_blank"` and the merchant URL the
-catalogue records; that every image has alt text; that every value the source
-does not support is labelled where it is shown; that a bounded figure keeps its
-qualifier; that a placeholder price says so; and that a chip which would leave
-nothing is disabled rather than dead.
+What it checks that a count cannot:
 
-**Two defects it found, both fixed:**
+- every outbound offer link carries `rel="sponsored nofollow noopener"`,
+  `target="_blank"` and the merchant URL the catalogue records
+- every value the source does not support is labelled where it is shown, and
+  every bounded figure keeps its qualifier
+- a placeholder price says so **in the block holding the amount**, proved
+  sensitive by deleting the tag from the live page and confirming the same
+  check then fails
+- three products selected through the real toggles, one removed from the tray,
+  re-added, and the selection still standing after leaving the page and coming
+  back
+- on a phone, a populated comparison table scrolls inside its own container
+  while the page does not scroll sideways, and scrolling it leaves the page
+  where it was
+- by keyboard alone: a filter chip applies and removes its filter, a compare
+  toggle selects and deselects, the assistant opens on Enter, moves focus into
+  itself, closes on Escape and hands focus back to the button that opened it.
+  No message is typed and no request is made
+- every visible button and link on the home page, a category page, a product
+  page, the comparison and the phone has a name a screen reader can announce
+- the focused control is not covered by the sticky header
+
+**Three defects it found, all fixed:**
 
 1. **A placeholder price was shown as a price.** Eight of twenty products show
    one. Every placeholder *spec* carried a "Demo data" tag; the price, the
@@ -202,10 +218,23 @@ nothing is disabled rather than dead.
    in our set fits this filter yet"); the link was not. Facets are filtered by
    `liveFacets` now, and the active one is still shown so a shopper arriving by
    URL can see where they are.
+3. **Closing the assistant dropped focus on the floor.** Escape closed the
+   panel and left `document.body` focused, so a keyboard shopper who opened it
+   from the middle of a category page had to tab from the top of the document
+   again. The panel remembers what was focused when it opened and restores it.
 
-**Still not covered**: no accessibility audit beyond alt text, one h1 per page
-and keyboard operation of the filters (an audit needs tooling this environment
-cannot fetch), no performance measurement, and no analytics.
+**One observation, not fixed:** the comparison lays its columns out in
+catalogue order, not the order the shopper picked. It is deterministic and
+nothing misreads it, so it is left alone and recorded here.
+
+**Still not covered, stated so nobody reads the above as an accessibility
+pass:** there is no accessibility audit. What exists is alt text on every
+image, one h1 per page, a name on every visible control, keyboard operation of
+the filters, the compare toggle and the assistant, and a focus check on two
+controls. There is no axe or equivalent run (it needs tooling this environment
+cannot fetch), no screen-reader verification, no colour-contrast check, no
+focus-order review, no touch-target audit beyond one chip, no performance
+measurement and no analytics.
 
 ## What would block a launch
 

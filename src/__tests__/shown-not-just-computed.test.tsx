@@ -1,6 +1,11 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { beforeEach, vi } from "vitest";
 import { afterEach, describe, expect, it } from "vitest";
+import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
+import { AssistantPanel } from "@/components/assistant/AssistantPanel";
+import { AssistantProvider } from "@/components/assistant/AssistantProvider";
+import { CompareProvider } from "@/components/compare/CompareProvider";
 import { FacetChips } from "@/components/category/sections";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { coldPlunge, redLight } from "@/domain/categories";
@@ -61,5 +66,35 @@ describe("a facet that matches nothing is not offered", () => {
     // Arriving by link or by URL, a shopper has to see where they are.
     render(<FacetChips cat={coldPlunge} active="indoor" available={liveFacets(page(coldPlunge))} />);
     expect(within(screen.getByRole("navigation")).getByText("Indoor")).toBeTruthy();
+  });
+});
+
+describe("closing the assistant gives focus back", () => {
+  beforeEach(() => {
+    Element.prototype.scrollTo = vi.fn();
+  });
+
+  it("returns focus to the button that opened it", async () => {
+    render(
+      <CompareProvider>
+        <AssistantProvider categoryId="red-light">
+          <AssistantLauncher />
+          <AssistantPanel />
+        </AssistantProvider>
+      </CompareProvider>,
+    );
+    const launcher = screen.getByRole("button", { name: /Help me choose/ });
+    launcher.focus();
+    expect(document.activeElement).toBe(launcher);
+
+    fireEvent.click(launcher);
+    const input = await screen.findByPlaceholderText(/what matters to you/i);
+    expect(document.activeElement).toBe(input);
+
+    // Escape, the way a keyboard shopper closes it. Focus used to land on the
+    // body, which means tabbing from the top of the document again.
+    fireEvent.keyDown(window, { key: "Escape" });
+    await screen.findByRole("button", { name: /Help me choose/ });
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: /Help me choose/ }));
   });
 });
