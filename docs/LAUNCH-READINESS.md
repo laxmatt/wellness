@@ -1,6 +1,9 @@
 # Launch readiness, read-only inventory
 
-Taken from the repository at 58ecd85, updated through the bounded-value pass. Nothing was deployed, contacted, changed
+Every figure and check below was taken from the repository at the head this
+document was last revised on, and that head is named where the checks are
+listed rather than here, so a stale commit id cannot outlive the numbers.
+Nothing was deployed, contacted, changed
 or purchased to produce it. Every line below is either **verified** against a
 file in this repository or **not evidenced here**, meaning this repository does
 not carry the evidence a launch would need. "Not evidenced here" is a claim
@@ -153,7 +156,7 @@ hosting account has to say.
 The same applies to CI: **this repository automates nothing**, and that does
 not tell you whether checks run somewhere else.
 
-Everything that does exist passes, run by hand today at 58ecd85:
+Everything that does exist passes, run by hand at the head named here:
 
 - **635 tests** in 40 files, all passing, including the two Postgres ledger
   suites run against the disposable test database. They skip without
@@ -163,6 +166,9 @@ Everything that does exist passes, run by hand today at 58ecd85:
   stubs the model; the second needs no model at all.
 - `npm run catalog:check`, `npm run lint`, `npm run typecheck` and
   `npm run build`.
+
+Head these were run at: **255681a**, plus the working tree of the commit that
+carries this revision.
 
 Environment variables the code reads: `ADMIN_ACCESS_KEY`, `DATABASE_URL`,
 `NEXT_PUBLIC_SITE_URL`, `OPENAI_*`, and the `ASSISTANT_*` family. Only the
@@ -198,12 +204,20 @@ What it checks that a count cannot:
 - on a phone, a populated comparison table scrolls inside its own container
   while the page does not scroll sideways, and scrolling it leaves the page
   where it was
+- a filter chip is tapped **once**, after the page's own readiness signal says
+  React has attached its handlers. Retrying a tap until something happened
+  would have hidden a control that ignores taps, which is the defect worth
+  catching
 - by keyboard alone: a filter chip applies and removes its filter, a compare
   toggle selects and deselects, the assistant opens on Enter, moves focus into
   itself, closes on Escape and hands focus back to the button that opened it.
   No message is typed and no request is made
-- every visible button and link on the home page, a category page, a product
-  page, the comparison and the phone has a name a screen reader can announce
+- every visible `button`, `a[href]` and `[role="button"]` on the home page, a
+  category page, a product page, the comparison and the phone has non-empty
+  text from `aria-label`, `aria-labelledby`, its own text, `title` or a nested
+  image's alt. That is a heuristic over those elements, not a computed
+  accessible name and not a check of every control: inputs, custom widgets and
+  anything hidden from this selector are outside it
 - the focused control is not covered by the sticky header
 
 **Three defects it found, all fixed:**

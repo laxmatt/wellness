@@ -1,17 +1,27 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { useCategoryFilters } from "./FilterContext";
 
 // Filters run in the browser over id sets built on the server. Every product
 // card is server-rendered and stays in the HTML; filtering hides children.
 // Works without the assistant and without a round trip.
+// Hydration, as a value: the server snapshot is false and the client snapshot
+// is true, so this flips exactly when React takes over. Nothing ever changes
+// after that, so the store has nothing to notify.
+const subscribeNothing = () => () => {};
+
 export function FilterChips() {
   const f = useCategoryFilters();
+  // The chips are server-rendered and do nothing until React attaches its
+  // handlers. Nothing on the page said when that had happened, so a test could
+  // only tap and hope, and a tap that lands early looks exactly like a tap the
+  // page ignored. This flips on mount and says which is which.
+  const ready = useSyncExternalStore(subscribeNothing, () => true, () => false);
   if (!f || f.groups.length === 0) return null;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3" data-filters-ready={ready ? "true" : "false"}>
       {f.groups.map((g) => (
         <div key={g.key} className="flex flex-wrap items-center gap-2">
           <span className="eyebrow w-full sm:w-28 sm:shrink-0">{g.label}</span>

@@ -577,9 +577,9 @@ async function run(browser: Browser) {
     scenario = "keyboard";
     await goto(page, `/${c.slug}`);
     // The chips are a client component. Tabbing into one before React has
-    // attached its handler proves nothing about the keyboard.
-    await page.waitForLoadState("load");
-    await chipButton(page, target.label).waitFor({ state: "visible" });
+    // attached its handler proves nothing about the keyboard, so the page's own
+    // readiness signal is waited for rather than the load event.
+    await page.locator('[data-filters-ready="true"]').first().waitFor({ timeout: 10000 });
 
     // Tab until the chip has focus. A control a keyboard cannot reach is a
     // control half the shoppers do not have.
@@ -739,22 +739,21 @@ async function run(browser: Browser) {
     const ranked = recommendCategory(views, categoryById("wellness-drinks")!);
     const expected = ranked.products.filter((p) => option.matchIds.includes(p.view.id)).map((p) => p.view.slug);
 
-    // Hydration is not announced by the load event, so the tap is repeated
-    // until the page's own state says it took, rather than trusted once.
-    const pressed = async () => (await mobileChip.getAttribute("aria-pressed")) === "true";
-    for (let i = 0; i < 4 && !(await pressed()); i++) {
-      await mobileChip.tap();
-      await mp
-        .waitForFunction(
-          (n) => {
-            const chip = [...document.querySelectorAll("button")].find((b) => (b.textContent ?? "").trim().startsWith("Electrolytes"));
-            return chip?.getAttribute("aria-pressed") === "true" && (document.body.textContent ?? "").includes(`${n} of 6 shown`);
-          },
-          expected.length,
-          { timeout: 2500, polling: 100 },
-        )
-        .catch(() => undefined);
-    }
+    // Readiness is established first, from the page's own signal, and then the
+    // chip is tapped once. Retrying until something happens would hide a chip
+    // that ignores a tap, which is the defect worth catching.
+    await mp.locator('[data-filters-ready="true"]').first().waitFor({ timeout: 10000 });
+    await mobileChip.tap();
+    await mp
+      .waitForFunction(
+        (n) => {
+          const chip = [...document.querySelectorAll("button")].find((b) => (b.textContent ?? "").trim().startsWith("Electrolytes"));
+          return chip?.getAttribute("aria-pressed") === "true" && (document.body.textContent ?? "").includes(`${n} of 6 shown`);
+        },
+        expected.length,
+        { timeout: 5000, polling: 100 },
+      )
+      .catch(() => undefined);
     check("tapping it selects the chip", await mobileChip.getAttribute("aria-pressed"), "true");
     check("and filters the grid", await shownSlugs(mp), expected);
     check("every visible control on the phone has a name", await namelessControls(mp), []);
