@@ -33,3 +33,12 @@ The fifth run, `2026-09-08T21-37.md`, scored 12 of 15 for $0.0055 with no new
 uncertain charges. Every budget case passed, so the money contract is followed.
 Its generated tables are incomplete: a defect in the report writer, explained
 and fixed in the same commit, and the file says so.
+
+The sixth report, `2026-09-09T01-28.md`, is not a suite run. It is one request,
+sent to answer the one question the non-paid tests cannot: whether this account
+and `gpt-4o-mini` compile the strict JSON schema. They do. The request cost
+$0.000416, returned `price lte 500000` and `chiller_included eq true`, and
+recorded no uncertain charge. That is the extraction that failed twice before,
+once with the value written into the operator field. `npm run
+assistant:strictcheck` sends it; `ASSISTANT_RESPONSE_FORMAT=json_schema` is
+still off by default.

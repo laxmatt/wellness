@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "catalog:check": "tsx scripts/check-catalog.ts",
     "assistant:livetest": "tsx scripts/assistant-live-test.ts",
+    "assistant:strictcheck": "tsx scripts/assistant-strict-check.ts",
     "ledger:restore": "tsx scripts/ledger-restore.ts"
   },
   "dependencies": {
