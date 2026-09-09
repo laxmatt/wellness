@@ -103,7 +103,11 @@ type Outcome = {
 
 function evaluate(views: ProductView[], cat: CategoryDefinition, hard: HardConstraint[], soft: SoftPreference[], unmapped: string[] = []): Outcome {
   const result = applyPreferences(views, cat, PreferenceSet.parse({ hard, soft, unmapped, medicalIntent: false }));
-  const order = new Map((result.bestMatchId ? [result.bestMatchId, ...result.alternativeIds] : []).map((id, i) => [id, i]));
+  // The engine's full order, not the four ids it names. Ordering by those left
+  // everything from the fifth product onwards in catalogue order: a search for
+  // the cheapest red-light panel put a product scoring 0 above one scoring
+  // 24.3, four rows down, where a shopper would never think to look for it.
+  const order = new Map(result.rankedIds.map((id, i) => [id, i]));
   // Hard constraints decide what matches. Soft preferences only order the
   // result: treating an unmet preference as a miss would quietly turn "I would
   // prefer full body" into a filter and hide products the shopper asked to see.
@@ -427,8 +431,24 @@ export async function POST(req: Request) {
   }
 
   if (revoked.length === 0 && shown.matching.length === 0 && shown.hard.length > 0 && shown.result.relaxations.length > 0) {
-    for (const r of shown.result.relaxations.slice(0, 2)) {
-      proposals.push({ kind: "relax_constraint", summary: `Set aside ${r.keptLabel} and show the closest option`, key: r.keptKey });
+    // A relaxation route honours `keptKey` and offers a product that fails the
+    // others. So what the shopper sets aside is those others, and the offer
+    // used to name the opposite: the route that protected the budget rendered
+    // "Set aside price of $5,000 or less" and removed the budget, leaving the
+    // chiller requirement the product did not meet.
+    const offered = new Set<string>();
+    for (const r of shown.result.relaxations) {
+      for (const key of r.droppedKeys) {
+        if (offered.has(key) || offered.size >= 2) continue;
+        const constraint = shown.hard.find((c) => c.key === key);
+        if (!constraint) continue;
+        offered.add(key);
+        proposals.push({
+          kind: "relax_constraint",
+          summary: `Set aside ${describeConstraint(cat, constraint as Condition)} and keep the rest`,
+          key,
+        });
+      }
     }
   }
 

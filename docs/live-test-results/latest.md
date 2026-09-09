@@ -311,10 +311,14 @@ key. Separate defect, recorded here, not fixed.
 **8. "Nothing above 90 cents a serving." — the amount right, the boundary
 wrong.** It returned `lt 90`, which excludes a product costing exactly 90
 cents. "Nothing above 90" includes 90, so the constraint had to admit at most
-90. This is the operator-inclusivity failure in new wording: the MONEY block
-lists "up to", "at most", "no more than" and "or less" as `lte`, and does not
-list "nothing above" or "no higher than". The failure is a gap in that list,
-not in the amount, which was correct.
+90. The amount was correct; the boundary was not.
+
+**A missing wording example is a hypothesis, not the cause.** The MONEY block
+lists "up to", "at most", "no more than" and "or less" as `lte` and does not
+list "nothing above", which is one explanation. It is untested. The model may
+equally have read "above 90 cents" as the excluded region and negated it
+carelessly, or defaulted to `lt` as it does for most budgets. Distinguishing
+these needs sentences built to separate them, and none has been run.
 
 **10. "A greens powder with a subscription, ideally cheap." — one real miss and
 one expectation too narrow.**
@@ -348,10 +352,20 @@ loosening it afterwards would make the score meaningless.
 Ledger before: $0.030017 spent, $0.003120 uncertain. After: $0.034277 spent,
 $0.003120 uncertain. Cap $1.00, remaining $0.962603.
 
-Per-call cost fell from $0.000484 at 03:31 to $0.000426, and input tokens from
-about 2,470 to about 2,465 per call on a comparable mix; the shorter prompt is
-visible in the output side, 934 tokens across ten calls against 2,274 across
-fifteen at 03:31.
+Per-call cost fell from $0.000484 at 03:31 to $0.000426.
+
+**Correction to the arithmetic in an earlier draft of this section.** It gave
+the 03:31 input as "about 2,470 tokens per call". That figure was wrong:
+39,324 input tokens over 15 calls is **2,622** per call, not 2,470. This batch
+averaged 24,648 over 10, or **2,465**, so input fell by about 157 tokens a
+call, roughly 6%.
+
+The same draft implied the shorter prompt explains the lower output count. It
+does not, and nothing here shows that it does. Output was 934 tokens over 10
+calls, 93 each, against 2,274 over 15, or 152 each. The two runs asked
+different questions of different lengths, and output length is the model's
+choice, not a consequence of input size. The drop is recorded; it is not
+attributed.
 
 ### Settings
 

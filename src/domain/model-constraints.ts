@@ -48,6 +48,59 @@ function includesProblem(cat: CategoryDefinition, key: string, value: unknown): 
   return `"${key}" is a list. "includes" takes the value to look for, or a list of values, as strings.`;
 }
 
+/**
+ * Whether a key can be ranked along, and by what.
+ *
+ * Price and any number can be ordered. An enum can be ordered only when its
+ * options carry ranks: cold plunge's `plumbing` runs none, plug-in, dedicated
+ * circuit, so "less plumbing" means something. `tub_type` runs barrel, tub,
+ * inflatable with no ranks at all, so "lower tub type" means nothing.
+ */
+function ordinalBasis(cat: CategoryDefinition, key: string): "price" | "number" | "ranked_enum" | null {
+  if (key === "price") return "price";
+  const def = attributeDef(cat, key);
+  if (!def) return null;
+  if (def.type === "number" || def.type === "integer" || def.type === "boolean") return "number";
+  if (def.type === "enum") {
+    const options = def.enumOptions ?? [];
+    return options.length > 0 && options.every((o) => typeof o.rank === "number") ? "ranked_enum" : null;
+  }
+  return null;
+}
+
+/**
+ * Why a preference cannot be ranked with, or null when it can.
+ *
+ * A direction has to mean something on the key it points at. "Rank for lower
+ * tub type" does not: the options are barrel, tub and inflatable, and none is
+ * lower than another. The reply of 05:37 asked for exactly that, and the site
+ * printed "Ranking for lower tub_type" while quietly scoring an equality match
+ * instead. Guessing what a meaningless direction meant is how a shopper gets a
+ * ranking nobody asked for, so it fails here and is visible.
+ */
+function softProblem(cat: CategoryDefinition, p: ModelSoftPreference): string | null {
+  const def = attributeDef(cat, p.key);
+  const basis = ordinalBasis(cat, p.key);
+
+  if (p.direction === "prefer_low" || p.direction === "prefer_high") {
+    if (basis === null) {
+      const named = def?.type === "list" ? "a list of values" : def?.type === "enum" ? "an unordered set of options" : "not something with an order";
+      return `"${p.key}" is ${named}, so "${p.direction}" says nothing about it. Use "prefer_value" with the value to rank towards, or send it as a constraint.`;
+    }
+    return null;
+  }
+
+  // prefer_value has to name the value it prefers.
+  if (p.value === undefined) return `"${p.key}" was given "prefer_value" with no value to prefer.`;
+  if (def?.type === "enum") {
+    const options = (def.enumOptions ?? []).map((o) => o.value);
+    const wanted = Array.isArray(p.value) ? p.value : [p.value];
+    const unknown = wanted.filter((v) => !options.includes(v as string));
+    if (unknown.length > 0) return `"${p.key}" has no option ${unknown.map((v) => JSON.stringify(v)).join(", ")}. Its options are ${options.join("|")}.`;
+  }
+  return null;
+}
+
 export function toEngineConstraints(
   cat: CategoryDefinition,
   modelHard: ModelHardConstraint[],
@@ -95,6 +148,11 @@ export function toEngineConstraints(
   });
 
   modelSoft.forEach((p, index) => {
+    const problem = softProblem(cat, p);
+    if (problem) {
+      problems.push({ where: "soft", index, key: p.key, reason: problem });
+      return;
+    }
     if (!isMoneyKey(cat, p.key) || p.value === undefined) {
       soft.push(p as SoftPreference);
       return;

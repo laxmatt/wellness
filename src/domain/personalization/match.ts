@@ -168,6 +168,7 @@ export function relaxationSearch(views: ProductView[], cat: CategoryDefinition, 
 
     out.push({
       keptKey: kept.key,
+      droppedKeys: failing.map((c) => c.key),
       keptLabel: describeConstraint(cat, kept),
       productId: pick.id,
       keptSatisfied: satisfying.length > 0,
@@ -211,6 +212,7 @@ export function applyPreferences(views: ProductView[], cat: CategoryDefinition, 
   return {
     bestMatchId: ranked[0]?.id ?? null,
     alternativeIds: ranked.slice(1, 4).map((v) => v.id),
+    rankedIds: ranked.map((v) => v.id),
     explanations,
     relaxations: qualifying.length === 0 ? relaxationSearch(published, cat, prefs.hard) : [],
     medicalRedirect: prefs.medicalIntent,

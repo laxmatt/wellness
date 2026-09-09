@@ -307,14 +307,14 @@ describe("what the scorer would otherwise let through", () => {
     const v = scoreCase(reply([], [{ key: "tub_type", direction: "prefer_value", value: "barrel", weight: 0.5 }]), {
       requiredSoft: [{ key: "tub_type", directions: ["prefer_value", "prefer_high"], value: "inflatable" }],
     });
-    expect(v.problems).toEqual(['soft tub_type targets "barrel", expected "inflatable"']);
+    expect(v.problems).toEqual(['soft tub_type came back as prefer_value "barrel"; expected one entry that is prefer_value/prefer_high "inflatable"']);
   });
 
   it("catches a preference with no target where the sentence named one", () => {
     const v = scoreCase(reply([], [{ key: "tub_type", direction: "prefer_value", weight: 0.5 }]), {
       requiredSoft: [{ key: "tub_type", directions: ["prefer_value"], value: "inflatable" }],
     });
-    expect(v.problems).toEqual(['soft tub_type targets no value, expected "inflatable"']);
+    expect(v.problems).toEqual(['soft tub_type came back as prefer_value; expected one entry that is prefer_value "inflatable"']);
   });
 
   it("accepts a preference that names no target where the case names none", () => {
@@ -367,5 +367,103 @@ describe("a sentence naming something the category cannot filter on", () => {
     const v = scoreCase(reply([{ key: "price", op: "lte", value: 13999 }], "One thing you mentioned is not something this site compares."), expect_);
     expect(v.problems).toHaveLength(1);
     expect(v.problems[0]).toMatch(/invented hard price/);
+  });
+});
+
+describe("the scorer's own equivalences and joins", () => {
+  const reply = (soft: unknown[], question?: { text: string; options: string[] }) =>
+    ({ text: "All 6 products in this category match.", medicalRedirect: false, matchingIds: [], question, proposals: [{ kind: "apply_preferences", hard: [], soft }] }) as CheckableReply;
+
+  it("treats a singleton array target as the same as the scalar", () => {
+    // Independently executed against db7dc56 and rejected: `["outdoor"]` is
+    // `"outdoor"` for a preference naming one value.
+    const v = scoreCase(reply([{ key: "placement", direction: "prefer_value", value: ["outdoor"], weight: 0.5 }]), {
+      requiredSoft: [{ key: "placement", directions: ["prefer_value"], value: "outdoor" }],
+    });
+    expect(v.problems).toEqual([]);
+  });
+
+  it("treats the scalar as the same as a singleton array", () => {
+    const v = scoreCase(reply([{ key: "placement", direction: "prefer_value", value: "outdoor", weight: 0.5 }]), {
+      requiredSoft: [{ key: "placement", directions: ["prefer_value"], value: ["outdoor"] }],
+    });
+    expect(v.problems).toEqual([]);
+  });
+
+  it("does not treat a longer list as equivalent", () => {
+    const v = scoreCase(reply([{ key: "placement", direction: "prefer_value", value: ["outdoor", "indoor"], weight: 0.5 }]), {
+      requiredSoft: [{ key: "placement", directions: ["prefer_value"], value: "outdoor" }],
+    });
+    expect(v.problems).toHaveLength(1);
+  });
+
+  it("refuses two entries that supply the direction and the target separately", () => {
+    // Independently executed against db7dc56 and wrongly accepted. Neither
+    // entry is what was asked for; between them they cover the two halves.
+    const v = scoreCase(
+      reply([
+        { key: "placement", direction: "prefer_value", value: "indoor", weight: 0.5 },
+        { key: "placement", direction: "prefer_low", value: "outdoor", weight: 0.5 },
+      ]),
+      { requiredSoft: [{ key: "placement", directions: ["prefer_value"], value: "outdoor" }] },
+    );
+    expect(v.problems).toHaveLength(1);
+    expect(v.problems[0]).toMatch(/no single entry|expected one entry/);
+  });
+
+  it("accepts one entry carrying both, among others", () => {
+    const v = scoreCase(
+      reply([
+        { key: "placement", direction: "prefer_low", value: "indoor", weight: 0.5 },
+        { key: "placement", direction: "prefer_value", value: "outdoor", weight: 0.5 },
+      ]),
+      { requiredSoft: [{ key: "placement", directions: ["prefer_value"], value: "outdoor" }] },
+    );
+    expect(v.problems).toEqual([]);
+  });
+
+  it("applies the same join to a requirement stated either way", () => {
+    const split = scoreCase(
+      {
+        text: "",
+        medicalRedirect: false,
+        matchingIds: [],
+        proposals: [
+          {
+            kind: "apply_preferences",
+            hard: [{ key: "plumbing", op: "neq", value: "none" }],
+            soft: [{ key: "plumbing", direction: "prefer_low", weight: 0.5 }],
+          },
+        ],
+      } as CheckableReply,
+      { requiredEither: [{ key: "plumbing", ops: ["eq"], directions: ["prefer_low"], value: "none" }] },
+    );
+    // The op is on one entry and the value on another; neither entry is right.
+    expect(split.problems).toHaveLength(1);
+    expect(split.problems[0]).toMatch(/no single entry matches/);
+  });
+
+  it("accepts either form when one entry carries both", () => {
+    const asHard = scoreCase(
+      { text: "", medicalRedirect: false, matchingIds: [], proposals: [{ kind: "apply_preferences", hard: [{ key: "plumbing", op: "eq", value: "none" }], soft: [] }] } as CheckableReply,
+      { requiredEither: [{ key: "plumbing", ops: ["eq"], directions: ["prefer_low"], value: "none" }] },
+    );
+    expect(asHard.problems).toEqual([]);
+  });
+
+  it("counts the question the panel renders, not a question mark in the prose", () => {
+    // The composed sentence carries no "?"; the question is its own card.
+    const withCard = scoreCase(reply([], { text: "Which tub type suits you?", options: ["Upright barrel", "Reclined tub"] }), {
+      mustNameOrAsk: { because: "this category has no size filter" },
+    });
+    expect(withCard.problems).toEqual([]);
+
+    const withNothing = scoreCase(reply([]), { mustNameOrAsk: { because: "this category has no size filter" } });
+    expect(withNothing.problems).toHaveLength(1);
+  });
+
+  it("counts an empty options list as no question", () => {
+    const v = scoreCase(reply([], { text: "Which tub type suits you?", options: [] }), { mustAskQuestion: true });
+    expect(v.problems).toEqual(["did not ask a clarifying question"]);
   });
 });

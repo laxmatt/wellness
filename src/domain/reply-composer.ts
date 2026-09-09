@@ -1,6 +1,6 @@
 import type { CategoryDefinition } from "./category";
 import { engineSummary } from "./match-claims";
-import { describeConstraint } from "./personalization/describe";
+import { describeConstraint, labelFor } from "./personalization/describe";
 import type { HardConstraint, SoftPreference } from "./personalization";
 
 // Every sentence a shopper reads is written here, from the catalogue and the
@@ -113,7 +113,12 @@ function constraintList(cat: CategoryDefinition, hard: HardConstraint[]): string
 function softList(cat: CategoryDefinition, soft: SoftPreference[]): string {
   return soft
     .map((p) => {
-      const label = cat.attributeDefinitions.find((a) => a.key === p.key)?.shortLabel ?? p.key;
+      // The same resolution the rest of the site uses: shortLabel, then label,
+      // then the key. Reaching for shortLabel alone and falling back to the key
+      // put "Ranking for lower tub_type" and "lower price_per_serving_minor" on
+      // the screen, which name a column in this codebase and nothing a shopper
+      // has ever seen.
+      const label = labelFor(cat, p.key);
       if (p.direction === "prefer_low") return `lower ${label.toLowerCase()}`;
       if (p.direction === "prefer_high") return `higher ${label.toLowerCase()}`;
       return label.toLowerCase();

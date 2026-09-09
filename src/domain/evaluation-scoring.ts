@@ -16,10 +16,12 @@ import { admittedMaximum, describeWant, valueFits } from "./livetest-expectation
 export type SoftExpectation = {
   key: string;
   directions?: string[];
+  // A list of alternatives is a legitimate target, and a one-element list is
+  // the same preference as the bare value.
   // The target the preference names, when the sentence names one. A direction
   // alone is not enough: `prefer_value` on the wrong enum points the ranking at
   // the wrong products while looking correct.
-  value?: number | string | boolean;
+  value?: number | string | boolean | string[];
 };
 
 export type CaseExpectation = {
@@ -33,7 +35,7 @@ export type CaseExpectation = {
   // "I don't want to deal with an electrician" is as fairly a requirement as a
   // preference, and a case that says so must not be scored as though it had
   // picked one.
-  requiredEither?: { key: string; ops?: string[]; directions?: string[]; value?: number | string | boolean }[];
+  requiredEither?: { key: string; ops?: string[]; directions?: string[]; value?: number | string | boolean | string[] }[];
   // Keys that must not appear as hard constraints. A budget the shopper never
   // stated is the case this exists for: it silently narrows the search to
   // something they did not ask for.
@@ -61,6 +63,30 @@ export type Verdict = {
   // Keys the case neither required nor allowed.
   extras: string[];
 };
+
+/**
+ * Two values naming the same thing.
+ *
+ * A preference on a list key may arrive as `"outdoor"` or as `["outdoor"]`, and
+ * they mean the same. Comparing with `===` called the second a miss. Order does
+ * not matter for a set of alternatives; a longer or shorter list does.
+ */
+function sameTarget(got: unknown, want: unknown): boolean {
+  const one = (v: unknown) => (Array.isArray(v) ? (v.length === 1 ? v[0] : v) : v);
+  const a = one(got);
+  const b = one(want);
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false;
+    const rest = [...b];
+    return a.every((x) => {
+      const i = rest.findIndex((y) => y === x);
+      if (i === -1) return false;
+      rest.splice(i, 1);
+      return true;
+    });
+  }
+  return a === b;
+}
 
 /**
  * One case, judged.
@@ -116,15 +142,19 @@ export function scoreCase(reply: CheckableReply, expect: CaseExpectation): Verdi
       }
       continue;
     }
-    if (want.directions && !found.some((s) => want.directions!.includes(s.direction))) {
-      v.problems.push(`soft ${want.key} pointed ${found.map((s) => s.direction).join("/")}, expected ${want.directions.join("/")}`);
-    }
-    // A preference with a target names the target. Checking the direction and
-    // not the value passes `prefer_value` pointed at the wrong option, which
-    // ranks the wrong products to the top while reading as correct.
-    if (want.value !== undefined && !found.some((s) => s.value === want.value)) {
-      const shown = found.map((s) => (s.value === undefined ? "no value" : JSON.stringify(s.value))).join(", ");
-      v.problems.push(`soft ${want.key} targets ${shown}, expected ${JSON.stringify(want.value)}`);
+    // Direction and target, on the SAME entry. Checked apart, a reply carrying
+    // `prefer_value indoor` and `prefer_low outdoor` satisfied an expectation
+    // of `prefer_value outdoor`: one entry supplied the direction, the other
+    // the value, and neither was what was asked for.
+    const ok = found.filter(
+      (s) =>
+        (!want.directions || want.directions.includes(s.direction)) &&
+        (want.value === undefined || sameTarget(s.value, want.value)),
+    );
+    if (ok.length === 0) {
+      const shown = found.map((s) => `${s.direction}${s.value === undefined ? "" : ` ${JSON.stringify(s.value)}`}`).join(", ");
+      const wanted = `${want.directions ? want.directions.join("/") : "any direction"}${want.value === undefined ? "" : ` ${JSON.stringify(want.value)}`}`;
+      v.problems.push(`soft ${want.key} came back as ${shown}; expected one entry that is ${wanted}`);
     }
   }
 
@@ -136,14 +166,20 @@ export function scoreCase(reply: CheckableReply, expect: CaseExpectation): Verdi
       v.problems.push(`missing ${want.key}, in either form`);
       continue;
     }
-    if (hard.length > 0 && want.ops && !hard.some((h) => want.ops!.includes(h.op))) {
-      v.problems.push(`${want.key} used op ${hard.map((h) => h.op).join("/")}, expected one of ${want.ops.join("/")}`);
-    }
-    if (soft.length > 0 && want.directions && !soft.some((s) => want.directions!.includes(s.direction))) {
-      v.problems.push(`${want.key} pointed ${soft.map((s) => s.direction).join("/")}, expected ${want.directions.join("/")}`);
-    }
-    if (want.value !== undefined && ![...hard, ...soft].some((c) => c.value === want.value)) {
-      v.problems.push(`${want.key} does not target ${JSON.stringify(want.value)}`);
+    // Either form will do, and whichever form it is, the operator or direction
+    // and the target have to be on the same entry.
+    const okHard = hard.filter(
+      (h) => (!want.ops || want.ops.includes(h.op)) && (want.value === undefined || sameTarget(h.value, want.value)),
+    );
+    const okSoft = soft.filter(
+      (s) => (!want.directions || want.directions.includes(s.direction)) && (want.value === undefined || sameTarget(s.value, want.value)),
+    );
+    if (okHard.length === 0 && okSoft.length === 0) {
+      const shown = [
+        ...hard.map((h) => `hard ${h.op}${h.value === undefined ? "" : ` ${JSON.stringify(h.value)}`}`),
+        ...soft.map((s) => `soft ${s.direction}${s.value === undefined ? "" : ` ${JSON.stringify(s.value)}`}`),
+      ].join(", ");
+      v.problems.push(`${want.key} came back as ${shown}; no single entry matches what was expected`);
     }
   }
 
@@ -178,13 +214,19 @@ export function scoreCase(reply: CheckableReply, expect: CaseExpectation): Verdi
     // Judged on what the shopper is shown, because that is what the route
     // returns: the composed reply counts unmapped phrases in a fixed sentence,
     // and a clarifying question is the other acceptable answer.
-    const said = /not something this site compares/i.test(reply.text) || /\?/.test(reply.text);
+    // The panel renders `question` as its own card with clickable options, and
+    // the composed sentence rarely carries a question mark, so looking for one
+    // in the prose misses every question the site actually asks.
+    const asked = (reply.question?.options.length ?? 0) > 0 || /\?/.test(reply.text);
+    const said = /not something this site compares/i.test(reply.text) || /I have not filtered by/i.test(reply.text) || asked;
     if (!said) v.problems.push(`nothing was said about what could not be filtered: ${expect.mustNameOrAsk.because}`);
   }
 
   if (expect.medicalIntent && !reply.medicalRedirect) v.problems.push("medical question was not declined");
   if (!expect.medicalIntent && reply.medicalRedirect) v.problems.push("declined a question that was not medical");
-  if (expect.mustAskQuestion && !/\?/.test(reply.text)) v.problems.push("did not ask a clarifying question");
+  if (expect.mustAskQuestion && !((reply.question?.options.length ?? 0) > 0 || /\?/.test(reply.text))) {
+    v.problems.push("did not ask a clarifying question");
+  }
 
   return v;
 }

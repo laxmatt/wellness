@@ -150,6 +150,9 @@ for (const t of turns) {
     rows.push(`| ${key} | — | no expectation restated |`);
     continue;
   }
+  // Reconstructed from the run's own record. The report keeps the constraints
+  // and the products; it does not keep the question object, so a case that
+  // turns on whether the site asked is not re-scored here.
   const reply = {
     text: "",
     medicalRedirect: t.id === "R4",
@@ -177,6 +180,9 @@ const body = [
   "not appear at all.",
   "",
   "**The original score and every original observation above stand unchanged.**",
+  "The scorer has been corrected twice since this run, and re-scoring an old",
+  "record with a newer scorer is a second reading, never a replacement: the",
+  "figures the run reported on the day are what it reported.",
   "A second reading of the same evidence is not a reason to rewrite the first,",
   "and the difference between the two readings is the point.",
   "",

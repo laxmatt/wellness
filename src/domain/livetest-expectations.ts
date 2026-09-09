@@ -53,6 +53,10 @@ export type CheckableReply = {
   failure?: string;
   medicalRedirect: boolean;
   matchingIds: string[];
+  // The panel renders this as its own card with clickable options. A scorer
+  // that looks for a question mark in the prose misses every question the site
+  // actually asks, because the composed sentence rarely carries one.
+  question?: { text: string; options: string[]; key?: string };
   proposals: {
     kind: string;
     hard?: { key: string; op: string; value?: unknown }[];
