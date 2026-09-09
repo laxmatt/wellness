@@ -394,6 +394,8 @@ In their place the rules say what extraction means: only what the shopper said b
 
 The values are removed, not replaced: no number is guessed. A `not_stated` verification tier carries the reason, distinct from `demo`, which is a value this project invented, and from `unknown`, which is a real value whose provenance was not recorded. `check-catalog` refuses an absent value whose verification claims the source reported it, and refuses a `not_stated` entry that still carries one.
 
+**A placeholder price is no longer quoted, to the shopper or by the assistant.** The route sent `price: formatMoney(...)` for every product, placeholder or not, alongside `priceIsPlaceholder: true`, and the panel printed the number. It now sends "Check current price" for those, the same words every other surface uses. The model never saw a price either way.
+
 **Closing the panel gives focus back.** Escape closed it and left focus on the body, so a keyboard shopper who opened the assistant from the middle of a category page had to tab from the top of the document to get back. The panel records what was focused when it opened and restores it on close. Found by `e2e/public-journeys.mts`, which opens the panel with Enter, checks focus moves into it, closes it with Escape and checks focus returns. Nothing is typed and no request is made, so the check costs nothing.
 
 **A bound is not an amount, and now it is not stored as one.** AG1's label says "less than 1 g" of sugar and the catalogue recorded `1`. Four red-light panels state irradiance as "over" or "greater than" a figure and the catalogue recorded the figure. The page then printed an exact number nobody claimed, and matching treated it as one: AG1 answered "sugar of exactly 1 g" as a fact.

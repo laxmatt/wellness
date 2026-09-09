@@ -5,13 +5,16 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
-import type { OfferView, ProductView } from "@/domain/view";
+import { displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
+// What the shopper is told about the link they are about to follow. "unknown"
+// is the honest state of every offer here: no programme has been joined, so
+// the link is an ordinary one and earns nothing.
 const affiliateCopy: Record<OfferView["affiliateStatus"], string> = {
   affiliate: "Affiliate link. We may earn a commission.",
-  non_affiliate: "No affiliate relationship.",
-  unknown: "No affiliate relationship established.",
+  non_affiliate: "Ordinary link. No commission.",
+  unknown: "Ordinary link. No commission.",
 };
 
 const availabilityCopy: Record<OfferView["availability"], string> = {
@@ -31,7 +34,9 @@ export function OfferList({ view }: { view: ProductView }) {
   if (view.offers.length === 0) {
     return (
       <div className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
-        No retailer listed yet. Reference price {formatMoney(view.price.money)} from the maker, checked {shortDate(view.price.checkedAt)}.
+        {view.price.isDemo
+          ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
+          : `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`}
       </div>
     );
   }
@@ -60,8 +65,10 @@ export function OfferList({ view }: { view: ProductView }) {
           </div>
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <div className="text-right">
-              <p className="tabular text-xl font-semibold">{formatMoney(o.price)}</p>
-              {o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p> : null}
+              <p className={o.priceIsDemo ? "text-sm font-semibold" : "tabular text-xl font-semibold"}>{displayOfferPrice(o)}</p>
+              {!o.priceIsDemo && o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? (
+                <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
+              ) : null}
             </div>
             <a href={o.url} target="_blank" rel="sponsored nofollow noopener" className={buttonStyles("primary", "md")}>
               Visit {o.merchant.name.replace(/\s*\(direct\)$/, "")}

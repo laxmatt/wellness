@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
-import { formatMoney } from "@/domain/money";
+import { displayPrice } from "@/domain/view";
 import { BADGES, BADGE_LABELS, primaryStrength, type RecommendationSet, type RecommendedProduct } from "@/domain/recommend";
 import { cn } from "@/lib/cn";
 import { useCategoryFilters } from "./FilterContext";
@@ -62,7 +62,7 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                   {isOutside ? <p className="text-xs font-semibold text-accent-strong">Outside your current filters</p> : null}
                   <p className="eyebrow">{w.view.brand.name}</p>
                   <p className="font-display text-2xl leading-tight group-hover:underline">{w.view.name}</p>
-                  <p className="tabular text-xl font-semibold">{formatMoney(w.view.price.money)}</p>
+                  <p className="tabular text-xl font-semibold">{displayPrice(w.view.price)}</p>
                   {alsoValue ? <p className="text-xs font-semibold text-positive">Also the strongest value here.</p> : null}
                   {why ? <p className="text-sm text-fg-soft">{why}</p> : null}
                   <span className="mt-auto pt-2 text-sm font-semibold text-accent-strong">See details</span>

@@ -3,6 +3,7 @@ import type { AttributeDefinition, AttributePrimitive } from "./attributes";
 import { formatAttribute } from "./attributes";
 import type { CategoryDefinition } from "./category";
 import type { Money } from "./money";
+import { formatMoney } from "./money";
 import type {
   AffiliateStatus,
   Availability,
@@ -26,6 +27,9 @@ export type OfferView = {
   id: string;
   merchant: Pick<Merchant, "id" | "slug" | "name">;
   price: Money;
+  // This offer's amount is prototype data, not a price anybody quoted. The
+  // number is never shown; the page says to check the merchant instead.
+  priceIsDemo: boolean;
   listPrice?: Money;
   url: string;
   affiliateStatus: AffiliateStatus;
@@ -46,6 +50,20 @@ export type PriceView = {
   isDemo: boolean;
 };
 
+// What a shopper is shown in place of a placeholder amount. A number nobody
+// quoted is not a price, and putting one on a shopping page is the single
+// easiest way to lose a reader's trust: they click through, see something
+// else, and every other figure on the page is suspect.
+export const PRICE_UNCONFIRMED = "Check current price";
+
+export function displayPrice(price: PriceView): string {
+  return price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
+}
+
+export function displayOfferPrice(offer: OfferView): string {
+  return offer.priceIsDemo ? PRICE_UNCONFIRMED : formatMoney(offer.price);
+}
+
 export type SpecView = {
   key: string;
   label: string;
@@ -53,6 +71,9 @@ export type SpecView = {
   group: string;
   raw: AttributePrimitive | undefined;
   formatted: string;
+  // Set when this is a money figure derived from a placeholder price, so
+  // `formatted` says to check the price rather than quoting one.
+  moneyWithheld?: boolean;
   // Set when the source states a bound rather than an exact value. `formatted`
   // already carries the qualifier; this is for a screen that needs to know.
   bound?: Bound;
@@ -128,14 +149,19 @@ export function derivePrice(product: Product): PriceView {
 export function completeness(product: Product, category: CategoryDefinition): number {
   const required = category.attributeDefinitions.filter((a) => a.required);
   if (required.length === 0) return 1;
+  // A money figure withheld because it came from a placeholder price counts as
+  // missing, exactly like the placeholder itself. Completeness is a measure of
+  // what is actually known.
+  const priceIsDemo = derivePrice(product).isDemo;
   const present = required.filter((a) => {
     const sv = product.attributes[a.key];
+    if (priceIsDemo && a.unit === "USD_minor") return false;
     return sv !== undefined && isUsable(sv.verification);
   }).length;
   return present / required.length;
 }
 
-function specFor(def: AttributeDefinition, product: Product): SpecView {
+function specFor(def: AttributeDefinition, product: Product, moneyWithheld = false): SpecView {
   const sv = product.attributes[def.key];
   const displayText = def.displayField ? product[def.displayField]?.value : undefined;
   // A bound only qualifies a value that can be used as fact. A demo or
@@ -146,9 +172,10 @@ function specFor(def: AttributeDefinition, product: Product): SpecView {
     label: def.label,
     shortLabel: def.shortLabel ?? def.label,
     group: def.group,
-    raw: sv?.value,
+    raw: moneyWithheld ? undefined : sv?.value,
     bound,
-    formatted: displayText ?? formatAttribute(def, sv?.value, bound),
+    moneyWithheld: moneyWithheld || undefined,
+    formatted: moneyWithheld ? PRICE_UNCONFIRMED : (displayText ?? formatAttribute(def, sv?.value, bound)),
     unit: sv?.unit ?? def.unit,
     provenance: sv ? provenanceOf(sv) : undefined,
     alwaysShowVerification: def.alwaysShowVerification,
@@ -162,6 +189,16 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   const provenance: Record<string, Provenance> = {};
   const attributes: Record<string, AttributePrimitive> = {};
   const bounds: Record<string, Bound> = {};
+
+  const price = derivePrice(product);
+  // A money figure computed from a placeholder price is that placeholder,
+  // divided. Liquid I.V.'s price per serving was the demo pack price over 16,
+  // recorded as an editorial calculation, shown as a fact, and used to rank
+  // it. Every amount in the category's own currency unit is withheld here when
+  // the price it came from is prototype data.
+  const moneyKeys = new Set(
+    price.isDemo ? ctx.category.attributeDefinitions.filter((a) => a.unit === "USD_minor").map((a) => a.key) : [],
+  );
   for (const [key, sv] of Object.entries(product.attributes)) {
     // Only values that can be used as fact become attributes. A demo value is
     // still shown, labelled "Demo data" by every component that renders a spec,
@@ -171,7 +208,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     // for as long as it has existed. An attribute the source does not state
     // keeps its provenance so the page can say "not stated" and show why, and
     // neither kind becomes something to match on.
-    if (sv.value !== undefined && isUsable(sv.verification)) {
+    if (sv.value !== undefined && isUsable(sv.verification) && !moneyKeys.has(key)) {
       attributes[key] = sv.value;
       if (sv.bound) bounds[key] = sv.bound;
     }
@@ -183,7 +220,6 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   if (product.weight) provenance.weight = provenanceOf(product.weight);
   if (product.referencePrice) provenance.referencePrice = provenanceOf(product.referencePrice);
 
-  const price = derivePrice(product);
   const best = lowestOffer(product.offers);
   provenance.price = best
     ? { source: best.source, verification: "unknown" }
@@ -196,6 +232,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
       id: o.id,
       merchant: { id: merchant.id, slug: merchant.slug, name: merchant.name },
       price: { amountMinor: o.priceMinor, currency: o.currency },
+      priceIsDemo: o.source.kind === "demo",
       listPrice: o.listPriceMinor !== undefined ? { amountMinor: o.listPriceMinor, currency: o.currency } : undefined,
       url: o.url,
       affiliateStatus: o.affiliate.status,
@@ -209,7 +246,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
 
   const specs = [...ctx.category.attributeDefinitions]
     .sort((a, b) => a.compareOrder - b.compareOrder)
-    .map((def) => specFor(def, product));
+    .map((def) => specFor(def, product, moneyKeys.has(def.key)));
   const cardSpecs = ctx.category.cardSpecKeys
     .map((k) => specs.find((s) => s.key === k))
     .filter((s): s is SpecView => s !== undefined);

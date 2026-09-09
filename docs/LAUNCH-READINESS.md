@@ -59,10 +59,30 @@ same value the page renders: `bon-charge-max`, `hooga-hg300`, `hooga-pro1500`,
 `liquid-iv-hydration-multiplier-16`, `olipop-root-beer-12`. Twelve prices are
 real.
 
-The site withholds them from price claims, lists them apart as unconfirmed,
-excludes them from price-based badges, and, since the public-journey harness
-caught that it did not, tags them "Demo data" wherever the price is shown. The
-handling is verified. What is missing is the real data.
+No placeholder amount is shown to a shopper any more. Where one exists, the
+page says **"Check current price"** and sends the reader to the merchant: on
+the card, on the product page, in the offer row, in the comparison table and in
+the assistant's answer. The figures were already withheld from price claims,
+from price-based badges and from the assistant's evidence; they were still
+printed as prices, which is the part that mattered.
+
+Two consequences worth naming, both measured before the change:
+
+- **A money figure computed from a placeholder price is withheld too.** Liquid
+  I.V.'s price per serving was its demo pack price divided by 16, recorded as
+  an editorial calculation and shown as a fact. It and OLIPOP's are gone from
+  display, from matching and from scoring, which drops Liquid I.V. below the
+  completeness floor. Five products now sit below it rather than four.
+- **A placeholder price no longer sets the affordability range.** Six of the
+  eight red-light panels carry one, and their invented figures were both ends
+  of the range the two real-priced panels were measured against. Placeholder
+  priced products get no value number now, and the range is drawn from real
+  prices only. **No badge changed in any category**: Best Overall, Best Value,
+  Best Budget and Best Premium are identical before and after. What changed is
+  the numbers on the page: red light 39.1 to 42 and 64.5 to 56, drinks 58.3 to
+  48.8.
+
+The handling is verified. What is missing is the real data.
 
 **Four products are ineligible for badges**: Infraredi Flex Max, AG1, Cure
 Hydration and OLIPOP. Two of those four became ineligible in 58ecd85, when
@@ -110,8 +130,12 @@ Two things remain for a person, because no check settles them:
 **No affiliate programme is joined, or at least nothing here shows one.** There
 is no network identifier, no tracking parameter, and no signed agreement in the
 repository. Every "Buy" link points at a plain manufacturer URL. The site can
-be published in this state, but it earns nothing and the disclosure page
-describes a relationship that does not yet exist.
+be published in this state and it earns nothing, which is now what the site
+says: `/disclosure` states there is no programme, no commission and no
+partnership, that links are ordinary ones with no tracking parameter, that this
+may change and will be said on the page when it does, and that affiliate status
+is not an input to ranking. Every offer row reads "Ordinary link. No
+commission." 
 
 **Half the offer prices were not fetched from the merchant.** Thirteen carry
 `method: "secondhand"` with a note saying the page was not fetched directly.
@@ -256,8 +280,9 @@ In the order that matters:
 
 1. **Images.** 24 of 24 are procedural placeholders. Nothing to license, and
    nothing showing the products.
-2. **Affiliate.** No programme, no tracking, no revenue path, and a disclosure
-   page describing a relationship that does not exist.
+2. **Affiliate.** No programme, no tracking and no revenue path. The
+   disclosure page now says exactly that: no commission, ordinary links, and
+   the ranking cannot see affiliate status because it is never passed to it.
 3. **Prices.** Eight of twenty shown as unconfirmed placeholders, and 13 of 26
    real ones never fetched from the merchant.
 4. **`NEXT_PUBLIC_SITE_URL` and a host config**, unless the hosting account

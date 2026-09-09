@@ -18,11 +18,14 @@ export function SiteFooter() {
             </Link>
           ))}
           <Link href="/disclosure" className="tap flex items-center text-fg-soft hover:text-fg">
-            Affiliate disclosure
+            How this site is paid
           </Link>
         </nav>
         <div className="text-xs text-fg-muted">
-          <p>Prototype. Product data is demo data relayed from public sources and marked as such. Prices shown with the date checked.</p>
+          <p>
+            Prototype. Specifications are relayed from public sources and each one says who reported it. Where no price
+            has been confirmed, the page says so instead of showing an amount. No affiliate programme, no commission.
+          </p>
           <p className="mt-2">
             This site helps you compare products by their stated specifications and price. It does not give medical advice, and no product here is presented as treating any condition.
           </p>

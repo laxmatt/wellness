@@ -2,14 +2,13 @@ import { formatAttribute } from "../attributes";
 import type { CategoryDefinition } from "../category";
 import { attributeDef } from "../category";
 import { matchesAll } from "../conditions";
-import { formatMoney } from "../money";
-import type { ProductView } from "../view";
+import { displayPrice, type ProductView } from "../view";
 
 export type Insight = { id: string; text: string; tone: "strength" | "tradeoff" | "neutral" };
 
 function fill(template: string, view: ProductView, cat: CategoryDefinition): string {
   return template.replace(/\{([a-z0-9_]+)\}/g, (_, key: string) => {
-    if (key === "price") return formatMoney(view.price.money);
+    if (key === "price") return displayPrice(view.price).toLowerCase();
     // Universal text fields take priority so "Lifetime warranty" reads as the
     // product states it, not as the capped scoring number.
     if (key === "warranty") return view.warranty ?? (typeof view.attributes.warranty_years === "number" ? `${view.attributes.warranty_years}-year warranty` : "warranty not stated");

@@ -190,10 +190,22 @@ async function priceBlock(page: Page, money: string): Promise<{ found: boolean; 
       const block = leaf.parentElement;
       if (!block) continue;
       // PriceDisplay is a column: the amount, an optional tag, the basis line.
-      if (/retailer|Reference/i.test(block.textContent ?? "")) return { found: true, text: (block.textContent ?? "").trim() };
+      if (/retailer|Reference|No price confirmed/i.test(block.textContent ?? "")) return { found: true, text: (block.textContent ?? "").trim() };
     }
     return { found: false, text: "" };
   }, money);
+}
+
+async function offerRowText(page: Page, merchantName: string): Promise<string> {
+  return page.evaluate((name) => {
+    const row = [...document.querySelectorAll("li")].find((li) => (li.querySelector("p")?.textContent ?? "").trim() === name);
+    return (row?.textContent ?? "").trim();
+  }, merchantName);
+}
+
+async function cardText(page: Page, slug: string): Promise<string> {
+  const card = page.locator(`article:has(a[href="/products/${slug}"])`).first();
+  return (await card.count()) > 0 ? ((await card.textContent()) ?? "") : "";
 }
 
 async function headingCount(page: Page): Promise<number> {
@@ -237,12 +249,16 @@ async function run(browser: Browser) {
       ok(`${view.slug} card carries its ${BADGE_LABELS[b.badge]} badge`, text.includes(BADGE_LABELS[b.badge]), text.slice(0, 120));
     }
 
-    // A price the catalogue calls a placeholder must say so where the price is
-    // shown. Anywhere on the card is not the same thing: a demo spec three
-    // rows below carries its own tag and says nothing about the price.
+    // A placeholder amount is not shown at all. The card says to check the
+    // price at the merchant, and the invented number appears nowhere on it.
     for (const v of views.filter((v) => v.price.isDemo)) {
-      const text = await priceBlockText(page, v.slug, formatMoney(v.price.money));
-      ok(`${v.slug} card marks its placeholder price`, /demo|placeholder|unconfirmed|not confirmed/i.test(text), text);
+      const card = await cardText(page, v.slug);
+      ok(`${v.slug} card offers to check the price`, card.includes("Check current price"), card.slice(0, 200));
+      ok(`${v.slug} card does not quote the placeholder amount`, !card.includes(formatMoney(v.price.money)), formatMoney(v.price.money));
+    }
+    for (const v of views.filter((v) => !v.price.isDemo)) {
+      const card = await cardText(page, v.slug);
+      ok(`${v.slug} card shows its real price`, card.includes(formatMoney(v.price.money)), formatMoney(v.price.money));
     }
 
     // Filters: the page must hide exactly what the engine says the chip means.
@@ -329,14 +345,37 @@ async function run(browser: Browser) {
 
     const body = (await page.locator("body").textContent()) ?? "";
     const money = formatMoney(view.price.money);
-    const block = await priceBlock(page, money);
-    ok("shows the price the engine computed, in its own block", block.found, money);
     if (view.price.isDemo) {
-      // Scoped to the block holding the amount. Searching the whole page let
-      // an unrelated demo spec answer for the price.
-      ok("marks a placeholder price beside the price itself", block.text.includes("Demo data"), block.text);
+      // The amount is prototype data, so nothing presents it as this
+      // product's price: not the price block, not an offer row, not a spec.
+      const block = await priceBlock(page, "Check current price");
+      ok("offers to check the price instead of quoting one", block.found, block.text);
+      ok("and quotes no amount where the price goes", !block.text.includes(money), block.text);
+      for (const spec of view.specs.filter((sp) => sp.moneyWithheld)) {
+        const shown = await valueBlockText(page, spec.label, "Check current price");
+        ok(`${spec.key} is withheld with the price it came from`, shown !== null, spec.formatted);
+      }
     } else {
-      ok("does not call a real price placeholder data", !block.text.includes("Demo data"), block.text);
+      const block = await priceBlock(page, money);
+      ok("shows the price the engine computed, in its own block", block.found, money);
+    }
+    for (const offer of view.offers.filter((o) => o.priceIsDemo)) {
+      const row = await offerRowText(page, offer.merchant.name);
+      ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price)), row);
+      ok(`the ${offer.merchant.name} row says to check instead`, row.includes("Check current price"), row);
+    }
+    // A source note may quote what a source reported: that is provenance, and
+    // on a product with a real price it is the price's own paperwork. On a
+    // product whose price is prototype data, a note quoting an amount has to
+    // say so, or the number is back on the page by the side door.
+    if (view.price.isDemo) {
+      const notesWithAmounts = Object.values(view.provenance)
+        .map((pr) => pr.source.note)
+        .filter((n): n is string => Boolean(n) && /\$\d/.test(n!));
+      for (const note of notesWithAmounts) {
+        if (!body.includes(note.slice(0, 40))) continue;
+        ok("an amount quoted in a note says it is prototype data", /demo|placeholder|unconfirmed/i.test(note), note);
+      }
     }
 
     // Every unusable value is labelled where it is shown, and every bound
@@ -391,40 +430,32 @@ async function run(browser: Browser) {
 
   // ------------------------------------------- the price check, proved
   {
-    // A check that cannot fail proves nothing. The tag is removed from the
-    // price block in the page and the same predicate is asked again: it has
-    // to notice. The page is reloaded afterwards.
+    // A check that cannot fail proves nothing. The amount is put back into the
+    // page and the same predicate is asked again: it has to notice. The page
+    // is reloaded afterwards.
     const demoPriced = cat.products
       .map((p) => viewsOf(p.categoryId).find((v) => v.id === p.id)!)
       .find((v) => v.price.isDemo)!;
-    scenario = `price tag, proved sensitive on ${demoPriced.slug}`;
+    scenario = `price check, proved sensitive on ${demoPriced.slug}`;
     await goto(page, `/products/${demoPriced.slug}`);
     const money = formatMoney(demoPriced.price.money);
-    const before = await priceBlock(page, money);
-    ok("the tag is there to begin with", before.text.includes("Demo data"), before.text);
+    const clean = (await page.locator("body").textContent()) ?? "";
+    ok("the page quotes no amount to begin with", !clean.includes(money), money);
 
-    const removed = await page.evaluate((money) => {
-      const leaves = [...document.querySelectorAll("span")].filter(
-        (el) => (el.textContent ?? "").trim() === money && el.querySelectorAll("*").length === 0,
-      );
-      for (const leaf of leaves) {
-        const block = leaf.parentElement;
-        if (!block || !/retailer|Reference/i.test(block.textContent ?? "")) continue;
-        const tag = [...block.querySelectorAll("span")].find((el) => (el.textContent ?? "").trim() === "Demo data");
-        if (tag) {
-          tag.remove();
-          return true;
-        }
-      }
-      return false;
+    const injected = await page.evaluate((money) => {
+      const el = [...document.querySelectorAll("span")].find((s) => (s.textContent ?? "").trim() === "Check current price");
+      if (!el) return false;
+      el.textContent = money;
+      return true;
     }, money);
-    ok("the tag can be taken out of the page", removed);
+    ok("an amount can be put into the page", injected);
 
-    const after = await priceBlock(page, money);
-    ok("and the check then fails, which is what makes it worth running", after.found && !after.text.includes("Demo data"), after);
+    const dirty = (await page.locator("body").textContent()) ?? "";
+    ok("and the check then fails, which is what makes it worth running", dirty.includes(money), money);
     await page.reload({ waitUntil: "domcontentloaded" });
-    const restored = await priceBlock(page, money);
-    ok("the real page still has it", restored.text.includes("Demo data"), restored.text);
+    const restored = (await page.locator("body").textContent()) ?? "";
+    ok("the real page quotes nothing", !restored.includes(money), money);
+    ok("and offers to check instead", restored.includes("Check current price"));
   }
 
   // ------------------------------------------------------------ compare

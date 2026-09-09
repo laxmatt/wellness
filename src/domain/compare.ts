@@ -6,7 +6,7 @@ import { formatMoney } from "./money";
 import type { Badge } from "./recommend/badges";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "./recommend";
 import type { Verification } from "./provenance";
-import type { ProductView } from "./view";
+import { displayPrice, type ProductView } from "./view";
 
 // Serializable comparison model. Built on the server so the client component
 // carries no domain code, only rows to render.
@@ -111,7 +111,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     slug: it.view.slug,
     name: it.view.name,
     brand: it.view.brand.name,
-    price: formatMoney(it.view.price.money),
+    price: displayPrice(it.view.price),
     badge: it.badges[0] ?? null,
     image: it.view.images.find((i) => i.role === "card") ?? it.view.images.find((i) => i.role === "primary") ?? it.view.images[0],
     score: it.score,
@@ -128,7 +128,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "price",
         label: "Price",
-        cells: items.map((it, i) => ({ text: formatMoney(it.view.price.money), best: priceBest.has(i) })),
+        cells: items.map((it, i) => ({ text: displayPrice(it.view.price), best: priceBest.has(i) })),
         same: new Set(items.map((it) => it.view.price.money.amountMinor)).size === 1,
         notComparable: priceComparable.ok ? undefined : priceComparable.reason,
       },
@@ -181,7 +181,15 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "retailers",
         label: "Retailers",
-        cells: items.map((it) => ({ text: it.view.offers.length === 0 ? "None listed" : `${it.view.offers.length}, from ${formatMoney(it.view.price.money)}`, best: false })),
+        cells: items.map((it) => ({
+          text:
+            it.view.offers.length === 0
+              ? "None listed"
+              : it.view.price.isDemo
+                ? `${it.view.offers.length}, price not confirmed`
+                : `${it.view.offers.length}, from ${formatMoney(it.view.price.money)}`,
+          best: false,
+        })),
         same: new Set(items.map((it) => it.view.offers.length)).size === 1,
       },
     ],

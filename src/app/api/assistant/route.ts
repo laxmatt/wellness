@@ -14,11 +14,10 @@ import { FIXED_LIMITATION, clarifyingQuestion, composeReply, questionForKey } fr
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
-import { formatMoney } from "@/domain/money";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
 import { describeConstraint } from "@/domain/personalization/describe";
 import { applyPreferences } from "@/domain/personalization/match";
-import type { ProductView } from "@/domain/view";
+import { displayPrice, type ProductView } from "@/domain/view";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
 import { buildRejection, captureRejectedIntent } from "@/providers/ai/diagnostics";
 import { OpenAIConversationProvider, ProviderCallError, type ConversationProvider, type ConverseInput, type GroundedProduct } from "@/providers/ai/OpenAIProvider";
@@ -551,7 +550,7 @@ function toRef(v: ProductView, outcome: Outcome, cat: CategoryDefinition): Assis
     slug: v.slug,
     name: v.name,
     brand: v.brand.name,
-    price: formatMoney(v.price.money),
+    price: displayPrice(v.price),
     priceIsPlaceholder: v.price.isDemo,
     // Rendered here from the catalogue, with the attribution attached, so what
     // the shopper reads as fact never passes through the model at all.

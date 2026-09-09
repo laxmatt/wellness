@@ -24,25 +24,39 @@ const page = (cat: typeof coldPlunge) => {
   return { cat, products, set };
 };
 
-describe("a placeholder price says so where it is shown", () => {
-  it("tags a placeholder price", () => {
+describe("a placeholder amount is not shown at all", () => {
+  it("sends the shopper to the merchant instead of quoting a number nobody quoted", () => {
     const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
     expect(olipop.price.isDemo).toBe(true);
     render(<PriceDisplay price={olipop.price} />);
-    expect(screen.getByText("Demo data")).toBeTruthy();
+    expect(screen.getByText("Check current price")).toBeTruthy();
+    expect(screen.queryByText("$35.88")).toBeNull();
   });
 
-  it("tags it on a card too, where most shoppers meet it", () => {
+  it("does the same on a card, where most shoppers meet the price", () => {
     const liquidIv = viewsFor("wellness-drinks").find((v) => v.id === "liquid-iv-hydration-multiplier-16")!;
     render(<PriceDisplay price={liquidIv.price} compact />);
-    expect(screen.getByText("Demo data")).toBeTruthy();
+    expect(screen.getByText("Check current price")).toBeTruthy();
+    expect(screen.queryByText("$24.99")).toBeNull();
   });
 
-  it("says nothing about a real price", () => {
+  it("withholds a money figure computed from a placeholder price", () => {
+    // Price per serving was the demo pack price divided by servings, recorded
+    // as an editorial calculation and shown as a fact.
+    const liquidIv = viewsFor("wellness-drinks").find((v) => v.id === "liquid-iv-hydration-multiplier-16")!;
+    expect(liquidIv.attributes.price_per_serving_minor).toBeUndefined();
+    const spec = liquidIv.specs.find((s) => s.key === "price_per_serving_minor")!;
+    expect(spec.formatted).toBe("Check current price");
+    expect(spec.moneyWithheld).toBe(true);
+  });
+
+  it("still shows a real price", () => {
     const lmnt = viewsFor("wellness-drinks").find((v) => v.id === "lmnt-citrus-salt-30")!;
     expect(lmnt.price.isDemo).toBe(false);
     render(<PriceDisplay price={lmnt.price} />);
-    expect(screen.queryByText("Demo data")).toBeNull();
+    expect(screen.getByText("$45")).toBeTruthy();
+    expect(screen.queryByText("Check current price")).toBeNull();
+    expect(lmnt.attributes.price_per_serving_minor).toBe(150);
   });
 });
 
