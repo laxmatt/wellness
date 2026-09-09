@@ -38,6 +38,16 @@ export const ProposedAction = z.discriminatedUnion("kind", [
     // for THESE constraints, so applying delivers what the summary promised.
     matchingIds: z.array(z.string()).default([]),
     matchCount: z.number().int().nonnegative().default(0),
+    // What each hard constraint admits, on its own, computed by the engine for
+    // these products. Hard constraints are ANDed, so the set admitted by any
+    // subset of them is the intersection of these, which is how the page stays
+    // exact when the shopper sets one aside and then another: the second
+    // removal is answered from the constraints that actually remain, not from
+    // a set precomputed for removing one.
+    //
+    // Empty is not "nothing matches": it means the breakdown is unavailable,
+    // and the caller must treat the result as unknown rather than as none.
+    matchesByKey: z.array(z.object({ key: z.string(), label: z.string(), matchIds: z.array(z.string()) })).default([]),
   }),
   z.object({
     kind: z.literal("add_to_compare"),

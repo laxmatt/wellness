@@ -14,8 +14,11 @@ it measures the cost of doing so. It does not measure whether the wording is
 good, and it is not a benchmark: 15 samples across three categories cannot
 separate a small change in quality from ordinary variation between calls.
 
-The three repetitions exist for one question only, stated below, and even they
-answer it weakly.
+The three repetitions exist for one question only, stated below, and they
+cannot answer it. Three samples do not separate systematic failure from
+variance at any useful confidence, whichever way they come out. They are worth
+running because five samples are better than two and because the run is
+cheap, not because the result will settle anything.
 
 ## Preconditions
 
@@ -42,6 +45,10 @@ model: the site's own detector returns before any call.
 | Medical case | 1 | 0 | 0 |
 | Repetitions | 3 | 1 | 3 |
 | | | **Ceiling** | **25** |
+
+Three of the eleven are named below as two-turn conversations by design (M1,
+M2, X1); they are the same conversations as D2, R1 and C1 rather than extra
+ones, so the ceiling is unchanged.
 
 A second call happens only where the site asks a clarifying question and the
 plan says to answer it. No conversation runs past two turns.
@@ -106,6 +113,33 @@ run of 01:35 produced.
 | D3 | Which one is healthiest? | nothing applied; `medicalRedirect` **false** | the fixed shopping clarification, not the clinician line |
 | D4 | Something under $1.60 a serving that isn't a can. | hard `price_per_serving_minor` admitting at most 159; hard `format neq rtd_can` | exactly `liquid-iv-hydration-multiplier-16`, `lmnt-citrus-salt-30` |
 
+### Two conversations that must run more than one turn
+
+These are the interaction paths built and tested without a model. They have
+never run against one, and they are the reason the ceiling allows a second
+turn.
+
+| # | Turn one | Turn two | Expected |
+| --- | --- | --- | --- |
+| M1 | A greens powder I can subscribe to. | **Click** the option the site offers, if it asks about `function` | the clicked value becomes `function includes greens`, and `subscription_available` survives the second turn without the model repeating it |
+| M2 | I want a full-body panel under $700. | **Type** `door hang` after applying | `mounting includes door_hang` is added and the budget survives; if the reply drops the budget, the site keeps it and offers to set it aside |
+
+M1 exercises the clicked answer, M2 the typed one. Both check the same thing
+the non-paid regressions check: that answering a clarification adds to the
+shopper's requirements rather than replacing them. Neither is a new case in
+the count: M1 is D2 and M2 is R1, run to two turns where the site asks.
+
+### One conversation that changes a requirement
+
+| # | Turn one | Turn two | Expected |
+| --- | --- | --- | --- |
+| X1 | A tub with a chiller, up to $5,000. | Actually make it up to $10,000. | `price` admitting at most 1000000 replaces the old budget; `chiller_included eq true` survives |
+
+This is the case that must **not** merge. A typed message naming no option of
+an open question replaces, which is how a budget is changed at all. X1 is C1
+run to two turns, and it fails if the old budget survives alongside the new
+one or if the chiller requirement is dropped.
+
 D3 is the case the model itself flagged as medical at 21:37. D4 tests a
 decimal per-serving budget and a negated enum in one sentence.
 
@@ -121,8 +155,8 @@ no clarification answered:
 
 > Zero sugar electrolytes under $2 a serving
 
-The question is narrow: **is the omission of `sugar_g` systematic or
-variance?** It was extracted at 01:50 and not at 02:12, from the same sentence
+The question is narrow: **how often is `sugar_g` extracted from this
+sentence?** It was extracted at 01:50 and not at 02:12, from the same sentence
 and the same prompt.
 
 | Requirement | Expected |
@@ -131,11 +165,16 @@ and the same prompt.
 | Under $2 a serving | hard `price_per_serving_minor` admitting at most 199 |
 | Electrolytes | hard `function includes electrolytes` |
 
-Read as: 3 of 3 is weak evidence the corrections held. 0 of 3 is good evidence
-the omission is systematic. Anything between is variance, and says the
-sentence needs a different fix from a prompt line. With the two existing
-samples this makes five, which is still a small number and will be reported as
-one.
+**Three repetitions cannot establish systematic failure versus variance, and
+this run will not claim they do.** Five samples in total, counting the two
+already recorded, support one thing only: a count, reported as a count. 5 of 5
+or 0 of 5 would each be worth acting on as a direction to investigate, not as
+a finding. Anything in between says only that the sentence is unreliable, and
+a reliable answer needs a sample size nobody has authorized, or a fix that
+does not depend on the model reading a sentence the same way twice.
+
+The honest use of this result is to decide whether to spend more on the
+question, not to close it.
 
 Answering the clarification is deliberately excluded here. The variable is
 first-turn extraction, and a second turn would change the cost per sample

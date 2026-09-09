@@ -34,7 +34,7 @@ export type AssistantState = {
   // the constraint, so the other requirements it carried are kept rather than
   // being left behind unapplied. Without it, the applied state is filtered
   // instead, which is what an alternative offered on its own can do.
-  setAside: (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[] }) => void;
+  setAside: (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: { key: string; label: string; matchIds: string[] }[] }) => void;
   dismiss: (index: number) => void;
   dismissed: number[];
   removeConstraint: (key: string) => void;
@@ -78,6 +78,12 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   // A removal stands until the shopper accepts a proposal that names the key
   // again, which is them asking for it back.
   const [removed, setRemoved] = useState<string[]>([]);
+  // What each hard constraint of the applied proposal admits on its own. Kept
+  // so a removal can be answered exactly: hard constraints are ANDed, so what
+  // remains after any number of removals is the intersection of the sets for
+  // the constraints still standing. A set precomputed for removing one would
+  // be wrong the moment a second was removed.
+  const [matchesByKey, setMatchesByKey] = useState<{ key: string; label: string; matchIds: string[] }[]>([]);
   const sessionId = useRef<string | null>(null);
   const nonce = useRef(0);
 
@@ -201,27 +207,60 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     setApplied({ hard: h, soft: s, matchingIds, labels, nonce: nonce.current });
   }, []);
 
+  /**
+   * What the engine admits for a set of hard constraints, from the breakdown
+   * the route sent with the proposal.
+   *
+   * Null when any remaining constraint has no set: the count is then unknown,
+   * and the page falls back rather than showing a number nobody computed. An
+   * empty constraint list admits everything, which is the correct answer when
+   * the last one is set aside.
+   */
+  const admittedBy = useCallback(
+    (keys: string[], breakdown: { key: string; label: string; matchIds: string[] }[]): string[] | null => {
+      if (keys.length === 0) return null;
+      const sets = keys.map((k) => breakdown.find((m) => m.key === k));
+      if (sets.some((m) => m === undefined)) return null;
+      return sets.reduce<string[]>((acc, m, i) => (i === 0 ? [...m!.matchIds] : acc.filter((id) => m!.matchIds.includes(id))), []);
+    },
+    [],
+  );
+
   const setAside = useCallback(
-    (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[] }) => {
+    (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: { key: string; label: string; matchIds: string[] }[] }) => {
       setRemoved((prev) => (prev.includes(key) ? prev : [...prev, key]));
+      // The breakdown of the proposal being acted on, not of whatever was
+      // applied last: an alternative offered beside a proposal can name a
+      // constraint the applied set never had, and the applied set's breakdown
+      // says nothing about it.
+      const breakdown = from?.matchesByKey ?? matchesByKey;
+      if (from) setMatchesByKey(from.matchesByKey);
+      const settle = (nextHard: HardConstraint[], nextSoft: SoftPreference[]) => {
+        // Answered from the constraints that actually remain, however many
+        // removals it took to get here. The page used to go back to unfiltered
+        // on the first one, showing every product while the panel held two
+        // constraints.
+        const keys = nextHard.map((c) => c.key);
+        const ids = admittedBy(keys, breakdown);
+        // Named by the site, from the labels it sent with the proposal.
+        const labels = keys.map((k) => breakdown.find((m) => m.key === k)?.label).filter((l): l is string => l !== undefined);
+        publish(nextHard, nextSoft, ids, labels);
+      };
       if (from) {
         const nextHard = from.hard.filter((c) => c.key !== key);
         const nextSoft = from.soft.filter((p) => p.key !== key);
         setHard(nextHard);
         setSoft(nextSoft);
-        // Relaxing widens the set, so the count returns to unknown until the
-        // next reply reports what now qualifies. The site does not publish a
-        // number it has not computed.
-        publish(nextHard, nextSoft, null, []);
+        settle(nextHard, nextSoft);
         return;
       }
       setHard((prev) => {
         const nextHard = prev.filter((c) => c.key !== key);
-        publish(nextHard, soft, null, []);
+        settle(nextHard, soft);
         return nextHard;
       });
     },
-    [publish, soft],
+    [admittedBy, matchesByKey, publish, soft],
   );
 
   const accept = useCallback(
@@ -232,6 +271,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         // Accepting a proposal that names a key is asking for it back.
         const named = new Set([...action.hard.map((c) => c.key), ...action.soft.map((p) => p.key)]);
         setRemoved((prev) => prev.filter((k) => !named.has(k)));
+        setMatchesByKey(action.matchesByKey);
         // The engine's answer for these exact constraints, not a chip
         // approximation and not the previous turn's answer.
         publish(action.hard, action.soft, action.matchingIds, [action.summary]);
@@ -247,17 +287,9 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     [compare, compareSeeds, publish, setAside],
   );
 
-  const removeConstraint = useCallback(
-    (key: string) => {
-      setRemoved((prev) => (prev.includes(key) ? prev : [...prev, key]));
-      setHard((prev) => {
-        const nextHard = prev.filter((c) => c.key !== key);
-        publish(nextHard, soft, null, []);
-        return nextHard;
-      });
-    },
-    [publish, soft],
-  );
+  // The constraint chip's own control. Same act as setting one aside, by a
+  // different button, and it published the same null.
+  const removeConstraint = useCallback((key: string) => setAside(key), [setAside]);
 
   const reset = useCallback(() => {
     setMessages([]);
@@ -266,6 +298,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     setSoft([]);
     setDismissed([]);
     setRemoved([]);
+    setMatchesByKey([]);
     setError(null);
     publish([], [], null, []);
   }, [publish]);

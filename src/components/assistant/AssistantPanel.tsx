@@ -412,7 +412,15 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
                       a.setAside(
                         p.key,
                         proposed
-                          ? { hard: proposed.hard.filter((c) => !dropped.includes(c.key)), soft: proposed.soft.filter((sp) => !dropped.includes(sp.key)) }
+                          ? {
+                              hard: proposed.hard.filter((c) => !dropped.includes(c.key)),
+                              soft: proposed.soft.filter((sp) => !dropped.includes(sp.key)),
+                              // The whole breakdown, not the reduced one: what
+                              // remains is the intersection of the sets still
+                              // standing, so the second removal is answered
+                              // from the same numbers as the first.
+                              matchesByKey: proposed.matchesByKey,
+                            }
                           : undefined,
                       );
                       setSetAside(dropped);

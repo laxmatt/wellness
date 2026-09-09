@@ -7,7 +7,7 @@ import { attributeDef } from "@/domain/category";
 import { resolveClientIdentity } from "@/domain/client-identity";
 import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
-import { matchesAll, unconfirmedByPrice } from "@/domain/conditions";
+import { evaluateCondition, matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
 import { FIXED_LIMITATION, clarifyingQuestion, composeReply, questionForKey } from "@/domain/reply-composer";
 import { toEngineConstraints } from "@/domain/model-constraints";
@@ -423,6 +423,16 @@ export async function POST(req: Request) {
       hard: proposedHard,
       soft: proposedSoft,
       matchingIds: shown.matching.map((v) => v.id),
+      // Computed with the same predicate that decided `matching`, so the
+      // placeholder-price treatment and every other rule come with it rather
+      // than being restated.
+      matchesByKey: proposedHard.map((c) => ({
+        key: c.key,
+        // The site's own words for the constraint, so the band can name what
+        // is left after a removal without the browser composing text.
+        label: describeConstraint(cat, c as Condition),
+        matchIds: views.filter((v) => evaluateCondition(v, cat, c as Condition)).map((v) => v.id),
+      })),
       matchCount: shown.matching.length,
     });
   }
