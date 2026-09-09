@@ -1,13 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/assistant/route";
 import { coldPlunge, wellnessDrinks } from "@/domain/categories";
+import { CategoryDefinition as CategorySchema } from "@/domain/category";
+import { demo } from "@/domain/provenance";
+import { toProductView } from "@/domain/view";
 import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, type MeterConfig } from "@/providers/usage/UsageMeter";
 import { resetMeterForTests } from "@/providers/usage";
 import { PreferenceSet } from "@/domain/personalization";
 import { applyPreferences } from "@/domain/personalization/match";
-import { viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, testBrand, testMerchant, viewsFor } from "./fixtures";
 
 // A value the shopper named, that the site publishes, and that nothing was
 // extracted for.
@@ -136,23 +139,34 @@ describe("finding a named value nothing covers", () => {
   });
 
   it("offers only the values the catalogue actually holds", () => {
-    // Cold plunge held no real `placement` value at all until the Ice Barrel
-    // 500's page was read on 2026-09-09: it states weatherproofing and UV
-    // protection, so "outdoor" is a value somebody claimed. "indoor" still
-    // exists only as prototype data on other tubs, and is still not offered.
+    // Cold plunge held no real `placement` value at all until two pages were
+    // read on 2026-09-09: Ice Barrel's 500 states weatherproofing and UV
+    // protection, and Renu's page states indoor and outdoor explicitly. Both
+    // values are now somebody's claim, and both are offered.
     const cold = viewsFor("cold-plunge");
-    const placement = namedValues(coldPlunge, cold).get("placement") ?? [];
-    expect(placement.map((v) => v.value)).toEqual(["outdoor"]);
-    const holders = cold.filter((v) => (v.attributes.placement as string[] | undefined)?.includes("outdoor"));
-    expect(holders.map((v) => v.id)).toEqual(["ice-barrel-500"]);
+    const placement = (namedValues(coldPlunge, cold).get("placement") ?? []).map((v) => v.value).sort();
+    const held = [...new Set(cold.flatMap((v) => (v.attributes.placement as string[] | undefined) ?? []))].sort();
+    expect(placement).toEqual(held);
+    expect(placement).toEqual(["indoor", "outdoor"]);
   });
 
   it("offers nothing for a filter whose every value is placeholder data", () => {
-    // The rule itself, on a key where it still bites: no tub states an indoor
-    // rating, so nothing may suggest one.
-    const cold = viewsFor("cold-plunge");
-    const placement = namedValues(coldPlunge, cold).get("placement") ?? [];
-    expect(placement.map((v) => v.value)).not.toContain("indoor");
+    // Built rather than found: no live key is prototype-only any more, and the
+    // rule is the thing under test. A list attribute nobody states leaves the
+    // shopper nothing to be asked about.
+    const cat = CategorySchema.parse({
+      ...JSON.parse(JSON.stringify(miniCategory)),
+      attributeDefinitions: [
+        ...JSON.parse(JSON.stringify(miniCategory.attributeDefinitions)),
+        { key: "ports", label: "Ports", type: "list", group: "g", compareOrder: 9 },
+      ],
+      filters: [{ key: "ports", label: "Ports", kind: "list" }],
+    });
+    const p = miniProduct("only-prototype", 10000, { power: 50, size: "m" });
+    p.attributes.ports = demo(["usb"]);
+    const views = [toProductView(p, { category: cat, brands: [testBrand], merchants: [testMerchant] })];
+    expect(namedValues(cat, views).has("ports")).toBe(false);
+    expect(namedButUnconstrained(cat, views, "something with usb", [], [])).not.toContain("ports");
   });
 });
 

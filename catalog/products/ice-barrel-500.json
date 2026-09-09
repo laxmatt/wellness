@@ -174,18 +174,16 @@
       "verification": "unknown"
     },
     "warranty_years": {
-      "value": 5,
       "unit": "yr",
-      "bound": "greater_than",
-      "verification": "manufacturer_reported",
       "source": {
         "kind": "manufacturer",
         "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://icebarrel.com/products/ice-barrel-500",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Page states a limited lifetime warranty, which names no number of years. This category scores warranty with a five-year cap, so the record says more than five years, which a lifetime term satisfies and which claims no figure of its own. The record carried 10 years, which no source stated. The warranty text on the page is what a shopper sees."
-      }
+        "note": "Page states a limited lifetime warranty and names no number of years, so no numeric term is recorded. This record briefly said \"more than 5 years\", which was this catalogue's own scoring cap dressed as a manufacturer claim; the cap is an editorial scoring policy and not a fact about the product. The warranty text is what the maker states. Before that the record carried 10 years, which no source ever stated."
+      },
+      "verification": "not_stated"
     }
   },
   "source": {
@@ -222,7 +220,8 @@
       "url": "https://icebarrel.com/products/ice-barrel-500",
       "retrievedAt": "2026-09-09",
       "method": "direct",
-      "note": "Page states 104 lb empty."
-    }
+      "note": "The product page states 104 lb empty, read at 15:08 Pacific on 2026-09-09. The maker's home page, read at 15:52 the same day, states 106 lb empty for the same model. The two do not agree and neither is preferred here; the figure shown is the product page's, marked disputed, with both on record."
+    },
+    "disputed": true
   }
 }

@@ -9,20 +9,16 @@ import { CompareProvider } from "@/components/compare/CompareProvider";
 import { FacetChips } from "@/components/category/sections";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { coldPlunge, redLight } from "@/domain/categories";
+import { CategoryDefinition as CategorySchema } from "@/domain/category";
+import { matchesAll } from "@/domain/conditions";
 import { recommendCategory } from "@/domain/recommend";
 import { liveFacets } from "@/lib/queries";
-import { miniProduct, miniView, viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
 
 // Two findings from the public-journey harness. Both are the same shape: the
 // domain knew something and the page did not say it.
 
 afterEach(cleanup);
-
-const page = (cat: typeof coldPlunge) => {
-  const views = viewsFor(cat.id);
-  const { products, set } = recommendCategory(views, cat);
-  return { cat, products, set };
-};
 
 describe("a placeholder amount is not shown at all", () => {
   it("sends the shopper to the merchant instead of quoting a number nobody quoted", () => {
@@ -74,25 +70,50 @@ describe("a placeholder amount is not shown at all", () => {
 });
 
 describe("a facet that matches nothing is not offered", () => {
+  // Every live facet matches something again: Renu's page, read on
+  // 2026-09-09, states indoor and outdoor explicitly, which refilled the one
+  // that had emptied. The rule is tested on a category built for it, and the
+  // live claim is the one that stays true whatever the data does: what is
+  // offered is what matches.
+  const emptyFacet = CategorySchema.parse({
+    ...JSON.parse(JSON.stringify(miniCategory)),
+    facets: [
+      { slug: "big", label: "Big", title: "Big", description: "", conditions: [{ key: "power", op: "gte", value: 10 }] },
+      { slug: "impossible", label: "Impossible", title: "Impossible", description: "", conditions: [{ key: "power", op: "gte", value: 10_000 }] },
+    ],
+  });
+  const page = (cat: typeof miniCategory) => {
+    const views = [miniView(miniProduct("a", 10000, { power: 50, size: "m" })), miniView(miniProduct("b", 20000, { power: 60, size: "l" }))];
+    const { products, set } = recommendCategory(views, cat);
+    return { cat, products, set };
+  };
+
   it("knows which facets still match something", () => {
-    // `placement` values were assumed and were removed, so no cold plunge
-    // states an indoor rating any more.
-    expect(liveFacets(page(coldPlunge))).not.toContain("indoor");
-    expect(liveFacets(page(coldPlunge))).toContain("with-chiller");
-    expect(liveFacets(page(redLight)).sort()).toEqual(redLight.facets.map((f) => f.slug).sort());
+    expect(liveFacets(page(emptyFacet))).toEqual(["big"]);
   });
 
   it("leaves the empty facet out of the chips", () => {
-    render(<FacetChips cat={coldPlunge} available={liveFacets(page(coldPlunge))} />);
+    render(<FacetChips cat={emptyFacet} available={liveFacets(page(emptyFacet))} />);
     const nav = screen.getByRole("navigation");
-    expect(within(nav).queryByText("Indoor")).toBeNull();
-    expect(within(nav).getByText("With a chiller")).toBeTruthy();
+    expect(within(nav).queryByText("Impossible")).toBeNull();
+    expect(within(nav).getByText("Big")).toBeTruthy();
   });
 
   it("still shows it when it is the page you are on", () => {
-    // Arriving by link or by URL, a shopper has to see where they are.
-    render(<FacetChips cat={coldPlunge} active="indoor" available={liveFacets(page(coldPlunge))} />);
-    expect(within(screen.getByRole("navigation")).getByText("Indoor")).toBeTruthy();
+    render(<FacetChips cat={emptyFacet} active="impossible" available={liveFacets(page(emptyFacet))} />);
+    expect(within(screen.getByRole("navigation")).getByText("Impossible")).toBeTruthy();
+  });
+
+  it("offers every live facet in the real catalogue", () => {
+    for (const cat of [coldPlunge, redLight]) {
+      const views = viewsFor(cat.id);
+      const { products, set } = recommendCategory(views, cat);
+      const live = liveFacets({ cat, products, set });
+      for (const f of cat.facets) {
+        const matches = products.some((p) => matchesAll(p.view, cat, f.conditions));
+        expect(live.includes(f.slug), `${cat.id}/${f.slug}`).toBe(matches);
+      }
+    }
   });
 });
 

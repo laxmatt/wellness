@@ -125,13 +125,15 @@ describe("list filters carry their values", () => {
 
   it("takes them from the catalogue, not from a hard-coded list", async () => {
     // The model is offered the values the catalogue holds and no others. Cold
-    // plunge held none for `placement` until the Ice Barrel 500's page was
-    // read; it now holds "outdoor" and still holds no "indoor", which exists
-    // only as prototype data.
+    // plunge held none for `placement` until two pages were read on
+    // 2026-09-09; it now holds outdoor from Ice Barrel's 500 and indoor from
+    // Renu's, and offers exactly those.
     const cold = (await promptFor("cold-plunge")).split("\n").find((l) => l.startsWith("FILTERS:"))!;
     expect(cold).toMatch(/placement \(list; use op "includes"/);
+    expect(cold).toMatch(/placement \([^)]*values include [^)]*indoor/);
     expect(cold).toMatch(/placement \([^)]*values include [^)]*outdoor/);
-    expect(cold).not.toMatch(/placement \([^)]*indoor/);
+    // A value nobody states is still never offered.
+    expect(cold).not.toMatch(/placement \([^)]*poolside/);
 
     // Where the catalogue does hold values, they are offered.
     const drinks = (await promptFor("wellness-drinks")).split("\n").find((l) => l.startsWith("FILTERS:"))!;

@@ -44,47 +44,51 @@
       "merchantId": "renu-therapy-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 959900,
+      "priceMinor": 849900,
       "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Starting price reported at $9,599. Relayed via search summary; manufacturer page not fetched directly."
-      }
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states $8,499 USD for the base configuration, California Redwood with no light, against a compare-at price of $9,499. Cedar adds $200 and a light adds $320; neither is included here. Availability is not recorded from this reading. The record carried $9,599, relayed on 2026-09-08."
+      },
+      "listPriceMinor": 949900
     }
   ],
   "dimensions": {
     "value": {
-      "length": 40,
-      "width": 25,
-      "height": 31
+      "length": 70,
+      "width": 33,
+      "height": 35
     },
     "unit": "in",
+    "verification": "manufacturer_reported",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
-    },
-    "verification": "manufacturer_reported"
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states an exterior of 70 L x 33 W x 35 H in. Its interior, separately, is 40 L x 25 W x 31 D in; the record carried those interior figures as the product's dimensions."
+    }
   },
   "warranty": {
     "value": "5-year limited warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a 5-year limited warranty. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -93,22 +97,24 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "1/4 HP chiller. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states an integrated 0.25 HP chiller. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
     "min_temp_f": {
-      "value": 36,
+      "value": 39,
       "unit": "°F",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states cold only, down to 39 F. The record carried 36 F, relayed, which the page does not support. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -128,10 +134,11 @@
       "unit": "gal",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 95 gallons filled, the volume it runs at, and separately a 134-gallon maximum capacity. The 95 is recorded because it is the working volume the other figures describe; the 134 is the tub's limit and is a different measurement. Neither is derived from the other. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -139,10 +146,11 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Brand describes the tank as super insulated with contoured side panels. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states insulation. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -150,10 +158,11 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states filtration and ozone. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -164,10 +173,11 @@
       ],
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Advanced filtration with ozone sanitation. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states filtration and ozone. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -177,22 +187,37 @@
         "outdoor"
       ],
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Placement rating not confirmed from the source. Demo value."
+        "note": "Page states the tub is rated for indoor and outdoor use, explicitly. The record carried the same pair as prototype data; it is the maker's own statement now."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "warranty_years": {
       "value": 5,
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a 5-year limited warranty. Previously recorded as relayed via a search summary on 2026-09-08."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "plumbing": {
+      "value": "plug_in_120v",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 120 V, 15 A, with 450 W of cooling. Recorded as a standard 120 V outlet. The page does not call for a dedicated circuit, and none is inferred."
       },
       "verification": "manufacturer_reported"
     }
@@ -203,5 +228,18 @@
     "retrievedAt": "2026-09-08",
     "method": "direct",
     "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  },
+  "weight": {
+    "value": 365,
+    "unit": "lb",
+    "verification": "manufacturer_reported",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://www.renutherapy.com/products/cold-stoic-2-0",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 365 lb dry. Filled, it states 1,155 lb with 95 gallons of water."
+    }
   }
 }

@@ -145,17 +145,27 @@ describe("affiliate neutrality", () => {
 
 describe("review decisions", () => {
   it("caps warranty at 5 years inside scoring while the card shows the product's own warranty text", () => {
+    // Built, because the catalogue no longer holds a number above the cap:
+    // both Ice Barrels said 10 years, which no source ever stated, and the
+    // numeric is withdrawn on both. The cap is the thing under test.
     const cat = categoryById("cold-plunge")!;
-    const views = viewsFor("cold-plunge");
-    const ib400 = views.find((v) => v.id === "ice-barrel-400")!;
-    const renu = views.find((v) => v.id === "renu-cold-stoic-2")!;
-    const scores = scoreProducts(views.map(toScoringInput), cat);
+    const long = miniProduct("long-warranty", 100000, { power: 50, size: "m" });
+    const capped = miniProduct("at-the-cap", 100000, { power: 50, size: "m" });
+    const inputs = [
+      { ...toScoringInput(miniView(long)), attributes: { power: 50, size: "m", warranty_years: 10 } },
+      { ...toScoringInput(miniView(capped)), attributes: { power: 50, size: "m", warranty_years: 5 } },
+    ];
+    const scores = scoreProducts(inputs, cat);
     const w = (id: string) => scores.find((s) => s.id === id)!.criteria.find((c) => c.key === "warranty_years")!;
-    expect(w("ice-barrel-400").raw).toBe(5);
-    expect(w("ice-barrel-400").normalized).toBe(w("renu-cold-stoic-2").normalized);
-    expect(ib400.attributes.warranty_years).toBe(10);
-    expect(ib400.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("Lifetime warranty");
+    expect(w("long-warranty").raw).toBe(5);
+    expect(w("long-warranty").normalized).toBe(w("at-the-cap").normalized);
+
+    // And the card still shows the maker's own words, whatever the number is.
+    const renu = viewsFor("cold-plunge").find((v) => v.id === "renu-cold-stoic-2")!;
     expect(renu.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("5-year limited warranty");
+    const ib400 = viewsFor("cold-plunge").find((v) => v.id === "ice-barrel-400")!;
+    expect(ib400.attributes.warranty_years).toBeUndefined();
+    expect(ib400.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("Lifetime warranty");
   });
 
   it("cold plunge value weights are 0.50 / 0.50 and Best Value no longer lands on the priciest tub", () => {
