@@ -382,13 +382,25 @@ export async function POST(req: Request) {
   //
   // Only this path merges. An ordinary message replaces, which is what lets
   // "forget the budget" drop a constraint.
-  const answeringKey = parsed.data.answering?.key;
+  const answering = parsed.data.answering;
   const mergeInto = <T extends { key: string }>(held: T[], incoming: T[]): T[] => {
     const named = new Set(incoming.map((c) => c.key));
     return [...held.filter((c) => !named.has(c.key)), ...incoming];
   };
-  const proposedHard = answeringKey !== undefined ? mergeInto(hard, converted.hard) : converted.hard;
-  const proposedSoft = answeringKey !== undefined ? mergeInto(soft, converted.soft) : converted.soft;
+  const proposedHard = answering ? mergeInto(hard, converted.hard) : converted.hard;
+  const proposedSoft = answering ? mergeInto(soft, converted.soft) : converted.soft;
+
+  // Typed text can answer the question and revoke something in the same breath.
+  // "Electrolytes" is an answer; "electrolytes, and forget the budget" is both;
+  // and a model that answers only what it was asked looks identical to the
+  // second from here. So when a typed answer's reply would have dropped
+  // constraints the shopper holds, the two readings disagree, and the site
+  // keeps them and offers to set each one aside rather than choosing.
+  //
+  // An option the site offered carries no such second meaning, so it merges and
+  // says nothing.
+  const revoked =
+    answering?.via === "typed" ? hard.filter((c) => !converted.hard.some((n) => n.key === c.key)).map((c) => c.key) : [];
   const changed = JSON.stringify(proposedHard) !== JSON.stringify(hard) || JSON.stringify(proposedSoft) !== JSON.stringify(soft);
 
   // When the model proposes new constraints, everything shown describes those
@@ -420,7 +432,14 @@ export async function POST(req: Request) {
     proposals.push({ kind: "add_to_compare", summary: `Compare ${compareIds.length} of these side by side`, productIds: compareIds.slice(0, 4) });
   }
 
-  if (shown.matching.length === 0 && shown.hard.length > 0 && shown.result.relaxations.length > 0) {
+  // Asked, not assumed. Each is one press, and the constraint stays until the
+  // shopper says otherwise.
+  for (const key of revoked.slice(0, 2)) {
+    const held = hard.find((c) => c.key === key);
+    if (held) proposals.push({ kind: "relax_constraint", summary: `Set aside ${describeConstraint(cat, held)}`, key });
+  }
+
+  if (revoked.length === 0 && shown.matching.length === 0 && shown.hard.length > 0 && shown.result.relaxations.length > 0) {
     for (const r of shown.result.relaxations.slice(0, 2)) {
       proposals.push({ kind: "relax_constraint", summary: `Set aside ${r.keptLabel} and show the closest option`, key: r.keptKey });
     }
@@ -466,6 +485,7 @@ export async function POST(req: Request) {
         clearing,
         lastUserText: lastUser,
         unaddressed,
+        revoked,
       });
 
   return NextResponse.json(

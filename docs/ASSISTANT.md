@@ -338,7 +338,13 @@ An earlier version of that file proved less than its names suggested, and it is 
 - **Answering carries the pending requirements.** The constraints of the reply that asked the question are sent even though nothing has been applied to the page. They are what the question is about, and losing them for want of a button press is how "zero sugar, electrolytes, under $2" became "electrolytes".
 - **Answering merges rather than replaces.** `AssistantRequest.answering` names the filter the site asked about. On that path the reply's constraints are merged into the ones already held, so a model that answers only the question it was asked cannot take the rest with it. Constraints the reply names still win on their own key, so it can correct a budget it is told about.
 
-Only that path merges. An ordinary typed message still replaces, which is the whole mechanism behind "forget the budget", and a test asserts it.
+A typed answer is treated the same way, because a shopper asked "Which function suits you?" who types "electrolytes" has answered as surely as one who pressed the chip. There are three cases, not two:
+
+- **The text is exactly one of the options.** The same act as pressing it, and handled identically: the pending constraints go with the message and the reply is merged into them.
+- **The text names an option among other words.** "Electrolytes, and forget the budget" answers and revokes at once, and from the route that is indistinguishable from a model answering only what it was asked. So neither reading is chosen. The constraints are kept, and the reply says which ones and offers a one-press `relax_constraint` for each: *I have kept your sugar and price per serving as they were. Did you want to drop them?*
+- **The text names no option.** An ordinary message, which replaces. That is the whole mechanism behind "forget the budget", and a test asserts it while a question is open.
+
+Matching is on whole words, by the same `mentionsValue` the missing-value check uses, so "energy" does not match inside "energy-free". Nothing is ever discarded on a guess: the ambiguous case keeps the constraint and asks.
 
 **`includes` has one meaning, in one place.** It asks whether a product's list holds a value. A scalar names one value; an array names alternatives and matches a product holding any of them, which is how this site's list filter chips behave, since options within a group are OR. The engine used to compare the value against the array's members, so an array matched only a product whose list held that same array, which is never. A live model answered `function includes ["electrolytes"]` and the shopper was told nothing matched while an electrolyte drink sat in the catalogue at $1.50 a serving.
 

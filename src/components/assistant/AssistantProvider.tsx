@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from "react";
 import { useCompare } from "@/components/compare/CompareProvider";
 import type { AssistantMessage, AssistantReply, ProposedAction } from "@/domain/assistant";
+import { mentionsValue } from "@/domain/named-values";
 import type { HardConstraint, SoftPreference } from "@/domain/personalization";
 
 export type CompareSeed = { id: string; slug: string; name: string; categoryId: string };
@@ -76,7 +77,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     async (
       text: string,
       carry: { hard: HardConstraint[]; soft: SoftPreference[] },
-      answering?: { key: string },
+      answering?: { key: string; via: "option" | "typed" },
     ) => {
       const trimmed = text.trim();
       if (!trimmed || sending) return;
@@ -107,7 +108,47 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     [categoryId, messages, sending],
   );
 
-  const send = useCallback((text: string) => post(text, { hard, soft }), [hard, post, soft]);
+  /**
+   * An ordinary typed message, unless a question is open and the text answers
+   * it.
+   *
+   * A shopper who is asked "Which function suits you?" and types "electrolytes"
+   * has answered, and deserves the same treatment as pressing the chip: the
+   * constraints that question was about go with the message, and the reply is
+   * merged into them. A shopper who types "forget the budget" has not answered,
+   * and replacement is what drops the constraint.
+   *
+   * Three cases, not two. Text that is exactly one of the options is the same
+   * act as pressing it, and merges. Text that names an option among other words
+   * might be answering and revoking at once, so it is marked `typed` and the
+   * route asks rather than assuming. Text that names no option is an ordinary
+   * message and replaces.
+   */
+  const send = useCallback(
+    (text: string) => {
+      const question = latest?.question;
+      const answered =
+        question?.key !== undefined && question.options.some((o) => mentionsValue(text, o));
+      if (!answered || question?.key === undefined) return post(text, { hard, soft });
+
+      const asking = Object.keys(replies)
+        .map(Number)
+        .sort((a, b) => b - a)
+        .map((i) => replies[i])
+        .find((r) => r.question?.key === question.key);
+      const pending = asking?.proposals.find((p) => p.kind === "apply_preferences");
+      const carry =
+        pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)
+          ? { hard: pending.hard, soft: pending.soft }
+          : { hard, soft };
+      // "electrolytes" leaves no room for a second meaning; "electrolytes, and
+      // forget the budget" does.
+      const bare = text.trim().replace(/[.,!?;:]+$/, "").toLowerCase();
+      const exact = question.options.some((o) => o.trim().toLowerCase() === bare);
+      return post(text, carry, { key: question.key, via: exact ? "option" : "typed" });
+    },
+    [hard, latest, post, replies, soft],
+  );
 
   /**
    * Answering a clarifying question the site asked.
@@ -127,7 +168,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         pending && pending.kind === "apply_preferences" && (pending.hard.length > 0 || pending.soft.length > 0)
           ? { hard: pending.hard, soft: pending.soft }
           : { hard, soft };
-      return post(option, carry, question.key ? { key: question.key } : undefined);
+      return post(option, carry, question.key ? { key: question.key, via: "option" } : undefined);
     },
     [hard, post, replies, soft],
   );

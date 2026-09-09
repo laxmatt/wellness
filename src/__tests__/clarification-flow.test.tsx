@@ -76,7 +76,7 @@ const TURN_TWO_FORGETFUL = {
   hard: [{ key: "function", op: "includes", value: "electrolytes" }],
 };
 
-type Body = { messages: { role: string; text: string }[]; hard: unknown[]; soft: unknown[]; answering?: { key: string } };
+type Body = { messages: { role: string; text: string }[]; hard: unknown[]; soft: unknown[]; answering?: { key: string; via: string } };
 let posted: Body[] = [];
 
 // Routes the panel's own request into the real handler, and answers the
@@ -259,7 +259,7 @@ describe("what answering the question does not do", () => {
       { key: "sugar_g", op: "eq", value: 0 },
       { key: "price_per_serving_minor", op: "lt", value: 200 },
     ]);
-    expect(posted[1].answering).toEqual({ key: "function" });
+    expect(posted[1].answering).toEqual({ key: "function", via: "option" });
 
     // Nothing was applied to the page, and the answer still lands on all three.
     await waitFor(() => {
@@ -288,6 +288,92 @@ describe("what answering the question does not do", () => {
     });
   });
 
+  it("treats a typed answer like the chip, and keeps what the model forgot", async () => {
+    // The same flow, typed instead of pressed. The model answers only the
+    // question it was asked, and the shopper keeps everything they had.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+
+    await ask("electrolytes");
+
+    await waitFor(() => expect(posted).toHaveLength(2));
+    // Exactly the option, typed rather than pressed. Same act, same handling.
+    expect(posted[1].answering).toEqual({ key: "function", via: "option" });
+    expect(posted[1].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "price_per_serving_minor", op: "lt", value: 200 },
+    ]);
+
+    await waitFor(() => {
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+      expect(summary.textContent).toContain("price per serving under $2");
+      expect(summary.textContent).toContain("function includes Electrolytes");
+    });
+  });
+
+  it("types the answer before applying anything, and still keeps it", async () => {
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+
+    await ask("electrolytes");
+
+    await waitFor(() => expect(posted).toHaveLength(2));
+    expect(posted[1].hard).toEqual([
+      { key: "sugar_g", op: "eq", value: 0 },
+      { key: "price_per_serving_minor", op: "lt", value: 200 },
+    ]);
+    await waitFor(() => {
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+      expect(summary.textContent).toContain("function includes Electrolytes");
+    });
+  });
+
+  it("asks instead of discarding when a typed answer might also be revoking", async () => {
+    // "electrolytes, and forget the budget" is an answer and a revocation at
+    // once, and from the route it looks exactly like a model that answered only
+    // the question. Neither reading is chosen: the constraint is kept and the
+    // shopper is asked, with one press to set it aside.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+
+    await ask("electrolytes, and forget the budget");
+
+    await waitFor(() => expect(posted).toHaveLength(2));
+    await waitFor(() => expect(screen.getByText(/Did you want to drop them\?|Did you want to drop it\?/)).toBeTruthy());
+    expect(screen.getByText(/Set aside price per serving under \$2/)).toBeTruthy();
+    expect(screen.getByText(/Set aside zero total sugar/)).toBeTruthy();
+
+    // Nothing was discarded on a guess.
+    const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+    expect(summary.textContent).toContain("price per serving under $2");
+  });
+
+  it("says nothing about dropping when the answer was exact", async () => {
+    // A clean answer gets a clean reply. The caution is for the ambiguous case,
+    // not for every typed word.
+    wireRoute([TURN_ONE, TURN_TWO_FORGETFUL]);
+    renderPanel();
+    await ask(SENTENCE);
+    await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }));
+    await ask("electrolytes");
+    await waitFor(() => expect(posted).toHaveLength(2));
+    await waitFor(() => {
+      const summary = screen.getAllByText(/Narrow to zero total sugar/).at(-1)!;
+      expect(summary.textContent).toContain("function includes Electrolytes");
+    });
+    expect(screen.queryByText(/Did you want to drop/)).toBeNull();
+    expect(screen.queryByText(/Set aside/)).toBeNull();
+  });
+
   it("still lets an ordinary message drop a constraint", async () => {
     // Merging is only for an answer to the site's own question. A typed
     // message replaces, which is the whole mechanism behind relaxing.
@@ -297,6 +383,8 @@ describe("what answering the question does not do", () => {
     await waitFor(() => expect(screen.getByText("Which function suits you?")).toBeTruthy());
     fireEvent.click(screen.getByRole("button", { name: "Apply" }));
 
+    // Names no option of the open question, so it is an instruction, not an
+    // answer, and replacement is what drops the budget.
     await ask("forget the budget");
     await waitFor(() => expect(posted).toHaveLength(2));
     expect(posted[1].answering).toBeUndefined();

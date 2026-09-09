@@ -92,6 +92,9 @@ export type ComposeInput = {
   // Said plainly rather than passed over: a reply that lists what was applied
   // and stays silent about what was not reads as though everything was.
   unaddressed?: string[];
+  // Filter keys a typed answer might have meant to drop. Kept, and said out
+  // loud, because the alternative is discarding a requirement on a guess.
+  revoked?: string[];
 };
 
 // A question this site cannot answer from its own fields. Deliberately crude:
@@ -156,6 +159,17 @@ export function composeReply(input: ComposeInput): string {
       parts.push(unmapped.length === 1 ? "One thing you mentioned is not something this site compares." : `${unmapped.length} things you mentioned are not something this site compares.`);
     }
     parts.push(...unaddressedSentences(cat, input.unaddressed ?? []));
+    if ((input.revoked ?? []).length > 0) {
+      const labels = (input.revoked ?? []).slice(0, 2).map((key) => {
+        const def = cat.attributeDefinitions.find((a) => a.key === key);
+        return (def?.shortLabel ?? def?.label ?? key).toLowerCase();
+      });
+      parts.push(
+        labels.length === 1
+          ? `I have kept your ${labels[0]} as it was. Did you want to drop it?`
+          : `I have kept your ${labels.join(" and ")} as they were. Did you want to drop them?`,
+      );
+    }
     return parts.join(" ");
   }
 

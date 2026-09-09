@@ -119,7 +119,11 @@ export const AssistantRequest = z.object({
   // site asked: pressing "Electrolytes" is not a request to forget anything,
   // and a model that answers only the question it was asked would otherwise
   // take the shopper's other requirements with it.
-  answering: z.object({ key: z.string() }).optional(),
+  // `via` says how the answer arrived. An option the site offered cannot also
+  // mean "and drop my budget", so it merges outright. Typed text can mean both,
+  // so when the reply to it would drop something the shopper holds, the two
+  // readings disagree and the site asks instead of choosing one.
+  answering: z.object({ key: z.string(), via: z.enum(["option", "typed"]).default("option") }).optional(),
 });
 export type AssistantRequest = z.infer<typeof AssistantRequest>;
 

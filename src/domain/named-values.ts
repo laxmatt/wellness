@@ -48,9 +48,16 @@ export function namedValues(cat: CategoryDefinition, views: ProductView[]): Map<
   return byKey;
 }
 
-// Whole words only. "energy" must not match inside "energy-free", and a value
-// that happens to be a substring of an unrelated word is not a mention.
-function mentions(text: string, term: string): boolean {
+/**
+ * Whether a message names a term, as a whole word.
+ *
+ * "energy" must not match inside "energy-free", and a value that happens to be
+ * a substring of an unrelated word is not a mention. Exported because the panel
+ * decides with it too: a typed reply that names one of an open question's
+ * options is an answer to that question, and one that does not is an ordinary
+ * message.
+ */
+export function mentionsValue(text: string, term: string): boolean {
   const cleaned = term.replace(/[_-]+/g, " ").trim();
   if (cleaned.length < 3) return false;
   const escaped = cleaned.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "[\\s_-]+");
@@ -76,7 +83,7 @@ export function namedButUnconstrained(
 
   for (const [key, values] of namedValues(cat, views)) {
     if (covered.has(key)) continue;
-    if (values.some((v) => mentions(text, v.value) || mentions(text, v.label))) unaddressed.push(key);
+    if (values.some((v) => mentionsValue(text, v.value) || mentionsValue(text, v.label))) unaddressed.push(key);
   }
 
   return unaddressed;
