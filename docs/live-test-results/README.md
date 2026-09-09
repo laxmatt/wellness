@@ -78,3 +78,13 @@ The missing-value safeguard ran live for the first time, firing four times and
 producing one false positive on the word "tub". Both clarification paths went
 unexercised because the site had nothing to ask on the cases that would have
 answered them.
+
+The eleventh report, `2026-09-09T05-37-batch.md`, is the ten-case verification
+batch: 10 calls for $0.004260 against a $0.03 allowance, 7 of 10 passing.
+Neither defect from 03:31 recurred, and the drinks repetition extracted all
+three requirements both times, `function` included, having never once done so
+before. The three failures are new and different: a size word mapped onto a
+filter that does not mean size with nothing said about it, "nothing above 90
+cents" read as exclusive when it is inclusive, and "greens powder" read as a
+format rather than a function. One of the three also exposed an expectation
+that was too narrow, recorded rather than corrected.
