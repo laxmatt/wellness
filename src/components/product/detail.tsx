@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import { VerificationTag } from "@/components/ui/VerificationTag";
 import { buttonStyles } from "@/components/ui/Button";
 import type { CategoryDefinition } from "@/domain/category";
@@ -104,7 +105,7 @@ export function SpecGroups({ view, cat }: { view: ProductView; cat: CategoryDefi
               <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
                 {specs.map((s) => {
                   const missing = s.raw === undefined;
-                  const showTag = !missing && s.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo");
+                  const showTag = !missing && s.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification));
                   return <SpecBlock key={s.key} label={s.shortLabel} value={s.formatted} verification={showTag ? s.provenance?.verification : undefined} muted={missing} />;
                 })}
               </div>
@@ -196,7 +197,7 @@ export function ProvenanceBlock({ view }: { view: ProductView }) {
     cur.fields.push(path.replace(/^attributes\./, "").replace(/_/g, " "));
     byUrl.set(key, cur);
   }
-  const demoCount = entries.filter(([, p]) => p.verification === "demo").length;
+  const demoCount = entries.filter(([, p]) => !isUsable(p.verification)).length;
   return (
     <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm">
       <h3 className="eyebrow">Sources and updates</h3>

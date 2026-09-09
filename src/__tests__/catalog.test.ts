@@ -42,15 +42,18 @@ describe("local catalog", () => {
   });
 
   it("only falls below the completeness floor where required specs are missing or placeholders", () => {
-    // Placeholder values count as absent, so two prototype products are
-    // deliberately ineligible for badges until real data replaces them.
+    // Placeholder values count as absent, and so do values the source does not
+    // state. Two more products fall short than before: AG1 and Cure both
+    // carried a caffeine figure of 0 that no source stated, and removing an
+    // invented number is what a completeness score is for. Real data replaces
+    // them; a number chosen to fill the gap does not.
     const short: string[] = [];
     for (const cat of categories) {
       for (const v of viewsFor(cat.id)) {
         if (v.flags.completeness < cat.scoring.completenessFloor) short.push(v.id);
       }
     }
-    expect(short.sort()).toEqual(["infraredi-flex-max", "olipop-root-beer-12"]);
+    expect(short.sort()).toEqual(["ag1-pouch-30", "cure-hydration-lemonade-14", "infraredi-flex-max", "olipop-root-beer-12"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {

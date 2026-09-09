@@ -149,16 +149,15 @@
       "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
-      "value": 0,
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "No added caffeine. Brand notes trace caffeine from green tea extract; amount not on label. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Brand states no ADDED caffeine and notes trace caffeine from green tea extract, with no amount on the label. No figure is stated, so none is recorded. Relayed via search summary; manufacturer page not fetched directly."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "fiber_g": {
       "value": 2,

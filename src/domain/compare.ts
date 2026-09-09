@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import type { CategoryDefinition } from "./category";
 import { attributeDef } from "./category";
 import { comparable } from "./conditions";
@@ -46,7 +47,8 @@ export type CompareModel = {
 };
 
 function isDemoValue(view: ProductView, key: string): boolean {
-  return view.provenance[`attributes.${key}`]?.verification === "demo";
+  const v = view.provenance[`attributes.${key}`]?.verification;
+  return v !== undefined && !isUsable(v);
 }
 
 // A winner is only marked when the numbers mean the same thing. Three ways a
@@ -157,7 +159,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         notComparable: comp.ok ? undefined : comp.reason,
         cells: specs.map((s, i) => ({
           text: texts[i],
-          verification: s?.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo") ? s.provenance.verification : undefined,
+          verification: s?.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification)) ? s.provenance.verification : undefined,
           best: best.has(i),
         })),
         same: new Set(texts).size === 1,

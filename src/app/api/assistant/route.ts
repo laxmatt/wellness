@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AssistantRequest, type AssistantProductRef, type AssistantReply, type ProposedAction } from "@/domain/assistant";
@@ -47,7 +48,7 @@ function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
     const p = view.provenance[`attributes.${def.key}`];
     // Demo data is withheld, not labelled. Labels are advice; withholding is
     // not, and the model quoted a labelled placeholder to a shopper once.
-    if (!spec || spec.raw === undefined || p?.verification === "demo") {
+    if (!spec || spec.raw === undefined || !isUsable(p?.verification ?? "unknown")) {
       notStated.push(def.shortLabel ?? def.label);
       continue;
     }
@@ -481,9 +482,17 @@ export async function POST(req: Request) {
 
   // Whether any single removal admits a product. The no-match sentence says so
   // rather than promising that one will do.
+  // By key, because a key is what a shopper removes: the chip and the
+  // alternative both drop every constraint on it at once. Removing one
+  // constraint OBJECT asked a question nobody can act on, and got it wrong
+  // whenever a key carried two: two bounds that are impossible together are
+  // each still standing after the other goes, so the site would say no single
+  // removal helps when removing that one key admits products.
   const oneRelaxationIsEnough =
     shown.matching.length === 0 && shown.hard.length > 0
-      ? shown.hard.some((dropped) => views.some((v) => matchesAll(v, cat, shown.hard.filter((c) => c !== dropped) as Condition[])))
+      ? [...new Set(shown.hard.map((c) => c.key))].some((key) =>
+          views.some((v) => matchesAll(v, cat, shown.hard.filter((c) => c.key !== key) as Condition[])),
+        )
       : undefined;
 
   const composed = modelFlaggedOnly
@@ -558,7 +567,7 @@ function renderFacts(view: ProductView, cat: CategoryDefinition): AssistantProdu
   for (const def of cat.attributeDefinitions.slice(0, 24)) {
     const spec = view.specs.find((sp) => sp.key === def.key);
     const p = view.provenance[`attributes.${def.key}`];
-    if (!spec || spec.raw === undefined || p?.verification === "demo") continue;
+    if (!spec || spec.raw === undefined || !isUsable(p?.verification ?? "unknown")) continue;
     out.push({
       label: def.shortLabel ?? def.label,
       value: spec.formatted,

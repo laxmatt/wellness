@@ -124,11 +124,17 @@ describe("list filters carry their values", () => {
   });
 
   it("takes them from the catalogue, not from a hard-coded list", async () => {
-    // cold-plunge's `placement` is a list too, and carries its own values.
-    const prompt = await promptFor("cold-plunge");
-    const filters = prompt.split("\n").find((l) => l.startsWith("FILTERS:"))!;
-    expect(filters).toMatch(/placement \(list; use op "includes"[^)]*; values include \w/);
-    expect(filters).not.toMatch(/placement \([^)]*electrolytes/);
+    // Every cold-plunge `placement` value is demo data, so the catalogue holds
+    // none and the model is offered none. A list of values invented by this
+    // project is not a vocabulary; it is a suggestion to filter on nothing.
+    const cold = (await promptFor("cold-plunge")).split("\n").find((l) => l.startsWith("FILTERS:"))!;
+    expect(cold).toMatch(/placement \(list; use op "includes"/);
+    expect(cold).not.toMatch(/placement \([^)]*values include/);
+
+    // Where the catalogue does hold values, they are offered.
+    const drinks = (await promptFor("wellness-drinks")).split("\n").find((l) => l.startsWith("FILTERS:"))!;
+    expect(drinks).toMatch(/function \(list;[^)]*values include [^)]*electrolytes/);
+    expect(drinks).not.toMatch(/function \([^)]*indoor/);
   });
 
   it("still describes a list key with no stated values", async () => {

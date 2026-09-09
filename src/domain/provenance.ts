@@ -13,6 +13,13 @@ export const Verification = z.enum([
   "manufacturer_reported",
   "independently_verified",
   "demo",
+  // The source was read and does not state this. Distinct from "demo", which
+  // is a value this project made up, and from "unknown", which is a real value
+  // whose provenance was not recorded. A figure nobody stated must not be
+  // matched on: AG1's caffeine was carried as 0 while its own note said the
+  // brand reports trace caffeine from green tea with no amount on the label,
+  // so a search for zero caffeine returned it as a factual zero.
+  "not_stated",
   "unknown",
 ]);
 export type Verification = z.infer<typeof Verification>;
@@ -39,7 +46,11 @@ export type Provenance = z.infer<typeof Provenance>;
 
 export function sourced<T extends z.ZodTypeAny>(value: T) {
   return z.object({
-    value,
+    // Absent when the source states nothing. The entry stays so the note
+    // survives: "the label does not say" is worth recording, and a number is
+    // not invented to stand in for it. `check-catalog` refuses an absent value
+    // whose verification claims the source reported it.
+    value: value.optional(),
     unit: z.string().optional(),
     source: Source,
     verification: Verification,
@@ -47,7 +58,7 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
 }
 
 export type Sourced<T> = {
-  value: T;
+  value?: T;
   unit?: string;
   source: Source;
   verification: Verification;
@@ -62,6 +73,13 @@ export const DEMO_SOURCE: Source = {
 
 export function demo<T>(value: T, unit?: string): Sourced<T> {
   return { value, unit, source: DEMO_SOURCE, verification: "demo" };
+}
+
+// Values that cannot be used as fact: made up, or never stated by the source.
+// Both are withheld from matching, from scoring and from the assistant, and
+// both keep their note so a reader can see why.
+export function isUsable(verification: Verification): boolean {
+  return verification !== "demo" && verification !== "not_stated";
 }
 
 export function manufacturer<T>(
@@ -82,7 +100,7 @@ export function manufacturer<T>(
   };
 }
 
-export function stripProvenance<T>(s: Sourced<T>): T {
+export function stripProvenance<T>(s: Sourced<T>): T | undefined {
   return s.value;
 }
 

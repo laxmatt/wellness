@@ -54,11 +54,33 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
         issues.push({ file, message: `attribute "${key}" is not defined for ${category.id}` });
         continue;
       }
-      const err = validateAttributeAgainstDefinition(def, sv.value);
-      if (err) issues.push({ file, message: `attribute "${key}": ${err}` });
+      // An attribute may hold no value, and only when the source states none.
+      // "Not stated" is a real answer; a value that is simply missing while
+      // the record claims the maker reported it is a hole, not an answer.
+      if (sv.value === undefined) {
+        if (sv.verification !== "not_stated" && sv.verification !== "demo") {
+          issues.push({
+            file,
+            message: `attribute "${key}" has no value but is recorded as "${sv.verification}". Use "not_stated" when the source does not state it.`,
+          });
+        }
+      } else {
+        if (sv.verification === "not_stated") {
+          issues.push({ file, message: `attribute "${key}" is recorded as "not_stated" and still carries a value. Remove the value or change the verification.` });
+        }
+        const err = validateAttributeAgainstDefinition(def, sv.value);
+        if (err) issues.push({ file, message: `attribute "${key}": ${err}` });
+      }
       if (sv.verification === "independently_verified" && sv.source.kind !== "independent_test") {
         issues.push({ file, message: `attribute "${key}" claims independent verification without an independent_test source` });
       }
+      // A note-matching rule was tried here and removed. It flagged four
+      // irradiance figures whose notes say the measurement DISTANCE is not
+      // stated, which is a different fact from the figure itself, and the
+      // sanitation note that records a removal. A heuristic that forces true
+      // values to be deleted is worse than no heuristic: the exact check above
+      // is the one that holds, and the bounds recorded as values are listed in
+      // docs/LAUNCH-READINESS.md for a human to judge.
     }
     for (const o of p.offers) {
       if (!merchantIds.has(o.merchantId)) issues.push({ file, message: `offer ${o.id} has unknown merchantId ${o.merchantId}` });

@@ -196,15 +196,14 @@
     },
     "sanitation_methods": {
       "value": [
-        "ozone",
-        "filter"
+        "ozone"
       ],
       "source": {
         "kind": "manufacturer",
         "url": "https://plunge.com/products/plunge",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Ozone sanitation stated; filtration assumed in the chiller loop. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Ozone sanitation stated by the brand. Filtration in the chiller loop was previously assumed and has been removed: it was not stated. Relayed via search summary; manufacturer page not fetched directly."
       },
       "verification": "manufacturer_reported"
     },

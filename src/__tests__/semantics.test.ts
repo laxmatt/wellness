@@ -38,10 +38,14 @@ describe("what the score claims", () => {
 describe("demo data never counts as evidence", () => {
   it("drops placeholder attribute values before scoring and records which", () => {
     const flex = viewsFor("red-light").find((v) => v.id === "infraredi-flex-max")!;
-    expect(flex.attributes.coverage).toBe("full_body");
+    // The placeholder is withheld from `attributes` itself now, one layer
+    // earlier than before, because `evaluateCondition` reads that map and a
+    // demo value was matchable while being hidden from every screen.
+    expect(flex.attributes.coverage).toBeUndefined();
     expect(flex.provenance["attributes.coverage"].verification).toBe("demo");
     const input = toScoringInput(flex);
     expect(input.attributes.coverage).toBeUndefined();
+    // Still named, so the score can say what it could not use.
     expect(input.demoKeys).toContain("coverage");
   });
 

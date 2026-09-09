@@ -341,3 +341,63 @@ describe("the no-match sentence does not promise a way out that is not there", (
     expect(body.text).toMatch(/Setting aside any single one of them still leaves nothing/);
   });
 });
+
+describe("a way out is counted by key, because a key is what gets removed", () => {
+  // Two bounds on one key, impossible together and each survivable alone.
+  // Removing one constraint object leaves the other, so an object-by-object
+  // check says nothing helps; removing the key, which is what the chip and the
+  // alternative both do, admits products.
+  const impossibleRange = [
+    { key: "price_per_serving_minor", op: "gte" as const, value: 200 },
+    { key: "price_per_serving_minor", op: "lt" as const, value: 100 },
+    { key: "sugar_g", op: "eq" as const, value: 0 },
+  ];
+
+  it("the premise: no product satisfies the pair, and dropping either bound alone still admits none", () => {
+    const views = viewsFor("wellness-drinks");
+    expect(views.filter((v) => matchesAll(v, wellnessDrinks, impossibleRange))).toHaveLength(0);
+    for (const dropped of impossibleRange.slice(0, 2)) {
+      const rest = impossibleRange.filter((c) => c !== dropped);
+      expect(views.filter((v) => matchesAll(v, wellnessDrinks, rest))).toHaveLength(0);
+    }
+    // But dropping the whole key does admit something.
+    const withoutTheKey = impossibleRange.filter((c) => c.key !== "price_per_serving_minor");
+    expect(views.filter((v) => matchesAll(v, wellnessDrinks, withoutTheKey)).length).toBeGreaterThan(0);
+  });
+
+  it("the reply says one removal is enough, because by key it is", async () => {
+    const body = await ask(
+      intentOf({
+        hard: [
+          { key: "price_per_serving_minor", op: "gte", value: usd(2) },
+          { key: "price_per_serving_minor", op: "lt", value: usd(1) },
+          { key: "sugar_g", op: "eq", value: 0 },
+        ],
+      }),
+      "At least $2.00 and under $1.00 a serving, with no sugar.",
+      "wellness-drinks",
+    );
+    expect(body.matchingIds).toEqual([]);
+    expect(body.matchSummary).toMatch(/so one of them would have to be relaxed/);
+    expect(body.matchSummary).not.toMatch(/Setting aside any single one of them still leaves nothing/);
+  });
+
+  it("and the action a shopper can take does admit products", async () => {
+    const body = await ask(
+      intentOf({
+        hard: [
+          { key: "price_per_serving_minor", op: "gte", value: usd(2) },
+          { key: "price_per_serving_minor", op: "lt", value: usd(1) },
+          { key: "sugar_g", op: "eq", value: 0 },
+        ],
+      }),
+      "At least $2.00 and under $1.00 a serving, with no sugar.",
+      "wellness-drinks",
+    );
+    const applied = body.proposals.find((p: { kind: string }) => p.kind === "apply_preferences");
+    const views = viewsFor("wellness-drinks");
+    // Removing the key, as the chip and the alternative both do.
+    const afterKeyRemoval = (applied.hard as { key: string }[]).filter((c) => c.key !== "price_per_serving_minor");
+    expect(views.filter((v) => matchesAll(v, wellnessDrinks, afterKeyRemoval as never)).length).toBeGreaterThan(0);
+  });
+});

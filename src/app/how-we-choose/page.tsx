@@ -27,6 +27,7 @@ export default function HowWeChoosePage() {
               <li className="flex items-center gap-2"><VerificationTag verification="manufacturer_reported" /> The maker published this figure. We did not measure it.</li>
               <li className="flex items-center gap-2"><VerificationTag verification="independently_verified" /> Measured by an independent test we cite. None yet in this prototype.</li>
               <li className="flex items-center gap-2"><VerificationTag verification="demo" /> Placeholder value in the prototype. Not a real measurement.</li>
+              <li className="flex items-center gap-2"><VerificationTag verification="not_stated" /> The source was read and does not state this. We do not fill the gap with a number.</li>
               <li className="flex items-center gap-2"><VerificationTag verification="unknown" /> Source did not state who measured it.</li>
             </ul>
           </Card>

@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import type { AttributeDefinition, AttributePrimitive } from "./attributes";
 import { formatAttribute } from "./attributes";
 import type { CategoryDefinition } from "./category";
@@ -107,7 +108,7 @@ export function derivePrice(product: Product): PriceView {
       isDemo: best.source.kind === "demo",
     };
   }
-  if (!product.referencePrice) throw new Error(`Product ${product.id} has no offers and no referencePrice`);
+  if (!product.referencePrice?.value) throw new Error(`Product ${product.id} has no offers and no priced referencePrice`);
   return {
     money: product.referencePrice.value,
     basis: "reference",
@@ -122,7 +123,7 @@ export function completeness(product: Product, category: CategoryDefinition): nu
   if (required.length === 0) return 1;
   const present = required.filter((a) => {
     const sv = product.attributes[a.key];
-    return sv !== undefined && sv.verification !== "demo";
+    return sv !== undefined && isUsable(sv.verification);
   }).length;
   return present / required.length;
 }
@@ -150,7 +151,14 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   const provenance: Record<string, Provenance> = {};
   const attributes: Record<string, AttributePrimitive> = {};
   for (const [key, sv] of Object.entries(product.attributes)) {
-    attributes[key] = sv.value;
+    // Only values that can be used as fact become attributes. `specs` already
+    // withheld demo values from every screen and from the assistant, while
+    // `attributes` kept them, and `evaluateCondition` reads `attributes`: a
+    // demo zero for OLIPOP's caffeine qualified a search for zero caffeine for
+    // as long as it has existed. An attribute the source does not state keeps
+    // its provenance so the page can say "not stated" and show why, and never
+    // becomes something to match on.
+    if (sv.value !== undefined && isUsable(sv.verification)) attributes[key] = sv.value;
     provenance[`attributes.${key}`] = provenanceOf(sv);
   }
   if (product.warranty) provenance.warranty = provenanceOf(product.warranty);
@@ -208,8 +216,8 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     affiliateStatus: deriveAffiliateStatus(product.offers),
     warranty: product.warranty?.value,
     returnPolicy: product.returnPolicy?.value,
-    dimensions: product.dimensions ? { ...product.dimensions.value, unit: product.dimensions.unit ?? "in" } : undefined,
-    weight: product.weight ? { value: product.weight.value, unit: product.weight.unit ?? "lb" } : undefined,
+    dimensions: product.dimensions?.value ? { ...product.dimensions.value, unit: product.dimensions.unit ?? "in" } : undefined,
+    weight: product.weight?.value !== undefined ? { value: product.weight.value, unit: product.weight.unit ?? "lb" } : undefined,
     attributes,
     specs,
     cardSpecs,

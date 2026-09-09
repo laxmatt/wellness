@@ -171,16 +171,15 @@
       "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
-      "value": 0,
       "unit": "mg",
       "source": {
         "kind": "editorial",
         "ref": "Editorial classification",
         "retrievedAt": "2026-09-08",
         "method": "direct",
-        "note": "No caffeine listed."
+        "note": "No caffeine listed on the source consulted. A label that does not mention caffeine does not state that there is none, so no figure is recorded."
       },
-      "verification": "unknown"
+      "verification": "not_stated"
     },
     "sodium_mg": {
       "value": 240,

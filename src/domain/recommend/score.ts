@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import type { AttributePrimitive } from "../attributes";
 import type { CategoryDefinition } from "../category";
 import { attributeDef } from "../category";
@@ -20,12 +21,16 @@ export type ScoringInput = {
 // Demo values never reach the score. A placeholder is not evidence, so it is
 // treated as absent rather than as a measurement.
 export function toScoringInput(view: ProductView): ScoringInput {
-  const attributes: Record<string, AttributePrimitive> = {};
-  const demoKeys: string[] = [];
-  for (const [key, value] of Object.entries(view.attributes)) {
-    if (view.provenance[`attributes.${key}`]?.verification === "demo") demoKeys.push(key);
-    else attributes[key] = value;
-  }
+  const attributes: Record<string, AttributePrimitive> = { ...view.attributes };
+  // Read from provenance, not from the attributes: a value that cannot be used
+  // as fact no longer reaches `view.attributes` at all, and iterating those
+  // would report an empty list for exactly the products this exists to name.
+  // The withholding happens earlier now; the reporting has to look where the
+  // record still is.
+  const demoKeys = Object.entries(view.provenance)
+    .filter(([field, p]) => field.startsWith("attributes.") && !isUsable(p.verification))
+    .map(([field]) => field.slice("attributes.".length));
+  for (const key of demoKeys) delete attributes[key];
   return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys };
 }
 

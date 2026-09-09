@@ -132,7 +132,16 @@ describe("finding a named value nothing covers", () => {
 
   it("works for any category, not this sentence", () => {
     const cold = viewsFor("cold-plunge");
-    expect(namedButUnconstrained(coldPlunge, cold, "an outdoor tub", [], [])).toContain("placement");
+    expect(namedButUnconstrained(coldPlunge, cold, "an inflatable one", [], [])).toContain("tub_type");
+  });
+
+  it("offers nothing for a filter whose every value is placeholder data", () => {
+    // Cold plunge holds no real `placement` value at all, so the site cannot
+    // ask about it and must not: the options would be values this project
+    // made up.
+    const cold = viewsFor("cold-plunge");
+    expect(namedValues(coldPlunge, cold).has("placement")).toBe(false);
+    expect(namedButUnconstrained(coldPlunge, cold, "an outdoor tub", [], [])).not.toContain("placement");
   });
 });
 
