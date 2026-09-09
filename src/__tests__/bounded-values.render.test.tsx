@@ -18,6 +18,7 @@ afterEach(cleanup);
 
 const ag1 = () => viewsFor("wellness-drinks").find((v) => v.id === "ag1-pouch-30")!;
 const pro1500 = () => viewsFor("red-light").find((v) => v.id === "hooga-pro1500")!;
+const bonCharge = () => viewsFor("red-light").find((v) => v.id === "bon-charge-max")!;
 
 describe("the product page", () => {
   it("shows AG1's sugar as the bound its label states", () => {
@@ -28,10 +29,17 @@ describe("the product page", () => {
     expect(within(row).queryByText("1 g")).toBeNull();
   });
 
-  it("shows the panel's irradiance as the floor its maker states", () => {
+  it("shows a panel's irradiance as the floor its maker states", () => {
+    render(<SpecGroups view={bonCharge()} cat={redLight} />);
+    expect(screen.getByText("more than 142 mW/cm²")).toBeTruthy();
+    expect(screen.queryByText("142 mW/cm²")).toBeNull();
+  });
+
+  it("shows a disputed figure with the value and the word", () => {
+    // PRO1500's page says "over 189" in its highlights and 189 in its table.
     render(<SpecGroups view={pro1500()} cat={redLight} />);
-    expect(screen.getByText("more than 189 mW/cm²")).toBeTruthy();
-    expect(screen.queryByText("189 mW/cm²")).toBeNull();
+    expect(screen.getByText("189 mW/cm², disputed")).toBeTruthy();
+    expect(screen.queryByText("more than 189 mW/cm²")).toBeNull();
   });
 });
 

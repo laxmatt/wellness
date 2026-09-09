@@ -8,6 +8,7 @@ import { applyPreferences } from "@/domain/personalization/match";
 import { describeFit, describeGap } from "@/domain/personalization/describe";
 import { deriveInsights } from "@/domain/recommend/insights";
 import { recommendCategory } from "@/domain/recommend";
+import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
 import { validateCatalog } from "@/providers/catalog/LocalCatalogProvider";
 import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { toProductView } from "@/domain/view";
@@ -28,7 +29,10 @@ import { catalog, miniCategory, miniProduct, testBrand, testMerchant, viewsFor }
 const drinks = () => viewsFor("wellness-drinks");
 const panels = () => viewsFor("red-light");
 const ag1 = () => drinks().find((v) => v.id === "ag1-pouch-30")!;
-const pro1500 = () => panels().find((v) => v.id === "hooga-pro1500")!;
+// BON CHARGE's page states its irradiance once, as a floor. Hooga's two
+// panels state theirs twice and disagree with themselves, so they are
+// disputed rather than bounded and are not the example here.
+const bonCharge = () => panels().find((v) => v.id === "bon-charge-max")!;
 
 const ask = (view: ReturnType<typeof ag1>, cat: CategoryDefinition, c: Condition) => evaluateCondition(view, cat, c);
 
@@ -40,10 +44,12 @@ describe("the catalogue records the bound, not a number nobody stated", () => {
         if (sv.bound) bounded.push(`${p.id}.${key} ${sv.bound} ${sv.value}`);
       }
     }
+    // Two panels left. Hooga's HG300 and PRO1500 both left this list when
+    // their own pages turned out to state the figure twice, once as a floor
+    // and once as exact: those are disputed now, not bounded.
     expect(bounded.sort()).toEqual([
       "ag1-pouch-30.sugar_g less_than 1",
       "bon-charge-max.irradiance_mw_cm2 greater_than 142",
-      "hooga-pro1500.irradiance_mw_cm2 greater_than 189",
       "joovv-solo-3.irradiance_mw_cm2 greater_than 100",
     ]);
   });
@@ -58,7 +64,7 @@ describe("what a bound settles, and what it declines", () => {
     // The defect, in one line: AG1 answered "sugar of exactly 1 g" as a fact.
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "eq", value: 1 })).toBe(false);
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "eq", value: 0 })).toBe(false);
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "eq", value: 189 })).toBe(false);
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "eq", value: 142 })).toBe(false);
   });
 
   it("answers the side of the bound the source settled", () => {
@@ -66,10 +72,10 @@ describe("what a bound settles, and what it declines", () => {
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 1 })).toBe(true);
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lte", value: 1 })).toBe(true);
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 5 })).toBe(true);
-    // "Over 189" is over 189, and over anything below it.
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 189 })).toBe(true);
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gte", value: 189 })).toBe(true);
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 100 })).toBe(true);
+    // "Over 142" is over 142, and over anything below it.
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 142 })).toBe(true);
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "gte", value: 142 })).toBe(true);
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 100 })).toBe(true);
   });
 
   it("declines the side the source left open", () => {
@@ -77,10 +83,10 @@ describe("what a bound settles, and what it declines", () => {
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "lt", value: 0.5 })).toBe(false);
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "gt", value: 0 })).toBe(false);
     expect(ask(ag1(), wellnessDrinks, { key: "sugar_g", op: "gte", value: 1 })).toBe(false);
-    // Somewhere above 189 could be 190 or 400.
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 200 })).toBe(false);
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "lt", value: 300 })).toBe(false);
-    expect(ask(pro1500(), redLight, { key: "irradiance_mw_cm2", op: "lte", value: 189 })).toBe(false);
+    // Somewhere above 142 could be 190 or 400.
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "gt", value: 200 })).toBe(false);
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "lt", value: 300 })).toBe(false);
+    expect(ask(bonCharge(), redLight, { key: "irradiance_mw_cm2", op: "lte", value: 142 })).toBe(false);
   });
 
   it("says a value differs only when the bound proves it differs", () => {
@@ -108,8 +114,8 @@ describe("the qualifier survives to every screen", () => {
     const sugar = ag1().specs.find((s) => s.key === "sugar_g")!;
     expect(sugar.formatted).toBe("less than 1 g");
     expect(sugar.bound).toBe("less_than");
-    const irradiance = pro1500().specs.find((s) => s.key === "irradiance_mw_cm2")!;
-    expect(irradiance.formatted).toBe("more than 189 mW/cm²");
+    const irradiance = bonCharge().specs.find((s) => s.key === "irradiance_mw_cm2")!;
+    expect(irradiance.formatted).toBe("more than 142 mW/cm²");
   });
 
   it("never renders the bare number as the value", () => {
@@ -123,11 +129,11 @@ describe("the qualifier survives to every screen", () => {
 
   it("marks no winner in a comparison row holding a bound", () => {
     const items = recommendCategory(panels(), redLight).products.filter((p) =>
-      ["hooga-pro1500", "platinumled-biomax-900"].includes(p.view.id),
+      ["bon-charge-max", "platinumled-biomax-900"].includes(p.view.id),
     );
     const model = buildCompareModel(items, redLight);
     const row = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
-    expect(row.cells.map((c) => c.text)).toContain("more than 189 mW/cm²");
+    expect(row.cells.map((c) => c.text)).toContain("more than 142 mW/cm²");
     expect(row.cells.every((c) => !c.best)).toBe(true);
     expect(row.notComparable).toBeTruthy();
   });
@@ -176,14 +182,16 @@ describe("the qualifier survives to every screen", () => {
 
 describe("scoring reads the stated end, and the catalogue check keeps it that way", () => {
   it("scores the bound itself, which is the end that cannot flatter", () => {
-    // "Over 189" scores as 189. The real figure is higher, so the product is
+    // "Over 142" scores as 142. The real figure is higher, so the product is
     // ranked no better than the maker's own floor. The reverse, a floor on a
     // lower-is-better figure, would rank a product on the best case of a range
     // whose worst case nobody stated, and the catalogue check refuses it.
-    const ranked = recommendCategory(panels(), redLight).products;
-    const before = ranked.find((p) => p.view.id === "hooga-pro1500")!.score;
-    expect(before).toBe(100);
-    expect(pro1500().attributes.irradiance_mw_cm2).toBe(189);
+    const inputs = panels().map(toScoringInput);
+    const scored = scoreProducts(inputs, redLight).find((r) => r.id === "bon-charge-max")!;
+    expect(bonCharge().attributes.irradiance_mw_cm2).toBe(142);
+    expect(scored.criteria.find((c) => c.key === "irradiance_mw_cm2")!.raw).toBe(142);
+    expect(scored.demoCriteria).not.toContain("irradiance_mw_cm2");
+    expect(scored.disputedCriteria).not.toContain("irradiance_mw_cm2");
   });
 
   it("refuses a bound pointing the flattering way", () => {
@@ -208,9 +216,9 @@ describe("scoring reads the stated end, and the catalogue check keeps it that wa
     const shapeIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "lmnt-citrus-salt-30"), lmnt] });
     expect(shapeIssues.map((i) => i.message).join(" ")).toMatch(/value is not a number/);
 
-    const hooga = structuredClone(c.products.find((p) => p.id === "hooga-pro1500")!);
-    delete hooga.attributes.irradiance_mw_cm2!.source.note;
-    const noteIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "hooga-pro1500"), hooga] });
+    const boncharge = structuredClone(c.products.find((p) => p.id === "bon-charge-max")!);
+    delete boncharge.attributes.irradiance_mw_cm2!.source.note;
+    const noteIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "bon-charge-max"), boncharge] });
     expect(noteIssues.map((i) => i.message).join(" ")).toMatch(/bound with no source note/);
   });
 });

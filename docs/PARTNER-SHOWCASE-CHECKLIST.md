@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **19 of 250**, across 2 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **32 of 252**, across 3 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -67,7 +67,7 @@ Two things apply to all 20 and are not repeated in each entry:
 | Links | https://boncharge.com/products/max-red-light-device |
 | Sources on file | https://boncharge.com/products/max-red-light-device |
 | Retrieval | 7 of 10 recorded fields were relayed rather than read from the source |
-| Ranking | score 59.5, completeness 100%, badges: none |
+| Ranking | score 59.8, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -113,33 +113,25 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
+| Price evidence | partly | $1,199 on record from Hooga (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `hooga-pro1500`, `/products/hooga-pro1500` |
-| Offers | Hooga (direct) (no amount on record, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
-| Links | https://hoogahealth.com/products/hgpro1500<br>https://www.amazon.com/dp/B08Z6NMRB9 |
+| Offers | Amazon (no amount on record, unknown, affiliate status not recorded); Hooga (direct) ($1,199, unknown, affiliate status not recorded) |
+| Links | https://www.amazon.com/dp/B08Z6NMRB9<br>https://hoogahealth.com/products/hgpro1500 |
 | Sources on file | https://hoogahealth.com/products/hgpro1500 |
-| Retrieval | 9 of 12 recorded fields were relayed rather than read from the source |
-| Ranking | score 100, completeness 100%, badges: best_overall |
+| Retrieval | 0 of 14 recorded fields were relayed rather than read from the source |
+| Ranking | score 85.7, completeness 100%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
 
-- `coverage` (required): source not recorded
 - `footprint` (required): source not recorded
-- `wavelengths_nm` (required): relayed, maker's page not fetched
-- `irradiance_mw_cm2`: bound: more than 189 mW/cm²; relayed, maker's page not fetched
 - `irradiance_distance_in`: **absent from the record**
-- `led_count`: relayed, maker's page not fetched
-- `power_w`: **absent from the record**
-- `mounting`: relayed, maker's page not fetched
 - `app_control`: **absent from the record**
 - `pulsing`: **absent from the record**
-- `warranty_years` (required): relayed, maker's page not fetched
-- `return_window_days`: relayed, maker's page not fetched
 
 ### Infraredi Flex Max
 
@@ -188,7 +180,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://joovv.com/products/joovv-solo-3-0 |
 | Sources on file | https://joovv.com/products/joovv-solo-3-0 |
 | Retrieval | 11 of 14 recorded fields were relayed rather than read from the source |
-| Ranking | score 69.1, completeness 100%, badges: none |
+| Ranking | score 69.2, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -284,7 +276,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://platinumtherapylights.com/products/biomax-900 |
 | Sources on file | https://platinumtherapylights.com/products/biomax-900 |
 | Retrieval | 8 of 12 recorded fields were relayed rather than read from the source |
-| Ranking | score 92.3, completeness 75%, badges: none |
+| Ranking | score 92.9, completeness 75%, badges: best_overall |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -717,7 +709,7 @@ Specifications that are missing, unsupported or relayed:
 
 | Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |
 | --- | --- | --- | --- | --- | --- |
-| Red Light Therapy | 8 | 3 | 1 | 0 | 0 |
+| Red Light Therapy | 8 | 4 | 2 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 0 | 0 | 0 |
 | Wellness Drinks | 6 | 5 | 1 | 0 | 0 |
 
@@ -725,9 +717,9 @@ Specifications that are missing, unsupported or relayed:
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 14. No amount on record: 6. Amount read from the merchant rather than relayed: 2 (hooga-hg300, lmnt-citrus-salt-30). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 15. No amount on record: 5. Amount read from the merchant rather than relayed: 3 (hooga-hg300, hooga-pro1500, lmnt-citrus-salt-30). Independently measured: 0, on all 20; every figure is its maker's own.
 
-Shown prices that are prototype data: 6, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
+Shown prices that are prototype data: 5, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
 **Image readiness.** A real image with a recorded licence: 0. A real image without one: 0. Placeholders only: 20.
 
@@ -737,7 +729,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 154 of 250 records and 12 of 26 offer prices are
+1. **Read the pages already on file.** 145 of 252 records and 12 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

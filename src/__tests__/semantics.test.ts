@@ -71,12 +71,12 @@ describe("demo data never counts as evidence", () => {
 
   it("says which badges were withheld rather than quietly showing fewer picks", () => {
     const set = assignBadges(viewsFor("red-light").map(toScoringInput), redLight);
-    const withheldBadges = set.withheld.map((w) => w.badge);
-    // Best Budget is awarded again: HG300's real $199, read on 2026-09-09,
-    // sits under the budget line where a prototype $149 used to sit and count
-    // for nothing. Best Premium is still withheld, and still says why.
-    expect(set.badges.map((b) => b.badge)).toContain("best_budget");
-    expect(withheldBadges).toContain("best_premium");
+    // Both price-tier badges are awarded again, each because a real price
+    // arrived where a prototype one used to sit: HG300's $199 under the budget
+    // line, PRO1500's $1,199 above the premium line, both read on 2026-09-09.
+    // Nothing is withheld in this category now, and the reason text is still
+    // required wherever something is.
+    expect(set.badges.map((b) => b.badge).sort()).toEqual(["best_budget", "best_overall", "best_premium", "best_value"]);
     for (const w of set.withheld) expect(w.reason.length).toBeGreaterThan(20);
   });
 
@@ -190,17 +190,18 @@ describe("a placeholder price is not budget evidence", () => {
 
   it("cannot confirm an unverified price meets a budget", () => {
     const views = viewsFor("red-light");
-    const pro = views.find((v) => v.id === "hooga-pro1500")!;
-    // Listed at $649, which is under $700, but the price is a placeholder.
-    expect(pro.price.money.amountMinor).toBeLessThan(70000);
-    expect(pro.price.isDemo).toBe(true);
-    expect(evaluateCondition(pro, redLight, budget[0])).toBe(false);
+    // BON CHARGE is listed at $1,099 as prototype data. PRO1500 used to be the
+    // example here at a prototype $649; its maker's $1,199 was read on
+    // 2026-09-09 and it is a real price now.
+    const boncharge = views.find((v) => v.id === "bon-charge-max")!;
+    expect(boncharge.price.isDemo).toBe(true);
+    expect(evaluateCondition(boncharge, redLight, { key: "price", op: "lte", value: 200000 })).toBe(false);
   });
 
   it("surfaces those products separately rather than hiding them", () => {
     const views = viewsFor("red-light");
-    const apart = unconfirmedByPrice(views, redLight, budget);
-    expect(apart.map((v) => v.id)).toContain("hooga-pro1500");
+    const apart = unconfirmedByPrice(views, redLight, [{ key: "price", op: "lte" as const, value: 200000 }]);
+    expect(apart.map((v) => v.id)).toContain("bon-charge-max");
     // Everything listed apart genuinely has an unverified price.
     for (const v of apart) expect(v.price.isDemo).toBe(true);
   });
