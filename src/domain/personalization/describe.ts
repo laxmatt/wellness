@@ -28,6 +28,15 @@ export function describeConstraint(cat: CategoryDefinition, c: Condition): strin
   const val = c.value === undefined ? "" : formatValueFor(cat, c.key, c.value);
   const def = attributeDef(cat, c.key);
   if (def?.type === "enum" && c.value !== undefined && ["eq", "gte", "gt", "lte", "lt"].includes(c.op)) {
+    // An option label is written for a filter chip, where it stands alone. Most
+    // are short phrases and fold into a sentence: "full body" plus "coverage"
+    // reads as "full body coverage". Some are whole sentences and do not.
+    // Cold plunge's plumbing option is "None. Fill with a hose.", and folding
+    // it produced "none. fill with a hose. power and plumbing", which is not a
+    // sentence in any language. A label carrying its own sentence punctuation
+    // is quoted and left as its author wrote it, capitals included.
+    const option = val.replace(/\s*\.\s*$/, "");
+    if (/[.!?]/.test(option)) return `${labelFor(cat, c.key)} set to "${option}"`;
     return `${val.toLowerCase()} ${label}`;
   }
   switch (c.op) {

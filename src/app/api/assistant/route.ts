@@ -80,14 +80,40 @@ function ground(view: ProductView, cat: CategoryDefinition): GroundedProduct {
   };
 }
 
-function vocabulary(cat: CategoryDefinition): string {
+// What the model is told it may filter on.
+//
+// An enum key has always carried its allowed values. A list key did not, so
+// "electrolytes" had no visible home: the model was shown `function (list; use
+// op "includes")` and no indication that "electrolytes" was one of the values
+// it could take. The site's own filter chips derive those values from the
+// products, in src/domain/filters.ts, and this now does the same, from the same
+// views the shortlist is drawn from.
+//
+// The price line used to read "integer cents, use op lte", which contradicted
+// the MONEY block twice over: money crosses this boundary in dollars, not
+// cents, and "lte" is not the operator for every budget. The MONEY block owns
+// that contract, so this says nothing about it.
+function vocabulary(cat: CategoryDefinition, views: ProductView[]): string {
+  const listValues = (key: string): string[] => {
+    const values = new Set<string>();
+    for (const v of views) {
+      const raw = v.attributes[key];
+      if (Array.isArray(raw)) for (const x of raw as string[]) values.add(String(x));
+    }
+    return [...values].sort();
+  };
+
   return cat.filters
     .map((f) => {
       const def = attributeDef(cat, f.key);
       if (def?.type === "enum") return `${f.key} (one of ${def.enumOptions?.map((o) => o.value).join("|")})`;
       if (def?.type === "boolean") return `${f.key} (true|false)`;
-      if (def?.type === "list") return `${f.key} (list; use op "includes")`;
-      if (f.key === "price") return "price (integer cents, use op lte)";
+      if (def?.type === "list") {
+        const values = listValues(f.key);
+        const shown = values.length > 0 ? `; values include ${values.join("|")}` : "";
+        return `${f.key} (list; use op "includes"${shown})`;
+      }
+      if (isMoneyKey(cat, f.key)) return `${f.key} (money; see the MONEY block)`;
       return `${f.key} (number${def?.unit ? `, ${def.unit}` : ""})`;
     })
     .join("; ");
@@ -191,7 +217,7 @@ export async function POST(req: Request) {
   const shortlist = (agreed.matching.length > 0 ? agreed.matching : views).slice(0, 6);
   const full: ConverseInput = {
     categoryName: cat.name,
-    filterVocabulary: vocabulary(cat),
+    filterVocabulary: vocabulary(cat, views),
     products: shortlist.map((v) => ground(v, cat)),
     // The model is told how much it cannot see, so it cannot report a
     // shortlist's emptiness as the category's.

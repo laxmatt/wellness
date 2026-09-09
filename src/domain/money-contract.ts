@@ -93,8 +93,10 @@ export function moneyContractText(cat: CategoryDefinition): string {
   return [
     `MONEY: ${keys.join(", ")} ${keys.length === 1 ? "is" : "are"} money.`,
     `Send money as an object in whole dollars, never as a number of cents and never as a bare number:`,
-    `- {"key": "${keys[0]}", "op": "lte", "value": {"amount": 700, "currency": "${MONEY_CURRENCY}"}} means "under $700".`,
-    `- {"key": "${keys[0]}", "op": "lte", "value": {"amount": 1.99, "currency": "${MONEY_CURRENCY}"}} means "under $1.99".`,
+    `- {"key": "${keys[0]}", "op": "lt", "value": {"amount": 700, "currency": "${MONEY_CURRENCY}"}} means "under $700", which excludes $700 exactly.`,
+    `- {"key": "${keys[0]}", "op": "lte", "value": {"amount": 700, "currency": "${MONEY_CURRENCY}"}} means "$700 or less", which includes $700 exactly.`,
+    `Choose between them by what the shopper said. "Under", "below" and "less than" are lt. "Up to", "at most", "no more than" and "or less" are lte. A budget written one way is not the other.`,
+    `Cents work the same way: {"amount": 1.99, ...} is $1.99, not 199.`,
     `A bare number for one of these keys is rejected outright, because "500" cannot be told apart from "$5.00".`,
   ].join("\n");
 }

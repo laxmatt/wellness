@@ -126,6 +126,8 @@ OUTPUT CONTRACT. Reply with a single JSON object and nothing else. Every field b
 - medicalIntent: boolean.
 - suggestCompare: at most ${INTENT_LIMITS.suggestCompare} product ids taken from the CATALOGUE.
 
+One sentence often states several constraints at once. Extract every one of them, not only the budget: a shopper who names a nutrition limit, an ingredient and a price has given you three, and dropping two of them narrows their search to something they did not ask for.
+
 Repeat every constraint that still applies, not just new ones. Use "unmapped" for anything the shopper cares about that the filters cannot express.`;
 
 export class OpenAIConversationProvider implements ConversationProvider {
@@ -469,6 +471,20 @@ function normalize(v: unknown): unknown {
     if (!Array.isArray(q.options)) q.options = [];
   }
   for (const k of ["hard", "soft", "unmapped", "suggestCompare"]) if (!Array.isArray(o[k])) o[k] = [];
+
+  // A comparison suggestion is optional and the shopper may ignore it. The
+  // constraints in the same reply are the whole point of the call. So an
+  // over-long suggestion list is trimmed, not treated as a broken reply.
+  //
+  // It was treated as one. `ModelIntent` caps suggestCompare at 4, the strict
+  // schema expresses no such bound, and the run of 01:35 lost two of fifteen
+  // cases to it: "under 500" came back with the budget converted exactly and
+  // five ids, and "Which one is healthiest?" came back correctly declining and
+  // six. Both were discarded whole and the shopper was told the reply could not
+  // be read. Trimming costs a suggestion. Rejecting cost the answer.
+  if (Array.isArray(o.suggestCompare) && o.suggestCompare.length > INTENT_LIMITS.suggestCompare) {
+    o.suggestCompare = o.suggestCompare.slice(0, INTENT_LIMITS.suggestCompare);
+  }
 
   // Strict structured outputs cannot omit a property: every one must be
   // present, so "no value" arrives as `value: null`. The validator accepts an
