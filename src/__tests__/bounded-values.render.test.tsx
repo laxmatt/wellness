@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { CompareView } from "@/components/compare/CompareView";
 import { OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
 import { redLight, wellnessDrinks } from "@/domain/categories";
@@ -155,5 +155,28 @@ describe("an offer whose amount belongs to another product is not a way to buy t
     expect(row.price.amountMinor).toBe(1999);
     expect(row.url).toBe("https://example.com/variety-pack");
     expect(row.disputeNote).toBe("Reported for a different pack.");
+  });
+});
+
+describe("the comparison table's group keys", () => {
+  it("renders two groups that share a label without React seeing one group twice", () => {
+    // Wellness Drinks defines a "Buying" group of subscription specs, and the
+    // model appends a "Buying" group of retailers to every category. Keyed by
+    // label, React saw a duplicate and warned on every compare render. The
+    // warning was the only symptom, which is why it sat in the logs.
+    const cat = wellnessDrinks;
+    const items = recommendCategory(viewsFor("wellness-drinks"), cat).products.slice(0, 3);
+    const model = buildCompareModel(items, cat);
+    const labels = model.groups.map((g) => g.label);
+    expect(labels.filter((l) => l === "Buying").length).toBe(2);
+
+    const errors: unknown[][] = [];
+    const spy = vi.spyOn(console, "error").mockImplementation((...args) => void errors.push(args));
+    try {
+      render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
+    } finally {
+      spy.mockRestore();
+    }
+    expect(errors.flat().join(" ")).not.toMatch(/same key/);
   });
 });

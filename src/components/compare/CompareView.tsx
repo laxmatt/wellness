@@ -78,15 +78,22 @@ export function CompareView({ model, ids }: { model: CompareModel; ids: string[]
             </tr>
           </thead>
           <tbody>
-            {groups.map((g) => (
-              <Fragment key={g.label}>
+            {/* Keyed by position, not by label. Two groups can carry the same
+                label: Wellness Drinks defines a "Buying" group of subscription
+                specs, and every category gets a "Buying" group of retailers
+                appended by the model. Keying on the label made React see one
+                group twice. Position is stable here because the groups are
+                built in a fixed order from the category definition and never
+                reordered. */}
+            {groups.map((g, gi) => (
+              <Fragment key={gi}>
                 <tr>
                   <th scope="rowgroup" colSpan={model.columns.length + 1} className="sticky left-0 z-10 bg-surface px-2 pb-1 pt-6 text-left">
                     <span className="eyebrow">{g.label}</span>
                   </th>
                 </tr>
                 {g.rows.map((r) => (
-                  <tr key={`${g.label}-${r.key}`}>
+                  <tr key={`${gi}-${r.key}`}>
                     <th scope="row" className={cn("sticky left-0 z-10 bg-surface p-2 text-left align-top text-xs font-semibold", r.same ? "text-fg-muted" : "text-fg-soft")}>
                       {r.label}
                       {r.notComparable ? (

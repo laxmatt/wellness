@@ -17,6 +17,7 @@
  */
 
 import { chromium, type Browser, type Page } from "playwright";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { categories, categoryById } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
@@ -865,6 +866,25 @@ import { evaluateCondition } from "@/domain/conditions";
 function evaluate(v: ProductView, c: CategoryDefinition, cond: Parameters<typeof evaluateCondition>[2]) {
   return evaluateCondition(v, c, cond);
 }
+
+// Which build is actually answering on :3000.
+//
+// `next start` renames its process to `next-server`, so a `pkill -f "next
+// start"` matches nothing and a server from an earlier build keeps the port.
+// The next `next start` then fails with EADDRINUSE in a log nobody reads, the
+// health check still returns 200, and every check below runs against stale
+// code while appearing to pass. This asserts the served build is the one on
+// disk before a single check runs, and fails loudly rather than reporting a
+// green run against something else.
+const expectedBuildId = (await readFile(join(process.cwd(), ".next", "BUILD_ID"), "utf8")).trim();
+const homeHtml = await (await fetch(BASE)).text();
+if (!homeHtml.includes(expectedBuildId)) {
+  console.log(`FAIL build identity :: the server on ${BASE} is not serving the build in .next`);
+  console.log(`       expected build ${expectedBuildId}`);
+  console.log("       run a fresh `next start` against this build, and check nothing else holds the port");
+  process.exit(1);
+}
+console.log(`ok   build identity :: serving ${expectedBuildId}`);
 
 const browser = await chromium.launch({ executablePath: EXECUTABLE });
 try {

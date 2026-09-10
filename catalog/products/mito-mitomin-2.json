@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": false
@@ -22,7 +22,7 @@
   "brandId": "mito-red-light",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "Sixty-LED compact panel with kickstand and session timer. Two wavelengths, two-year warranty.",
+  "description": "Sixty-LED compact panel with a built-in tabletop kickstand and a 1 to 20 minute timer. Red, near-infrared and combined modes; two-year warranty.",
   "images": [
     {
       "id": "mito-mitomin-2-primary",
@@ -45,13 +45,14 @@
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitomin",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "$249, read at 17:34 Pacific on 2026-09-09. The record already carried $249 relayed from a search summary; the amount has not changed and what it is worth has."
       }
     },
     {
@@ -79,10 +80,11 @@
     "value": "Full 2-year warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://mitoredlight.com/products/mitomin",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The page states a full 2-year warranty."
     },
     "verification": "manufacturer_reported"
   },
@@ -90,22 +92,24 @@
     "coverage": {
       "value": "targeted",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up. Based on the reported 12 by 9 in treatment area."
+        "note": "The page describes targeted coverage. This was an editorial class inferred from a reported treatment area; the maker states it."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "compact",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in. Based on the reported 12 by 9 in treatment area; panel dimensions not stated."
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in. The panel measures 12 by 9 by 3 in, read from the page, so the class now rests on stated panel dimensions rather than on a treatment area standing in for them."
       },
       "verification": "unknown"
     },
@@ -117,10 +121,11 @@
       "unit": "nm",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitomin",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "660 nm and 850 nm in a 50:50 ratio."
       },
       "verification": "manufacturer_reported"
     },
@@ -128,10 +133,11 @@
       "value": 60,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitomin",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "60 LEDs."
       },
       "verification": "manufacturer_reported"
     },
@@ -141,10 +147,11 @@
       ],
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitomin",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Kickstand. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A built-in tabletop kickstand with 180 degrees of adjustment. No other mounting is stated, and none is recorded."
       },
       "verification": "manufacturer_reported"
     },
@@ -153,12 +160,62 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitomin",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A full 2-year warranty."
       },
       "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 85,
+      "unit": "W",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "85 W consumption. This is what the panel draws, which is not the same as its light output and is not treated as one."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A 60-day returns headline. The detailed terms were not read, so the conditions, restocking and who pays return shipping are unknown here."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "app_control": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states no Bluetooth and no WiFi, and describes no app. That is an absence of a claim rather than a stated \"no\", so no value is recorded and this panel answers neither an app-control filter nor a no-app-control one."
+      },
+      "verification": "not_stated"
+    },
+    "irradiance_mw_cm2": {
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitomin",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "No comparable figure is recorded, because the page states two and they are not the same measurement. It gives more than 115 mW/cm2 at 6 in from a consumer-grade meter, and more than 52 mW/cm2 at 6 in from what the maker describes as a laboratory method. The page is explicit that the methods differ, and nothing here read any report behind either number. This catalogue's irradiance field carries one unqualified figure and compares it against other products' unqualified figures, so putting either number in it would assert a comparability neither one has. A duplicated block on the mobile layout labels the 52 as fluence, which is a different quantity in different units; that looks like a page error and is not treated as a third figure."
+      },
+      "verification": "not_stated"
     }
   },
   "source": {
@@ -166,6 +223,37 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the product page was read by Codex on 2026-09-09 at 17:34 Pacific and the price, dimensions, weight, power, returns, coverage and warranty recorded from it. The two irradiance figures the page gives are measured by different methods and neither is recorded as a comparable number. Stock, images and any health claim remain unverified."
+  },
+  "dimensions": {
+    "value": {
+      "length": 12,
+      "width": 9,
+      "height": 3
+    },
+    "unit": "in",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://mitoredlight.com/products/mitomin",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "12 by 9 by 3 in."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "weight": {
+    "value": 7,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://mitoredlight.com/products/mitomin",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The page states the weight two ways and they do not agree: 7 lb in the technical specifications and 6 lb in the specification table. Neither is preferred here; the figure shown is the technical specification's, marked disputed, with both on record."
+    },
+    "verification": "manufacturer_reported",
+    "disputed": true
   }
 }

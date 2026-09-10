@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **127 of 266**, across 11 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **141 of 272**, across 12 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -191,8 +191,8 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | partly | $249 on record from Mito Red Light (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
+| Price evidence | partly | $249 on record from Mito Red Light (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -201,23 +201,16 @@ Specifications that are missing, unsupported or relayed:
 | Offers | Mito Red Light (direct) ($249, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
 | Links | https://mitoredlight.com/products/mitomin<br>https://www.amazon.com/dp/B0CL5KJB7M |
 | Sources on file | https://mitoredlight.com/products/mitomin |
-| Retrieval | 6 of 8 recorded fields were relayed rather than read from the source |
-| Ranking | score 10.7, completeness 100%, badges: none |
+| Retrieval | 0 of 14 recorded fields were relayed rather than read from the source |
+| Ranking | score 17.9, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
-- `coverage` (required): source not recorded
 - `footprint` (required): source not recorded
-- `wavelengths_nm` (required): relayed, maker's page not fetched
-- `irradiance_mw_cm2`: **absent from the record**
+- `irradiance_mw_cm2`: no value, recorded as `not_stated`
 - `irradiance_distance_in`: **absent from the record**
-- `led_count`: relayed, maker's page not fetched
-- `power_w`: **absent from the record**
-- `mounting`: relayed, maker's page not fetched
-- `app_control`: **absent from the record**
+- `app_control`: no value, recorded as `not_stated`
 - `pulsing`: **absent from the record**
-- `warranty_years` (required): relayed, maker's page not fetched
-- `return_window_days`: **absent from the record**
 
 ### Mito Red Light MitoPRO 1500+
 
@@ -646,7 +639,7 @@ Specifications that are missing, unsupported or relayed:
 
 | Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |
 | --- | --- | --- | --- | --- | --- |
-| Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
+| Red Light Therapy | 8 | 6 | 5 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
 | Wellness Drinks | 6 | 6 | 5 | 0 | 0 |
 
@@ -654,7 +647,7 @@ Specifications that are missing, unsupported or relayed:
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 11 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 12 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -666,7 +659,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 87 of 266 records and 8 of 26 offer prices are
+1. **Read the pages already on file.** 81 of 272 records and 7 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

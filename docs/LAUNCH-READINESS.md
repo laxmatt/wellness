@@ -393,18 +393,29 @@ piecemeal.
 **Structured data was publishing amounts the page had hidden.** The JSON-LD on
 every product page listed every offer, so a prototype amount that the page
 displayed as "Check current price" was still being handed to search engines as
-this product's price, on four products. A disputed offer's amount and its link
-were being published the same way. Hiding a number in one surface is not
+this product's price, on four products. The display side of that was fixed
+earlier the same day and the markup underneath was not changed with it. A
+disputed offer's amount and its link were being published the same way. Hiding a number in one surface is not
 withholding it; every surface that states a price has to be checked, and the
 browser harness now checks the published offer count against the offers that
 actually price the product on all 20.
 
 ## Known defects, logged for a bounded fix
 
-1. **Duplicate React key in the comparison table.** Rendering a compare model
-   logs `Encountered two children with the same key, "Buying"`, because two
-   spec groups carry that label and the list is keyed by label rather than by
-   anything unique. It is a warning, not a visible fault: React's fallback
-   still renders both groups. It predates the 2026-09-09 readings and
-   reproduces on a stashed tree. A one-line key change plus a regression, kept
-   out of the data batches it was found in.
+1. ~~**Duplicate React key in the comparison table.**~~ Fixed on 2026-09-09.
+   Wellness Drinks defines a "Buying" group of subscription specs and the
+   compare model appends a "Buying" group of retailers to every category, so
+   keying the group list by label made React see one group twice. The table is
+   keyed by position now, which is safe because groups are built in a fixed
+   order from the category definition and never reordered. A regression asserts
+   that a model with two same-labelled groups renders without the warning.
+
+2. **Irradiance carries no method.** Four red-light products state irradiance,
+   and the figures come from different methods at different distances: the
+   MitoMIN 2.0 page alone gives more than 115 mW/cm2 from a consumer meter and
+   more than 52 from a maker-described laboratory method, at the same 6 in. The
+   field holds one unqualified number and the comparison table ranks those
+   numbers against each other. Products whose figure cannot be made comparable
+   are recorded as `not_stated` with the figures in the note, which is honest
+   and costs them the criterion. A method dimension beside the number is the
+   real fix and is architecture: it should follow a decision, not a reading.

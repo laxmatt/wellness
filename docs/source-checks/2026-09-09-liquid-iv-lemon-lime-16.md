@@ -77,8 +77,9 @@ checklist, which is not a shopping page.
 **A second leak, found while proving the first.** The structured data was
 publishing every offer, so the disputed $27.99 and its Amazon URL were being
 handed to search engines as a price for this product. The same markup was also
-publishing prototype amounts on four other products, months after the page
-itself started saying "Check current price" instead of showing them. A
+publishing prototype amounts on four other products. The page itself started
+saying "Check current price" instead of showing those amounts earlier the same
+day, 2026-09-09, and the markup underneath was never changed with it. A
 placeholder price hidden on the page and published in the markup is still a
 published price. Both are fixed by the same filter, and the harness now checks
 the count of published offers against the offers that actually price the
