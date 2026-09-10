@@ -106,6 +106,39 @@ describe("badges", () => {
     expect(set.badges.some((b) => b.badge === "best_premium")).toBe(false);
   });
 
+  it("withholds a tier badge from a zero-scoring product when the better budget candidate took Best Value", () => {
+    // The defect this guards: in Cold Plunges, Best Value went to the only
+    // decent budget tub, and Best Budget then fell through to a tub scoring 0
+    // on every weighted criterion, whose product URL now redirects to the
+    // maker's home page. A badge is a recommendation; nothing recommends a
+    // zero.
+    const ps = [
+      miniProduct("top", 90000, { power: 100, noise: 10, size: "l", wifi: true }),
+      miniProduct("second-premium", 85000, { power: 90, noise: 15, size: "l", wifi: true }),
+      miniProduct("budget-good", 15000, { power: 50, noise: 30, size: "m", wifi: true }),
+      miniProduct("budget-zero", 18000, { power: 10, noise: 90, size: "s", wifi: false }),
+    ];
+    const set = assignBadges(inputs(ps), miniCategory);
+
+    // The zero is eligible and priced and sits in the tier. It is only the
+    // score that stops it.
+    expect(set.scores["budget-zero"].eligible).toBe(true);
+    expect(set.scores["budget-zero"].score).toBe(0);
+    expect(set.badgesByProduct["budget-good"]).toEqual(["best_value"]);
+    expect(set.badgesByProduct["budget-zero"]).toBeUndefined();
+    expect(set.badges.some((b) => b.badge === "best_budget")).toBe(false);
+    expect(set.withheld.find((w) => w.badge === "best_budget")!.reason).toBe(
+      "No remaining priced product at or under the budget line scores above zero across the weighted criteria.",
+    );
+
+    // And the guard is only that: give the same product one point and it wins
+    // the badge on the same rules.
+    const scoring = [...ps.slice(0, 3), miniProduct("budget-zero", 18000, { power: 10, noise: 90, size: "s", wifi: true })];
+    const after = assignBadges(inputs(scoring), miniCategory);
+    expect(after.scores["budget-zero"].score).toBeGreaterThan(0);
+    expect(after.badgesByProduct["budget-zero"]).toEqual(["best_budget"]);
+  });
+
   it("breaks exact ties deterministically", () => {
     const ps = [miniProduct("z", 50000, { power: 100, size: "l" }), miniProduct("y", 50000, { power: 100, size: "l" })];
     const set = assignBadges(inputs(ps), miniCategory);

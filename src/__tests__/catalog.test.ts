@@ -54,10 +54,14 @@ describe("local catalog", () => {
         if (v.flags.completeness < cat.scoring.completenessFloor) short.push(v.id);
       }
     }
-    // Liquid I.V. left this list when its shown price became the real $27.99
+    // Two products have left this list by being read rather than by being
+    // filled in. Liquid I.V. left when its shown price became the real $27.99
     // rather than a prototype $24.99: its per-serving cost is computed from
-    // the price, so a real price restores it.
-    expect(short.sort()).toEqual(["ag1-pouch-30", "cure-hydration-lemonade-14", "infraredi-flex-max", "olipop-root-beer-12"]);
+    // the price, so a real price restores it. Cure left when its Lemonade page
+    // was read on 2026-09-09 and its placeholder serving size became the
+    // stated 7.3 g packet. Its caffeine is still not stated and still counts
+    // against it.
+    expect(short.sort()).toEqual(["ag1-pouch-30", "infraredi-flex-max", "olipop-root-beer-12"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {

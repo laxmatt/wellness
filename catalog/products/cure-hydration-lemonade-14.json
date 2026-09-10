@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": true
@@ -22,7 +22,7 @@
   "brandId": "cure-hydration",
   "categoryId": "wellness-drinks",
   "subcategoryId": "electrolytes",
-  "description": "Coconut-water based electrolyte mix with no added sugar, built on the WHO oral rehydration ratio.",
+  "description": "Coconut-water and lemon-juice electrolyte mix sweetened with stevia and monk fruit, 4 g of total sugar and no added sugar per packet.",
   "images": [
     {
       "id": "cure-hydration-lemonade-14-primary",
@@ -38,20 +38,21 @@
       "merchantId": "cure-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 2299,
-      "url": "https://www.curehydration.com/products/variety-pack-1",
+      "priceMinor": 2399,
+      "url": "https://www.curehydration.com/products/lemonade",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "$22.99 one-time; $18.39 on subscription. Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The 14 pack shows $23.99, read at 16:15 Pacific on 2026-09-09. A subscription price is offered separately at 15% off and is not this offer's price. The record previously carried $22.99 with an $18.39 subscription figure, both relayed from the variety pack page, which never described this flavour."
       }
     },
     {
@@ -94,43 +95,47 @@
       "value": "powder_stick",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Powder sticks. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "serving_size": {
-      "value": "1 packet in 8 to 16 oz water",
+      "value": "1 packet (7.3 g)",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Mixing volume not confirmed from the source. Demo value."
+        "note": "The page states a 7.3 g packet. It does not state a mixing volume, and the record no longer invents one: it previously carried a placeholder \"1 packet in 8 to 16 oz water\"."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "servings_per_pack": {
       "value": 14,
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "14 packets. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "price_per_serving_minor": {
-      "value": 164,
+      "value": 171,
       "unit": "USD_minor",
       "source": {
         "kind": "editorial",
         "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Pack price divided by servings."
+        "note": "Pack price divided by servings: $23.99 over 14 packets. Was 164, from the relayed $22.99 the page has now replaced."
       },
       "verification": "unknown",
       "derivedFrom": "price"
@@ -140,10 +145,11 @@
       "unit": "g",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Total sugars from coconut water and fruit juice. No added sugar. Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "4 g of total sugars from coconut water and lemon juice, with 0 g added. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
@@ -152,10 +158,11 @@
       "unit": "g",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "0 g added sugar. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
@@ -164,21 +171,23 @@
       "unit": "kcal",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "25 kcal per packet. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
       "unit": "mg",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "No caffeine listed on the source consulted. A label that does not mention caffeine does not state that there is none, so no figure is recorded."
+        "note": "The flavour page was read and states no caffeine figure. A label that does not mention caffeine does not state that there is none, so no figure is recorded and this product does not answer a caffeine-free filter."
       },
       "verification": "not_stated"
     },
@@ -187,37 +196,41 @@
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "240 mg per packet. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "potassium_mg": {
-      "value": 300,
+      "value": 310,
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "310 mg per packet. The record carried 300 mg, relayed from the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "sweeteners": {
       "value": [
-        "fruit_juice",
+        "stevia",
         "monk_fruit"
       ],
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Not confirmed from the source. Demo value."
+        "note": "The page names stevia and monk fruit as the sweeteners. Coconut water and lemon juice appear as ingredients and account for the 4 g of total sugars; they are not listed as sweeteners, so they are not recorded as ones. The record previously carried an unconfirmed fruit_juice and monk_fruit placeholder."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "dietary": {
       "value": [
@@ -227,10 +240,11 @@
       ],
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Vegan, non-GMO and gluten free, as the maker states them. These are manufacturer statements, not third-party certifications, and nothing here verifies them. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
@@ -238,24 +252,39 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.curehydration.com/products/variety-pack-1",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A subscription option is offered on the page. Replaces a citation to the variety pack page, which never described this flavour."
       },
       "verification": "manufacturer_reported"
     },
     "subscription_discount_pct": {
-      "value": 20,
+      "value": 15,
       "unit": "%",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "$22.99 to $18.39."
+        "note": "The page states 15% off on subscription. The record carried 20%, computed from a relayed $22.99 to $18.39 on the variety pack page, which never described this flavour."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
+    },
+    "fiber_g": {
+      "value": 0,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here.",
+        "url": "https://www.curehydration.com/products/lemonade",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "0 g of fiber per packet."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "source": {
@@ -263,6 +292,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the Lemonade flavour page was read by Codex on 2026-09-09 at 16:15 Pacific and the nutrition, price, sweeteners and subscription terms replaced on that reading. Stock, images and any health claim remain unverified. An earlier description repeated a WHO oral rehydration claim from marketing copy; no reading supports it and it has been removed."
   }
 }

@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **83 of 259**, across 7 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **98 of 260**, across 8 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -329,7 +329,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://icebarrel.com/products/ice-barrel-400 |
 | Sources on file | https://icebarrel.com/products/ice-barrel-400 |
 | Retrieval | 8 of 12 recorded fields were relayed rather than read from the source |
-| Ranking | score 0, completeness 75%, badges: best_budget |
+| Ranking | score 0, completeness 75%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -540,38 +540,25 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 5 of 7 required specifications carry a usable value; 1 prototype; 2 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | partly | $22.99 on record from Cure Hydration (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 2 with no recorded source |
+| Price evidence | partly | $23.99 on record from Cure Hydration (direct), read from the page (Read by Codex on the manufacturer's page for this flavour and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `cure-hydration-lemonade-14`, `/products/cure-hydration-lemonade-14-pack` |
-| Offers | Cure Hydration (direct) ($22.99, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
-| Links | https://www.curehydration.com/products/variety-pack-1<br>https://www.amazon.com/dp/B07LFLRGQ6 |
-| Sources on file | https://www.curehydration.com/products/variety-pack-1 |
-| Retrieval | 10 of 16 recorded fields were relayed rather than read from the source |
-| Ranking | score 51.3, completeness 71%, badges: none, **ineligible** |
+| Offers | Cure Hydration (direct) ($23.99, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
+| Links | https://www.curehydration.com/products/lemonade<br>https://www.amazon.com/dp/B07LFLRGQ6 |
+| Sources on file | https://www.curehydration.com/products/lemonade |
+| Retrieval | 0 of 17 recorded fields were relayed rather than read from the source |
+| Ranking | score 51.3, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
 - `function` (required): source not recorded
-- `format` (required): relayed, maker's page not fetched
-- `serving_size` (required): prototype value `"1 packet in 8 to 16 oz water"`
-- `servings_per_pack` (required): relayed, maker's page not fetched
 - `price_per_serving_minor` (required): source not recorded
-- `sugar_g` (required): relayed, maker's page not fetched
-- `added_sugar_g`: relayed, maker's page not fetched
-- `calories`: relayed, maker's page not fetched
 - `caffeine_mg` (required): no value, recorded as `not_stated`
-- `sodium_mg`: relayed, maker's page not fetched
-- `potassium_mg`: relayed, maker's page not fetched
 - `magnesium_mg`: **absent from the record**
-- `fiber_g`: **absent from the record**
-- `sweeteners`: prototype value `["fruit_juice","monk_fruit"]`
-- `dietary`: relayed, maker's page not fetched
-- `subscription_available`: relayed, maker's page not fetched
-- `subscription_discount_pct`: source not recorded
 
 ### Liquid I.V. Hydration Multiplier, Lemon Lime, 16 pack
 
@@ -684,13 +671,13 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
-| Wellness Drinks | 6 | 5 | 1 | 0 | 0 |
+| Wellness Drinks | 6 | 5 | 2 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 7 (bon-charge-max, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 8 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 3, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -702,7 +689,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 109 of 259 records and 10 of 26 offer prices are
+1. **Read the pages already on file.** 99 of 260 records and 9 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.
