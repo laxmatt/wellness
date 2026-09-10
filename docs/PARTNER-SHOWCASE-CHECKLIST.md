@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **152 of 273**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **163 of 275**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -375,23 +375,16 @@ Specifications that are missing, unsupported or relayed:
 | Offers | Plunge (direct) ($6,990, unknown, affiliate status not recorded) |
 | Links | https://plunge.com/products/plunge |
 | Sources on file | https://plunge.com/products/plunge |
-| Retrieval | 12 of 14 recorded fields were relayed rather than read from the source |
-| Ranking | score 64.8, completeness 100%, badges: best_premium |
+| Retrieval | 4 of 16 recorded fields were relayed rather than read from the source |
+| Ranking | score 81.5, completeness 100%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
 
-- `chiller_included` (required): relayed, maker's page not fetched
-- `min_temp_f`: relayed, maker's page not fetched
-- `heating`: **absent from the record**
+- `heating`: no value, recorded as `not_stated`
 - `tub_type` (required): source not recorded
-- `water_capacity_gal`: relayed, maker's page not fetched
-- `fits_height_in`: relayed, maker's page not fetched
-- `insulated`: **absent from the record**
-- `placement`: prototype value `["indoor","outdoor"]`
 - `plumbing`: relayed, maker's page not fetched
 - `sanitation_system` (required): relayed, maker's page not fetched
 - `sanitation_methods`: relayed, maker's page not fetched
-- `warranty_years` (required): relayed, maker's page not fetched
 
 ### Renu Therapy Cold Stoic 2.0
 
@@ -654,7 +647,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 73 of 273 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 65 of 275 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

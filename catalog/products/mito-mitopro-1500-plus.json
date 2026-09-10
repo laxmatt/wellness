@@ -21,7 +21,7 @@
   "brandId": "mito-red-light",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "Four-wavelength full-body panel, 12 in wide by 36 in high, with 300 dual-chip LEDs and a three-year warranty.",
+  "description": "Four-wavelength full-body panel, 12 in wide by 36 in high, with 300 LEDs and a three-year warranty.",
   "images": [
     {
       "id": "mito-mitopro-1500-plus-primary",
@@ -157,7 +157,7 @@
         "url": "https://mitoredlight.com/products/mitopro-series",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "300 dual-chip LEDs. The count is of LEDs, not of chips, and the two are not added together here. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
+        "note": "300 LEDs. The reading confirms the count and not the wording: the record previously said \"300 dual-chip LEDs\", relayed from a search summary, and that adjective is not carried forward as if it had been read. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "manufacturer_reported"
     },

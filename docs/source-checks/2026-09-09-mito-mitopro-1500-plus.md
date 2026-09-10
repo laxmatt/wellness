@@ -43,10 +43,15 @@ what was observed, and that is all the record claims.
 - **Coverage "full body"**, promoted from an editorial inference to a maker
   statement, because the page describes it. Footprint stays an editorial class
   and now rests on read dimensions.
-- **Wavelengths 630, 660, 830 and 850 nm; 300 dual-chip LEDs; a 3-year
-  warranty**, confirmed on the page rather than relayed. The LED count is of
-  LEDs, not chips, and the two are not added together, which is the rule this
-  catalogue settled on the BON CHARGE reading.
+- **Wavelengths 630, 660, 830 and 850 nm; 300 LEDs; a 3-year warranty**,
+  confirmed on the page rather than relayed.
+
+  The count is 300 and the reading says nothing about dual chips. The record
+  had "300 dual-chip LEDs" from a search summary, and an earlier version of
+  this file kept that adjective while calling the line freshly read. It is
+  removed. Confirming a number does not confirm the words that were sitting
+  beside it, and this catalogue's rule about not adding chips into a count
+  does not need an unread adjective to state it. Corrected on 2026-09-10.
 - **Returns 60 days** unchanged and still cited as relayed. The reading did not
   cover returns, and a reading that did not reach a figure says nothing about
   whether the page states it.

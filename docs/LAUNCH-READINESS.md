@@ -356,7 +356,14 @@ What the evidence says, per category, as of 2026-09-09:
   product URL that redirects to the home page, Edge Theory Labs has four demo
   values and an unconfirmed listing claim that the brand is out of business,
   and Best Budget is withheld because no budget-tier product scores above
-  zero. Three of the six carry demo values.
+  zero. Two of the six carry demo values.
+
+  Plunge Original carries a **known-stale price**: $6,990 relayed, against
+  $6,790 displayed on the page read 2026-09-09. It was not imported because the
+  page prices a configuration and this record's configuration, cold-only or
+  heater, has not been matched. Settling that is a reading, and until it
+  happens the site shows an amount its own source note says is contradicted.
+  This is the only place in the catalogue where that is true.
 
 Where the remaining source work sits, then: Cold Plunges first by need, and
 Infraredi in Red Light as the single cheapest fix. That is where to read next,
