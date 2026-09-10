@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": false
@@ -17,11 +17,11 @@
   },
   "id": "ag1-pouch-30",
   "slug": "ag1-greens-powder-30-servings",
-  "name": "AG1 Greens Powder, 30 servings",
+  "name": "AG1 Greens Powder, Next Gen Original, 30 servings",
   "brandId": "ag1",
   "categoryId": "wellness-drinks",
   "subcategoryId": "greens",
-  "description": "Daily greens and vitamin powder. One scoop in 8 oz of water. Subscription cuts the per-serving price.",
+  "description": "Daily greens and vitamin powder, Next Gen Original. One 13 g level scoop, 40 calories, 2 g of fiber and under 1 g of total sugar. Contains soy.",
   "images": [
     {
       "id": "ag1-pouch-30-primary",
@@ -44,14 +44,16 @@
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "$99 one-time; $79 on subscription. Relayed via search summary; manufacturer page not fetched directly."
-      }
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "$99 one-time for 30 servings, read at 16:39 Pacific on 2026-09-09, with $9 shipping stated separately. Two subscription options are offered and neither is recorded as this offer's price: $79 on the 30-day subscription and $207 on the 90-day. A first-order promotional price is also shown and is deliberately not recorded: it is not what this pack costs. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
+      },
+      "shippingNote": "$9 shipping, stated on the product page"
     }
   ],
   "attributes": {
@@ -72,31 +74,35 @@
       "value": "powder_scoop",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A powder measured by scoop. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
     "serving_size": {
-      "value": "1 scoop (about 12 g) in 8 oz water",
+      "value": "1 level scoop (13 g)",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Sources report 12 to 13 g per scoop. Demo value."
+        "note": "One level scoop, 13 g. The record carried a placeholder \"about 12 g\" built from a relayed 12 to 13 g range; the page states 13 g. It does not state a mixing volume in what was retrieved, and the placeholder's \"in 8 oz water\" is not carried forward as if it had been read. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "servings_per_pack": {
       "value": 30,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "30 servings. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
@@ -106,9 +112,9 @@
       "source": {
         "kind": "editorial",
         "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "One-time pack price divided by servings. Subscription is $2.63 per serving."
+        "note": "One-time pack price divided by servings: $99 over 30. Shipping is not included, because this figure is what the powder costs, not what an order costs. The subscriptions work out lower: $79 for 30 days is $2.63 a serving and $207 for 90 days is $2.30."
       },
       "verification": "unknown",
       "derivedFrom": "price"
@@ -118,10 +124,11 @@
       "unit": "g",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Label states less than 1 g total sugar; no added sugar. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The label states less than 1 g of total sugar. The bound is the only number stated and is recorded as a bound. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported",
       "bound": "less_than"
@@ -134,19 +141,20 @@
         "url": "https://drinkag1.com/products/greens-powder-pouch",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Relayed via search summary; manufacturer page not fetched directly. The 2026-09-09 reading of the product page did not show this figure in the table it retrieved, so this value is still the relayed one and is still cited as relayed. Nothing here says the label omits it."
       },
       "verification": "manufacturer_reported"
     },
     "calories": {
-      "value": 50,
+      "value": 40,
       "unit": "kcal",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "40 kcal per serving. The record carried a relayed 50 kcal, which this page does not support. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
@@ -157,7 +165,7 @@
         "url": "https://drinkag1.com/products/greens-powder-pouch",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Brand states no ADDED caffeine and notes trace caffeine from green tea extract, with no amount on the label. No figure is stated, so none is recorded. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Brand states no ADDED caffeine and notes trace caffeine from green tea extract, with no amount on the label. No figure is stated, so none is recorded. Relayed via search summary; manufacturer page not fetched directly. The 2026-09-09 reading did not show a caffeine figure in the table it retrieved either, so none is recorded and none is inferred from the absence."
       },
       "verification": "not_stated"
     },
@@ -166,10 +174,11 @@
       "unit": "g",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "2 g of fiber per serving. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
@@ -179,10 +188,11 @@
       ],
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Stevia leaf extract. The page also states the product contains soy, which is an allergen rather than a sweetener and is recorded in the description instead of being forced into this list. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
@@ -204,24 +214,51 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://drinkag1.com/products/greens-powder-pouch",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Two subscription options are offered, 30-day and 90-day. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
     "subscription_discount_pct": {
-      "value": 20,
       "unit": "%",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "$99 to $79."
+        "note": "No single discount percentage is recorded, because the page states two subscription prices at different cadences and they do not imply one figure: $79 for 30 days against a $99 one-time pack is about 20 per cent, and $207 for 90 days works out near 30 per cent for the same quantity. The record previously said 20 per cent, computed from a relayed $99 to $79 as though the 30-day option were the only one. Picking either cadence now would state a discount the page does not."
       },
-      "verification": "unknown"
+      "verification": "not_stated"
+    },
+    "sodium_mg": {
+      "value": 35,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "35 mg of sodium per serving. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "potassium_mg": {
+      "value": 250,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://drinkag1.com/products/greens-powder-pouch",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "250 mg of potassium per serving. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "source": {
@@ -229,6 +266,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the Next Gen Original pouch page was read by Codex on 2026-09-09 at 16:39 Pacific. The page is explicitly Next Gen Original. Citrus and Berry are separate choices this record does not describe, and their figures must not be mixed in here. Added sugar and caffeine were not in the table that reading retrieved, so neither was inferred and the added-sugar figure is still the relayed one. Dietary claims were not part of this reading and remain prototype data. Stock, images and any health claim remain unverified."
   }
 }

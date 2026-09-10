@@ -48,18 +48,18 @@ describe("the sources block", () => {
   it("counts demo data and unstated figures separately, and calls neither the other", () => {
     render(<ProvenanceBlock view={ag1()} />);
     const text = screen.getByText(/Last updated/).textContent ?? "";
-    // AG1 holds two demo fields, one figure its source does not state, and one
-    // bound. Calling the unstated one an invention is a different accusation
-    // and the wrong one.
-    expect(text).toMatch(/2 fields carry demo data/);
-    expect(text).toMatch(/1 field is not stated by the source/);
+    // AG1 holds one demo field, two figures its source does not state, and one
+    // bound. Calling an unstated figure an invention is a different accusation
+    // and the wrong one, which is what this counts separately for.
+    expect(text).toMatch(/1 field carries demo data/);
+    expect(text).toMatch(/2 fields are not stated by the source/);
     expect(text).toMatch(/1 figure is a bound the source states/);
     expect(text).not.toMatch(/3 fields carry demo/);
   });
 
   it("renders the note that says why, which is where the reason has always been", () => {
     render(<ProvenanceBlock view={ag1()} />);
-    expect(screen.getByText(/Label states less than 1 g total sugar/)).toBeTruthy();
+    expect(screen.getByText(/The label states less than 1 g of total sugar/)).toBeTruthy();
     expect(screen.getByText(/trace caffeine from green tea extract/)).toBeTruthy();
   });
 
@@ -107,34 +107,53 @@ describe("the comparison table", () => {
   });
 });
 
-describe("an offer whose amount belongs to another product says so on the page", () => {
+describe("an offer whose amount belongs to another product is not a way to buy this one", () => {
   const withMismatchCheapest = () => {
     const p = miniProduct("subject", 10000, { power: 50, size: "m" });
     p.offers = [
-      { ...offer("real", 2499), source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "direct" as const } },
+      { ...offer("real", 2499), url: "https://example.com/lemon-lime-16", source: { kind: "manufacturer" as const, url: "https://example.com/lemon-lime-16", retrievedAt: "2026-09-09", method: "direct" as const } },
       {
         ...offer("mismatched", 1999),
+        url: "https://example.com/variety-pack",
         disputed: true,
-        source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different pack." },
+        source: { kind: "manufacturer" as const, url: "https://example.com/variety-pack", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different pack." },
       },
     ];
     return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
   };
 
-  it("marks the row and prints the reason from the record", () => {
-    render(<OfferList view={withMismatchCheapest()} />);
-    expect(screen.getByText("Not this product")).toBeTruthy();
-    expect(screen.getByText(/not used for the price shown above/)).toBeTruthy();
-    expect(screen.getByText(/Reported for a different pack/)).toBeTruthy();
+  it("shows neither its amount nor its link, and keeps the right offer", () => {
+    // Labelling the row was not enough. A row with a price and a Shop button
+    // is a way to buy something, and this one buys a different product at a
+    // different price.
+    const { container } = render(<OfferList view={withMismatchCheapest()} />);
+    const html = container.innerHTML;
+    expect(html).not.toContain("19.99");
+    expect(html).not.toContain("variety-pack");
+    expect(screen.getByText("$24.99")).toBeTruthy();
+    expect(container.querySelector('a[href="https://example.com/lemon-lime-16"]')).toBeTruthy();
   });
 
-  it("does not call it the lowest, even though it sorts first", () => {
+  it("says an amount is on record and withheld, rather than vanishing", () => {
+    render(<OfferList view={withMismatchCheapest()} />);
+    expect(screen.getByText(/One further amount is on record and is not shown here/)).toBeTruthy();
+  });
+
+  it("does not call the remaining offer the lowest of two", () => {
     const view = withMismatchCheapest();
-    // It really is the cheapest amount on the record, and the list is sorted
-    // by amount, so it is the first row. That is exactly when a "Lowest" chip
-    // would be a lie.
+    // The withheld one really is the cheapest amount on the record, and the
+    // list is sorted by amount, so it was the first row. One offer left means
+    // no lowest to name.
     expect(view.offers[0].id).toBe("mismatched");
     render(<OfferList view={view} />);
     expect(screen.queryByText("Lowest")).toBeNull();
+  });
+
+  it("keeps the evidence on the record, which is where it belongs", () => {
+    const view = withMismatchCheapest();
+    const row = view.offers.find((o) => o.id === "mismatched")!;
+    expect(row.price.amountMinor).toBe(1999);
+    expect(row.url).toBe("https://example.com/variety-pack");
+    expect(row.disputeNote).toBe("Reported for a different pack.");
   });
 });

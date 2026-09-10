@@ -52,7 +52,18 @@ export default async function ProductPage({ params }: Props) {
   const cat = page.cat;
   const primaryBadge = item.badges[0];
   const alsoValue = item.badges.includes("best_overall") && item.badges.includes("best_value");
-  const lowest = view.offers[0];
+  // A disputed offer is not a way to buy this product: its amount and its link
+  // belong to something else. It stays on the record and out of every buying
+  // surface, which is this button, the retailer list and the structured data.
+  const buyable = view.offers.filter((o) => !o.disputed);
+  const lowest = buyable[0];
+
+  // Structured data is a price claim made to search engines, which will quote
+  // it back to people. It carries only amounts that price this product:
+  // nothing disputed, and nothing whose amount is prototype data. The page
+  // itself has said "Check current price" for a placeholder since 2026-09-09;
+  // this markup was still publishing the invented number underneath it.
+  const publishedOffers = buyable.filter((o) => !o.priceIsDemo);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -61,9 +72,9 @@ export default async function ProductPage({ params }: Props) {
     brand: { "@type": "Brand", name: view.brand.name },
     description: view.description,
     url: `${SITE_URL}/products/${view.slug}`,
-    ...(view.offers.length > 0
+    ...(publishedOffers.length > 0
       ? {
-          offers: view.offers.map((o) => ({
+          offers: publishedOffers.map((o) => ({
             "@type": "Offer",
             price: (o.price.amountMinor / 100).toFixed(2),
             priceCurrency: o.price.currency,
@@ -113,8 +124,8 @@ export default async function ProductPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <CompareToggle size="lg" item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
               {lowest ? (
-                <a href={view.offers.length > 1 ? "#retailers" : lowest.url} target={view.offers.length > 1 ? undefined : "_blank"} rel={view.offers.length > 1 ? undefined : "sponsored nofollow noopener"} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
-                  {view.offers.length > 1 ? `See ${view.offers.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
+                <a href={buyable.length > 1 ? "#retailers" : lowest.url} target={buyable.length > 1 ? undefined : "_blank"} rel={buyable.length > 1 ? undefined : "sponsored nofollow noopener"} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
+                  {buyable.length > 1 ? `See ${buyable.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
                 </a>
               ) : null}
             </div>

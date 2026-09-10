@@ -365,10 +365,47 @@ async function run(browser: Browser) {
       const block = await priceBlock(page, money);
       ok("shows the price the engine computed, in its own block", block.found, money);
     }
-    for (const offer of view.offers.filter((o) => o.priceIsDemo)) {
+    for (const offer of view.offers.filter((o) => o.priceIsDemo && !o.disputed)) {
       const row = await offerRowText(page, offer.merchant.name);
       ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price)), row);
       ok(`the ${offer.merchant.name} row says to check instead`, row.includes("Check current price"), row);
+    }
+
+    // An offer whose amount belongs to another product is not a way to buy
+    // this one. It stays on the record and appears on no buying surface: no
+    // row, no amount, no link, and nothing in the structured data a search
+    // engine will quote back to somebody.
+    const jsonLd = (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "";
+    const retailers = (await page.locator("#retailers").textContent()) ?? "";
+    for (const offer of view.offers.filter((o) => o.disputed)) {
+      const amount = formatMoney(offer.price);
+      // Scoped to the retailers section on purpose. A source note elsewhere on
+      // the page may recount what this amount used to be and why it stopped
+      // being the price, and that history is the point of keeping the record.
+      // What must not exist is a way to buy at it.
+      ok(`the ${offer.merchant.name} row is gone from the retailers section`, !retailers.includes(offer.merchant.name), retailers.slice(0, 160));
+      ok(`its amount ${amount} is not quoted there either`, !retailers.includes(amount), retailers.slice(0, 160));
+      const html = await page.content();
+      ok("its link is nowhere on the page at all", !html.includes(offer.url), offer.url);
+      ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
+      ok("but the page says an amount is on record and withheld", retailers.includes("is on record and is not shown here"));
+    }
+
+    // The same rule for a placeholder amount, which the page has hidden since
+    // 2026-09-09 while the markup went on publishing it underneath.
+    //
+    // Counted rather than string-matched: two offers can carry the same
+    // amount, so finding "23.99" in the markup proves nothing about which
+    // offer put it there. The URL is what identifies an offer.
+    const publishable = view.offers.filter((o) => !o.disputed && !o.priceIsDemo);
+    const publishedCount = (jsonLd.match(/"@type":"Offer"/g) ?? []).length;
+    check("structured data publishes exactly the offers that price this product", publishedCount, publishable.length);
+    for (const offer of view.offers.filter((o) => o.priceIsDemo || o.disputed)) {
+      ok(
+        `the ${offer.merchant.name} row is not published as structured data`,
+        !jsonLd.includes(offer.url),
+        offer.url,
+      );
     }
     // A source note may quote what a source reported: that is provenance, and
     // on a product with a real price it is the price's own paperwork. On a
@@ -414,7 +451,9 @@ async function run(browser: Browser) {
         .filter((a) => new URL(a.href).origin !== location.origin)
         .map((a) => ({ href: a.href, rel: a.getAttribute("rel") ?? "", target: a.getAttribute("target") ?? "" })),
     );
-    for (const offer of view.offers) {
+    // Buyable only. A disputed offer is deliberately unlinked, and the checks
+    // above prove its link is absent rather than present.
+    for (const offer of view.offers.filter((o) => !o.disputed)) {
       const same = (a: string, b: string) => new URL(a).href === new URL(b).href;
       const link = links.find((l) => same(l.href, offer.url));
       ok(`offer ${offer.merchant.name} is linked`, link !== undefined, offer.url);

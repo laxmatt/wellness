@@ -34,12 +34,33 @@ function shortDate(iso: string): string {
 }
 
 export function OfferList({ view }: { view: ProductView }) {
-  if (view.offers.length === 0) {
+  // A disputed offer is not a buy option. Its amount belongs to a different
+  // product and its link goes to a different product's listing, so rendering
+  // the row at all would put a wrong price and a wrong destination in front of
+  // a shopper, however it was labelled. The row is withheld from this list and
+  // the page says one exists, without repeating the amount or the link.
+  //
+  // Withheld, not deleted. The record keeps the offer, its amount, its URL and
+  // its note; `docs/source-checks/` keeps the reading; the partner checklist
+  // still reports it. None of that is a shopping page.
+  const offers = view.offers.filter((o) => !o.disputed);
+  const withheldOffers = view.offers.length - offers.length;
+  const withheldLine =
+    withheldOffers > 0 ? (
+      <p className="mt-2 text-xs text-fg-muted">
+        {withheldOffers === 1 ? "One further amount is on record and is not shown here" : `${withheldOffers} further amounts are on record and are not shown here`}: the
+        record cannot show it belongs to this product, so it is not offered as a
+        way to buy this one.
+      </p>
+    ) : null;
+
+  if (offers.length === 0) {
     return (
       <div className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
         {view.price.isDemo
           ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
           : `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`}
+        {withheldLine}
       </div>
     );
   }
@@ -56,23 +77,16 @@ export function OfferList({ view }: { view: ProductView }) {
         .
       </p>
       <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
-      {view.offers.map((o, i) => (
+      {offers.map((o, i) => (
         <li key={o.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <p className="font-semibold">{o.merchant.name}</p>
-              {i === 0 && !o.disputed && view.offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
-              {o.disputed ? <span className="rounded-pill bg-surface px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-fg-muted ring-1 ring-edge-strong">Not this product</span> : null}
+              {i === 0 && offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
             </div>
             <p className="mt-0.5 text-xs text-fg-muted">
               {availabilityCopy[o.availability]} · checked {shortDate(o.lastChecked)} · {affiliateCopy[o.affiliateStatus]}
             </p>
-            {o.disputed ? (
-              <p className="mt-1 max-w-prose text-xs text-fg-soft">
-                This amount is not used for the price shown above: the record cannot show it belongs to this product.
-                {o.disputeNote ? ` ${o.disputeNote}` : ""}
-              </p>
-            ) : null}
             {o.discountCodes.length > 0 ? (
               <ul className="mt-2 flex flex-wrap gap-2">
                 {o.discountCodes.map((d) => (
@@ -98,6 +112,7 @@ export function OfferList({ view }: { view: ProductView }) {
         </li>
       ))}
       </ul>
+      {withheldLine}
     </>
   );
 }

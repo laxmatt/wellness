@@ -54,15 +54,17 @@ describe("local catalog", () => {
         if (v.flags.completeness < cat.scoring.completenessFloor) short.push(v.id);
       }
     }
-    // Three products have left this list by being read rather than by being
-    // filled in. Liquid I.V. left when its shown price became the real $27.99
-    // rather than a prototype $24.99: its per-serving cost is computed from
-    // the price, so a real price restores it. Cure left when its Lemonade page
-    // was read and its placeholder serving size became the stated 7.3 g
-    // packet. OLIPOP left when its Classic Root Beer page was read and its
-    // placeholder price, sugar and calories became stated figures. Caffeine is
-    // still unstated on both drinks and still counts against them.
-    expect(short.sort()).toEqual(["ag1-pouch-30", "infraredi-flex-max"]);
+    // Four products have left this list by being read rather than by being
+    // filled in: Liquid I.V. when its per-serving cost stopped resting on a
+    // prototype price, Cure when its placeholder serving size became a stated
+    // 7.3 g packet, OLIPOP when its placeholder price, sugar and calories
+    // became stated figures, and AG1 when its placeholder scoop became a
+    // stated 13 g one. Caffeine is unstated on three of them and still counts
+    // against each.
+    //
+    // Infraredi Flex Max is the last one here, and it is the last unread
+    // product in Red Light Therapy.
+    expect(short.sort()).toEqual(["infraredi-flex-max"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {

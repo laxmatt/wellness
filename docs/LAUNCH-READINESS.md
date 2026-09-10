@@ -293,10 +293,10 @@ drifts from the catalogue.
 It reports evidence on three independent dimensions and makes no launch
 selection: which products to publish, and in what order, is not a question the
 catalogue answers. Its figures are computed, so they move when the data does.
-As of 2026-09-09, after ten readings: a real amount is the shown price on 18 of
-20, ten products have that amount read from the merchant's own page rather than
-relayed, 115 of 264 records cite a page somebody opened, and no product has a
-real image.
+As of 2026-09-09, after twelve readings: a real amount is the shown price on 18
+of 20, eleven products have that amount read from the merchant's own page
+rather than relayed, and no product has a real image. The record-level counts
+are in the checklist, which computes them.
 
 An amount on record is not a verified price, and a reading is not a
 measurement. `docs/source-checks/` holds one file per reading: who read the
@@ -320,11 +320,11 @@ What actually holds it back, in the order that matters:
    will move it: reading a page grants no right to its pictures. Every other
    item on this list is work this project can do. This one needs permission
    from somebody, or photographs of products somebody owns.
-2. **Sourcing.** 115 of 264 records now cite a page somebody opened; the rest
-   are `secondhand`, recorded from a search summary. Ten products have their
-   shown price read from the merchant. The remaining ten are the cheapest
-   large improvement available, because the URLs are already on file.
-3. **Prototype specifications.** 14 values across 9 products are demo data,
+2. **Sourcing.** Most records still cite a search summary rather than a page
+   somebody opened. Eleven products have their shown price read from the
+   merchant; the remaining nine are the cheapest large improvement available,
+   because the URLs are already on file.
+3. **Prototype specifications.** 13 values across 9 products are demo data,
    down from 24 across 14. Each is marked on the page, which is honest and
    still reads as unfinished.
 4. **`NEXT_PUBLIC_SITE_URL` and a host config**, unless the hosting account
@@ -338,26 +338,29 @@ a comparison site to behave and is honest about what is known.
 
 ## Launch selection
 
-Not decided here, and not decidable from evidence alone: a partner conversation
-is about a category that looks complete, not about a per-product score. What
-the evidence says, per category, as of 2026-09-09:
+**All three categories are in scope and stay in scope.** The checklist reports
+evidence, and an evidence gap is work to do rather than grounds for dropping a
+category. Nothing below narrows what the site launches with; it says where the
+remaining source work sits.
 
-- **Red Light Therapy, 8 products.** The strongest category. Six have a price
-  read from the maker. Infraredi Flex Max is the weak one: ineligible, two
-  demo values, no amount on record.
-- **Wellness Drinks, 6 products.** Four read in the last two days. AG1 is
-  ineligible on two demo values. Every nutrition figure on Liquid I.V. is
-  still relayed.
-- **Cold Plunges, 6 products.** The weakest, and the one with the visible
-  holes: Ice Barrel 400 scores 0 with a product URL that redirects, Edge Theory
-  Labs has four demo values and an unconfirmed claim that the brand is out of
-  business, and Best Budget is withheld because no budget-tier product scores
-  above zero. Three of the six carry demo values.
+What the evidence says, per category, as of 2026-09-09:
 
-The order that follows from that, if somebody wants one: Red Light first,
-Drinks second, Cold Plunges only after the 400 and the Edge record are settled.
-That is a judgement, not a computation, and the checklist deliberately does not
-make it.
+- **Red Light Therapy, 8 products.** Six have a price read from the maker.
+  Infraredi Flex Max is the one unread record left: ineligible, two demo
+  values, no amount on record.
+- **Wellness Drinks, 6 products.** All six read, five of them on 2026-09-09.
+  Every product is eligible and every one carries a real price. What is left
+  is Liquid I.V.'s nutrition, still entirely relayed because that reading did
+  not reach the table, and AG1's dietary claims.
+- **Cold Plunges, 6 products.** The least read. Ice Barrel 400 scores 0 with a
+  product URL that redirects to the home page, Edge Theory Labs has four demo
+  values and an unconfirmed listing claim that the brand is out of business,
+  and Best Budget is withheld because no budget-tier product scores above
+  zero. Three of the six carry demo values.
+
+Where the remaining source work sits, then: Cold Plunges first by need, and
+Infraredi in Red Light as the single cheapest fix. That is where to read next,
+not a ranking of which categories deserve to launch.
 
 ## Open policy questions, for one consolidated review
 
@@ -384,3 +387,24 @@ piecemeal.
    and found to be none. The site says so, and the ranking cannot see the
    field either way. Worth deciding whether `unknown` should ever be published
    or whether every offer needs a recorded answer first.
+
+## Fixed on 2026-09-09, worth remembering
+
+**Structured data was publishing amounts the page had hidden.** The JSON-LD on
+every product page listed every offer, so a prototype amount that the page
+displayed as "Check current price" was still being handed to search engines as
+this product's price, on four products. A disputed offer's amount and its link
+were being published the same way. Hiding a number in one surface is not
+withholding it; every surface that states a price has to be checked, and the
+browser harness now checks the published offer count against the offers that
+actually price the product on all 20.
+
+## Known defects, logged for a bounded fix
+
+1. **Duplicate React key in the comparison table.** Rendering a compare model
+   logs `Encountered two children with the same key, "Buying"`, because two
+   spec groups carry that label and the list is keyed by label rather than by
+   anything unique. It is a warning, not a visible fault: React's fallback
+   still renders both groups. It predates the 2026-09-09 readings and
+   reproduces on a stashed tree. A one-line key change plus a regression, kept
+   out of the data batches it was found in.

@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **115 of 264**, across 10 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **127 of 266**, across 11 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -462,12 +462,12 @@ Specifications that are missing, unsupported or relayed:
 
 ## Wellness Drinks
 
-### AG1 AG1 Greens Powder, 30 servings
+### AG1 AG1 Greens Powder, Next Gen Original, 30 servings
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 5 of 7 required specifications carry a usable value; 1 prototype; 2 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | partly | $99 on record from AG1 (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 2 with no recorded source |
+| Price evidence | partly | $99 on record from AG1 (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -476,28 +476,19 @@ Specifications that are missing, unsupported or relayed:
 | Offers | AG1 (direct) ($99, unknown, affiliate status not recorded) |
 | Links | https://drinkag1.com/products/greens-powder-pouch |
 | Sources on file | https://drinkag1.com/products/greens-powder-pouch |
-| Retrieval | 10 of 15 recorded fields were relayed rather than read from the source |
-| Ranking | score 83, completeness 71%, badges: none, **ineligible** |
+| Retrieval | 2 of 17 recorded fields were relayed rather than read from the source |
+| Ranking | score 84.5, completeness 86%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
 
 - `function` (required): source not recorded
-- `format` (required): relayed, maker's page not fetched
-- `serving_size` (required): prototype value `"1 scoop (about 12 g) in 8 oz water"`
-- `servings_per_pack` (required): relayed, maker's page not fetched
 - `price_per_serving_minor` (required): source not recorded
-- `sugar_g` (required): bound: less than 1 g; relayed, maker's page not fetched
+- `sugar_g` (required): bound: less than 1 g
 - `added_sugar_g`: relayed, maker's page not fetched
-- `calories`: relayed, maker's page not fetched
 - `caffeine_mg` (required): no value, recorded as `not_stated`; relayed, maker's page not fetched
-- `sodium_mg`: **absent from the record**
-- `potassium_mg`: **absent from the record**
 - `magnesium_mg`: **absent from the record**
-- `fiber_g`: relayed, maker's page not fetched
-- `sweeteners`: relayed, maker's page not fetched
 - `dietary`: prototype value `["vegan","gluten_free","non_gmo"]`
-- `subscription_available`: relayed, maker's page not fetched
-- `subscription_discount_pct`: source not recorded
+- `subscription_discount_pct`: no value, recorded as `not_stated`
 
 ### CELSIUS Sparkling Orange, 12 pack
 
@@ -514,7 +505,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.amazon.com/dp/B007R8XGJA |
 | Sources on file | https://www.amazon.com/dp/B007R8XGJA |
 | Retrieval | 6 of 11 recorded fields were relayed rather than read from the source |
-| Ranking | score 61.1, completeness 100%, badges: none |
+| Ranking | score 60.9, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -551,7 +542,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.curehydration.com/products/lemonade<br>https://www.amazon.com/dp/B07LFLRGQ6 |
 | Sources on file | https://www.curehydration.com/products/lemonade |
 | Retrieval | 0 of 17 recorded fields were relayed rather than read from the source |
-| Ranking | score 76.3, completeness 86%, badges: none |
+| Ranking | score 75.6, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -575,7 +566,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier<br>https://www.amazon.com/dp/B01IT9NLHW |
 | Sources on file | https://www.liquid-iv.com/pages/ingredients<br>https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier |
 | Retrieval | 9 of 15 recorded fields were relayed rather than read from the source |
-| Ranking | score 13.9, completeness 86%, badges: none |
+| Ranking | score 12.5, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -640,7 +631,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://drinkolipop.com/products/classic-root-beer |
 | Sources on file | https://drinkolipop.com/products/classic-root-beer<br>https://drinkolipop.com/pages/ingredients |
 | Retrieval | 1 of 16 recorded fields were relayed rather than read from the source |
-| Ranking | score 51.6, completeness 86%, badges: none |
+| Ranking | score 50.4, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -657,13 +648,13 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
-| Wellness Drinks | 6 | 6 | 4 | 0 | 0 |
+| Wellness Drinks | 6 | 6 | 5 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 10 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 11 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -675,7 +666,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 95 of 264 records and 9 of 26 offer prices are
+1. **Read the pages already on file.** 87 of 266 records and 8 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

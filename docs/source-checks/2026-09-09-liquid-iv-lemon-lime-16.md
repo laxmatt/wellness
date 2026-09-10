@@ -58,11 +58,31 @@ computed from it and shown as $1.75.
 Nothing was hidden. The note said "variety pack" and the site priced on it
 anyway, because no mechanism read the note.
 
-**What was done.** The `disputed` marker, which already exists for attribute
-values, now exists on offers and means the same thing: the row stays visible
-with its note, and nothing prices, ranks or counts on it. The Amazon row is
-marked disputed, keeps its $27.99 and its history, and renders on the page as
-"Not this product" with a sentence saying the amount is not used and why.
+**What was done, and then corrected.** The `disputed` marker, which already
+exists for attribute values, now exists on offers and means the same thing:
+nothing prices, ranks or counts on it.
+
+The first attempt kept the row on the page, labelled "Not this product". That
+was wrong, and the correction is the point: a row with an amount and a Shop
+button is a way to buy something, whatever the label above it says, and this
+one bought a different product at a different price. Labelling a wrong price
+does not stop somebody paying it.
+
+Disputed offers are now withheld from every buying surface: the retailer list,
+the Shop button and its "See N retailers" count, and the JSON-LD. The page says
+"One further amount is on record and is not shown here" and gives neither the
+amount nor the link. The record keeps all of it, and so does the partner
+checklist, which is not a shopping page.
+
+**A second leak, found while proving the first.** The structured data was
+publishing every offer, so the disputed $27.99 and its Amazon URL were being
+handed to search engines as a price for this product. The same markup was also
+publishing prototype amounts on four other products, months after the page
+itself started saying "Check current price" instead of showing them. A
+placeholder price hidden on the page and published in the markup is still a
+published price. Both are fixed by the same filter, and the harness now checks
+the count of published offers against the offers that actually price the
+product, on all 20.
 
 **Why preferring the direct offer would not have been enough.** The direct
 offer only happened to be the right one here. A rule that prefers it would
