@@ -7,6 +7,7 @@ import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import type { CategoryDefinition } from "@/domain/category";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "@/domain/recommend";
+import { buyableOffers } from "@/domain/view";
 
 // Card budget: image, one badge, brand, name, price, three specs, one why
 // line, one tradeoff line (hidden on phones), two actions. Nothing else.
@@ -16,8 +17,14 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   const primaryBadge = item.badges[0];
   const strength = primaryStrength(view, cat);
   const tradeoff = primaryTradeoff(view, cat);
-  const shopHref = view.offers.length === 1 ? view.offers[0].url : `${href}#retailers`;
-  const external = view.offers.length === 1;
+  // Only offers a shopper can be sent to. A card sent people straight to a
+  // withheld listing whenever a product had exactly one offer and that offer
+  // was the withheld one: Plunge's card carried a Shop button to a page whose
+  // configuration nobody has matched, which the product page already refuses
+  // to link.
+  const buyable = buyableOffers(view);
+  const shopHref = buyable.length === 1 ? buyable[0].url : `${href}#retailers`;
+  const external = buyable.length === 1;
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">

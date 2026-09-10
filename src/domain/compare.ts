@@ -6,7 +6,7 @@ import { formatMoney } from "./money";
 import type { Badge } from "./recommend/badges";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "./recommend";
 import type { Verification } from "./provenance";
-import { displayPrice, type ProductView } from "./view";
+import { buyableOffers, displayPrice, type ProductView } from "./view";
 
 // Serializable comparison model. Built on the server so the client component
 // carries no domain code, only rows to render.
@@ -147,10 +147,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     // Affiliate status is not read here and cannot be. `ProductView` carries it
     // for display; nothing in this file sorts, filters or picks on it, and the
     // affiliate-neutrality test would fail if it did.
-    merchants: it.view.offers
-      .filter((o) => !o.disputed)
-      .slice()
-      .sort((a, b) => Number(a.priceIsDemo) - Number(b.priceIsDemo) || a.price.amountMinor - b.price.amountMinor)
+    merchants: buyableOffers(it.view)
       .map((o) => ({
         offerId: o.id,
         merchant: o.merchant.name,

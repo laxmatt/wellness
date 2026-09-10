@@ -56,7 +56,10 @@ export function FilterChips() {
 export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: ReactNode[]; emptyHref?: string; emptyLabel?: string }) {
   const f = useCategoryFilters();
   const indexOf = useMemo(() => new Map((f?.ids ?? []).map((id, i) => [id, i])), [f?.ids]);
-  if (!f) return <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{children}</div>;
+  // `data-product-grid` names the grid a filter acts on. The picks row above
+  // it is also a row of <article> cards now, and anything identifying the grid
+  // by shape confused the two once a filter shrank the grid below four.
+  if (!f) return <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{children}</div>;
 
   return (
     <div>
@@ -99,7 +102,7 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           ) : null}
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {/* The assistant's order when it has one, the page's otherwise. A
               preference that reorders nothing is not a preference. */}
           {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}

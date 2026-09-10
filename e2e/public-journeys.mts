@@ -71,9 +71,11 @@ function watch(page: Page) {
 // and the grid are both card lists, so the grid is the one with the most.
 async function shownSlugs(page: Page): Promise<string[]> {
   return page.evaluate(() => {
-    const grids = [...document.querySelectorAll("div")].filter((d) => d.querySelectorAll(":scope > article").length > 0);
-    if (grids.length === 0) return [];
-    const grid = grids.sort((a, b) => b.querySelectorAll(":scope > article").length - a.querySelectorAll(":scope > article").length)[0];
+    // The grid names itself. Picking "the div with the most article children"
+    // read the picks row instead once a filter shrank the grid below four
+    // cards, and every filter assertion then compared against the wrong set.
+    const grid = document.querySelector("[data-product-grid]");
+    if (!grid) return [];
     return [...grid.querySelectorAll(":scope > article")]
       .filter((a) => (a as HTMLElement).offsetParent !== null)
       .map((a) => {

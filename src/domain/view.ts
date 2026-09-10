@@ -85,6 +85,21 @@ export function displayPrice(price: PriceView): string {
   return price.money === undefined || price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
 }
 
+// The offers a shopper can be sent to, in the order a shopper should see them:
+// real amounts first and cheapest first, then the ones whose amount is a
+// placeholder. A withheld offer is never among them, because its amount and
+// its link belong to another product or an unmatched configuration.
+//
+// Every surface that offers a way to buy goes through this. The product page
+// had the rule and the category card did not, so a card carried a Shop button
+// straight to a listing the product page refused to show.
+export function buyableOffers(view: { offers: OfferView[] }): OfferView[] {
+  return view.offers
+    .filter((o) => !o.disputed)
+    .slice()
+    .sort((a, b) => Number(a.priceIsDemo) - Number(b.priceIsDemo) || a.price.amountMinor - b.price.amountMinor);
+}
+
 export function displayOfferPrice(offer: OfferView): string {
   return offer.priceIsDemo ? PRICE_UNCONFIRMED : formatMoney(offer.price);
 }
