@@ -17,9 +17,23 @@ inherits production's environment, that variable included.
 
 1. `NEXT_PUBLIC_ALLOW_INDEXING=1`, an explicit switch that defaults to off;
 2. a public `NEXT_PUBLIC_SITE_URL`, so canonicals resolve somewhere real;
-3. no known preview signal: `VERCEL_ENV` or `NEXT_PUBLIC_VERCEL_ENV` of
-   `preview` or `development`, a Netlify `CONTEXT` other than `production`, or
-   a Cloudflare Pages branch serving a `*.pages.dev` URL.
+3. no known preview signal.
+
+**The preview signals, and what each is worth.** `VERCEL_ENV` and
+`NEXT_PUBLIC_VERCEL_ENV` are both read and either one saying `preview` or
+`development` is enough; an earlier version read one with `??` as a fallback
+for the other, so a production value in the public variable would have masked a
+preview value in the private one. Netlify's `CONTEXT` is documented as
+`production`, `deploy-preview`, `branch-deploy` or `dev`, and anything set and
+not `production` counts as a preview.
+
+The Cloudflare check is **a fail-closed guess, not Cloudflare support**. It
+treats any Pages deployment serving a `*.pages.dev` URL as a preview. Nobody
+here has checked Cloudflare's documented variable semantics, so it may well
+call a production Pages deployment a preview, which costs indexing rather than
+leaking it. A Pages deployment on a custom domain does not match this check at
+all, and whether that is right is unknown. Before relying on Cloudflare, read
+their docs and replace the guess.
 
 **Crawling is always allowed, and that is deliberate.** `Disallow` is crawl
 control, not removal from an index: a blocked URL can still be indexed from

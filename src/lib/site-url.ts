@@ -58,13 +58,30 @@ function readEnv(): IndexingEnv {
 }
 
 export function isPreviewDeployment(env: IndexingEnv = readEnv()): boolean {
-  const vercel = (env.NEXT_PUBLIC_VERCEL_ENV ?? env.VERCEL_ENV ?? "").toLowerCase();
-  if (vercel === "preview" || vercel === "development") return true;
-  // Netlify: "production", "deploy-preview", "branch-deploy", "dev".
+  // Any explicit preview signal wins. The first version read
+  // `NEXT_PUBLIC_VERCEL_ENV ?? VERCEL_ENV`, so a build carrying
+  // NEXT_PUBLIC_VERCEL_ENV=production alongside VERCEL_ENV=preview would have
+  // been treated as production: the exact shape of a preview inheriting a
+  // production environment, which is what this function exists to catch. Both
+  // variables are now read, and either one saying preview is enough.
+  const vercelValues = [env.NEXT_PUBLIC_VERCEL_ENV, env.VERCEL_ENV].map((v) => (v ?? "").toLowerCase());
+  if (vercelValues.some((v) => v === "preview" || v === "development")) return true;
+
+  // Netlify's CONTEXT is "production", "deploy-preview", "branch-deploy" or
+  // "dev". Anything set and not "production" is not production.
   const netlify = (env.CONTEXT ?? "").toLowerCase();
   if (netlify && netlify !== "production") return true;
-  // Cloudflare Pages names the branch; a preview also gets a *.pages.dev URL.
+
+  // Cloudflare Pages. This is a fail-closed guess, not a supported check: it
+  // treats any Pages deployment serving a *.pages.dev URL as a preview,
+  // because a Pages production deployment on its own custom domain will not
+  // match and one that has no custom domain yet is not somewhere to invite a
+  // crawler either. Nobody here has checked Cloudflare's documented variable
+  // semantics, so this must not be described as Cloudflare support. It errs
+  // toward noindex and its limit is written down in
+  // docs/PUBLICATION-READINESS.md.
   if (env.CF_PAGES_BRANCH !== undefined && (env.CF_PAGES_URL ?? "").includes(".pages.dev")) return true;
+
   return false;
 }
 

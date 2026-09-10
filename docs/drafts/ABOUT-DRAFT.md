@@ -59,13 +59,26 @@ reading did to the rankings.
 
 ## Prices
 
-Where a price has been confirmed, it is shown with the date it was written
-down. Where one has not, the site says "Check current price" and links to the
-retailer rather than showing a number nobody quoted.
+Where an amount is on record, it is shown with the date it was written down and
+with where it came from. Two kinds of amount are on this site and they are not
+the same thing:
+
+- one somebody read on the merchant's own page, on a stated date, which is
+  most of them;
+- one relayed from a search summary that nobody has opened since, which is the
+  rest.
+
+Both say which they are, on the product page. Neither has been re-checked
+today, and a price on a shopping site goes stale faster than any other fact, so
+follow the link before you spend anything.
+
+Where no amount can be shown to belong to the product, the site says "Check
+current price" and links to the retailer rather than showing a number nobody
+quoted.
 
 A price recorded for a different product, or for a configuration that has not
-been matched to the product on the page, is not shown at all. One product
-currently has no price on this site for that reason.
+been matched to the product on the page, is not shown at all and is not used
+for ranking. One product currently has no price on this site for that reason.
 
 ## How this site is paid
 

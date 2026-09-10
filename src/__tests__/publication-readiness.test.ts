@@ -50,7 +50,31 @@ describe("known preview deployments", () => {
     expect(preview({ VERCEL_ENV: "development" })).toBe(true);
     expect(preview({ CONTEXT: "deploy-preview" })).toBe(true);
     expect(preview({ CONTEXT: "branch-deploy" })).toBe(true);
+  });
+
+  it("lets any explicit preview signal win over a production value beside it", () => {
+    // The defect: reading `NEXT_PUBLIC_VERCEL_ENV ?? VERCEL_ENV` let the
+    // public variable mask the private one, so a preview carrying an
+    // inherited production value would have been indexed. That is precisely
+    // the case this whole gate exists for.
+    expect(preview({ NEXT_PUBLIC_VERCEL_ENV: "production", VERCEL_ENV: "preview" })).toBe(true);
+    expect(preview({ NEXT_PUBLIC_VERCEL_ENV: "preview", VERCEL_ENV: "production" })).toBe(true);
+    expect(preview({ NEXT_PUBLIC_VERCEL_ENV: "production", VERCEL_ENV: "development" })).toBe(true);
+    expect(preview({ VERCEL_ENV: "production", CONTEXT: "deploy-preview" })).toBe(true);
+
+    // And the same conflict reaches the decision, not just the predicate.
+    const site = { NEXT_PUBLIC_SITE_URL: "https://example.com", NEXT_PUBLIC_ALLOW_INDEXING: "1" };
+    expect(indexingAllowed({ ...site, NEXT_PUBLIC_VERCEL_ENV: "production", VERCEL_ENV: "preview" })).toBe(false);
+  });
+
+  it("treats a pages.dev deployment as a preview, which is a guess that fails closed", () => {
+    // Not Cloudflare support. Nobody here has checked Cloudflare's documented
+    // variable semantics, so this errs toward noindex and says so.
     expect(preview({ CF_PAGES_BRANCH: "feature", CF_PAGES_URL: "https://abc.wellness.pages.dev" })).toBe(true);
+    expect(preview({ CF_PAGES_BRANCH: "main", CF_PAGES_URL: "https://wellness.pages.dev" })).toBe(true);
+    // A Pages deployment on a custom domain does not match, and nothing here
+    // claims to know whether that is the right answer for Cloudflare.
+    expect(preview({ CF_PAGES_BRANCH: "main", CF_PAGES_URL: "https://example.com" })).toBe(false);
   });
 
   it("does not call a production deployment a preview", () => {
