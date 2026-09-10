@@ -201,7 +201,7 @@
         "url": "https://mitoredlight.com/products/mitomin",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The page states no Bluetooth and no WiFi, and describes no app. That is an absence of a claim rather than a stated \"no\", so no value is recorded and this panel answers neither an app-control filter nor a no-app-control one."
+        "note": "The page states outright that there is no Bluetooth or WiFi. That is an explicit negative about wireless connectivity, and it is recorded here as one rather than as silence. It is still not a statement about app control as this catalogue's field means it: a panel could be driven by an app over a cable, or ship with a companion app that does nothing to the hardware, and the page addresses neither. So the narrower fact is on record in these words and the field carries no value, which means this panel answers neither an app-control filter nor a no-app-control one."
       },
       "verification": "not_stated"
     },

@@ -80,11 +80,19 @@ decision rather than a reading.
 
 ## What was not recorded
 
-**App control.** The page states no Bluetooth and no WiFi and describes no app.
-That is an absence of a claim rather than a stated "no", so the field is
-`not_stated` and this panel answers neither an app-control filter nor a
-no-app-control one. If the page does state the negative outright, the field can
-be upgraded to a recorded `false` on a reading that says so.
+**App control.** The page states outright: "There is no bluetooth or Wifi."
+That is an explicit negative, not silence, and the record says so in those
+terms. An earlier version of this file called it an absence of a claim, which
+undersold what the page says. Corrected on 2026-09-10.
+
+The field still carries no value, and the reason is narrower than the
+correction. No Bluetooth and no WiFi is a statement about wireless
+connectivity. `app_control` asks whether an app drives the panel, and a panel
+could be driven over a cable, or ship with a companion app that does nothing to
+the hardware. The page settles the wireless question and does not settle that
+one. So the explicit negative is on record in its own words, the field stays
+empty, and this panel answers neither an app-control filter nor a
+no-app-control one.
 
 **Pulsing.** Red, near-infrared and combined are mode selections, not pulsing.
 Nothing was recorded for a field the page does not address.

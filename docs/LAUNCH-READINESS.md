@@ -410,12 +410,18 @@ actually price the product on all 20.
    order from the category definition and never reordered. A regression asserts
    that a model with two same-labelled groups renders without the warning.
 
-2. **Irradiance carries no method.** Four red-light products state irradiance,
-   and the figures come from different methods at different distances: the
-   MitoMIN 2.0 page alone gives more than 115 mW/cm2 from a consumer meter and
-   more than 52 from a maker-described laboratory method, at the same 6 in. The
-   field holds one unqualified number and the comparison table ranks those
-   numbers against each other. Products whose figure cannot be made comparable
-   are recorded as `not_stated` with the figures in the note, which is honest
-   and costs them the criterion. A method dimension beside the number is the
-   real fix and is architecture: it should follow a decision, not a reading.
+2. **Irradiance carries no method, and the criterion is thinning.** The field
+   holds one unqualified number and the comparison table ranks those numbers
+   against each other, so a figure that cannot be made comparable cannot go in
+   it. Two readings on 2026-09-09 ended that way: the MitoMIN 2.0 page gives
+   more than 115 mW/cm2 from a consumer meter and more than 52 from a
+   maker-described laboratory method at the same 6 in, and the MitoPRO series
+   page gives more than 170 and more than 68 at six inches with footnote method
+   labels its own prose contradicts. Both are recorded as `not_stated` with the
+   figures and the methods in the note.
+
+   That is honest and it has a cost: 3 of 8 red-light products now carry an
+   irradiance figure, and one of those is a bound. A criterion that most of the
+   category cannot answer is close to not being a criterion. A method dimension
+   beside the number is the real fix and is architecture: it should follow a
+   decision, not a reading.

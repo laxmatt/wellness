@@ -342,10 +342,26 @@ describe("what the model is allowed to see", () => {
   });
 
   it("passes real manufacturer figures through", () => {
-    const mito = views.find((v) => v.id === "mito-mitopro-1500-plus")!;
-    const g = ground(mito);
-    expect(g.facts).toContain("irradiance_mw_cm2");
-    expect(g.facts).toContain("warranty_years");
+    // Asserted over the category rather than over one product. This named
+    // whichever panel still had a recorded irradiance figure, and that keeps
+    // changing: MitoPRO 1500+ carried a relayed 76.5 until its page was read
+    // and turned out to state two figures under contradictory method labels.
+    // The rule is that a usable, sourced value reaches the model, and it holds
+    // for every product whether or not any one of them has irradiance.
+    let checked = 0;
+    for (const v of views) {
+      const g = ground(v);
+      for (const [key, value] of Object.entries(v.attributes)) {
+        if (value === undefined) continue;
+        const p = v.provenance[`attributes.${key}`];
+        if (p?.verification !== "manufacturer_reported") continue;
+        expect(g.facts, `${v.id}.${key}`).toContain(key);
+        expect(g.notStated, `${v.id}.${key}`).not.toContain(key);
+        checked++;
+      }
+    }
+    // A guard on the guard: an empty loop would pass silently.
+    expect(checked).toBeGreaterThan(20);
   });
 
   it("withholds a figure whose own source states it two ways", () => {
