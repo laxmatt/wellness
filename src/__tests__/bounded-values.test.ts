@@ -210,8 +210,17 @@ describe("scoring reads the stated end, and the catalogue check keeps it that wa
 
   it("refuses a bound on a value that is not a fact, not a number, or has no note", () => {
     const c = catalog();
+    // The demo case is built onto the record rather than found on it. It used
+    // to rely on OLIPOP carrying a placeholder caffeine figure, and that
+    // figure is withdrawn now that its page has been read.
     const olipop = structuredClone(c.products.find((p) => p.id === "olipop-root-beer-12")!);
-    olipop.attributes.caffeine_mg!.bound = "less_than";
+    olipop.attributes.caffeine_mg = {
+      value: 0,
+      unit: "mg",
+      verification: "demo",
+      bound: "less_than",
+      source: { kind: "demo", ref: "Prototype demo value", method: "direct", note: "Placeholder." },
+    };
     const demoIssues = validateCatalog({ ...c, products: [...c.products.filter((p) => p.id !== "olipop-root-beer-12"), olipop] });
     expect(demoIssues.map((i) => i.message).join(" ")).toMatch(/bound on a "demo" value/);
 

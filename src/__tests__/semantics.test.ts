@@ -3,7 +3,7 @@ import { categories, categoryById } from "@/domain/categories";
 import { buildCompareModel } from "@/domain/compare";
 import { evaluateCondition, unconfirmedByPrice } from "@/domain/conditions";
 import { assignBadges, recommendCategory, scoreProducts, toScoringInput } from "@/domain/recommend";
-import { catalog, miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
+import { catalog, miniCategory, miniProduct, miniView, moneyCategory, moneyView, viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
 
@@ -86,11 +86,18 @@ describe("demo data never counts as evidence", () => {
   });
 
   it("a placeholder value can never raise a score", () => {
-    const views = viewsFor("wellness-drinks");
-    const olipop = views.find((v) => v.id === "olipop-root-beer-12")!;
-    // Sugar and calories are placeholders, so its label score cannot benefit.
-    const r = scoreProducts(views.map(toScoringInput), categoryById("wellness-drinks")!).find((x) => x.id === olipop.id)!;
-    expect(r.demoCriteria).toEqual(expect.arrayContaining(["sugar_g", "calories"]));
+    // Built rather than found. This named whichever drink still carried
+    // placeholder nutrition, and moved every time a page was read: OLIPOP's
+    // sugar and calories are read figures now. The rule is not about OLIPOP.
+    const best = miniProduct("real", 10000, { power: 100, noise: 10, size: "l", wifi: true });
+    const placeheld = miniProduct("placeheld", 10000, { power: 100, noise: 10, size: "l", wifi: true }, "unknown", [
+      "power",
+      "noise",
+      "size",
+      "wifi",
+    ]);
+    const r = scoreProducts([best, placeheld].map((p) => toScoringInput(miniView(p))), miniCategory).find((x) => x.id === "placeheld")!;
+    expect(r.demoCriteria).toEqual(expect.arrayContaining(["power", "noise", "size", "wifi"]));
     expect(r.score).toBe(0);
   });
 });
@@ -226,11 +233,13 @@ describe("a placeholder price is not budget evidence", () => {
     expect(evaluateCondition(priced, miniCategory, { key: "price", op: "lte", value: 40000 })).toBe(true);
   });
 
-  it("applies the same doubt to per-serving cost, which is derived from price", () => {
-    const drinks = categoryById("wellness-drinks")!;
-    const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
-    expect(olipop.price.isDemo).toBe(true);
-    expect(evaluateCondition(olipop, drinks, { key: "price_per_serving_minor", op: "lte", value: 1000 })).toBe(false);
+  it("applies the same doubt to a cost derived from that price", () => {
+    // Same reason as above: the drink this named keeps becoming a read one.
+    const view = moneyView("prototype-priced", 3588, true, { derived: 299 });
+    expect(view.price.isDemo).toBe(true);
+    expect(evaluateCondition(view, moneyCategory, { key: "cost_per_use_minor", op: "lte", value: 1000 })).toBe(false);
+    // The amount beside it that stands on its own source still answers.
+    expect(evaluateCondition(view, moneyCategory, { key: "shipping_minor", op: "lte", value: 1000 })).toBe(true);
   });
 
   it("leaves non-price conditions untouched", () => {

@@ -111,7 +111,7 @@
         "url": "https://www.curehydration.com/products/lemonade",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The page states a 7.3 g packet. It does not state a mixing volume, and the record no longer invents one: it previously carried a placeholder \"1 packet in 8 to 16 oz water\"."
+        "note": "The page states a 7.3 g packet, mixed into 8 to 16 fl oz of water. The record already carried \"1 packet in 8 to 16 oz water\" as a placeholder; the reading confirms that volume rather than withdrawing it. The packet weight is the serving the nutrition figures are stated against, so it is the recorded value, and the mixing volume is here."
       },
       "verification": "manufacturer_reported"
     },

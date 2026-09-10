@@ -149,7 +149,7 @@ export const wellnessDrinks = CategoryDefinition.parse({
       type: "list",
       group: "Ingredients",
       compareOrder: 100,
-      tooltip: "Values: stevia, monk_fruit, cane_sugar, dextrose, allulose, fruit_juice, none.",
+      tooltip: "Values: stevia, monk_fruit, cane_sugar, cassava_root_syrup, dextrose, allulose, fruit_juice, none.",
     },
     {
       key: "dietary",

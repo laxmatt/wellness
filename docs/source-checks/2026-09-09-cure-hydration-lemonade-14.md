@@ -18,10 +18,10 @@ every citation moved to it.
 ## What the page stated
 
 $23.99 for the 14 pack, with a subscription option at 15% off shown
-separately. A 7.3 g packet: 25 calories, 4 g of total sugars, 0 g added, 0 g
-fiber, 240 mg sodium, 310 mg potassium. Stevia and monk fruit as the
-sweeteners, with coconut water and lemon juice among the ingredients. Vegan,
-non-GMO and gluten free, as the maker's own statements.
+separately. A 7.3 g packet mixed into 8 to 16 fl oz of water: 25 calories, 4 g
+of total sugars, 0 g added, 0 g fiber, 240 mg sodium, 310 mg potassium. Stevia
+and monk fruit as the sweeteners, with coconut water and lemon juice among the
+ingredients. Vegan, non-GMO and gluten free, as the maker's own statements.
 
 ## What was recorded
 
@@ -35,9 +35,15 @@ non-GMO and gluten free, as the maker's own statements.
   164, from the price the page has now replaced. A derived figure follows its
   basis.
 - **Potassium 310 mg**, read, replacing a relayed 300 mg.
-- **Serving size "1 packet (7.3 g)"**, read, replacing the placeholder
-  "1 packet in 8 to 16 oz water". The page states the packet weight and states
-  no mixing volume, so the record no longer states one either.
+- **Serving size "1 packet (7.3 g)"**, read. The record already carried
+  "1 packet in 8 to 16 oz water" as a placeholder, and the page states that
+  volume, so the reading confirms it rather than withdrawing it. The recorded
+  value is the packet weight because that is the serving the nutrition figures
+  are stated against; the mixing volume is in the note.
+
+  This entry was wrong when first written. It said the page states no mixing
+  volume, on the strength of a handoff that summarised the reading without
+  repeating that line. The page does state it. Corrected on 2026-09-10.
 - **Sweeteners stevia and monk fruit**, read, replacing an unconfirmed
   fruit_juice and monk_fruit placeholder. Coconut water and lemon juice are
   ingredients and account for the 4 g of total sugars; the page does not list

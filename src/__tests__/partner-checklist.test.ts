@@ -4,7 +4,7 @@ import { buildPartnerChecklist, CHECKLIST_PATH } from "../../scripts/partner-che
 import { categories, categoryById } from "@/domain/categories";
 import { formatMoney } from "@/domain/money";
 import { toProductView } from "@/domain/view";
-import { catalog } from "./fixtures";
+import { catalog, viewsFor } from "./fixtures";
 
 // The checklist is what a partner conversation would be run from, so a stale
 // one is worse than none: it would describe a catalogue that has moved.
@@ -85,9 +85,17 @@ describe("the partner showcase checklist", () => {
     // what the page shows. The document reports the record either way.
     expect(entry).toContain("$199 on record");
     expect(entry).not.toContain("The page still shows Check current price");
-    // A product whose only amounts are prototype data still says so.
-    const olipop = doc.indexOf("`olipop-root-beer-12`");
-    expect(doc.slice(Math.max(0, olipop - 1500), olipop + 400)).toContain("no amount on record");
+    // A product whose only amounts are prototype data still says so. Asserted
+    // over every such product rather than a named one: this named OLIPOP, and
+    // OLIPOP's page has since been read. Which products are placeholder-priced
+    // is the thing that keeps changing; that the document says so is not.
+    const withheld = categories.flatMap((c) => viewsFor(c.id)).filter((v) => v.price.isDemo);
+    expect(withheld.length).toBeGreaterThan(0);
+    for (const v of withheld) {
+      const at = doc.indexOf(`\`${v.id}\``);
+      expect(at, v.id).toBeGreaterThan(-1);
+      expect(doc.slice(Math.max(0, at - 1500), at + 400), v.id).toContain("no amount on record");
+    }
   });
 
   it("keeps the LMNT reading attributed to whoever made it", () => {

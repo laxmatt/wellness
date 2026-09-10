@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **98 of 260**, across 8 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **111 of 263**, across 9 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -477,7 +477,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://drinkag1.com/products/greens-powder-pouch |
 | Sources on file | https://drinkag1.com/products/greens-powder-pouch |
 | Retrieval | 10 of 15 recorded fields were relayed rather than read from the source |
-| Ranking | score 58, completeness 71%, badges: none, **ineligible** |
+| Ranking | score 83, completeness 71%, badges: none, **ineligible** |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -514,7 +514,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.amazon.com/dp/B007R8XGJA |
 | Sources on file | https://www.amazon.com/dp/B007R8XGJA |
 | Retrieval | 6 of 11 recorded fields were relayed rather than read from the source |
-| Ranking | score 61.1, completeness 100%, badges: best_value |
+| Ranking | score 61.1, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -551,7 +551,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.curehydration.com/products/lemonade<br>https://www.amazon.com/dp/B07LFLRGQ6 |
 | Sources on file | https://www.curehydration.com/products/lemonade |
 | Retrieval | 0 of 17 recorded fields were relayed rather than read from the source |
-| Ranking | score 51.3, completeness 86%, badges: none |
+| Ranking | score 76.3, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -612,7 +612,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink<br>https://www.amazon.com/dp/B07TT8B1JJ |
 | Sources on file | https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink<br>https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266 |
 | Retrieval | 7 of 17 recorded fields were relayed rather than read from the source |
-| Ranking | score 75, completeness 100%, badges: best_overall |
+| Ranking | score 100, completeness 100%, badges: best_overall, best_value |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -628,42 +628,31 @@ Specifications that are missing, unsupported or relayed:
 - `subscription_available`: relayed, maker's page not fetched
 - `subscription_discount_pct`: source not recorded
 
-### OLIPOP Classic Root Beer, 12 pack
+### OLIPOP Classic Root Beer, refrigerated 9 g fiber formula, 12 pack
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 4 of 7 required specifications carry a usable value; 2 prototype; 3 with no recorded source; below the completeness floor, so it holds no badge |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 2 with no recorded source |
+| Price evidence | partly | $35.99 on record from OLIPOP (direct), read from the page (Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `olipop-root-beer-12`, `/products/olipop-classic-root-beer-12-pack` |
-| Offers | OLIPOP (direct) (no amount on record, unknown, affiliate status not recorded) |
-| Links | https://drinkolipop.com |
-| Sources on file | https://drinkolipop.com/pages/ingredients |
-| Retrieval | 4 of 13 recorded fields were relayed rather than read from the source |
-| Ranking | score 0, completeness 57%, badges: none, **ineligible** |
+| Offers | OLIPOP (direct) ($35.99, out_of_stock, affiliate status not recorded) |
+| Links | https://drinkolipop.com/products/classic-root-beer |
+| Sources on file | https://drinkolipop.com/products/classic-root-beer<br>https://drinkolipop.com/pages/ingredients |
+| Retrieval | 1 of 16 recorded fields were relayed rather than read from the source |
+| Ranking | score 51.6, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
 - `function` (required): source not recorded
-- `format` (required): relayed, maker's page not fetched
-- `serving_size` (required): relayed, maker's page not fetched
-- `servings_per_pack` (required): source not recorded
-- `price_per_serving_minor` (required): withheld: computed from a price that is prototype data; source not recorded
-- `sugar_g` (required): prototype value `2`
-- `added_sugar_g`: **absent from the record**
-- `calories`: prototype value `35`
-- `caffeine_mg` (required): prototype value `0`
-- `sodium_mg`: **absent from the record**
+- `price_per_serving_minor` (required): source not recorded
+- `caffeine_mg` (required): no value, recorded as `not_stated`
 - `potassium_mg`: **absent from the record**
 - `magnesium_mg`: **absent from the record**
-- `fiber_g`: relayed, maker's page not fetched
-- `sweeteners`: prototype value `["stevia","fruit_juice"]`
 - `dietary`: relayed, maker's page not fetched
-- `subscription_available`: prototype value `true`
-- `subscription_discount_pct`: **absent from the record**
 
 ## By category
 
@@ -671,15 +660,15 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
-| Wellness Drinks | 6 | 5 | 2 | 0 | 0 |
+| Wellness Drinks | 6 | 6 | 3 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 8 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 9 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
-Shown prices that are prototype data: 3, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
+Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
 **Image readiness.** A real image with a recorded licence: 0. A real image without one: 0. Placeholders only: 20.
 
@@ -689,7 +678,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 99 of 260 records and 9 of 26 offer prices are
+1. **Read the pages already on file.** 96 of 263 records and 9 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

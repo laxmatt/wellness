@@ -13,7 +13,7 @@ import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
 import { recommendCategory } from "@/domain/recommend";
 import { liveFacets } from "@/lib/queries";
-import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, moneyView, viewsFor } from "./fixtures";
 
 // Two findings from the public-journey harness. Both are the same shape: the
 // domain knew something and the page did not say it.
@@ -22,9 +22,11 @@ afterEach(cleanup);
 
 describe("a placeholder amount is not shown at all", () => {
   it("sends the shopper to the merchant instead of quoting a number nobody quoted", () => {
-    const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
-    expect(olipop.price.isDemo).toBe(true);
-    render(<PriceDisplay price={olipop.price} />);
+    // Built, for the reason the next test gives: this named whichever
+    // catalogue product still had a prototype price.
+    const view = moneyView("prototype-priced", 3588, true);
+    expect(view.price.isDemo).toBe(true);
+    render(<PriceDisplay price={view.price} />);
     expect(screen.getByText("Check current price")).toBeTruthy();
     expect(screen.queryByText("$35.88")).toBeNull();
   });
@@ -40,14 +42,21 @@ describe("a placeholder amount is not shown at all", () => {
   });
 
   it("withholds a money figure computed from a placeholder price", () => {
-    // OLIPOP's price per serving is its prototype pack price divided by cans,
-    // recorded as an editorial calculation and shown as a fact.
-    const olipop = viewsFor("wellness-drinks").find((v) => v.id === "olipop-root-beer-12")!;
-    expect(olipop.price.isDemo).toBe(true);
-    expect(olipop.attributes.price_per_serving_minor).toBeUndefined();
-    const spec = olipop.specs.find((s) => s.key === "price_per_serving_minor")!;
+    // A cost per use recorded as an editorial calculation over a prototype
+    // pack price, and shown as a fact. This was OLIPOP's price per serving
+    // until its page was read; before that it was Liquid I.V.'s. The rule is
+    // not about either product, so it is tested on neither.
+    const view = moneyView("prototype-priced", 3588, true, { derived: 299 });
+    expect(view.price.isDemo).toBe(true);
+    expect(view.attributes.cost_per_use_minor).toBeUndefined();
+    const spec = view.specs.find((s) => s.key === "cost_per_use_minor")!;
     expect(spec.formatted).toBe("Check current price");
     expect(spec.moneyWithheld).toBe(true);
+
+    // And the amount that stands on its own source is untouched by the
+    // prototype price sitting beside it.
+    expect(view.attributes.shipping_minor).toBe(499);
+    expect(view.specs.find((s) => s.key === "shipping_minor")!.moneyWithheld).toBeFalsy();
   });
 
   it("shows a real price once one is on record, even when a lower prototype exists", () => {

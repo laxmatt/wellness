@@ -226,12 +226,33 @@ async function run(browser: Browser) {
     check("the count says every product is shown", await shownCount(page), `${views.length} of ${views.length} shown`);
     check("the grid is the engine's order", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
 
-    // Badges are computed, not written on the card by hand.
-    for (const b of ranked.set.badges) {
-      const view = views.find((v) => v.id === b.productId)!;
+    // Badges are computed, not written on the card by hand. A card shows one
+    // badge, its first, because a product can hold two: Best Overall and Best
+    // Value stack, and the page states the second in words rather than
+    // printing a second chip. So the card is checked against the badge it is
+    // meant to show, and the stacked case against the sentence.
+    for (const p of ranked.products.filter((p) => p.badges.length > 0)) {
+      const view = p.view;
       const card = page.locator(`article:has(a[href="/products/${view.slug}"])`).first();
       const text = (await card.textContent()) ?? "";
-      ok(`${view.slug} card carries its ${BADGE_LABELS[b.badge]} badge`, text.includes(BADGE_LABELS[b.badge]), text.slice(0, 120));
+      ok(`${view.slug} card carries its ${BADGE_LABELS[p.badges[0]]} badge`, text.includes(BADGE_LABELS[p.badges[0]]), text.slice(0, 120));
+    }
+    const stacked = ranked.products.filter((p) => p.badges.includes("best_overall") && p.badges.includes("best_value"));
+    for (const p of stacked) {
+      const body = (await page.locator("body").textContent()) ?? "";
+      ok(`${p.view.slug} is named the strongest value in words, not a second chip`, body.includes("Also the strongest value here"));
+    }
+
+    // And every badge the engine awarded reaches the page somewhere.
+    for (const b of ranked.set.badges) {
+      const body = (await page.locator("body").textContent()) ?? "";
+      ok(`${BADGE_LABELS[b.badge]} appears on the page`, body.includes(BADGE_LABELS[b.badge]));
+    }
+
+    // A badge the engine withheld says so, rather than quietly going missing.
+    for (const w of ranked.set.withheld) {
+      const body = (await page.locator("body").textContent()) ?? "";
+      ok(`${BADGE_LABELS[w.badge]} withheld with its reason stated`, body.includes(w.reason), w.reason);
     }
 
     // A placeholder amount is not shown at all. The card says to check the

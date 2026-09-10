@@ -112,7 +112,7 @@ describe("a search for zero caffeine returns only what states zero", () => {
     expect(drinks().filter((v) => matchesAll(v, wellnessDrinks, zero)).map((v) => v.id)).toEqual(["lmnt-citrus-salt-30"]);
   });
 
-  it("excludes the three whose sources say nothing, and the demo one", () => {
+  it("excludes the four whose sources say nothing", () => {
     const matched = drinks().filter((v) => matchesAll(v, wellnessDrinks, zero)).map((v) => v.id);
     for (const id of ["ag1-pouch-30", "cure-hydration-lemonade-14", "liquid-iv-hydration-multiplier-16", "olipop-root-beer-12"]) {
       expect(matched).not.toContain(id);
