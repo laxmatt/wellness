@@ -447,3 +447,62 @@ describe("a product whose every offer is withheld has no price, and still works"
     expect(set.badgesByProduct["plunge-original"]).toBeUndefined();
   });
 });
+
+// Going to a retailer from the comparison took a detour through the product
+// page: the columns linked internally and nowhere else.
+describe("the comparison offers retailers directly", () => {
+  const model = (catId: string, ids: string[]) => {
+    const cat = categoryById(catId)!;
+    const views = viewsFor(catId);
+    const items = recommendCategory(views, cat).products.filter((p) => ids.includes(p.view.id));
+    return buildCompareModel(items, cat);
+  };
+
+  it("names every retailer on the record, with the amount only where there is one", () => {
+    const [pro] = model("red-light", ["hooga-pro1500"]).columns;
+    expect(pro.merchants.map((m) => m.merchant)).toEqual(["Hooga (direct)", "Amazon"]);
+    expect(pro.merchants[0].price).toBe("$1,199");
+    // Amazon's amount is prototype data. The retailer and the link are real,
+    // so the link stands; the invented number is not quoted.
+    expect(pro.merchants[1].price).toBeUndefined();
+    for (const m of pro.merchants) expect(m.url).toMatch(/^https:\/\//);
+  });
+
+  it("keeps a retailer a shopper can use even when no price can be shown", () => {
+    const [flex] = model("red-light", ["infraredi-flex-max"]).columns;
+    expect(flex.price).toBe(PRICE_UNCONFIRMED);
+    expect(flex.merchants).toHaveLength(1);
+    expect(flex.merchants[0].price).toBeUndefined();
+    expect(flex.merchants[0].url).toContain("infraredi.com");
+  });
+
+  it("offers nothing at all when the record holds no way to buy", () => {
+    // Plunge's only offer is withheld: its amount belongs to a configuration
+    // nobody matched. A fabricated destination would be worse than none.
+    const [plunge] = model("cold-plunge", ["plunge-original"]).columns;
+    expect(plunge.merchants).toEqual([]);
+  });
+
+  it("never offers a withheld listing, on the real three-product path", () => {
+    const cols = model("cold-plunge", ["renu-cold-stoic-2", "plunge-original", "ice-barrel-500"]).columns;
+    const urls = cols.flatMap((c) => c.merchants.map((m) => m.url));
+    expect(urls).not.toContain("https://www.amazon.com/dp/B01IT9NLHW");
+    expect(urls.some((u) => u.includes("renutherapy.com"))).toBe(true);
+    expect(urls.some((u) => u.includes("icebarrel.com"))).toBe(true);
+  });
+
+  it("orders retailers by amount, and never by who might pay", () => {
+    const flip = (views: ReturnType<typeof viewsFor>) =>
+      views.map((v) => ({ ...v, offers: v.offers.map((o) => ({ ...o, affiliateStatus: "affiliate" as const })) }));
+    const cat = categoryById("wellness-drinks")!;
+    const ids = ["lmnt-citrus-salt-30", "cure-hydration-lemonade-14"];
+    const before = buildCompareModel(recommendCategory(viewsFor("wellness-drinks"), cat).products.filter((p) => ids.includes(p.view.id)), cat);
+    const after = buildCompareModel(recommendCategory(flip(viewsFor("wellness-drinks")), cat).products.filter((p) => ids.includes(p.view.id)), cat);
+    expect(after.columns.map((c) => c.merchants)).toEqual(before.columns.map((c) => c.merchants));
+    // Real amounts first, cheapest first, placeholders last.
+    for (const c of before.columns) {
+      const shown = c.merchants.filter((m) => m.price !== undefined).length;
+      expect(c.merchants.slice(0, shown).every((m) => m.price !== undefined)).toBe(true);
+    }
+  });
+});

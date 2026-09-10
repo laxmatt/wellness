@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ImageFrame } from "@/components/ui/ImageFrame";
 import { VerificationTag } from "@/components/ui/VerificationTag";
 import type { CompareModel } from "@/domain/compare";
+import { buttonStyles } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 // One table, two behaviours. Wide screens see every column at once. Narrow
@@ -72,6 +73,39 @@ export function CompareView({ model, ids }: { model: CompareModel; ids: string[]
                         </Link>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Going to a retailer took a detour through the product page.
+                      Every retailer on the record is offered here by name, in
+                      the order the record holds them, and the page never picks
+                      one for a shopper. Details is separate and labelled, so
+                      leaving the comparison is always a deliberate choice.
+
+                      A product with nothing to link to says so rather than
+                      inventing a destination, and nothing here claims stock:
+                      an amount was true on a date, which the product page
+                      shows and this column does not. */}
+                  <div className="mt-2 flex flex-col gap-1.5">
+                    {c.merchants.map((m) => (
+                      <a
+                        key={m.offerId}
+                        href={m.url}
+                        target="_blank"
+                        rel="sponsored nofollow noopener"
+                        className={cn(buttonStyles("primary", "sm"), "w-full justify-between gap-2 px-3")}
+                      >
+                        <span className="truncate">Visit {m.merchant}</span>
+                        {m.price ? <span className="tabular shrink-0 opacity-80">{m.price}</span> : null}
+                      </a>
+                    ))}
+                    <Link href={`/products/${c.slug}`} className={cn(buttonStyles("ghost", "sm"), "w-full")}>
+                      Details
+                    </Link>
+                    {c.merchants.length === 0 ? (
+                      <p className="text-[11px] leading-snug text-fg-muted">
+                        No retailer we can link to for this one. The details page says what we hold.
+                      </p>
+                    ) : null}
                   </div>
                 </th>
               ))}

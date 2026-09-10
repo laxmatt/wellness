@@ -30,6 +30,23 @@ export type CompareRow = {
 
 export type CompareGroup = { label: string; rows: CompareRow[] };
 
+// A retailer a shopper can actually go to from this column.
+//
+// Not every offer on a record is one. A withheld offer's amount belongs to
+// another product or an unmatched configuration, so it is not a way to buy this
+// one and never appears here. A prototype amount is different: the amount is a
+// placeholder but the retailer and the link are real, so the link stands and
+// the price simply is not quoted.
+export type CompareMerchant = {
+  offerId: string;
+  merchant: string;
+  url: string;
+  // What to show beside the merchant, or undefined when no amount can be
+  // quoted. Never a stock claim: this record's freshness is a date, not a
+  // promise, and the product page is where that date is shown.
+  price?: string;
+};
+
 export type CompareColumn = {
   id: string;
   slug: string;
@@ -39,6 +56,9 @@ export type CompareColumn = {
   badge: Badge | null;
   image: ProductView["images"][number] | undefined;
   score: number;
+  // Empty when nothing on the record can send a shopper anywhere. The column
+  // then offers no outbound action at all rather than a fabricated one.
+  merchants: CompareMerchant[];
 };
 
 export type CompareModel = {
@@ -121,6 +141,22 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     badge: it.badges[0] ?? null,
     image: it.view.images.find((i) => i.role === "card") ?? it.view.images.find((i) => i.role === "primary") ?? it.view.images[0],
     score: it.score,
+    // Retailers with a real amount first, cheapest first, then the ones whose
+    // amount is a placeholder. The same rule the shown price already follows:
+    // an invented figure is not a cheaper offer, so it does not sort like one.
+    // Affiliate status is not read here and cannot be. `ProductView` carries it
+    // for display; nothing in this file sorts, filters or picks on it, and the
+    // affiliate-neutrality test would fail if it did.
+    merchants: it.view.offers
+      .filter((o) => !o.disputed)
+      .slice()
+      .sort((a, b) => Number(a.priceIsDemo) - Number(b.priceIsDemo) || a.price.amountMinor - b.price.amountMinor)
+      .map((o) => ({
+        offerId: o.id,
+        merchant: o.merchant.name,
+        url: o.url,
+        price: o.priceIsDemo ? undefined : formatMoney(o.price),
+      })),
   }));
 
   const priceBest = bestIndexes(items, cat, "price");
