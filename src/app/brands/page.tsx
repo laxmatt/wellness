@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
 
-export const metadata: Metadata = { title: "Brands", description: "Every brand in the catalog and what we compare from each." };
+export const metadata: Metadata = { title: "Brands", description: "Every brand in the catalog and what we compare from each.", alternates: { canonical: "/brands" } };
 
 export default async function BrandsPage() {
   const [brands, pages] = await Promise.all([getBrands(), getAllCategoryPages()]);

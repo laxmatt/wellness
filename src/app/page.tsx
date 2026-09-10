@@ -2,6 +2,12 @@ import { BrandStrip, CategoryTiles, DiscoveryModules, Hero, HowWeChooseCallout, 
 import { ProductCard } from "@/components/product/ProductCard";
 import { Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
+import type { Metadata } from "next";
+
+// The home page inherits its title and description from the root layout. It
+// had no canonical of its own, which left the one page most likely to be
+// linked with a query string or a trailing variation without one.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 // "Recently added" deferred for MVP. The newArrival flag stays in the data.
 export default async function HomePage() {

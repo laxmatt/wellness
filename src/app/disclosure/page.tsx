@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 
-export const metadata: Metadata = { title: "How this site is paid" };
+export const metadata: Metadata = { title: "How this site is paid", description: "How this site makes money, what that means for the rankings, and what it does not.", alternates: { canonical: "/disclosure" } };
 
 export default function DisclosurePage() {
   return (

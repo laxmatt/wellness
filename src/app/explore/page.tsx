@@ -4,7 +4,7 @@ import { BrandStrip, CategoryTiles, DiscoveryModules } from "@/components/home/s
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
 
-export const metadata: Metadata = { title: "Explore", description: "Every category, filter and brand we track." };
+export const metadata: Metadata = { title: "Explore", description: "Every category, filter and brand we track.", alternates: { canonical: "/explore" } };
 
 export default async function ExplorePage() {
   const [pages, brands] = await Promise.all([getAllCategoryPages(), getBrands()]);

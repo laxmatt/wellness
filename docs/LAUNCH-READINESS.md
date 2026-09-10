@@ -328,9 +328,14 @@ What actually holds it back, in the order that matters:
    down from 24 across 14. Each is marked on the page, which is honest and
    still reads as unfinished.
 4. **`NEXT_PUBLIC_SITE_URL` and a host config**, unless the hosting account
-   already carries them. Canonicals point at localhost by default.
-5. **No robots or sitemap**, on a site whose whole purpose is search traffic.
-6. **No CI in the repository.** Every check here is run by hand.
+   already carries them. Canonicals point at localhost by default, and until
+   the variable is set the site refuses crawling by design.
+5. **No CI in the repository.** Every check here is run by hand.
+
+Robots and sitemap routes were added on 2026-09-10, along with the canonicals
+five public pages were missing. See `docs/PUBLICATION-READINESS.md`, which
+carries the publishing side of this list and separates what needs the owner
+from what can be finished here.
 
 Two products have no amount on record, and that is not on this list. The page
 says "Check current price" and links to the merchant, which is a normal way for

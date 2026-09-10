@@ -5,7 +5,7 @@ import { categories } from "@/domain/categories";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
 
-export const metadata: Metadata = { title: "How We Choose", description: "The rules behind every badge, score and label on this site." };
+export const metadata: Metadata = { title: "How We Choose", description: "The rules behind every badge, score and label on this site.", alternates: { canonical: "/how-we-choose" } };
 
 export default function HowWeChoosePage() {
   return (
