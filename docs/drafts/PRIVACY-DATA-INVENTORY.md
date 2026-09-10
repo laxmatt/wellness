@@ -109,6 +109,14 @@ server-side against a session. But "never leaves the browser" was wrong, and a
 notice describing what the hosting logs contain should say that comparison URLs
 name products.
 
+Two limits on that, so the next edit does not overstate it either. Request logs
+and browser history do receive the full URL, query string included. A `Referer`
+sent on an outbound click is a weaker claim: what it carries depends on the
+browser and on the referrer policy in force, and several common policies send
+only the origin or nothing at all. This site sets no referrer policy of its
+own, so the browser's default applies and the query string may or may not
+travel. Treat the outbound case as possible rather than established.
+
 ## 2. What is written to the database
 
 `src/providers/usage/PostgresUsageStore.ts`
@@ -135,7 +143,14 @@ refuses to write on a deployed host. It records the model's rejected output,
 the validator's complaint and the provider's finish reason. Its own contract
 says it never records the conversation, the shortlist, request headers,
 environment variables or credentials, and reading the module confirms that is
-what it writes. It is a developer tool on a developer's machine, not a
+what it writes.
+
+One qualification that matters more than the contract. The rejected output is
+the model's text, and a model's text can quote, paraphrase or restate what the
+visitor just said. So excluding the conversation object does not guarantee that
+no visitor content lands in the file: it guarantees the conversation is not
+copied there deliberately. Anyone enabling this anywhere a visitor can reach
+should treat the file as potentially containing visitor content. It is a developer tool on a developer's machine, not a
 production log, and a notice should say so only if it is ever enabled anywhere
 a visitor can reach.
 

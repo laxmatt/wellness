@@ -110,10 +110,11 @@ follow. It guesses nothing. Tested in
 6. **Product images: the permission, not the research.** 24 of 24 are
    procedural placeholders and reading a page grants no right to its pictures.
    What needs the owner is the act of asking and the agreement that follows.
-   What does not is finding out what each maker already publishes: several
-   brands operate press or affiliate asset pages with stated terms, and
-   establishing which do, and on what conditions, is research this repository
-   can do and has not yet done.
+   The research half is started: `docs/drafts/IMAGE-RIGHTS-MATRIX.md` covers
+   six representative products, two per category. One finding so far, and it
+   is a no: Hooga's terms require express written permission before copying.
+   The other five brands' terms are unread, because this container cannot
+   reach them, and the refusal is recorded rather than reasoned around.
 
 ## Work that can be finished here, without the owner
 
