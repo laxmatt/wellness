@@ -3,8 +3,15 @@ import Link from "next/link";
 import { BrandStrip, CategoryTiles, DiscoveryModules } from "@/components/home/sections";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
+import { social } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "Explore", description: "Every category, filter and brand we track.", alternates: { canonical: "/explore" } };
+const description = "Every category, filter and brand we track.";
+export const metadata: Metadata = {
+  title: "Explore",
+  description,
+  alternates: { canonical: "/explore" },
+  ...social({ title: "Explore", description, path: "/explore" }),
+};
 
 export default async function ExplorePage() {
   const [pages, brands] = await Promise.all([getAllCategoryPages(), getBrands()]);

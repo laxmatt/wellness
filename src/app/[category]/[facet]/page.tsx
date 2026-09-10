@@ -9,6 +9,7 @@ import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
 import { facetProducts, getCategoryPage, liveFacets } from "@/lib/queries";
+import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
 
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: fp.facet.title,
     description: fp.facet.description,
     alternates: { canonical: `/${page.cat.slug}/${fp.facet.slug}` },
+    ...social({ title: fp.facet.title, description: fp.facet.description, path: `/${page.cat.slug}/${fp.facet.slug}` }),
   };
 }
 

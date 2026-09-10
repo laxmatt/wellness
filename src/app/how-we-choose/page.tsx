@@ -4,8 +4,15 @@ import { VerificationTag } from "@/components/ui/VerificationTag";
 import { categories } from "@/domain/categories";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
+import { social } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "How We Choose", description: "The rules behind every badge, score and label on this site.", alternates: { canonical: "/how-we-choose" } };
+const description = "The rules behind every badge, score and label on this site.";
+export const metadata: Metadata = {
+  title: "How We Choose",
+  description,
+  alternates: { canonical: "/how-we-choose" },
+  ...social({ title: "How We Choose", description, path: "/how-we-choose" }),
+};
 
 export default function HowWeChoosePage() {
   return (

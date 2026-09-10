@@ -7,10 +7,19 @@ import { buildCompareModel } from "@/domain/compare";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories, categoryById } from "@/domain/categories";
 import { getCategoryPage, getProductViewsByIds } from "@/lib/queries";
+import { social } from "@/lib/metadata";
+
+const COMPARE_DESCRIPTION = "Products side by side on the same specifications, with every source shown.";
 
 export const metadata: Metadata = {
   title: "Compare",
+  description: COMPARE_DESCRIPTION,
+  // Still noindex: a comparison URL is one shopper's selection. The card copy
+  // exists so a link somebody pastes into a message names what it is, which
+  // is a different thing from asking a search engine to keep it. No `url`,
+  // because the page a link points at depends on its query string.
   robots: { index: false, follow: true },
+  ...social({ title: "Compare", description: COMPARE_DESCRIPTION }),
 };
 
 type Props = { searchParams: Promise<{ ids?: string }> };

@@ -9,6 +9,7 @@ import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
 import { getCategoryPage, liveFacets } from "@/lib/queries";
+import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ category: string }> };
 
@@ -20,10 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   const page = await getCategoryPage(category);
   if (!page) return {};
+  const title = `${page.cat.name}: ${page.products.length} compared`;
   return {
-    title: `${page.cat.name}: ${page.products.length} compared`,
+    title,
     description: page.cat.intro,
     alternates: { canonical: `/${page.cat.slug}` },
+    ...social({ title, description: page.cat.intro, path: `/${page.cat.slug}` }),
   };
 }
 

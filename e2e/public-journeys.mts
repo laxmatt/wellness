@@ -194,6 +194,18 @@ async function offerRowText(page: Page, merchantName: string): Promise<string> {
   }, merchantName);
 }
 
+// Social card tags, as the page actually serves them.
+async function socialTags(page: Page): Promise<{ title?: string; description?: string; image?: string; card?: string }> {
+  // No inner arrow: tsx wraps a named function in an `__name` helper that does
+  // not exist in the page, and the evaluate throws.
+  return page.evaluate(() => ({
+    title: document.querySelector('meta[property="og:title"]')?.getAttribute("content") ?? undefined,
+    description: document.querySelector('meta[property="og:description"]')?.getAttribute("content") ?? undefined,
+    image: document.querySelector('meta[property="og:image"]')?.getAttribute("content") ?? undefined,
+    card: document.querySelector('meta[name="twitter:card"]')?.getAttribute("content") ?? undefined,
+  }));
+}
+
 async function cardText(page: Page, slug: string): Promise<string> {
   const card = page.locator(`article:has(a[href="/products/${slug}"])`).first();
   return (await card.count()) > 0 ? ((await card.textContent()) ?? "") : "";
@@ -365,6 +377,18 @@ async function run(browser: Browser) {
     scenario = `product ${view.slug}`;
     await goto(page, `/products/${view.slug}`);
     check("exactly one h1", await headingCount(page), 1);
+
+    // A shared link has to name this product, not the site. Every route set a
+    // title and a description and none set OpenGraph, so every product link
+    // carried whatever a client could scrape and nothing said which product.
+    const og = await socialTags(page);
+    ok("names the product in its social title", (og.title ?? "").includes(view.name), og.title);
+    ok("does not fall back to the site's own card copy", og.title !== "Wellness Compare. The specs, side by side.", og.title);
+    check("its social description is the page's own", og.description, view.description);
+    // No image, because every image here is a procedural placeholder and
+    // og:image would present a generated pattern as a photograph.
+    ok("offers no image it does not have", og.image === undefined, og.image);
+    check("so the card is the small one", og.card, "summary");
 
     const body = (await page.locator("body").textContent()) ?? "";
     const money = view.price.money ? formatMoney(view.price.money) : "";

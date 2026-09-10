@@ -129,12 +129,18 @@ follow. It guesses nothing. Tested in
 3. **The Cold Pod identity**, open at
    `docs/source-checks/2026-09-09-the-cold-pod-usa.md`.
 
-4. **Open graph and social cards.** No `openGraph` or `twitter` metadata
-   anywhere in `src/app`, and no `opengraph-image`. Without them a client that
-   builds a preview has only the title and description to work with, and one
-   that looks for an image finds none; how any particular client renders the
-   link was not tested here. The copy can be written here; only the image needs
-   a design decision.
+4. ~~**Open graph and social cards.**~~ Copy done on 2026-09-10. Every route
+   that has a title and a description now sets `openGraph` and `twitter` from
+   the same copy, through `social()` in `src/lib/metadata.ts`, with `og:url`
+   matching the page's canonical. Verified in built HTML on the home page, a
+   category, a facet, a product, a brand, `/compare` and `/disclosure`, and the
+   browser harness checks all 20 product pages.
+
+   **No image, deliberately.** Every image in this catalogue is a procedural
+   placeholder, so `og:image` would present a generated pattern as a photograph
+   of a product. The card is `summary` rather than `summary_large_image` for
+   the same reason. That stays true until the image rights question in item 6
+   above is answered.
 
 5. **No CI.** Every check in this repository is run by hand.
    `.github/workflows` does not exist.

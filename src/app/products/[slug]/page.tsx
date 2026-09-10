@@ -15,6 +15,7 @@ import { primaryStrength } from "@/domain/recommend";
 import { getCatalog } from "@/providers";
 import { getProductPage } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
+import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,10 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getProductPage(slug);
   if (!data) return {};
   const { view } = data.item;
+  const title = `${view.brand.name} ${view.name}`;
   return {
-    title: `${view.brand.name} ${view.name}`,
+    title,
     description: view.description,
     alternates: { canonical: `/products/${view.slug}` },
+    ...social({ title, description: view.description, path: `/products/${view.slug}` }),
   };
 }
 
