@@ -24,7 +24,7 @@ export function PriceDisplay({ price, size = "md", compact = false, className }:
   }
   return (
     <div className={cn("flex flex-col", compact ? "items-end text-right" : "", className)}>
-      <span className={cn("tabular font-semibold", size === "lg" ? "text-3xl" : "text-lg")}>{formatMoney(price.money)}</span>
+      <span className={cn("tabular font-semibold", size === "lg" ? "text-3xl" : "text-lg")}>{price.money ? formatMoney(price.money) : PRICE_UNCONFIRMED}</span>
       <span className="whitespace-nowrap text-[11px] text-fg-muted">
         {basis} · {shortDate(price.checkedAt)}
       </span>

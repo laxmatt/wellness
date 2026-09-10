@@ -26,7 +26,7 @@ describe("matcher engine", () => {
     // prototype data, so it cannot be confirmed under $700 and is excluded.
     // HG300 wins it since its maker's own $199 was read on 2026-09-09: before
     // that its shown price was a prototype $149 and this was MitoMIN at $249.
-    const eligible = views.filter((v) => v.price.money.amountMinor <= 70000 && !v.price.isDemo).map((v) => v.id);
+    const eligible = views.filter((v) => v.price.money!.amountMinor <= 70000 && !v.price.isDemo).map((v) => v.id);
     expect(eligible).toContain(r.bestMatchId!);
     expect(r.bestMatchId).toBe("hooga-hg300");
     expect(r.explanations["hooga-hg300"].fits.some((f) => f.includes("under your limit"))).toBe(true);

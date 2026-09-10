@@ -59,7 +59,11 @@ export function computeValue(
         affordability: 0,
         priceBasisValue: undefined,
         eligible: false,
-        reason: i.priceIsDemo ? "price is placeholder data, so there is nothing to weigh it against" : "ineligible or no price basis",
+        reason: i.priceIsDemo
+          ? "price is placeholder data, so there is nothing to weigh it against"
+          : i.priceMinor === undefined && cfg.priceBasis === "price"
+            ? "no amount on record, so there is nothing to weigh against the score"
+            : "ineligible or no price basis",
       };
     }
     if (!admittedIds.has(i.id)) {

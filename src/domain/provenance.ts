@@ -84,12 +84,17 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     // Set when this value was computed from the product's price, so it is
     // worth exactly what that price is worth.
     derivedFrom: DerivedFrom.optional(),
-    // Set when the source states this figure in two ways that do not agree.
-    // The value and the note stay, so a reader sees both statements and the
-    // conflict; nothing matches or scores on it, because the source has not
-    // settled what the figure is. Hooga's HG300 page says "over 73 mW/cm2" in
-    // its highlights and "73" in its specification table, and recording either
-    // one as the answer picks a passage.
+    // Set when the recorded figure cannot be relied on to describe this
+    // product. The value and the note stay, so a reader sees what the record
+    // holds and why; nothing matches or scores on it.
+    //
+    // Two things reach this marker, and they are the same thing from a
+    // reader's side. A source states the figure two ways: Hooga's HG300 page
+    // says "over 73 mW/cm2" in its highlights and "73" in its specification
+    // table, and recording either one picks a passage. Or the figure cannot be
+    // shown to belong to this product: Plunge's sanitation and power claims
+    // were relayed from summaries that named no generation, and the page now
+    // describes a reimagined model those summaries may never have seen.
     disputed: z.boolean().optional(),
   });
 }

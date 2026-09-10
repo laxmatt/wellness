@@ -3,7 +3,7 @@ import type { CategoryDefinition, Condition } from "./category";
 import { attributeDef } from "./category";
 import type { Bound } from "./provenance";
 import type { ProductView } from "./view";
-import { numericValue } from "./view";
+import { numericValue, priceMinorOf } from "./view";
 
 export function enumRank(cat: CategoryDefinition, key: string, value: unknown): number | undefined {
   const def = attributeDef(cat, key);
@@ -68,7 +68,7 @@ function evaluateBounded(bound: Bound, stated: number, op: Condition["op"], targ
 
 export function evaluateCondition(view: ProductView, cat: CategoryDefinition, c: Condition): boolean {
   if (isUnconfirmedPriceClaim(view, cat, c)) return false;
-  const raw: AttributePrimitive | number | undefined = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const raw: AttributePrimitive | number | undefined = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
   const bound = c.key === "price" ? undefined : view.bounds[c.key];
   if (bound !== undefined && typeof raw === "number") {
     // `exists` and `missing` ask whether the catalogue holds anything at all,

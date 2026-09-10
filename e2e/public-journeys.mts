@@ -258,14 +258,24 @@ async function run(browser: Browser) {
 
     // A placeholder amount is not shown at all. The card says to check the
     // price at the merchant, and the invented number appears nowhere on it.
-    for (const v of views.filter((v) => v.price.isDemo)) {
+    for (const v of views.filter((v) => v.price.isDemo && v.price.money)) {
       const card = await cardText(page, v.slug);
       ok(`${v.slug} card offers to check the price`, card.includes("Check current price"), card.slice(0, 200));
-      ok(`${v.slug} card does not quote the placeholder amount`, !card.includes(formatMoney(v.price.money)), formatMoney(v.price.money));
+      ok(`${v.slug} card does not quote the placeholder amount`, !card.includes(formatMoney(v.price.money!)), formatMoney(v.price.money!));
     }
-    for (const v of views.filter((v) => !v.price.isDemo)) {
+    // No amount at all: every offer withheld and no reference price. The card
+    // says to check, and quotes nothing, including the withheld amounts that
+    // are still on the record.
+    for (const v of views.filter((v) => v.price.money === undefined)) {
       const card = await cardText(page, v.slug);
-      ok(`${v.slug} card shows its real price`, card.includes(formatMoney(v.price.money)), formatMoney(v.price.money));
+      ok(`${v.slug} card offers to check the price it does not have`, card.includes("Check current price"), card.slice(0, 200));
+      for (const o of v.offers) {
+        ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price)), formatMoney(o.price));
+      }
+    }
+    for (const v of views.filter((v) => !v.price.isDemo && v.price.money)) {
+      const card = await cardText(page, v.slug);
+      ok(`${v.slug} card shows its real price`, card.includes(formatMoney(v.price.money!)), formatMoney(v.price.money!));
     }
 
     // Filters: the page must hide exactly what the engine says the chip means.
@@ -351,8 +361,26 @@ async function run(browser: Browser) {
     check("exactly one h1", await headingCount(page), 1);
 
     const body = (await page.locator("body").textContent()) ?? "";
-    const money = formatMoney(view.price.money);
-    if (view.price.isDemo) {
+    const money = view.price.money ? formatMoney(view.price.money) : "";
+    if (view.price.money === undefined) {
+      // Nothing on the record can price this product. The block says so and
+      // quotes no number, and the structured data carries no offer at all.
+      const block = await priceBlock(page, "Check current price");
+      ok("offers to check a price the record does not have", block.found, block.text);
+      const ld = (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "";
+      ok("publishes no offer in structured data", !ld.includes('"@type":"Offer"'), ld.slice(0, 200));
+      const retailersText = (await page.locator("#retailers").textContent()) ?? "";
+      const shopLinks = await page.$$eval('a[rel*="sponsored"]', (as) => as.map((a) => (a as HTMLAnchorElement).href));
+      for (const o of view.offers) {
+        ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price)), block.text);
+        ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price)), retailersText.slice(0, 160));
+        // Not "the URL is absent": a withheld offer's URL can be the same
+        // manufacturer page that legitimately sources the specs, and a
+        // citation under Sources is provenance, not a way to buy. What must
+        // not exist is a shopping link to it.
+        ok(`nothing offers to shop the withheld ${o.merchant.name} listing`, !shopLinks.some((h) => new URL(h).href === new URL(o.url).href), o.url);
+      }
+    } else if (view.price.isDemo) {
       // The amount is prototype data, so nothing presents it as this
       // product's price: not the price block, not an offer row, not a spec.
       const block = await priceBlock(page, "Check current price");
@@ -386,8 +414,8 @@ async function run(browser: Browser) {
       // What must not exist is a way to buy at it.
       ok(`the ${offer.merchant.name} row is gone from the retailers section`, !retailers.includes(offer.merchant.name), retailers.slice(0, 160));
       ok(`its amount ${amount} is not quoted there either`, !retailers.includes(amount), retailers.slice(0, 160));
-      const html = await page.content();
-      ok("its link is nowhere on the page at all", !html.includes(offer.url), offer.url);
+      const shopping = await page.$$eval('a[rel*="sponsored"]', (as) => as.map((a) => (a as HTMLAnchorElement).href));
+      ok("nothing offers to shop it", !shopping.some((h) => new URL(h).href === new URL(offer.url).href), offer.url);
       ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
       ok("but the page says an amount is on record and withheld", retailers.includes("is on record and is not shown here"));
     }
@@ -487,10 +515,10 @@ async function run(browser: Browser) {
     // is reloaded afterwards.
     const demoPriced = cat.products
       .map((p) => viewsOf(p.categoryId).find((v) => v.id === p.id)!)
-      .find((v) => v.price.isDemo)!;
+      .find((v) => v.price.isDemo && v.price.money !== undefined)!;
     scenario = `price check, proved sensitive on ${demoPriced.slug}`;
     await goto(page, `/products/${demoPriced.slug}`);
-    const money = formatMoney(demoPriced.price.money);
+    const money = formatMoney(demoPriced.price.money!);
     // Scoped to the price block. A source note may quote what a source
     // reported, and one on this product does; the claim under test is that
     // nothing presents the amount as this product's price.

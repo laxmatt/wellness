@@ -5,6 +5,7 @@ import { comparable, conditionTarget } from "../conditions";
 import { formatMoney } from "../money";
 import { BOUND_WORDS, type Bound } from "../provenance";
 import type { ProductView } from "../view";
+import { priceMinorOf } from "../view";
 
 // Human phrasing for constraints and for how far a product sits from one.
 // Templates only. No model text reaches these strings.
@@ -79,7 +80,7 @@ export type Gap = { text: string; magnitude: number };
 export function describeGap(view: ProductView, cat: CategoryDefinition, c: Condition): Gap {
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
-  const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const actualRaw = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
   const bound = c.key === "price" ? undefined : view.bounds[c.key];
 
   if (actualRaw === undefined) {
@@ -127,7 +128,7 @@ export function describeGap(view: ProductView, cat: CategoryDefinition, c: Condi
 export function describeFit(view: ProductView, cat: CategoryDefinition, c: Condition): string {
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
-  const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const actualRaw = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
   const bound = c.key === "price" ? undefined : view.bounds[c.key];
   const actual = actualRaw === undefined ? "" : formatValueFor(cat, c.key, actualRaw, bound);
 

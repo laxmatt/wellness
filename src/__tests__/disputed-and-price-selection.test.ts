@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { redLight } from "@/domain/categories";
+import { categoryById, redLight } from "@/domain/categories";
 import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { evaluateCondition } from "@/domain/conditions";
 import { buildCompareModel } from "@/domain/compare";
-import { recommendCategory } from "@/domain/recommend";
+import { assignBadges, recommendCategory } from "@/domain/recommend";
 import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
 import { applyPreferences } from "@/domain/personalization/match";
-import { derivePrice, toProductView } from "@/domain/view";
+import { derivePrice, displayPrice, numericValue, toProductView, PRICE_UNCONFIRMED } from "@/domain/view";
 import { validateCatalog } from "@/providers/catalog/LocalCatalogProvider";
-import { catalog, miniCategory, miniProduct, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
+import { catalog, miniCategory, miniProduct, miniView, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
 
 // Two defects, both reproduced from real records.
 //
@@ -138,7 +138,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
       { amount: 14900, demoPrice: true },
       { amount: 19900, demoPrice: false },
     ]);
-    expect(v.price.money.amountMinor).toBe(19900);
+    expect(v.price.money!.amountMinor).toBe(19900);
     expect(v.price.isDemo).toBe(false);
   });
 
@@ -148,7 +148,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
       { amount: 19900, demoPrice: false },
       { amount: 900, demoPrice: true },
     ]);
-    expect(v.price.money.amountMinor).toBe(19900);
+    expect(v.price.money!.amountMinor).toBe(19900);
     expect(v.price.isDemo).toBe(false);
   });
 
@@ -157,7 +157,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
       { amount: 14900, demoPrice: true },
       { amount: 19900, demoPrice: true },
     ]);
-    expect(v.price.money.amountMinor).toBe(14900);
+    expect(v.price.money!.amountMinor).toBe(14900);
     expect(v.price.isDemo).toBe(true);
   });
 
@@ -184,7 +184,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
 
   it("holds on the real record it was found in", () => {
     const v = hg300();
-    expect(v.price.money.amountMinor).toBe(19900);
+    expect(v.price.money!.amountMinor).toBe(19900);
     expect(v.price.isDemo).toBe(false);
     expect(v.offers.find((o) => o.priceIsDemo)!.price.amountMinor).toBe(14900);
     // The provenance shown for the price is the offer the price came from.
@@ -193,7 +193,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
 
   it("leaves a product with one real offer exactly as it was", () => {
     const p = miniProduct("single", 12345, { power: 50, size: "m" });
-    expect(derivePrice(p).money.amountMinor).toBe(12345);
+    expect(derivePrice(p).money!.amountMinor).toBe(12345);
     expect(derivePrice(p).isDemo).toBe(false);
     expect(derivePrice(p).offerCount).toBe(1);
   });
@@ -294,7 +294,7 @@ describe("an offer whose amount belongs to another product prices nothing", () =
 
   it("does not set the price, even when it is the cheapest real amount on the record", () => {
     const v = withOffers([offer("real", 2499), disputedOffer("mismatched", 1999)]);
-    expect(v.price.money.amountMinor).toBe(2499);
+    expect(v.price.money!.amountMinor).toBe(2499);
     expect(v.price.isDemo).toBe(false);
   });
 
@@ -305,7 +305,7 @@ describe("an offer whose amount belongs to another product prices nothing", () =
 
   it("loses to a placeholder, which is at least this product's placeholder", () => {
     const v = withOffers([offer("placeholder", 9999, "unknown", true), disputedOffer("mismatched", 1999)]);
-    expect(v.price.money.amountMinor).toBe(9999);
+    expect(v.price.money!.amountMinor).toBe(9999);
     expect(v.price.isDemo).toBe(true);
     expect(v.price.offerCount).toBe(1);
   });
@@ -324,7 +324,7 @@ describe("an offer whose amount belongs to another product prices nothing", () =
     const amazon = v.offers.find((o) => o.merchant.name.toLowerCase().includes("amazon"))!;
     expect(amazon.disputed).toBe(true);
     expect(amazon.price.amountMinor).toBe(2799);
-    expect(v.price.money.amountMinor).toBe(2499);
+    expect(v.price.money!.amountMinor).toBe(2499);
     expect(v.price.offerCount).toBe(1);
 
     // And the per-serving figure no longer follows any price: the maker states
@@ -349,5 +349,101 @@ describe("an offer whose amount belongs to another product prices nothing", () =
     amazon.source = { kind: "demo", ref: "Prototype demo value", method: "direct", note: "Placeholder." };
     const issues = validateCatalog({ ...c, products: [...c.products.filter((x) => x.id !== p.id), p] });
     expect(issues.map((i) => i.message).join(" ")).toMatch(/also prototype data/);
+  });
+});
+
+// A product every one of whose offers is withheld has no price. Not a zero,
+// not an invented reference, not a placeholder: no price.
+//
+// This exists because the argument for keeping a contradicted $6,990 on
+// Plunge's public page was that withholding the offer would fail the build. It
+// did fail: `derivePrice` threw, and a second defect sat behind it, an
+// undefined written into the provenance map that crashed the catalogue report.
+// A type that cannot express "no price" is not a reason to publish a price.
+describe("a product whose every offer is withheld has no price, and still works", () => {
+  const unpriced = () => {
+    const p = miniProduct("unpriced", 10000, { power: 50, size: "m" });
+    p.offers = [
+      {
+        ...offer("mismatched", 1999),
+        disputed: true,
+        source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different configuration." },
+      },
+    ];
+    return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+  };
+
+  it("reports no amount rather than throwing, inventing one, or falling back to zero", () => {
+    const v = unpriced();
+    expect(v.price.money).toBeUndefined();
+    expect(v.price.basis).toBe("none");
+    expect(v.price.offerCount).toBe(0);
+    // Not flagged as a placeholder either: a missing amount and an invented
+    // amount are different things and the copy for them differs.
+    expect(v.price.isDemo).toBe(false);
+    expect(displayPrice(v.price)).toBe(PRICE_UNCONFIRMED);
+  });
+
+  it("keeps the withheld amount on the record with its reason", () => {
+    const row = unpriced().offers.find((o) => o.id === "mismatched")!;
+    expect(row.price.amountMinor).toBe(1999);
+    expect(row.disputed).toBe(true);
+    expect(row.disputeNote).toBe("Reported for a different configuration.");
+  });
+
+  it("leaves no hole in the provenance map", () => {
+    // The catalogue report iterates Object.values(provenance). An undefined
+    // written under the "price" key crashed it.
+    const v = unpriced();
+    expect(Object.values(v.provenance).every((p) => p !== undefined)).toBe(true);
+    expect("price" in v.provenance).toBe(false);
+  });
+
+  it("still scores, and stays eligible and comparable", () => {
+    // Three, so the unpriced one is not the floor on every criterion by
+    // construction: a zero there would say nothing about the price path.
+    const priced = miniView(miniProduct("priced", 30000, { power: 90, size: "l" }));
+    const weak = miniView(miniProduct("weak", 20000, { power: 10, size: "s" }));
+    const set = assignBadges([unpriced(), priced, weak].map(toScoringInput), miniCategory);
+    expect(set.scores.unpriced.eligible).toBe(true);
+    expect(set.scores.unpriced.score).toBeGreaterThan(0);
+    expect(set.ranking).toContain("unpriced");
+    const model = buildCompareModel(recommendCategory([unpriced(), priced], miniCategory).products, miniCategory);
+    const priceRow = model.groups[0].rows.find((r) => r.key === "price")!;
+    expect(priceRow.cells[0].text === PRICE_UNCONFIRMED || priceRow.cells[1].text === PRICE_UNCONFIRMED).toBe(true);
+    // Two products, one of which has no amount, are not "the same price".
+    expect(priceRow.same).toBe(false);
+  });
+
+  it("earns no affordability and no price badge from an amount it does not have", () => {
+    const dearer = miniView(miniProduct("dearer", 90000, { power: 40, size: "s" }));
+    const cheaper = miniView(miniProduct("cheaper", 12000, { power: 30, size: "s" }));
+    const ins = [unpriced(), dearer, cheaper].map(toScoringInput);
+    expect(ins.find((i) => i.id === "unpriced")!.priceMinor).toBeUndefined();
+    const set = assignBadges(ins, miniCategory);
+    const value = set.values.unpriced;
+    expect(value.eligible).toBe(false);
+    expect(value.affordability).toBe(0);
+    expect(value.reason).toMatch(/no amount on record/);
+    for (const b of set.badges) {
+      if (b.badge !== "best_overall") expect(b.productId, b.badge).not.toBe("unpriced");
+    }
+  });
+
+  it("answers no price condition and sorts last on price, rather than as free", () => {
+    const v = unpriced();
+    expect(evaluateCondition(v, miniCategory, { key: "price", op: "lte", value: 100000 })).toBe(false);
+    expect(evaluateCondition(v, miniCategory, { key: "price", op: "exists" })).toBe(false);
+    expect(numericValue(v, "price")).toBeUndefined();
+  });
+
+  it("is what the real record now does with Plunge", () => {
+    const v = viewsFor("cold-plunge").find((x) => x.id === "plunge-original")!;
+    expect(v.price.money).toBeUndefined();
+    expect(v.offers[0].disputed).toBe(true);
+    expect(v.offers[0].price.amountMinor).toBe(699000);
+    const set = assignBadges(viewsFor("cold-plunge").map(toScoringInput), categoryById("cold-plunge")!);
+    expect(set.scores["plunge-original"].eligible).toBe(true);
+    expect(set.badgesByProduct["plunge-original"]).toBeUndefined();
   });
 });

@@ -52,15 +52,25 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
   // questions. Hooga's HG300 has a real $199 from its maker and still shows
   // "Check current price", because a prototype Amazon amount is lower and the
   // shown price is the lowest offer.
-  const realOffers = p.offers.filter((o) => o.source.kind !== "demo");
+  // Withheld offers are not price evidence for this product. Their amount is
+  // real and belongs to something else, or to a configuration nobody matched,
+  // so a partner reading "on record" would be reading a price the site itself
+  // refuses to show.
+  const realOffers = p.offers.filter((o) => o.source.kind !== "demo" && o.disputed !== true);
+  const withheldOffers = p.offers.filter((o) => o.disputed === true);
   const cheapestReal = [...realOffers].sort((a, b) => a.priceMinor - b.priceMinor)[0];
   const merchantOf = (id: string) => cat.merchants.find((m) => m.id === id)?.name ?? id;
+  const withheldNote =
+    withheldOffers.length === 0
+      ? ""
+      : ` ${withheldOffers.length} further ${withheldOffers.length === 1 ? "amount is" : "amounts are"} on the record and withheld: the record cannot show ${withheldOffers.length === 1 ? "it belongs" : "they belong"} to this product, so ${withheldOffers.length === 1 ? "it prices" : "they price"} nothing.`;
   const priceDetail = !cheapestReal
-    ? "no amount on record; the page shows Check current price"
+    ? `no amount on record; the page shows Check current price.${withheldNote}`.trimEnd()
     : `${formatMoney({ amountMinor: cheapestReal.priceMinor, currency: cheapestReal.currency })} on record from ${merchantOf(cheapestReal.merchantId)}, ${cheapestReal.source.method === "secondhand" ? "relayed from a search summary rather than read from the merchant" : `read from the page${cheapestReal.source.ref ? ` (${cheapestReal.source.ref.replace(/\.$/, "")})` : ""}`} on ${cheapestReal.source.retrievedAt ?? cheapestReal.lastChecked}, not re-checked since` +
       (v.price.isDemo
         ? ". The page still shows Check current price: a lower prototype amount is the selected offer"
-        : "");
+        : "") +
+      withheldNote;
   // Never "complete": an amount on record is an amount somebody wrote down on
   // a date, and nothing here re-checked it. Only a fresh reading could earn
   // that, and this file has never made one.
@@ -201,7 +211,7 @@ for (const c of categories) {
     push("| --- | --- |");
     push(`| Record | \`${v.id}\`, \`/products/${v.slug}\` |`);
     push(
-      `| Offers | ${v.offers.length === 0 ? "none" : v.offers.map((o) => `${o.merchant.name} (${o.priceIsDemo ? "no amount on record" : formatMoney(o.price)}, ${o.availability}, ${o.affiliateStatus === "unknown" ? "affiliate status not recorded" : o.affiliateStatus})`).join("; ")} |`,
+      `| Offers | ${v.offers.length === 0 ? "none" : v.offers.map((o) => `${o.merchant.name} (${o.priceIsDemo ? "no amount on record" : formatMoney(o.price)}${o.disputed ? ", withheld: not shown to belong to this product" : ""}, ${o.availability}, ${o.affiliateStatus === "unknown" ? "affiliate status not recorded" : o.affiliateStatus})`).join("; ")} |`,
     );
     push(`| Links | ${v.offers.length === 0 ? "none" : v.offers.map((o) => o.url).join("<br>")} |`);
     push(`| Sources on file | ${sources.length === 0 ? "none" : sources.join("<br>")} |`);

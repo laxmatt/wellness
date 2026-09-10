@@ -358,12 +358,13 @@ What the evidence says, per category, as of 2026-09-09:
   and Best Budget is withheld because no budget-tier product scores above
   zero. Two of the six carry demo values.
 
-  Plunge Original carries a **known-stale price**: $6,990 relayed, against
-  $6,790 displayed on the page read 2026-09-09. It was not imported because the
-  page prices a configuration and this record's configuration, cold-only or
-  heater, has not been matched. Settling that is a reading, and until it
-  happens the site shows an amount its own source note says is contradicted.
-  This is the only place in the catalogue where that is true.
+  Plunge Original now has **no price at all**. Its $6,990 was relayed, the page
+  read 2026-09-09 displays $6,790, and the page prices a configuration this
+  record's tub has not been matched to. Neither amount can be defended, so the
+  offer is withheld with its figure and its history intact and the page says
+  "Check current price". The product is still browseable, comparable and
+  scored; it holds no price-tier badge, and Best Premium moved to Edge Tub
+  Elite. Settling the configuration is a reading, not a decision.
 
 Where the remaining source work sits, then: Cold Plunges first by need, and
 Infraredi in Red Light as the single cheapest fix. That is where to read next,
@@ -394,6 +395,19 @@ piecemeal.
    and found to be none. The site says so, and the ranking cannot see the
    field either way. Worth deciding whether `unknown` should ever be published
    or whether every offer needs a recorded answer first.
+
+## Fixed on 2026-09-10, worth remembering
+
+**A product could not have no price.** `derivePrice` threw when every offer was
+withheld and there was no reference price, and behind that a second defect
+wrote an undefined into the provenance map, which crashed the catalogue report
+on `Object.values`. Both were found by actually withholding a real offer rather
+than reasoning about it, and both were used as an argument for leaving a
+contradicted amount on a public page. A type that cannot express "no price" is
+not a reason to publish a price. `PriceView.money` is optional now, with a
+`none` basis; the value formula, the tier badges, the filters, the conditions,
+the compare table, the structured data and the partner checklist each decide
+what a missing amount means, and none of them substitutes a number for it.
 
 ## Fixed on 2026-09-09, worth remembering
 

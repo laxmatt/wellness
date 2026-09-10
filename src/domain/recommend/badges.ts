@@ -77,9 +77,12 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
   const badges: BadgeAssignment[] = [];
   const withheld: { badge: Badge; reason: string }[] = [];
 
-  // Price-based badges only consider products with an observed price.
-  const priced = eligible.filter((i) => !i.priceIsDemo);
-  const demoPricedCount = eligible.length - priced.length;
+  // Price-based badges only consider products with an observed price. Two
+  // different reasons keep a product out: its amount is a placeholder, or it
+  // has no amount at all because every offer on its record was withheld. The
+  // copy names the first, because that is the one a reader can act on.
+  const priced = eligible.filter((i) => !i.priceIsDemo && i.priceMinor !== undefined);
+  const demoPricedCount = eligible.filter((i) => i.priceIsDemo).length;
   const demoPriceNote =
     demoPricedCount === 0
       ? ""

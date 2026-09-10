@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **163 of 275**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **163 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -132,7 +132,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 2 of 4 required specifications carry a usable value; 2 prototype; below the completeness floor, so it holds no badge |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Price evidence | no | no amount on record; the page shows Check current price. |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
@@ -164,7 +164,7 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 4 of 4 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | no | no amount on record; the page shows Check current price |
+| Price evidence | no | no amount on record; the page shows Check current price. |
 | Image readiness | no | 2 procedural placeholders, no rights evidence |
 
 | | |
@@ -285,7 +285,7 @@ Specifications that are missing, unsupported or relayed:
 | Links | https://www.edgetheorylabs.com/products/the-edge-tub-elite |
 | Sources on file | https://www.edgetheorylabs.com/products/the-edge-tub-elite |
 | Retrieval | 7 of 12 recorded fields were relayed rather than read from the source |
-| Ranking | score 44.4, completeness 75%, badges: none |
+| Ranking | score 44.4, completeness 75%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -365,18 +365,18 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 4 of 4 required specifications carry a usable value; 1 with no recorded source |
-| Price evidence | partly | $6,990 on record from Plunge (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 3 of 4 required specifications carry a usable value; 1 with no recorded source |
+| Price evidence | no | no amount on record; the page shows Check current price. 1 further amount is on the record and withheld: the record cannot show it belongs to this product, so it prices nothing. |
 | Image readiness | no | 2 procedural placeholders, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `plunge-original`, `/products/plunge-original` |
-| Offers | Plunge (direct) ($6,990, unknown, affiliate status not recorded) |
+| Offers | Plunge (direct) ($6,990, withheld: not shown to belong to this product, unknown, affiliate status not recorded) |
 | Links | https://plunge.com/products/plunge |
 | Sources on file | https://plunge.com/products/plunge |
-| Retrieval | 4 of 16 recorded fields were relayed rather than read from the source |
-| Ranking | score 81.5, completeness 100%, badges: best_premium |
+| Retrieval | 3 of 15 recorded fields were relayed rather than read from the source |
+| Ranking | score 64.8, completeness 75%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -537,13 +537,13 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 6 of 7 required specifications carry a usable value; 1 with no recorded source |
-| Price evidence | partly | $24.99 on record from Liquid I.V. (direct), read from the page (Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
+| Price evidence | partly | $24.99 on record from Liquid I.V. (direct), read from the page (Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since 1 further amount is on the record and withheld: the record cannot show it belongs to this product, so it prices nothing. |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `liquid-iv-hydration-multiplier-16`, `/products/liquid-iv-hydration-multiplier-lemon-lime-16` |
-| Offers | Liquid I.V. (direct) ($24.99, unknown, affiliate status not recorded); Amazon ($27.99, unknown, affiliate status not recorded) |
+| Offers | Liquid I.V. (direct) ($24.99, unknown, affiliate status not recorded); Amazon ($27.99, withheld: not shown to belong to this product, unknown, affiliate status not recorded) |
 | Links | https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier<br>https://www.amazon.com/dp/B01IT9NLHW |
 | Sources on file | https://www.liquid-iv.com/pages/ingredients<br>https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier |
 | Retrieval | 9 of 15 recorded fields were relayed rather than read from the source |
@@ -635,7 +635,7 @@ Specifications that are missing, unsupported or relayed:
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 13 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 13 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -647,7 +647,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 65 of 275 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 64 of 274 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

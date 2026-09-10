@@ -59,7 +59,9 @@ export function OfferList({ view }: { view: ProductView }) {
       <div className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
         {view.price.isDemo
           ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
-          : `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`}
+          : view.price.money
+            ? `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`
+            : "No amount on record for this product. Nothing here can price it, so nothing here quotes a number."}
         {withheldLine}
       </div>
     );

@@ -26,11 +26,19 @@ describe("the partner showcase checklist", () => {
     for (const c of categories) {
       for (const p of catalog().products.filter((x) => x.categoryId === c.id)) {
         const view = toProductView(p, { category: categoryById(c.id)!, brands: catalog().brands, merchants: catalog().merchants });
-        if (!view.price.isDemo) continue;
+        const shown = view.price.money;
+        // Two ways to have no amount a partner can quote: the only amounts are
+        // placeholders, or every offer is withheld because it cannot be shown
+        // to belong to this product. Both must read the same in the document.
+        if (shown && !view.price.isDemo) continue;
         const at = doc.indexOf(`\`${p.id}\``);
         const entry = doc.slice(Math.max(0, at - 1200), at + 1200);
-        expect(entry, p.id).not.toContain(formatMoney(view.price.money));
+        if (shown) expect(entry, p.id).not.toContain(formatMoney(shown));
         expect(entry, p.id).toContain("no amount on record");
+        // A withheld amount is reported as withheld, never as evidence.
+        for (const o of p.offers.filter((o) => o.disputed === true)) {
+          expect(entry, `${p.id} ${o.id}`).toContain("withheld");
+        }
       }
     }
   });

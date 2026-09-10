@@ -36,6 +36,16 @@ describes, so a reader can judge for themselves.
 Two more figures agree in substance: a chiller is included, and the warranty
 runs a year.
 
+**Agreement licenses the number and nothing around it.** The record's warranty
+read "1-year limited manufacturer warranty from date of delivery". The page
+states a year. It does not state that the year runs from delivery, and an
+earlier version of this record cited that whole phrase to the reading because
+the number matched. It now records "1-year warranty" against the page, with
+the older wording preserved in the note as wording rather than as a read term.
+
+The same test applied to everything else the reading did not cover, and three
+claims failed it.
+
 ## What was recorded
 
 - **The seven matching figures**, recited to the page that states them, each
@@ -50,26 +60,42 @@ runs a year.
 - **App temperature control**, read, in the description. Cold plunges have no
   app field in this catalogue and one was not invented for a single product.
 
-## What was not recorded
+## What was withheld
 
-**The price.** This is the important one and it is deliberate.
+**Sanitation and power.** Ozone sanitation, a sanitation system and a dedicated
+120V circuit were all relayed on 2026-09-08 from material that named no
+generation. The reading does not cover them. They cannot be shown to describe
+the configuration this record now cites, so all three are marked and withheld
+from matching and scoring while staying visible with their notes. They are
+history, not current facts.
 
-The record carries $6,990, relayed. The page displays **$6,790**, two hundred
-dollars lower, beside **$8,490** presented as a comparable value. That $8,490
-is not recorded as a list price: a comparable value is a marketing comparison,
-not a proven former price, and `listPriceMinor` would assert it was one.
+That costs the product 16.7 points, because sanitation carries a weight of 1.5
+out of 9. It is the same amount insulation gained, which is a coincidence and
+not a balancing act.
 
-The $6,790 is not imported either. The page prices a configuration, and the
-cold-only and heater configurations were not separated in this reading. Putting
-$6,790 on this record would attach a price to a configuration nobody has
-matched to this product. So the offer keeps its relayed amount, still labelled
-relayed, and the note says plainly that the current page contradicts it.
+**The price.** The record carried $6,990, relayed. The page displays **$6,790**,
+beside **$8,490** presented as a comparable value. That $8,490 is not recorded
+as a list price: a comparable value is a marketing comparison, not a proven
+former price, and `listPriceMinor` would assert it was one.
 
-**That leaves a known-stale price on a public page, and it is the top open item
-on this record.** The alternatives were worse: importing an unmatched
-configuration's price, or withholding the offer entirely, which would leave the
-product with no price at all because it has no reference price to fall back on.
-Settling the configuration is a reading, not a decision.
+$6,790 is not imported either. The page prices a configuration, and cold-only
+versus heater was not separated in this reading, so that amount cannot be
+attached to this record's tub.
+
+**So this product now has no price at all.** The offer is withheld with its
+$6,990 and its history intact, and the page says "Check current price" and
+links to the merchant. A first version of this record kept the $6,990 public
+and argued that withholding it would fail the build. That was tested, and it
+was true: `derivePrice` threw, and a second defect sat behind it, an undefined
+written into the provenance map that crashed the catalogue report. Both are
+fixed. A type that could not express "no price" was never a reason to publish
+one.
+
+Nothing was invented to fill the gap: no reference price, no zero, no
+placeholder. The product keeps its capability score of 64.8, stays eligible,
+stays comparable, and is excluded from affordability and from every price-tier
+badge because it has no amount to be ranked on. It lost Best Premium to Edge
+Tub Elite, which does have a price.
 
 **Shipping.** The header offers free in-home shipping. Another section offers
 free curbside delivery with in-home as a paid premium. Those are different
@@ -81,9 +107,7 @@ offer note.
 absent. Whether this record's tub heats is the same open question as its price:
 both turn on the configuration.
 
-**Sanitation, plumbing, tub type.** Unchanged and still cited as relayed. The
-reading did not cover them, and a reading that did not reach a figure says
-nothing about whether the page states it.
+**Tub type.** An editorial classification, unchanged.
 
 **Stock, image rights, health claims.** None verified.
 
@@ -92,18 +116,22 @@ nothing about whether the page states it.
 | product | before | after |
 | --- | --- | --- |
 | Renu Cold Stoic 2.0 | 83.3, Best Overall | 83.3, Best Overall |
-| Plunge Original | 64.8, Best Premium | **81.5**, Best Premium |
-| Edge Tub Elite | 44.4 | 44.4 |
+| Plunge Original | 64.8, Best Premium | 64.8, **no badge, no price** |
+| Edge Tub Elite | 44.4 | 44.4, **Best Premium** |
 | Ice Barrel 500 | 22.2 | 22.2 |
 | The Cold Pod | 18.5, Best Value | 18.5, Best Value |
 | Ice Barrel 400 | 0 | 0 |
 
-All 16.7 points are the insulation field, which carries a weight of 1.5 out of
-9 and was previously unrecorded. Nothing else moved: every other value the
-reading confirmed was already on the record at the same number.
+The score is unchanged at 64.8, and that is arithmetic rather than balance:
+insulation added 16.7 and the withheld sanitation claim took the same 16.7
+away. Both fields carry a weight of 1.5 out of 9.
 
-Plunge is now 1.8 points behind Renu for Best Overall, on a field Renu has and
-Plunge had been missing. Two things are worth saying about that. The gap is
-this narrow because the category is scored on six criteria and most of the
-products cannot answer all of them. And Plunge closed it by having a fact
-recorded, not by being reassessed: the tub did not change.
+Best Premium moved to Edge Tub Elite on 44.4, which is a considerably weaker
+record: four prototype values and an unconfirmed listing claim that its brand
+is out of business. A tier badge goes to the best-scoring product that has a
+price, and Plunge no longer has one. That is the rule working, and it is worth
+seeing plainly rather than being smoothed over.
+
+Plunge does not hold Best Overall either, and it never did: Renu leads on 83.3.
+The 1.8-point gap an earlier version of this file noted was against a score
+built partly on a claim that has since been withheld.

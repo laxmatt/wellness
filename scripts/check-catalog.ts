@@ -20,7 +20,7 @@ for (const c of cat.categories) {
     const badges = p.badges.join("+") || "";
     const demoCount = Object.values(p.view.provenance).filter((x) => x.verification === "demo").length;
     console.log(
-      `  ${badges.padEnd(24)} ${String(p.score).padStart(5)} ${formatMoney(p.view.price.money).padStart(10)}  ${p.view.brand.name} ${p.view.name}` +
+      `  ${badges.padEnd(24)} ${String(p.score).padStart(5)} ${(p.view.price.money ? formatMoney(p.view.price.money) : "no price").padStart(10)}  ${p.view.brand.name} ${p.view.name}` +
         (p.eligible ? "" : "  [ineligible]") +
         (demoCount ? `  [${demoCount} demo fields]` : ""),
     );

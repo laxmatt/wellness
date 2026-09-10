@@ -10,7 +10,10 @@ import type { ProductView } from "../view";
 // tier rules, never inside the capability score.
 export type ScoringInput = {
   id: string;
-  priceMinor: number;
+  // Undefined when nothing on the record can price the product: every offer is
+  // withheld and there is no reference price. Price-based steps leave such a
+  // product out rather than substituting a number for it.
+  priceMinor?: number;
   priceIsDemo: boolean;
   attributes: Record<string, AttributePrimitive>;
   // Attributes withheld because their value is a placeholder. They score zero
@@ -38,7 +41,10 @@ export function toScoringInput(view: ProductView): ScoringInput {
     .filter(([field, p]) => field.startsWith("attributes.") && p.disputed === true)
     .map(([field]) => field.slice("attributes.".length));
   for (const key of [...demoKeys, ...disputedKeys]) delete attributes[key];
-  return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys, disputedKeys };
+  // `priceMinor` is undefined when nothing on the record can price the
+  // product. Every price-based step treats that the way it treats a
+  // placeholder: by leaving the product out, never by substituting a number.
+  return { id: view.id, priceMinor: view.price.money?.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys, disputedKeys };
 }
 
 export type CriterionContribution = {

@@ -135,7 +135,9 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         key: "price",
         label: "Price",
         cells: items.map((it, i) => ({ text: displayPrice(it.view.price), best: priceBest.has(i) })),
-        same: new Set(items.map((it) => it.view.price.money.amountMinor)).size === 1,
+        // Two products with no amount are not "the same price". A missing
+        // amount is not a value that can match another one.
+        same: items.every((it) => it.view.price.money !== undefined) && new Set(items.map((it) => it.view.price.money!.amountMinor)).size === 1,
         notComparable: priceComparable.ok ? undefined : priceComparable.reason,
       },
       {
@@ -197,6 +199,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
           const tail = unpriced > 0 ? `, ${unpriced} with no amount on record` : "";
           if (it.view.offers.length === 0) return { text: "None listed", best: false };
           if (priced === 0) return { text: `${it.view.offers.length}, none with an amount on record`, best: false };
+          if (!it.view.price.money) return { text: `${it.view.offers.length}, none that can price this product`, best: false };
           return { text: `${priced}, from ${formatMoney(it.view.price.money)}${tail}`, best: false };
         }),
         same: new Set(items.map((it) => it.view.offers.length)).size === 1,

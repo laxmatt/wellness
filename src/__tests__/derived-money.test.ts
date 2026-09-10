@@ -117,7 +117,7 @@ describe("a value derived from the price agrees with the price it is derived fro
       const servings = v.attributes.servings_per_pack as number | undefined;
       const derived = v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === "price";
       if (!derived || pps === undefined || servings === undefined) continue;
-      expect(pps, v.id).toBe(Math.round(v.price.money.amountMinor / servings));
+      expect(pps, v.id).toBe(Math.round(v.price.money!.amountMinor / servings));
     }
   });
 });

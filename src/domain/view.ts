@@ -45,14 +45,35 @@ export type OfferView = {
 };
 
 export type PriceView = {
-  money: Money;
-  basis: "lowest_offer" | "reference";
+  // Absent when nothing on the record can price this product: every offer is
+  // withheld, and there is no reference price either. Not a zero, and not a
+  // stand-in figure. A product in this state is still browseable, comparable
+  // and scoreable on everything that is not an amount; it simply has no price,
+  // and the page says so rather than showing a number.
+  //
+  // This exists because the alternative was worse. Plunge Original carried a
+  // relayed $6,990 that its own read page contradicts, and the argument for
+  // keeping it public was that withholding the offer would throw here. It did
+  // throw. Keeping a contradicted amount on a shopping page to satisfy a type
+  // is not a reason.
+  money?: Money;
+  basis: "lowest_offer" | "reference" | "none";
   checkedAt: string;
   offerCount: number;
   // The price shown is a placeholder, not a real observed price. Price-based
   // claims (Best Value, Best Budget, Best Premium) must not be made about it.
+  // A missing price is a different thing and is not flagged as a placeholder:
+  // see `money`.
   isDemo: boolean;
 };
+
+// The amount a product can be ranked, filtered or compared on, or undefined
+// when it has none. Every caller that used to read `price.money.amountMinor`
+// goes through this, so a missing amount is a decision each of them makes
+// rather than a crash.
+export function priceMinorOf(view: { price: PriceView }): number | undefined {
+  return view.price.money?.amountMinor;
+}
 
 // What a shopper is shown in place of a placeholder amount. A number nobody
 // quoted is not a price, and putting one on a shopping page is the single
@@ -61,7 +82,7 @@ export type PriceView = {
 export const PRICE_UNCONFIRMED = "Check current price";
 
 export function displayPrice(price: PriceView): string {
-  return price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
+  return price.money === undefined || price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
 }
 
 export function displayOfferPrice(offer: OfferView): string {
@@ -169,7 +190,15 @@ export function derivePrice(product: Product): PriceView {
       isDemo: best.source.kind === "demo",
     };
   }
-  if (!product.referencePrice?.value) throw new Error(`Product ${product.id} has no offers and no priced referencePrice`);
+  if (!product.referencePrice?.value) {
+    // No offer can price this product and there is no reference price. Say so.
+    return {
+      basis: "none",
+      checkedAt: product.lastUpdated,
+      offerCount: 0,
+      isDemo: false,
+    };
+  }
   return {
     money: product.referencePrice.value,
     basis: "reference",
@@ -277,9 +306,12 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
   if (product.referencePrice) provenance.referencePrice = provenanceOf(product.referencePrice);
 
   const best = lowestOffer(product.offers);
-  provenance.price = best
-    ? { source: best.source, verification: "unknown" }
-    : provenance.referencePrice;
+  // Assigned only when there is something to assign. Writing the key with an
+  // undefined value put a hole in a map every consumer iterates: the first
+  // product with no usable offer and no reference price crashed the catalogue
+  // report on `Object.values(provenance)`.
+  const priceProvenance = best ? { source: best.source, verification: "unknown" as const } : provenance.referencePrice;
+  if (priceProvenance) provenance.price = priceProvenance;
 
   const offers: OfferView[] = product.offers.map((o) => {
     const merchant = ctx.merchants.find((m) => m.id === o.merchantId);
@@ -355,7 +387,7 @@ export function provenanceFor(view: ProductView, path: string): Provenance | und
 // Numeric accessor used by filters, scoring and facets. "price" resolves to
 // the current price in minor units. Everything else reads attributes.
 export function numericValue(view: ProductView, key: string): number | undefined {
-  if (key === "price") return view.price.money.amountMinor;
+  if (key === "price") return priceMinorOf(view);
   const v = view.attributes[key];
   if (typeof v === "number") return v;
   if (typeof v === "boolean") return v ? 1 : 0;

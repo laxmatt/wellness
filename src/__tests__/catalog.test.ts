@@ -74,7 +74,7 @@ describe("local catalog", () => {
     // The shown price is the lowest offer whose amount is real: the maker's
     // own $199, read on 2026-09-09. Amazon's prototype $149 is lower and is
     // not a price. See docs/source-checks/2026-09-09-hooga-hg300.md.
-    expect(v.price.money.amountMinor).toBe(19900);
+    expect(v.price.money!.amountMinor).toBe(19900);
     expect(v.price.isDemo).toBe(false);
     expect(v.price.offerCount).toBe(1);
     expect(v.price.basis).toBe("lowest_offer");

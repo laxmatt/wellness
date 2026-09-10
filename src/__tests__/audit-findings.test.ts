@@ -90,8 +90,8 @@ describe("directional preferences compare values, not existence", () => {
     const result = applyPreferences(views, cat, prefs);
 
     const priced = views.filter((v) => !v.price.isDemo);
-    const cheapest = [...priced].sort((a, b) => a.price.money.amountMinor - b.price.money.amountMinor)[0];
-    const dearest = [...priced].sort((a, b) => b.price.money.amountMinor - a.price.money.amountMinor)[0];
+    const cheapest = [...priced].sort((a, b) => a.price.money!.amountMinor - b.price.money!.amountMinor)[0];
+    const dearest = [...priced].sort((a, b) => b.price.money!.amountMinor - a.price.money!.amountMinor)[0];
 
     expect(result.explanations[cheapest.id].softScore).toBeGreaterThan(result.explanations[dearest.id].softScore);
   });
@@ -102,8 +102,8 @@ describe("directional preferences compare values, not existence", () => {
     const result = applyPreferences(views, cat, prefs);
 
     const priced = views.filter((v) => !v.price.isDemo);
-    const cheapest = [...priced].sort((a, b) => a.price.money.amountMinor - b.price.money.amountMinor)[0];
-    const dearest = [...priced].sort((a, b) => b.price.money.amountMinor - a.price.money.amountMinor)[0];
+    const cheapest = [...priced].sort((a, b) => a.price.money!.amountMinor - b.price.money!.amountMinor)[0];
+    const dearest = [...priced].sort((a, b) => b.price.money!.amountMinor - a.price.money!.amountMinor)[0];
 
     expect(result.explanations[dearest.id].softScore).toBeGreaterThan(result.explanations[cheapest.id].softScore);
   });

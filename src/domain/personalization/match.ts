@@ -5,6 +5,7 @@ import type { MatchResult, PreferenceSet, ProductExplanation, Relaxation, SoftPr
 import { toScoringInput, scoreProducts } from "../recommend/score";
 import type { Bound } from "../provenance";
 import type { ProductView } from "../view";
+import { priceMinorOf } from "../view";
 import { describeConstraint, describeFit, describeGap, labelFor } from "./describe";
 
 export const MEDICAL_REDIRECT =
@@ -65,7 +66,7 @@ function softScore(
   const unmet: SoftPreference[] = [];
   for (const p of soft) {
     total += p.weight;
-    const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
+    const raw = p.key === "price" ? priceMinorOf(view) : view.attributes[p.key];
     // A value the source states only as a bound is not an amount, so a
     // preference naming an amount cannot be met by it, and a preference with
     // no amount can only use the endpoint when the endpoint is the worse end
@@ -150,7 +151,7 @@ function softScore(
 
 function describeSoft(view: ProductView, cat: CategoryDefinition, p: SoftPreference, met: boolean): string {
   const label = labelFor(cat, p.key);
-  const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
+  const raw = p.key === "price" ? priceMinorOf(view) : view.attributes[p.key];
   if (met) return describeFit(view, cat, { key: p.key, op: "eq", value: p.value });
   // Saying "price is $1,249" about an amount nobody recorded quotes the
   // placeholder the rest of this refuses to use.
@@ -201,7 +202,8 @@ export function relaxationSearch(views: ProductView[], cat: CategoryDefinition, 
       const oa = others.reduce((n, c) => n + norm(a, c), 0);
       const ob = others.reduce((n, c) => n + norm(b, c), 0);
       if (oa !== ob) return oa - ob;
-      return a.price.money.amountMinor - b.price.money.amountMinor;
+      // A product with no amount sorts last on price rather than as free.
+      return (a.price.money?.amountMinor ?? Infinity) - (b.price.money?.amountMinor ?? Infinity);
     });
 
     // Prefer a product this route has not already recommended.

@@ -217,7 +217,7 @@ describe("a placeholder price is not budget evidence", () => {
 
   it("cannot confirm an unverified price meets a budget", () => {
     // $100 is under the $200 limit, and it is not a price.
-    expect(unpriced.price.money.amountMinor).toBeLessThan(budget.value);
+    expect(unpriced.price.money!.amountMinor).toBeLessThan(budget.value);
     expect(unpriced.price.isDemo).toBe(true);
     expect(evaluateCondition(unpriced, miniCategory, budget)).toBe(false);
   });
