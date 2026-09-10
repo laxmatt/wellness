@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 import { categories } from "@/domain/categories";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
-import { SITE_URL, hasPublicSiteUrl } from "@/lib/site-url";
+import { SITE_URL, indexingAllowed } from "@/lib/site-url";
 
-// Empty until a public address is configured. A sitemap is a list of absolute
-// URLs, and without a configured host every one of them would say localhost.
+// Empty unless this deployment is meant to be indexed. A sitemap is a list of
+// absolute URLs asking to be crawled and indexed; a preview or an unconfigured
+// deployment is asking for neither.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  if (!hasPublicSiteUrl()) return [];
+  if (!indexingAllowed()) return [];
 
   const [pages, brands] = await Promise.all([getAllCategoryPages(), getBrands()]);
   const at = (path: string, lastModified?: string) => ({

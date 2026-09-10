@@ -1,28 +1,21 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL, hasPublicSiteUrl } from "@/lib/site-url";
+import { SITE_URL, indexingAllowed } from "@/lib/site-url";
 
-// There was no robots.txt at all, which meant a preview deployment invited
-// indexing as loudly as production would, and every page it served carried a
-// canonical pointing at localhost.
+// Crawling is always allowed. Indexing is what this controls, and it is
+// controlled with `noindex` on the pages themselves, set in the root layout.
 //
-// Until a public address is configured, this refuses crawling outright. That
-// is the honest state of an unconfigured deployment: it does not know its own
-// URL, so nothing it says about its own pages can be trusted by a crawler.
+// The two are not the same lever and the earlier version confused them. A
+// `Disallow` stops a crawler fetching a page, which stops it reading the
+// `noindex` on that page, which is the instruction that actually keeps the
+// page out of an index. A URL blocked in robots.txt can still be indexed from
+// links alone, and now cannot be told not to be.
+//
+// `/api/` stays disallowed: those routes serve no HTML and so can carry no
+// meta tag. They answer 405 and 401 to a browser in any case.
 export default function robots(): MetadataRoute.Robots {
-  if (!hasPublicSiteUrl()) {
-    return { rules: [{ userAgent: "*", disallow: "/" }] };
-  }
+  const indexable = indexingAllowed();
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        // Comparison URLs are one shopper's selection, already noindex in the
-        // page's own metadata, and there are more of them than products.
-        disallow: ["/api/", "/compare"],
-      },
-    ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/"] }],
+    ...(indexable ? { sitemap: `${SITE_URL}/sitemap.xml`, host: SITE_URL } : {}),
   };
 }

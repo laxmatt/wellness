@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 import { CompareProvider } from "@/components/compare/CompareProvider";
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
+import { SITE_URL, indexingAllowed } from "@/lib/site-url";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -22,6 +23,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: `${SITE_NAME}. ${SITE_TAGLINE}`, template: `%s | ${SITE_NAME}` },
   description: "Compare red light panels, cold plunges and wellness drinks on the specs that matter, with sources shown.",
+  // Off unless somebody switched indexing on for this deployment. Every page
+  // inherits it, so a preview stays out of the index even when it was handed
+  // production's environment, and a crawler is allowed in to read the tag.
+  ...(indexingAllowed() ? {} : { robots: { index: false, follow: false } }),
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

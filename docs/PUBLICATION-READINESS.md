@@ -2,33 +2,63 @@
 
 What stands between this repository and a first public partner showcase, split
 by who can do it. Every line names the file or the observation behind it.
-Inspected on 2026-09-10 against build `LlVOjJLgfhmiDxlMqKgQD`, served locally.
+Inspected on 2026-09-10 against locally served production builds.
 
 This is about publishing. `docs/LAUNCH-READINESS.md` covers the catalogue and
 the evidence in it; `docs/PARTNER-SHOWCASE-CHECKLIST.md` covers each product.
 
-## Fixed in this pass
+## Indexing
 
-**No robots.txt existed.** `/robots.txt` returned 404, so any deployment,
-preview included, invited crawling as loudly as production would, while serving
-canonicals that pointed at `http://localhost:3000`. `src/app/robots.ts` now
-refuses crawling outright until a public address is configured, and allows it
-with a sitemap reference once one is. Verified both ways against a running
-build.
+**Indexing is off, and turning it on takes three separate yeses.** A public URL
+is not permission to index the deployment serving it: a preview commonly
+inherits production's environment, that variable included.
 
-**No sitemap existed.** `/sitemap.xml` returned 404. `src/app/sitemap.ts` emits
-nothing without a configured address, and 57 URLs with one: 5 static pages, 3
-categories, 12 facets, 17 brands and 20 products, with product entries carrying
-`lastUpdated`.
+`indexingAllowed()` in `src/lib/site-url.ts` requires all of:
+
+1. `NEXT_PUBLIC_ALLOW_INDEXING=1`, an explicit switch that defaults to off;
+2. a public `NEXT_PUBLIC_SITE_URL`, so canonicals resolve somewhere real;
+3. no known preview signal: `VERCEL_ENV` or `NEXT_PUBLIC_VERCEL_ENV` of
+   `preview` or `development`, a Netlify `CONTEXT` other than `production`, or
+   a Cloudflare Pages branch serving a `*.pages.dev` URL.
+
+**Crawling is always allowed, and that is deliberate.** `Disallow` is crawl
+control, not removal from an index: a blocked URL can still be indexed from
+links alone, and blocking it stops a crawler reading the `noindex` that would
+actually keep it out. So robots.txt allows everything except `/api/`, which
+serves no HTML and can carry no meta tag, and the root layout emits
+`noindex, nofollow` on every page unless indexing is permitted.
+
+`/compare` keeps its own `noindex, follow` and is no longer disallowed in
+robots.txt, for the same reason: the tag has to be readable to work.
+
+### Verified against built HTML, four states
+
+| environment | robots.txt | sitemap URLs | meta robots on pages |
+| --- | --- | --- | --- |
+| Nothing configured | `Allow: /`, `Disallow: /api/`, no sitemap line | 0 | `noindex, nofollow` |
+| Public URL, switch off | same | 0 | `noindex, nofollow` |
+| Public URL + switch + `VERCEL_ENV=preview` | same | 0 | `noindex, nofollow` |
+| Public URL + switch, no preview signal | adds `Host:` and `Sitemap:` | 57 | none, so indexable |
+
+Each row is a real build served locally and queried over HTTP, not a helper
+test. The configured URL was a throwaway value that is not a real domain.
+`/compare` returned `noindex, follow` in all four.
+
+## Also fixed in this pass
+
+**No robots.txt or sitemap existed.** Both returned 404.
 
 **Five public pages had no canonical.** `/`, `/explore`, `/brands`,
 `/how-we-choose` and `/disclosure` emitted none, while every dynamic route did.
 All five now do.
 
-The gate is `hasPublicSiteUrl` in `src/lib/site-url.ts`, tested in
-`src/__tests__/publication-readiness.test.ts`. It rejects an unset value, the
-localhost fallback, `127.0.0.1`, `0.0.0.0`, `.local` hosts, a bare domain with
-no scheme, and a non-HTTP scheme. It guesses nothing.
+**The configured origin is checked for shape.** `hasPublicSiteUrl` rejects an
+unset value, the localhost fallback, `127.0.0.1`, `0.0.0.0`, `.local` hosts, a
+bare domain with no scheme, a non-HTTP scheme, and an origin carrying
+credentials, a query or a fragment. That last group is not a security
+judgement: appending a path to any of them produces a canonical nobody can
+follow. It guesses nothing. Tested in
+`src/__tests__/publication-readiness.test.ts`.
 
 ## Needs the owner, and nothing here should invent it
 
@@ -37,30 +67,39 @@ no scheme, and a non-HTTP scheme. It guesses nothing.
    the sitemap and the robots host all read from it. Until it is set, the site
    refuses indexing by design. One environment variable unblocks all of it.
 
-2. **A privacy notice, and the facts it has to state.** The site processes
-   personal data today. `src/domain/client-identity.ts` takes the visitor's IP
-   from a proxy header and stores a salted hash of it as a rate-limit key in
-   the `assistant_client` table; `src/providers/usage/PostgresUsageStore.ts`
-   also stores session identifiers and per-request token counts. A hashed IP is
-   still personal data. The page needs a controller name, a contact address, a
-   retention period and the hosting and model subprocessors, none of which this
-   repository knows. The code is ready to be described; the facts are not here.
+2. **A privacy notice.** The site processes personal data today: a salted hash
+   of the visitor's IP as a rate-limit key, a browser session id, and whatever
+   a visitor types into the assistant, which is forwarded to a model provider.
+   `docs/drafts/PRIVACY-DATA-INVENTORY.md` is a source-grounded inventory of
+   exactly what is collected, stored and sent, with the file behind each claim.
+   Four things it deliberately does not state, because this repository does not
+   know them: the controller, a contact route, a retention period and the named
+   subprocessors. It also records that **no deletion or retention code exists**,
+   which is a decision to make before any notice can be truthful.
 
 3. **A contact route.** There is no contact page and nothing links to one, so
    nothing is broken, but a partner reading the site has no way to reach
    anybody. Needs an address or a form endpoint.
 
-4. **An about page**, if the showcase is meant to say who is behind it. Same
-   reason: the content is entirely owner information.
+4. **The identity half of an about page.** Who runs the site, and how to reach
+   them. The rest of an about page is not owner information: what the site is
+   for and how it ranks are documented here and in `/how-we-choose`, and a
+   draft built only from those is in `docs/drafts/ABOUT-DRAFT.md`.
 
-5. **Hosting.** No host is configured and no deployment exists. The one
-   deployment-shaped requirement in the code is `NEXT_PUBLIC_SITE_URL`; the
-   database URL and the assistant's credentials are already environment-driven.
+5. **Hosting.** No deployment configuration was found in this repository: no
+   host config file, no CI, no deployment manifest. That is a statement about
+   what is on disk here and not about whether anything is deployed anywhere,
+   which this repository cannot see. The deployment-shaped inputs in the code
+   are `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_ALLOW_INDEXING`; the database
+   URL and the assistant's credentials are already environment-driven.
 
-6. **Product images.** 24 of 24 are procedural placeholders, and reading a page
-   grants no right to its pictures. This needs permission from makers or
-   photographs of products somebody owns. It is the largest remaining gap and
-   the first thing a partner sees.
+6. **Product images: the permission, not the research.** 24 of 24 are
+   procedural placeholders and reading a page grants no right to its pictures.
+   What needs the owner is the act of asking and the agreement that follows.
+   What does not is finding out what each maker already publishes: several
+   brands operate press or affiliate asset pages with stated terms, and
+   establishing which do, and on what conditions, is research this repository
+   can do and has not yet done.
 
 ## Work that can be finished here, without the owner
 
@@ -76,9 +115,11 @@ no scheme, and a non-HTTP scheme. It guesses nothing.
    `docs/source-checks/2026-09-09-the-cold-pod-usa.md`.
 
 4. **Open graph and social cards.** No `openGraph` or `twitter` metadata
-   anywhere in `src/app`, and no `opengraph-image`. A link to this site pasted
-   into a message renders as a bare URL. The copy can be written here; only the
-   image needs a design decision.
+   anywhere in `src/app`, and no `opengraph-image`. Without them a client that
+   builds a preview has only the title and description to work with, and one
+   that looks for an image finds none; how any particular client renders the
+   link was not tested here. The copy can be written here; only the image needs
+   a design decision.
 
 5. **No CI.** Every check in this repository is run by hand.
    `.github/workflows` does not exist.
@@ -100,5 +141,14 @@ no scheme, and a non-HTTP scheme. It guesses nothing.
 - **Titles and descriptions.** Every route sets a title through the root
   template, and the category, product and brand pages set their own
   descriptions.
-- **Nothing on the shopping pages quotes an amount nobody confirmed**, which
-  the browser harness checks on all 20 products.
+- **No shopping page quotes an amount its own record does not support.** The
+  harness checks this on all 20 products: a placeholder amount is never shown,
+  a withheld one is never shown, and a product with no usable amount says the
+  price is unavailable.
+
+  That is a narrower claim than "every price is verified", and the difference
+  matters for a partner conversation. 17 of the 20 products show a real amount.
+  13 of those have it read from the merchant's own page; the other 4 are
+  relayed from search summaries and have never been re-checked. Recorded is not
+  verified, and `docs/PARTNER-SHOWCASE-CHECKLIST.md` reports which is which,
+  per product.
