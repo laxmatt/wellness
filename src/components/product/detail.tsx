@@ -35,22 +35,23 @@ function shortDate(iso: string): string {
 
 export function OfferList({ view }: { view: ProductView }) {
   // A disputed offer is not a buy option. Its amount belongs to a different
-  // product and its link goes to a different product's listing, so rendering
-  // the row at all would put a wrong price and a wrong destination in front of
-  // a shopper, however it was labelled. The row is withheld from this list and
-  // the page says one exists, without repeating the amount or the link.
+  // product, or to a configuration nobody matched, so rendering the row at all
+  // would put a wrong price and a wrong destination in front of a shopper,
+  // however it was labelled. The row is withheld and the page says a listing
+  // exists that we could not confirm, in a sentence a shopper can act on.
   //
-  // Withheld, not deleted. The record keeps the offer, its amount, its URL and
-  // its note; `docs/source-checks/` keeps the reading; the partner checklist
-  // still reports it. None of that is a shopping page.
+  // The bookkeeping stays off the shopping page. Why an amount was withheld,
+  // what it was, and where it came from live on the record, in
+  // `docs/source-checks/` and in the partner checklist, which are where
+  // somebody auditing this looks. A shopper needs to know the price is not
+  // available and where to get it.
   const offers = view.offers.filter((o) => !o.disputed);
   const withheldOffers = view.offers.length - offers.length;
   const withheldLine =
     withheldOffers > 0 ? (
       <p className="mt-2 text-xs text-fg-muted">
-        {withheldOffers === 1 ? "One further amount is on record and is not shown here" : `${withheldOffers} further amounts are on record and are not shown here`}: the
-        record cannot show it belongs to this product, so it is not offered as a
-        way to buy this one.
+        {withheldOffers === 1 ? "One listing is not shown here" : `${withheldOffers} listings are not shown here`}: we could not confirm{" "}
+        {withheldOffers === 1 ? "it is" : "they are"} for this product. Check the price with the retailer.
       </p>
     ) : null;
 
@@ -61,7 +62,7 @@ export function OfferList({ view }: { view: ProductView }) {
           ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
           : view.price.money
             ? `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`
-            : "No amount on record for this product. Nothing here can price it, so nothing here quotes a number."}
+            : "Current price unavailable. We could not confirm a price for this product, so we are not quoting one."}
         {withheldLine}
       </div>
     );

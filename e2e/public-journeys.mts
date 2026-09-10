@@ -175,8 +175,13 @@ async function priceBlock(page: Page, money: string): Promise<{ found: boolean; 
     for (const leaf of leaves) {
       const block = leaf.parentElement;
       if (!block) continue;
-      // PriceDisplay is a column: the amount, an optional tag, the basis line.
-      if (/retailer|Reference|No price confirmed/i.test(block.textContent ?? "")) return { found: true, text: (block.textContent ?? "").trim() };
+      // PriceDisplay is a column: the amount, an optional tag, and a line
+      // underneath saying what the amount is. That line is a retailer count, a
+      // reference marker, "No price confirmed yet" for a placeholder, or
+      // "Current price unavailable" when the record holds no amount at all.
+      if (/retailer|Reference|No price confirmed|Current price unavailable/i.test(block.textContent ?? "")) {
+        return { found: true, text: (block.textContent ?? "").trim() };
+      }
     }
     return { found: false, text: "" };
   }, money);
@@ -269,6 +274,7 @@ async function run(browser: Browser) {
     for (const v of views.filter((v) => v.price.money === undefined)) {
       const card = await cardText(page, v.slug);
       ok(`${v.slug} card offers to check the price it does not have`, card.includes("Check current price"), card.slice(0, 200));
+      ok(`${v.slug} card invents no retailer count`, !/\d+ retailers?|Lowest of/.test(card), card.slice(0, 200));
       for (const o of v.offers) {
         ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price)), formatMoney(o.price));
       }
@@ -417,7 +423,7 @@ async function run(browser: Browser) {
       const shopping = await page.$$eval('a[rel*="sponsored"]', (as) => as.map((a) => (a as HTMLAnchorElement).href));
       ok("nothing offers to shop it", !shopping.some((h) => new URL(h).href === new URL(offer.url).href), offer.url);
       ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
-      ok("but the page says an amount is on record and withheld", retailers.includes("is on record and is not shown here"));
+      ok("but the page tells a shopper the listing is not shown", retailers.includes("is not shown here"));
     }
 
     // The same rule for a placeholder amount, which the page has hidden since

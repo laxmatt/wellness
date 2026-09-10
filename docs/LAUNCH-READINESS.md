@@ -352,11 +352,25 @@ What the evidence says, per category, as of 2026-09-09:
   Every product is eligible and every one carries a real price. What is left
   is Liquid I.V.'s nutrition, still entirely relayed because that reading did
   not reach the table, and AG1's dietary claims.
-- **Cold Plunges, 6 products.** The least read. Ice Barrel 400 scores 0 with a
+- **Cold Plunges, 6 products.** The least read, and the one with an open
+  identity question: The Cold Pod's record is an Amazon listing for an
+  88-gallon tub, and the maker's own page reads 85 gallons at a different
+  price, near enough to be the same product and not close enough to assume it.
+  See `docs/source-checks/2026-09-09-the-cold-pod-usa.md`. Ice Barrel 400 scores 0 with a
   product URL that redirects to the home page, Edge Theory Labs has four demo
   values and an unconfirmed listing claim that the brand is out of business,
   and Best Budget is withheld because no budget-tier product scores above
   zero. Two of the six carry demo values.
+
+  **Best Premium sits on the weakest record in the category.** Edge Tub Elite
+  holds it on 44.4, with four prototype values, every figure relayed from a
+  search summary, and an unconfirmed listing claim that its brand is out of
+  business. It did not improve: it inherited the badge when Plunge Original's
+  price was withheld, because a price-tier badge needs a product with a price
+  and Plunge no longer has one. The badge rule is working as written and the
+  outcome is still a partner-facing problem. Logged as a source problem, not a
+  reason to change ranking rules: the fix is reading the Edge record, or
+  settling Plunge's configuration, not tuning the badge.
 
   Plunge Original now has **no price at all**. Its $6,990 was relayed, the page
   read 2026-09-09 displays $6,790, and the page prices a configuration this

@@ -103,9 +103,10 @@
         "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "note": "88 gallons, relayed from an Amazon search summary on 2026-09-08; the listing was not fetched. The maker's own page for the standard USA model, read by Codex on 2026-09-09 at 16:04 (https://www.thecoldpod.com/products/the-cold-pod-usa), states 85 gallons. Nothing establishes whether that is the same tub as this Amazon listing, so this is either a conflict about one product or a figure belonging to another. Either way the number cannot be relied on here: both figures stay on record and neither matches or scores."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "fits_height_in": {
       "value": 79,
@@ -171,6 +172,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries of an Amazon listing on 2026-09-08 and cited to that listing, which nothing here has fetched. On 2026-09-09 at 16:04 Codex read the maker's own page for the standard USA model, https://www.thecoldpod.com/products/the-cold-pod-usa, and it does not clearly describe this record. That page states 85 gallons against this record's 88, and $119.99 against the $139.99 relayed here. The physical size matches, 29.53 in across and high against 29.5, and so does the shape of the package: cover, six legs, pump, drain hose and bag, insulated and portable, indoor and outdoor. That is a near match, not an identity, and this record is not rescoped onto it: the capacity is marked as unreliable, no manufacturer price is invented for an 88-gallon tub, and nothing on the maker's page is promoted onto values relayed from a different listing. The maker's page shows Immediate Dispatch, a Notify When Available control and cart behaviour that disagree, so stock stays unknown. This reading gives no support for the maximum user height or for any warranty, and none for image rights."
   }
 }

@@ -3,6 +3,7 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CompareView } from "@/components/compare/CompareView";
 import { OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
+import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { redLight, wellnessDrinks } from "@/domain/categories";
 import { toProductView } from "@/domain/view";
 import { buildCompareModel } from "@/domain/compare";
@@ -134,9 +135,13 @@ describe("an offer whose amount belongs to another product is not a way to buy t
     expect(container.querySelector('a[href="https://example.com/lemon-lime-16"]')).toBeTruthy();
   });
 
-  it("says an amount is on record and withheld, rather than vanishing", () => {
+  it("tells a shopper the listing is not shown, in words they can act on", () => {
     render(<OfferList view={withMismatchCheapest()} />);
-    expect(screen.getByText(/One further amount is on record and is not shown here/)).toBeTruthy();
+    expect(screen.getByText(/One listing is not shown here/)).toBeTruthy();
+    expect(screen.getByText(/Check the price with the retailer/)).toBeTruthy();
+    // The bookkeeping belongs on the record, not on the shopping page.
+    expect(screen.queryByText(/cannot show it belongs to this product/)).toBeNull();
+    expect(screen.queryByText(/on record/)).toBeNull();
   });
 
   it("does not call the remaining offer the lowest of two", () => {
@@ -178,5 +183,53 @@ describe("the comparison table's group keys", () => {
       spy.mockRestore();
     }
     expect(errors.flat().join(" ")).not.toMatch(/same key/);
+  });
+});
+
+describe("a product with no price at all", () => {
+  const unpriced = () => {
+    const p = miniProduct("unpriced", 12345, { power: 50, size: "m" });
+    p.offers = [
+      {
+        ...offer("mismatched", 12345),
+        disputed: true,
+        source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different configuration." },
+      },
+    ];
+    return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+  };
+
+  it("says the price is unavailable, and invents neither a retailer count nor a date", () => {
+    // The defect: with no money, no basis and no offers, the component fell
+    // through to a fallback that read "1 retailer", beside the record's last
+    // edit date presented as the day a price was checked. Both were made up.
+    const view = unpriced();
+    expect(view.price.offerCount).toBe(0);
+    const { container } = render(<PriceDisplay price={view.price} />);
+    expect(screen.getByText("Check current price")).toBeTruthy();
+    expect(screen.getByText("Current price unavailable")).toBeTruthy();
+    expect(container.textContent).not.toMatch(/retailer[s]?\b/i);
+    expect(container.textContent).not.toMatch(/Lowest of/);
+    expect(container.textContent).not.toMatch(/\b\w{3} \d{1,2}\b/);
+    expect(container.textContent).not.toContain("123.45");
+  });
+
+  it("does the same on a card", () => {
+    const { container } = render(<PriceDisplay price={unpriced().price} compact />);
+    expect(screen.getByText("Check current price")).toBeTruthy();
+    expect(container.textContent).not.toMatch(/retailer/i);
+  });
+
+  it("still names a retailer count when there is one", () => {
+    const priced = miniView(miniProduct("priced", 5000, { power: 50, size: "m" }));
+    const { container } = render(<PriceDisplay price={priced.price} />);
+    expect(container.textContent).toMatch(/retailer/i);
+    expect(screen.getByText("$50")).toBeTruthy();
+  });
+
+  it("offers no way to buy, and says so plainly", () => {
+    render(<OfferList view={unpriced()} />);
+    expect(screen.getByText(/Current price unavailable/)).toBeTruthy();
+    expect(screen.queryByText("$123.45")).toBeNull();
   });
 });
