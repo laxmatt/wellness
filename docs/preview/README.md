@@ -1,7 +1,11 @@
 # Preview
 
-The built site, captured and reproducible. Screenshots are in `shots/`, taken
-2026-09-10 from a production build served locally.
+The built site, captured and reproducible. **Open `index.html` in a browser**
+for the gallery: it reads the committed images with relative paths, so it works
+from a clone with no server and no network.
+
+Screenshots are in `shots/`, taken 2026-09-10 from a production build served
+locally.
 
 ## Running it yourself
 
@@ -33,16 +37,22 @@ npm run preview:shots    # in another
 `preview:shots` refuses to run unless the server is serving the build in
 `.next`, so a set of images can never quietly describe older code.
 
-## Hosting: what is not solved here
+## Hosting
 
-This is a local preview. **Nothing is deployed and no host is configured.** A
-link Matt can open from his own machine needs a host, which needs a decision
-and an account, and neither has been made. The repository is ready for one: the
-only deployment-shaped inputs are `NEXT_PUBLIC_SITE_URL` and, when indexing is
-wanted, `NEXT_PUBLIC_ALLOW_INDEXING`.
+**A local preview needs no host and no account.** Clone the repository, run
+`npm ci && npm run preview`, open `http://localhost:3000`. That is the whole
+path on a Mac, and it gives the real site rather than pictures of it.
 
-Until then the screenshots below are the durable artefact: they are committed
-to the repository and survive this container.
+A *public* URL is a different thing and is not solved here. **No external
+deployment configuration exists in this repository and none has been verified
+from here**, which is a statement about what is on disk and what this container
+could check, not a claim that nothing is deployed anywhere. Publishing would
+need a host, and the only deployment-shaped inputs the code has are
+`NEXT_PUBLIC_SITE_URL` and, when indexing is wanted,
+`NEXT_PUBLIC_ALLOW_INDEXING`.
+
+The screenshots and `index.html` are the artefact that travels: committed to
+the repository, readable offline, and independent of this container.
 
 ## What to look at
 
@@ -51,6 +61,7 @@ to the repository and survive this container.
 | `home-desktop`, `home-mobile` | The whole home page: hero, three category tiles, category winners, filter shortcuts, the ranking statement, brands |
 | `category-red-light-*` | Eight products ranked, badges, filter chips, the how-we-rank panel |
 | `category-cold-plunge-*` | Six products, and the withheld Best Budget stated on the page with its reason |
+| `category-wellness-drinks-*` | Six products scored on sugar, added sugar, calories and subscription, with Best Budget withheld and explained |
 | `product-renu-*` | A well-sourced product: score breakdown, specs by group, retailers, sources |
 | `product-plunge-no-price-*` | **The most unusual state, worth a careful look.** A product with no price at all: the block says "Current price unavailable", the retailer section explains it in a shopper's words, one withheld listing is acknowledged without its amount, and the product still ranks and compares |
 | `compare-*` | Three cold plunges side by side, sticky product header |
@@ -65,20 +76,25 @@ to the repository and survive this container.
 - **Every product image is a procedural placeholder**, marked "DEMO IMAGE" on
   the image itself. Nothing here is presented as a photograph. See
   `docs/drafts/IMAGE-RIGHTS-MATRIX.md`.
-- **"Tradeoff: Not assessed"** appears on 9 of 20 product cards, including
-  every card on the home page. That is not a bug: the home page features
-  category winners, and a category winner is exactly the product that trips no
-  tradeoff rule. The copy is honest and it reads as unfinished. Whether to hide
-  the line when there is nothing to say is a copy decision, not a defect, and
-  it has not been made.
+- **Some cards carry a tradeoff line and some do not.** A card shows one when a
+  rule fired and omits the line when none did, which is often the case for a
+  category winner. The statement itself still exists where there is room to say
+  it properly: the product page explains that no rule firing is not the same as
+  finding no tradeoff, and the compare table keeps its row.
 - **Some prices are relayed rather than read**, and the page says which.
 - **Some specs are prototype values**, labelled "Demo data" wherever they
   appear. `docs/PROTOTYPE-VALUE-AUDIT.md` traces all 12 through every surface.
 
-## Fixed while capturing these
+## Changed while capturing these
 
 **Compare qualifiers read "Not ranked. at least one source…"** with a lowercase
 letter after the full stop, on every unranked row. The component turns the
 source string's colon into a full stop and was not capitalising what followed.
 Fixed in `src/components/compare/CompareView.tsx`; the tooltip keeps the
 original single-sentence wording.
+
+**Cards no longer print "Tradeoff: Not assessed."** Every category winner trips
+no tradeoff rule, so all four cards on the home page carried the same empty
+line. The line is omitted when there is nothing to say. Actual tradeoffs are
+untouched, no ranking logic changed, and the product page and compare table
+still state explicitly what "not assessed" means.

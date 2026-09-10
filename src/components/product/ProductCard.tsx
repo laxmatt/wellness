@@ -52,10 +52,17 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             {strength}
           </p>
         ) : null}
-        <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
-          <span className="font-semibold text-accent-strong">Tradeoff: </span>
-          {tradeoff ?? "Not assessed"}
-        </p>
+        {/* Only when there is one. A card said "Tradeoff: Not assessed"
+            whenever no rule fired, which is every category winner, so all four
+            cards on the home page carried the same empty line. The statement
+            still exists where it can be read properly: the product page says
+            what "not assessed" means, and the compare table keeps its row. */}
+        {tradeoff ? (
+          <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
+            <span className="font-semibold text-accent-strong">Tradeoff: </span>
+            {tradeoff}
+          </p>
+        ) : null}
         <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a

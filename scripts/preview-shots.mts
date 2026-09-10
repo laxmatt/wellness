@@ -27,6 +27,7 @@ const SHOTS: Shot[] = [
   { name: "home", path: "/", full: true },
   { name: "category-red-light", path: "/red-light", full: true },
   { name: "category-cold-plunge", path: "/cold-plunge", full: true },
+  { name: "category-wellness-drinks", path: "/wellness-drinks", full: true },
   { name: "product-renu", path: "/products/renu-therapy-cold-stoic-2-0", full: true },
   { name: "product-plunge-no-price", path: "/products/plunge-original", full: true },
   // Not fullPage. The compare table lives in a `max-h-[calc(100dvh-6rem)]`
@@ -83,4 +84,17 @@ try {
   await browser.close();
 }
 await writeFile(join(OUT, "BUILD.txt"), `${expected}\n`, "utf8");
+
+// Stamp the gallery, rather than have it fetch BUILD.txt: a page opened from
+// a file:// URL cannot fetch a sibling file, so the id would always read as
+// unstamped in the one situation the gallery exists for.
+const galleryPath = join(process.cwd(), "docs/preview/index.html");
+const gallery = await readFile(galleryPath, "utf8");
+const stamped = gallery
+  .replace(/(<code id="build">)[^<]*(<\/code>)/, `$1${expected}$2`)
+  .replace(/(<span id="captured">)[^<]*(<\/span>)/, `$1${new Date().toISOString().slice(0, 10)}$2`);
+if (stamped !== gallery) {
+  await writeFile(galleryPath, stamped, "utf8");
+  console.log("stamped docs/preview/index.html");
+}
 console.log("done");

@@ -100,10 +100,11 @@ follow. It guesses nothing. Tested in
    for and how it ranks are documented here and in `/how-we-choose`, and a
    draft built only from those is in `docs/drafts/ABOUT-DRAFT.md`.
 
-5. **Hosting.** No deployment configuration was found in this repository: no
-   host config file, no CI, no deployment manifest. That is a statement about
-   what is on disk here and not about whether anything is deployed anywhere,
-   which this repository cannot see. The deployment-shaped inputs in the code
+5. **Hosting.** No deployment configuration was found in this repository and no
+   external deployment has been verified from here: no host config file, no CI,
+   no deployment manifest. That is a statement about what is on disk and what
+   this container could check, not a claim that nothing is deployed anywhere.
+   A local preview needs none of it: `npm ci && npm run preview` on a Mac. The deployment-shaped inputs in the code
    are `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_ALLOW_INDEXING`; the database
    URL and the assistant's credentials are already environment-driven.
 
