@@ -2,11 +2,12 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { CompareView } from "@/components/compare/CompareView";
-import { ProvenanceBlock, SpecGroups } from "@/components/product/detail";
+import { OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
 import { redLight, wellnessDrinks } from "@/domain/categories";
+import { toProductView } from "@/domain/view";
 import { buildCompareModel } from "@/domain/compare";
 import { recommendCategory } from "@/domain/recommend";
-import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
 
 // The screen, not the model behind it. A qualifier that survives the domain
 // and dies in a component is a qualifier a shopper never sees, and this is the
@@ -103,5 +104,37 @@ describe("the comparison table", () => {
     const row = screen.getByText("60, disputed").closest("tr")!;
     expect(within(row).getByText(/states its figure two ways/)).toBeTruthy();
     expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
+  });
+});
+
+describe("an offer whose amount belongs to another product says so on the page", () => {
+  const withMismatchCheapest = () => {
+    const p = miniProduct("subject", 10000, { power: 50, size: "m" });
+    p.offers = [
+      { ...offer("real", 2499), source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "direct" as const } },
+      {
+        ...offer("mismatched", 1999),
+        disputed: true,
+        source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different pack." },
+      },
+    ];
+    return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+  };
+
+  it("marks the row and prints the reason from the record", () => {
+    render(<OfferList view={withMismatchCheapest()} />);
+    expect(screen.getByText("Not this product")).toBeTruthy();
+    expect(screen.getByText(/not used for the price shown above/)).toBeTruthy();
+    expect(screen.getByText(/Reported for a different pack/)).toBeTruthy();
+  });
+
+  it("does not call it the lowest, even though it sorts first", () => {
+    const view = withMismatchCheapest();
+    // It really is the cheapest amount on the record, and the list is sorted
+    // by amount, so it is the first row. That is exactly when a "Lowest" chip
+    // would be a lie.
+    expect(view.offers[0].id).toBe("mismatched");
+    render(<OfferList view={view} />);
+    expect(screen.queryByText("Lowest")).toBeNull();
   });
 });

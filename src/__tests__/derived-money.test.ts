@@ -56,14 +56,18 @@ describe("a value computed from a price is worth what the price is worth", () =>
   });
 
   it("marks a per-serving cost as derived only where it was computed here", () => {
-    // Five of the six are the pack price divided by servings. LMNT's is not:
-    // its maker states $1.50 a stick on the product page, read on 2026-09-09,
-    // so it stands on that source rather than on the pack price.
+    // Four of the six are the pack price divided by servings. Two are not:
+    // LMNT states $1.50 a stick and Liquid I.V. states $1.56, both read from
+    // the makers' own pages, so both stand on their sources rather than on a
+    // pack price. Liquid I.V.'s was derived until 2026-09-09, and derived from
+    // an Amazon amount recorded for a variety pack at that.
     const derived = viewsFor("wellness-drinks").filter((v) => v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === "price");
     const stated = viewsFor("wellness-drinks").filter((v) => v.provenance["attributes.price_per_serving_minor"]?.derivedFrom === undefined);
-    expect(derived.length).toBe(5);
-    expect(stated.map((v) => v.id)).toEqual(["lmnt-citrus-salt-30"]);
-    expect(stated[0].provenance["attributes.price_per_serving_minor"]?.verification).toBe("manufacturer_reported");
+    expect(derived.length).toBe(4);
+    expect(stated.map((v) => v.id).sort()).toEqual(["liquid-iv-hydration-multiplier-16", "lmnt-citrus-salt-30"]);
+    for (const v of stated) {
+      expect(v.provenance["attributes.price_per_serving_minor"]?.verification, v.id).toBe("manufacturer_reported");
+    }
   });
 });
 

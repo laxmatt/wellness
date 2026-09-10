@@ -38,6 +38,10 @@ export type OfferView = {
   availability: Availability;
   shippingNote?: string;
   lastChecked: string;
+  // The recorded amount cannot be shown to belong to this product. The row
+  // stays, with what the record says about it; the amount prices nothing.
+  disputed?: boolean;
+  disputeNote?: string;
 };
 
 export type PriceView = {
@@ -123,10 +127,12 @@ export type ViewContext = {
   merchants: Merchant[];
 };
 
-// Offers whose amount is a real one somebody recorded. A prototype amount is
-// not a cheaper offer; it is not an offer at all for pricing purposes.
+// Offers whose amount is a real one somebody recorded for this product. A
+// prototype amount is not a cheaper offer; it is not an offer at all for
+// pricing purposes. Neither is a real amount recorded against something else:
+// a disputed offer is a price for a product this record does not describe.
 export function pricedOffers(offers: MerchantOffer[]): MerchantOffer[] {
-  return offers.filter((o) => o.availability !== "discontinued" && o.source.kind !== "demo");
+  return offers.filter((o) => o.availability !== "discontinued" && o.source.kind !== "demo" && o.disputed !== true);
 }
 
 // The offer a price is taken from. Real amounts first, and only when there is
@@ -136,10 +142,17 @@ export function pricedOffers(offers: MerchantOffer[]): MerchantOffer[] {
 // $199 read from its maker's own page and a prototype $149 on an Amazon
 // record, and the page showed "Check current price" because the invented
 // number was lower.
+// Offers that could stand as this product's price at all, real or placeholder.
+// A disputed offer is not among them: a prototype amount is at least this
+// product's placeholder, while a disputed one is another product's real price,
+// and standing it in would be worse than showing nothing.
+export function liveOffers(offers: MerchantOffer[]): MerchantOffer[] {
+  return offers.filter((o) => o.availability !== "discontinued" && o.disputed !== true);
+}
+
 export function lowestOffer(offers: MerchantOffer[]): MerchantOffer | undefined {
-  const live = offers.filter((o) => o.availability !== "discontinued");
   const real = pricedOffers(offers);
-  return (real.length > 0 ? real : live).sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  return (real.length > 0 ? real : liveOffers(offers)).sort((a, b) => a.priceMinor - b.priceMinor)[0];
 }
 
 export function derivePrice(product: Product): PriceView {
@@ -150,8 +163,9 @@ export function derivePrice(product: Product): PriceView {
       basis: "lowest_offer",
       checkedAt: best.lastChecked,
       // The count belongs to the same set the price came from: "lowest of 2
-      // retailers" must not count a retailer whose amount is prototype data.
-      offerCount: (pricedOffers(product.offers).length || product.offers.length),
+      // retailers" must not count a retailer whose amount is prototype data,
+      // and must not count one whose amount belongs to another product.
+      offerCount: pricedOffers(product.offers).length || liveOffers(product.offers).length,
       isDemo: best.source.kind === "demo",
     };
   }
@@ -283,6 +297,8 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
       availability: o.availability,
       shippingNote: o.shippingNote,
       lastChecked: o.lastChecked,
+      disputed: o.disputed === true ? true : undefined,
+      disputeNote: o.disputed === true ? o.source.note : undefined,
     };
   }).sort((a, b) => a.price.amountMinor - b.price.amountMinor);
 

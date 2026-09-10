@@ -61,11 +61,18 @@ export function OfferList({ view }: { view: ProductView }) {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <p className="font-semibold">{o.merchant.name}</p>
-              {i === 0 && view.offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
+              {i === 0 && !o.disputed && view.offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
+              {o.disputed ? <span className="rounded-pill bg-surface px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-fg-muted ring-1 ring-edge-strong">Not this product</span> : null}
             </div>
             <p className="mt-0.5 text-xs text-fg-muted">
               {availabilityCopy[o.availability]} · checked {shortDate(o.lastChecked)} · {affiliateCopy[o.affiliateStatus]}
             </p>
+            {o.disputed ? (
+              <p className="mt-1 max-w-prose text-xs text-fg-soft">
+                This amount is not used for the price shown above: the record cannot show it belongs to this product.
+                {o.disputeNote ? ` ${o.disputeNote}` : ""}
+              </p>
+            ) : null}
             {o.discountCodes.length > 0 ? (
               <ul className="mt-2 flex flex-wrap gap-2">
                 {o.discountCodes.map((d) => (

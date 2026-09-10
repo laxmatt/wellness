@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": false
@@ -39,18 +39,20 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 2499,
-      "url": "https://www.liquid-iv.com",
+      "url": "https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here.",
+        "url": "https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Direct price not confirmed. Demo value."
+        "note": "16 sticks at $24.99 one-time, read at 16:23 Pacific on 2026-09-09, with a subscription price of $17.49 at 30% off offered separately and not recorded as this offer's price. The record carried the same $24.99 as a placeholder until this reading; the amount has not changed, and what it is worth has."
       }
     },
     {
@@ -72,8 +74,9 @@
         "url": "https://www.amazon.com/dp/B01IT9NLHW",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Amazon price reported at $27.99 for a variety pack; sale prices lower. Relayed via search summary; manufacturer page not fetched directly."
-      }
+        "note": "Amazon price reported at $27.99 for a variety pack; sale prices lower. Relayed via search summary; the listing was not fetched, and no Amazon page has been read here. The note names a variety pack, and this record is a 16-stick Lemon Lime box, so the amount cannot be shown to belong to this product. It stood as the shown price of this product from 2026-09-09 until the maker's own page was read the same day, and the per-serving cost was computed from it. Kept visible with that history rather than deleted; withheld from pricing."
+      },
+      "disputed": true
     }
   ],
   "attributes": {
@@ -125,17 +128,17 @@
       "verification": "manufacturer_reported"
     },
     "price_per_serving_minor": {
-      "value": 175,
+      "value": 156,
       "unit": "USD_minor",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here.",
+        "url": "https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Pack price divided by servings. Recomputed on 2026-09-09 as $27.99 over 16 servings, after the shown price stopped being a prototype $24.99 and became the manufacturer's own $27.99. Carried 156 until then, which was the prototype amount divided by the same 16."
+        "note": "The page displays $1.56 a stick beside the $24.99 pack price. This figure is stated rather than computed here, so it no longer follows the shown price. Its history: it was 156 as $24.99 divided by 16 while that pack price was a placeholder, then 175 when the Amazon $27.99 became the shown price on 2026-09-09, and it is 156 again now, from the maker rather than from arithmetic."
       },
-      "verification": "unknown",
-      "derivedFrom": "price"
+      "verification": "manufacturer_reported"
     },
     "sugar_g": {
       "value": 11,
@@ -221,19 +224,34 @@
         "url": "https://www.liquid-iv.com/pages/ingredients",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Gluten free and non-GMO are the maker's own label claims. Vegan is carried from the earlier search summary and was not part of the 2026-09-09 reading. Relayed via search summary; these claims are the maker's statements and nothing here verifies them."
       },
       "verification": "manufacturer_reported"
     },
     "subscription_available": {
       "value": true,
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here.",
+        "url": "https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Subscription availability not confirmed from the source. Demo value."
+        "note": "A subscription option is offered on the page at 30% off."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
+    },
+    "subscription_discount_pct": {
+      "value": 30,
+      "unit": "%",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here.",
+        "url": "https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states $17.49 on subscription against $24.99 one-time, at 30% off."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "source": {
@@ -241,6 +259,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the Lemon Lime 16-stick page was read by Codex on 2026-09-09 at 16:23 Pacific. That reading covered the price, the per-stick figure, the subscription terms and the gluten-free and non-GMO labels. The nutrition and ingredient table was not exposed in the page as retrieved, so every nutrition figure here is still the relayed 2026-09-08 material and is still cited that way. Nothing here says the page lacks a nutrition table; it says this reading did not reach it. Stock, images and any health claim remain unverified."
   }
 }

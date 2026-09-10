@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **111 of 263**, across 9 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **115 of 264**, across 10 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -564,18 +564,18 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 2 with no recorded source |
-| Price evidence | partly | $27.99 on record from Amazon, relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 1 with no recorded source |
+| Price evidence | partly | $24.99 on record from Liquid I.V. (direct), read from the page (Read by Codex on the manufacturer's page for this flavour and pack and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `liquid-iv-hydration-multiplier-16`, `/products/liquid-iv-hydration-multiplier-lemon-lime-16` |
-| Offers | Liquid I.V. (direct) (no amount on record, unknown, affiliate status not recorded); Amazon ($27.99, unknown, affiliate status not recorded) |
-| Links | https://www.liquid-iv.com<br>https://www.amazon.com/dp/B01IT9NLHW |
-| Sources on file | https://www.liquid-iv.com/pages/ingredients<br>https://www.amazon.com/dp/B01IT9NLHW |
-| Retrieval | 10 of 14 recorded fields were relayed rather than read from the source |
-| Ranking | score 1.4, completeness 86%, badges: none |
+| Offers | Liquid I.V. (direct) ($24.99, unknown, affiliate status not recorded); Amazon ($27.99, unknown, affiliate status not recorded) |
+| Links | https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier<br>https://www.amazon.com/dp/B01IT9NLHW |
+| Sources on file | https://www.liquid-iv.com/pages/ingredients<br>https://www.liquid-iv.com/products/lemon-lime-hydration-multiplier |
+| Retrieval | 9 of 15 recorded fields were relayed rather than read from the source |
+| Ranking | score 13.9, completeness 86%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -583,7 +583,6 @@ Specifications that are missing, unsupported or relayed:
 - `format` (required): relayed, maker's page not fetched
 - `serving_size` (required): relayed, maker's page not fetched
 - `servings_per_pack` (required): relayed, maker's page not fetched
-- `price_per_serving_minor` (required): source not recorded
 - `sugar_g` (required): relayed, maker's page not fetched
 - `added_sugar_g`: **absent from the record**
 - `calories`: relayed, maker's page not fetched
@@ -594,8 +593,6 @@ Specifications that are missing, unsupported or relayed:
 - `fiber_g`: **absent from the record**
 - `sweeteners`: relayed, maker's page not fetched
 - `dietary`: relayed, maker's page not fetched
-- `subscription_available`: prototype value `true`
-- `subscription_discount_pct`: **absent from the record**
 
 ### LMNT Citrus Salt, 30 stick packs
 
@@ -660,13 +657,13 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 4 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
-| Wellness Drinks | 6 | 6 | 3 | 0 | 0 |
+| Wellness Drinks | 6 | 6 | 4 | 0 | 0 |
 
 ## Totals
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 9 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 18. No amount on record: 2. Amount read from the merchant rather than relayed: 10 (bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -678,7 +675,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 96 of 263 records and 9 of 26 offer prices are
+1. **Read the pages already on file.** 95 of 264 records and 9 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

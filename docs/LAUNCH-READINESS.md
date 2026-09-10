@@ -292,10 +292,10 @@ drifts from the catalogue.
 
 It reports evidence on three independent dimensions and makes no launch
 selection: which products to publish, and in what order, is not a question the
-catalogue answers. Its figures are computed, so they move when the data does;
-as of the LMNT reading below, an amount is on record for 12 of 20, one product
-has its shown price read from the maker's page rather than relayed, no product
-has every required specification both usable and sourced, and no product has a
+catalogue answers. Its figures are computed, so they move when the data does.
+As of 2026-09-09, after ten readings: a real amount is the shown price on 18 of
+20, ten products have that amount read from the merchant's own page rather than
+relayed, 115 of 264 records cite a page somebody opened, and no product has a
 real image.
 
 An amount on record is not a verified price, and a reading is not a
@@ -315,22 +315,72 @@ that follows a site worth showing, not a prerequisite for having one.
 What actually holds it back, in the order that matters:
 
 1. **Images.** 24 of 24 are procedural placeholders. Nothing to license, and
-   nothing showing the products. This is the one a partner sees first.
-2. **Sourcing.** Most records are marked `secondhand`: the URL was recorded
-   from a search summary and the page was never opened. Two products, LMNT
-   Citrus Salt and Hooga HG300, have since had their price and specifications
-   read from the maker's page, both supplied by Codex and recorded in
-   `docs/source-checks/`. The current counts are in
-   `docs/PARTNER-SHOWCASE-CHECKLIST.md`, which computes them; the URLs are
-   already on file, which makes this the cheapest large improvement
-   available.
-3. **Prototype specifications.** 24 values across 14 products are demo data.
-   Each is marked on the page, which is honest and still reads as unfinished.
+   nothing showing the products. This is the one a partner sees first, it has
+   not moved at all through ten readings, and no amount of further reading
+   will move it: reading a page grants no right to its pictures. Every other
+   item on this list is work this project can do. This one needs permission
+   from somebody, or photographs of products somebody owns.
+2. **Sourcing.** 115 of 264 records now cite a page somebody opened; the rest
+   are `secondhand`, recorded from a search summary. Ten products have their
+   shown price read from the merchant. The remaining ten are the cheapest
+   large improvement available, because the URLs are already on file.
+3. **Prototype specifications.** 14 values across 9 products are demo data,
+   down from 24 across 14. Each is marked on the page, which is honest and
+   still reads as unfinished.
 4. **`NEXT_PUBLIC_SITE_URL` and a host config**, unless the hosting account
    already carries them. Canonicals point at localhost by default.
 5. **No robots or sitemap**, on a site whose whole purpose is search traffic.
 6. **No CI in the repository.** Every check here is run by hand.
 
-Eight products have no amount on record, and that is not on this list. The page
+Two products have no amount on record, and that is not on this list. The page
 says "Check current price" and links to the merchant, which is a normal way for
 a comparison site to behave and is honest about what is known.
+
+## Launch selection
+
+Not decided here, and not decidable from evidence alone: a partner conversation
+is about a category that looks complete, not about a per-product score. What
+the evidence says, per category, as of 2026-09-09:
+
+- **Red Light Therapy, 8 products.** The strongest category. Six have a price
+  read from the maker. Infraredi Flex Max is the weak one: ineligible, two
+  demo values, no amount on record.
+- **Wellness Drinks, 6 products.** Four read in the last two days. AG1 is
+  ineligible on two demo values. Every nutrition figure on Liquid I.V. is
+  still relayed.
+- **Cold Plunges, 6 products.** The weakest, and the one with the visible
+  holes: Ice Barrel 400 scores 0 with a product URL that redirects, Edge Theory
+  Labs has four demo values and an unconfirmed claim that the brand is out of
+  business, and Best Budget is withheld because no budget-tier product scores
+  above zero. Three of the six carry demo values.
+
+The order that follows from that, if somebody wants one: Red Light first,
+Drinks second, Cold Plunges only after the 400 and the Edge record are settled.
+That is a judgement, not a computation, and the checklist deliberately does not
+make it.
+
+## Open policy questions, for one consolidated review
+
+Each of these is a rule the site follows that nobody has decided on
+deliberately. None is a defect today. All are logged here rather than changed
+piecemeal.
+
+1. **An out-of-stock product can win a price badge.** `pricedOffers` excludes
+   only `discontinued` offers, so an out-of-stock product keeps a real price
+   and stays eligible for Best Value, Best Budget and Best Premium. OLIPOP is
+   out of stock today and holds no badge, so nothing is wrong on the page. The
+   question is whether a recommendation should be able to point at something
+   nobody can buy, and it is the same shape as the zero-score badge defect that
+   was fixed on 2026-09-09: eligible is not the same as recommendable.
+2. **Stock status is only as fresh as the reading.** An `out_of_stock` marker
+   is what a page said on a date, and the page will change without this record
+   changing. The site shows the date beside it, which is honest and does not
+   answer whether an old stock status should be shown at all.
+3. **A badge tier can be silently thin.** `minQualifying` withholds a badge
+   when fewer than two priced products sit in a tier, and states why. Nothing
+   states how thin a tier is when it does clear the bar: Best Premium in Cold
+   Plunges is the best of three.
+4. **Affiliate status is `unknown` on all 26 offers.** Unrecorded, not checked
+   and found to be none. The site says so, and the ranking cannot see the
+   field either way. Worth deciding whether `unknown` should ever be published
+   or whether every offer needs a recorded answer first.

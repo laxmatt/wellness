@@ -133,6 +133,15 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
     }
     for (const o of p.offers) {
       if (!merchantIds.has(o.merchantId)) issues.push({ file, message: `offer ${o.id} has unknown merchantId ${o.merchantId}` });
+      // Same rule as a disputed attribute: the marker exists so a reader can
+      // see the amount and why it is not used. Without a note it is a silent
+      // deletion with extra steps.
+      if (o.disputed === true && !o.source.note) {
+        issues.push({ file, message: `offer ${o.id} is marked disputed with no note saying why the amount cannot be shown to belong to this product.` });
+      }
+      if (o.disputed === true && o.source.kind === "demo") {
+        issues.push({ file, message: `offer ${o.id} is marked disputed and is also prototype data. A made-up amount is not a mismatched one; use one marker or the other.` });
+      }
     }
     const hasPrimary = p.images.some((i) => i.role === "primary");
     if (!hasPrimary) issues.push({ file, message: "no primary image" });

@@ -85,6 +85,13 @@ export const MerchantOffer = z.object({
   merchantSku: z.string().optional(),
   lastChecked: z.iso.date(),
   source: Source,
+  // Set when the recorded amount cannot be shown to belong to this product.
+  // The same word, and the same rule, as a disputed attribute value: the row
+  // stays visible with its note, and nothing prices, ranks or counts on it.
+  // Liquid I.V.'s Amazon row carried $27.99 whose own note said it was for a
+  // variety pack, and that amount was the shown price of a 16-stick Lemon
+  // Lime box. `check-catalog` refuses a disputed offer with no note.
+  disputed: z.boolean().optional(),
 });
 export type MerchantOffer = z.infer<typeof MerchantOffer>;
 

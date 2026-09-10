@@ -7,7 +7,8 @@ import { recommendCategory } from "@/domain/recommend";
 import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
 import { applyPreferences } from "@/domain/personalization/match";
 import { derivePrice, toProductView } from "@/domain/view";
-import { miniCategory, miniProduct, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
+import { validateCatalog } from "@/providers/catalog/LocalCatalogProvider";
+import { catalog, miniCategory, miniProduct, offer, testBrand, testMerchant, viewsFor } from "./fixtures";
 
 // Two defects, both reproduced from real records.
 //
@@ -263,5 +264,90 @@ describe("a prototype amount cannot make a product look cheap", () => {
     const misses = r.explanations.invented.misses.join(" ");
     expect(misses).toContain("not confirmed");
     expect(misses).not.toContain("$1,249");
+  });
+});
+
+// The third case, and the one the first two do not cover: an offer whose
+// amount is real, is not this product's.
+//
+// Liquid I.V.'s record carried an Amazon row at $27.99 whose own note said the
+// figure was for a variety pack. The record is a 16-stick Lemon Lime box. That
+// $27.99 was the shown price, it beat the maker's own $24.99 into second place
+// as the only non-prototype amount, and the per-serving cost was computed from
+// it. Nothing in the file was hidden: the note said "variety pack" and the
+// site priced on it anyway.
+//
+// Preferring the direct offer would not have fixed this. The direct offer only
+// happened to be right; the rule has to be that a mismatched amount prices
+// nothing, wherever it sits and whatever it costs.
+describe("an offer whose amount belongs to another product prices nothing", () => {
+  const withOffers = (offers: ReturnType<typeof offer>[]) => {
+    const p = miniProduct("subject", 10000, { power: 50, size: "m" });
+    p.offers = offers;
+    return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
+  };
+  const disputedOffer = (id: string, priceMinor: number) => ({
+    ...offer(id, priceMinor),
+    disputed: true,
+    source: { kind: "manufacturer" as const, url: "https://example.com", retrievedAt: "2026-09-09", method: "secondhand" as const, note: "Reported for a different pack." },
+  });
+
+  it("does not set the price, even when it is the cheapest real amount on the record", () => {
+    const v = withOffers([offer("real", 2499), disputedOffer("mismatched", 1999)]);
+    expect(v.price.money.amountMinor).toBe(2499);
+    expect(v.price.isDemo).toBe(false);
+  });
+
+  it("does not count as a retailer", () => {
+    const v = withOffers([offer("real", 2499), disputedOffer("mismatched", 1999)]);
+    expect(v.price.offerCount).toBe(1);
+  });
+
+  it("loses to a placeholder, which is at least this product's placeholder", () => {
+    const v = withOffers([offer("placeholder", 9999, "unknown", true), disputedOffer("mismatched", 1999)]);
+    expect(v.price.money.amountMinor).toBe(9999);
+    expect(v.price.isDemo).toBe(true);
+    expect(v.price.offerCount).toBe(1);
+  });
+
+  it("stays visible on the record, with what is known about it", () => {
+    const v = withOffers([offer("real", 2499), disputedOffer("mismatched", 1999)]);
+    const row = v.offers.find((o) => o.id === "mismatched")!;
+    expect(row.price.amountMinor).toBe(1999);
+    expect(row.disputed).toBe(true);
+    expect(row.disputeNote).toBe("Reported for a different pack.");
+    expect(v.offers.find((o) => o.id === "real")!.disputed).toBeUndefined();
+  });
+
+  it("is what the real record now does with the Amazon row", () => {
+    const v = viewsFor("wellness-drinks").find((x) => x.id === "liquid-iv-hydration-multiplier-16")!;
+    const amazon = v.offers.find((o) => o.merchant.name.toLowerCase().includes("amazon"))!;
+    expect(amazon.disputed).toBe(true);
+    expect(amazon.price.amountMinor).toBe(2799);
+    expect(v.price.money.amountMinor).toBe(2499);
+    expect(v.price.offerCount).toBe(1);
+
+    // And the per-serving figure no longer follows any price: the maker states
+    // it. It read 175 while the mismatched $27.99 was the basis.
+    expect(v.attributes.price_per_serving_minor).toBe(156);
+    expect(v.provenance["attributes.price_per_serving_minor"]?.derivedFrom).toBeUndefined();
+    expect(v.provenance["attributes.price_per_serving_minor"]?.verification).toBe("manufacturer_reported");
+  });
+  it("must say why, or the marker is a silent deletion", () => {
+    const c = catalog();
+    const p = structuredClone(c.products.find((x) => x.id === "liquid-iv-hydration-multiplier-16")!);
+    const amazon = p.offers.find((o) => o.id === "liquid-iv-16-amazon")!;
+    delete amazon.source.note;
+    const issues = validateCatalog({ ...c, products: [...c.products.filter((x) => x.id !== p.id), p] });
+    expect(issues.map((i) => i.message).join(" ")).toMatch(/disputed with no note/);
+  });
+
+  it("refuses a marker on prototype data, which is a different problem", () => {
+    const c = catalog();
+    const p = structuredClone(c.products.find((x) => x.id === "liquid-iv-hydration-multiplier-16")!);
+    const amazon = p.offers.find((o) => o.id === "liquid-iv-16-amazon")!;
+    amazon.source = { kind: "demo", ref: "Prototype demo value", method: "direct", note: "Placeholder." };
+    const issues = validateCatalog({ ...c, products: [...c.products.filter((x) => x.id !== p.id), p] });
+    expect(issues.map((i) => i.message).join(" ")).toMatch(/also prototype data/);
   });
 });
