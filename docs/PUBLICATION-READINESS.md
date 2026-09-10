@@ -111,10 +111,10 @@ follow. It guesses nothing. Tested in
    procedural placeholders and reading a page grants no right to its pictures.
    What needs the owner is the act of asking and the agreement that follows.
    The research half is started: `docs/drafts/IMAGE-RIGHTS-MATRIX.md` covers
-   six representative products, two per category. One finding so far, and it
-   is a no: Hooga's terms require express written permission before copying.
-   The other five brands' terms are unread, because this container cannot
-   reach them, and the refusal is recorded rather than reasoned around.
+   six representative products, two per category. Three brands' published terms
+   have been read and none permits the reuse this site would need; two reads
+   failed and one is unattempted. No brand has been asked for anything, so none
+   of this is a refusal.
 
 ## Work that can be finished here, without the owner
 
