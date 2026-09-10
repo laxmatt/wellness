@@ -678,7 +678,12 @@ async function run(browser: Browser) {
     );
     for (const r of modelRows.filter((x) => x.notComparable)) {
       const drawn = rows.find((x) => x.label.startsWith(r.label))!;
-      ok(`${r.key} says why it is not ranked`, drawn.label.includes(r.notComparable!.replace(/^Not ranked: /, "")), drawn.label);
+      // Case-insensitive on the reason's first letter: the component turns the
+      // source string's colon into a full stop and capitalises what follows,
+      // so the drawn text is "Not ranked. At least one…" where the model holds
+      // "Not ranked: at least one…".
+      const reason = r.notComparable!.replace(/^Not ranked: /, "").toLowerCase();
+      ok(`${r.key} says why it is not ranked`, drawn.label.toLowerCase().includes(reason), drawn.label);
       check(`${r.key} marks no winner`, drawn.dots, 0);
     }
 

@@ -98,7 +98,11 @@ export function CompareView({ model, ids }: { model: CompareModel; ids: string[]
                       {r.label}
                       {r.notComparable ? (
                         <span className="mt-0.5 block font-normal text-[10px] leading-tight text-fg-muted" title={r.notComparable}>
-                          {r.notComparable.replace(/^Not ranked: /, "Not ranked. ")}
+                          {/* The colon becomes a full stop so the qualifier reads as two
+                              sentences under a narrow label. The word after it has to be
+                              capitalised too: "Not ranked. at least one source" was
+                              rendering on every unranked row. */}
+                          {r.notComparable.replace(/^Not ranked: (\w)/, (_, c: string) => `Not ranked. ${c.toUpperCase()}`)}
                         </span>
                       ) : null}
                     </th>

@@ -19,7 +19,9 @@
     "e2e:setaside": "node e2e/set-aside-updates-page.mjs",
     "ledger:restore": "tsx scripts/ledger-restore.ts",
     "e2e:public": "tsx e2e/public-journeys.mts",
-    "partner:checklist": "tsx scripts/partner-checklist.ts"
+    "partner:checklist": "tsx scripts/partner-checklist.ts",
+    "preview:shots": "tsx scripts/preview-shots.mts",
+    "preview": "next build && next start -p ${PORT:-3000}"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",
