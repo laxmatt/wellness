@@ -2,6 +2,7 @@ import { Pool } from "pg";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { PostgresUsageStore } from "@/providers/usage/PostgresUsageStore";
 import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageMeter";
+import { assertDisposable } from "./support/disposable-db";
 
 // These run against a real Postgres. The in-memory store cannot show that the
 // conditional UPDATE actually serialises, nor that an upgrade from the previous
@@ -12,36 +13,7 @@ const URL = process.env.TEST_DATABASE_URL;
 // application instance is using, it destroys that instance's accounting: real
 // spend, open reservations and uncertain charges awaiting reconciliation. That
 // happened, to a ledger holding two uncertain charges and $0.003837 of recorded
-// spend.
-//
-// Comparing TEST_DATABASE_URL to DATABASE_URL as text does not prevent it. Two
-// different strings reach the same database through a host alias, a different
-// user, an added option or a socket instead of TCP. So identity is established
-// from inside the database instead: a table named `disposable_test_database`
-// that only a throwaway database is given. The application's own database will
-// never have one, whatever the connection string says.
-//
-// The database permissions are the real barrier and this is the second one. The
-// test role should have no CONNECT privilege on the application database at
-// all; see docs/ASSISTANT.md.
-export const DISPOSABLE_MARKER = "disposable_test_database";
-
-async function assertDisposable(url: string): Promise<void> {
-  const probe = new Pool({ connectionString: url, max: 1 });
-  try {
-    const r = await probe.query<{ present: boolean }>(`SELECT to_regclass($1) IS NOT NULL AS present`, [DISPOSABLE_MARKER]);
-    if (!r.rows[0]?.present) {
-      const named = await probe.query<{ db: string }>("SELECT current_database() AS db");
-      throw new Error(
-        `Refusing to run: database "${named.rows[0]?.db}" has no ${DISPOSABLE_MARKER} table, so it is not marked disposable. ` +
-          `This suite drops every ledger table. Create the marker only in a throwaway database:\n` +
-          `  CREATE TABLE ${DISPOSABLE_MARKER} (note TEXT);`,
-      );
-    }
-  } finally {
-    await probe.end();
-  }
-}
+// spend. The guard is assertDisposable; see src/__tests__/support/disposable-db.ts.
 
 const suite = URL ? describe : describe.skip;
 

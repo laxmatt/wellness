@@ -3,6 +3,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { PostgresUsageStore } from "@/providers/usage/PostgresUsageStore";
 import { MemoryUsageStore } from "@/providers/usage/MemoryUsageStore";
 import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageMeter";
+import { assertDisposable } from "./support/disposable-db";
 
 // A reservation with no outcome is not a free request. It may have reached the
 // provider and been charged; nobody in this process can say. These tests pin
@@ -10,7 +11,6 @@ import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageM
 // operator and a late settlement act on the same reservation.
 
 const URL = process.env.TEST_DATABASE_URL;
-export const DISPOSABLE_MARKER = "disposable_test_database";
 
 const config: MeterConfig = {
   monthlyCapUsd: 25,
@@ -154,13 +154,7 @@ suite("shared postgres store", () => {
   };
 
   beforeAll(async () => {
-    const probe = new Pool({ connectionString: URL, max: 1 });
-    try {
-      const r = await probe.query<{ present: boolean }>(`SELECT to_regclass($1) IS NOT NULL AS present`, [DISPOSABLE_MARKER]);
-      if (!r.rows[0]?.present) throw new Error(`Refusing to run: no ${DISPOSABLE_MARKER} table. This suite drops ledger tables.`);
-    } finally {
-      await probe.end();
-    }
+    await assertDisposable(URL!);
     admin = new Pool({ connectionString: URL, max: 2 });
   });
 

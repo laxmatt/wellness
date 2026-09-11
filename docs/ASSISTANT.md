@@ -115,7 +115,7 @@ Reading a total, deciding there is room, then spending is not safe: two requests
 
 ### Never point the tests at the application's database
 
-`src/__tests__/postgres-ledger.test.ts` drops every ledger table after each test, because it tests the migration path against a real Postgres. Pointed at a database an application instance is using, it destroys that instance's accounting. That happened on 2026-09-08 and cost this project its only real spend record; see `docs/live-test-results/LEDGER-HISTORY.md`.
+Three suites write to and drop ledger tables, because the migration path, the reservation orderings and the retention predicates cannot be tested against an approximation of Postgres: `src/__tests__/postgres-ledger.test.ts`, `src/__tests__/abandoned-reservations.test.ts` and `src/__tests__/retention-postgres.test.ts`. Pointed at a database an application instance is using, they destroy that instance's accounting. That happened on 2026-09-08 and cost this project its only real spend record; see `docs/live-test-results/LEDGER-HISTORY.md`.
 
 Comparing `TEST_DATABASE_URL` to `DATABASE_URL` as text does not prevent it, because two different strings reach the same database through a host alias, a different user, an added option, or a socket instead of TCP. So there are two barriers, of different kinds.
 
@@ -139,7 +139,7 @@ A misaimed connection string is then refused before any statement runs:
 CREATE TABLE disposable_test_database (note TEXT);
 ```
 
-The suite refuses to run without it, naming the database it reached. Identity is established from inside the database, so no connection-string trick gets past it, and the application's database will never carry the marker.
+The suite refuses to run without it, naming the database it reached. Identity is established from inside the database, so no connection-string trick gets past it, and the application's database will never carry the marker. The check lives in one place, `src/__tests__/support/disposable-db.ts`, because a barrier copied into three suites can be weakened in two of them without anyone noticing.
 
 Set `TEST_DATABASE_URL` to the restricted role on the disposable database. Without it the Postgres tests skip.
 

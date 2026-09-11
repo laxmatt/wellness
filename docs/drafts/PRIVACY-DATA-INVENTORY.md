@@ -13,6 +13,10 @@ review found three claims that the code does not support. Corrections are
 marked. Nothing below was tested against a live deployment, because no
 deployment configuration exists in this repository.
 
+Updated 2026-09-11: section 2 now describes a reporting command that did not
+exist when this was compiled, and separates what that command does from the
+deletion it does not do.
+
 **What this inventory cannot tell you.** It is a reading of application code in
 this repository and nothing else. It says nothing about what a hosting platform
 logs before this code runs, what a merchant does when a visitor follows an
@@ -167,11 +171,54 @@ worth naming in an inventory because it is a text-retaining path that exists;
 it is not a route by which public traffic is recorded, and nothing wires it to
 the live endpoint.
 
-**There is no deletion or retention code.** No `DELETE`, no expiry, no pruning
-job anywhere in the store. Rows accumulate. Whoever writes the notice has to
-either state a retention period and have somebody implement it, or describe
-what actually happens, which today is "kept indefinitely". This is the single
-largest gap between the code and any notice that could be published.
+### Nothing is deleted, and a command that counts what deleting would reach
+
+**No row is ever removed.** There is no `DELETE`, no expiry, no anonymisation
+step and no scheduled job anywhere in the store. Rows accumulate from the first
+write. Whoever writes the notice has to either state a retention period and have
+somebody implement it, or describe what actually happens, which today is "kept
+indefinitely".
+
+One piece of that gap was closed on 2026-09-11, and it is worth being exact
+about which piece. What now exists is a dry run:
+
+```
+npm run retention:report -- --retain-days=90
+npm run retention:report -- --before=2026-06-30
+```
+
+`scripts/retention-report.ts` counts how many rows a stated cutoff would reach
+and prints the figures. `src/domain/retention.ts` holds the categories and the
+predicates, and refuses to send any statement that is not a `SELECT count(*)`.
+`src/__tests__/retention.test.ts` holds that refusal to it, and
+`src/__tests__/retention-postgres.test.ts` runs the predicates against a real
+throwaway Postgres and checks that every row count, and every accounting row's
+id, session, outcome and cost, is the same after the report as before it.
+
+Three things the command deliberately does not do:
+
+- **It assumes no retention period.** Run with neither `--before` nor
+  `--retain-days` it exits with an error rather than a default. The period is
+  the owner's decision, and a number invented in code would reach a published
+  notice looking like a decision somebody made.
+- **It prints counts and nothing else.** No session id, no client key, no
+  amount, no row. The statements it sends return a single integer each.
+- **It deletes nothing, and there is nothing to switch on.** No scheduler, no
+  flag that turns counting into deleting, and no deletion code behind either.
+
+What it classifies, so a period can be argued about against real figures:
+
+| category | what a job would do | why |
+| --- | --- | --- |
+| `assistant_client` rows older than the cutoff | prune | the row enforces a limit for an hour that has already passed, and this is the only table holding anything derived from an IP address |
+| `assistant_session` rows older than the cutoff | prune | a per-session turn limit that the session will not reach again |
+| `assistant_usage.session_id` on settled, reconciled rows | keep the row, drop the link | the row is the ledger and deleting it would change what the site has spent; the session id is the only part of it pointing at a visitor |
+| open reservations, unreconciled uncertain charges, `assistant_budget` | nothing, at any age | an operator still has to close each one against the provider's record, and the monthly totals are the financial history |
+| rows carrying an outcome this code does not recognise | nothing, and reported separately | nothing here can say whether such a row is finished |
+
+Two things still do not exist: a chosen period, and any code that would act on
+one. The report exists so the first can be decided with the shape of the second
+already visible, not as a substitute for either.
 
 ## 3. Where data goes outside this system
 
@@ -239,10 +286,15 @@ These need the owner or a document this repository does not hold:
 
 ## 7. What could be done here first, without the owner
 
-- Implement retention once a window is chosen. A scheduled delete of
-  `assistant_client` rows older than that window is a small job. **Not started:
-  the window is the owner's decision and inventing one would put a false period
-  in a notice.**
-- Consider whether `assistant_usage` needs `session_id` at all after
-  reconciliation, or whether cost accounting can keep the row and drop the link
-  to a session.
+- **Done, and only this:** a dry run that counts what a stated cutoff would
+  reach (section 2). It requires the cutoff as an argument, prints counts alone,
+  deletes nothing and runs on no schedule.
+- **Not started: the deletion itself.** Three separate pieces of work, none
+  written: a prune of `assistant_client`, a prune of `assistant_session`, and an
+  update that clears `session_id` on settled, reconciled `assistant_usage` rows.
+  Each needs the window first, which is the owner's to choose.
+- Whether `assistant_usage` needs `session_id` at all after reconciliation is
+  now answered in code as a proposal rather than a question: the report counts
+  the link as droppable once the row is settled and reconciled, and keeps the
+  row. That is a classification somebody can disagree with, not a decision, and
+  nothing drops the link today.
