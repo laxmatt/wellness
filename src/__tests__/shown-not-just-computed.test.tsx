@@ -1,17 +1,17 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, vi } from "vitest";
 import { afterEach, describe, expect, it } from "vitest";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { AssistantPanel } from "@/components/assistant/AssistantPanel";
 import { AssistantProvider } from "@/components/assistant/AssistantProvider";
 import { CompareProvider } from "@/components/compare/CompareProvider";
-import { FacetChips } from "@/components/category/sections";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { coldPlunge, redLight } from "@/domain/categories";
 import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
 import { recommendCategory } from "@/domain/recommend";
+import { buildFilterGroups, facetOptionId } from "@/domain/filters";
 import { liveFacets } from "@/lib/queries";
 import { miniCategory, miniProduct, miniView, moneyView, viewsFor } from "./fixtures";
 
@@ -101,16 +101,32 @@ describe("a facet that matches nothing is not offered", () => {
     expect(liveFacets(page(emptyFacet))).toEqual(["big"]);
   });
 
-  it("leaves the empty facet out of the chips", () => {
-    render(<FacetChips cat={emptyFacet} available={liveFacets(page(emptyFacet))} />);
-    const nav = screen.getByRole("navigation");
-    expect(within(nav).queryByText("Impossible")).toBeNull();
-    expect(within(nav).getByText("Big")).toBeTruthy();
+  // The chip bar that navigated to a separate page is gone. What replaced the
+  // rule is stronger: a facet that matches nothing is still not offered as a
+  // starting point, and if a shopper reaches its URL anyway the chip is there,
+  // pressed, so they can take it off. The old bar could only show them where
+  // they were stuck.
+  it("keeps a starting point that matches nothing as a chip, so it can be removed", () => {
+    const { cat, products } = page(emptyFacet);
+    const views = products.map((p) => p.view);
+    const id = facetOptionId(views, cat, "impossible")!;
+    expect(id, "the facet resolves to a chip").toBeTruthy();
+
+    const offered = buildFilterGroups(views, cat).flatMap((g) => g.options.map((o) => o.id));
+    expect(offered, "not offered to somebody who did not ask for it").not.toContain(id);
+
+    const arrived = buildFilterGroups(views, cat, [id]).flatMap((g) => g.options);
+    const chip = arrived.find((o) => o.id === id);
+    expect(chip, "but present when it is the selection the URL arrived with").toBeTruthy();
+    expect(chip!.matchIds).toEqual([]);
   });
 
-  it("still shows it when it is the page you are on", () => {
-    render(<FacetChips cat={emptyFacet} active="impossible" available={liveFacets(page(emptyFacet))} />);
-    expect(within(screen.getByRole("navigation")).getByText("Impossible")).toBeTruthy();
+  it("does not route a facet through a product subset any more", () => {
+    const { cat, products } = page(emptyFacet);
+    const views = products.map((p) => p.view);
+    const id = facetOptionId(views, cat, "big")!;
+    // The grid is the category, whatever the URL. Only the selection differs.
+    expect(buildFilterGroups(views, cat, [id]).flatMap((g) => g.options.map((o) => o.id))).toContain(id);
   });
 
   it("offers every live facet in the real catalogue", () => {

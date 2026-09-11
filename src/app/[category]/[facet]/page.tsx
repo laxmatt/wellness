@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CategoryHero, FacetChips, MatcherInput, RankingTransparency } from "@/components/category/sections";
-import { FilterChips, FilterableGrid } from "@/components/category/FilterBar";
-import { CategoryFilterProvider } from "@/components/category/FilterContext";
-import { ProductCard } from "@/components/product/ProductCard";
+import { CategoryBrowse } from "@/components/category/CategoryBrowse";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
-import { buildFilterGroups } from "@/domain/filters";
-import { buildNeeds, facetProducts, getCategoryPage, liveFacets } from "@/lib/queries";
+import { facetSelection, getCategoryPage } from "@/lib/queries";
 import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
@@ -20,78 +15,44 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category, facet } = await params;
   const page = await getCategoryPage(category);
-  if (!page) return {};
-  const fp = facetProducts(page, facet);
-  if (!fp) return {};
+  const def = page?.cat.facets.find((f) => f.slug === facet);
+  if (!page || !def) return {};
   return {
-    title: fp.facet.title,
-    description: fp.facet.description,
-    alternates: { canonical: `/${page.cat.slug}/${fp.facet.slug}` },
-    ...social({ title: fp.facet.title, description: fp.facet.description, path: `/${page.cat.slug}/${fp.facet.slug}` }),
+    title: def.title,
+    description: def.description,
+    alternates: { canonical: `/${page.cat.slug}/${def.slug}` },
+    ...social({ title: def.title, description: def.description, path: `/${page.cat.slug}/${def.slug}` }),
   };
 }
 
+/**
+ * A facet URL is the category, opened with one chip already pressed.
+ *
+ * It used to be its own product set, built by filtering the category and handing
+ * the smaller list to the grid. Everything downstream inherited that: the chips
+ * were built from the subset, the counts were of the subset, and no control on
+ * the page could reach a product outside it. The narrowing was in the route, and
+ * a route is not something a shopper can take off.
+ */
 export default async function FacetPage({ params }: Props) {
   const { category, facet } = await params;
   const page = await getCategoryPage(category);
   if (!page) notFound();
-  const fp = facetProducts(page, facet);
-  if (!fp) notFound();
-  const { cat } = page;
-  const filterGroups = buildFilterGroups(fp.products.map((p) => p.view), cat);
-  // Over the whole category, and carrying this facet as a requirement of its own.
-  const needs = buildNeeds(page, fp.facet.slug);
+  const def = page.cat.facets.find((f) => f.slug === facet);
+  if (!def) notFound();
+  const { cat, products } = page;
 
   return (
     <Shell
       current={`/${cat.slug}`}
       trayCategoryId={cat.id}
       assistantCategoryId={cat.id}
-      compareSeeds={fp.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
+      compareSeeds={products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
       <Container className="pt-4">
-        <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: fp.facet.title }]} />
+        <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: def.title }]} />
       </Container>
-      <CategoryHero cat={cat} title={fp.facet.title} description={fp.facet.description} count={fp.products.length} />
-      <div className="mt-8 flex flex-col gap-10">
-        <MatcherInput cat={cat} />
-        <FacetChips cat={cat} active={fp.facet.slug} available={liveFacets(page)} />
-        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="eyebrow">{fp.facet.title}</p>
-              <h2 className="font-display mt-1 text-3xl">Ranked by {cat.scoring.label.toLowerCase()}.</h2>
-            </div>
-            <p className="text-sm text-fg-muted">
-              {fp.products.length} of {page.products.length}
-            </p>
-          </div>
-          {fp.products.length === 0 ? (
-            <div className="mt-6 rounded-card border border-edge bg-surface-raised p-8 text-center">
-              <p className="font-display text-2xl">Nothing in our set fits this filter yet.</p>
-              <p className="mt-2 text-fg-soft">Badges are awarded across the whole category, so the closest picks are on the main page.</p>
-              <Link href={`/${cat.slug}`} className="tap mt-4 inline-flex items-center rounded-pill bg-fg px-5 text-sm font-semibold text-fg-inverse">
-                See all {cat.navLabel.toLowerCase()}
-              </Link>
-            </div>
-          ) : (
-            <CategoryFilterProvider groups={filterGroups} ids={fp.products.map((p) => p.view.id)} needs={needs} categoryId={cat.id} activeFacetId={`facet:${fp.facet.slug}`}>
-              <div className="mt-6">
-                <FilterChips />
-              </div>
-              <div className="mt-6">
-                <FilterableGrid emptyHref={`/${cat.slug}`} emptyLabel={`See all ${cat.navLabel.toLowerCase()}`}>
-                  {fp.products.map((item, i) => (
-                    <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
-                  ))}
-                </FilterableGrid>
-              </div>
-            </CategoryFilterProvider>
-          )}
-          <p className="mt-4 text-xs text-fg-muted">Badges are decided across all {page.products.length} {cat.name.toLowerCase()} we track, not within this filter.</p>
-        </section>
-        <RankingTransparency cat={cat} />
-      </div>
+      <CategoryBrowse page={page} title={def.title} description={def.description} initialSelected={facetSelection(page, def.slug)} startingFrom={def.label} />
     </Shell>
   );
 }

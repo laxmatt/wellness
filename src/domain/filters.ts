@@ -1,7 +1,7 @@
 import { formatAttribute, humanize } from "./attributes";
 import type { CategoryDefinition, Condition } from "./category";
 import { attributeDef } from "./category";
-import { evaluateCondition } from "./conditions";
+import { matchesAll } from "./conditions";
 import type { ProductView } from "./view";
 
 // Filter options are resolved on the server: each option carries the product
@@ -24,7 +24,40 @@ export type FilterGroup = { key: string; label: string; options: FilterOption[] 
  * excluded bounded values by hand, and `eq` already refuses them, because a
  * source that said "under 1 g" did not say 1 g.
  */
-export type FilterOptionSpec = { id: string; label: string; groupKey: string; groupLabel: string; condition: Condition };
+export type FilterOptionSpec = {
+  id: string;
+  label: string;
+  groupKey: string;
+  groupLabel: string;
+  /** All of them must hold. One condition for a chip; a facet may state several. */
+  conditions: Condition[];
+  /**
+   * Facet URLs this option is the control for.
+   *
+   * A facet page is not a different filter engine and not a different product
+   * set. It is this site's own chip, already pressed. Recording that here is
+   * what lets `/wellness-drinks/energy` open the whole category with the Energy
+   * chip on, which the shopper can then turn off, instead of a page whose
+   * product list cannot be widened.
+   */
+  facetSlugs?: string[];
+  /**
+   * Where the option came from. "filter" is a chip the category defines;
+   * "facet" is one that exists only because a facet URL states it and no chip
+   * did. A facet pointing at an existing chip does not change that chip's
+   * source: it is still the category's own filter.
+   */
+  source: "filter" | "facet";
+};
+
+/** Same key, same operator, same value. Nothing is inferred from labels. */
+export function conditionsEqual(a: Condition[], b: Condition[]): boolean {
+  if (a.length !== b.length) return false;
+  const key = (c: Condition) => `${c.key}|${c.op}|${JSON.stringify(c.value ?? null)}`;
+  const left = a.map(key).sort();
+  const right = b.map(key).sort();
+  return left.every((x, i) => x === right[i]);
+}
 
 /**
  * Every option this category could offer, before any pruning.
@@ -39,7 +72,7 @@ export type FilterOptionSpec = { id: string; label: string; groupKey: string; gr
 export function filterOptionSpecs(views: ProductView[], cat: CategoryDefinition): FilterOptionSpec[] {
   const out: FilterOptionSpec[] = [];
   const push = (spec: { key: string; label: string }, id: string, label: string, condition: Condition) =>
-    out.push({ id: `${spec.key}:${id}`, label, groupKey: spec.key, groupLabel: spec.label, condition });
+    out.push({ id: `${spec.key}:${id}`, label, groupKey: spec.key, groupLabel: spec.label, conditions: [condition], source: "filter" });
 
   for (const spec of cat.filters) {
     const def = attributeDef(cat, spec.key);
@@ -69,24 +102,67 @@ export function filterOptionSpecs(views: ProductView[], cat: CategoryDefinition)
     }
   }
 
+  // Facets last, because a facet is a chip this site has already written down
+  // somewhere else. Where the chip already exists it is annotated, never
+  // duplicated: /red-light/under-1000 and the "Under $1,000" chip are one
+  // control, so pressing one and arriving by the other cannot disagree.
+  for (const facet of cat.facets) {
+    const existing = out.find((o) => conditionsEqual(o.conditions, facet.conditions));
+    if (existing) {
+      existing.facetSlugs = [...(existing.facetSlugs ?? []), facet.slug];
+      continue;
+    }
+    // No chip says this yet. The facet joins the row its condition belongs to,
+    // so it stays an alternative to that row's other options rather than a new
+    // requirement ANDed against them. /cold-plunge/indoor is the live case: the
+    // assumed placement values were removed from the catalogue, so no product
+    // states one and the list kind offers no chip for it.
+    const key = facet.conditions.length === 1 ? facet.conditions[0].key : undefined;
+    const owner = key ? cat.filters.find((f) => f.key === key) : undefined;
+    out.push({
+      id: `${owner?.key ?? "facet"}:${facet.slug}`,
+      label: facet.label,
+      groupKey: owner?.key ?? "facet",
+      groupLabel: owner?.label ?? "Starting point",
+      conditions: facet.conditions,
+      facetSlugs: [facet.slug],
+      source: "facet",
+    });
+  }
+
   return out;
 }
 
-export function buildFilterGroups(views: ProductView[], cat: CategoryDefinition): FilterGroup[] {
+/** The chip a facet URL presses, or nothing if the category does not define it. */
+export function facetOptionId(views: ProductView[], cat: CategoryDefinition, facetSlug: string): string | undefined {
+  return filterOptionSpecs(views, cat).find((o) => o.facetSlugs?.includes(facetSlug))?.id;
+}
+
+/**
+ * @param keep option ids that must be offered even if the rule below would drop
+ *   them. A chip the page has already pressed is one: an option matching nothing
+ *   is normally not worth a tap, but when it is *on* it is the thing the shopper
+ *   has to be able to turn off. Hiding it strands them in an empty result with
+ *   no control to undo, which is the dead end a facet page used to be.
+ */
+export function buildFilterGroups(views: ProductView[], cat: CategoryDefinition, keep: string[] = []): FilterGroup[] {
   const groups = new Map<string, FilterGroup>();
 
   for (const spec of filterOptionSpecs(views, cat)) {
-    const matchIds = views.filter((v) => evaluateCondition(v, cat, spec.condition)).map((v) => v.id);
+    const matchIds = views.filter((v) => matchesAll(v, cat, spec.conditions)).map((v) => v.id);
     // A chip that admits nothing is a dead end, and one that admits everything
-    // changes nothing.
-    if (matchIds.length === 0 || matchIds.length === views.length) continue;
+    // changes nothing. Neither is true of a chip that is already on.
+    if ((matchIds.length === 0 || matchIds.length === views.length) && !keep.includes(spec.id)) continue;
     const group = groups.get(spec.groupKey) ?? { key: spec.groupKey, label: spec.groupLabel, options: [] };
     group.options.push({ id: spec.id, label: spec.label, matchIds });
     groups.set(spec.groupKey, group);
   }
 
-  // Category order, not discovery order.
-  return cat.filters.map((f) => groups.get(f.key)).filter((g): g is FilterGroup => g !== undefined);
+  // Category order, not discovery order. A facet with no filter row of its own
+  // goes last, under its own heading.
+  const ordered = cat.filters.map((f) => groups.get(f.key)).filter((g): g is FilterGroup => g !== undefined);
+  const loose = groups.get("facet");
+  return loose ? [...ordered, loose] : ordered;
 }
 
 // Options within a group are OR. Groups are AND.

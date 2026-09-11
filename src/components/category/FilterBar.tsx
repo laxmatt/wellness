@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { NeedsHeldBack, NeedsInvitation } from "@/components/needs/NeedsFit";
 import { cn } from "@/lib/cn";
@@ -75,7 +76,7 @@ export function FilterChips() {
   );
 }
 
-export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: ReactNode[]; emptyHref?: string; emptyLabel?: string }) {
+export function FilterableGrid({ children, emptyHref, emptyLabel, sortLabel }: { children: ReactNode[]; emptyHref?: string; emptyLabel?: string; sortLabel?: string }) {
   const f = useCategoryFilters();
   const indexOf = useMemo(() => new Map((f?.ids ?? []).map((id, i) => [id, i])), [f?.ids]);
   // `data-product-grid` names the grid a filter acts on. The picks row above
@@ -100,10 +101,31 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           shopper to do it for. */}
       {f.categoryId ? <NeedsInvitation categoryId={f.categoryId} className="mb-3" /> : null}
 
-      <div className="mb-4 flex items-center gap-3 text-sm text-fg-muted">
+      {/* The sort context, beside the results it describes. Both pages carried a
+          large "Ranked by label score." heading above the grid, repeated on
+          every facet URL, and it stated the page's order rather than the one on
+          screen: the assistant reorders the grid, and the heading went on
+          claiming the category ranking. This reads from the same state the grid
+          renders from, so it cannot say one and show the other. The methodology
+          stays where it was, in full, further down the page. */}
+      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-muted">
         <span aria-live="polite">
           {f.visible.size} of {f.ids.length} shown
         </span>
+        {sortLabel ? (
+          <span data-testid="sort-context">
+            {f.assistantOrder ? (
+              "Ordered by your answers"
+            ) : (
+              <>
+                Ranked by {sortLabel}.{" "}
+                <Link href="/how-we-choose" className="font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
+                  How
+                </Link>
+              </>
+            )}
+          </span>
+        ) : null}
         {f.active ? (
           <button type="button" onClick={f.clear} className="font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
             Clear filters

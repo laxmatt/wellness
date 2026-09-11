@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { categoryById, coldPlunge, redLight, wellnessDrinks } from "@/domain/categories";
 import type { Condition } from "@/domain/category";
 import { evaluateCondition } from "@/domain/conditions";
-import { applyFilters, buildFilterGroups, filterOptionSpecs } from "@/domain/filters";
+import { applyFilters, buildFilterGroups, facetOptionId, filterOptionSpecs } from "@/domain/filters";
 import { classifyCondition, classifyConditions, mergeAlternatives, stateFor, unknownReason, withholdingOf } from "@/domain/needs";
 import { buildNeeds } from "@/lib/queries";
 import { recommendCategory } from "@/domain/recommend";
@@ -24,8 +24,8 @@ describe("the classifier never contradicts the engine", () => {
       const views = viewsFor(slug);
       for (const spec of filterOptionSpecs(views, cat)) {
         for (const v of views) {
-          const admitted = evaluateCondition(v, cat, spec.condition);
-          const state = classifyCondition(v, cat, spec.condition);
+          const admitted = spec.conditions.every((c) => evaluateCondition(v, cat, c));
+          const state = classifyConditions(v, cat, spec.conditions);
           if (admitted) expect(state, `${v.id} / ${spec.id}`).toBe("match");
           else expect(state, `${v.id} / ${spec.id}`).not.toBe("match");
         }
@@ -148,22 +148,39 @@ describe("the requirements a page publishes", () => {
     }
   });
 
-  it("classifies against the whole category, not a facet's subset", () => {
+  it("gives a facet URL the same requirement as the chip that means the same thing", () => {
     const cat = redLight;
     const views = viewsFor("red-light");
     const { products, set } = recommendCategory(views, cat);
-    const needs = buildNeeds({ cat, products, set }, "under-1000");
-    const facet = needs.find((n) => n.id === "facet:under-1000")!;
-    expect(facet.source).toBe("facet");
-    expect(facet.label).toBe("Under $1,000");
-    // Every product in the category is accounted for, including those the
-    // facet page would never render. A comparison can hold one of them.
-    for (const v of views) {
-      const counted = facet.matchIds.includes(v.id) || facet.unknownIds.includes(v.id);
-      expect(typeof counted).toBe("boolean");
-    }
-    const overBudget = views.filter((v) => !facet.matchIds.includes(v.id) && !facet.unknownIds.includes(v.id));
+    const needs = buildNeeds({ cat, products, set });
+
+    // /red-light/under-1000 and the "Under $1,000" chip are one control, so
+    // they resolve to one requirement. They used to be two ids for one idea,
+    // which is how a page could report the same budget twice.
+    const id = facetOptionId(views, cat, "under-1000")!;
+    expect(id).toBe("price:Under $1,000");
+    const need = needs.find((n) => n.id === id)!;
+    expect(need.label).toBe("Under $1,000");
+    expect(needs.filter((n) => n.label === "Under $1,000").length).toBe(1);
+
+    // Classified over the whole category, including the panels a shopper who
+    // arrived by that URL is now able to reach.
+    const overBudget = views.filter((v) => !need.matchIds.includes(v.id) && !need.unknownIds.includes(v.id));
     expect(overBudget.length, "some panels cost more than $1,000").toBeGreaterThan(0);
+  });
+
+  it("has a requirement for every facet in every category, including one nothing matches", () => {
+    for (const slug of ["red-light", "cold-plunge", "wellness-drinks"]) {
+      const cat = categoryById(slug)!;
+      const views = viewsFor(slug);
+      const { products, set } = recommendCategory(views, cat);
+      const ids = new Set(buildNeeds({ cat, products, set }).map((n) => n.id));
+      for (const f of cat.facets) {
+        const id = facetOptionId(views, cat, f.slug);
+        expect(id, `${slug}/${f.slug} resolves to a chip`).toBeTruthy();
+        expect(ids.has(id!), `${slug}/${f.slug} has a requirement`).toBe(true);
+      }
+    }
   });
 
   it("never places a product in two states at once", () => {

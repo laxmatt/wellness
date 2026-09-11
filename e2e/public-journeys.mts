@@ -20,9 +20,8 @@ import { chromium, type Browser, type Page } from "playwright";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { categories, categoryById } from "@/domain/categories";
-import type { CategoryDefinition } from "@/domain/category";
 import { buildCompareModel } from "@/domain/compare";
-import { buildFilterGroups } from "@/domain/filters";
+import { applyFilters, buildFilterGroups, facetOptionId } from "@/domain/filters";
 import { formatMoney } from "@/domain/money";
 import { isUsable } from "@/domain/provenance";
 import { recommendCategory } from "@/domain/recommend";
@@ -349,27 +348,142 @@ async function run(browser: Browser) {
   }
 
   // ------------------------------------------------------------- facets
+  //
+  // A facet URL is the category with one chip already pressed. What is proved
+  // here is the half that used to be impossible: not that the page opens
+  // narrowed, but that a shopper can widen out of it. The old facet page handed
+  // the grid a subset of the category, so no control on it could reach a
+  // product outside the facet.
   for (const c of categories) {
+    const views = viewsOf(c.id);
+    const ranked = recommendCategory(views, c);
     for (const f of c.facets) {
       scenario = `facet /${c.slug}/${f.slug}`;
       await goto(page, `/${c.slug}/${f.slug}`);
       check("exactly one h1", await headingCount(page), 1);
-      const views = viewsOf(c.id);
-      const matching = views.filter((v) => f.conditions.every((cond) => evaluate(v, c, cond)));
-      const shown = await shownSlugs(page);
-      check("shows exactly the products meeting the facet", shown.sort(), matching.map((m) => m.slug).sort());
+
+      const optionId = facetOptionId(views, c, f.slug);
+      ok("the facet resolves to a chip", optionId !== undefined, f.slug);
+      const groups = buildFilterGroups(views, c, optionId ? [optionId] : []);
+      const option = groups.flatMap((g) => g.options).find((o) => o.id === optionId)!;
+
+      const matching = ranked.products.filter((p) => option.matchIds.includes(p.view.id)).map((p) => p.view.slug);
+      await settled(page, matching.length);
+      check("opens on exactly the products meeting the facet", await shownSlugs(page), matching);
+      check("and counts them against the whole category", await shownCount(page), `${matching.length} of ${views.length} shown`);
+
+      const chip = chipButton(page, option.label);
+      check("the facet is shown as a chip that is on", await chip.getAttribute("aria-pressed"), "true");
+      check("and it is not disabled, whatever it matches", await chip.isDisabled(), false);
+
+      // The whole point. Press the chip the URL arrived with, and the rest of
+      // the category is reachable without leaving the page.
+      await chip.click();
+      await settled(page, ranked.products.length);
+      check("removing it reaches the whole category", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
+      check("and the count agrees", await shownCount(page), `${views.length} of ${views.length} shown`);
+
       if (matching.length === 0) {
-        const body = (await page.locator("body").textContent()) ?? "";
-        ok("says plainly that nothing fits", /Nothing in our set fits this filter yet/.test(body), body.slice(0, 200));
-        // And it is not offered from the category page, which would be a chip
-        // that always leads nowhere.
-        await goto(page, `/${c.slug}`);
-        const offered = await page.locator(`a[href="/${c.slug}/${f.slug}"]`).count();
-        check("the category page does not offer an empty facet", offered, 0);
+        // Not offered anywhere as a starting point, because it leads to an
+        // empty result. It is still escapable if somebody reaches the URL.
         const home = await page.goto(`${BASE}/`, { waitUntil: "domcontentloaded" });
         ok("home responds", home?.status() === 200, home?.status());
-        check("nor does the home page", await page.locator(`a[href="/${c.slug}/${f.slug}"]`).count(), 0);
+        check("an empty facet is not offered on the home page", await page.locator(`a[href="/${c.slug}/${f.slug}"]`).count(), 0);
       }
+    }
+  }
+
+  // ------------------------------------------- browsing, three choices at once
+  //
+  // The journey Matt asked for, pressed in a browser: a function, a label
+  // requirement and a budget, combined, then taken apart one at a time. Every
+  // expectation is the engine's answer for the same selections.
+  {
+    const c = categoryById("wellness-drinks")!;
+    const views = viewsOf(c.id);
+    const ranked = recommendCategory(views, c);
+    const ids = ranked.products.map((p) => p.view.id);
+    const groups = buildFilterGroups(views, c);
+    const slugsFor = (selected: string[]) => {
+      const allowed = new Set(applyFilters(ids, groups, selected));
+      return ranked.products.filter((p) => allowed.has(p.view.id)).map((p) => p.view.slug);
+    };
+    const option = (id: string) => groups.flatMap((g) => g.options).find((o) => o.id === id)!;
+    const ENERGY = "function:energy";
+    const SUGAR_FREE = "sugar_g:Zero sugar";
+    const BUDGET = "price_per_serving_minor:Under $2";
+
+    scenario = "browse: energy, sugar-free, budget";
+    await goto(page, `/${c.slug}`);
+    for (const id of [ENERGY, SUGAR_FREE, BUDGET]) {
+      const o = option(id);
+      const button = chipButton(page, o.label);
+      check(`${o.label} is offered as live`, await button.isDisabled(), false);
+      await button.click();
+    }
+    const three = slugsFor([ENERGY, SUGAR_FREE, BUDGET]);
+    ok("the three together still leave something", three.length > 0, three);
+    await settled(page, three.length);
+    check("three choices across three rows are ANDed", await shownSlugs(page), three);
+    check("the count agrees", await shownCount(page), `${three.length} of ${views.length} shown`);
+
+    // Personal fit, read from the cards themselves. Three rows selected means
+    // three requirements, and a product the grid is showing meets all of them.
+    const fit = await page.evaluate(() => {
+      const grid = document.querySelector("[data-product-grid]");
+      return [...(grid?.querySelectorAll(":scope > article") ?? [])]
+        .filter((a) => (a as HTMLElement).offsetParent !== null)
+        .map((a) => (a.querySelector("[data-testid='needs-fit']")?.textContent ?? "").replace(/\s+/g, " ").trim());
+    });
+    ok("every shown product reports meeting all three requirements", fit.length > 0 && fit.every((t) => t.includes("3 of 3 requirements met")), fit);
+
+    scenario = "browse: remove one of the three";
+    await chipButton(page, option(ENERGY).label).click();
+    const widened = slugsFor([SUGAR_FREE, BUDGET]);
+    await settled(page, widened.length);
+    check("removing one widens to exactly what the other two admit", await shownSlugs(page), widened);
+    ok("and that is more than all three admitted", widened.length > three.length, { widened: widened.length, three: three.length });
+    check("the removed chip is off", await chipButton(page, option(ENERGY).label).getAttribute("aria-pressed"), "false");
+    check("the others are still on", await chipButton(page, option(SUGAR_FREE).label).getAttribute("aria-pressed"), "true");
+
+    scenario = "browse: widen inside one row";
+    await chipButton(page, option(ENERGY).label).click();
+    await chipButton(page, option("function:electrolytes").label).click();
+    const both = slugsFor([SUGAR_FREE, BUDGET, ENERGY, "function:electrolytes"]);
+    await settled(page, both.length);
+    check("two chips in one row are alternatives, not a second requirement", await shownSlugs(page), both);
+
+    scenario = "browse: clear";
+    await page.getByRole("button", { name: "Clear filters" }).first().click();
+    await settled(page, ranked.products.length);
+    check("clearing restores every product", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
+
+    // And the same three choices reached the other way: the URL states one of
+    // them, the shopper presses the other two.
+    scenario = "browse: the same three, starting from a facet URL";
+    await goto(page, `/${c.slug}/sugar-free`);
+    await settled(page, slugsFor([SUGAR_FREE]).length);
+    for (const id of [ENERGY, BUDGET]) await chipButton(page, option(id).label).click();
+    await settled(page, three.length);
+    check("a facet start reaches the same set as pressing all three", await shownSlugs(page), three);
+  }
+
+  // --------------------------------------- one chip bar, not two, on every page
+  for (const c of categories) {
+    scenario = `controls ${c.slug}`;
+    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+      await goto(page, path);
+      // The facet pills navigated to other pages while looking exactly like the
+      // chips below them. A shopper could not tell which of two rows of pills
+      // would filter and which would leave the page.
+      const facetLinks = await page.locator(`a[href^="/${c.slug}/"]`).count();
+      check(`${path} offers no second row of chips that navigate`, facetLinks, 0);
+      const guidance = await page.getByTestId("filter-guidance").count();
+      check(`${path} has one chip bar`, guidance, 1);
+      const sort = (await page.getByTestId("sort-context").first().textContent()) ?? "";
+      ok(`${path} states the order beside the results`, sort.includes(`Ranked by ${c.scoring.label.toLowerCase()}`), sort);
+      const bigHeading = await page.getByRole("heading", { name: /^Ranked by/ }).count();
+      check(`${path} no longer repeats the ranking as a heading`, bigHeading, 0);
     }
   }
 
@@ -930,12 +1044,6 @@ async function run(browser: Browser) {
     ok("the electrolytes chip exists on a phone", false);
   }
   await mobile.close();
-}
-
-// Facet conditions are evaluated with the same engine the page uses.
-import { evaluateCondition } from "@/domain/conditions";
-function evaluate(v: ProductView, c: CategoryDefinition, cond: Parameters<typeof evaluateCondition>[2]) {
-  return evaluateCondition(v, c, cond);
 }
 
 // Which build is actually answering on :3000.

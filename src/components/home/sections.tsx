@@ -124,8 +124,8 @@ export function DiscoveryModules({ pages }: { pages: CategoryPage[] }) {
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <SectionHeading eyebrow="Start from a need" title="Narrow it fast." />
       <p className="mt-2 max-w-2xl text-sm text-fg-soft">
-        Each of these opens a category already narrowed one way. Budget and kind are split apart, because &quot;Under $500&quot; and &quot;Full body&quot; sat in one row and read as the same kind of
-        choice. Inside a category you can combine them.
+        Each of these opens a category with one filter already on. It is an ordinary chip once you are there: add to it, swap it, or take it off without leaving the page. Budget and kind
+        are split apart here, because &quot;Under $500&quot; and &quot;Full body&quot; sat in one row and read as the same kind of choice.
       </p>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {pages.map((p) => {

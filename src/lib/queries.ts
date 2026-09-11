@@ -2,7 +2,7 @@ import { cache } from "react";
 import { categories, categoryBySlug } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
-import { filterOptionSpecs } from "@/domain/filters";
+import { facetOptionId, filterOptionSpecs } from "@/domain/filters";
 import { buildNeedCatalogue, type NeedDefinition } from "@/domain/needs";
 import type { Brand } from "@/domain/product";
 import { similarProducts } from "@/domain/personalization/similar";
@@ -32,12 +32,6 @@ export const getAllCategoryPages = cache(async (): Promise<CategoryPage[]> => {
   return pages.filter((p): p is CategoryPage => p !== null);
 });
 
-export function facetProducts(page: CategoryPage, facetSlug: string): { facet: CategoryDefinition["facets"][number]; products: RecommendedProduct[] } | null {
-  const facet = page.cat.facets.find((f) => f.slug === facetSlug);
-  if (!facet) return null;
-  return { facet, products: page.products.filter((p) => matchesAll(p.view, page.cat, facet.conditions)) };
-}
-
 // Facets whose filter still matches something. A facet that matches nothing is
 // a chip that leads to a page saying "nothing fits this filter yet", and the
 // category's own filter chips already refuse to offer a dead end. Removing the
@@ -57,17 +51,30 @@ export function liveFacets(page: CategoryPage): string[] {
  * subset would report every such product as a mismatch on every requirement,
  * including the ones it meets.
  *
- * The active facet joins the list as a requirement of its own. A shopper on
- * /red-light/under-1000 has stated a budget as surely as one who pressed the
- * chip, and the page was the only thing that knew it.
+ * A facet is in here because `filterOptionSpecs` puts it there, as the chip it
+ * is. It used to be appended separately, under its own id, which meant a
+ * shopper arriving at /red-light/under-1000 and one pressing "Under $1,000" had
+ * two different requirements for one thing.
  */
-export function buildNeeds(page: CategoryPage, activeFacetSlug?: string): NeedDefinition[] {
+export function buildNeeds(page: CategoryPage): NeedDefinition[] {
   const views = page.products.map((p) => p.view);
-  const facet = activeFacetSlug ? page.cat.facets.find((f) => f.slug === activeFacetSlug) : undefined;
-  return buildNeedCatalogue(views, page.cat, [
-    ...filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, groupKey: o.groupKey, conditions: [o.condition], source: "filter" as const })),
-    ...(facet ? [{ id: `facet:${facet.slug}`, label: facet.label, groupLabel: "This page", conditions: facet.conditions, source: "facet" as const }] : []),
-  ]);
+  return buildNeedCatalogue(
+    views,
+    page.cat,
+    filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, groupKey: o.groupKey, conditions: o.conditions, source: o.source })),
+  );
+}
+
+/**
+ * The chips a facet URL arrives with already pressed.
+ *
+ * This is the whole of what a facet page now is: the category, and a selection.
+ * The products are the category's, the groups are the category's, and the
+ * shopper can turn this off.
+ */
+export function facetSelection(page: CategoryPage, facetSlug: string): string[] {
+  const id = facetOptionId(page.products.map((p) => p.view), page.cat, facetSlug);
+  return id ? [id] : [];
 }
 
 export type ProductPage = {

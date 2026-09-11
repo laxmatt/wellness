@@ -4,7 +4,6 @@ import { DemoArt } from "@/components/ui/DemoArt";
 import type { CategoryDefinition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
-import { cn } from "@/lib/cn";
 
 export function CategoryHero({ cat, title, description, count }: { cat: CategoryDefinition; title: string; description: string; count: number }) {
   return (
@@ -42,39 +41,6 @@ export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
         <AssistantLauncher size="lg" className="shrink-0" />
       </div>
     </section>
-  );
-}
-
-// `available` names the facets that still match something. The active facet is
-// always shown, so a shopper who arrives at an empty one by link or by URL can
-// still see where they are.
-export function FacetChips({ cat, active, available }: { cat: CategoryDefinition; active?: string; available?: string[] }) {
-  const facets = available ? cat.facets.filter((f) => available.includes(f.slug) || f.slug === active) : cat.facets;
-  return (
-    <nav aria-label="Narrow by" className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-      <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-        <li className="shrink-0">
-          <Link
-            href={`/${cat.slug}`}
-            aria-current={!active ? "page" : undefined}
-            className={cn("tap inline-flex items-center rounded-pill border px-4 text-sm font-semibold", !active ? "border-fg bg-fg text-fg-inverse" : "border-edge-strong bg-surface-raised hover:border-fg")}
-          >
-            All {cat.navLabel.toLowerCase()}
-          </Link>
-        </li>
-        {facets.map((f) => (
-          <li key={f.slug} className="shrink-0">
-            <Link
-              href={`/${cat.slug}/${f.slug}`}
-              aria-current={active === f.slug ? "page" : undefined}
-              className={cn("tap inline-flex items-center rounded-pill border px-4 text-sm font-semibold", active === f.slug ? "border-fg bg-fg text-fg-inverse" : "border-edge-strong bg-surface-raised hover:border-fg")}
-            >
-              {f.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }
 

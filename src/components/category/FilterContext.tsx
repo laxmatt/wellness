@@ -43,19 +43,21 @@ export function CategoryFilterProvider({
   // evaluates a product.
   needs = [],
   categoryId,
-  // The facet this page is, when it is one. A shopper on /red-light/under-1000
-  // has stated a budget as surely as one who pressed the chip, and only the
-  // page knew it.
-  activeFacetId,
+  // Chips the URL arrives with already pressed. A shopper on
+  // /red-light/under-1000 has stated a budget as surely as one who pressed the
+  // chip, so it starts in the same state, in the same list, and comes off the
+  // same way. It used to be held apart as the page's own fact, which is why it
+  // could not be removed.
+  initialSelected = [],
 }: {
   groups: FilterGroup[];
   ids: string[];
   children: ReactNode;
   needs?: NeedDefinition[];
   categoryId?: string;
-  activeFacetId?: string;
+  initialSelected?: string[];
 }) {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(initialSelected);
   const assistant = useAssistant();
   const applied = assistant?.applied ?? null;
   const lastNonce = useRef<number | null>(null);
@@ -91,10 +93,6 @@ export function CategoryFilterProvider({
   const selectedNeeds = useMemo(() => {
     const byId = new Map(needs.map((n) => [n.id, n]));
     const chosen: NeedDefinition[] = [];
-    if (activeFacetId) {
-      const facet = byId.get(activeFacetId);
-      if (facet) chosen.push(facet);
-    }
 
     // One requirement per filter row, not per chip. Options within a row are
     // alternatives, which is exactly what `applyFilters` does with them: it
@@ -103,9 +101,9 @@ export function CategoryFilterProvider({
     // failing the targeted one, turning "either is fine" into a conflict the
     // shopper never asked for.
     //
-    // Rows stay separate, because rows are ANDed. The facet and each accepted
-    // assistant constraint stay separate for the same reason: they are
-    // requirements in their own right, not alternatives to a chip.
+    // Rows stay separate, because rows are ANDed. Each accepted assistant
+    // constraint stays separate for the same reason: it is a requirement in its
+    // own right, not an alternative to a chip.
     const byRow = new Map<string, NeedDefinition[]>();
     for (const id of selected) {
       const need = byId.get(id);
@@ -120,7 +118,7 @@ export function CategoryFilterProvider({
       chosen.push({ id: `assistant:${b.key}`, label: b.label, groupLabel: "From your answers", source: "assistant", matchIds: b.matchIds, unknownIds: b.unknownIds });
     }
     return chosen;
-  }, [needs, selected, activeFacetId, applied]);
+  }, [needs, selected, applied]);
 
   useEffect(() => {
     if (categoryId) setNeeds(categoryId, selectedNeeds);
