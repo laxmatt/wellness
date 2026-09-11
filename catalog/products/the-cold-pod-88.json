@@ -18,7 +18,7 @@
   },
   "id": "the-cold-pod-88",
   "slug": "the-cold-pod-88-gallon",
-  "name": "Ice Bath Tub, 88 Gallon",
+  "name": "Ice Bath Tub",
   "brandId": "the-cold-pod",
   "categoryId": "cold-plunge",
   "subcategoryId": "inflatable",
@@ -172,6 +172,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries of an Amazon listing on 2026-09-08 and cited to that listing, which nothing here has fetched. On 2026-09-09 at 16:04 Codex read the maker's own page for the standard USA model, https://www.thecoldpod.com/products/the-cold-pod-usa, and it does not clearly describe this record. That page states 85 gallons against this record's 88, and $119.99 against the $139.99 relayed here. The physical size matches, 29.53 in across and high against 29.5, and so does the shape of the package: cover, six legs, pump, drain hose and bag, insulated and portable, indoor and outdoor. That is a near match, not an identity, and this record is not rescoped onto it: the capacity is marked as unreliable, no manufacturer price is invented for an 88-gallon tub, and nothing on the maker's page is promoted onto values relayed from a different listing. The maker's page shows Immediate Dispatch, a Notify When Available control and cart behaviour that disagree, so stock stays unknown. This reading gives no support for the maximum user height or for any warranty, and none for image rights."
+    "note": "Demo catalog. Specs relayed from web search summaries of an Amazon listing on 2026-09-08 and cited to that listing, which nothing here has fetched. On 2026-09-09 at 16:04 Codex read the maker's own page for the standard USA model, https://www.thecoldpod.com/products/the-cold-pod-usa, and it does not clearly describe this record. That page states 85 gallons against this record's 88, and $119.99 against the $139.99 relayed here. The physical size matches, 29.53 in across and high against 29.5, and so does the shape of the package: cover, six legs, pump, drain hose and bag, insulated and portable, indoor and outdoor. That is a near match, not an identity, and this record is not rescoped onto it: the capacity is marked as unreliable, no manufacturer price is invented for an 88-gallon tub, and nothing on the maker's page is promoted onto values relayed from a different listing. The maker's page shows Immediate Dispatch, a Notify When Available control and cart behaviour that disagree, so stock stays unknown. This reading gives no support for the maximum user height or for any warranty, and none for image rights. Renamed on 2026-09-11, from \"Ice Bath Tub, 88 Gallon\" to \"Ice Bath Tub\". The name asserted a capacity this record will not state: the figure is marked disputed and withheld everywhere else, while the name repeated it unqualified in the page title, the breadcrumb, the heading and the category card, where no capacity row exists to qualify it. Removing it takes away an unsupported claim and establishes nothing: it does not adopt the maker's 85-gallon figure, does not rescope this record onto the standard USA model, and leaves the disputed 88 and its evidence exactly where they were. The id and the slug are unchanged, so no URL moves."
   }
 }

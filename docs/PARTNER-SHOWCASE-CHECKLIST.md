@@ -407,7 +407,7 @@ Specifications that are missing, unsupported or relayed:
 - `tub_type` (required): source not recorded
 - `fits_height_in`: **absent from the record**
 
-### The Cold Pod Ice Bath Tub, 88 Gallon
+### The Cold Pod Ice Bath Tub
 
 | Evidence | | |
 | --- | --- | --- |
