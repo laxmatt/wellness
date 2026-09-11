@@ -26,6 +26,28 @@ describe("a maker's figure relayed by a retailer says so", () => {
     expect(attributionSentence(p)).toBe("reported by the maker");
   });
 
+  // The third shape, and the largest: 38 records hold the maker's claim from a
+  // search summary with nobody having opened the maker's page. They read
+  // identically to the 111 that were read, which is the thing being fixed.
+  it("says a claim relayed from a summary was not read here", () => {
+    const p = { verification: "manufacturer_reported" as const, source: { kind: "manufacturer" as const, method: "secondhand" as const } };
+    expect(attributionTag(p)).toBe("Maker, relayed");
+    expect(attributionSentence(p)).toBe("reported by the maker, relayed to us rather than read");
+  });
+
+  it("tells the three shapes apart on real records, and changes none of their values", () => {
+    const shapes = new Map<string, string>();
+    for (const v of viewsFor("cold-plunge")) {
+      for (const [key, prov] of Object.entries(v.provenance)) {
+        if (prov.verification !== "manufacturer_reported") continue;
+        shapes.set(attributionTag(prov), `${v.id}.${key}`);
+      }
+    }
+    // All three occur in this one category, so the wording is exercised by the
+    // catalogue rather than only by the two literals above.
+    expect([...shapes.keys()].sort()).toEqual(["Maker reported", "Maker, relayed", "Via retailer"]);
+  });
+
   it("applies to the real records that carry it", () => {
     for (const key of RELAYED) {
       const prov = pod().provenance[`attributes.${key}`];

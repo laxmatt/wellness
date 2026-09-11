@@ -93,19 +93,39 @@ export type Provenance = z.infer<typeof Provenance>;
  */
 export type Attributed = { verification: Verification; source: Pick<Source, "kind" | "method"> };
 
+/**
+ * Three shapes a maker's claim can arrive in, and they are not the same news.
+ *
+ * A figure read from the maker's own page is the strongest thing this site has.
+ * The same figure relayed by a search summary is the maker's claim with nobody
+ * having opened the page. Relayed by a shop's listing, it is the maker's claim
+ * at a further remove still. All three are `manufacturer_reported`, because
+ * that word says whose claim it is, and all three read identically until the
+ * source is consulted alongside it.
+ */
+function makerClaim(source: Attributed["source"]): "direct" | "relayed" | "retailer" {
+  if (source.kind === "retailer") return "retailer";
+  return source.method === "secondhand" ? "relayed" : "direct";
+}
+
 /** Short enough for a pill beside a value. */
 export function attributionTag(p: Attributed): string {
-  if (p.verification === "manufacturer_reported" && p.source.kind === "retailer") return "Via retailer";
-  return TAGS[p.verification];
+  if (p.verification !== "manufacturer_reported") return TAGS[p.verification];
+  const shape = makerClaim(p.source);
+  if (shape === "retailer") return "Via retailer";
+  return shape === "relayed" ? "Maker, relayed" : "Maker reported";
 }
 
 /** A clause for prose, as the assistant renders beside a fact. */
 export function attributionSentence(p: Attributed): string {
   if (p.verification === "independently_verified") return "verified by this site";
-  if (p.verification === "manufacturer_reported") {
-    return p.source.kind === "retailer" ? "the maker's figure, relayed by a retailer listing" : "reported by the maker";
-  }
-  return "source not recorded";
+  if (p.verification !== "manufacturer_reported") return "source not recorded";
+  const shape = makerClaim(p.source);
+  if (shape === "retailer") return "the maker's figure, relayed by a retailer listing";
+  // The direct case keeps its short wording. It is the common one, 111 records,
+  // and the contrast with "relayed to us rather than read" carries the meaning
+  // without lengthening every other fact on the site.
+  return shape === "relayed" ? "reported by the maker, relayed to us rather than read" : "reported by the maker";
 }
 
 const TAGS: Record<Verification, string> = {

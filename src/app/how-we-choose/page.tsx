@@ -31,7 +31,11 @@ export default function HowWeChoosePage() {
           </Card>
           <Card title="What the labels mean">
             <ul className="flex flex-col gap-2">
-              <li className="flex items-center gap-2"><VerificationTag verification="manufacturer_reported" /> The maker published this figure, on its own page. We did not measure it.</li>
+              <li className="flex items-center gap-2"><VerificationTag verification="manufacturer_reported" /> The maker published this figure, on its own page, which somebody here read. We did not measure it.</li>
+              <li className="flex items-center gap-2">
+                <VerificationTag verification="manufacturer_reported" source={{ kind: "manufacturer", method: "secondhand" }} /> The maker&apos;s figure, reaching us relayed rather
+                than read: nobody has opened the maker&apos;s page for it yet. Still the maker&apos;s claim.
+              </li>
               <li className="flex items-center gap-2">
                 <VerificationTag verification="manufacturer_reported" source={{ kind: "retailer", method: "secondhand" }} /> The maker&apos;s figure, reaching us through a
                 retailer&apos;s listing rather than the maker&apos;s own page. Still the maker&apos;s claim, and still not measured here.
