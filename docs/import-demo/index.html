@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Supplier import demonstration (local, offline)</title>
+    <style>
+      :root { color-scheme: light; --edge: #ddd6cc; --bad: #8a2b1f; --warn: #7a5a12; --ok: #245b3a; --ink: #22201d; --soft: #5d574f; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0 0 4rem; background: #faf7f2; color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+      h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+      h2 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+      h3 { font-size: 1rem; margin: 0; }
+      p { margin: .4rem 0; }
+      .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .75rem 1rem; border-radius: 6px; margin: 1rem 0; }
+      .banner.bad { border-left-color: var(--bad); }
+      .banner strong { display: block; }
+      .status { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .6rem .9rem; margin: 1rem 0; }
+      .status.ok { border-left: 4px solid var(--ok); }
+      .status.bad { border-left: 4px solid var(--bad); }
+      .controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: 1rem; }
+      .controls label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .25rem; }
+      .grid { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+      .row { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .7rem; }
+      .row .field { display: block; font-weight: 600; font-size: .85rem; }
+      .row select { width: 100%; margin: .3rem 0; padding: .3rem; }
+      .row .review, .row .path { font-size: .8rem; color: var(--soft); margin: .3rem 0 0; }
+      .row .path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; }
+      .note { font-size: .85rem; color: var(--soft); }
+      .totals { font-weight: 600; }
+      .draft { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .8rem; margin: .8rem 0; }
+      .draft.blocked { border-left-color: var(--bad); }
+      .draft.checks { border-left-color: var(--warn); }
+      .draft.clean { border-left-color: var(--ok); }
+      .draft header { display: flex; gap: .75rem; align-items: baseline; flex-wrap: wrap; margin-bottom: .5rem; }
+      .draft .rownum, .draft .verdict { font-size: .8rem; color: var(--soft); }
+      table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+      th, td { text-align: left; vertical-align: top; padding: .35rem .5rem; border-top: 1px solid var(--edge); }
+      th { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); border-top: 0; }
+      td.k { white-space: nowrap; font-weight: 600; }
+      td.raw, td.val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; white-space: pre-wrap; word-break: break-word; }
+      tr.bad td.val { color: var(--bad); }
+      .flag { margin: 0 0 .25rem; font-size: .8rem; }
+      .flag.blocker { color: var(--bad); }
+      .flag.check { color: var(--warn); }
+      ol li { margin-bottom: .6rem; }
+      ol li p { margin: .15rem 0 0; color: var(--soft); font-size: .88rem; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Supplier import: a demonstration</h1>
+      <p class="note">Runs from a file on your own disk. No server, no account, no database.</p>
+
+      <div class="banner">
+        <strong>What this does, and what it will not do.</strong>
+        <p>
+          It reads a supplier CSV you choose, in this browser, and shows what a draft record would look like and what is wrong with it. It writes nothing: the catalogue is untouched, no
+          file is uploaded, no address is contacted, and nothing here can publish anything.
+        </p>
+        <p>
+          The sample files under <code>docs/import-demo/samples/</code> are invented. The suppliers, the products and every figure in them were made up for this demonstration. They are
+          not real products and their numbers are not facts about anything.
+        </p>
+      </div>
+
+      <div class="controls">
+        <div>
+          <label for="file">Supplier file (CSV or TSV)</label>
+          <input id="file" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" />
+        </div>
+        <div id="currency-row" hidden>
+          <label for="currency">Currency of the price column</label>
+          <input id="currency" type="text" size="6" placeholder="USD" />
+        </div>
+        <div id="mapping-actions" hidden>
+          <label for="mapping-file">Reuse a saved mapping</label>
+          <input id="mapping-file" type="file" accept=".json,application/json" />
+          <button id="export-mapping" type="button">Save this mapping</button>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <h2>Columns</h2>
+      <div id="mapping"></div>
+
+      <h2>Drafts</h2>
+      <div id="drafts"></div>
+
+      <section id="review"></section>
+    </main>
+    <script>
+      "use strict";
+(() => {
+  // src/domain/import/csv.ts
+  var LIMITS = {
+    bytes: 1e6,
+    rows: 500,
+    columns: 64,
+    cellChars: 2e3
+  };
+  var SIGNATURES = [
+    { magic: "%PDF", what: "a PDF" },
+    { magic: "PK", what: "a zip-based file, which is what .xlsx, .ods and .numbers are" },
+    { magic: "\xD0\xCF\xE0", what: "an old binary Excel file (.xls)" },
+    { magic: "{", what: "JSON" },
+    { magic: "[", what: "JSON" },
+    { magic: "<", what: "XML or HTML" }
+  ];
+  function rejectByContent(text) {
+    const head = text.slice(0, 8);
+    for (const s of SIGNATURES) {
+      if (head.startsWith(s.magic)) {
+        return `This looks like ${s.what}. This demonstration reads CSV and TSV only, and refuses anything else rather than guessing at its contents.`;
+      }
+    }
+    if (text.slice(0, 1024).includes("\0")) {
+      return "This file contains binary data, not text. This demonstration reads CSV and TSV only.";
+    }
+    return void 0;
+  }
+  function parseWith(text, delimiter) {
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let quoted = false;
+    let i = 0;
+    const endCell = () => {
+      row.push(cell);
+      cell = "";
+    };
+    const endRow = () => {
+      endCell();
+      rows.push(row);
+      row = [];
+    };
+    while (i < text.length) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch === '"') {
+          if (text[i + 1] === '"') {
+            cell += '"';
+            i += 2;
+            continue;
+          }
+          quoted = false;
+          i += 1;
+          continue;
+        }
+        cell += ch;
+        i += 1;
+        continue;
+      }
+      if (ch === '"' && cell === "") {
+        quoted = true;
+        i += 1;
+        continue;
+      }
+      if (ch === delimiter) {
+        endCell();
+        i += 1;
+        continue;
+      }
+      if (ch === "\r") {
+        endRow();
+        i += text[i + 1] === "\n" ? 2 : 1;
+        continue;
+      }
+      if (ch === "\n") {
+        endRow();
+        i += 1;
+        continue;
+      }
+      cell += ch;
+      i += 1;
+    }
+    if (cell !== "" || row.length > 0) endRow();
+    return rows;
+  }
+  var DELIMITERS = [",", ";", "	"];
+  var delimiterName = (d) => d === "	" ? "tab" : `"${d}"`;
+  function readCsv(input, byteLength = input.length) {
+    if (byteLength > LIMITS.bytes) {
+      return { ok: false, reason: `This file is ${Math.round(byteLength / 1e3)} kB. This demonstration reads files up to ${LIMITS.bytes / 1e3} kB.` };
+    }
+    let text = input.charCodeAt(0) === 65279 ? input.slice(1) : input;
+    const notes = [];
+    if (text !== input) notes.push("A byte-order mark was removed from the start of the file.");
+    const refusal = rejectByContent(text);
+    if (refusal) return { ok: false, reason: refusal };
+    if (text.trim() === "") return { ok: false, reason: "This file is empty." };
+    if (!text.endsWith("\n")) text += "\n";
+    const candidates = DELIMITERS.map((delimiter2) => {
+      const rows2 = parseWith(text, delimiter2).filter((r) => !(r.length === 1 && r[0].trim() === ""));
+      const width2 = rows2[0]?.length ?? 0;
+      const consistent = rows2.length > 0 && rows2.every((r) => r.length === width2);
+      return { delimiter: delimiter2, rows: rows2, width: width2, consistent };
+    }).filter((c) => c.consistent && c.width > 1);
+    if (candidates.length === 0) {
+      return {
+        ok: false,
+        reason: "No delimiter reads this file into rows of equal width. That usually means a quote is left open, or the file is not comma, semicolon or tab separated. It is refused rather than read into rows that would quietly lose columns."
+      };
+    }
+    if (candidates.length > 1) {
+      return {
+        ok: false,
+        reason: `Both ${candidates.map((c) => delimiterName(c.delimiter)).join(" and ")} read this file as a valid table. Which one is right cannot be decided from the file, so it is refused rather than guessed.`
+      };
+    }
+    const { delimiter, rows, width } = candidates[0];
+    if (width > LIMITS.columns) return { ok: false, reason: `This file has ${width} columns. This demonstration reads up to ${LIMITS.columns}.` };
+    const [headerRow, ...dataRows] = rows;
+    const headers = headerRow.map((h) => h.trim());
+    if (headers.some((h) => h === "")) return { ok: false, reason: "A column has no heading. A mapping has nothing to name it by." };
+    if (new Set(headers).size !== headers.length) {
+      return { ok: false, reason: "Two columns share a heading. A mapping cannot tell them apart, so the file is refused rather than mapped to whichever came first." };
+    }
+    const truncated = Math.max(0, dataRows.length - LIMITS.rows);
+    const kept = dataRows.slice(0, LIMITS.rows).map((r) => r.map((c) => c.slice(0, LIMITS.cellChars)));
+    if (truncated > 0) notes.push(`${truncated} rows past the first ${LIMITS.rows} were not read.`);
+    return { ok: true, delimiter, headers, rows: kept, truncated, notes };
+  }
+
+  // src/domain/import/fields.ts
+  var DRINK_FIELDS = [
+    {
+      key: "supplier_sku",
+      label: "Supplier SKU",
+      kind: "reference",
+      catalogPath: "identifiers.merchantSkus[supplier]",
+      required: true,
+      review: "A supplier's own code identifies a line in their catalogue, not a product in ours. It is kept so a reviewer can trace the row back, and it never becomes our id.",
+      synonyms: ["sku", "supplier_sku", "item code", "item_code", "item no", "article", "article_number", "product code", "product_code"]
+    },
+    {
+      key: "name",
+      label: "Product name",
+      kind: "identity",
+      catalogPath: "name",
+      required: true,
+      review: "A supplier's description is not a product identity. Flavour, size and pack count have to be read off it and confirmed against the maker before this names a record.",
+      synonyms: ["name", "product", "product name", "product_name", "title", "description", "item name", "item_name"]
+    },
+    {
+      key: "brand",
+      label: "Brand",
+      kind: "identity",
+      catalogPath: "brandId",
+      required: true,
+      review: "Matched to a brand we already hold, or created deliberately. Two suppliers spell one brand three ways, and none of those spellings is an id.",
+      synonyms: ["brand", "manufacturer", "maker", "vendor", "brand name", "brand_name"]
+    },
+    {
+      key: "category",
+      label: "Category",
+      kind: "classification",
+      catalogPath: "categoryId",
+      allowed: ["wellness-drinks"],
+      required: true,
+      review: "The row has to be for a category this site compares. Anything else is out of scope and is not a draft.",
+      synonyms: ["category", "categoryid", "category_id", "department", "type", "product type", "product_type"]
+    },
+    {
+      key: "function",
+      label: "Function",
+      kind: "list",
+      catalogPath: "attributes.function",
+      allowed: ["electrolytes", "greens", "energy", "prebiotic", "hydration"],
+      required: true,
+      review: "A supplier's own words for what a drink is for. Anything outside the five values this site filters on is a value judgement somebody has to make, not a translation.",
+      synonyms: ["function", "functions", "use", "usage", "purpose", "benefit", "benefits", "segment"]
+    },
+    {
+      key: "sugar_g",
+      label: "Sugar",
+      kind: "measure",
+      catalogPath: "attributes.sugar_g",
+      unit: "g",
+      required: false,
+      review: "Per serving, and the file has to say so. A figure per 100 ml and a figure per stick are different numbers with the same name.",
+      synonyms: ["sugar", "sugar_g", "sugars", "total sugar", "total_sugar", "sugar (g)", "sugar per serving"]
+    },
+    {
+      key: "caffeine_mg",
+      label: "Caffeine",
+      kind: "measure",
+      catalogPath: "attributes.caffeine_mg",
+      unit: "mg",
+      required: false,
+      review: "An empty cell is not zero caffeine. A drink with no stated figure and a drink stated as caffeine free are different records here.",
+      synonyms: ["caffeine", "caffeine_mg", "caffeine (mg)", "caffeine per serving"]
+    },
+    {
+      key: "price",
+      label: "Pack price",
+      kind: "money",
+      catalogPath: "offers[].priceMinor with offers[].currency",
+      required: false,
+      review: "A supplier's price is one merchant's price on one day. It becomes an offer with that merchant named and a date attached, never the product's price.",
+      synonyms: ["price", "unit price", "unit_price", "pack price", "pack_price", "rrp", "msrp", "cost", "price_usd", "unit_price_usd"]
+    },
+    {
+      key: "servings_per_pack",
+      label: "Servings per pack",
+      kind: "count",
+      catalogPath: "attributes.servings_per_pack",
+      required: false,
+      review: "Servings, not units. A 12-can pack is 12 servings only if a can is one serving, and the file rarely says which it means.",
+      synonyms: ["servings", "servings_per_pack", "serving count", "pack size", "pack_size", "pack", "count", "units per pack", "units_per_pack"]
+    },
+    {
+      key: "source_reference",
+      label: "Source reference",
+      kind: "reference",
+      catalogPath: "attributes.*.source.url or .ref",
+      required: true,
+      review: "Where the supplier's figures came from. Held as text and never opened by this tool. A reviewer decides whether it is evidence, and a supplier page is a retailer speaking, not the maker.",
+      synonyms: ["source", "source_url", "source reference", "reference", "ref", "datasheet", "spec sheet", "spec_url", "url", "link"]
+    }
+  ];
+  var fieldByKey = (key) => DRINK_FIELDS.find((f) => f.key === key);
+  function normaliseHeader(header) {
+    return header.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  }
+
+  // src/domain/import/values.ts
+  var blocker = (message) => ({ severity: "blocker", message });
+  var check = (message) => ({ severity: "check", message });
+  var onlyBlockers = (flags) => flags.filter((f) => f.severity === "blocker");
+  function looksLikeFormula(raw) {
+    const t = raw.trim();
+    if (t === "") return false;
+    if (t.startsWith("=") || t.startsWith("@")) return true;
+    if (/^[+-]/.test(t) && !/^[+-]?\d/.test(t)) return true;
+    return false;
+  }
+  var CURRENCY_SYMBOLS = { $: "USD", "\xA3": "GBP", "\u20AC": "EUR" };
+  var KNOWN_CURRENCIES = ["USD", "GBP", "EUR", "CAD", "AUD"];
+  function currencyFromHeader(header) {
+    const words = header.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+    for (const code of KNOWN_CURRENCIES) if (words.includes(code.toLowerCase())) return code;
+    for (const [symbol, code] of Object.entries(CURRENCY_SYMBOLS)) if (header.includes(symbol)) return code;
+    return void 0;
+  }
+  var CONVERSIONS = {
+    g: { mg: 1e-3, g: 1 },
+    mg: { g: 1e3, mg: 1 }
+  };
+  function readNumber(text) {
+    const n = Number(text);
+    return Number.isFinite(n) ? n : void 0;
+  }
+  function normaliseDecimal(text) {
+    const hasComma = text.includes(",");
+    const hasDot = text.includes(".");
+    if (!hasComma) return { text };
+    if (hasDot) {
+      return text.lastIndexOf(",") > text.lastIndexOf(".") ? { text: text.replace(/\./g, "").replace(",", "."), note: "Read with a comma as the decimal separator and a period grouping thousands." } : { text: text.replace(/,/g, ""), note: "Read with a period as the decimal separator and a comma grouping thousands." };
+    }
+    const single = /^(\d+),(\d+)$/.exec(text);
+    if (single && single[2].length !== 3) return { text: text.replace(",", "."), note: "Read as a decimal comma." };
+    return { ambiguous: true };
+  }
+  function readMeasure(raw, field) {
+    const t = raw.trim();
+    const match = /^([+-]?[\d.,]+)\s*([a-zA-Zµ]*)$/.exec(t);
+    if (!match) return { raw, flags: [blocker(`"${t}" is not a number with an optional unit.`)] };
+    const decimal = normaliseDecimal(match[1]);
+    if ("ambiguous" in decimal) {
+      return { raw, flags: [blocker(`"${t}" could be read two ways: the comma is either a decimal point or a thousands separator. Refused rather than guessed.`)] };
+    }
+    const n = readNumber(decimal.text);
+    if (n === void 0) return { raw, flags: [blocker(`"${t}" is not a number.`)] };
+    const flags = [];
+    if (decimal.note) flags.push(check(decimal.note));
+    if (n < 0) flags.push(blocker("A negative amount is not a nutrition figure."));
+    const stated = match[2].toLowerCase();
+    const target = field.unit;
+    if (stated === "") {
+      flags.push(check(`No unit stated. Taken as ${target}, which is what this site stores, and worth confirming against the supplier's own sheet.`));
+      return { raw, value: { kind: "number", value: n, unit: target }, flags };
+    }
+    if (stated === target) return { raw, value: { kind: "number", value: n, unit: target }, flags };
+    const factor = CONVERSIONS[target]?.[stated];
+    if (factor === void 0) {
+      flags.push(blocker(`Stated in ${match[2]}, and this site stores ${target}. Those do not convert, so the figure is not read.`));
+      return { raw, flags: onlyBlockers(flags) };
+    }
+    flags.push(check(`Stated in ${match[2]} and converted to ${target}: ${n} ${match[2]} is ${n * factor} ${target}. Confirm the supplier meant ${match[2]}.`));
+    return { raw, value: { kind: "number", value: n * factor, unit: target }, flags };
+  }
+  function readMoney(raw, columnCurrency) {
+    const t = raw.trim();
+    const flags = [];
+    let currency = columnCurrency;
+    let rest = t;
+    for (const [symbol, code2] of Object.entries(CURRENCY_SYMBOLS)) {
+      if (rest.includes(symbol)) {
+        if (currency && currency !== code2) flags.push(blocker(`The column says ${currency} and the cell says ${symbol}. Those disagree, so the price is not read.`));
+        currency = currency ?? code2;
+        rest = rest.replace(symbol, "");
+      }
+    }
+    const code = /\b([A-Z]{3})\b/.exec(rest);
+    if (code && KNOWN_CURRENCIES.includes(code[1])) {
+      if (currency && currency !== code[1]) flags.push(blocker(`The column says ${currency} and the cell says ${code[1]}. Those disagree, so the price is not read.`));
+      currency = currency ?? code[1];
+      rest = rest.replace(code[1], "");
+    }
+    rest = rest.trim();
+    if (!currency) {
+      flags.push(blocker("No currency. A bare number is not a price, and the currency is not assumed from anything."));
+      return { raw, flags: onlyBlockers(flags) };
+    }
+    if (flags.some((f) => f.severity === "blocker")) return { raw, flags: onlyBlockers(flags) };
+    const decimal = normaliseDecimal(rest);
+    if ("ambiguous" in decimal) {
+      return { raw, flags: [blocker(`"${t}" could be read two ways: the comma is either a decimal point or a thousands separator. Refused rather than guessed.`)] };
+    }
+    if (decimal.note) flags.push(check(decimal.note));
+    const n = readNumber(decimal.text);
+    if (n === void 0 || n < 0) return { raw, flags: onlyBlockers([...flags, blocker(`"${t}" is not an amount.`)]) };
+    const minor = Math.round(n * 100);
+    if (Math.abs(n * 100 - minor) > 1e-9) flags.push(check(`Rounded to ${(minor / 100).toFixed(2)} ${currency}, because prices are stored in whole cents.`));
+    return { raw, value: { kind: "money", minor, currency }, flags };
+  }
+  function readCount(raw) {
+    const t = raw.trim();
+    const match = /^(\d+)\s*(.*)$/.exec(t);
+    if (!match) return { raw, flags: [blocker(`"${t}" is not a whole number.`)] };
+    const n = Number(match[1]);
+    const trailing = match[2].trim();
+    const flags = [];
+    if (trailing !== "") {
+      flags.push(
+        check(`Counted as ${n}, with "${trailing}" ignored. A pack of ${n} ${trailing} is ${n} servings only if one ${trailing.replace(/s$/, "")} is one serving, which this file does not say.`)
+      );
+    }
+    if (n === 0) flags.push(blocker("A pack of zero is not a pack."));
+    return { raw, value: { kind: "integer", value: n }, flags };
+  }
+  function readList(raw, field) {
+    const parts = raw.split(/[|,;/]/).map((p) => p.trim().toLowerCase().replace(/\s+/g, "_")).filter((p) => p !== "");
+    if (parts.length === 0) return { raw, flags: [blocker("No value.")] };
+    const allowed = field.allowed ?? [];
+    const unknown = parts.filter((p) => !allowed.includes(p));
+    const flags = [];
+    if (unknown.length > 0) {
+      flags.push(
+        blocker(
+          `${unknown.map((u) => `"${u}"`).join(", ")} ${unknown.length === 1 ? "is not a value" : "are not values"} this site uses. It filters on ${allowed.join(", ")}. Deciding that the supplier's word means one of ours is an editorial call, not a conversion.`
+        )
+      );
+    }
+    const known = parts.filter((p) => allowed.includes(p));
+    const value = known.length > 0 ? { kind: "list", value: known } : void 0;
+    return { raw, value, flags: value ? flags : onlyBlockers(flags) };
+  }
+  function readClassification(raw, field) {
+    const t = raw.trim().toLowerCase().replace(/\s+/g, "-");
+    const allowed = field.allowed ?? [];
+    if (!allowed.includes(t)) {
+      return { raw, flags: [blocker(`"${raw.trim()}" is not a category this site compares. It holds ${allowed.join(", ")}.`)] };
+    }
+    return { raw, value: { kind: "text", value: t }, flags: [] };
+  }
+  function readCell(raw, field, columnCurrency) {
+    const t = raw.trim();
+    if (t === "") {
+      return { raw, flags: field.required ? [blocker("Nothing in this cell, and a draft needs this field.")] : [check("Nothing in this cell. Held as unknown, which is not the same as zero.")] };
+    }
+    if (looksLikeFormula(t)) {
+      return {
+        raw,
+        flags: [blocker("This cell starts like a spreadsheet formula. It is kept as text and never run here, and it is almost certainly a broken export rather than a value.")]
+      };
+    }
+    switch (field.kind) {
+      case "measure":
+        return readMeasure(raw, field);
+      case "money":
+        return readMoney(raw, columnCurrency);
+      case "count":
+        return readCount(raw);
+      case "list":
+        return readList(raw, field);
+      case "classification":
+        return readClassification(raw, field);
+      case "identity":
+      case "reference":
+      default: {
+        const flags = [];
+        if (field.key === "source_reference" && /^https?:\/\//i.test(t)) {
+          flags.push(check("A link, kept as text. This tool never opens it, and a reviewer decides whether the page behind it is evidence."));
+        }
+        return { raw, value: { kind: "text", value: t }, flags };
+      }
+    }
+  }
+
+  // src/domain/import/draft.ts
+  function buildDrafts(headers, rows, mapping) {
+    const indexOf = new Map(headers.map((h, i) => [h, i]));
+    const missingRequired = DRINK_FIELDS.filter((f) => f.required && mapping.columns[f.key] === void 0);
+    const drafts = rows.map((row, i) => {
+      const fields = [];
+      for (const [key, header] of Object.entries(mapping.columns)) {
+        const field = fieldByKey(key);
+        const column = indexOf.get(header);
+        if (!field || column === void 0) continue;
+        const raw = row[column] ?? "";
+        const fromHeader = field.kind === "money" ? currencyFromHeader(header) : void 0;
+        const currency = field.kind === "money" ? mapping.currency ?? fromHeader : void 0;
+        const cell = readCell(raw, field, currency);
+        if (field.kind === "money" && !mapping.currency && fromHeader && cell.value) {
+          cell.flags = [...cell.flags, { severity: "check", message: `Currency read from the column heading "${header}". Confirm the supplier means ${fromHeader} in every row.` }];
+        }
+        fields.push({ field, ...cell });
+      }
+      fields.sort((a, b) => DRINK_FIELDS.indexOf(a.field) - DRINK_FIELDS.indexOf(b.field));
+      const count = (severity) => fields.reduce((n, f) => n + f.flags.filter((x) => x.severity === severity).length, 0);
+      const name = fields.find((f) => f.field.key === "name")?.raw.trim();
+      const sku = fields.find((f) => f.field.key === "supplier_sku")?.raw.trim();
+      return {
+        row: i + 2,
+        fields,
+        blockers: count("blocker") + missingRequired.length,
+        checks: count("check"),
+        label: name || sku || `Row ${i + 2}`
+      };
+    });
+    return {
+      drafts,
+      missingRequired,
+      totals: {
+        rows: drafts.length,
+        clean: drafts.filter((d) => d.blockers === 0 && d.checks === 0).length,
+        withChecks: drafts.filter((d) => d.blockers === 0 && d.checks > 0).length,
+        withBlockers: drafts.filter((d) => d.blockers > 0).length
+      }
+    };
+  }
+  var STANDING_REVIEW = [
+    {
+      title: "Which product this is",
+      detail: "A supplier row names a line in their catalogue. Matching it to a product here, or deciding it is a new one, is a person's judgement. Nothing in this tool matches anything to the catalogue, by name or by code."
+    },
+    {
+      title: "Which variant this is",
+      detail: "Flavour, size and pack count separate records that otherwise look identical. A row reading a brand and a product name usually settles none of the three, and a wrong variant is a wrong price, a wrong sugar figure and a wrong caffeine figure at once."
+    },
+    {
+      title: "Whether the supplier is evidence",
+      detail: "Every figure here is a supplier's claim. On this site that is a retailer speaking, not the maker: it is recorded as merchant_feed, method secondhand, and never as manufacturer_reported unless the maker's own page has been read."
+    },
+    {
+      title: "What date the figures carry",
+      detail: "A record needs the date the figure was read. A file has no date in it unless the supplier put one there, and the date it was downloaded is not the date the figure was true."
+    },
+    {
+      title: "Whether a price is an offer",
+      detail: "A supplier's price belongs to that merchant on that day. It becomes an offer with the merchant named and the date attached, and never the product's own price."
+    },
+    {
+      title: "What is missing entirely",
+      detail: "Serving size, format, sodium, calories and the rest are not in this mapping. A draft is silent on them rather than defaulted, and a product page will not show a figure this site does not hold."
+    }
+  ];
+
+  // src/domain/import/mapping.ts
+  function suggestMapping(headers, name = "Suggested") {
+    const byNormalised = new Map(headers.map((h) => [normaliseHeader(h), h]));
+    const columns = {};
+    const taken = /* @__PURE__ */ new Set();
+    for (const field of DRINK_FIELDS) {
+      for (const synonym of [field.key, ...field.synonyms]) {
+        const header = byNormalised.get(normaliseHeader(synonym));
+        if (header !== void 0 && !taken.has(header)) {
+          columns[field.key] = header;
+          taken.add(header);
+          break;
+        }
+      }
+    }
+    return {
+      mapping: { version: 1, name, columns },
+      unmapped: headers.filter((h) => !taken.has(h)),
+      missingRequired: DRINK_FIELDS.filter((f) => f.required && columns[f.key] === void 0)
+    };
+  }
+  function parseMapping(text, headers) {
+    let raw;
+    try {
+      raw = JSON.parse(text);
+    } catch {
+      return { ok: false, reason: "This is not JSON." };
+    }
+    if (typeof raw !== "object" || raw === null) return { ok: false, reason: "A mapping is a JSON object." };
+    const obj = raw;
+    if (obj.version !== 1) return { ok: false, reason: `This mapping says version ${String(obj.version)}. This tool writes and reads version 1.` };
+    if (typeof obj.columns !== "object" || obj.columns === null) return { ok: false, reason: "A mapping needs a columns object." };
+    const notes = [];
+    const columns = {};
+    for (const [key, header] of Object.entries(obj.columns)) {
+      if (typeof header !== "string") continue;
+      if (!DRINK_FIELDS.some((f) => f.key === key)) {
+        notes.push(`"${key}" is not a field this tool maps to, and was left out.`);
+        continue;
+      }
+      if (!headers.includes(header)) {
+        notes.push(`"${header}" is not a column in this file, so ${key} was left unmapped.`);
+        continue;
+      }
+      columns[key] = header;
+    }
+    return { ok: true, mapping: { version: 1, name: typeof obj.name === "string" ? obj.name : "Imported", columns, currency: typeof obj.currency === "string" ? obj.currency : void 0 }, notes };
+  }
+  var serialiseMapping = (mapping) => JSON.stringify(mapping, null, 2);
+
+  // src/tools/import-demo/main.ts
+  var state = {};
+  var el = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== void 0) node.textContent = text;
+    return node;
+  };
+  var byId = (id) => document.getElementById(id);
+  var clear = (node) => {
+    while (node.firstChild) node.removeChild(node.firstChild);
+  };
+  function status(message, kind = "plain") {
+    const node = byId("status");
+    clear(node);
+    node.className = `status ${kind}`;
+    node.appendChild(el("p", void 0, message));
+  }
+  async function loadFile(file) {
+    state.table = void 0;
+    state.mapping = void 0;
+    state.fileName = file.name;
+    if (file.size > LIMITS.bytes) {
+      status(`${file.name} is ${Math.round(file.size / 1e3)} kB. This demonstration reads files up to ${LIMITS.bytes / 1e3} kB.`, "bad");
+      render();
+      return;
+    }
+    const text = await file.text();
+    const result = readCsv(text, file.size);
+    if (!result.ok) {
+      status(`${file.name} was not read. ${result.reason}`, "bad");
+      render();
+      return;
+    }
+    state.table = result;
+    const suggestion = suggestMapping(result.headers, file.name);
+    state.mapping = suggestion.mapping;
+    const mapped = Object.keys(suggestion.mapping.columns).length;
+    status(`${file.name}: ${result.rows.length} rows, ${result.headers.length} columns, ${mapped} of ${DRINK_FIELDS.length} fields matched by name. Nothing has been saved.`, "ok");
+    render();
+  }
+  function renderMapping() {
+    const host = byId("mapping");
+    clear(host);
+    const table = state.table;
+    if (!table || !state.mapping) return;
+    for (const note of table.notes) host.appendChild(el("p", "note", note));
+    const grid = el("div", "grid");
+    for (const field of DRINK_FIELDS) {
+      const row = el("div", "row");
+      const label = el("label", "field");
+      label.textContent = field.label + (field.required ? " (required)" : "");
+      label.htmlFor = `map-${field.key}`;
+      const select = el("select");
+      select.id = `map-${field.key}`;
+      const none = el("option", void 0, "not mapped");
+      none.value = "";
+      select.appendChild(none);
+      for (const header of table.headers) {
+        const option = el("option", void 0, header);
+        option.value = header;
+        if (state.mapping.columns[field.key] === header) option.selected = true;
+        select.appendChild(option);
+      }
+      select.addEventListener("change", () => {
+        if (select.value === "") delete state.mapping.columns[field.key];
+        else state.mapping.columns[field.key] = select.value;
+        render();
+      });
+      row.appendChild(label);
+      row.appendChild(select);
+      row.appendChild(el("p", "review", field.review));
+      row.appendChild(el("p", "path", `Would land in ${field.catalogPath}`));
+      grid.appendChild(row);
+    }
+    host.appendChild(grid);
+    const unmapped = table.headers.filter((h) => !Object.values(state.mapping.columns).includes(h));
+    if (unmapped.length > 0) {
+      host.appendChild(el("p", "note", `Columns this tool has no field for, and does not read: ${unmapped.join(", ")}.`));
+    }
+  }
+  function renderDrafts() {
+    const host = byId("drafts");
+    clear(host);
+    if (!state.table || !state.mapping) return;
+    const set = buildDrafts(state.table.headers, state.table.rows, state.mapping);
+    if (set.missingRequired.length > 0) {
+      const warn = el("div", "banner bad");
+      warn.appendChild(el("p", void 0, `No column is mapped to ${set.missingRequired.map((f) => f.label).join(", ")}. A draft needs ${set.missingRequired.length === 1 ? "it" : "them"}, so every row below is blocked.`));
+      host.appendChild(warn);
+    }
+    const totals = el("p", "totals");
+    totals.textContent = `${set.totals.rows} rows: ${set.totals.withBlockers} blocked, ${set.totals.withChecks} to confirm, ${set.totals.clean} with nothing flagged.`;
+    host.appendChild(totals);
+    for (const draft of set.drafts) {
+      const card = el("article", `draft ${draft.blockers > 0 ? "blocked" : draft.checks > 0 ? "checks" : "clean"}`);
+      const head = el("header");
+      head.appendChild(el("h3", void 0, draft.label));
+      head.appendChild(el("span", "rownum", `row ${draft.row}`));
+      head.appendChild(el("span", "verdict", draft.blockers > 0 ? `${draft.blockers} blocked` : draft.checks > 0 ? `${draft.checks} to confirm` : "nothing flagged"));
+      card.appendChild(head);
+      const table = el("table");
+      const thead = el("thead");
+      const hrow = el("tr");
+      for (const h of ["Field", "In the file", "Read as", "Flags"]) hrow.appendChild(el("th", void 0, h));
+      thead.appendChild(hrow);
+      table.appendChild(thead);
+      const body = el("tbody");
+      for (const f of draft.fields) {
+        const tr = el("tr", f.flags.some((x) => x.severity === "blocker") ? "bad" : "");
+        tr.appendChild(el("td", "k", f.field.label));
+        tr.appendChild(el("td", "raw", f.raw === "" ? "(empty)" : f.raw));
+        tr.appendChild(el("td", "val", describe(f.value)));
+        const flags = el("td");
+        if (f.flags.length === 0) flags.textContent = "";
+        for (const flag of f.flags) flags.appendChild(el("p", `flag ${flag.severity}`, `${flag.severity === "blocker" ? "Blocked" : "Confirm"}: ${flag.message}`));
+        tr.appendChild(flags);
+        body.appendChild(tr);
+      }
+      table.appendChild(body);
+      card.appendChild(table);
+      host.appendChild(card);
+    }
+  }
+  function describe(value) {
+    if (!value) return "not read";
+    switch (value.kind) {
+      case "number":
+        return `${value.value}${value.unit ? ` ${value.unit}` : ""}`;
+      case "money":
+        return `${(value.minor / 100).toFixed(2)} ${value.currency} (${value.minor} minor units)`;
+      case "integer":
+        return String(value.value);
+      case "list":
+        return value.value.join(", ");
+      case "text":
+        return value.value;
+    }
+  }
+  function renderReview() {
+    const host = byId("review");
+    clear(host);
+    host.appendChild(el("h2", void 0, "Still to do, on every row, however clean the file is"));
+    host.appendChild(el("p", "note", "None of this is decided by parsing. A file with nothing flagged has not answered any of it."));
+    const list = el("ol");
+    for (const item of STANDING_REVIEW) {
+      const li = el("li");
+      li.appendChild(el("strong", void 0, item.title));
+      li.appendChild(el("p", void 0, item.detail));
+      list.appendChild(li);
+    }
+    host.appendChild(list);
+  }
+  function render() {
+    renderMapping();
+    renderDrafts();
+    byId("currency-row").hidden = !state.table;
+    byId("mapping-actions").hidden = !state.table;
+  }
+  function download(name, text) {
+    const blob = new Blob([text], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  function start() {
+    renderReview();
+    status("No file loaded. Nothing on this page is saved, sent anywhere, or published.");
+    byId("file").addEventListener("change", (e) => {
+      const input = e.target;
+      const file = input.files?.[0];
+      if (file) void loadFile(file);
+    });
+    const currency = byId("currency");
+    currency.addEventListener("change", () => {
+      if (!state.mapping) return;
+      const value = currency.value.trim().toUpperCase();
+      state.mapping.currency = value === "" ? void 0 : value;
+      render();
+    });
+    byId("export-mapping").addEventListener("click", () => {
+      if (!state.mapping) return;
+      download(`mapping-${(state.fileName ?? "supplier").replace(/[^a-z0-9.-]/gi, "-")}.json`, serialiseMapping(state.mapping));
+    });
+    byId("mapping-file").addEventListener("change", async (e) => {
+      const input = e.target;
+      const file = input.files?.[0];
+      if (!file || !state.table) return;
+      const parsed = parseMapping(await file.text(), state.table.headers);
+      if (!parsed.ok) {
+        status(`That mapping was not used. ${parsed.reason}`, "bad");
+        return;
+      }
+      state.mapping = parsed.mapping;
+      if (parsed.mapping.currency) byId("currency").value = parsed.mapping.currency;
+      status(`Mapping "${parsed.mapping.name}" applied.${parsed.notes.length > 0 ? ` ${parsed.notes.join(" ")}` : ""}`, "ok");
+      render();
+    });
+  }
+
+  // src/tools/import-demo/entry.ts
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+    </script>
+  </body>
+</html>

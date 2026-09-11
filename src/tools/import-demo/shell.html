@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Supplier import demonstration (local, offline)</title>
+    <style>
+      :root { color-scheme: light; --edge: #ddd6cc; --bad: #8a2b1f; --warn: #7a5a12; --ok: #245b3a; --ink: #22201d; --soft: #5d574f; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0 0 4rem; background: #faf7f2; color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+      h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+      h2 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+      h3 { font-size: 1rem; margin: 0; }
+      p { margin: .4rem 0; }
+      .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .75rem 1rem; border-radius: 6px; margin: 1rem 0; }
+      .banner.bad { border-left-color: var(--bad); }
+      .banner strong { display: block; }
+      .status { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .6rem .9rem; margin: 1rem 0; }
+      .status.ok { border-left: 4px solid var(--ok); }
+      .status.bad { border-left: 4px solid var(--bad); }
+      .controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: 1rem; }
+      .controls label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .25rem; }
+      .grid { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+      .row { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .7rem; }
+      .row .field { display: block; font-weight: 600; font-size: .85rem; }
+      .row select { width: 100%; margin: .3rem 0; padding: .3rem; }
+      .row .review, .row .path { font-size: .8rem; color: var(--soft); margin: .3rem 0 0; }
+      .row .path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; }
+      .note { font-size: .85rem; color: var(--soft); }
+      .totals { font-weight: 600; }
+      .draft { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .8rem; margin: .8rem 0; }
+      .draft.blocked { border-left-color: var(--bad); }
+      .draft.checks { border-left-color: var(--warn); }
+      .draft.clean { border-left-color: var(--ok); }
+      .draft header { display: flex; gap: .75rem; align-items: baseline; flex-wrap: wrap; margin-bottom: .5rem; }
+      .draft .rownum, .draft .verdict { font-size: .8rem; color: var(--soft); }
+      table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+      th, td { text-align: left; vertical-align: top; padding: .35rem .5rem; border-top: 1px solid var(--edge); }
+      th { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); border-top: 0; }
+      td.k { white-space: nowrap; font-weight: 600; }
+      td.raw, td.val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; white-space: pre-wrap; word-break: break-word; }
+      tr.bad td.val { color: var(--bad); }
+      .flag { margin: 0 0 .25rem; font-size: .8rem; }
+      .flag.blocker { color: var(--bad); }
+      .flag.check { color: var(--warn); }
+      ol li { margin-bottom: .6rem; }
+      ol li p { margin: .15rem 0 0; color: var(--soft); font-size: .88rem; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Supplier import: a demonstration</h1>
+      <p class="note">Runs from a file on your own disk. No server, no account, no database.</p>
+
+      <div class="banner">
+        <strong>What this does, and what it will not do.</strong>
+        <p>
+          It reads a supplier CSV you choose, in this browser, and shows what a draft record would look like and what is wrong with it. It writes nothing: the catalogue is untouched, no
+          file is uploaded, no address is contacted, and nothing here can publish anything.
+        </p>
+        <p>
+          The sample files under <code>docs/import-demo/samples/</code> are invented. The suppliers, the products and every figure in them were made up for this demonstration. They are
+          not real products and their numbers are not facts about anything.
+        </p>
+      </div>
+
+      <div class="controls">
+        <div>
+          <label for="file">Supplier file (CSV or TSV)</label>
+          <input id="file" type="file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" />
+        </div>
+        <div id="currency-row" hidden>
+          <label for="currency">Currency of the price column</label>
+          <input id="currency" type="text" size="6" placeholder="USD" />
+        </div>
+        <div id="mapping-actions" hidden>
+          <label for="mapping-file">Reuse a saved mapping</label>
+          <input id="mapping-file" type="file" accept=".json,application/json" />
+          <button id="export-mapping" type="button">Save this mapping</button>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <h2>Columns</h2>
+      <div id="mapping"></div>
+
+      <h2>Drafts</h2>
+      <div id="drafts"></div>
+
+      <section id="review"></section>
+    </main>
+    <script>
+      /* BUNDLE */
+    </script>
+  </body>
+</html>

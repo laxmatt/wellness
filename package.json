@@ -19,6 +19,7 @@
     "e2e:setaside": "node e2e/set-aside-updates-page.mjs",
     "ledger:restore": "tsx scripts/ledger-restore.ts",
     "retention:report": "tsx scripts/retention-report.ts",
+    "import:demo": "tsx scripts/build-import-demo.ts",
     "e2e:public": "tsx e2e/public-journeys.mts",
     "partner:checklist": "tsx scripts/partner-checklist.ts",
     "preview:shots": "tsx scripts/preview-shots.mts",
