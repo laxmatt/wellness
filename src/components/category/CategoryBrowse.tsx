@@ -3,6 +3,7 @@ import { CategoryHero, MatcherInput, RankingTransparency } from "@/components/ca
 import { WinnersRow } from "@/components/category/WinnersRow";
 import { FilterChips, FilterableGrid } from "@/components/category/FilterBar";
 import { CategoryFilterProvider } from "@/components/category/FilterContext";
+import { StartingPoint } from "@/components/category/StartingPoint";
 import { ProductCard } from "@/components/product/ProductCard";
 import { buildFilterGroups } from "@/domain/filters";
 import { buildNeeds, type CategoryPage } from "@/lib/queries";
@@ -23,18 +24,16 @@ import { buildNeeds, type CategoryPage } from "@/lib/queries";
  */
 export function CategoryBrowse({
   page,
-  title,
-  description,
+  // What a facet URL opened with, if this is one. It earns a single line of
+  // orientation, shown only while those chips are still on, and nothing else.
+  // The heading, the hero and the count belong to the category on every page
+  // that renders this, because that is what they are counting: a hero reading
+  // "Sugar-Free Wellness Drinks" above "all 6 we track" describes neither the
+  // page nor the results, and once the shopper widens it describes nothing.
   initialSelected = [],
-  // The facet this URL is, when it is one. Shown as a line of orientation, not
-  // as a second set of controls.
-  startingFrom,
 }: {
   page: CategoryPage;
-  title: string;
-  description: string;
   initialSelected?: string[];
-  startingFrom?: string;
 }) {
   const { cat, products, set } = page;
   // `initialSelected` is kept, so a starting point that matches nothing still
@@ -42,10 +41,18 @@ export function CategoryBrowse({
   // on an empty grid with no control to undo.
   const filterGroups = buildFilterGroups(products.map((p) => p.view), cat, initialSelected);
   const ids = products.map((p) => p.view.id);
+  // Named by the chip, not by the facet. /wellness-drinks/sugar-free presses a
+  // chip reading "Zero sugar", and a line saying "Sugar-free is selected" sends
+  // the shopper looking for a control with that name.
+  const startingLabel = filterGroups
+    .flatMap((g) => g.options)
+    .filter((o) => initialSelected.includes(o.id))
+    .map((o) => o.label)
+    .join(" and ");
 
   return (
     <>
-      <CategoryHero cat={cat} title={title} description={description} count={products.length} />
+      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} />
       <CategoryFilterProvider groups={filterGroups} ids={ids} needs={buildNeeds(page)} categoryId={cat.id} initialSelected={initialSelected}>
         <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
@@ -58,15 +65,10 @@ export function CategoryBrowse({
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="eyebrow">All {cat.navLabel.toLowerCase()}</p>
-                <h2 className="font-display mt-1 text-3xl">{startingFrom ? `Starting from ${startingFrom}.` : "Pick what matters to you."}</h2>
+                <h2 className="font-display mt-1 text-3xl">Pick what matters to you.</h2>
               </div>
             </div>
-            {startingFrom ? (
-              <p className="mt-2 max-w-2xl text-sm text-fg-soft">
-                {startingFrom} is a filter, not a different page. It is switched on below. Turn it off or add to it, and the {products.length} {cat.name.toLowerCase()} we track stay
-                reachable.
-              </p>
-            ) : null}
+            {startingLabel ? <StartingPoint ids={initialSelected} label={startingLabel} /> : null}
             <div className="mt-6">
               <FilterChips />
             </div>

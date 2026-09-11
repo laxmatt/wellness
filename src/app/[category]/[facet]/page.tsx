@@ -50,9 +50,13 @@ export default async function FacetPage({ params }: Props) {
       compareSeeds={products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
       <Container className="pt-4">
-        <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: def.title }]} />
+        {/* The trail stops at the category, because that is the page. The facet
+            is a selection on it, named by the line above the chips while it is
+            still selected, and a crumb reading "Sugar-Free Wellness Drinks"
+            would go on saying it after the shopper had removed it. */}
+        <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: cat.name }]} />
       </Container>
-      <CategoryBrowse page={page} title={def.title} description={def.description} initialSelected={facetSelection(page, def.slug)} startingFrom={def.label} />
+      <CategoryBrowse page={page} initialSelected={facetSelection(page, def.slug)} />
     </Shell>
   );
 }

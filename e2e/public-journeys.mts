@@ -103,6 +103,11 @@ async function settled(page: Page, expected: number) {
     .catch(() => undefined);
 }
 
+// What a person can actually read. `textContent` includes the inline scripts
+// Next writes into the body, so a "this copy is not on the page" check reads the
+// flight payload and finds the metadata it is checking is absent.
+const visibleText = (page: Page) => page.evaluate(() => document.body.innerText);
+
 const shownCount = (page: Page) => page.getByText(/^\d+ of \d+ shown$/).first().textContent().then((t) => (t ?? "").trim());
 
 // The text of the smallest block holding a rendered value, so a check can ask
@@ -376,12 +381,37 @@ async function run(browser: Browser) {
       check("the facet is shown as a chip that is on", await chip.getAttribute("aria-pressed"), "true");
       check("and it is not disabled, whatever it matches", await chip.isDisabled(), false);
 
+      // The hero belongs to the category, on this page as on every other. It
+      // used to carry the facet's own title over the whole category's count:
+      // "Sugar-Free Wellness Drinks" above "6 compared", describing neither the
+      // page nor the results. One line names the starting point instead, and
+      // only while it is still selected.
+      check("the hero is the category's, not the facet's", await page.locator("h1").first().textContent(), c.tagline);
+      // Rendered text, not textContent: Next embeds its flight payload in
+      // inline scripts inside the body, and that payload carries the page
+      // metadata. A check reading textContent finds the facet title in a script
+      // and reports copy that is not on the screen.
+      const visible = await visibleText(page);
+      ok("the facet's own title is nowhere on the page", !visible.includes(f.title), f.title);
+      const starting = (await page.getByTestId("starting-point").textContent()) ?? "";
+      // The chip's label, which is what the shopper has to find and press. The
+      // facet's own label can differ from it: /wellness-drinks/sugar-free
+      // presses a chip reading "Zero sugar".
+      ok("one line names the chip that is selected to start", starting.includes(option.label), { starting, expected: option.label });
+      ok("and it is not implementation talk", !/filter, not a different page|stay reachable/.test(visible), visible.slice(0, 160));
+
       // The whole point. Press the chip the URL arrived with, and the rest of
       // the category is reachable without leaving the page.
       await chip.click();
       await settled(page, ranked.products.length);
       check("removing it reaches the whole category", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
       check("and the count agrees", await shownCount(page), `${views.length} of ${views.length} shown`);
+      check("and nothing still claims the facet is selected", await page.getByTestId("starting-point").count(), 0);
+
+      await page.getByRole("button", { name: "Clear filters" }).first().count().then(async (n) => {
+        if (n > 0) await page.getByRole("button", { name: "Clear filters" }).first().click();
+      });
+      check("clearing leaves no claim either", await page.getByTestId("starting-point").count(), 0);
 
       if (matching.length === 0) {
         // Not offered anywhere as a starting point, because it leads to an
@@ -466,6 +496,42 @@ async function run(browser: Browser) {
     for (const id of [ENERGY, BUDGET]) await chipButton(page, option(id).label).click();
     await settled(page, three.length);
     check("a facet start reaches the same set as pressing all three", await shownSlugs(page), three);
+  }
+
+  // ------------------------------- moving between two facet URLs in one session
+  //
+  // A client-side navigation keeps the React tree alive, so the provider's
+  // starting selection changes as a prop rather than as a fresh mount. Seeded
+  // once, the second page would filter by the first page's chip while showing
+  // its own.
+  {
+    const c = categoryById("wellness-drinks")!;
+    const views = viewsOf(c.id);
+    const ranked = recommendCategory(views, c);
+    const ids = ranked.products.map((p) => p.view.id);
+    const groups = buildFilterGroups(views, c);
+    const slugsFor = (selected: string[]) => {
+      const allowed = new Set(applyFilters(ids, groups, selected));
+      return ranked.products.filter((p) => allowed.has(p.view.id)).map((p) => p.view.slug);
+    };
+
+    scenario = "facet to facet, without a reload";
+    await goto(page, "/wellness-drinks/energy");
+    await settled(page, slugsFor(["function:energy"]).length);
+    check("the first facet's products", await shownSlugs(page), slugsFor(["function:energy"]));
+
+    // Through the site's own links, so it is Next's client router doing it.
+    await page.locator('a[href="/wellness-drinks"]').first().click();
+    await page.waitForURL("**/wellness-drinks");
+    await settled(page, ranked.products.length);
+    check("the category page shows everything", await shownSlugs(page), ranked.products.map((p) => p.view.slug));
+    check("and claims no starting point", await page.getByTestId("starting-point").count(), 0);
+
+    await goto(page, "/wellness-drinks/sugar-free");
+    const sugarFree = slugsFor(["sugar_g:Zero sugar"]);
+    await settled(page, sugarFree.length);
+    check("the second facet's products, not the first facet's", await shownSlugs(page), sugarFree);
+    check("the first facet's chip is off", await chipButton(page, "Energy").getAttribute("aria-pressed"), "false");
   }
 
   // --------------------------------------- one chip bar, not two, on every page

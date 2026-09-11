@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { FilterChips, FilterableGrid } from "@/components/category/FilterBar";
 import { CategoryFilterProvider } from "@/components/category/FilterContext";
+import { StartingPoint } from "@/components/category/StartingPoint";
 import { stateOf, useNeeds } from "@/components/needs/NeedsStore";
 import { categoryById } from "@/domain/categories";
 import { applyFilters, buildFilterGroups, facetOptionId, type FilterGroup } from "@/domain/filters";
@@ -42,12 +43,13 @@ function NeedsProbe({ categoryId }: { categoryId: string }) {
   return <div data-testid="needs" data-needs={JSON.stringify(needs.map((n) => ({ label: n.label, matchIds: n.matchIds })))} />;
 }
 
-function mount(slug: string, initialSelected: string[] = []) {
+function mount(slug: string, initialSelected: string[] = [], startingFrom?: string) {
   const page = pageFor(slug);
   const ids = page.products.map((p) => p.view.id);
   const groups = buildFilterGroups(page.views, page.cat, initialSelected);
   render(
     <CategoryFilterProvider groups={groups} ids={ids} needs={buildNeeds(page)} categoryId={page.cat.id} initialSelected={initialSelected}>
+      {startingFrom ? <StartingPoint ids={initialSelected} label={startingFrom} /> : null}
       <FilterChips />
       <FilterableGrid sortLabel={page.cat.scoring.label.toLowerCase()}>
         {page.products.map((p) => (
@@ -289,5 +291,101 @@ describe("the same behaviour in every category", () => {
         expect(groups.flatMap((g) => g.options.map((o) => o.id)), `${slug}/${f.slug} is offered when selected`).toContain(id);
       }
     }
+  });
+});
+
+describe("moving from one facet URL to another", () => {
+  /**
+   * Next keeps the React tree alive across a client-side navigation between two
+   * URLs on the same route. The provider seeds its selection from a prop, and a
+   * component that seeds state once ignores a prop that changes later: the
+   * second facet would render its own chips and its own count while still
+   * filtering by the first facet's selection.
+   */
+  it("takes the new selection, and drops the old one", () => {
+    const page = pageFor("wellness-drinks");
+    const ids = page.products.map((p) => p.view.id);
+    const groups = buildFilterGroups(page.views, page.cat, [ENERGY, SUGAR_FREE]);
+    const view = (initialSelected: string[]) => (
+      <CategoryFilterProvider groups={groups} ids={ids} needs={buildNeeds(page)} categoryId={page.cat.id} initialSelected={initialSelected}>
+        <FilterChips />
+        <FilterableGrid sortLabel="label score">
+          {page.products.map((p) => (
+            <article key={p.view.id} data-slug={p.view.slug} />
+          ))}
+        </FilterableGrid>
+      </CategoryFilterProvider>
+    );
+
+    const { rerender } = render(view([ENERGY]));
+    expect(shown()).toEqual(engineSays(page, groups, [ENERGY]));
+
+    rerender(view([SUGAR_FREE]));
+    expect(shown(), "the new facet's products").toEqual(engineSays(page, groups, [SUGAR_FREE]));
+    expect(chip(labelOf(groups, SUGAR_FREE)).getAttribute("aria-pressed")).toBe("true");
+    expect(chip(labelOf(groups, ENERGY)).getAttribute("aria-pressed"), "the old facet is not still on").toBe("false");
+  });
+
+  it("leaves a shopper's own choices alone when nothing about the URL changed", () => {
+    const page = pageFor("wellness-drinks");
+    const ids = page.products.map((p) => p.view.id);
+    const groups = buildFilterGroups(page.views, page.cat, [ENERGY]);
+    const view = () => (
+      <CategoryFilterProvider groups={groups} ids={ids} needs={buildNeeds(page)} categoryId={page.cat.id} initialSelected={[ENERGY]}>
+        <FilterChips />
+        <FilterableGrid sortLabel="label score">
+          {page.products.map((p) => (
+            <article key={p.view.id} data-slug={p.view.slug} />
+          ))}
+        </FilterableGrid>
+      </CategoryFilterProvider>
+    );
+
+    const { rerender } = render(view());
+    press(labelOf(groups, ENERGY));
+    expect(shown()).toEqual(page.products.map((p) => p.view.slug));
+    // A re-render with the same starting point must not put the chip back on.
+    rerender(view());
+    expect(shown(), "the removal survives a re-render").toEqual(page.products.map((p) => p.view.slug));
+  });
+});
+
+describe("the page stops naming a choice once it is undone", () => {
+  const startingLine = () => screen.queryByTestId("starting-point")?.textContent ?? null;
+
+  it("names the starting point by the chip a shopper has to press", () => {
+    const page = pageFor("wellness-drinks");
+    const groups = buildFilterGroups(page.views, page.cat, [SUGAR_FREE]);
+    const chipLabel = labelOf(groups, SUGAR_FREE);
+    // The facet is called "Sugar-free" and its chip reads "Zero sugar". Naming
+    // the facet would send the shopper looking for a control with that name.
+    expect(chipLabel).toBe("Zero sugar");
+    mount("wellness-drinks", [SUGAR_FREE], chipLabel);
+    expect(startingLine()).toContain("Zero sugar is selected to start");
+  });
+
+  it("says nothing once the chip is removed", () => {
+    const page = mount("wellness-drinks", [ENERGY], "Energy");
+    press(labelOf(page.groups, ENERGY));
+    expect(startingLine(), "no line claiming a removed choice").toBeNull();
+    expect(shown()).toEqual(page.products.map((p) => p.view.slug));
+  });
+
+  it("says nothing after Clear filters", () => {
+    mount("wellness-drinks", [ENERGY], "Energy");
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(startingLine()).toBeNull();
+  });
+
+  it("comes back if the shopper presses it again", () => {
+    const page = mount("wellness-drinks", [ENERGY], "Energy");
+    press(labelOf(page.groups, ENERGY));
+    press(labelOf(page.groups, ENERGY));
+    expect(startingLine()).toContain("Energy");
+  });
+
+  it("is not shown on a page nobody arrived at with a selection", () => {
+    mount("wellness-drinks");
+    expect(startingLine()).toBeNull();
   });
 });

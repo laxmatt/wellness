@@ -9,8 +9,11 @@ export function CategoryHero({ cat, title, description, count }: { cat: Category
   return (
     <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 pt-6 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-10 lg:px-8 lg:pt-10">
       <div className="lg:col-span-6">
+        {/* The count is of everything in the category, on every page that shows
+            this hero. A facet URL opens with a chip pressed and shows fewer
+            products than this; the number beside the results says how many. */}
         <p className="eyebrow">
-          {cat.name} · {count} compared
+          {cat.name} · all {count} we track
         </p>
         <h1 className="font-display mt-3 text-4xl leading-[0.98] sm:text-5xl lg:text-6xl">{title}</h1>
         <p className="mt-4 max-w-xl text-base text-fg-soft sm:text-lg">{description}</p>

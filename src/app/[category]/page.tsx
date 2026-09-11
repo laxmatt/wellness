@@ -41,7 +41,7 @@ export default async function CategoryPage({ params }: Props) {
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: cat.name }]} />
       </Container>
-      <CategoryBrowse page={page} title={cat.tagline} description={cat.intro} />
+      <CategoryBrowse page={page} />
     </Shell>
   );
 }

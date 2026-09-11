@@ -58,6 +58,20 @@ export function CategoryFilterProvider({
   initialSelected?: string[];
 }) {
   const [selected, setSelected] = useState<string[]>(initialSelected);
+
+  // What that state was seeded from. Moving between two facet URLs is a
+  // client-side navigation on one route: this component stays mounted and only
+  // the prop changes, so state seeded once would filter the page a shopper has
+  // arrived at by the chip of the page they left. Compared by content, because
+  // a fresh array with the same ids in it is the same starting point and must
+  // not throw away a choice the shopper made after arriving.
+  const seed = initialSelected.join("\u0000");
+  const [seededFrom, setSeededFrom] = useState(seed);
+  if (seededFrom !== seed) {
+    setSeededFrom(seed);
+    setSelected(initialSelected);
+  }
+
   const assistant = useAssistant();
   const applied = assistant?.applied ?? null;
   const lastNonce = useRef<number | null>(null);
