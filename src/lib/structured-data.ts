@@ -98,8 +98,11 @@ export function publisher() {
  * product pages it links to and repeating them here would be two places to keep
  * true instead of one.
  *
- * Built from the same array the grid renders, so the list and the page cannot
- * disagree about what is on it or what order it is in.
+ * Built from the same array the server hands the grid, so the markup and the
+ * delivered page agree on what is listed and in what order. It describes the
+ * document as served: filtering happens in the browser afterwards and does not
+ * re-emit this, so a shopper who narrows the grid is looking at a subset of
+ * what the markup describes.
  */
 export function categoryItemList(name: string, path: string, products: { name: string; slug: string }[]) {
   return {
