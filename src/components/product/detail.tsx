@@ -65,7 +65,7 @@ export function OfferList({ view }: { view: ProductView }) {
         {gone > 0 && view.availability !== "discontinued" ? (
           <p>
             {gone === 1 ? "One listing is no longer current" : `${gone} listings are no longer current`}, so {gone === 1 ? "it is" : "they are"} not shown. Others may still list this
-            product, and we hold no confirmed listing for one.
+            product.
           </p>
         ) : null}
       </div>
