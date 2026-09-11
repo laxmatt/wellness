@@ -28,6 +28,22 @@ const SHOTS: Shot[] = [
   { name: "category-red-light", path: "/red-light", full: true },
   { name: "category-cold-plunge", path: "/cold-plunge", full: true },
   { name: "category-wellness-drinks", path: "/wellness-drinks", full: true },
+  // The same page with a filter actually selected. "How it fits your needs" is
+  // only rendered once a shopper has asked for something, so a first-load
+  // capture cannot contain it, and the feature's whole point sat outside the
+  // gallery. One chip is enough: it puts a match, a miss and the unconfirmed
+  // count on one page.
+  {
+    name: "category-cold-plunge-filtered",
+    path: "/cold-plunge",
+    full: true,
+    prepare: async (page) => {
+      await page.waitForSelector('[data-filters-ready="true"]');
+      await page.locator("[data-filters-ready] button", { hasText: "Under $2,000" }).first().click();
+      await page.waitForFunction(() => document.querySelectorAll('[data-testid="needs-fit"]').length > 0);
+      await page.waitForTimeout(250);
+    },
+  },
   { name: "product-renu", path: "/products/renu-therapy-cold-stoic-2-0", full: true },
   { name: "product-plunge-no-price", path: "/products/plunge-original", full: true },
   // Not fullPage. The compare table lives in a `max-h-[calc(100dvh-6rem)]`

@@ -51,7 +51,7 @@
 <header>
   <h1>Wellness Compare</h1>
   <p class="lede">A walkthrough of one shopper's journey: arrive, pick a category, narrow it down, compare what is left, and leave for a retailer. Every image below is a real page from a production build served locally. None is a mockup.</p>
-  <p class="meta">Build <code id="build">3vfTmwmo5ZP8I6m7k7X37</code>, captured <span id="captured">2026-09-11</span>. All twenty screenshots were taken in that one run, so every page here shows the same build. Run it yourself with <code>npm run preview</code>, then follow the routes named at each step.</p>
+  <p class="meta">Every image is a page as it first loads, except step three, which was captured after actually pressing a filter. Build <code id="build">mKZp1pP_FDQAz5dZU_9P0</code>, captured <span id="captured">2026-09-11</span>. All twenty-two screenshots were taken in that one run, so every page here shows the same build. Run it yourself with <code>npm run preview</code>, then follow the routes named at each step.</p>
 </header>
 
 <div class="tabs" role="group" aria-label="Viewport">
@@ -62,17 +62,15 @@
 <main id="journey"></main>
 
 <section class="step">
-  <h2>Two things these screenshots cannot show</h2>
-  <p>Both are worth a minute in a live demo, and neither appears above, because every screenshot was captured on a page as it first loads, with nothing selected.</p>
+  <h2>What a screenshot leaves out</h2>
+  <p>A still shows a state, not the act of reaching it. Step three is a real selected state, captured after a real click, but the tap itself and the grid re-ordering under it are things to do live rather than look at. Two more are worth a minute in front of someone.</p>
 
   <div class="note">
-    <b>How it fits your needs.</b>
+    <b>The third fit state, which this selection happens not to produce.</b>
     <ul>
-      <li>Pick any filter and every card grows a short section reporting, requirement by requirement, what <b>Matches</b>, what <b>Does not match</b>, and what <b>Needs confirmation</b>.</li>
-      <li>The third state is the point. A filter has to refuse anything it cannot settle, so a missing figure and a genuine mismatch both read as "no". A shopper deciding needs to tell them apart: one rules a product out, the other is something to check with the maker.</li>
-      <li>It is not a score or a percentage and it never reads the capability score. It reports the shopper's own selections back.</li>
-      <li>Products the filters cannot place are counted under the grid rather than vanishing, with a line saying they are neither a match nor a miss.</li>
-      <li>To see it: open <code>/cold-plunge</code>, press <b>Under $2,000</b>, and read any card. Then open the comparison, which carries the same requirements.</li>
+      <li>A requirement can also read <b>Needs confirmation</b>, when the catalogue holds nothing it can match on: a figure nobody published, one a source states two ways, or an amount resting on prototype data.</li>
+      <li>It matters because a filter has to refuse anything it cannot settle, so a missing figure and a genuine mismatch both come out as "no". One rules a product out; the other is something to check with the maker before buying.</li>
+      <li>In step three those two products are the ones counted under the grid. To see the state as a row on a card, open the comparison with one of them: <code>/compare?ids=plunge-original</code> with a budget selected on the cold plunge page first.</li>
     </ul>
   </div>
 
@@ -154,6 +152,15 @@ const STEPS = [
   },
   {
     n: 3,
+    title: "Narrow it down, and see where each product stands",
+    route: "/cold-plunge, then press Under $2,000",
+    blurb: "One chip is selected in this capture, which is why this page looks different from the three above. Every card grows a short section reporting the shopper's own selections back, requirement by requirement. It is not a score and it never reads the capability score.",
+    shots: [
+      ["category-cold-plunge-filtered", "Cold plunges under $2,000", "Visible here: the Best Overall pick, at $8,499, reads <b>0 of 1 requirement met, 1 not met</b> with a red cross against <b>Under $2,000 &middot; Price</b>, so a badge winner that fails your budget says so instead of sitting quietly at the top. The pick beside it reads <b>1 of 1 requirement met</b> with a tick. Under the grid, a line says two products are not shown because no confirmed figure could be checked against the selection, and that they are neither a match nor a miss. The chip row shows the selected chip, its count, and the chips dimmed to zero because nothing left matches them."],
+    ],
+  },
+  {
+    n: 4,
     title: "Open one product",
     route: "/products/renu-therapy-cold-stoic-2-0",
     blurb: "The score broken down criterion by criterion, specifications grouped, retailers listed, and every source named with the date it was read and whether anybody read it.",
@@ -163,7 +170,7 @@ const STEPS = [
     ],
   },
   {
-    n: 4,
+    n: 5,
     title: "Compare what is left",
     route: "/compare?ids=renu-cold-stoic-2,plunge-original,ice-barrel-500",
     blurb: "Up to four from one category, attribute by attribute. The product header stays put while the table scrolls, and a row whose values cannot be ranked against each other says so instead of marking a winner.",
@@ -173,10 +180,10 @@ const STEPS = [
     ],
   },
   {
-    n: 5,
+    n: 6,
     title: "Leave for a retailer",
     route: "not one page &mdash; the cards, the picks row, the comparison columns and the product page all offer it",
-    blurb: "Every retailer on a record is offered by name. The site never picks one, and a withheld or discontinued listing is never a destination: a product with nothing to link to says so rather than inventing somewhere to send you. Affiliate status is not an input to any ranking, and there is no affiliate programme in place today.",
+    blurb: "Every current listing on a record is offered by name, and the site never picks between them. A listing it cannot stand behind is not a destination: one whose amount cannot be shown to belong to the product, or whose seller has stopped selling it, is withheld, and a product left with nothing to link to says so rather than inventing somewhere to send you. Affiliate status is not an input to any ranking, and there is no affiliate programme in place today.",
     shots: [
       ["disclosure", "How this site is paid", "The whole arrangement, stated plainly."],
       ["how-we-choose", "How We Choose", "The published rules behind every badge and every score."],
@@ -189,7 +196,7 @@ function render(view) {
   journey.className = view === "mobile" ? "phone" : "";
   journey.innerHTML = STEPS.map((s) => `
     <section class="step">
-      <h2><span class="num">${s.n}</span>${s.title}</h2>
+      <h2><span class="num" aria-hidden="true">${s.n}</span>Step ${s.n}: ${s.title}</h2>
       <p class="route">Route: ${s.route}</p>
       <p>${s.blurb}</p>
       ${s.shots.map(([name, title, caption]) => `
