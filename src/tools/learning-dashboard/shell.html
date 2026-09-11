@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>What we have learned (local, private)</title>
+    <style>
+      :root { color-scheme: light; --edge: #ddd6cc; --bad: #8a2b1f; --warn: #7a5a12; --ok: #245b3a; --ink: #22201d; --soft: #5d574f; --demo: #4a3a7a; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0 0 5rem; background: #faf7f2; color: var(--ink); font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+      h1 { font-size: 1.7rem; margin: 1.5rem 0 .25rem; }
+      h2 { font-size: 1.2rem; margin: 2.25rem 0 .5rem; }
+      h3 { font-size: 1rem; margin: 0; }
+      h4 { font-size: .8rem; margin: .6rem 0 .2rem; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); }
+      p { margin: .45rem 0; }
+      .lede { color: var(--soft); max-width: 62ch; }
+      .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0; }
+      .banner strong { display: block; margin-bottom: .2rem; }
+      .pill { display: inline-block; border-radius: 999px; padding: .05rem .55rem; font-size: .72rem; font-weight: 700; letter-spacing: .02em; border: 1px solid var(--edge); background: #f3efe8; color: var(--soft); }
+      .pill.off { border-color: #d8c9c6; background: #f7ecea; color: var(--bad); }
+      .pill.on { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
+      .pill.demo { border-color: #cec6e2; background: #efebf8; color: var(--demo); }
+      .pill.measured { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
+      .pill.unmeasured { border-color: #e2dcc6; background: #f8f4e6; color: var(--warn); }
+      .sources { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .8rem 1rem; margin-bottom: 1rem; }
+      .sources ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+      .sources li { display: flex; flex-wrap: wrap; gap: .5rem; align-items: baseline; padding: .3rem 0; border-top: 1px solid var(--edge); }
+      .sources li:first-child { border-top: 0; }
+      .sources .src { font-weight: 600; }
+      .sources .note { color: var(--soft); font-size: .85rem; }
+      .panel { border: 1px solid var(--edge); border-left: 4px solid #d8c9c6; background: #fff; border-radius: 6px; padding: .85rem 1rem; margin: .75rem 0; }
+      .panel header { display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+      .panel .nofigure { font-weight: 600; }
+      .panel .what, .panel .contract { color: var(--soft); font-size: .9rem; }
+      .panel .contract { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; }
+      .panel ul { margin: .2rem 0 0; padding-left: 1.1rem; color: var(--soft); font-size: .9rem; }
+      .panel .never li { color: var(--bad); }
+      .entry { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .85rem 1rem; margin: .7rem 0; }
+      .entry.is-demo { border-left-color: var(--demo); background: #fdfcff; }
+      .entry[data-status="done"] { border-left-color: var(--ok); }
+      .entry[data-status="dropped"] { opacity: .72; }
+      .entry header { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .4rem; }
+      .entry .observation { font-size: 1.02rem; font-weight: 600; }
+      .entry .meta { color: var(--soft); font-size: .82rem; }
+      .entry .actions { margin-top: .5rem; display: flex; gap: .8rem; }
+      button.link { border: 0; background: none; padding: 0; font: inherit; font-size: .85rem; font-weight: 600; color: var(--soft); text-decoration: underline; cursor: pointer; }
+      form { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: 1rem; }
+      form .grid { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+      label { display: block; font-weight: 600; font-size: .82rem; margin-bottom: .2rem; }
+      input, select, textarea { width: 100%; padding: .4rem; font: inherit; font-size: .9rem; border: 1px solid var(--edge); border-radius: 4px; background: #fff; }
+      input:disabled { background: #f3efe8; color: var(--soft); }
+      textarea { min-height: 3.2rem; resize: vertical; }
+      .hint { color: var(--soft); font-size: .8rem; margin-top: .2rem; }
+      #problems { margin-top: .7rem; }
+      .problem { color: var(--bad); font-size: .88rem; margin: .2rem 0; }
+      .toolbar { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin: .8rem 0; }
+      .save { color: var(--soft); font-size: .85rem; }
+      .save.bad { color: var(--bad); }
+      .counts { font-size: .95rem; }
+      .empty, .demo-note { color: var(--soft); }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>What we have learned</h1>
+      <p class="lede">A private page for the owner. It runs from a file on your own disk, keeps its notes in this browser, and sends nothing anywhere.</p>
+
+      <div class="banner">
+        <strong>Nothing on this site is measured yet.</strong>
+        <p>
+          There is no analytics store, no traffic data and no connected search account. The typed events in <code>src/domain/analytics.ts</code> describe what could be recorded;
+          nothing calls the provider that would record them, so nothing ever has been. The four questions below therefore have no figures, and show what they would need instead
+          of showing a zero. <strong>No figure is not the same as a figure of zero</strong>, and this page will not print the second in place of the first.
+        </p>
+        <p>
+          This is a local operator tool. There is no login and no route: if this ever becomes a page on the site, it needs authentication first, and that work does not exist.
+        </p>
+      </div>
+
+      <h2>Four questions, and what would answer them</h2>
+      <div id="metrics"></div>
+
+      <h2>What we have learned, and what to do next</h2>
+      <p class="lede">
+        The part of this page with real content, because a person wrote it. Each entry says where it came from, and an entry resting on something somebody noticed is marked
+        differently from one resting on a measurement. There is no score: a count of notes says nothing about how the site is doing.
+      </p>
+
+      <div class="toolbar">
+        <button id="export" type="button">Save the register to a file</button>
+        <label for="import" style="display:inline">Load a saved file</label>
+        <input id="import" type="file" accept=".json,application/json" style="width:auto" />
+        <span id="save-state" class="save"></span>
+      </div>
+      <div class="toolbar">
+        <button id="load-demo" type="button">Load example entries</button>
+        <button id="clear-demo" type="button">Remove the examples</button>
+        <span class="save">Examples are invented, marked EXAMPLE, counted separately, and are not about this site.</span>
+      </div>
+
+      <div id="summary"></div>
+      <div id="entries"></div>
+
+      <h2 id="form-title">Add what you noticed</h2>
+      <form onsubmit="return false">
+        <div class="grid">
+          <div style="grid-column: 1 / -1">
+            <label for="f-observation">What did you see?</label>
+            <textarea id="f-observation" placeholder="One sentence, in plain words."></textarea>
+          </div>
+          <div>
+            <label for="f-source">Where did it come from?</label>
+            <select id="f-source"></select>
+            <p class="hint" id="measurement-note"></p>
+          </div>
+          <div>
+            <label for="f-sample">Sample</label>
+            <input id="f-sample" placeholder="12 sessions" />
+          </div>
+          <div>
+            <label for="f-dates">Dates</label>
+            <input id="f-dates" placeholder="1 to 14 September" />
+          </div>
+          <div>
+            <label for="f-reference">Reference</label>
+            <input id="f-reference" placeholder="A file, a page, a conversation. Never somebody's words." />
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-hypothesis">What do you think it means? (optional)</label>
+            <textarea id="f-hypothesis" placeholder="Kept separate from what you saw, on purpose."></textarea>
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-change">What should change?</label>
+            <textarea id="f-change" placeholder="Even if the answer is to look into it."></textarea>
+          </div>
+          <div>
+            <label for="f-status">Status</label>
+            <select id="f-status"></select>
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-outcome">What happened? (only once it is changed or dropped)</label>
+            <textarea id="f-outcome"></textarea>
+          </div>
+        </div>
+        <div id="problems" hidden></div>
+        <div class="toolbar">
+          <button id="save-entry" type="button">Save the entry</button>
+          <button id="cancel-edit" type="button" class="link" hidden>Cancel</button>
+        </div>
+      </form>
+
+      <h2>Where the notes live</h2>
+      <p class="lede">
+        In this browser, on this machine, under one key in local storage. That is convenient and it is not a backup: clearing site data, another browser, or another machine all
+        start empty. <strong>Save the register to a file</strong> and keep that file somewhere you keep things. Loading a file replaces what is here.
+      </p>
+      <p class="lede">
+        Nothing on this page records a visitor, and nothing here should ever hold one: no addresses, no identifiers, no referring query strings, and nothing anybody typed into
+        the assistant or a filter.
+      </p>
+    </main>
+    <script>
+      /* BUNDLE */
+    </script>
+  </body>
+</html>

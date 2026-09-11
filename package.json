@@ -19,11 +19,12 @@
     "e2e:setaside": "node e2e/set-aside-updates-page.mjs",
     "ledger:restore": "tsx scripts/ledger-restore.ts",
     "retention:report": "tsx scripts/retention-report.ts",
-    "import:demo": "tsx scripts/build-import-demo.ts",
+    "import:demo": "tsx scripts/build-local-tool.ts import-demo",
     "e2e:public": "tsx e2e/public-journeys.mts",
     "partner:checklist": "tsx scripts/partner-checklist.ts",
     "preview:shots": "tsx scripts/preview-shots.mts",
-    "preview": "next build && next start -p ${PORT:-3000}"
+    "preview": "next build && next start -p ${PORT:-3000}",
+    "dashboard": "tsx scripts/build-local-tool.ts learning-dashboard"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",
