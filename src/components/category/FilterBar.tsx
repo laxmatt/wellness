@@ -25,11 +25,17 @@ export function FilterChips() {
       {/* The rule the chips already follow, said out loud. Picking two chips in
           one row widens the result and picking one in each row narrows it, and
           nothing on the page said so: a shopper who picked "Under $300" and
-          watched five other chips grey out had no way to know why. The number
-          on each chip is what that press would leave. */}
+          watched five other chips grey out had no way to know why.
+
+          The sentence about the number is written from what `countFor` does,
+          not from what a number beside a chip looks like it should mean. It
+          drops every selection in the chip's own row and counts that one option
+          against the other rows, so it is what the chip matches on its own, not
+          what pressing it would leave. Those differ the moment a second chip in
+          the same row is already on. */}
       <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
-        Pick more than one in a row to widen the result. Pick across rows to narrow it. The number on a chip is how many products you would be left with, and a chip at zero is dimmed
-        because nothing left matches it.
+        Pick more than one in a row to widen the result. Pick across rows to narrow it. A chip&apos;s number counts that chip on its own against your other rows, so it ignores anything
+        else you have picked in its own row. A chip at zero is dimmed because nothing in your other rows matches it.
       </p>
       {f.groups.map((g) => (
         <div key={g.key} className="flex flex-wrap items-center gap-2">
@@ -48,8 +54,8 @@ export function FilterChips() {
                 // screen reader nothing about why it cannot be pressed, and
                 // sighted shoppers only got a dimmer pill. Both now get the
                 // reason.
-                aria-label={dead ? `${o.label}, no products left match this` : undefined}
-                title={dead ? "Nothing left matches this. Clear a filter in another row to reach it." : undefined}
+                aria-label={dead ? `${o.label}, no products in your other rows match this` : undefined}
+                title={dead ? "Nothing in your other rows matches this. Clear a filter in another row to reach it." : undefined}
                 onClick={() => f.toggle(o.id)}
                 className={cn(
                   "tap inline-flex items-center gap-1.5 rounded-pill border px-3.5 text-sm font-medium transition-colors",

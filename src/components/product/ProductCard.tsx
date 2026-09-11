@@ -23,8 +23,17 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   // configuration nobody has matched, which the product page already refuses
   // to link.
   const buyable = buyableOffers(view);
-  const shopHref = buyable.length === 1 ? buyable[0].url : `${href}#retailers`;
+  // Destination AND label from the same list. The href already came from
+  // `buyable` and the label still counted `view.offers`, which holds the
+  // withheld ones too, so a product with two offers and one of them withheld
+  // advertised "2 retailers" over a link to the single one a shopper can
+  // actually be sent to. With none buyable it said "Shop" over an anchor that
+  // goes nowhere a shopper can buy.
   const external = buyable.length === 1;
+  const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
+  // Nothing to shop is not a shop button. The product page still says what is
+  // known and why no retailer is listed, so the way in stays.
+  const shopLabel = buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
@@ -78,7 +87,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             rel={external ? "sponsored nofollow noopener" : undefined}
             className={buttonStyles("primary", "md")}
           >
-            {view.offers.length > 1 ? `${view.offers.length} retailers` : "Shop"}
+            {shopLabel}
           </a>
         </div>
       </div>

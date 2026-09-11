@@ -175,6 +175,26 @@ function affirmed(tokens: string[], terms: string[]): boolean {
   return seen;
 }
 
+/**
+ * Categories the message names and rules out.
+ *
+ * Used where the site offers its sections as a way out of a dead end. Offering
+ * "Go to Cold Plunges" to someone who has just written that they do not want a
+ * cold plunge is tin-eared, and the refusal is already right there in the
+ * sentence. It changes nothing else: a negated category was never going to be
+ * proposed as a switch.
+ */
+export function negatedCategoryIds(text: string, all: CategoryDefinition[]): string[] {
+  const tokens = tokenize(text);
+  if (tokens.length === 0) return [];
+  return all
+    .filter((c) => categoryTerms(c).some((term) => {
+      const at = findTerm(tokens, term);
+      return at >= 0 && negatedAt(tokens, at);
+    }))
+    .map((c) => c.id);
+}
+
 /** The phrases that name a category, from the category's own definition. */
 export function categoryTerms(cat: CategoryDefinition): string[] {
   return [cat.name, cat.navLabel, cat.slug.replace(/-/g, " "), ...cat.aliases];

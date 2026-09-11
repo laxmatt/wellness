@@ -30,9 +30,11 @@ type Body = {
   text: string;
   mode: string;
   products: unknown[];
+  unconfirmedPrice: unknown[];
   proposals: unknown[];
   links?: { href: string; label: string }[];
   activeConstraints: { key: string; label: string }[];
+  matchSummary: string;
 };
 
 function ask(categoryId: string, text: string, hard: unknown[] = []) {
@@ -102,6 +104,16 @@ describe("a red-light shopper asks about cold plunges", () => {
     const body: Body = await (await POST(ask("red-light", MESSAGE))).json();
     expect(body.proposals).toEqual([]);
     expect(body.products).toEqual([]);
+    expect(body.unconfirmedPrice).toEqual([]);
+  });
+
+  // The count goes with the cards. "All 8 products in this category match" is
+  // true and answers a question nobody asked, and the panel renders it in bold
+  // as the site's own figure directly under a sentence about another section.
+  it("counts nothing, because it is not about the products on this page", async () => {
+    goScripted();
+    const body: Body = await (await POST(ask("red-light", MESSAGE))).json();
+    expect(body.matchSummary).toBe("");
   });
 
   it("leaves the shopper's own filters exactly as they set them", async () => {
@@ -120,6 +132,15 @@ describe("a subject this site has no catalogue for", () => {
     expect(body.text).toContain("no vitamins catalogue");
     expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/cold-plunge", "/wellness-drinks"]);
     expect(body.proposals).toEqual([]);
+    expect(body.products).toEqual([]);
+    expect(body.matchSummary).toBe("");
+  });
+
+  it("still reports the filters the shopper is holding", async () => {
+    goScripted();
+    const held = [{ key: "price", op: "lte", value: 70000 }];
+    const body: Body = await (await POST(ask("red-light", "do you have vitamins?", held))).json();
+    expect(body.activeConstraints.map((c) => c.key)).toEqual(["price"]);
   });
 
   // Matt's spelling.
@@ -141,8 +162,11 @@ describe("messages that must not move anybody", () => {
   it("ignores a category the shopper ruled out", async () => {
     goScripted();
     const body: Body = await (await POST(ask("red-light", "I don't want a cold plunge, show me panels"))).json();
-    expect(body.links).toBeUndefined();
     expect(body.text).not.toContain("separate section");
+    // "panels" is not in this category's vocabulary, so nothing was read and the
+    // reply is the invitation, which offers this site's sections. Cold plunges
+    // is not among them: the sentence has already said so.
+    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/wellness-drinks"]);
   });
 
   it("asks which one when the message names two", async () => {
@@ -162,9 +186,48 @@ describe("messages that must not move anybody", () => {
 });
 
 describe("a dead end always offers a way out", () => {
+  const SECTIONS = ["/red-light", "/cold-plunge", "/wellness-drinks"];
+
   it("puts the section links under the fixed limitation", async () => {
     goScripted();
     const body: Body = await (await POST(ask("red-light", "which is best for my skin tone?"))).json();
-    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/cold-plunge", "/wellness-drinks"]);
+    expect(body.links?.map((l) => l.href)).toEqual(SECTIONS);
+  });
+
+  // A statement never reaches the fixed limitation: `looksLikeQuestion` sends
+  // only questions there. "I want kettlebells" fell to the invitation, which
+  // offered "What matters most to you here?" beside this category's own cards
+  // and no way anywhere else.
+  it("puts them under the invitation too, for a statement nothing was read from", async () => {
+    goScripted();
+    const body: Body = await (await POST(ask("red-light", "I want kettlebells"))).json();
+    expect(body.text).toContain("What matters most to you here?");
+    expect(body.links?.map((l) => l.href)).toEqual(SECTIONS);
+  });
+
+  // The links say what this site holds. They do not say the request was
+  // understood, and they do not say kettlebells are absent: nothing here knows
+  // that, and only the four written entries in ABSENT_SUBJECTS may say it.
+  it("claims nothing about what it could not read", async () => {
+    goScripted();
+    const body: Body = await (await POST(ask("red-light", "I want kettlebells"))).json();
+    expect(body.text).not.toMatch(/kettlebell/i);
+    expect(body.text).not.toMatch(/catalogue/i);
+    expect(body.text).not.toMatch(/separate section/i);
+  });
+
+  it("still counts and still shows the page's own products", async () => {
+    goScripted();
+    const body: Body = await (await POST(ask("red-light", "I want kettlebells"))).json();
+    // Nothing was applied, so the page is unchanged and the count describes it.
+    expect(body.matchSummary).toContain("All 8 products");
+    expect(body.products.length).toBeGreaterThan(0);
+    expect(body.proposals).toEqual([]);
+  });
+
+  it("says nothing extra once a real preference is read", async () => {
+    goScripted();
+    const body: Body = await (await POST(ask("red-light", "a full body panel under $700"))).json();
+    expect(body.links).toBeUndefined();
   });
 });

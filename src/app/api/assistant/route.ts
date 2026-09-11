@@ -10,8 +10,8 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { evaluateCondition, matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { FIXED_LIMITATION, categoryLink, clarifyingQuestion, composeReply, outOfScopeReply, questionForKey } from "@/domain/reply-composer";
-import { resolveSubjectScope } from "@/domain/subject-scope";
+import { FIXED_INVITATION, FIXED_LIMITATION, categoryLink, clarifyingQuestion, composeReply, outOfScopeReply, questionForKey } from "@/domain/reply-composer";
+import { negatedCategoryIds, resolveSubjectScope } from "@/domain/subject-scope";
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
@@ -211,7 +211,7 @@ export async function POST(req: Request) {
         proposals: [],
         medicalRedirect: false,
         links: redirect.links,
-        suppressProducts: true,
+        outOfScope: true,
       }),
     );
   }
@@ -570,13 +570,33 @@ export async function POST(req: Request) {
       // returned before the model was called.
       medicalRedirect: false,
       notice: undefined,
-      // A shopper who has reached the fixed statement of what this site can
-      // compare is handed the sections it compares. It is the same set of links
-      // the cross-category answer offers, because it is the same dead end:
-      // nothing here matched, and a way out beats a shrug.
-      links: composed === FIXED_LIMITATION ? categories.map(categoryLink) : undefined,
+      // Both dead ends, not just the question. A reply reaches the fixed
+      // limitation only when `looksLikeQuestion` says so, and "I want
+      // kettlebells" is a statement: it fell to the invitation, which offered
+      // nothing but "What matters most to you here?" beside the category's own
+      // cards. Nothing was understood in either case, so both get the sections
+      // this site holds.
+      //
+      // The links say what exists. They do not say the request was understood
+      // and they do not say kettlebells are absent, because nothing here knows
+      // that.
+      links: composed === FIXED_LIMITATION || composed.startsWith(FIXED_INVITATION) ? deadEndLinks(lastUser) : undefined,
     }),
   );
+}
+
+/**
+ * The sections offered beside a reply nothing was read from.
+ *
+ * Every category this site holds, minus any the message ruled out. "I don't
+ * want a cold plunge" is a sentence that already says where not to send
+ * somebody. If it rules out everything, the full set stands: a dead end with no
+ * way out of it is worse than an unwanted link.
+ */
+function deadEndLinks(text: string) {
+  const negated = new Set(negatedCategoryIds(text, categories));
+  const offered = categories.filter((c) => !negated.has(c.id));
+  return (offered.length > 0 ? offered : categories).map(categoryLink);
 }
 
 function toRef(v: ProductView, outcome: Outcome, cat: CategoryDefinition): AssistantProductRef {
@@ -632,20 +652,26 @@ function reply(args: {
   oneRelaxationIsEnough?: boolean;
   notice?: string;
   links?: AssistantReply["links"];
-  // Set when the reply is not about the products on this page. The cards are
-  // dropped rather than shown under an answer that is not about them: a
-  // red-light shopper asking about cold plunges was going to be handed three
-  // red-light panels beside a sentence saying this page is the wrong one.
-  suppressProducts?: boolean;
+  // Set when the reply is not about the products on this page. A red-light
+  // shopper asking about cold plunges was going to be handed three red-light
+  // panels beside a sentence saying this page is the wrong one.
+  //
+  // The count goes with the cards. "All 8 products in this category match" is
+  // true and it is an answer to a question nobody asked: printed under "this
+  // site has no vitamins catalogue" it reads as a count of something, and the
+  // panel renders it in bold as the site's own figure. What the shopper holds
+  // is still reported, in activeConstraints, because the point of these replies
+  // is that the page is exactly as they left it.
+  outOfScope?: boolean;
 }): AssistantReply {
   const { outcome } = args;
-  const products = args.suppressProducts ? [] : outcome.matching.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
-  const unconfirmed = args.suppressProducts ? [] : outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
+  const products = args.outOfScope ? [] : outcome.matching.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
+  const unconfirmed = args.outOfScope ? [] : outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
   return {
     text: args.text,
     // Authored here, from the same evaluation the cards come from, on every
-    // reply including the ones the model never reached.
-    matchSummary: engineSummary(outcome.matching.length, args.totalProducts, args.oneRelaxationIsEnough),
+    // reply that has cards to describe.
+    matchSummary: args.outOfScope ? "" : engineSummary(outcome.matching.length, args.totalProducts, args.oneRelaxationIsEnough),
     failure: args.failure,
     mode: args.mode,
     question: args.question,
