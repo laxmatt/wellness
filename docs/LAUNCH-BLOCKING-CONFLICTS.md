@@ -31,7 +31,10 @@ The offer is disputed too: $6,990 relayed, against $6,790 on the page read on
 2026-09-09. The product currently shows no price at all, which is the correct
 behaviour and not a fix.
 
-**Read:** https://plunge.com/products/plunge
+**Read:** https://plunge.com/products/plunge, and the variant behind the Cold
+Only option. `2026-09-11-plunge-edge-reach-attempt.md` sets out where a Shopify
+store publishes that identifier and the alignment prepared against it, including
+the three disputed rows a variant id does **not** settle.
 
 **The question:** which configuration this record is, named by the maker's own
 words, and what that configuration's price, plumbing, sanitation and heating
@@ -50,8 +53,10 @@ That is a listing, not the maker, so the offer is neither removed nor marked
 dead, and availability stays `unknown`. The $5,490 is relayed and has never been
 re-checked. Four of its attributes are prototype values.
 
-**Read:** https://www.edgetheorylabs.com/products/the-edge-tub-elite, and the
-site root, and any support or contact channel that answers.
+**Read:** the site root first, not the product URL, which returned an internal
+error on 2026-09-11. `2026-09-11-plunge-edge-reach-attempt.md` lists the three
+things that would settle closure and why one error on one page is not one of
+them.
 
 **The question:** does the maker's own site still sell this. A site that no
 longer resolves, or a store with nothing purchasable, is evidence. A Shop
