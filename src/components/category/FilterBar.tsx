@@ -22,6 +22,15 @@ export function FilterChips() {
   if (!f || f.groups.length === 0) return null;
   return (
     <div className="flex flex-col gap-3" data-filters-ready={ready ? "true" : "false"}>
+      {/* The rule the chips already follow, said out loud. Picking two chips in
+          one row widens the result and picking one in each row narrows it, and
+          nothing on the page said so: a shopper who picked "Under $300" and
+          watched five other chips grey out had no way to know why. The number
+          on each chip is what that press would leave. */}
+      <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
+        Pick more than one in a row to widen the result. Pick across rows to narrow it. The number on a chip is how many products you would be left with, and a chip at zero is dimmed
+        because nothing left matches it.
+      </p>
       {f.groups.map((g) => (
         <div key={g.key} className="flex flex-wrap items-center gap-2">
           <span className="eyebrow w-full sm:w-28 sm:shrink-0">{g.label}</span>
@@ -35,6 +44,12 @@ export function FilterChips() {
                 type="button"
                 aria-pressed={on}
                 disabled={dead}
+                // A disabled control with no name but its own label tells a
+                // screen reader nothing about why it cannot be pressed, and
+                // sighted shoppers only got a dimmer pill. Both now get the
+                // reason.
+                aria-label={dead ? `${o.label}, no products left match this` : undefined}
+                title={dead ? "Nothing left matches this. Clear a filter in another row to reach it." : undefined}
                 onClick={() => f.toggle(o.id)}
                 className={cn(
                   "tap inline-flex items-center gap-1.5 rounded-pill border px-3.5 text-sm font-medium transition-colors",
