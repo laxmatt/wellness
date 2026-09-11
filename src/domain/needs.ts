@@ -106,13 +106,24 @@ export function classifyCondition(view: ProductView, cat: CategoryDefinition, c:
   if (isUnconfirmedPriceClaim(view, cat, c)) return "unknown";
 
   const raw = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
-  const held = withholdingOf(view, c.key);
 
-  // These two ask what the catalogue holds, so a withheld value is neither a
-  // presence nor an absence: the record has something and this site will not
-  // use it.
-  if (c.op === "exists") return held === "absent" ? "miss" : "unknown";
-  if (c.op === "missing") return held === "absent" ? "match" : "unknown";
+  // These two ask one question about the catalogue and nothing about the
+  // product: does this site hold a figure it will use for the key.
+  // `chiller_included missing` means "we have no usable record of whether it
+  // has a chiller", never "it has no chiller". The second is a claim about
+  // equipment that nobody has made, and a shopper reading "Does not match:
+  // chiller" would take it as one.
+  //
+  // Neither is ever unanswerable, because the question is about this site's own
+  // record and this site can always answer it. They are exact complements, so
+  // one of them is true for every product and the other is a definite no. The
+  // engine settles the yes above, which leaves only the no here.
+  //
+  // A withheld figure is an absence by this definition: a disputed number or a
+  // demo one is not a figure this site holds, which is exactly what
+  // `attributes` means and exactly what the engine tests. The record still says
+  // what it says, and the product page is where that is read.
+  if (c.op === "exists" || c.op === "missing") return "miss";
 
   // Nothing usable to compare against. False here was never the product
   // failing; it was the catalogue declining to answer. Zero and false are
@@ -159,10 +170,49 @@ export type NeedDefinition = {
   label: string;
   // The row it came from ("Price", "Coverage"), or the section for a facet.
   groupLabel: string;
+  // The filter row, for options that came from one. Chips in the same row are
+  // alternatives to each other, and a requirement has to be assembled from all
+  // of them together rather than one per chip.
+  groupKey?: string;
   source: "filter" | "facet" | "assistant";
+  // True when the requirement is satisfied by any one of several options. It
+  // changes the wording, because "Targeted or Full body" met by a full-body
+  // panel is a match, not a half-failure.
+  anyOf?: boolean;
   matchIds: string[];
   unknownIds: string[];
 };
+
+/**
+ * Several chips from one filter row, as the one requirement they are.
+ *
+ * Options within a row are alternatives: `applyFilters` unions them, so picking
+ * Targeted and Full body means either will do and the grid widens. Reported one
+ * per chip, that same choice read as two requirements, and a full-body panel
+ * was marked as failing the targeted one. A shopper who said "either is fine"
+ * was shown a conflict they had not created.
+ *
+ * Any option matching is a match. Every option missing is a miss. Anything else
+ * is a product no option settles, which is neither.
+ */
+export function mergeAlternatives(needs: NeedDefinition[]): NeedDefinition {
+  if (needs.length === 1) return needs[0];
+  const matchIds = [...new Set(needs.flatMap((n) => n.matchIds))];
+  const matched = new Set(matchIds);
+  // A product one option cannot place is unknown only while no option matched
+  // it outright.
+  const unknownIds = [...new Set(needs.flatMap((n) => n.unknownIds))].filter((id) => !matched.has(id));
+  return {
+    id: needs.map((n) => n.id).join("|"),
+    label: needs.map((n) => n.label).join(" or "),
+    groupLabel: needs[0].groupLabel,
+    groupKey: needs[0].groupKey,
+    source: needs[0].source,
+    anyOf: true,
+    matchIds,
+    unknownIds,
+  };
+}
 
 /**
  * Why one product cannot answer one requirement, in the site's own words.
@@ -201,7 +251,7 @@ export function unknownReason(view: ProductView, cat: CategoryDefinition, key: s
 export function buildNeedCatalogue(
   views: ProductView[],
   cat: CategoryDefinition,
-  options: { id: string; label: string; groupLabel: string; conditions: Condition[]; source: "filter" | "facet" }[],
+  options: { id: string; label: string; groupLabel: string; groupKey?: string; conditions: Condition[]; source: "filter" | "facet" }[],
 ): NeedDefinition[] {
   return options.map((o) => {
     const matchIds: string[] = [];
@@ -211,7 +261,7 @@ export function buildNeedCatalogue(
       if (state === "match") matchIds.push(v.id);
       else if (state === "unknown") unknownIds.push(v.id);
     }
-    return { id: o.id, label: o.label, groupLabel: o.groupLabel, source: o.source, matchIds, unknownIds };
+    return { id: o.id, label: o.label, groupLabel: o.groupLabel, groupKey: o.groupKey, source: o.source, matchIds, unknownIds };
   });
 }
 

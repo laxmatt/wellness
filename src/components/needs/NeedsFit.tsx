@@ -37,7 +37,13 @@ function Row({ need, state }: { need: NeedDefinition; state: NeedState }) {
       <span className="min-w-0">
         <span className="sr-only">{c.heading}: </span>
         <span className="font-medium text-fg">{need.label}</span>
-        <span className="text-fg-muted"> · {need.groupLabel}</span>
+        <span className="text-fg-muted">
+          {" "}
+          · {need.groupLabel}
+          {/* Said out loud, because "Targeted or Full body" met by a full-body
+              panel is a match and the row has to read that way. */}
+          {need.anyOf ? ", any of these" : ""}
+        </span>
         {state === "unknown" ? <span className="text-fg-soft"> · not stated clearly enough to match on</span> : null}
       </span>
     </li>

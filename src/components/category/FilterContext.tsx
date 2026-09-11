@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useRef, useState, type R
 import { useAssistant } from "@/components/assistant/AssistantProvider";
 import { setNeeds } from "@/components/needs/NeedsStore";
 import { applyFilters, type FilterGroup } from "@/domain/filters";
-import type { NeedDefinition } from "@/domain/needs";
+import { mergeAlternatives, type NeedDefinition } from "@/domain/needs";
 
 type FilterState = {
   groups: FilterGroup[];
@@ -95,10 +95,27 @@ export function CategoryFilterProvider({
       const facet = byId.get(activeFacetId);
       if (facet) chosen.push(facet);
     }
+
+    // One requirement per filter row, not per chip. Options within a row are
+    // alternatives, which is exactly what `applyFilters` does with them: it
+    // unions them and the grid widens. Reported one per chip, picking Targeted
+    // and Full body read as two requirements and marked a full-body panel as
+    // failing the targeted one, turning "either is fine" into a conflict the
+    // shopper never asked for.
+    //
+    // Rows stay separate, because rows are ANDed. The facet and each accepted
+    // assistant constraint stay separate for the same reason: they are
+    // requirements in their own right, not alternatives to a chip.
+    const byRow = new Map<string, NeedDefinition[]>();
     for (const id of selected) {
       const need = byId.get(id);
-      if (need) chosen.push(need);
+      if (!need) continue;
+      const row = need.groupKey ?? need.id;
+      byRow.set(row, [...(byRow.get(row) ?? []), need]);
     }
+    // Category order, which is the order the rows are shown in.
+    for (const row of byRow.values()) chosen.push(mergeAlternatives(row));
+
     for (const b of applied?.breakdown ?? []) {
       chosen.push({ id: `assistant:${b.key}`, label: b.label, groupLabel: "From your answers", source: "assistant", matchIds: b.matchIds, unknownIds: b.unknownIds });
     }

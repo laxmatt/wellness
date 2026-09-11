@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { categoryById, coldPlunge, redLight, wellnessDrinks } from "@/domain/categories";
 import type { Condition } from "@/domain/category";
 import { evaluateCondition } from "@/domain/conditions";
-import { buildFilterGroups, filterOptionSpecs } from "@/domain/filters";
-import { classifyCondition, classifyConditions, unknownReason, withholdingOf } from "@/domain/needs";
+import { applyFilters, buildFilterGroups, filterOptionSpecs } from "@/domain/filters";
+import { classifyCondition, classifyConditions, mergeAlternatives, stateFor, unknownReason, withholdingOf } from "@/domain/needs";
 import { buildNeeds } from "@/lib/queries";
 import { recommendCategory } from "@/domain/recommend";
 import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
@@ -171,6 +171,108 @@ describe("the requirements a page publishes", () => {
     const { products, set } = recommendCategory(viewsFor("cold-plunge"), cat);
     for (const need of buildNeeds({ cat, products, set })) {
       for (const id of need.matchIds) expect(need.unknownIds).not.toContain(id);
+    }
+  });
+});
+
+describe("options within one filter row are alternatives, not separate requirements", () => {
+  const cat = redLight;
+  const views = () => viewsFor("red-light");
+
+  const needFor = (ids: string[]) => {
+    const all = buildNeeds({ cat, ...recommendCategory(views(), cat) });
+    return mergeAlternatives(ids.map((id) => all.find((n) => n.id === id)!));
+  };
+
+  it("matches a product that meets either one", () => {
+    const merged = needFor(["coverage:targeted", "coverage:full_body"]);
+    const fullBody = views().filter((v) => v.attributes.coverage === "full_body");
+    const targeted = views().filter((v) => v.attributes.coverage === "targeted");
+    expect(fullBody.length).toBeGreaterThan(0);
+    expect(targeted.length).toBeGreaterThan(0);
+    for (const v of [...fullBody, ...targeted]) expect(stateFor(merged, v.id), v.id).toBe("match");
+  });
+
+  it("misses only a product that meets none of them", () => {
+    const merged = needFor(["coverage:targeted", "coverage:full_body"]);
+    const halfBody = views().filter((v) => v.attributes.coverage === "half_body");
+    expect(halfBody.length).toBeGreaterThan(0);
+    for (const v of halfBody) expect(stateFor(merged, v.id), v.id).toBe("miss");
+  });
+
+  it("admits exactly what the chip bar admits, so the section cannot disagree with the grid", () => {
+    const all = views();
+    const groups = buildFilterGroups(all, cat);
+    const ids = ["coverage:targeted", "coverage:full_body"];
+    const shown = applyFilters(all.map((v) => v.id), groups, ids);
+    const merged = needFor(ids);
+    expect([...merged.matchIds].sort()).toEqual([...shown].sort());
+  });
+
+  it("says any of these, so a met alternative does not read as a half failure", () => {
+    const merged = needFor(["coverage:targeted", "coverage:full_body"]);
+    expect(merged.anyOf).toBe(true);
+    expect(merged.label).toBe("Targeted or Full body");
+    expect(merged.groupLabel).toBe("Coverage");
+  });
+
+  it("keeps a product unknown only while no alternative places it", () => {
+    // An option that cannot place a product, merged with one that matches it,
+    // is a match: the shopper said either would do and one of them did.
+    const all = buildNeeds({ cat, ...recommendCategory(views(), cat) });
+    const cheap = all.find((n) => n.id === "price:Under $300")!;
+    const unplaceable = cheap.unknownIds[0];
+    expect(unplaceable, "a panel with no usable price").toBeTruthy();
+    const merged = mergeAlternatives([cheap, { ...cheap, id: "price:everything", label: "Everything", matchIds: [unplaceable], unknownIds: [] }]);
+    expect(stateFor(merged, unplaceable)).toBe("match");
+    expect(merged.unknownIds).not.toContain(unplaceable);
+  });
+
+  it("leaves a single selection alone", () => {
+    const one = needFor(["coverage:full_body"]);
+    expect(one.anyOf).toBeUndefined();
+    expect(one.label).toBe("Full body");
+  });
+});
+
+describe("exists and missing ask what the catalogue holds", () => {
+  it("calls missing a definite no when the catalogue holds the figure", () => {
+    const v = miniView(miniProduct("has-power", 10000, { power: 50, size: "m" }));
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "missing" })).toBe("miss");
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "exists" })).toBe("match");
+  });
+
+  it("calls missing a definite yes when the catalogue holds nothing", () => {
+    const v = miniView(miniProduct("no-power", 10000, { size: "m" }));
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "missing" })).toBe("match");
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "exists" })).toBe("miss");
+  });
+
+  // A figure this site will not use is not a figure this site holds, which is
+  // what `attributes` means and what the engine tests. The record still says
+  // what it says; the product page is where that is read.
+  it("treats a withheld figure as an absence, the same way everything else does", () => {
+    const p = miniProduct("disputed", 10000, { power: 60, size: "m" });
+    p.attributes.power!.disputed = true;
+    const v = miniView(p);
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "missing" })).toBe("match");
+    expect(classifyCondition(v, miniCategory, { key: "power", op: "exists" })).toBe("miss");
+  });
+
+  // They ask opposite questions about one fact, so exactly one of them holds
+  // for every product and every key. Neither is ever a shrug.
+  it("are exact complements, and never unanswerable", () => {
+    for (const slug of ["red-light", "cold-plunge", "wellness-drinks"]) {
+      const cat = categoryById(slug)!;
+      for (const v of viewsFor(slug)) {
+        for (const a of cat.attributeDefinitions) {
+          const exists = classifyCondition(v, cat, { key: a.key, op: "exists" });
+          const missing = classifyCondition(v, cat, { key: a.key, op: "missing" });
+          expect(exists, `${v.id}.${a.key}`).not.toBe("unknown");
+          expect(missing, `${v.id}.${a.key}`).not.toBe("unknown");
+          expect(exists === "match", `${v.id}.${a.key}`).toBe(missing === "miss");
+        }
+      }
     }
   });
 });

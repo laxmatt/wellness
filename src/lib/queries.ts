@@ -65,7 +65,7 @@ export function buildNeeds(page: CategoryPage, activeFacetSlug?: string): NeedDe
   const views = page.products.map((p) => p.view);
   const facet = activeFacetSlug ? page.cat.facets.find((f) => f.slug === activeFacetSlug) : undefined;
   return buildNeedCatalogue(views, page.cat, [
-    ...filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, conditions: [o.condition], source: "filter" as const })),
+    ...filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, groupKey: o.groupKey, conditions: [o.condition], source: "filter" as const })),
     ...(facet ? [{ id: `facet:${facet.slug}`, label: facet.label, groupLabel: "This page", conditions: facet.conditions, source: "facet" as const }] : []),
   ]);
 }

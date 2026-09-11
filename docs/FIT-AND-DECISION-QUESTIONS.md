@@ -43,15 +43,26 @@ already carries.
 - A bound too wide for the question. "Less than 1 g of sugar" settles "under
   5 g" as a yes and "4 g or more" as a no; it settles "exactly 0 g" as neither.
 
+`exists` and `missing` are never unanswerable. They ask one question about this
+site's own record, does it hold a figure it will use for the key, and it can
+always answer that. They are exact complements. Neither is a claim about the
+product: `chiller_included missing` means no usable record of a chiller, never
+that there is no chiller.
+
 Zero and false are values, not absences. A drink recorded at 0 g of sugar fails
 "5 g or more" outright, and a tub recorded as having no chiller fails "chiller
 included" outright.
 
 ### Where requirements come from
 
-- **Filter chips.** Options within a row are separate requirements, so two in
-  one row read as two lines, which is also how they behave: within a row they
-  are alternatives and the grid widens.
+- **Filter chips, one requirement per row.** Options within a row are
+  alternatives: `applyFilters` unions them, so picking Targeted and Full body
+  means either will do and the grid widens. They are reported as one line,
+  "Targeted or Full body, any of these", matched when any of them matches and
+  missed only when all of them miss. One line per chip read as two separate
+  requirements and marked a full-body panel as failing the targeted one, turning
+  "either is fine" into a conflict the shopper never created. Rows stay separate
+  from each other, because rows are ANDed.
 - **The facet page you are on.** A shopper on `/red-light/under-1000` stated a
   budget as surely as one who pressed the chip, and the page was the only thing
   that knew it.
