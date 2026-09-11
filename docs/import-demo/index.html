@@ -344,7 +344,14 @@
     return false;
   }
   var SUPPORTED_CURRENCIES = ["USD", "GBP", "EUR", "CAD", "AUD", "NZD", "CHF"];
-  var CURRENCY_SYMBOLS = ["$", "\xA3", "\u20AC", "\xA5", "\u20B9"];
+  var SYMBOL_CANDIDATES = [
+    { symbol: "$", currencies: ["USD", "CAD", "AUD", "NZD", "SGD", "HKD"], name: "a dollar sign" },
+    { symbol: "\xA3", currencies: ["GBP"], name: "a pound sign" },
+    { symbol: "\u20AC", currencies: ["EUR"], name: "a euro sign" },
+    { symbol: "\xA5", currencies: ["JPY", "CNY"], name: "a yen or yuan sign" },
+    { symbol: "\u20B9", currencies: ["INR"], name: "a rupee sign" },
+    { symbol: "\u20BD", currencies: ["RUB"], name: "a rouble sign" }
+  ];
   var UNIT_WORDS = {
     g: "g",
     gram: "g",
@@ -432,11 +439,15 @@
     const t = raw.trim();
     const flags = [];
     let rest = t;
-    const symbol = CURRENCY_SYMBOLS.find((s) => rest.includes(s));
+    const symbols = SYMBOL_CANDIDATES.filter((s) => rest.includes(s.symbol));
+    if (symbols.length > 1) {
+      return rejected(raw, [blocker(`"${t}" carries ${symbols.map((s) => s.name).join(" and ")}. Two currency symbols in one amount is not an amount.`)]);
+    }
+    const symbol = symbols[0];
     const codeMatch = /(?:^|[^A-Za-z])([A-Za-z]{3})(?:[^A-Za-z]|$)/.exec(rest);
     const cellCode = codeMatch ? codeMatch[1].toUpperCase() : void 0;
     if (codeMatch) rest = rest.replace(codeMatch[1], "");
-    if (symbol) rest = rest.split(symbol).join("");
+    if (symbol) rest = rest.split(symbol.symbol).join("");
     rest = rest.trim();
     if (cellCode && !SUPPORTED_CURRENCIES.includes(cellCode)) {
       return rejected(raw, [
@@ -451,8 +462,16 @@
     }
     const currency = cellCode ?? column?.value;
     if (!currency) {
-      const because = symbol ? `"${symbol}" is not a currency: more than one country spends it.` : "Neither the cell nor the column states one.";
+      const because = symbol ? `"${symbol.symbol}" is ${symbol.name}, and a symbol is not a code: it does not say which country's money this is.` : "Neither the cell nor the column states one.";
       return rejected(raw, [blocker(`No currency. ${because} Put a code such as ${SUPPORTED_CURRENCIES[0]} in the heading, or set one beside the column.`)]);
+    }
+    if (symbol && !symbol.currencies.includes(currency)) {
+      const where = cellCode ? "the cell" : column?.from ?? "the column";
+      return rejected(raw, [
+        blocker(
+          `The amount carries ${symbol.name} and ${where} says ${currency}. ${symbol.symbol} is ${symbol.currencies.join(", ")}, so those contradict each other and nothing is read.`
+        )
+      ]);
     }
     if (!cellCode && column) flags.push(check(`Currency taken from the ${column.from}: ${column.value}. The cell itself states none.`));
     if (rest === "") return rejected(raw, [...flags, blocker(`"${t}" states no amount.`)]);
@@ -466,26 +485,64 @@
     if (Math.abs(n * 100 - minor) > 1e-9) flags.push(check(`Rounded to ${(minor / 100).toFixed(2)} ${currency}, because prices are stored in whole cents.`));
     return { raw, value: { kind: "money", minor, currency }, flags };
   }
+  var ITEM_LABELS = [
+    "can",
+    "cans",
+    "stick",
+    "sticks",
+    "sachet",
+    "sachets",
+    "packet",
+    "packets",
+    "scoop",
+    "scoops",
+    "tablet",
+    "tablets",
+    "capsule",
+    "capsules",
+    "bottle",
+    "bottles",
+    "pouch",
+    "pouches",
+    "bar",
+    "bars",
+    "piece",
+    "pieces",
+    "unit",
+    "units"
+  ];
+  var SERVING_LABELS = ["serving", "servings"];
   function readCount(raw, ctx) {
     const t = raw.trim();
-    const match = /^(\d+)\s*(.*)$/.exec(t);
-    if (!match) return rejected(raw, [blocker(`"${t}" is not a whole number of servings.`)]);
+    const match = /^(\d+)(?:\s+([A-Za-z]+))?$/.exec(t);
+    if (!match) {
+      return rejected(raw, [
+        blocker(`"${t}" is not a whole number, optionally followed by one word naming what is counted. A count is whole: no decimals, no exponents, no punctuation.`)
+      ]);
+    }
     const n = Number(match[1]);
     if (!Number.isSafeInteger(n) || n > MAX_COUNT) return rejected(raw, [blocker(`"${match[1]}" is past anything this reads as a pack size.`)]);
     if (n === 0) return rejected(raw, [blocker("A pack of zero is not a pack.")]);
-    const trailing = match[2].trim();
-    if (trailing === "") return { raw, value: { kind: "integer", value: n }, flags: [] };
+    const label = match[2]?.toLowerCase();
+    if (label === void 0) return { raw, value: { kind: "integer", value: n }, flags: [] };
+    if (SERVING_LABELS.includes(label)) return { raw, value: { kind: "integer", value: n }, flags: [check(`Counted as ${n} servings, which is what the cell says it counts.`)] };
+    if (!ITEM_LABELS.includes(label)) {
+      return rejected(raw, [
+        blocker(`"${match[2]}" is not a word this recognises as one packed item. It knows ${ITEM_LABELS.slice(0, 6).join(", ")} and a few more, and it will not assume what an unfamiliar one holds.`)
+      ]);
+    }
+    const one = label.replace(/s$/, "");
     if (!ctx.servingsBasis) {
       return rejected(raw, [
         blocker(
-          `This counts ${n} ${trailing}, and the field holds servings. ${n} ${trailing} is ${n} servings only if one ${trailing.replace(/s$/, "")} is one serving, which the file does not say. State that basis beside the column if it is true, or map servings from a column that counts servings.`
+          `This counts ${n} ${label}, and the field holds servings. ${n} ${label} is ${n} servings only if one ${one} is one serving, which the file does not say. State that basis beside the column if it is true, or map servings from a column that counts servings.`
         )
       ]);
     }
     return {
       raw,
       value: { kind: "integer", value: n },
-      flags: [check(`Counted as ${n} servings from ${n} ${trailing}, because one item per serving was stated for this column. The file itself does not say it.`)]
+      flags: [check(`Counted as ${n} servings from ${n} ${label}, because one item per serving was stated for this column. The file itself does not say it.`)]
     };
   }
   function readList(raw, field) {

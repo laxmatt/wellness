@@ -95,7 +95,23 @@ export function looksLikeFormula(raw: string): boolean {
  * stored rather than a parsing tweak.
  */
 export const SUPPORTED_CURRENCIES = ["USD", "GBP", "EUR", "CAD", "AUD", "NZD", "CHF"] as const;
-const CURRENCY_SYMBOLS = ["$", "£", "€", "¥", "₹"];
+/**
+ * What a symbol could be, within the currencies anybody uses.
+ *
+ * A symbol never establishes a currency here, not even an unambiguous one: it
+ * can only agree with a stated code or contradict it. But it is not nothing. A
+ * cell reading "£12" in a column somebody has set to EUR is not twelve euros,
+ * and reading it as twelve euros because the code outranks the symbol is how a
+ * sterling price ends up in the books as a euro one.
+ */
+const SYMBOL_CANDIDATES: { symbol: string; currencies: string[]; name: string }[] = [
+  { symbol: "$", currencies: ["USD", "CAD", "AUD", "NZD", "SGD", "HKD"], name: "a dollar sign" },
+  { symbol: "£", currencies: ["GBP"], name: "a pound sign" },
+  { symbol: "€", currencies: ["EUR"], name: "a euro sign" },
+  { symbol: "¥", currencies: ["JPY", "CNY"], name: "a yen or yuan sign" },
+  { symbol: "₹", currencies: ["INR"], name: "a rupee sign" },
+  { symbol: "₽", currencies: ["RUB"], name: "a rouble sign" },
+];
 
 const UNIT_WORDS: Record<string, string> = {
   g: "g",
@@ -251,11 +267,15 @@ function readMoney(raw: string, ctx: CellContext): ReadCell {
   const flags: Flag[] = [];
   let rest = t;
 
-  const symbol = CURRENCY_SYMBOLS.find((s) => rest.includes(s));
+  const symbols = SYMBOL_CANDIDATES.filter((s) => rest.includes(s.symbol));
+  if (symbols.length > 1) {
+    return rejected(raw, [blocker(`"${t}" carries ${symbols.map((s) => s.name).join(" and ")}. Two currency symbols in one amount is not an amount.`)]);
+  }
+  const symbol = symbols[0];
   const codeMatch = /(?:^|[^A-Za-z])([A-Za-z]{3})(?:[^A-Za-z]|$)/.exec(rest);
   const cellCode = codeMatch ? codeMatch[1].toUpperCase() : undefined;
   if (codeMatch) rest = rest.replace(codeMatch[1], "");
-  if (symbol) rest = rest.split(symbol).join("");
+  if (symbol) rest = rest.split(symbol.symbol).join("");
   rest = rest.trim();
 
   if (cellCode && !(SUPPORTED_CURRENCIES as readonly string[]).includes(cellCode)) {
@@ -272,8 +292,18 @@ function readMoney(raw: string, ctx: CellContext): ReadCell {
   }
   const currency = cellCode ?? column?.value;
   if (!currency) {
-    const because = symbol ? `"${symbol}" is not a currency: more than one country spends it.` : "Neither the cell nor the column states one.";
+    const because = symbol ? `"${symbol.symbol}" is ${symbol.name}, and a symbol is not a code: it does not say which country's money this is.` : "Neither the cell nor the column states one.";
     return rejected(raw, [blocker(`No currency. ${because} Put a code such as ${SUPPORTED_CURRENCIES[0]} in the heading, or set one beside the column.`)]);
+  }
+  // A symbol cannot name the currency, but it can rule one out. This is the
+  // check that stops "£12" in a EUR column from being read as twelve euros.
+  if (symbol && !symbol.currencies.includes(currency)) {
+    const where = cellCode ? "the cell" : (column?.from ?? "the column");
+    return rejected(raw, [
+      blocker(
+        `The amount carries ${symbol.name} and ${where} says ${currency}. ${symbol.symbol} is ${symbol.currencies.join(", ")}, so those contradict each other and nothing is read.`,
+      ),
+    ]);
   }
   if (!cellCode && column) flags.push(check(`Currency taken from the ${column.from}: ${column.value}. The cell itself states none.`));
 
@@ -293,32 +323,73 @@ function readMoney(raw: string, ctx: CellContext): ReadCell {
   return { raw, value: { kind: "money", minor, currency }, flags };
 }
 
+/**
+ * Words this recognises as one packed thing.
+ *
+ * Written down, like every other vocabulary here. A label nobody wrote down is
+ * a label this cannot reason about: "12 cases" is not twelve of anything a
+ * shopper drinks, and guessing that it might be would be the same mistake as
+ * turning cans into servings.
+ */
+const ITEM_LABELS = [
+  "can", "cans",
+  "stick", "sticks",
+  "sachet", "sachets",
+  "packet", "packets",
+  "scoop", "scoops",
+  "tablet", "tablets",
+  "capsule", "capsules",
+  "bottle", "bottles",
+  "pouch", "pouches",
+  "bar", "bars",
+  "piece", "pieces",
+  "unit", "units",
+];
+/** The one label that already says servings, and so needs no basis at all. */
+const SERVING_LABELS = ["serving", "servings"];
+
 function readCount(raw: string, ctx: CellContext): ReadCell {
   const t = raw.trim();
-  const match = /^(\d+)\s*(.*)$/.exec(t);
-  // "1.5" used to pass as 1 with a note about the ".5". A count is whole.
-  if (!match) return rejected(raw, [blocker(`"${t}" is not a whole number of servings.`)]);
+  // The whole cell has to be a whole number and, at most, one word. Pinned here
+  // and not after the basis question: a looser shape used to capture the digits
+  // off the front of "1.5" and "1e3" and hand back 1 as soon as the basis was
+  // stated, which turned an operator's tick into a number the file never held.
+  const match = /^(\d+)(?:\s+([A-Za-z]+))?$/.exec(t);
+  if (!match) {
+    return rejected(raw, [
+      blocker(`"${t}" is not a whole number, optionally followed by one word naming what is counted. A count is whole: no decimals, no exponents, no punctuation.`),
+    ]);
+  }
 
   const n = Number(match[1]);
   if (!Number.isSafeInteger(n) || n > MAX_COUNT) return rejected(raw, [blocker(`"${match[1]}" is past anything this reads as a pack size.`)]);
   if (n === 0) return rejected(raw, [blocker("A pack of zero is not a pack.")]);
 
-  const trailing = match[2].trim();
-  if (trailing === "") return { raw, value: { kind: "integer", value: n }, flags: [] };
+  const label = match[2]?.toLowerCase();
+  if (label === undefined) return { raw, value: { kind: "integer", value: n }, flags: [] };
+
+  if (SERVING_LABELS.includes(label)) return { raw, value: { kind: "integer", value: n }, flags: [check(`Counted as ${n} servings, which is what the cell says it counts.`)] };
+
+  if (!ITEM_LABELS.includes(label)) {
+    return rejected(raw, [
+      blocker(`"${match[2]}" is not a word this recognises as one packed item. It knows ${ITEM_LABELS.slice(0, 6).join(", ")} and a few more, and it will not assume what an unfamiliar one holds.`),
+    ]);
+  }
 
   // A count of cans is a count of cans. Calling it servings needs somebody to
   // say that one can is one serving, and this used to say it for them.
+  const one = label.replace(/s$/, "");
   if (!ctx.servingsBasis) {
     return rejected(raw, [
       blocker(
-        `This counts ${n} ${trailing}, and the field holds servings. ${n} ${trailing} is ${n} servings only if one ${trailing.replace(/s$/, "")} is one serving, which the file does not say. State that basis beside the column if it is true, or map servings from a column that counts servings.`,
+        `This counts ${n} ${label}, and the field holds servings. ${n} ${label} is ${n} servings only if one ${one} is one serving, which the file does not say. State that basis beside the column if it is true, or map servings from a column that counts servings.`,
       ),
     ]);
   }
   return {
     raw,
     value: { kind: "integer", value: n },
-    flags: [check(`Counted as ${n} servings from ${n} ${trailing}, because one item per serving was stated for this column. The file itself does not say it.`)],
+    flags: [check(`Counted as ${n} servings from ${n} ${label}, because one item per serving was stated for this column. The file itself does not say it.`)],
   };
 }
 
