@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **169 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
+Records whose source was read: **171 of 276**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -226,7 +226,7 @@ Specifications that are missing, unsupported or relayed:
 | Offers | Mito Red Light (direct) ($1,169, unknown, affiliate status not recorded) |
 | Links | https://mitoredlight.com/products/mitopro-series?variant=32084839432292 |
 | Sources on file | https://mitoredlight.com/products/mitopro-series<br>https://mitoredlight.com/products/mitopro-series?variant=32084839432292 |
-| Retrieval | 2 of 13 recorded fields were relayed rather than read from the source |
+| Retrieval | 2 of 14 recorded fields were relayed rather than read from the source |
 | Ranking | score 85.7, completeness 100%, badges: best_value |
 
 Specifications that are missing, unsupported or relayed:
@@ -234,7 +234,6 @@ Specifications that are missing, unsupported or relayed:
 - `footprint` (required): source not recorded
 - `irradiance_mw_cm2`: no value, recorded as `not_stated`
 - `irradiance_distance_in`: **absent from the record**
-- `mounting`: **absent from the record**
 - `app_control`: **absent from the record**
 - `pulsing`: **absent from the record**
 - `return_window_days`: relayed, maker's page not fetched
@@ -253,7 +252,7 @@ Specifications that are missing, unsupported or relayed:
 | Offers | PlatinumLED (direct) ($1,299, unknown, affiliate status not recorded) |
 | Links | https://platinumtherapylights.com/products/biomax-rlt |
 | Sources on file | https://platinumtherapylights.com/products/biomax-rlt |
-| Retrieval | 0 of 12 recorded fields were relayed rather than read from the source |
+| Retrieval | 0 of 13 recorded fields were relayed rather than read from the source |
 | Ranking | score 78.6, completeness 75%, badges: best_premium |
 
 Specifications that are missing, unsupported or relayed:
@@ -263,7 +262,6 @@ Specifications that are missing, unsupported or relayed:
 - `irradiance_mw_cm2`: no value, recorded as `not_stated`
 - `irradiance_distance_in`: no value, recorded as `not_stated`
 - `power_w`: no value, recorded as `not_stated`
-- `mounting`: **absent from the record**
 - `app_control`: **absent from the record**
 - `pulsing`: **absent from the record**
 - `return_window_days`: **absent from the record**
@@ -641,7 +639,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 58 of 274 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 58 of 276 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

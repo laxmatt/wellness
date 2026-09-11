@@ -141,14 +141,14 @@
       "verification": "demo"
     },
     "irradiance_mw_cm2": {
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://platinumtherapylights.com/products/biomax-rlt",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "The ninth-generation page gives irradiance only in a chart, which was not read, so no figure is recorded. The record carried 185 mW/cm² at 6 inches, relayed from a search summary on 2026-09-08 for a BIOMAX 900 whose generation was never recorded. That figure is kept here as history and is not carried forward onto a ninth-generation record."
+        "note": "The ninth-generation page gives irradiance only in a chart, which was not read, so no figure is recorded. The record carried 185 mW/cm\u00b2 at 6 inches, relayed from a search summary on 2026-09-08 for a BIOMAX 900 whose generation was never recorded. That figure is kept here as history and is not carried forward onto a ninth-generation record."
       },
       "verification": "not_stated"
     },
@@ -160,7 +160,7 @@
         "url": "https://platinumtherapylights.com/products/biomax-rlt",
         "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "No distance is recorded, because no irradiance figure is. The 6 inches carried before belonged to the relayed 185 mW/cm² above."
+        "note": "No distance is recorded, because no irradiance figure is. The 6 inches carried before belonged to the relayed 185 mW/cm\u00b2 above."
       },
       "verification": "not_stated"
     },
@@ -198,6 +198,20 @@
         "retrievedAt": "2026-09-09",
         "method": "direct",
         "note": "The 900 row states a 3-year warranty. The page read is explicitly the ninth generation, and this record is now scoped to it."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "floor_stand_optional"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+        "url": "https://platinumtherapylights.com/products/biomax-rlt",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The page's accessory descriptions state a Mobile Rack Stand and a Horizontal Stand, both compatible with BIOMAX and both sold separately. Sold separately is floor_stand_optional, not stand: nothing states a stand ships with the panel. A tabletop stand is stated for the 300 and 450 only and is not recorded here, because this record is the 900. Also read and not recorded: a wall bracket the page offers separately for any BIOMAX size. This catalogue's `wall` value does not distinguish an included bracket from one sold separately, and recording it would read on a filter chip as though the panel came ready to mount. The evidence is kept here; the value waits for a way to say 'optional' about it."
       },
       "verification": "manufacturer_reported"
     }

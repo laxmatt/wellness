@@ -138,7 +138,7 @@
       "verification": "manufacturer_reported"
     },
     "irradiance_mw_cm2": {
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
@@ -196,6 +196,20 @@
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
         "note": "Relayed via search summary; manufacturer page not fetched directly."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "door_hang"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitopro-series?variant=32084839432292",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The page's FAQ box contents states that the 300+, 1000+ and 1500+ include an over-door hook, steel cables and four vinyl straps. This record is the 1500+, which the statement names, and the variant string pins the page to it. A tabletop stand is stated for the 300+ only, so no tabletop value is recorded here: the same sentence that supplies this record's value names a different model for that one, and taking it would be transferring a fact across models."
       },
       "verification": "manufacturer_reported"
     }

@@ -99,9 +99,9 @@ changed.
 | Compact | Footprint | 2 | 5 | 1 |
 | Standard | Footprint | 5 | 2 | 1 |
 | Large | Footprint | 0 | 7 | 1 |
-| Door hang | Mounting | 2 | 2 | 4 |
-| Floor stand optional | Mounting | 1 | 3 | 4 |
-| Stand | Mounting | 2 | 2 | 4 |
+| Door hang | Mounting | 3 | 3 | 2 |
+| Floor stand optional | Mounting | 2 | 4 | 2 |
+| Stand | Mounting | 2 | 4 | 2 |
 | Full body | Facet page | 4 | 3 | 1 |
 | Targeted | Facet page | 2 | 5 | 1 |
 | Under $500 | Facet page | 2 | 4 | 2 |
@@ -216,8 +216,11 @@ that flavour, so it was withdrawn. The one yes this filter gives is OLIPOP now,
 not LMNT, and it rests on a page written to answer the question rather than on a
 summary. Same arithmetic, better evidence under it.
 
-**Mounting, on red light.** Four of eight hold nothing usable, so every mounting
-chip leaves half the category unplaced.
+**Mounting, on red light.** Two of eight hold nothing usable. It was four until
+2026-09-11, when Mito's FAQ box contents and PlatinumLED's accessory
+descriptions were read: the 1500+ ships with an over-door hook, and the BIOMAX
+900's stands are sold separately. Infraredi Flex Max and Joovv Solo 3.0 remain
+unread on this field.
 
 **Placement, on cold plunges.** Three of six hold nothing usable for indoor or
 outdoor.
@@ -231,6 +234,10 @@ above. They are not filters and this batch invented none. The ones a shopper
 would most plausibly want to filter on, with what the catalogue holds:
 
 - **Red light:** irradiance (3 of 8), at distance (1 of 8), power draw (4 of 8).
+  A wall bracket is a fourth: PlatinumLED states one, sold separately for any
+  BIOMAX, and `mounting` has a `wall` value that cannot say "sold separately".
+  The evidence is recorded and the value is not, because a "Wall" chip would
+  promise a panel that arrives ready to mount.
   A shopper asking "how strong is it" cannot narrow by it, and adding the filter
   would place five of eight panels in Needs confirmation.
 - **Cold plunge:** lowest temperature (3 of 6), fits users up to (4 of 6),
