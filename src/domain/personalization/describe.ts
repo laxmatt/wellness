@@ -4,6 +4,7 @@ import { attributeDef } from "../category";
 import { comparable, conditionTarget } from "../conditions";
 import { formatMoney } from "../money";
 import { BOUND_WORDS, type Bound } from "../provenance";
+import type { SoftPreference } from "../personalization";
 import type { ProductView } from "../view";
 import { priceMinorOf } from "../view";
 
@@ -29,6 +30,20 @@ export function labelFor(cat: CategoryDefinition, key: string): string {
 }
 
 // "under $700", "full body coverage", "a chiller", "zero sugar"
+/**
+ * A soft preference in words, the same words the reply composer uses.
+ *
+ * A preference orders a list; it never decides whether a product qualifies. Any
+ * screen showing one has to say which of the two it is, so the wording keeps
+ * "ranking" in it rather than reading like a requirement.
+ */
+export function describeSoftPreference(cat: CategoryDefinition, p: SoftPreference): string {
+  const label = labelFor(cat, p.key).toLowerCase();
+  if (p.direction === "prefer_low") return `lower ${label}`;
+  if (p.direction === "prefer_high") return `higher ${label}`;
+  return label;
+}
+
 export function describeConstraint(cat: CategoryDefinition, c: Condition): string {
   const label = labelFor(cat, c.key).toLowerCase();
   const val = c.value === undefined ? "" : formatValueFor(cat, c.key, c.value);

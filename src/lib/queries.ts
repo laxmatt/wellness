@@ -2,6 +2,8 @@ import { cache } from "react";
 import { categories, categoryBySlug } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
+import { filterOptionSpecs } from "@/domain/filters";
+import { buildNeedCatalogue, type NeedDefinition } from "@/domain/needs";
 import type { Brand } from "@/domain/product";
 import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory, type RecommendedProduct, type RecommendationSet } from "@/domain/recommend";
@@ -43,6 +45,29 @@ export function facetProducts(page: CategoryPage, facetSlug: string): { facet: C
 // from the category page and the home page.
 export function liveFacets(page: CategoryPage): string[] {
   return page.cat.facets.filter((f) => page.products.some((p) => matchesAll(p.view, page.cat, f.conditions))).map((f) => f.slug);
+}
+
+/**
+ * The requirements this category can express, classified against every product
+ * in it.
+ *
+ * Over the whole category, always. A comparison can hold a product the current
+ * filters exclude, and that is the case worth showing: the shopper put it there
+ * and needs to see where it conflicts. Classifying against a page's visible
+ * subset would report every such product as a mismatch on every requirement,
+ * including the ones it meets.
+ *
+ * The active facet joins the list as a requirement of its own. A shopper on
+ * /red-light/under-1000 has stated a budget as surely as one who pressed the
+ * chip, and the page was the only thing that knew it.
+ */
+export function buildNeeds(page: CategoryPage, activeFacetSlug?: string): NeedDefinition[] {
+  const views = page.products.map((p) => p.view);
+  const facet = activeFacetSlug ? page.cat.facets.find((f) => f.slug === activeFacetSlug) : undefined;
+  return buildNeedCatalogue(views, page.cat, [
+    ...filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, conditions: [o.condition], source: "filter" as const })),
+    ...(facet ? [{ id: `facet:${facet.slug}`, label: facet.label, groupLabel: "This page", conditions: facet.conditions, source: "facet" as const }] : []),
+  ]);
 }
 
 export type ProductPage = {
