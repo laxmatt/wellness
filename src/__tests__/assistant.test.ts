@@ -306,7 +306,12 @@ describe("scripted stand-in", () => {
       messages: [{ role: "user", text: "under $700" }],
       activeConstraints: [],
     });
-    expect(second.intent.hard).toContainEqual({ key: "price", op: "lte", value: 70000 });
+    // Dollars with a currency, which is what the route accepts. This asserted
+    // 70000 cents, the engine's unit, and the route rejects a bare number for a
+    // money key rather than guessing what it counts. Every budget typed into the
+    // prototype was refused with "I could not read that reliably", and this test
+    // held the refusal in place.
+    expect(second.intent.hard).toContainEqual({ key: "price", op: "lte", value: { amount: 700, currency: "USD" } });
     expect(second.intent.question).toBeUndefined();
   });
 
