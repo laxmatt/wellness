@@ -18,6 +18,8 @@
       .lede { color: var(--soft); max-width: 62ch; }
       .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0; }
       .banner strong { display: block; margin-bottom: .2rem; }
+      .banner.bad-banner { border-left-color: var(--bad); }
+      #pending .toolbar, #rescue button { margin-top: .6rem; }
       .pill { display: inline-block; border-radius: 999px; padding: .05rem .55rem; font-size: .72rem; font-weight: 700; letter-spacing: .02em; border: 1px solid var(--edge); background: #f3efe8; color: var(--soft); }
       .pill.off { border-color: #d8c9c6; background: #f7ecea; color: var(--bad); }
       .pill.on { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
@@ -101,6 +103,8 @@
         <span class="save">Examples are invented, marked EXAMPLE, counted separately, and are not about this site.</span>
       </div>
 
+      <div id="rescue" hidden></div>
+      <div id="pending" hidden></div>
       <div id="summary"></div>
       <div id="entries"></div>
 
@@ -133,8 +137,8 @@
             <textarea id="f-hypothesis" placeholder="Kept separate from what you saw, on purpose."></textarea>
           </div>
           <div style="grid-column: 1 / -1">
-            <label for="f-change">What should change?</label>
-            <textarea id="f-change" placeholder="Even if the answer is to look into it."></textarea>
+            <label for="f-change">What should change? (optional)</label>
+            <textarea id="f-change" placeholder="Leave it empty if you do not know yet. Writing down what you saw comes first."></textarea>
           </div>
           <div>
             <label for="f-status">Status</label>

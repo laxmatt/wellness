@@ -18,6 +18,8 @@
       .lede { color: var(--soft); max-width: 62ch; }
       .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0; }
       .banner strong { display: block; margin-bottom: .2rem; }
+      .banner.bad-banner { border-left-color: var(--bad); }
+      #pending .toolbar, #rescue button { margin-top: .6rem; }
       .pill { display: inline-block; border-radius: 999px; padding: .05rem .55rem; font-size: .72rem; font-weight: 700; letter-spacing: .02em; border: 1px solid var(--edge); background: #f3efe8; color: var(--soft); }
       .pill.off { border-color: #d8c9c6; background: #f7ecea; color: var(--bad); }
       .pill.on { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
@@ -101,6 +103,8 @@
         <span class="save">Examples are invented, marked EXAMPLE, counted separately, and are not about this site.</span>
       </div>
 
+      <div id="rescue" hidden></div>
+      <div id="pending" hidden></div>
       <div id="summary"></div>
       <div id="entries"></div>
 
@@ -133,8 +137,8 @@
             <textarea id="f-hypothesis" placeholder="Kept separate from what you saw, on purpose."></textarea>
           </div>
           <div style="grid-column: 1 / -1">
-            <label for="f-change">What should change?</label>
-            <textarea id="f-change" placeholder="Even if the answer is to look into it."></textarea>
+            <label for="f-change">What should change? (optional)</label>
+            <textarea id="f-change" placeholder="Leave it empty if you do not know yet. Writing down what you saw comes first."></textarea>
           </div>
           <div>
             <label for="f-status">Status</label>
@@ -222,16 +226,17 @@
 
   // src/domain/learning/register.ts
   var EVIDENCE_SOURCES = [
-    { id: "owner_observation", label: "Something the owner noticed", measured: false },
-    { id: "partner_feedback", label: "A partner or reviewer said so", measured: false },
-    { id: "usability_session", label: "Watching somebody use the site", measured: false },
-    { id: "code_review", label: "Reading the code or the catalogue", measured: false },
-    { id: "reasoning", label: "Reasoning from what we know, with nothing observed", measured: false },
-    { id: "site_analytics", label: "Site analytics", measured: true },
-    { id: "search_console", label: "Search Console or Bing Webmaster Tools", measured: true }
+    { id: "owner_observation", label: "Something the owner noticed", observed: true, measured: false },
+    { id: "partner_feedback", label: "A partner or reviewer said so", observed: true, measured: false },
+    { id: "usability_session", label: "Watching somebody use the site", observed: true, measured: false },
+    { id: "code_review", label: "Reading the code or the catalogue", observed: true, measured: false },
+    { id: "reasoning", label: "Reasoning from what we know, with nothing observed", observed: false, measured: false },
+    { id: "site_analytics", label: "Site analytics", observed: true, measured: true },
+    { id: "search_console", label: "Search Console or Bing Webmaster Tools", observed: true, measured: true }
   ];
   var evidenceSource = (id) => EVIDENCE_SOURCES.find((s) => s.id === id);
   var isMeasured = (id) => evidenceSource(id)?.measured === true;
+  var isObserved = (id) => evidenceSource(id)?.observed === true;
   var STATUSES = [
     { id: "open", label: "Noticed, nothing done" },
     { id: "planned", label: "Change proposed" },
@@ -240,36 +245,60 @@
     { id: "dropped", label: "Decided against" }
   ];
   var MAX_FIELD = 2e3;
-  function validateEntry(entry) {
+  var MAX_SHORT = 200;
+  var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
+  var text = (v) => typeof v === "string" ? v.trim() : "";
+  var optionalString = (v) => v === void 0 || v === null || typeof v === "string";
+  function validateEntry(candidate) {
+    if (!isObject(candidate)) return [{ field: "entry", message: `An entry is an object, not ${candidate === null ? "null" : Array.isArray(candidate) ? "a list" : typeof candidate}.` }];
+    const entry = candidate;
     const problems = [];
-    const text = (v) => typeof v === "string" ? v.trim() : "";
-    if (text(entry.observation) === "") problems.push({ field: "observation", message: "An entry starts with what was seen." });
-    if (text(entry.proposedChange) === "") problems.push({ field: "proposedChange", message: "Say what to do about it, even if the answer is to look into it." });
-    const source = text(entry.evidence?.source);
-    if (source === "") problems.push({ field: "evidence.source", message: "Name where this came from." });
-    else if (!evidenceSource(source)) problems.push({ field: "evidence.source", message: `"${source}" is not a source this register knows.` });
-    if (!STATUSES.some((s) => s.id === entry.status)) problems.push({ field: "status", message: "Choose a status." });
-    const measured = isMeasured(source);
-    if (!measured) {
-      if (text(entry.evidence?.sample) !== "") {
-        problems.push({ field: "evidence.sample", message: `A sample size belongs to a measurement. "${evidenceSource(source)?.label ?? source}" is not one, so this would read as data it is not.` });
+    if (typeof entry.observation !== "string" || entry.observation.trim() === "") problems.push({ field: "observation", message: "An entry starts with what was seen." });
+    if (!isObject(entry.evidence)) {
+      problems.push({ field: "evidence.source", message: "Name where this came from." });
+    } else {
+      const evidence = entry.evidence;
+      const source = text(evidence.source);
+      if (source === "") problems.push({ field: "evidence.source", message: "Name where this came from." });
+      else if (!evidenceSource(source)) problems.push({ field: "evidence.source", message: `"${source}" is not a source this register knows.` });
+      for (const key of ["sample", "dateRange", "reference"]) {
+        if (!optionalString(evidence[key])) problems.push({ field: `evidence.${key}`, message: `${key} has to be text.` });
       }
-      if (text(entry.evidence?.dateRange) !== "") {
-        problems.push({ field: "evidence.dateRange", message: "A date range belongs to a measurement. Put the date in the reference if it matters." });
+      if (source !== "" && evidenceSource(source) && !isObserved(source)) {
+        if (text(evidence.sample) !== "") problems.push({ field: "evidence.sample", message: "Nothing was observed here, so there is nothing a sample size could be a sample of." });
+        if (text(evidence.dateRange) !== "") problems.push({ field: "evidence.dateRange", message: "Nothing was observed here, so a date range would be describing nothing." });
       }
+    }
+    if (!STATUSES.some((st) => st.id === entry.status)) problems.push({ field: "status", message: "Choose a status." });
+    for (const key of ["hypothesis", "proposedChange", "outcome"]) {
+      if (!optionalString(entry[key])) problems.push({ field: key, message: `${key} has to be text.` });
     }
     if (text(entry.outcome) !== "" && entry.status !== "done" && entry.status !== "dropped") {
       problems.push({ field: "outcome", message: "An outcome is what happened after the change. Mark it changed or decided against first." });
     }
-    for (const [field2, value] of [
-      ["observation", entry.observation],
-      ["hypothesis", entry.hypothesis],
-      ["proposedChange", entry.proposedChange],
-      ["outcome", entry.outcome],
-      ["evidence.reference", entry.evidence?.reference]
-    ]) {
-      if (typeof value === "string" && value.length > MAX_FIELD) problems.push({ field: field2, message: `Keep this under ${MAX_FIELD} characters.` });
+    const bounded = [
+      ["observation", entry.observation, MAX_FIELD],
+      ["hypothesis", entry.hypothesis, MAX_FIELD],
+      ["proposedChange", entry.proposedChange, MAX_FIELD],
+      ["outcome", entry.outcome, MAX_FIELD],
+      ["evidence.reference", isObject(entry.evidence) ? entry.evidence.reference : void 0, MAX_FIELD],
+      ["evidence.sample", isObject(entry.evidence) ? entry.evidence.sample : void 0, MAX_SHORT],
+      ["evidence.dateRange", isObject(entry.evidence) ? entry.evidence.dateRange : void 0, MAX_SHORT]
+    ];
+    for (const [field2, value, max] of bounded) {
+      if (typeof value === "string" && value.length > max) problems.push({ field: field2, message: `Keep this under ${max} characters.` });
     }
+    return problems;
+  }
+  var isIsoDate = (v) => typeof v === "string" && v !== "" && !Number.isNaN(Date.parse(v));
+  function validateStoredEntry(candidate) {
+    const problems = validateEntry(candidate);
+    if (!isObject(candidate)) return problems;
+    if (typeof candidate.id === "string" && candidate.id.length > MAX_SHORT) problems.push({ field: "id", message: `An id is under ${MAX_SHORT} characters.` });
+    for (const key of ["createdAt", "updatedAt"]) {
+      if (!isIsoDate(candidate[key])) problems.push({ field: key, message: `${key} has to be a date this can read.` });
+    }
+    if (candidate.demo !== void 0 && candidate.demo !== true) problems.push({ field: "demo", message: "The example marker is true or absent." });
     return problems;
   }
   function newId(now = /* @__PURE__ */ new Date(), random = Math.random) {
@@ -277,28 +306,37 @@
   }
   var MAX_REGISTER_BYTES = 2e6;
   var serialiseRegister = (entries2, now = /* @__PURE__ */ new Date()) => JSON.stringify({ version: 1, exportedAt: now.toISOString(), entries: entries2 }, null, 2);
-  function parseRegister(text) {
-    if (text.length > MAX_REGISTER_BYTES) return { ok: false, reason: `That file is ${Math.round(text.length / 1e3)} kB. A register is notes, not a database.` };
-    let raw;
+  function parseRegister(raw, makeId = newId) {
+    if (raw.length > MAX_REGISTER_BYTES) return { ok: false, reason: `That file is ${Math.round(raw.length / 1e3)} kB. A register is notes, not a database.` };
+    let parsed;
     try {
-      raw = JSON.parse(text);
+      parsed = JSON.parse(raw);
     } catch {
       return { ok: false, reason: "That is not JSON." };
     }
-    if (typeof raw !== "object" || raw === null) return { ok: false, reason: "A register file is a JSON object." };
-    const file = raw;
-    if (file.version !== 1) return { ok: false, reason: `That file says version ${String(file.version)}. This tool writes and reads version 1.` };
-    if (!Array.isArray(file.entries)) return { ok: false, reason: "A register file needs an entries array." };
+    if (!isObject(parsed)) return { ok: false, reason: "A register file is a JSON object." };
+    if (parsed.version !== 1) return { ok: false, reason: `That file says version ${String(parsed.version)}. This tool writes and reads version 1.` };
+    if (!Array.isArray(parsed.entries)) return { ok: false, reason: "A register file needs an entries array." };
     const entries2 = [];
     const notes = [];
-    for (const [i, candidate] of file.entries.entries()) {
-      const problems = validateEntry(candidate);
+    const seen = /* @__PURE__ */ new Set();
+    for (const [i, candidate] of parsed.entries.entries()) {
+      const problems = validateStoredEntry(candidate);
       if (problems.length > 0) {
         notes.push(`Entry ${i + 1} was left out: ${problems.map((p) => p.message).join(" ")}`);
         continue;
       }
-      const e = candidate;
-      entries2.push({ ...e, id: typeof e.id === "string" && e.id !== "" ? e.id : newId() });
+      const entry = candidate;
+      let id = typeof entry.id === "string" ? entry.id.trim() : "";
+      if (id === "") {
+        id = makeId();
+        notes.push(`Entry ${i + 1} had no id and was kept under "${id}".`);
+      } else if (seen.has(id)) {
+        id = makeId();
+        notes.push(`Entry ${i + 1} repeated the id "${entry.id}", which would make editing one edit both. It was kept under "${id}".`);
+      }
+      seen.add(id);
+      entries2.push({ ...entry, id });
     }
     return { ok: true, entries: entries2, notes };
   }
@@ -358,10 +396,12 @@
   var KEY = "wc.learning.v1";
   var entries = [];
   var editing = null;
-  var el = (tag, className, text) => {
+  var unreadable = null;
+  var pending = null;
+  var el = (tag, className, text2) => {
     const node = document.createElement(tag);
     if (className) node.className = className;
-    if (text !== void 0) node.textContent = text;
+    if (text2 !== void 0) node.textContent = text2;
     return node;
   };
   var byId = (id) => document.getElementById(id);
@@ -369,20 +409,34 @@
     while (node.firstChild) node.removeChild(node.firstChild);
   };
   function load() {
+    let raw = null;
     try {
-      const raw = window.localStorage.getItem(KEY);
-      if (!raw) return;
-      const parsed = parseRegister(raw);
-      if (parsed.ok) entries = parsed.entries;
+      raw = window.localStorage.getItem(KEY);
     } catch {
+      unreadable = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file." };
+      return;
     }
+    if (!raw) return;
+    const parsed = parseRegister(raw);
+    if (!parsed.ok) {
+      unreadable = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}` };
+      return;
+    }
+    entries = parsed.entries;
+    if (parsed.notes.length > 0) setSaveState(`Loaded from this browser. ${parsed.notes.join(" ")}`, true);
   }
   function save() {
+    if (unreadable) {
+      setSaveState("Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.", true);
+      return false;
+    }
     try {
       window.localStorage.setItem(KEY, serialiseRegister(entries));
       setSaveState("saved in this browser");
+      return true;
     } catch {
-      setSaveState("could not be saved in this browser. Export the file to keep it.", true);
+      setSaveState("Could not be saved in this browser. Save the register to a file to keep it.", true);
+      return false;
     }
   }
   function setSaveState(message, bad = false) {
@@ -390,8 +444,8 @@
     node.textContent = message;
     node.className = bad ? "save bad" : "save";
   }
-  function download(name, text) {
-    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+  function download(name, text2) {
+    const url = URL.createObjectURL(new Blob([text2], { type: "application/json" }));
     const a = document.createElement("a");
     a.href = url;
     a.download = name;
@@ -493,10 +547,12 @@
         h.appendChild(document.createTextNode(entry.hypothesis));
         card.appendChild(h);
       }
-      const change = el("p", "change");
-      change.appendChild(el("strong", void 0, "Proposed change: "));
-      change.appendChild(document.createTextNode(entry.proposedChange));
-      card.appendChild(change);
+      if (entry.proposedChange) {
+        const change = el("p", "change");
+        change.appendChild(el("strong", void 0, "Proposed change: "));
+        change.appendChild(document.createTextNode(entry.proposedChange));
+        card.appendChild(change);
+      }
       if (entry.outcome) {
         const o = el("p", "outcome");
         o.appendChild(el("strong", void 0, "What happened: "));
@@ -534,13 +590,14 @@
     syncMeasurementFields();
   }
   function syncMeasurementFields() {
-    const measured = isMeasured(field("f-source").value);
+    const source = field("f-source").value;
+    const observed = isObserved(source);
     for (const id of ["f-sample", "f-dates"]) {
       const input = field(id);
-      input.disabled = !measured;
-      if (!measured) input.value = "";
+      input.disabled = !observed;
+      if (!observed) input.value = "";
     }
-    byId("measurement-note").textContent = measured ? "This source measures something, so a sample size and a date range belong here." : "A sample size and a date range belong to a measurement. This source is not one, so they are switched off: putting them here would make a note look like data.";
+    byId("measurement-note").textContent = observed ? isMeasured(source) ? "Counted by something. A sample and a date range belong here, and the entry is marked as measured." : "Somebody looked at something. A sample and a date range belong here; the entry is marked as observed rather than measured." : "Nothing was observed here, so there is nothing a sample size could be a sample of. Both fields are switched off.";
   }
   function startEdit(id) {
     const entry = entries.find((e) => e.id === id);
@@ -592,7 +649,100 @@
     cancelEdit();
     render();
   }
+  function renderPending() {
+    const host = byId("pending");
+    clear(host);
+    host.hidden = pending === null;
+    if (!pending) return;
+    const box = el("div", "banner");
+    box.appendChild(el("strong", void 0, `${pending.name}: read, and not applied.`));
+    box.appendChild(
+      el(
+        "p",
+        void 0,
+        `${pending.entries.length} ${pending.entries.length === 1 ? "entry" : "entries"} can be loaded. You have ${entries.length} here now. Nothing has changed yet.`
+      )
+    );
+    for (const note of pending.notes) box.appendChild(el("p", "problem", note));
+    if (pending.entries.length === 0) box.appendChild(el("p", "problem", "There is nothing in it to load. Replacing would empty the register, so that choice is not offered."));
+    const actions = el("div", "toolbar");
+    if (pending.entries.length > 0) {
+      const merge = el("button", void 0, "Add these to what is here");
+      merge.type = "button";
+      merge.addEventListener("click", () => applyPending("merge"));
+      actions.appendChild(merge);
+      const replace = el("button", void 0, `Replace all ${entries.length}`);
+      replace.type = "button";
+      replace.addEventListener("click", () => applyPending("replace"));
+      actions.appendChild(replace);
+    }
+    const cancel = el("button", "link", "Cancel");
+    cancel.type = "button";
+    cancel.addEventListener("click", () => {
+      pending = null;
+      renderPending();
+      setSaveState("Nothing was changed.");
+    });
+    actions.appendChild(cancel);
+    box.appendChild(actions);
+    host.appendChild(box);
+  }
+  function applyPending(how) {
+    if (!pending) return;
+    const incoming = pending.entries;
+    const name = pending.name;
+    if (how === "replace") {
+      entries = incoming;
+    } else {
+      const taken = new Set(entries.map((e) => e.id));
+      entries = [
+        ...entries,
+        ...incoming.map((entry) => {
+          if (!taken.has(entry.id)) {
+            taken.add(entry.id);
+            return entry;
+          }
+          const id = newId();
+          taken.add(id);
+          return { ...entry, id };
+        })
+      ];
+    }
+    pending = null;
+    renderPending();
+    render();
+    const saved = save();
+    if (saved) setSaveState(`${how === "replace" ? "Replaced with" : "Added"} ${incoming.length} ${incoming.length === 1 ? "entry" : "entries"} from ${name}.`);
+  }
+  function renderRescue() {
+    const host = byId("rescue");
+    clear(host);
+    host.hidden = unreadable === null;
+    if (!unreadable) return;
+    const box = el("div", "banner bad-banner");
+    box.appendChild(el("strong", void 0, "Saved notes could not be read."));
+    box.appendChild(el("p", void 0, unreadable.reason));
+    box.appendChild(el("p", void 0, "They have not been changed and nothing will be written over them while this message is here. Save the raw text first, then decide what to do with it."));
+    if (unreadable.raw !== "") {
+      const rescue = el("button", void 0, "Save the raw text to a file");
+      rescue.type = "button";
+      rescue.addEventListener("click", () => download(`learning-register-unreadable-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.txt`, unreadable.raw));
+      box.appendChild(rescue);
+      const discard = el("button", "link", "I have a copy: start a new register");
+      discard.type = "button";
+      discard.addEventListener("click", () => {
+        unreadable = null;
+        renderRescue();
+        save();
+        render();
+      });
+      box.appendChild(discard);
+    }
+    host.appendChild(box);
+  }
   function render() {
+    renderRescue();
+    renderPending();
     renderSummary();
     renderEntries();
   }
@@ -616,7 +766,8 @@
     renderMetrics();
     render();
     fillForm();
-    setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
+    if (unreadable) setSaveState("Saved notes could not be read. Nothing has been written over them.", true);
+    else setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
     byId("f-source").addEventListener("change", syncMeasurementFields);
     byId("save-entry").addEventListener("click", submit);
     byId("cancel-edit").addEventListener("click", cancelEdit);
@@ -627,20 +778,18 @@
       const input = e.target;
       const file = input.files?.[0];
       if (!file) return;
+      input.value = "";
       if (file.size > MAX_REGISTER_BYTES) {
         setSaveState(`That file is ${Math.round(file.size / 1e3)} kB. A register is notes, not a database.`, true);
         return;
       }
       const parsed = parseRegister(await file.text());
-      input.value = "";
       if (!parsed.ok) {
-        setSaveState(`That file was not read. ${parsed.reason}`, true);
+        setSaveState(`That file was not read, and nothing here was touched. ${parsed.reason}`, true);
         return;
       }
-      entries = parsed.entries;
-      save();
-      render();
-      setSaveState(`Loaded ${entries.length} ${entries.length === 1 ? "entry" : "entries"} from the file.${parsed.notes.length > 0 ? ` ${parsed.notes.join(" ")}` : ""}`);
+      pending = { entries: parsed.entries, notes: parsed.notes, name: file.name };
+      renderPending();
     });
     byId("load-demo").addEventListener("click", () => {
       entries = [...entries.filter((e) => !e.demo), ...DEMO_ENTRIES];

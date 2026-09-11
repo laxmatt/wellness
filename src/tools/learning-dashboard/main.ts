@@ -19,6 +19,7 @@ import {
   STATUSES,
   evidenceSource,
   isMeasured,
+  isObserved,
   newId,
   parseRegister,
   registerSummary,
@@ -34,6 +35,15 @@ const KEY = "wc.learning.v1";
 
 let entries: LearningEntry[] = [];
 let editing: string | null = null;
+/**
+ * Set when stored notes could not be read. While it is set nothing is written
+ * back, because writing would overwrite whatever is still in there. The page
+ * offers the raw text as a file instead, so the owner can rescue it before
+ * deciding anything.
+ */
+let unreadable: { raw: string; reason: string } | null = null;
+/** A file that has been read and not yet applied. Applying it is a decision. */
+let pending: { entries: LearningEntry[]; notes: string[]; name: string } | null = null;
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] => {
   const node = document.createElement(tag);
@@ -50,23 +60,40 @@ const clear = (node: HTMLElement) => {
 // ------------------------------------------------------------- persistence
 
 function load() {
+  let raw: string | null = null;
   try {
-    const raw = window.localStorage.getItem(KEY);
-    if (!raw) return;
-    const parsed = parseRegister(raw);
-    if (parsed.ok) entries = parsed.entries;
+    raw = window.localStorage.getItem(KEY);
   } catch {
-    // A browser with storage switched off. The register is empty this session
-    // and the page says so rather than failing to open.
+    // Storage switched off, or a browser refusing it. Nothing was stored, so
+    // nothing is at risk; the page says so rather than pretending it saved.
+    unreadable = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file." };
+    return;
   }
+  if (!raw) return;
+
+  const parsed = parseRegister(raw);
+  if (!parsed.ok) {
+    // The saved text is still there and this will not write over it.
+    unreadable = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}` };
+    return;
+  }
+  entries = parsed.entries;
+  if (parsed.notes.length > 0) setSaveState(`Loaded from this browser. ${parsed.notes.join(" ")}`, true);
 }
 
-function save() {
+/** Returns whether it actually saved, so a caller cannot report success over a failure. */
+function save(): boolean {
+  if (unreadable) {
+    setSaveState("Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.", true);
+    return false;
+  }
   try {
     window.localStorage.setItem(KEY, serialiseRegister(entries));
     setSaveState("saved in this browser");
+    return true;
   } catch {
-    setSaveState("could not be saved in this browser. Export the file to keep it.", true);
+    setSaveState("Could not be saved in this browser. Save the register to a file to keep it.", true);
+    return false;
   }
 }
 
@@ -211,10 +238,12 @@ function renderEntries() {
       card.appendChild(h);
     }
 
-    const change = el("p", "change");
-    change.appendChild(el("strong", undefined, "Proposed change: "));
-    change.appendChild(document.createTextNode(entry.proposedChange));
-    card.appendChild(change);
+    if (entry.proposedChange) {
+      const change = el("p", "change");
+      change.appendChild(el("strong", undefined, "Proposed change: "));
+      change.appendChild(document.createTextNode(entry.proposedChange));
+      card.appendChild(change);
+    }
 
     if (entry.outcome) {
       const o = el("p", "outcome");
@@ -261,20 +290,23 @@ function fillForm(entry?: LearningEntry) {
 }
 
 /**
- * The measurement fields are only usable when the source measures something.
- * The validator refuses them anyway; disabling them says why before somebody
- * types into them.
+ * A sample and a date describe something somebody looked at. Only a source that
+ * observed nothing is refused them, and the note says which case this is rather
+ * than leaving a disabled field unexplained.
  */
 function syncMeasurementFields() {
-  const measured = isMeasured(field("f-source").value);
+  const source = field("f-source").value;
+  const observed = isObserved(source);
   for (const id of ["f-sample", "f-dates"]) {
     const input = field(id);
-    input.disabled = !measured;
-    if (!measured) input.value = "";
+    input.disabled = !observed;
+    if (!observed) input.value = "";
   }
-  byId("measurement-note").textContent = measured
-    ? "This source measures something, so a sample size and a date range belong here."
-    : "A sample size and a date range belong to a measurement. This source is not one, so they are switched off: putting them here would make a note look like data.";
+  byId("measurement-note").textContent = observed
+    ? isMeasured(source)
+      ? "Counted by something. A sample and a date range belong here, and the entry is marked as measured."
+      : "Somebody looked at something. A sample and a date range belong here; the entry is marked as observed rather than measured."
+    : "Nothing was observed here, so there is nothing a sample size could be a sample of. Both fields are switched off.";
 }
 
 function startEdit(id: string) {
@@ -333,7 +365,112 @@ function submit() {
   render();
 }
 
+function renderPending() {
+  const host = byId("pending");
+  clear(host);
+  host.hidden = pending === null;
+  if (!pending) return;
+
+  const box = el("div", "banner");
+  box.appendChild(el("strong", undefined, `${pending.name}: read, and not applied.`));
+  box.appendChild(
+    el(
+      "p",
+      undefined,
+      `${pending.entries.length} ${pending.entries.length === 1 ? "entry" : "entries"} can be loaded. You have ${entries.length} here now. Nothing has changed yet.`,
+    ),
+  );
+  for (const note of pending.notes) box.appendChild(el("p", "problem", note));
+  if (pending.entries.length === 0) box.appendChild(el("p", "problem", "There is nothing in it to load. Replacing would empty the register, so that choice is not offered."));
+
+  const actions = el("div", "toolbar");
+  if (pending.entries.length > 0) {
+    const merge = el("button", undefined, "Add these to what is here");
+    merge.type = "button";
+    merge.addEventListener("click", () => applyPending("merge"));
+    actions.appendChild(merge);
+
+    const replace = el("button", undefined, `Replace all ${entries.length}`);
+    replace.type = "button";
+    replace.addEventListener("click", () => applyPending("replace"));
+    actions.appendChild(replace);
+  }
+  const cancel = el("button", "link", "Cancel");
+  cancel.type = "button";
+  cancel.addEventListener("click", () => {
+    pending = null;
+    renderPending();
+    setSaveState("Nothing was changed.");
+  });
+  actions.appendChild(cancel);
+  box.appendChild(actions);
+  host.appendChild(box);
+}
+
+/** Merge keeps everything and renames a collision; replace is only ever explicit. */
+function applyPending(how: "merge" | "replace") {
+  if (!pending) return;
+  const incoming = pending.entries;
+  const name = pending.name;
+
+  if (how === "replace") {
+    entries = incoming;
+  } else {
+    const taken = new Set(entries.map((e) => e.id));
+    entries = [
+      ...entries,
+      ...incoming.map((entry) => {
+        if (!taken.has(entry.id)) {
+          taken.add(entry.id);
+          return entry;
+        }
+        // Keeping both rather than overwriting one with the other.
+        const id = newId();
+        taken.add(id);
+        return { ...entry, id };
+      }),
+    ];
+  }
+
+  pending = null;
+  renderPending();
+  render();
+  const saved = save();
+  if (saved) setSaveState(`${how === "replace" ? "Replaced with" : "Added"} ${incoming.length} ${incoming.length === 1 ? "entry" : "entries"} from ${name}.`);
+}
+
+function renderRescue() {
+  const host = byId("rescue");
+  clear(host);
+  host.hidden = unreadable === null;
+  if (!unreadable) return;
+
+  const box = el("div", "banner bad-banner");
+  box.appendChild(el("strong", undefined, "Saved notes could not be read."));
+  box.appendChild(el("p", undefined, unreadable.reason));
+  box.appendChild(el("p", undefined, "They have not been changed and nothing will be written over them while this message is here. Save the raw text first, then decide what to do with it."));
+  if (unreadable.raw !== "") {
+    const rescue = el("button", undefined, "Save the raw text to a file");
+    rescue.type = "button";
+    rescue.addEventListener("click", () => download(`learning-register-unreadable-${new Date().toISOString().slice(0, 10)}.txt`, unreadable!.raw));
+    box.appendChild(rescue);
+
+    const discard = el("button", "link", "I have a copy: start a new register");
+    discard.type = "button";
+    discard.addEventListener("click", () => {
+      unreadable = null;
+      renderRescue();
+      save();
+      render();
+    });
+    box.appendChild(discard);
+  }
+  host.appendChild(box);
+}
+
 function render() {
+  renderRescue();
+  renderPending();
   renderSummary();
   renderEntries();
 }
@@ -362,7 +499,8 @@ export function start() {
   renderMetrics();
   render();
   fillForm();
-  setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
+  if (unreadable) setSaveState("Saved notes could not be read. Nothing has been written over them.", true);
+  else setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
 
   byId("f-source").addEventListener("change", syncMeasurementFields);
   byId("save-entry").addEventListener("click", submit);
@@ -376,20 +514,22 @@ export function start() {
     const input = e.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    input.value = "";
     if (file.size > MAX_REGISTER_BYTES) {
       setSaveState(`That file is ${Math.round(file.size / 1000)} kB. A register is notes, not a database.`, true);
       return;
     }
     const parsed = parseRegister(await file.text());
-    input.value = "";
     if (!parsed.ok) {
-      setSaveState(`That file was not read. ${parsed.reason}`, true);
+      setSaveState(`That file was not read, and nothing here was touched. ${parsed.reason}`, true);
       return;
     }
-    entries = parsed.entries;
-    save();
-    render();
-    setSaveState(`Loaded ${entries.length} ${entries.length === 1 ? "entry" : "entries"} from the file.${parsed.notes.length > 0 ? ` ${parsed.notes.join(" ")}` : ""}`);
+    // Read, and nothing applied. Replacing what the owner has written is a
+    // decision they make after seeing what is in the file, not a side effect of
+    // choosing one. The first version replaced everything immediately, even
+    // when every entry in the file had been rejected.
+    pending = { entries: parsed.entries, notes: parsed.notes, name: file.name };
+    renderPending();
   });
 
   byId("load-demo").addEventListener("click", () => {

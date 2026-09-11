@@ -10,6 +10,7 @@
 
 import { chromium, type Page } from "playwright";
 import { join } from "node:path";
+import { rmSync, writeFileSync } from "node:fs";
 import { DEMO_ENTRIES } from "@/domain/learning/demo";
 import { METRIC_PANELS, SOURCES } from "@/domain/learning/metrics";
 
@@ -84,25 +85,37 @@ async function run() {
   ok("and the summary counts it as unmeasured", (await page.locator("#summary").innerText()).includes("1 rest on something somebody noticed"), await page.locator("#summary").innerText());
   ok("the summary publishes no score", (await page.locator("#summary").innerText()).includes("There is no score here"), "");
 
-  scenario = "a note cannot dress up as data";
-  // The sample field is switched off for a source that measures nothing, and
-  // the validator refuses it even if something gets in.
-  check("the sample field is disabled", await page.locator("#f-sample").isDisabled(), true);
-  ok("and says why", (await page.locator("#measurement-note").innerText()).includes("would make a note look like data"), "");
+  scenario = "a sample belongs to anything somebody looked at";
+  // Watching people is evidence with a sample in it. Only a source that
+  // observed nothing is refused one.
+  await page.selectOption("#f-source", "usability_session");
+  check("watching people can carry a sample", await page.locator("#f-sample").isDisabled(), false);
+  ok("and is still marked as observed rather than measured", (await page.locator("#measurement-note").innerText()).includes("observed rather than measured"), await page.locator("#measurement-note").innerText());
   await page.selectOption("#f-source", "search_console");
-  check("a measuring source switches it on", await page.locator("#f-sample").isDisabled(), false);
+  check("so can a measurement", await page.locator("#f-sample").isDisabled(), false);
+  await page.selectOption("#f-source", "reasoning");
+  check("reasoning cannot", await page.locator("#f-sample").isDisabled(), true);
+  ok("and says why", (await page.locator("#measurement-note").innerText()).includes("nothing a sample size could be a sample of"), "");
+
   await page.evaluate(() => {
-    // Force the invalid combination past the disabled control, which is what a
-    // determined person or a hand-edited file would do.
+    // Forced past the disabled control, which is what a determined person or a
+    // hand-edited file would do.
     (document.getElementById("f-sample") as HTMLInputElement).value = "12 sessions";
-    (document.getElementById("f-source") as HTMLSelectElement).value = "owner_observation";
+    (document.getElementById("f-source") as HTMLSelectElement).value = "reasoning";
   });
-  await page.fill("#f-observation", "Something I thought.");
-  await page.fill("#f-change", "Look into it.");
+  await page.fill("#f-observation", "Something I worked out.");
   await page.click("#save-entry");
-  ok("the validator refuses it", (await problems(page).count()) > 0, "");
-  ok("with the reason", (await problems(page).first().innerText()).includes("not one"), await problems(page).first().innerText());
+  ok("the validator refuses it anyway", (await problems(page).count()) > 0, "");
+  ok("with the reason", (await problems(page).first().innerText()).includes("sample of"), await problems(page).first().innerText());
   check("and nothing was added", await entryCards(page).count(), 1);
+
+  scenario = "an observation is worth keeping before you know what to do";
+  await page.reload();
+  await page.fill("#f-observation", "Somebody scrolled past the picks entirely.");
+  await page.selectOption("#f-source", "owner_observation");
+  await page.click("#save-entry");
+  check("saved with no proposed change", await entryCards(page).count(), 2);
+  check("and nothing was refused", await problems(page).count(), 0);
 
   scenario = "an outcome needs something to have happened";
   await page.reload();
@@ -117,7 +130,7 @@ async function run() {
 
   scenario = "the register survives a reload";
   await page.reload();
-  check("the entry is still there", await entryCards(page).count(), 1);
+  check("both entries are still there", await entryCards(page).count(), 2);
   ok("and says it came from this browser", (await page.locator("#save-state").innerText()).includes("loaded from this browser"), await page.locator("#save-state").innerText());
 
   scenario = "example entries are kept apart";
@@ -128,7 +141,67 @@ async function run() {
   ok("counted separately from the owner's own", summary.includes(`${DEMO_ENTRIES.length} example entries are loaded`), summary);
   ok("and named as not about this site", summary.includes("not about this site"), summary);
   await page.click("#clear-demo");
-  check("and they can be removed without touching the real one", await entryCards(page).count(), 1);
+  check("and they can be removed without touching the real ones", await entryCards(page).count(), 2);
+
+  scenario = "importing never destroys what is here";
+  // The first version replaced everything the moment a file was chosen, even
+  // when every entry in it had been rejected.
+  await page.reload();
+  const before = await entryCards(page).count();
+  ok("there is something to lose", before > 0, before);
+
+  const tmp = join(process.cwd(), "docs", "learning-dashboard", ".harness-tmp.json");
+  writeFileSync(tmp, JSON.stringify({ version: 1, entries: [null, "not an entry"] }));
+  await page.setInputFiles("#import", tmp);
+  await page.waitForSelector("#pending .banner", { timeout: 5000 });
+  check("nothing was applied", await entryCards(page).count(), before);
+  const rejected = await page.locator("#pending").innerText();
+  ok("the file is reported as read and not applied", rejected.includes("read, and not applied"), rejected.slice(0, 120));
+  ok("with nothing in it to load", rejected.includes("nothing in it to load"), rejected.slice(0, 200));
+  check("and no way to replace with nothing", await page.locator("#pending button", { hasText: "Replace" }).count(), 0);
+  await page.locator("#pending button", { hasText: "Cancel" }).click();
+  check("cancelling leaves it alone", await entryCards(page).count(), before);
+
+  scenario = "a good file waits for a decision";
+  writeFileSync(tmp, JSON.stringify({ version: 1, entries: [{ id: "imported-1", observation: "From a file.", evidence: { source: "reasoning" }, status: "open", createdAt: "2026-09-01T00:00:00.000Z", updatedAt: "2026-09-01T00:00:00.000Z" }] }));
+  await page.setInputFiles("#import", tmp);
+  await page.waitForSelector("#pending .banner", { timeout: 5000 });
+  check("still nothing applied", await entryCards(page).count(), before);
+  ok("both choices are offered", (await page.locator("#pending button").count()) === 3, await page.locator("#pending").innerText());
+
+  await page.locator("#pending button", { hasText: "Add these" }).click();
+  await page.waitForFunction((n) => document.querySelectorAll("#entries article.entry").length === n, before + 1, { timeout: 5000 });
+  check("merging keeps what was here and adds the file", await entryCards(page).count(), before + 1);
+  ok("and says so", (await page.locator("#save-state").innerText()).includes("Added 1 entry"), await page.locator("#save-state").innerText());
+
+  scenario = "replacing is explicit";
+  await page.setInputFiles("#import", tmp);
+  await page.waitForSelector("#pending .banner", { timeout: 5000 });
+  await page.locator("#pending button", { hasText: "Replace all" }).click();
+  await page.waitForFunction(() => document.querySelectorAll("#entries article.entry").length === 1, undefined, { timeout: 5000 });
+  check("only the file's entry remains", await entryCards(page).count(), 1);
+  rmSync(tmp, { force: true });
+
+  scenario = "unreadable storage is not written over";
+  await page.evaluate(() => window.localStorage.setItem("wc.learning.v1", "{ this is not json"));
+  await page.reload();
+  await page.waitForSelector("#rescue .banner", { timeout: 5000 });
+  const rescue = await page.locator("#rescue").innerText();
+  ok("the page says the saved notes could not be read", rescue.includes("Saved notes could not be read"), rescue.slice(0, 120));
+  ok("and that nothing has been written over them", rescue.includes("have not been changed"), rescue.slice(0, 200));
+  ok("the status line agrees, rather than saying nothing is saved", (await page.locator("#save-state").innerText()).includes("could not be read"), await page.locator("#save-state").innerText());
+
+  // Writing while the old text is unread would destroy it, so it is refused.
+  await page.fill("#f-observation", "Something new.");
+  await page.selectOption("#f-source", "reasoning");
+  await page.click("#save-entry");
+  const stored = await page.evaluate(() => window.localStorage.getItem("wc.learning.v1"));
+  check("the unread text is still exactly as it was", stored, "{ this is not json");
+  ok("and the refusal is on screen", (await page.locator("#save-state").innerText()).includes("Nothing was saved"), await page.locator("#save-state").innerText());
+
+  await page.locator("#rescue button", { hasText: "start a new register" }).click();
+  await page.waitForFunction(() => !document.getElementById("rescue")!.innerText.includes("could not be read"), undefined, { timeout: 5000 });
+  ok("and it can be cleared deliberately once the owner has a copy", (await page.evaluate(() => window.localStorage.getItem("wc.learning.v1")))?.startsWith("{") === true, "");
 
   scenario = "export and import";
   const exported = await page.evaluate(async () => {
@@ -145,9 +218,12 @@ async function run() {
 
   const file = join(process.cwd(), "docs", "learning-dashboard", "example-register.json");
   await page.setInputFiles("#import", file);
-  await page.waitForFunction(() => document.querySelectorAll("#entries article.entry").length > 0, undefined, { timeout: 5000 });
-  ok("a saved file loads back", (await entryCards(page).count()) > 0, "");
-  ok("and says how many", (await page.locator("#save-state").innerText()).includes("from the file"), await page.locator("#save-state").innerText());
+  await page.waitForSelector("#pending .banner", { timeout: 5000 });
+  check("into an empty register, it still waits to be told", await entryCards(page).count(), 0);
+  await page.locator("#pending button", { hasText: "Replace all" }).click();
+  await page.waitForFunction((n) => document.querySelectorAll("#entries article.entry").length === n, DEMO_ENTRIES.length, { timeout: 5000 });
+  check("a saved file loads back in full", await entryCards(page).count(), DEMO_ENTRIES.length);
+  ok("and says where from", (await page.locator("#save-state").innerText()).includes("example-register.json"), await page.locator("#save-state").innerText());
 
   scenario = "nothing left this machine";
   check("no network request of any kind", requests, []);

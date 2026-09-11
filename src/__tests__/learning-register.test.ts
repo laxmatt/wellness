@@ -5,6 +5,8 @@ import {
   EVIDENCE_SOURCES,
   MAX_REGISTER_BYTES,
   isMeasured,
+  isObserved,
+  validateStoredEntry,
   newId,
   parseRegister,
   registerSummary,
@@ -35,32 +37,74 @@ const entry = (over: Partial<LearningEntry> = {}): LearningEntry => ({
 });
 
 describe("an entry says where it came from", () => {
-  it("needs an observation, a proposed change, a known source and a status", () => {
+  it("needs an observation, a known source and a status", () => {
     expect(validateEntry(entry())).toEqual([]);
     expect(validateEntry({ ...entry(), observation: "  " }).map((p) => p.field)).toContain("observation");
-    expect(validateEntry({ ...entry(), proposedChange: "" }).map((p) => p.field)).toContain("proposedChange");
     expect(validateEntry({ ...entry(), status: "finished" as never }).map((p) => p.field)).toContain("status");
     expect(validateEntry({ ...entry(), evidence: { source: "a friend said" as never } }).map((p) => p.field)).toContain("evidence.source");
   });
 
-  it("refuses a sample size or a date range on a source that measures nothing", () => {
-    // The rule the whole register turns on. A hunch with "12 sessions" beside
-    // it reads as data, and once it reads as data somebody quotes it.
-    const withSample = validateEntry(entry({ evidence: { source: "owner_observation", sample: "12 sessions" } }));
-    expect(withSample.map((p) => p.field)).toContain("evidence.sample");
-    expect(withSample.find((p) => p.field === "evidence.sample")!.message).toContain("read as data it is not");
-
-    const withDates = validateEntry(entry({ evidence: { source: "reasoning", dateRange: "1 to 14 September" } }));
-    expect(withDates.map((p) => p.field)).toContain("evidence.dateRange");
-
-    // A reference is fine on anything: it says where to look, not how much was seen.
-    expect(validateEntry(entry({ evidence: { source: "owner_observation", reference: "docs/LAUNCH-READINESS.md" } }))).toEqual([]);
+  it("does not demand a remedy before it will keep an observation", () => {
+    // Requiring one was a good way to lose the note. What you saw comes first;
+    // what to do about it often comes days later.
+    expect(validateEntry(entry({ proposedChange: undefined }))).toEqual([]);
+    expect(validateEntry(entry({ proposedChange: "" }))).toEqual([]);
   });
 
-  it("accepts both on a source that does measure something", () => {
+  it("lets anything somebody looked at carry a sample and a date", () => {
+    // Watching three people on a Tuesday is evidence with a sample in it. An
+    // earlier version refused this, treating "not an analytics dashboard" as
+    // "not evidence".
+    expect(validateEntry(entry({ evidence: { source: "usability_session", sample: "3 of 5 people", dateRange: "9 September" } }))).toEqual([]);
+    expect(validateEntry(entry({ evidence: { source: "owner_observation", sample: "2 shoppers" } }))).toEqual([]);
     expect(validateEntry(entry({ evidence: { source: "search_console", sample: "412 impressions", dateRange: "September" } }))).toEqual([]);
+  });
+
+  it("refuses a sample only where nothing was observed at all", () => {
+    const withSample = validateEntry(entry({ evidence: { source: "reasoning", sample: "12 sessions" } }));
+    expect(withSample.map((p) => p.field)).toContain("evidence.sample");
+    expect(withSample.find((p) => p.field === "evidence.sample")!.message).toContain("nothing a sample size could be a sample of");
+    expect(validateEntry(entry({ evidence: { source: "reasoning", dateRange: "September" } })).map((p) => p.field)).toContain("evidence.dateRange");
+    // A reference is fine on anything: it says where to look, not how much was seen.
+    expect(validateEntry(entry({ evidence: { source: "reasoning", reference: "docs/LAUNCH-READINESS.md" } }))).toEqual([]);
+  });
+
+  it("keeps measured and observed as two different questions", () => {
+    expect(isObserved("usability_session")).toBe(true);
+    expect(isMeasured("usability_session")).toBe(false);
+    expect(isObserved("search_console")).toBe(true);
     expect(isMeasured("search_console")).toBe(true);
-    expect(isMeasured("owner_observation")).toBe(false);
+    expect(isObserved("reasoning")).toBe(false);
+    expect(isMeasured("reasoning")).toBe(false);
+  });
+
+  it("refuses a candidate that is not an entry at all, rather than throwing on it", () => {
+    // One null in a backup used to stop the whole file loading, because the
+    // validator dereferenced it.
+    for (const bad of [null, undefined, "a note", 42, [], true]) {
+      const problems = validateEntry(bad);
+      expect(problems.length, String(bad)).toBeGreaterThan(0);
+      expect(problems[0].field).toBe("entry");
+    }
+    expect(validateEntry({ ...entry(), evidence: null }).map((p) => p.field)).toContain("evidence.source");
+  });
+
+  it("refuses a field of the wrong type instead of storing it", () => {
+    expect(validateEntry({ ...entry(), hypothesis: 123 }).map((p) => p.field)).toContain("hypothesis");
+    expect(validateEntry({ ...entry(), proposedChange: { a: 1 } }).map((p) => p.field)).toContain("proposedChange");
+    expect(validateEntry({ ...entry(), outcome: [], status: "done" }).map((p) => p.field)).toContain("outcome");
+    expect(validateEntry({ ...entry(), evidence: { source: "reasoning", sample: 3 } }).map((p) => p.field)).toContain("evidence.sample");
+    expect(validateEntry({ ...entry(), evidence: { source: "reasoning", reference: {} } }).map((p) => p.field)).toContain("evidence.reference");
+  });
+
+  it("checks what the tool writes itself, which a hand-edited file can drop", () => {
+    // An entry with no updatedAt used to load and then crash the sort.
+    expect(validateStoredEntry(entry())).toEqual([]);
+    expect(validateStoredEntry({ ...entry(), updatedAt: undefined }).map((p) => p.field)).toContain("updatedAt");
+    expect(validateStoredEntry({ ...entry(), createdAt: "not a date" }).map((p) => p.field)).toContain("createdAt");
+    expect(validateStoredEntry({ ...entry(), updatedAt: 20260911 }).map((p) => p.field)).toContain("updatedAt");
+    expect(validateStoredEntry({ ...entry(), demo: "yes" }).map((p) => p.field)).toContain("demo");
+    expect(validateStoredEntry({ ...entry(), demo: true })).toEqual([]);
   });
 
   it("refuses an outcome on an entry where nothing was done yet", () => {
@@ -109,12 +153,53 @@ describe("saving and loading the register", () => {
     if (!huge.ok) expect(huge.reason).toContain("notes, not a database");
   });
 
-  it("gives an entry an id if a hand-edited file dropped it", () => {
-    const file = JSON.stringify({ version: 1, entries: [{ ...entry(), id: "" }] });
-    const back = parseRegister(file);
+  it("gives an entry an id if a hand-edited file dropped it, rather than losing the note", () => {
+    const back = parseRegister(JSON.stringify({ version: 1, entries: [{ ...entry(), id: "" }] }));
     expect(back.ok).toBe(true);
-    if (back.ok) expect(back.entries[0].id).toMatch(/^L-\d{4}-\d{2}-\d{2}-/);
+    if (back.ok) {
+      expect(back.entries.length).toBe(1);
+      expect(back.entries[0].id).toMatch(/^L-\d{4}-\d{2}-\d{2}-/);
+      expect(back.notes[0]).toContain("had no id");
+    }
     expect(newId(new Date("2026-09-11T00:00:00Z"), () => 0.5)).toMatch(/^L-2026-09-11-/);
+  });
+
+  it("keeps both notes when two share an id, and says which was renamed", () => {
+    // Two entries under one id means editing one edits both, and deleting one
+    // deletes both. Dropping the second would lose a note, so it is renamed.
+    let n = 0;
+    const back = parseRegister(JSON.stringify({ version: 1, entries: [entry(), entry({ observation: "A different thing." })] }), () => `L-new-${++n}`);
+    expect(back.ok).toBe(true);
+    if (back.ok) {
+      expect(back.entries.map((e) => e.id)).toEqual(["L-1", "L-new-1"]);
+      expect(back.entries.map((e) => e.observation)).toEqual(["Two people went straight to the chips.", "A different thing."]);
+      expect(back.notes[0]).toContain("repeated the id");
+    }
+  });
+
+  it("survives a backup with a null in it, and keeps the rest", () => {
+    const back = parseRegister(JSON.stringify({ version: 1, entries: [null, entry(), "a note", 7, []] }));
+    expect(back.ok).toBe(true);
+    if (back.ok) {
+      expect(back.entries.length).toBe(1);
+      expect(back.notes.length).toBe(4);
+      expect(back.notes[0]).toContain("Entry 1 was left out");
+    }
+  });
+
+  it("leaves out an entry the tool could not have written, and says so", () => {
+    const back = parseRegister(JSON.stringify({ version: 1, entries: [{ ...entry(), updatedAt: undefined }, entry({ id: "ok" })] }));
+    expect(back.ok).toBe(true);
+    if (back.ok) {
+      expect(back.entries.map((e) => e.id)).toEqual(["ok"]);
+      expect(back.notes[0]).toContain("updatedAt");
+    }
+  });
+
+  it("returns entries a sort can read, which is what the crash was about", () => {
+    const back = parseRegister(JSON.stringify({ version: 1, entries: [{ ...entry(), updatedAt: undefined }, entry({ id: "a" }), entry({ id: "b", status: "done", outcome: "x" })] }));
+    expect(back.ok).toBe(true);
+    if (back.ok) expect(() => sortEntries(back.entries)).not.toThrow();
   });
 });
 

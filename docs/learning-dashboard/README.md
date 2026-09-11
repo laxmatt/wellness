@@ -29,17 +29,24 @@ things, because nobody counted.
 should change, and what happened. This is the part with real content, because a
 person writes it.
 
-## The rule the register is built around
+## The rules the register is built around
 
-Each entry names where it came from, and only a source that measures something
-may carry a sample size or a date range. "Something the owner noticed" and
-"a partner said so" cannot: the fields are switched off, and the validator
-refuses them if they get through anyway. A hunch with "12 sessions" beside it
-reads as data, and once it reads as data somebody quotes it back six months
-later as though it were.
+Each entry names where it came from, and two different things are shown about
+that source. **Observed** is whether somebody actually looked at something.
+**Measured** is whether an instrument counted it. Watching three people use the
+site is observed and not measured, and both of those are true at once.
+
+A sample size and a date range belong to anything somebody looked at: "3 of 5
+people" on a Tuesday is evidence with a sample in it. Only reasoning, where
+nothing was observed at all, is refused them, because there is nothing for a
+sample to be a sample of.
 
 An outcome can only be recorded once the status says the change was made or
 dropped. A proposal is not a result.
+
+A proposed change is optional. Writing down what you saw before you know what to
+do about it is the most common and most useful thing to record, and demanding a
+remedy first is a good way to lose the observation.
 
 There is no score anywhere on the page. A count of notes says nothing about how
 the site is doing, and a number that looked like it did would be the most
@@ -51,10 +58,24 @@ In this browser, on this machine, under one key in local storage. That is
 convenient and it is not a backup: clearing site data, another browser or another
 machine all start empty.
 
-**Save the register to a file** and keep that file. Loading a file replaces what
-is in the browser. An entry in a file that does not validate is left out and
-named, rather than quietly repaired, because a backup that changes on the way
-back in is not one.
+**Save the register to a file** and keep that file.
+
+Loading a file never changes anything on its own. It is read, checked, and shown
+to you: how many entries it holds, how many are here now, and anything that was
+wrong with it. Then you choose to add them to what is here or to replace what is
+here, and replacing is only ever something you press. A file whose entries were
+all rejected offers no replace button at all, because that would empty the
+register.
+
+An entry that does not validate is left out and named rather than quietly
+repaired, because a backup that changes on the way back in is not one. The two
+exceptions are a missing id and a repeated id: both are fields the tool writes
+itself, both can be fixed without guessing at anything you wrote, and dropping
+the entry would lose a note. They are given an id and the change is reported.
+
+**If the saved notes cannot be read** the page says so, refuses to write
+anything over them, and offers the raw text as a file so you can rescue it.
+Nothing is overwritten until you say you have a copy.
 
 `example-register.json` in this folder is a saved file you can load to see it
 work. Its entries are invented and marked.
