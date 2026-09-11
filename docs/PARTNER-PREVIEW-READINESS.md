@@ -42,10 +42,15 @@ So it is a decision, and the drafts for asking are written and waiting in
 | **Commission or licence.** Stock or own photography for the products in the preview. | Money. | **Matt** |
 | **Show the placeholders and say so.** Every one is already labelled "Demo image". | Nothing. It is honest and it looks like a prototype. | **Matt** |
 
-The three emails are drafted, marked DO NOT SEND, with every blank named: the
-site URL, the sender's details, how a demo would be shown, and the two recipient
-addresses that are not on record. Two readings would supply those addresses.
-Sending is Matt's, and only sending.
+All three emails are drafted, marked DO NOT SEND, and now have verified
+recipients: `info@mitoredlight.com` from Mito's own terms, and
+`contact@hoogahealth.com` and `info@icebarrel.com` read from each brand's
+contact page on 2026-09-11. All three are general routes rather than known
+licensing contacts, so each draft asks to be passed on.
+
+What is left in them is Matt's: the sender's details and how the demo is shown.
+A domain is not a dependency; each draft works with screenshots or a screen
+share. Sending is his, and only sending.
 
 ## 2. Configuration identity. The other credibility gap.
 

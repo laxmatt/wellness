@@ -1,176 +1,165 @@
 # Image permission emails: drafts
 
-**DO NOT SEND.** Nothing here has been sent, and nothing may be sent without
-Matt's approval. No brand has been contacted about anything, ever.
+**DO NOT SEND.** Nothing in this repository has been sent to anyone, and no
+outreach is recorded in it. Sending is Matt's decision and Matt's action.
 
 Three drafts, for the three brands whose terms have been read and require
-written permission. They exist so the asking is a decision rather than a task:
-the text is ready, and what is missing is marked.
+written permission. They exist so the asking is a decision rather than a task.
 
-## What every draft says, and does not say
+## What every draft does
 
-- A pre-launch comparison site, not yet public.
-- Two requests in one message: the affiliate programme application, and
-  permission to use the brand's product images.
-- Both uses named plainly: a **private partner demo now**, and **public
-  commercial use** when the site launches.
-- Asks for an approved asset pack and the conditions attached to it, so the
-  brand sets the terms rather than us assuming any.
-- **No traffic, audience, revenue or timeline claims.** The site has no
-  visitors; saying anything about them would be inventing figures, which is the
-  one thing this project does not do.
-- **No implied approval.** Nothing says or hints that the brand endorses the
-  site, that a ranking is affected, or that a placement is offered. Rankings
-  follow published rules and affiliate status is not an input, and each draft
-  says so.
-- No product claims, no specification quotes, no comparison results.
+- Asks two things in one message: the affiliate programme application, and
+  permission to use product images.
+- Names the surfaces the images would appear on: category cards and picks,
+  product pages, and comparison tables.
+- Names both contexts: a private demo now, a public commercial site later.
+- Asks for **exact-model** assets, because the wrong model is the failure mode
+  in every one of these three records.
+- Asks for the conditions attached, so the brand sets them.
+- Asks a general contact route to forward it to whoever decides.
 
-## What is missing, and must be filled before sending
+It states once that affiliate participation does not influence rankings. It
+makes no traffic, audience or revenue claim: this repository holds no audience
+figures and no deployment configuration, so there is nothing to state.
+
+## Blanks to fill before sending
 
 | Blank | Needed from |
 | --- | --- |
-| `[SITE URL]` | Matt, once a domain is chosen. Until then there is no address to show anyone. |
 | `[SENDER NAME]`, `[SENDER ROLE]`, `[REPLY EMAIL]` | Matt |
-| `[DEMO ACCESS]` | How a private demo would be shown: a link, a screen share, or attached screenshots. |
-| Hooga's and Ice Barrel's recipient addresses | **Not recorded.** See below. |
+| `[DEMO ACCESS]` | How the demo is shown: screenshots attached, a screen share, or a link if one exists |
+| `[SITE URL]` | Optional. Each draft works without a domain; the demo alternative covers it. |
 
-## Contact routes: one verified, two not
+## Contact routes, read 2026-09-11
 
-**Mito Red Light: `info@mitoredlight.com`, verified.** The brand's own terms of
-service direct uses beyond the personal non-commercial licence to that address.
-It is the brand telling us where to ask.
+| Brand | Address | Source |
+| --- | --- | --- |
+| Mito Red Light | `info@mitoredlight.com` | `mitoredlight.com/policies/terms-of-service`, section 6, which directs other uses there |
+| Hooga | `contact@hoogahealth.com` | `hoogahealth.com/pages/contact` |
+| Ice Barrel | `info@icebarrel.com` | `icebarrel.com/policies/contact-information` |
 
-**Hooga: no route on record.** Their terms require express written permission
-before copying and, as recorded, do not name where to send the request. A
-contact address has never been read.
-
-**Ice Barrel: no route on record.** Their terms require written authorization
-and, as recorded, do not name a route either.
-
-Neither address is guessed here. A plausible-looking address is not a verified
-one, and sending a permission request to the wrong inbox is worse than not
-sending it. Finding those two routes is one reading each, of whatever contact
-or media page the brand publishes.
+All three are general contact routes. None is established as a licensing
+decision maker, which is why each draft asks to be passed on.
 
 ---
 
 ## Draft 1. Mito Red Light
 
 **To:** `info@mitoredlight.com`
-**Subject:** Affiliate application and product image permission, [SITE URL]
+**Subject:** Affiliate application and product image permission
 
 Hello,
 
-I run [SITE URL], a product comparison site covering red light therapy panels,
-cold plunges and wellness drinks. It is not public yet.
+I run a product comparison site covering red light therapy panels, cold plunges
+and wellness drinks. It is not public yet. [SITE URL]
 
-I would like to apply to your affiliate programme, and separately to ask about
-using your product images.
+I would like to apply to your affiliate programme, and to ask about using your
+product images. Section 6 of your terms directs uses beyond the personal,
+non-commercial licence to this address.
 
-Your terms of service, section 6, grant a personal and non-commercial licence
-and direct other uses to this address, which is why I am writing rather than
-assuming.
+We cover two of your products:
 
-The product on our record is the **MitoPRO 1500+**, the variant at
-`mitoredlight.com/products/mitopro-series?variant=32084839432292`. We would want
-images of that model specifically; your series page covers several, and we would
-rather use nothing than show the wrong one.
+- **MitoPRO 1500+**, the variant at
+  `mitoredlight.com/products/mitopro-series?variant=32084839432292`
+- **MitoMIN 2.0**, `mitoredlight.com/products/mitomin`
 
-Two uses, both stated up front:
+We would want assets for those two models specifically. Your series page covers
+several and we would rather show a placeholder than the wrong panel.
 
-1. A **private demo** shown to a small number of people while the site is being
-   reviewed, at [DEMO ACCESS].
-2. **Public commercial use** on the live site once it launches, on the product
-   page and in comparison tables.
+The images would appear on category cards and picks, on each product's page, and
+in comparison tables, first in a private demo shown while the site is reviewed
+and then on the public site.
 
-Could you tell me whether an approved asset pack exists, and what conditions
-apply to it? If you would rather we not use your images at all, that is a fine
-answer and we will keep showing a placeholder marked as one.
+Could you tell me whether an approved asset pack exists for these models and
+what conditions apply? Affiliate participation does not influence our rankings,
+which follow published rules.
 
-One thing worth saying plainly: our rankings follow published rules and
-affiliate status is not an input to them. Whether we join your programme, and
-whether you grant image permission, does not change where your products place.
+If this is not your area, I would be grateful if you could pass it to whoever
+handles it.
 
 [SENDER NAME]
 [SENDER ROLE]
 [REPLY EMAIL]
+[DEMO ACCESS]
 
 ---
 
-## Draft 2. Hooga Health
+## Draft 2. Hooga
 
-**To:** _not on record; a contact route has to be read first_
-**Subject:** Affiliate application and product image permission, [SITE URL]
+**To:** `contact@hoogahealth.com`
+**Subject:** Affiliate application and product image permission
 
 Hello,
 
-I run [SITE URL], a product comparison site covering red light therapy panels,
-cold plunges and wellness drinks. It is not public yet.
+I run a product comparison site covering red light therapy panels, cold plunges
+and wellness drinks. It is not public yet. [SITE URL]
 
-I would like to apply to your affiliate programme, and separately to ask about
-using your product images. Section 2 of your terms of service requires express
-written permission before copying, so I am asking rather than assuming.
+I would like to apply to your affiliate programme, and to ask about using your
+product images. Section 2 of your terms requires express written permission
+before copying.
 
-We hold two of your panels, the **PRO1500** and the **HG300**. One thing we
-noticed while reading the PRO1500 listing: parts of its gallery are labelled
-PRO4500. We would want images that are definitely of the model on our page, so
-if an asset pack separates them by model that would answer it.
+We cover two of your panels:
 
-Two uses, both stated up front:
+- **PRO1500**, `hoogahealth.com/products/hgpro1500`
+- **HG300**, `hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel`
 
-1. A **private demo** shown to a small number of people while the site is being
-   reviewed, at [DEMO ACCESS].
-2. **Public commercial use** on the live site once it launches, on the product
-   page and in comparison tables.
+We would want assets for those two models specifically. Reading the PRO1500
+listing, parts of its gallery appear to be labelled PRO4500, so assets separated
+by model would be useful.
 
-Could you tell me whether an approved asset pack exists, and what conditions
-apply to it? If the answer is no, that is fine and we will keep showing a
-placeholder marked as one.
+The images would appear on category cards and picks, on each product's page, and
+in comparison tables, first in a private demo shown while the site is reviewed
+and then on the public site.
 
-Our rankings follow published rules and affiliate status is not an input to
-them. Neither joining your programme nor granting image permission changes
-where your products place.
+Could you tell me whether an approved asset pack exists for these models and
+what conditions apply? Affiliate participation does not influence our rankings,
+which follow published rules.
+
+If this is not your area, I would be grateful if you could pass it to whoever
+handles it.
 
 [SENDER NAME]
 [SENDER ROLE]
 [REPLY EMAIL]
+[DEMO ACCESS]
 
 ---
 
 ## Draft 3. Ice Barrel
 
-**To:** _not on record; a contact route has to be read first_
-**Subject:** Affiliate application and product image permission, [SITE URL]
+**To:** `info@icebarrel.com`
+**Subject:** Affiliate application and product image permission
 
 Hello,
 
-I run [SITE URL], a product comparison site covering red light therapy panels,
-cold plunges and wellness drinks. It is not public yet.
+I run a product comparison site covering red light therapy panels, cold plunges
+and wellness drinks. It is not public yet. [SITE URL]
 
-I would like to apply to your affiliate programme, and separately to ask about
-using your product images. Section IV of your terms restricts copying and
-republication without written authorization, and notes some material may belong
-to third-party rightsholders, so I am asking first.
+I would like to apply to your affiliate programme, and to ask about using your
+product images. Section IV of your terms requires written authorization before
+copying or republication.
 
-The product on our record is the **Ice Barrel 500**. We would want images of
-that model specifically rather than of the range.
+We cover two of your products:
 
-Two uses, both stated up front:
+- **Ice Barrel 500**, `icebarrel.com/products/ice-barrel-500`
+- **Ice Barrel 400**, `icebarrel.com/products/ice-barrel-400`
 
-1. A **private demo** shown to a small number of people while the site is being
-   reviewed, at [DEMO ACCESS].
-2. **Public commercial use** on the live site once it launches, on the product
-   page and in comparison tables.
+We would want assets for those two models specifically.
 
-Could you tell me whether an approved asset pack exists, what conditions apply,
-and whether any of it is third-party material we would need to clear
-separately? If the answer is no, that is fine and we will keep showing a
-placeholder marked as one.
+The images would appear on category cards and picks, on each product's page, and
+in comparison tables, first in a private demo shown while the site is reviewed
+and then on the public site.
 
-Our rankings follow published rules and affiliate status is not an input to
-them. Neither joining your programme nor granting image permission changes
-where your products place.
+Could you tell me whether an approved asset pack exists for these models and
+what conditions apply, and whether any of it is third-party material we would
+need to clear separately? Your terms mention that some material may belong to
+third-party rightsholders. Affiliate participation does not influence our
+rankings, which follow published rules.
+
+If this is not your area, I would be grateful if you could pass it to whoever
+handles it.
 
 [SENDER NAME]
 [SENDER ROLE]
 [REPLY EMAIL]
+[DEMO ACCESS]
