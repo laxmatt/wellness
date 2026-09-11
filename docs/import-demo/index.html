@@ -131,10 +131,15 @@
     let row = [];
     let cell = "";
     let quoted = false;
+    let closed = false;
     let i = 0;
+    let openedAtRow = 0;
+    let openedAtCell = 0;
+    const where = (r, c) => `row ${r + 1}, column ${c + 1}`;
     const endCell = () => {
       row.push(cell);
       cell = "";
+      closed = false;
     };
     const endRow = () => {
       endCell();
@@ -151,6 +156,7 @@
             continue;
           }
           quoted = false;
+          closed = true;
           i += 1;
           continue;
         }
@@ -158,8 +164,10 @@
         i += 1;
         continue;
       }
-      if (ch === '"' && cell === "") {
+      if (ch === '"' && cell === "" && !closed) {
         quoted = true;
+        openedAtRow = rows.length;
+        openedAtCell = row.length;
         i += 1;
         continue;
       }
@@ -178,11 +186,23 @@
         i += 1;
         continue;
       }
+      if (closed) {
+        return {
+          ok: false,
+          problem: `At ${where(rows.length, row.length)} there is text after a closing quote: ${JSON.stringify((cell + text.slice(i, i + 12)).slice(0, 24))}. A quoted value ends at its closing quote, and what follows it belongs to no cell.`
+        };
+      }
       cell += ch;
       i += 1;
     }
+    if (quoted) {
+      return {
+        ok: false,
+        problem: `The quote opened at ${where(openedAtRow, openedAtCell)} is never closed, so everything after it was read as one value. Put a closing quote there, or double the quote inside the value if it is meant literally.`
+      };
+    }
     if (cell !== "" || row.length > 0) endRow();
-    return rows;
+    return { ok: true, rows };
   }
   var DELIMITERS = [",", ";", "	"];
   var delimiterName = (d) => d === "	" ? "tab" : `"${d}"`;
@@ -197,13 +217,17 @@
     if (refusal) return { ok: false, reason: refusal };
     if (text.trim() === "") return { ok: false, reason: "This file is empty." };
     if (!text.endsWith("\n")) text += "\n";
-    const candidates = DELIMITERS.map((delimiter2) => {
-      const rows2 = parseWith(text, delimiter2).filter((r) => !(r.length === 1 && r[0].trim() === ""));
+    const attempts = DELIMITERS.map((delimiter2) => {
+      const outcome = parseWith(text, delimiter2);
+      if (!outcome.ok) return { delimiter: delimiter2, problem: outcome.problem, rows: [], width: 0, consistent: false };
+      const rows2 = outcome.rows.filter((r) => !(r.length === 1 && r[0].trim() === ""));
       const width2 = rows2[0]?.length ?? 0;
-      const consistent = rows2.length > 0 && rows2.every((r) => r.length === width2);
-      return { delimiter: delimiter2, rows: rows2, width: width2, consistent };
-    }).filter((c) => c.consistent && c.width > 1);
+      return { delimiter: delimiter2, problem: void 0, rows: rows2, width: width2, consistent: rows2.length > 0 && rows2.every((r) => r.length === width2) };
+    });
+    const candidates = attempts.filter((c) => c.problem === void 0 && c.consistent && c.width > 1);
     if (candidates.length === 0) {
+      const quoteProblem = attempts.find((a) => a.problem !== void 0)?.problem;
+      if (quoteProblem) return { ok: false, reason: quoteProblem };
       return {
         ok: false,
         reason: "No delimiter reads this file into rows of equal width. That usually means a quote is left open, or the file is not comma, semicolon or tab separated. It is refused rather than read into rows that would quietly lose columns."
@@ -223,8 +247,17 @@
     if (new Set(headers).size !== headers.length) {
       return { ok: false, reason: "Two columns share a heading. A mapping cannot tell them apart, so the file is refused rather than mapped to whichever came first." };
     }
+    const oversized = rows.findIndex((r) => r.some((c) => c.length > LIMITS.cellChars));
+    if (oversized !== -1) {
+      const columnIndex = rows[oversized].findIndex((c) => c.length > LIMITS.cellChars);
+      const name = oversized === 0 ? `column ${columnIndex + 1}` : `"${headers[columnIndex] ?? `column ${columnIndex + 1}`}"`;
+      return {
+        ok: false,
+        reason: `Row ${oversized + 1}, ${name} holds ${rows[oversized][columnIndex].length} characters, and this reads cells up to ${LIMITS.cellChars}. It is refused rather than shortened, because a value cut to fit is no longer what the file said.`
+      };
+    }
     const truncated = Math.max(0, dataRows.length - LIMITS.rows);
-    const kept = dataRows.slice(0, LIMITS.rows).map((r) => r.map((c) => c.slice(0, LIMITS.cellChars)));
+    const kept = dataRows.slice(0, LIMITS.rows);
     if (truncated > 0) notes.push(`${truncated} rows past the first ${LIMITS.rows} were not read.`);
     return { ok: true, delimiter, headers, rows: kept, truncated, notes };
   }

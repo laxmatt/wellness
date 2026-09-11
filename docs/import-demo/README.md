@@ -36,7 +36,11 @@ their numbers are not facts about anything.
 
 - Reads CSV and TSV: quoted fields, embedded newlines, CRLF, a byte-order mark,
   and comma, semicolon or tab as the delimiter, decided by which one reads the
-  file into rows of equal width.
+  file into rows of equal width. Malformed quoting is refused with the row and
+  column it starts at: a quote that never closes, or text after a closing quote.
+- Refuses a cell longer than 2,000 characters, naming the row and column, rather
+  than shortening it. The row limit is different: nothing is altered by it and
+  the count of what was left unread is reported.
 - Suggests which column means which field, from names written down in
   `src/domain/import/fields.ts`. A heading nothing recognises is left unmapped
   and listed as unread. Nothing is matched by resemblance.
