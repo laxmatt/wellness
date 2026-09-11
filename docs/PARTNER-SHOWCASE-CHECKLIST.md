@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **163 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-09.
+Records whose source was read: **163 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -601,7 +601,7 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 2 with no recorded source |
+| Comparison facts | partly | 7 of 7 required specifications carry a usable value; 2 with no recorded source |
 | Price evidence | partly | $35.99 on record from OLIPOP (direct), read from the page (Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
@@ -610,15 +610,14 @@ Specifications that are missing, unsupported or relayed:
 | Record | `olipop-root-beer-12`, `/products/olipop-classic-root-beer-12-pack` |
 | Offers | OLIPOP (direct) ($35.99, out_of_stock, affiliate status not recorded) |
 | Links | https://drinkolipop.com/products/classic-root-beer |
-| Sources on file | https://drinkolipop.com/products/classic-root-beer<br>https://drinkolipop.com/pages/ingredients |
+| Sources on file | https://drinkolipop.com/products/classic-root-beer<br>https://drinkolipop.com/blogs/digest/does-olipop-have-caffeine<br>https://drinkolipop.com/pages/ingredients |
 | Retrieval | 1 of 16 recorded fields were relayed rather than read from the source |
-| Ranking | score 50.4, completeness 86%, badges: none |
+| Ranking | score 50.4, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
 - `function` (required): source not recorded
 - `price_per_serving_minor` (required): source not recorded
-- `caffeine_mg` (required): no value, recorded as `not_stated`
 - `potassium_mg`: **absent from the record**
 - `magnesium_mg`: **absent from the record**
 - `dietary`: relayed, maker's page not fetched

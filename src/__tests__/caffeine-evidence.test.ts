@@ -46,17 +46,29 @@ describe("what a caffeine record is allowed to say", () => {
     }
   });
 
-  // A figure on one flavour's page belongs to that flavour. LMNT's page carries
-  // a 50 mg FAQ figure for Lemonade Iced Tea, and the reading of 2026-09-09
-  // deliberately left Citrus Salt's record alone rather than take it. Two
-  // products citing one page for caffeine is how that rule breaks quietly.
-  it("does not cite one page for two products' caffeine", () => {
+  // There was a rule here forbidding two products from citing one page. It was
+  // the wrong test for the right worry. What must not happen is a figure moving
+  // between flavours, and a shared URL is not that: a maker's page about
+  // caffeine can state a figure for its whole range, and OLIPOP's does. A
+  // uniqueness check would have refused the best evidence this field has.
+  //
+  // The worry itself stays, in the note. A record citing a page that covers
+  // several products has to say how that page reaches this one.
+  it("says how a shared page reaches this product", () => {
     const byUrl = new Map<string, string[]>();
     for (const p of drinks()) {
       const url = p.attributes.caffeine_mg?.source.url;
       if (url) byUrl.set(url, [...(byUrl.get(url) ?? []), p.id]);
     }
-    for (const [url, ids] of byUrl) expect(ids, url).toHaveLength(1);
+    for (const [url, ids] of byUrl) {
+      if (ids.length < 2) continue;
+      for (const id of ids) {
+        const note = drinks().find((p) => p.id === id)!.attributes.caffeine_mg!.source.note ?? "";
+        expect(note, `${id} cites ${url}, shared with ${ids.filter((x) => x !== id).join(", ")}`).toMatch(
+          /flavour|flavor|variant|range|rest of|every remaining|this product/i,
+        );
+      }
+    }
   });
 });
 

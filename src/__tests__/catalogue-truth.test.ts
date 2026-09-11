@@ -98,6 +98,23 @@ describe("the catalogue records what the source states, and nothing else", () =>
     expect(byId("lmnt-citrus-salt-30").provenance["attributes.caffeine_mg"].verification).toBe("manufacturer_reported");
   });
 
+  // Silence is still not a zero. This one is not silence: the maker's own page
+  // about caffeine names the four flavours that carry it and states that the
+  // rest do not, which is a statement about this flavour made in one sentence
+  // about all of them.
+  it("records a zero the maker stated by naming every exception to it", () => {
+    const olipop = byId("olipop-root-beer-12");
+    expect(olipop.attributes.caffeine_mg).toBe(0);
+    const p = olipop.provenance["attributes.caffeine_mg"];
+    expect(p.verification).toBe("manufacturer_reported");
+    expect(p.source.method).toBe("direct");
+    expect(p.source.url).toBe("https://drinkolipop.com/blogs/digest/does-olipop-have-caffeine");
+    expect(p.source.note).toMatch(/rest of our flavors are caffeine-free/i);
+    // The distinction has to survive in the note, because it is the whole
+    // reason this record may hold a number and the others may not.
+    expect(p.source.note).toMatch(/silence is still not a zero/i);
+  });
+
   it("did not invent a replacement number anywhere", () => {
     for (const id of ["ag1-pouch-30", "cure-hydration-lemonade-14", "liquid-iv-hydration-multiplier-16"]) {
       expect(Object.keys(byId(id).attributes)).not.toContain("caffeine_mg");
@@ -105,18 +122,27 @@ describe("the catalogue records what the source states, and nothing else", () =>
   });
 });
 
+// The answer is derived from the records, not written down beside them. These
+// asserted "LMNT alone", which was true while LMNT was the only drink whose
+// record stated a zero. OLIPOP's maker states, on its own page about caffeine,
+// that four named flavours carry caffeine and the rest do not, so Classic Root
+// Beer now states a zero too and the right answer has two products in it. A
+// frozen answer would have called that regression.
 describe("a search for zero caffeine returns only what states zero", () => {
   const zero = [{ key: "caffeine_mg", op: "eq" as const, value: 0 }];
+  // Every drink whose own record carries a usable zero, in catalogue order.
+  const statesZero = () => drinks().filter((v) => v.attributes.caffeine_mg === 0).map((v) => v.id);
+  const statesNothing = () => drinks().filter((v) => v.attributes.caffeine_mg === undefined).map((v) => v.id);
 
-  it("matches LMNT alone", () => {
-    expect(drinks().filter((v) => matchesAll(v, wellnessDrinks, zero)).map((v) => v.id)).toEqual(["lmnt-citrus-salt-30"]);
+  it("matches exactly the drinks whose own record states zero", () => {
+    expect(statesZero().length, "at least one drink should state zero").toBeGreaterThan(0);
+    expect(drinks().filter((v) => matchesAll(v, wellnessDrinks, zero)).map((v) => v.id)).toEqual(statesZero());
   });
 
-  it("excludes the four whose sources say nothing", () => {
+  it("excludes every drink whose source says nothing", () => {
     const matched = drinks().filter((v) => matchesAll(v, wellnessDrinks, zero)).map((v) => v.id);
-    for (const id of ["ag1-pouch-30", "cure-hydration-lemonade-14", "liquid-iv-hydration-multiplier-16", "olipop-root-beer-12"]) {
-      expect(matched).not.toContain(id);
-    }
+    expect(statesNothing().length, "some gaps should remain").toBeGreaterThan(0);
+    for (const id of statesNothing()) expect(matched, id).not.toContain(id);
   });
 
   it("through the real route, with the reply the shopper reads", async () => {
@@ -124,24 +150,25 @@ describe("a search for zero caffeine returns only what states zero", () => {
       { reply: "ok", hard: [{ key: "caffeine_mg", op: "eq", value: 0 }], soft: [], unmapped: [], medicalIntent: false, suggestCompare: [] },
       "No caffeine, I drink it at night.",
     );
-    expect(body.matchingIds).toEqual(["lmnt-citrus-salt-30"]);
+    const expected = statesZero();
+    expect([...body.matchingIds].sort()).toEqual([...expected].sort());
     expect(body.text).toContain("zero caffeine");
-    expect(body.matchSummary).toMatch(/1 of the 6 products in this category matches/);
+    expect(body.matchSummary).toMatch(new RegExp(`${expected.length} of the ${drinks().length} products in this category match`));
   });
 
   it("and an upper-bound search behaves the same way, since there is no figure to compare", () => {
     const underTen = [{ key: "caffeine_mg", op: "lte" as const, value: 10 }];
-    expect(drinks().filter((v) => matchesAll(v, wellnessDrinks, underTen)).map((v) => v.id)).toEqual(["lmnt-citrus-salt-30"]);
+    expect(drinks().filter((v) => matchesAll(v, wellnessDrinks, underTen)).map((v) => v.id)).toEqual(statesZero());
   });
 });
 
 describe("the site's own filter chips agree", () => {
-  it("offers Caffeine free, and it selects only the product that states zero", () => {
+  it("offers Caffeine free, and it selects exactly the drinks that state zero", () => {
     const groups = buildFilterGroups(drinks(), wellnessDrinks);
     const caffeine = groups.find((g) => g.key === "caffeine_mg");
     expect(caffeine).toBeTruthy();
     const free = caffeine!.options.find((o) => /caffeine free/i.test(o.label));
-    expect(free?.matchIds).toEqual(["lmnt-citrus-salt-30"]);
+    expect(free?.matchIds).toEqual(drinks().filter((v) => v.attributes.caffeine_mg === 0).map((v) => v.id));
   });
 });
 

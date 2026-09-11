@@ -145,16 +145,17 @@
       "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
+      "value": 0,
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
-        "url": "https://drinkolipop.com/products/classic-root-beer",
-        "retrievedAt": "2026-09-09",
+        "ref": "Read by Codex on the manufacturer's own caffeine page and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/blogs/digest/does-olipop-have-caffeine",
+        "retrievedAt": "2026-09-11",
         "method": "direct",
-        "note": "No caffeine figure was read on this page. The record carried a placeholder 0 mg and the description called the drink caffeine free; neither was sourced. A root beer is usually caffeine free, and usually is not a label. No figure is recorded, and this product does not answer a caffeine-free filter."
+        "note": "The brand's own page about caffeine names its caffeinated flavours exhaustively, as Vintage Cola, Cherry Cola, Doctor Goodwin and Citrus Rush, and then states \"The rest of our flavors are caffeine-free!\". Its cheat sheet repeats that the remaining flavours have zero caffeine. Classic Root Beer appears on that same page and is not among the four. This is the maker stating a figure for this flavour through an exhaustive statement, not an absence of one: the earlier records stayed not_stated because the product page and the label simply did not mention caffeine, and silence is still not a zero. A statement that covers every remaining flavour is different in kind, and it covers this one. A search summary retrieved on 2026-09-11 named a fourth flavour differently; a search summary is not a reading and is recorded here only so a later reader knows why the names may not match."
       },
-      "verification": "not_stated"
+      "verification": "manufacturer_reported"
     },
     "fiber_g": {
       "value": 9,
