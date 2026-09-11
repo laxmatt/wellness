@@ -2,14 +2,29 @@
   "status": "published",
   "availability": "discontinued",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-11",
   "flags": {
     "demo": true,
     "newArrival": false
   },
   "editorial": {
     "strengths": [],
-    "tradeoffs": []
+    "tradeoffs": [
+      {
+        "text": "Edge Theory Labs states on its own site that the company has gone out of business, so there is no way to buy this from the maker. Other sellers may still have stock; we hold no confirmed listing for one. The maker's notice points owners to help documentation, a paid third-party service and an extended warranty provider, and says the Edge App is shutting down with a Tuya alternative.",
+        "author": "Wellness Compare",
+        "date": "2026-09-11",
+        "source": {
+          "kind": "manufacturer",
+          "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+          "url": "https://www.edgetheorylabs.com/",
+          "retrievedAt": "2026-09-11",
+          "method": "direct",
+          "note": "Heading \"Edge Theory Labs Update\", stating the company has gone out of business."
+        },
+        "experiential": false
+      }
+    ]
   },
   "identifiers": {
     "gtin": [],
@@ -44,11 +59,11 @@
       },
       "discountCodes": [],
       "availability": "discontinued",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-11",
       "source": {
         "kind": "manufacturer",
         "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite",
-        "retrievedAt": "2026-09-11",
+        "retrievedAt": "2026-09-08",
         "method": "secondhand",
         "note": "RRP reported at $5,490, relayed via search summary on 2026-09-08; the manufacturer page was not fetched. On 2026-09-11 Codex read the maker's own site root, https://www.edgetheorylabs.com/, which carries a heading \"Edge Theory Labs Update\" and states the company has gone out of business, directing owners to help documentation, a paid third-party service and an extended warranty provider, and saying the Edge App is shutting down with a Tuya alternative. The maker is therefore no longer selling this product and this offer is marked discontinued: it is not shown as a way to buy and it does not price the product. Two things this does not say. It does not say no stock exists anywhere: other sellers may still hold units, and this catalogue simply holds no confirmed listing for one. It does not say any warranty is void: the maker's own page names an extended warranty provider, and what that is worth is not something read here."
       }

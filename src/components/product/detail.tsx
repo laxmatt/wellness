@@ -60,13 +60,12 @@ export function OfferList({ view }: { view: ProductView }) {
             {unconfirmed === 1 ? "it is" : "they are"} for this product. Check the price with the retailer.
           </p>
         ) : null}
-        {/* Says what stopped, and stops there. It does not say no stock exists
-            anywhere, and it says nothing about anybody's warranty: neither is
-            something this site has read. */}
+        {/* About the listing, and nothing beyond it. Why a seller stopped
+            listing something is not knowable from the fact that it did. */}
         {gone > 0 && view.availability !== "discontinued" ? (
           <p>
-            {gone === 1 ? "One listing is not shown here" : `${gone} listings are not shown here`}: the seller no longer sells this product. Others may still list it, and we hold no
-            confirmed listing for one.
+            {gone === 1 ? "One listing is no longer current" : `${gone} listings are no longer current`}, so {gone === 1 ? "it is" : "they are"} not shown. Others may still list this
+            product, and we hold no confirmed listing for one.
           </p>
         ) : null}
       </div>
@@ -80,7 +79,14 @@ export function OfferList({ view }: { view: ProductView }) {
           : view.price.money
             ? `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`
             : view.availability === "discontinued"
-              ? "No price and no way to buy from us. The maker states on its own site that it has gone out of business, so we do not link to it and we hold no other confirmed listing. Other sellers may still have stock."
+              ? // Neutral on purpose. `discontinued` says a product is no longer
+                // sold and says nothing about why, and a maker that has retired
+                // one model is in exactly this state. Asserting a closure from
+                // it would put a claim on the page that the record does not
+                // hold. Where a closure IS the evidence, as for Edge Theory
+                // Labs, it is a sourced note on that product's own record and
+                // it appears above with the rest of them.
+                "No current listing. This product is no longer sold by any retailer on our record, so we are not quoting a price and there is nothing to link to. Other sellers may still have stock."
               : "Current price unavailable. We could not confirm a price for this product, so we are not quoting one."}
         {withheldLine}
       </div>

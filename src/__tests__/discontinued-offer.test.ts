@@ -35,6 +35,32 @@ describe("an offer from a seller that has stopped selling", () => {
   });
 });
 
+describe("the generic copy says what happened, not why", () => {
+  // `discontinued` means a product is no longer sold. It does not mean the
+  // maker closed: a healthy brand retiring one model is in exactly this state,
+  // and the page was telling every such product's visitors that its maker had
+  // gone out of business.
+  it("keeps the closure claim on the record that holds the evidence", () => {
+    const notices = edge().editorial.tradeoffs.filter((t) => /gone out of business/i.test(t));
+    expect(notices).toHaveLength(1);
+    // And it is sourced, on the product, rather than derived from a status flag.
+    const note = catalog().products.find((p) => p.id === "edge-tub-elite")!.editorial.tradeoffs[0];
+    expect(note.source?.url).toBe("https://www.edgetheorylabs.com/");
+    expect(note.date).toBe("2026-09-11");
+  });
+
+  it("does not let a discontinued status alone carry a closure claim", () => {
+    // A product marked discontinued with no such note on its record must not
+    // acquire one. Built rather than found, because today Edge is the only
+    // discontinued product and this is the case that would be missed.
+    const built = miniProduct("retired", 20000, { power: 50, size: "m" });
+    built.offers[0].availability = "discontinued";
+    const view = miniView(built);
+    expect(view.availability).not.toBe("discontinued");
+    expect(view.editorial.tradeoffs.some((t) => /out of business/i.test(t))).toBe(false);
+  });
+});
+
 describe("a badge needs somewhere to send a shopper", () => {
   it("takes every badge off the product nobody can buy", () => {
     const { products } = recommendCategory(plunges(), coldPlunge);
