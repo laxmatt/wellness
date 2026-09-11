@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { isUsable } from "@/domain/provenance";
 import { VerificationTag } from "@/components/ui/VerificationTag";
+import type { Attributed } from "@/domain/provenance";
 import { buttonStyles } from "@/components/ui/Button";
 import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
@@ -122,13 +123,28 @@ export function OfferList({ view }: { view: ProductView }) {
 
 const groupAccent = ["bg-accent", "bg-secondary", "bg-warm", "bg-positive", "bg-tertiary"];
 
-function SpecBlock({ label, value, verification, muted = false }: { label: string; value: string; verification?: Verification; muted?: boolean }) {
+function SpecBlock({
+  label,
+  value,
+  verification,
+  source,
+  muted = false,
+}: {
+  label: string;
+  value: string;
+  verification?: Verification;
+  // Only changes the tag's wording. A maker's figure that reached this site
+  // through a retailer's listing says so rather than reading as a page we
+  // opened.
+  source?: Attributed["source"];
+  muted?: boolean;
+}) {
   return (
     <div className="min-w-0">
       <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-fg-muted">{label}</p>
       <p className={cn("mt-0.5 flex flex-wrap items-center gap-1.5 text-base", muted ? "text-fg-muted" : "font-semibold text-fg")}>
         <span className="tabular">{value}</span>
-        {verification ? <VerificationTag verification={verification} /> : null}
+        {verification ? <VerificationTag verification={verification} source={source} /> : null}
       </p>
     </div>
   );
@@ -153,7 +169,16 @@ export function SpecGroups({ view, cat }: { view: ProductView; cat: CategoryDefi
                 {specs.map((s) => {
                   const missing = s.raw === undefined;
                   const showTag = !missing && s.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification));
-                  return <SpecBlock key={s.key} label={s.shortLabel} value={s.formatted} verification={showTag ? s.provenance?.verification : undefined} muted={missing} />;
+                  return (
+                    <SpecBlock
+                      key={s.key}
+                      label={s.shortLabel}
+                      value={s.formatted}
+                      verification={showTag ? s.provenance?.verification : undefined}
+                      source={s.provenance?.source}
+                      muted={missing}
+                    />
+                  );
                 })}
               </div>
             </section>

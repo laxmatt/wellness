@@ -1,4 +1,4 @@
-import { isUsable } from "@/domain/provenance";
+import { isUsable, type Attributed } from "@/domain/provenance";
 import type { CategoryDefinition } from "./category";
 import { attributeDef } from "./category";
 import { comparable } from "./conditions";
@@ -14,6 +14,8 @@ import { buyableOffers, displayPrice, type ProductView } from "./view";
 export type CompareCell = {
   text: string;
   verification?: Verification;
+  // Carried only to word the tag. Nothing here decides comparability.
+  source?: Attributed["source"];
   best: boolean;
 };
 
@@ -208,7 +210,12 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         notComparable: comp.ok ? undefined : comp.reason,
         cells: specs.map((s, i) => ({
           text: texts[i],
-          verification: s?.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification)) ? s.provenance.verification : undefined,
+          // The source travels with the verification, so a column can say a
+          // maker's figure reached this site through a retailer rather than
+          // showing a tag that reads as a page somebody opened.
+          ...(s?.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification))
+            ? { verification: s.provenance.verification, source: s.provenance.source }
+            : {}),
           best: best.has(i),
         })),
         same: new Set(texts).size === 1,

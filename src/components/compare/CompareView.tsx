@@ -174,7 +174,7 @@ export function CompareView({ model, ids, categoryId }: { model: CompareModel; i
                         <span className="flex flex-wrap items-center gap-1.5">
                           {cell.best ? <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-positive" aria-label="Strongest in this row" /> : null}
                           <span className={cn("tabular", cell.best ? "font-bold" : "font-semibold")}>{cell.text}</span>
-                          {cell.verification ? <VerificationTag verification={cell.verification} /> : null}
+                          {cell.verification ? <VerificationTag verification={cell.verification} source={cell.source} /> : null}
                         </span>
                       </td>
                     ))}

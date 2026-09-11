@@ -1,4 +1,4 @@
-import { isUsable } from "@/domain/provenance";
+import { attributionSentence, isUsable } from "@/domain/provenance";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AssistantRequest, type AssistantProductRef, type AssistantReply, type ProposedAction } from "@/domain/assistant";
@@ -632,12 +632,11 @@ function renderFacts(view: ProductView, cat: CategoryDefinition): AssistantProdu
     out.push({
       label: def.shortLabel ?? def.label,
       value: spec.formatted,
-      attribution:
-        p?.verification === "independently_verified"
-          ? "verified by this site"
-          : p?.verification === "manufacturer_reported"
-            ? "reported by the maker"
-            : "source not recorded",
+      // One rule, shared with the tag beside the same figure on the product
+      // page. A maker's figure relayed by a retailer's listing said "reported
+      // by the maker" here, which is true about the claim and reads as a
+      // promise this site opened the maker's page.
+      attribution: attributionSentence({ verification: p?.verification ?? "unknown", source: p?.source ?? { kind: "editorial", method: "direct" } }),
     });
     if (out.length >= 4) break;
   }

@@ -9,7 +9,7 @@ export function SpecRow({ spec, compact = false }: { spec: SpecView; compact?: b
       <span className={compact ? "text-xs text-fg-muted" : "text-sm text-fg-soft"}>{compact ? spec.shortLabel : spec.label}</span>
       <span className="flex items-center gap-1.5 text-right">
         <span className={compact ? "tabular text-sm font-semibold" : "tabular text-sm font-semibold"}>{spec.formatted}</span>
-        {showTag && spec.provenance ? <VerificationTag verification={spec.provenance.verification} /> : null}
+        {showTag && spec.provenance ? <VerificationTag verification={spec.provenance.verification} source={spec.provenance.source} /> : null}
       </span>
     </div>
   );

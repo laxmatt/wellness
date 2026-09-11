@@ -76,6 +76,46 @@ export const Provenance = z.object({
 });
 export type Provenance = z.infer<typeof Provenance>;
 
+/**
+ * How a figure should be attributed on screen, in one place.
+ *
+ * `verification` says whose claim a figure is. It does not say who was read,
+ * and the two came out of the same word for a long time: a figure relayed by an
+ * Amazon listing rendered "Maker reported", which is true about the claim and
+ * reads as a promise that this site opened the maker's page.
+ *
+ * So a retailer's listing is named as one. The claim is still the maker's, and
+ * the wording says both: the figure came from the maker and it reached us
+ * through a shop.
+ *
+ * Deliberately narrow. This changes no verification value, no usability rule
+ * and no ranking: `isUsable` reads `verification` and never gets here.
+ */
+export type Attributed = { verification: Verification; source: Pick<Source, "kind" | "method"> };
+
+/** Short enough for a pill beside a value. */
+export function attributionTag(p: Attributed): string {
+  if (p.verification === "manufacturer_reported" && p.source.kind === "retailer") return "Via retailer";
+  return TAGS[p.verification];
+}
+
+/** A clause for prose, as the assistant renders beside a fact. */
+export function attributionSentence(p: Attributed): string {
+  if (p.verification === "independently_verified") return "verified by this site";
+  if (p.verification === "manufacturer_reported") {
+    return p.source.kind === "retailer" ? "the maker's figure, relayed by a retailer listing" : "reported by the maker";
+  }
+  return "source not recorded";
+}
+
+const TAGS: Record<Verification, string> = {
+  manufacturer_reported: "Maker reported",
+  independently_verified: "Verified",
+  demo: "Demo data",
+  not_stated: "Not stated",
+  unknown: "Unverified",
+};
+
 export function sourced<T extends z.ZodTypeAny>(value: T) {
   return z.object({
     // Absent when the source states nothing. The entry stays so the note
