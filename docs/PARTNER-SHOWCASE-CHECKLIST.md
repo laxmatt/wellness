@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **163 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
+Records whose source was read: **168 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -484,27 +484,22 @@ Specifications that are missing, unsupported or relayed:
 | Record | `celsius-sparkling-orange-12`, `/products/celsius-sparkling-orange-12-pack` |
 | Offers | Amazon ($16.12, unknown, affiliate status not recorded) |
 | Links | https://www.amazon.com/dp/B007R8XGJA |
-| Sources on file | https://www.amazon.com/dp/B007R8XGJA |
-| Retrieval | 6 of 11 recorded fields were relayed rather than read from the source |
+| Sources on file | https://www.celsius.com/wp-content/uploads/2023/08/Orange-supp.png<br>https://www.celsius.com/products/celsius/sparkling-orange/<br>https://www.amazon.com/dp/B007R8XGJA |
+| Retrieval | 1 of 11 recorded fields were relayed rather than read from the source |
 | Ranking | score 60.9, completeness 100%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
 - `function` (required): source not recorded
 - `format` (required): source not recorded
-- `serving_size` (required): relayed, maker's page not fetched
 - `servings_per_pack` (required): source not recorded
 - `price_per_serving_minor` (required): source not recorded
-- `sugar_g` (required): relayed, maker's page not fetched
 - `added_sugar_g`: **absent from the record**
-- `calories`: relayed, maker's page not fetched
-- `caffeine_mg` (required): relayed, maker's page not fetched
 - `sodium_mg`: **absent from the record**
 - `potassium_mg`: **absent from the record**
 - `magnesium_mg`: **absent from the record**
 - `fiber_g`: **absent from the record**
 - `sweeteners`: prototype value `["sucralose"]`
-- `dietary`: relayed, maker's page not fetched
 - `subscription_available`: **absent from the record**
 - `subscription_discount_pct`: **absent from the record**
 
@@ -646,7 +641,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 64 of 274 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 59 of 274 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

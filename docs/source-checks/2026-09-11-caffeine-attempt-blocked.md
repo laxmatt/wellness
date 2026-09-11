@@ -175,3 +175,55 @@ products may cite one page for caffeine, the filter admits exactly the drinks
 whose own record states a usable zero, and a drink with no usable figure is
 neither cleared nor convicted. Closing a gap strengthens these; it does not
 break them.
+
+
+---
+
+## Follow-up readings, same day, by Codex
+
+Recorded here because a reading that found nothing is still a reading, and the
+next person to look needs to know these were tried.
+
+**OLIPOP Classic Root Beer: closed.** The caffeine page named above was read and
+settled it. See `2026-09-11-olipop-caffeine.md`.
+
+**CELSIUS Sparkling Orange: read for the first time.** Not one of the four
+gaps, but the record cited an Amazon listing as the manufacturer for five
+fields. See `2026-09-11-celsius-sparkling-orange.md`.
+
+**LMNT Citrus Salt: read, and the zero is still unsupported.**
+`https://drinklmnt.com/pages/ingredients` was read directly. The only explicit
+caffeine amount on it is 50 mg, for Lemonade Iced Tea. **No zero is stated for
+Citrus Salt.**
+
+That is now two direct readings of the maker's own pages, on 2026-09-09 and
+2026-09-11, neither of which found a caffeine statement for this flavour. The
+record's `caffeine_mg: 0` still rests on the 2026-09-08 search summary that
+preceded both of them, and it is the basis of one of the site's two
+caffeine-free matches.
+
+Held as it is, on instruction, and flagged rather than resolved. The question it
+raises is not what the figure should be but whether a figure two direct readings
+could not find should keep standing as `manufacturer_reported`. OLIPOP's answer
+came from a page written to answer the question; LMNT's ingredients page is not
+that page, and the FAQ at `https://drinklmnt.com/pages/faq` has still not been
+read.
+
+**AG1 greens powder pouch: not reached.** The URLs redirected to an en-uk
+destination whose content was an empty iframe. No US evidence was retrieved and
+nothing was recorded. The field stays `not_stated`, correctly: this is a
+reading that did not reach the page, which says nothing about what the page
+states.
+
+**Cure Hydration Lemonade and Liquid I.V.: FAQ pages retrieved, no caffeine
+text exposed.** Also nothing, and also not evidence of absence. Both stay
+`not_stated`.
+
+### Where the four stand now
+
+| Product | State | Next |
+| --- | --- | --- |
+| `olipop-root-beer-12` | Closed, 0 mg, manufacturer-read | none |
+| `ag1-pouch-30` | Open | a US destination that is not an empty iframe |
+| `cure-hydration-lemonade-14` | Open | a page that mentions caffeine at all |
+| `liquid-iv-hydration-multiplier-16` | Open | still no manufacturer citation of any kind; the nutrition table has never been reached |

@@ -85,10 +85,11 @@
       "value": "1 can (12 fl oz)",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.amazon.com/dp/B007R8XGJA",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on 2026-09-11, on the maker's own product page and the back-label image it links to, and supplied to this repository; not fetched here.",
+        "url": "https://www.celsius.com/wp-content/uploads/2023/08/Orange-supp.png",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "Read from the back-label image linked by the maker's product page for this flavour. The panel is titled SPARKLING ORANGE and states serving size 12 fl oz (355 mL), servings per container 1, calories 10 and \"Caffeine Content: 200mg\". Previously carried as manufacturer_reported while citing an Amazon listing, which is a retailer and not the maker speaking. The figure has not changed; what it rests on has. The label is evidence and nothing more: no right to reproduce the image has been established and none is claimed. The recorded wording keeps the pack's unit, one can, alongside the label's 12 fl oz."
       },
       "verification": "manufacturer_reported"
     },
@@ -121,10 +122,11 @@
       "unit": "g",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.amazon.com/dp/B007R8XGJA",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on 2026-09-11, on the maker's own product page and the back-label image it links to, and supplied to this repository; not fetched here.",
+        "url": "https://www.celsius.com/products/celsius/sparkling-orange/",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The maker's product page for this flavour shows a zero sugar icon. Previously carried as manufacturer_reported while citing an Amazon listing, which is a retailer and not the maker speaking. The value has not changed; what it rests on has."
       },
       "verification": "manufacturer_reported"
     },
@@ -133,10 +135,11 @@
       "unit": "kcal",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.amazon.com/dp/B007R8XGJA",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on 2026-09-11, on the maker's own product page and the back-label image it links to, and supplied to this repository; not fetched here.",
+        "url": "https://www.celsius.com/wp-content/uploads/2023/08/Orange-supp.png",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "Read from the back-label image linked by the maker's product page for this flavour. The panel is titled SPARKLING ORANGE and states serving size 12 fl oz (355 mL), servings per container 1, calories 10 and \"Caffeine Content: 200mg\". Previously carried as manufacturer_reported while citing an Amazon listing, which is a retailer and not the maker speaking. The figure has not changed; what it rests on has. The label is evidence and nothing more: no right to reproduce the image has been established and none is claimed."
       },
       "verification": "manufacturer_reported"
     },
@@ -145,10 +148,11 @@
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.amazon.com/dp/B007R8XGJA",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on 2026-09-11, on the maker's own product page and the back-label image it links to, and supplied to this repository; not fetched here.",
+        "url": "https://www.celsius.com/wp-content/uploads/2023/08/Orange-supp.png",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "Read from the back-label image linked by the maker's product page for this flavour. The panel is titled SPARKLING ORANGE and states serving size 12 fl oz (355 mL), servings per container 1, calories 10 and \"Caffeine Content: 200mg\". Previously carried as manufacturer_reported while citing an Amazon listing, which is a retailer and not the maker speaking. The figure has not changed; what it rests on has. The label is evidence and nothing more: no right to reproduce the image has been established and none is claimed."
       },
       "verification": "manufacturer_reported"
     },
@@ -166,14 +170,16 @@
     },
     "dietary": {
       "value": [
+        "gluten_free",
         "non_gmo"
       ],
       "source": {
         "kind": "manufacturer",
-        "url": "https://www.amazon.com/dp/B007R8XGJA",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on 2026-09-11, on the maker's own product page and the back-label image it links to, and supplied to this repository; not fetched here.",
+        "url": "https://www.celsius.com/products/celsius/sparkling-orange/",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The maker's product page for this flavour shows gluten free and non-GMO icons, and gluten free is added here on that reading. It also shows a kosher icon; this category defines no value for kosher, so it is read and not recorded rather than forced into a field that does not mean it. Vegan is not claimed: no vegan icon was read and none is inferred from the others. Previously carried as manufacturer_reported while citing an Amazon listing, which is a retailer and not the maker speaking. The value has not changed; what it rests on has."
       },
       "verification": "manufacturer_reported"
     }

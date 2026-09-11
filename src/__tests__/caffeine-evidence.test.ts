@@ -108,3 +108,50 @@ describe("an unconfirmed figure stays unconfirmed, in both directions", () => {
     }
   });
 });
+
+describe("a record may not claim the maker while citing a retailer", () => {
+  const RETAILER = /\b(amazon|walmart|target|ebay)\./i;
+
+  // Open defect, named rather than hidden. The Cold Pod's record cites one
+  // Amazon listing as the manufacturer for four specifications. It is the same
+  // fault CELSIUS carried until its maker's page was read on 2026-09-11, and it
+  // needs the same fix: a reading, not a relabel. Removing an entry from this
+  // list is how that fix announces itself.
+  const KNOWN_OPEN: Record<string, string[]> = {
+    "the-cold-pod-88": ["chiller_included", "water_capacity_gal", "fits_height_in", "insulated"],
+  };
+
+  it("holds for every attribute in the catalogue, except the ones still open", () => {
+    const found: string[] = [];
+    for (const file of readdirSync(join(CATALOG_DIR, "products")).filter((f) => f.endsWith(".json"))) {
+      const p = JSON.parse(readFileSync(join(CATALOG_DIR, "products", file), "utf8")) as Product;
+      for (const [key, attr] of Object.entries(p.attributes ?? {})) {
+        const s = attr?.source;
+        if (s?.kind !== "manufacturer" || !s.url || !RETAILER.test(s.url)) continue;
+        if (KNOWN_OPEN[p.id]?.includes(key)) continue;
+        found.push(`${p.id}.${key} -> ${s.url}`);
+      }
+    }
+    expect(found).toEqual([]);
+  });
+
+  it("still finds every entry the open list claims, so a fixed one cannot sit here forever", () => {
+    for (const [id, keys] of Object.entries(KNOWN_OPEN)) {
+      const p = JSON.parse(readFileSync(join(CATALOG_DIR, "products", `${id}.json`), "utf8")) as Product;
+      for (const key of keys) {
+        const s = p.attributes[key]?.source;
+        expect(s?.kind, `${id}.${key} is fixed; take it out of KNOWN_OPEN`).toBe("manufacturer");
+        expect(s?.url, `${id}.${key} is fixed; take it out of KNOWN_OPEN`).toMatch(RETAILER);
+      }
+    }
+  });
+
+  it("has no such claim left on any wellness drink", () => {
+    for (const p of drinks()) {
+      for (const [key, attr] of Object.entries(p.attributes ?? {})) {
+        const s = attr?.source;
+        if (s?.kind === "manufacturer" && s.url) expect(s.url, `${p.id}.${key}`).not.toMatch(RETAILER);
+      }
+    }
+  });
+});
