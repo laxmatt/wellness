@@ -41,7 +41,7 @@ export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
             Answer a few questions and we will narrow the list. Or skip it: the filters and comparison below do the same job.
           </p>
         </div>
-        <AssistantLauncher size="lg" className="shrink-0" />
+        <AssistantLauncher size="lg" className="shrink-0" entry={{ kind: "category", categoryId: cat.id }} />
       </div>
     </section>
   );

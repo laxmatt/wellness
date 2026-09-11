@@ -6,6 +6,8 @@ import type { AssistantMessage, AssistantReply, ProposedAction } from "@/domain/
 import { mentionsValue } from "@/domain/named-values";
 import type { HardConstraint, SoftPreference } from "@/domain/personalization";
 
+import type { AssistantEntry } from "@/domain/assistant-intro";
+
 export type CompareSeed = { id: string; slug: string; name: string; categoryId: string };
 
 export type AppliedBreakdown = { key: string; label: string; matchIds: string[]; unknownIds: string[] };
@@ -30,6 +32,14 @@ export type AssistantState = {
   available: boolean;
   open: boolean;
   setOpen: (v: boolean) => void;
+  /**
+   * Where it was opened from, as the control that opened it stated. The panel
+   * reads it for its opening copy and nothing else: it never changes what is
+   * sent, what is filtered, or anything the shopper has already said.
+   */
+  entry: AssistantEntry;
+  /** Open, recording where from. Closing leaves the entry alone. */
+  openFrom: (entry: AssistantEntry) => void;
   messages: AssistantMessage[];
   replies: Record<number, AssistantReply>;
   sending: boolean;
@@ -79,6 +89,9 @@ function newSessionId(): string {
 export function AssistantProvider({ categoryId, compareSeeds = [], children }: { categoryId: string; compareSeeds?: CompareSeed[]; children: ReactNode }) {
   const compare = useCompare();
   const [open, setOpen] = useState(false);
+  // The broad copy until a control says otherwise. A category page sets it from
+  // its own invitation rather than this reading the address bar.
+  const [entry, setEntry] = useState<AssistantEntry>({ kind: "general" });
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
   const [replies, setReplies] = useState<Record<number, AssistantReply>>({});
   const [sending, setSending] = useState(false);
@@ -339,6 +352,14 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       available: true,
       open,
       setOpen,
+      entry,
+      // Only the opening copy changes. Messages, constraints, applied filters
+      // and the session id are untouched, so reopening from somewhere else
+      // continues the same conversation.
+      openFrom: (next: AssistantEntry) => {
+        setEntry(next);
+        setOpen(true);
+      },
       messages,
       replies,
       sending,
@@ -357,7 +378,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
       reset,
       categoryId,
     }),
-    [accept, answerQuestion, applied, categoryId, dismissed, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, setAside, soft],
+    [accept, answerQuestion, applied, categoryId, dismissed, entry, error, hard, latest, messages, open, removeConstraint, replies, reset, send, sending, setAside, soft],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

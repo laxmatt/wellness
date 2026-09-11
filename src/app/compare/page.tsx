@@ -73,7 +73,7 @@ export default async function ComparePage({ searchParams }: Props) {
             {views.length !== sameCat.length ? <p className="mt-2 text-sm text-fg-muted">Products from other categories were left out. Compare one category at a time.</p> : null}
             <>
               <div className="mt-4 flex flex-wrap items-center gap-3">
-                <AssistantLauncher />
+                <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
                 <p className="text-sm text-fg-muted">Optional. Ask what the differences mean for you.</p>
               </div>
               <div className="mt-6">

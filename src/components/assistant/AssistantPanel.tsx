@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { AssistantProductRef, AssistantReply, ProposedAction } from "@/domain/assistant";
+import { introFor } from "@/domain/assistant-intro";
+import { categories } from "@/domain/categories";
 import { cn } from "@/lib/cn";
 import { useAssistant } from "./AssistantProvider";
 
@@ -128,6 +130,7 @@ function PanelBody({
   keyboardInset: number;
 }) {
   const latest = a.latest;
+  const intro = introFor(a.entry, categories);
   // With the keyboard up there is far less room, so the sheet takes what is
   // left rather than a fixed share of a viewport that no longer exists.
   const heightClass = keyboardInset > 0 ? "max-h-[min(60dvh,26rem)]" : "max-h-[74dvh]";
@@ -184,17 +187,20 @@ function PanelBody({
 
       <div ref={logRef} className="flex-1 overflow-y-auto overscroll-contain px-4 py-3">
         {a.messages.length === 0 ? (
-          <div className="text-base leading-relaxed text-fg-soft">
-            <p>Tell me what you need and I will narrow the list. For example:</p>
+          <div className="text-base leading-relaxed text-fg-soft" data-testid="assistant-intro" data-entry={a.entry.kind === "category" ? a.entry.categoryId : "general"}>
+            {/* The opening copy belongs to the door the shopper came through.
+                This used to be one hardcoded list for every page: two red-light
+                examples and one about drinks, offered on all three categories. */}
+            <p>{intro.lead}</p>
             <ul className="mt-3 flex flex-col gap-2">
-              {["A full-body panel under $700 for a small apartment", "Something I can set up without an electrician", "Zero sugar, no caffeine"].map((s) => (
-                <li key={s}>
+              {intro.examples.map((s) => (
+                <li key={s.text}>
                   <button
                     type="button"
-                    onClick={() => void a.send(s)}
+                    onClick={() => void a.send(s.text)}
                     className="tap w-full rounded-card border border-edge bg-surface px-3.5 py-2 text-left text-sm font-semibold text-fg hover:border-fg"
                   >
-                    {s}
+                    {s.text}
                   </button>
                 </li>
               ))}

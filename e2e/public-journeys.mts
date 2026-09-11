@@ -20,6 +20,7 @@ import { chromium, type Browser, type Page } from "playwright";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { categories, categoryById } from "@/domain/categories";
+import { introExamplesFor } from "@/domain/assistant-intro";
 import { buildCompareModel } from "@/domain/compare";
 import { applyFilters, buildFilterGroups, facetOptionId } from "@/domain/filters";
 import { formatMoney } from "@/domain/money";
@@ -532,6 +533,60 @@ async function run(browser: Browser) {
     await settled(page, sugarFree.length);
     check("the second facet's products, not the first facet's", await shownSlugs(page), sugarFree);
     check("the first facet's chip is off", await chipButton(page, "Energy").getAttribute("aria-pressed"), "false");
+  }
+
+  // ------------------------------ the assistant opens in the shop it was opened in
+  //
+  // The panel carried one hardcoded list of examples for every page. Pressing
+  // "Not sure which wellness drinks suits you?" offered "A full-body panel under
+  // $700" and "Something I can set up without an electrician".
+  for (const c of categories) {
+    scenario = `assistant entry ${c.slug}`;
+    const mine = introExamplesFor(c.id)!.map((e) => e.text);
+    const theirs = categories.filter((x) => x.id !== c.id).flatMap((x) => introExamplesFor(x.id)!.map((e) => e.text));
+
+    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+      await goto(page, path);
+      await page.getByRole("button", { name: "Help me choose" }).first().click();
+      await page.waitForSelector("[data-testid='assistant-intro']", { timeout: 5000 });
+
+      check(`${path} opens on this category`, await page.getByTestId("assistant-intro").getAttribute("data-entry"), c.id);
+      check(`${path} offers this category's examples`, await page.locator("[data-testid='assistant-intro'] li button").allTextContents(), mine);
+      const shown = await page.getByTestId("assistant-intro").innerText();
+      ok(`${path} names the section in the lead`, shown.toLowerCase().includes(c.navLabel.toLowerCase()), shown.slice(0, 120));
+      for (const other of theirs) ok(`${path} does not offer "${other.slice(0, 28)}"`, !shown.includes(other), shown.slice(0, 160));
+      ok(`${path} still says it gives no medical advice`, shown.includes("does not give medical advice"), "");
+    }
+
+    // From a product page in the same category, through its own button.
+    const view = viewsOf(c.id)[0];
+    await goto(page, `/products/${view.slug}`);
+    await page.getByRole("button", { name: "Help me choose" }).first().click();
+    await page.waitForSelector("[data-testid='assistant-intro']", { timeout: 5000 });
+    check("a product page opens on its own category", await page.getByTestId("assistant-intro").getAttribute("data-entry"), c.id);
+
+    // Reopening keeps the entry and does not reset the conversation.
+    await page.getByRole("button", { name: "Close assistant" }).first().click();
+    await page.getByRole("button", { name: "Help me choose" }).first().click();
+    check("reopening keeps the entry", await page.getByTestId("assistant-intro").getAttribute("data-entry"), c.id);
+  }
+
+  // Navigating from one category to another must not leave the old examples
+  // behind. The panel is mounted per page, and this is the check that it is.
+  {
+    scenario = "assistant entry across a navigation";
+    await goto(page, "/red-light");
+    await page.getByRole("button", { name: "Help me choose" }).first().click();
+    await page.waitForSelector("[data-testid='assistant-intro']");
+    check("opened on red light", await page.getByTestId("assistant-intro").getAttribute("data-entry"), "red-light");
+
+    await page.locator('a[href="/wellness-drinks"]').first().click();
+    await page.waitForURL("**/wellness-drinks");
+    await page.getByRole("button", { name: "Help me choose" }).first().click();
+    await page.waitForSelector("[data-testid='assistant-intro']");
+    check("opens on drinks after navigating", await page.getByTestId("assistant-intro").getAttribute("data-entry"), "wellness-drinks");
+    const after = await page.getByTestId("assistant-intro").innerText();
+    for (const stale of introExamplesFor("red-light")!.map((e) => e.text)) ok(`no stale "${stale.slice(0, 24)}"`, !after.includes(stale), after.slice(0, 160));
   }
 
   // --------------------------------------- one chip bar, not two, on every page

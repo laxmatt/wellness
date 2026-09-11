@@ -142,7 +142,7 @@ export default async function ProductPage({ params }: Props) {
               </p>
             ) : null}
             <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
-              <AssistantLauncher />
+              <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
               <p className="text-xs text-fg-muted">Optional. Ask how this compares to the alternatives.</p>
             </div>
           </div>
