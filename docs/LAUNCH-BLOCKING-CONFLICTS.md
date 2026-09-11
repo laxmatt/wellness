@@ -96,8 +96,17 @@ page for the standard USA model, read on 2026-09-09, states 85. The figure is
 disputed and withheld, so the specification is blank while the product's own
 name still says 88.
 
-**Read:** https://www.thecoldpod.com/products/the-cold-pod-usa, and whichever
-page names an 88 gallon model if one exists.
+**Already read, twice, and it did not settle this.** The maker's primary page
+was read on 2026-09-09 and again on 2026-09-11. Both times it describes the
+**standard USA model at 85 gallons and $119.99**. That is a complete answer
+about the model it describes and no answer at all about ours: an 85-gallon
+Standard does not establish what an 88-gallon record is, whether an 88 exists,
+or whether the Amazon listing renamed the same tub. Re-reading that page a third
+time will return 85 again.
+
+**Read instead:** a page that names an 88-gallon model, if the maker publishes
+one, or the Amazon listing itself, `https://www.amazon.com/dp/B0CPKYNJ9Q`, which
+is where the 88 came from and which has never been fetched.
 
 **The question:** whether 85 and 88 are two models or one figure stated two
 ways. If they are two models, this record has to pick one and its name, slug and

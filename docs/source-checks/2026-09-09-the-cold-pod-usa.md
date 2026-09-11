@@ -73,3 +73,21 @@ saying that the maker's own catalogue does not obviously contain it.
 
 Nothing changed. The Cold Pod keeps Best Value at 18.5 on a value score of
 59.3, and capacity is not one of this category's six scored criteria.
+
+---
+
+## 2026-09-11: read again, same answer
+
+The maker's primary page was read a second time on 2026-09-11 and describes the
+same standard USA model: **85 gallons, $119.99**.
+
+Two readings of that page now agree with each other and neither settles this
+record. An 85-gallon Standard is a complete answer about the model that page
+describes and no answer about an 88-gallon one: it does not establish that an 88
+exists, that it does not, or that the Amazon listing renamed the same tub. A
+third reading of the same page will return 85 again.
+
+What is still unread is the listing the 88 actually came from,
+`https://www.amazon.com/dp/B0CPKYNJ9Q`, and any maker's page that names an
+88-gallon model. The record is unchanged: capacity disputed and withheld, name
+and slug still saying 88.
