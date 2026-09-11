@@ -112,6 +112,11 @@ export type AssistantReply = {
   // A short, non-financial explanation when the assistant is unavailable.
   // Spend figures are operator information and never reach the customer.
   notice?: string;
+  // Internal destinations offered beside the reply, composed by the site from
+  // its own category list. A shopper who asks about a category they are not
+  // looking at gets a link to it and presses it themselves: nothing navigates,
+  // nothing re-filters, and the page they are on is exactly as they left it.
+  links?: { href: string; label: string }[];
 };
 
 export const AssistantRequest = z.object({

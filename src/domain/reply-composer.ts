@@ -1,5 +1,6 @@
 import type { CategoryDefinition } from "./category";
 import { engineSummary } from "./match-claims";
+import type { SubjectScope } from "./subject-scope";
 import { describeConstraint, labelFor } from "./personalization/describe";
 import type { HardConstraint, SoftPreference } from "./personalization";
 
@@ -29,6 +30,63 @@ export const FIXED_LIMITATION =
 export const FIXED_INVITATION = "What matters most to you here?";
 
 export type ComposedQuestion = { text: string; options: string[]; key?: string };
+
+/** An internal destination offered beside a reply. Always a path on this site. */
+export type ReplyLink = { href: string; label: string };
+
+export function categoryLink(cat: CategoryDefinition): ReplyLink {
+  return { href: `/${cat.slug}`, label: `Go to ${cat.name}` };
+}
+
+function nameList(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? "";
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
+
+/**
+ * What to say when the message is not about the category in front of the
+ * shopper.
+ *
+ * Three fixed shapes, one per answer `resolveSubjectScope` can give. Every one
+ * of them says that nothing on the page has changed, and every one of them ends
+ * in a link the shopper has to press. Nothing moves on its own: a shopper who
+ * types about cold plunges on the red-light page is still on the red-light page
+ * with the same filters afterwards.
+ *
+ * None of these sentences claims the assistant understood anything beyond the
+ * name it matched. See src/domain/subject-scope.ts for what that matching is
+ * and is not.
+ */
+export function outOfScopeReply(scope: SubjectScope, current: CategoryDefinition, all: CategoryDefinition[]): { text: string; links: ReplyLink[] } | null {
+  const byId = (id: string) => all.find((c) => c.id === id);
+
+  if (scope.kind === "other_category") {
+    const other = byId(scope.categoryIds[0]);
+    if (!other) return null;
+    return {
+      text: `This page compares ${current.name}. ${other.name} is a separate section of this site, so I have not changed anything here. Open it below when you want to switch.`,
+      links: [categoryLink(other)],
+    };
+  }
+
+  if (scope.kind === "ambiguous") {
+    const named = scope.categoryIds.map(byId).filter((c): c is CategoryDefinition => c !== undefined);
+    if (named.length < 2) return null;
+    return {
+      text: `That could mean ${nameList(named.map((c) => c.name))}. I have not changed anything on this page. Tell me which one you mean, or open it below.`,
+      links: named.map(categoryLink),
+    };
+  }
+
+  if (scope.kind === "absent_subject") {
+    return {
+      text: `This site has no ${nameList(scope.labels)} catalogue, so there is nothing here for me to compare. It compares ${nameList(all.map((c) => c.name))}. I have not changed anything on this page.`,
+      links: all.map(categoryLink),
+    };
+  }
+
+  return null;
+}
 
 /**
  * A clarifying question built from the category's own filters.

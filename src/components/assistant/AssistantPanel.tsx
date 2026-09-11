@@ -366,6 +366,24 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
 
       {reply.notice ? <p className="text-sm leading-snug text-fg-soft">{reply.notice}</p> : null}
 
+      {/* Offered, never taken. The shopper stays where they are, with the
+          filters they set, until they press one of these themselves. */}
+      {reply.links && reply.links.length > 0 ? (
+        <div data-testid="reply-links" className="rounded-card border border-edge bg-surface px-3.5 py-3">
+          <p className="text-sm font-semibold text-fg-soft">Sections of this site</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {reply.links.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing here changes until you open one.</p>
+        </div>
+      ) : null}
+
       {showPrimary || showAlternatives ? (
         <div className="rounded-card border border-dashed border-edge-strong bg-surface px-3.5 py-3">
           {/* Two kinds of action, and they must not travel together. Apply runs

@@ -2,7 +2,7 @@ import { isUsable } from "@/domain/provenance";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { AssistantRequest, type AssistantProductRef, type AssistantReply, type ProposedAction } from "@/domain/assistant";
-import { categoryById } from "@/domain/categories";
+import { categories, categoryById } from "@/domain/categories";
 import type { CategoryDefinition, Condition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
 import { resolveClientIdentity } from "@/domain/client-identity";
@@ -10,7 +10,8 @@ import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { evaluateCondition, matchesAll, unconfirmedByPrice } from "@/domain/conditions";
 import { engineSummary } from "@/domain/match-claims";
-import { FIXED_LIMITATION, clarifyingQuestion, composeReply, questionForKey } from "@/domain/reply-composer";
+import { FIXED_LIMITATION, categoryLink, clarifyingQuestion, composeReply, outOfScopeReply, questionForKey } from "@/domain/reply-composer";
+import { resolveSubjectScope } from "@/domain/subject-scope";
 import { toEngineConstraints } from "@/domain/model-constraints";
 import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
@@ -182,6 +183,35 @@ export async function POST(req: Request) {
         proposals: [],
         medicalRedirect: false,
         notice: "The assistant is not configured for shared spend tracking, so it has not been enabled.",
+      }),
+    );
+  }
+
+  // Whether this message is about the category in front of the shopper, decided
+  // by this site before the provider is reached.
+  //
+  // It runs here, above the call, so the scripted stand-in and a live model
+  // answer a cross-category question identically: neither of them is asked. A
+  // model cannot link to a page it was never told the URL of, and a stand-in
+  // that pattern-matches its way to the same answer is a second implementation
+  // to keep in step with the first. There is one, in code, and it is the site's.
+  //
+  // Nothing is applied, nothing is proposed, and the page keeps every filter the
+  // shopper set. The only thing offered is an anchor they press themselves.
+  const scope = resolveSubjectScope(lastUser, cat, categories);
+  const redirect = scope.kind === "in_scope" ? null : outOfScopeReply(scope, cat, categories);
+  if (redirect) {
+    return NextResponse.json(
+      reply({
+        text: redirect.text,
+        mode: provider.isLive ? "live" : "prototype",
+        cat,
+        outcome: agreed,
+        totalProducts: views.length,
+        proposals: [],
+        medicalRedirect: false,
+        links: redirect.links,
+        suppressProducts: true,
       }),
     );
   }
@@ -540,6 +570,11 @@ export async function POST(req: Request) {
       // returned before the model was called.
       medicalRedirect: false,
       notice: undefined,
+      // A shopper who has reached the fixed statement of what this site can
+      // compare is handed the sections it compares. It is the same set of links
+      // the cross-category answer offers, because it is the same dead end:
+      // nothing here matched, and a way out beats a shrug.
+      links: composed === FIXED_LIMITATION ? categories.map(categoryLink) : undefined,
     }),
   );
 }
@@ -596,8 +631,16 @@ function reply(args: {
   // there is nothing to relax.
   oneRelaxationIsEnough?: boolean;
   notice?: string;
+  links?: AssistantReply["links"];
+  // Set when the reply is not about the products on this page. The cards are
+  // dropped rather than shown under an answer that is not about them: a
+  // red-light shopper asking about cold plunges was going to be handed three
+  // red-light panels beside a sentence saying this page is the wrong one.
+  suppressProducts?: boolean;
 }): AssistantReply {
   const { outcome } = args;
+  const products = args.suppressProducts ? [] : outcome.matching.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
+  const unconfirmed = args.suppressProducts ? [] : outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome, args.cat));
   return {
     text: args.text,
     // Authored here, from the same evaluation the cards come from, on every
@@ -607,12 +650,13 @@ function reply(args: {
     mode: args.mode,
     question: args.question,
     // Cards, matching set and proposal all come from one evaluation.
-    products: outcome.matching.slice(0, 3).map((v) => toRef(v, outcome, args.cat)),
+    products,
     matchingIds: outcome.matching.map((v) => v.id),
-    unconfirmedPrice: outcome.unconfirmed.slice(0, 3).map((v) => toRef(v, outcome, args.cat)),
+    unconfirmedPrice: unconfirmed,
     proposals: args.proposals,
     activeConstraints: outcome.result.constraintLabels,
     medicalRedirect: args.medicalRedirect,
     notice: args.notice,
+    links: args.links,
   };
 }

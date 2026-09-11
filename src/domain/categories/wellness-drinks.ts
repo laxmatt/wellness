@@ -256,6 +256,21 @@ export const wellnessDrinks = CategoryDefinition.parse({
     { slug: "energy", label: "Energy", title: "Energy Drinks", description: "Caffeinated functional drinks compared by caffeine, sugar and cost.", conditions: [{ key: "function", op: "includes", value: "energy" }] },
     { slug: "sugar-free", label: "Sugar-free", title: "Sugar-Free Wellness Drinks", description: "Zero-sugar options across every function.", conditions: [{ key: "sugar_g", op: "eq", value: 0 }] },
   ],
+  aliases: [
+    "wellness drink",
+    "wellness drinks",
+    "drink mix",
+    "drink mixes",
+    "electrolyte drink",
+    "electrolyte drinks",
+    "electrolyte powder",
+    "greens powder",
+    "greens powders",
+    "hydration drink",
+    "hydration powder",
+    "energy drink",
+    "energy drinks",
+  ],
   matcherVocabulary: {
     function: {
       electrolytes: ["electrolyte", "electrolytes", "hydration", "sweat", "salt", "cramps"],

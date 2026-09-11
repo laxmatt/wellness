@@ -124,6 +124,12 @@ export const CategoryDefinition = z.object({
   facets: z.array(FacetPage),
   // Synonyms the matcher maps to enum values. Deterministic, hand-maintained.
   matcherVocabulary: z.record(FilterKey, z.record(z.string(), z.array(z.string()))).default({}),
+  // Other names for the category itself, as a shopper would type them.
+  // Hand-maintained, like matcherVocabulary, and used for one thing: deciding
+  // that a message is about a different section of this site. It is a written
+  // list, not a model of language, and a phrase nobody wrote down here is not
+  // recognised. See src/domain/subject-scope.ts.
+  aliases: z.array(z.string()).default([]),
 }).superRefine((cat, ctx) => {
   const keys = new Set(cat.attributeDefinitions.map((a) => a.key));
   keys.add("price");
