@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **172 of 277**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
+Records whose source was read: **172 of 276**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -273,17 +273,17 @@ Specifications that are missing, unsupported or relayed:
 | Evidence | | |
 | --- | --- | --- |
 | Comparison facts | partly | 3 of 4 required specifications carry a usable value; 1 prototype; 1 with no recorded source |
-| Price evidence | partly | $5,490 on record from Edge Theory Labs (direct), relayed from a search summary rather than read from the merchant on 2026-09-08, not re-checked since |
+| Price evidence | no | no amount on record; the page shows Check current price. 1 further amount is on the record from a seller no longer selling this product, so it prices nothing. Other sellers may still list it; none is on record. |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
 | | |
 | --- | --- |
 | Record | `edge-tub-elite`, `/products/edge-theory-labs-edge-tub-elite` |
-| Offers | Edge Theory Labs (direct) ($5,490, unknown, affiliate status not recorded) |
+| Offers | Edge Theory Labs (direct) ($5,490, discontinued, affiliate status not recorded) |
 | Links | https://www.edgetheorylabs.com/products/the-edge-tub-elite |
 | Sources on file | https://www.edgetheorylabs.com/products/the-edge-tub-elite |
-| Retrieval | 7 of 12 recorded fields were relayed rather than read from the source |
-| Ranking | score 44.4, completeness 75%, badges: best_premium |
+| Retrieval | 6 of 11 recorded fields were relayed rather than read from the source |
+| Ranking | score 44.4, completeness 75%, badges: none |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -627,7 +627,7 @@ Specifications that are missing, unsupported or relayed:
 
 **Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
 
-**Price evidence.** An amount on record: 17. No amount on record: 3. Amount read from the merchant rather than relayed: 13 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 16. No amount on record: 4. Amount read from the merchant rather than relayed: 13 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
@@ -639,7 +639,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 58 of 277 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 57 of 276 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

@@ -7,7 +7,7 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
-import { displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
+import { buyableOffers, displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
 // What the shopper is told about the link they are about to follow, per
@@ -46,14 +46,30 @@ export function OfferList({ view }: { view: ProductView }) {
   // `docs/source-checks/` and in the partner checklist, which are where
   // somebody auditing this looks. A shopper needs to know the price is not
   // available and where to get it.
-  const offers = view.offers.filter((o) => !o.disputed);
-  const withheldOffers = view.offers.length - offers.length;
+  // The same rule the cards and the comparison use, so one page cannot offer a
+  // way to buy that another refuses.
+  const offers = buyableOffers(view);
+  const unconfirmed = view.offers.filter((o) => o.disputed).length;
+  const gone = view.offers.filter((o) => !o.disputed && o.availability === "discontinued").length;
   const withheldLine =
-    withheldOffers > 0 ? (
-      <p className="mt-2 text-xs text-fg-muted">
-        {withheldOffers === 1 ? "One listing is not shown here" : `${withheldOffers} listings are not shown here`}: we could not confirm{" "}
-        {withheldOffers === 1 ? "it is" : "they are"} for this product. Check the price with the retailer.
-      </p>
+    unconfirmed > 0 || (gone > 0 && view.availability !== "discontinued") ? (
+      <div className="mt-2 flex flex-col gap-1 text-xs text-fg-muted">
+        {unconfirmed > 0 ? (
+          <p>
+            {unconfirmed === 1 ? "One listing is not shown here" : `${unconfirmed} listings are not shown here`}: we could not confirm{" "}
+            {unconfirmed === 1 ? "it is" : "they are"} for this product. Check the price with the retailer.
+          </p>
+        ) : null}
+        {/* Says what stopped, and stops there. It does not say no stock exists
+            anywhere, and it says nothing about anybody's warranty: neither is
+            something this site has read. */}
+        {gone > 0 && view.availability !== "discontinued" ? (
+          <p>
+            {gone === 1 ? "One listing is not shown here" : `${gone} listings are not shown here`}: the seller no longer sells this product. Others may still list it, and we hold no
+            confirmed listing for one.
+          </p>
+        ) : null}
+      </div>
     ) : null;
 
   if (offers.length === 0) {
@@ -63,7 +79,9 @@ export function OfferList({ view }: { view: ProductView }) {
           ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
           : view.price.money
             ? `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`
-            : "Current price unavailable. We could not confirm a price for this product, so we are not quoting one."}
+            : view.availability === "discontinued"
+              ? "No price and no way to buy from us. The maker states on its own site that it has gone out of business, so we do not link to it and we hold no other confirmed listing. Other sellers may still have stock."
+              : "Current price unavailable. We could not confirm a price for this product, so we are not quoting one."}
         {withheldLine}
       </div>
     );

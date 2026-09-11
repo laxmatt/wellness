@@ -95,7 +95,12 @@ export function displayPrice(price: PriceView): string {
 // straight to a listing the product page refused to show.
 export function buyableOffers(view: { offers: OfferView[] }): OfferView[] {
   return view.offers
-    .filter((o) => !o.disputed)
+    // Discontinued goes with disputed, which it always should have: `pricedOffers`
+    // and `liveOffers` both drop it and this did not, so an offer that no longer
+    // prices a product and no longer counts as live was still a shop button. Edge
+    // Theory Labs states on its own site that the company has gone out of
+    // business, and its record would have kept sending shoppers to the maker.
+    .filter((o) => !o.disputed && o.availability !== "discontinued")
     .slice()
     .sort((a, b) => Number(a.priceIsDemo) - Number(b.priceIsDemo) || a.price.amountMinor - b.price.amountMinor);
 }

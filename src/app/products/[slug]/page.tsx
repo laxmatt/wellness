@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import { primaryStrength } from "@/domain/recommend";
+import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
 import { getProductPage } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
@@ -55,10 +56,12 @@ export default async function ProductPage({ params }: Props) {
   const cat = page.cat;
   const primaryBadge = item.badges[0];
   const alsoValue = item.badges.includes("best_overall") && item.badges.includes("best_value");
-  // A disputed offer is not a way to buy this product: its amount and its link
-  // belong to something else. It stays on the record and out of every buying
-  // surface, which is this button, the retailer list and the structured data.
-  const buyable = view.offers.filter((o) => !o.disputed);
+  // The shared rule, not a fourth copy of it. This page held its own
+  // `!o.disputed` filter, so when discontinued joined the rule everywhere else,
+  // this page kept publishing a buy button and a schema.org Offer for a maker
+  // that states on its own site it has gone out of business. The harness caught
+  // it; the duplication is why there was anything to catch.
+  const buyable = buyableOffers(view);
   const lowest = buyable[0];
 
   // Structured data is a price claim made to search engines, which will quote

@@ -27,7 +27,7 @@ import { formatMoney } from "@/domain/money";
 import { isUsable } from "@/domain/provenance";
 import { recommendCategory } from "@/domain/recommend";
 import { BADGE_LABELS } from "@/domain/recommend/badges";
-import { toProductView, type ProductView } from "@/domain/view";
+import { buyableOffers, toProductView, type ProductView } from "@/domain/view";
 import { loadLocalCatalog } from "@/providers/catalog/LocalCatalogProvider";
 
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
@@ -458,10 +458,14 @@ async function run(browser: Browser) {
     // Counted rather than string-matched: two offers can carry the same
     // amount, so finding "23.99" in the markup proves nothing about which
     // offer put it there. The URL is what identifies an offer.
-    const publishable = view.offers.filter((o) => !o.disputed && !o.priceIsDemo);
+    // The site's own rule, not a copy of it. This filtered on `!o.disputed`
+    // alone, so when discontinued joined the rule the harness went on expecting
+    // a schema.org Offer for a maker that has gone out of business.
+    const publishable = buyableOffers(view).filter((o) => !o.priceIsDemo);
     const publishedCount = (jsonLd.match(/"@type":"Offer"/g) ?? []).length;
     check("structured data publishes exactly the offers that price this product", publishedCount, publishable.length);
-    for (const offer of view.offers.filter((o) => o.priceIsDemo || o.disputed)) {
+    const unpublished = view.offers.filter((o) => o.priceIsDemo || !buyableOffers(view).some((b) => b.id === o.id));
+    for (const offer of unpublished) {
       ok(
         `the ${offer.merchant.name} row is not published as structured data`,
         !jsonLd.includes(offer.url),
@@ -514,7 +518,9 @@ async function run(browser: Browser) {
     );
     // Buyable only. A disputed offer is deliberately unlinked, and the checks
     // above prove its link is absent rather than present.
-    for (const offer of view.offers.filter((o) => !o.disputed)) {
+    // Every offer a shopper can be sent to, and only those. An offer withheld
+    // for any reason, disputed or discontinued, has no row and no link to test.
+    for (const offer of buyableOffers(view)) {
       const same = (a: string, b: string) => new URL(a).href === new URL(b).href;
       const link = links.find((l) => same(l.href, offer.url));
       ok(`offer ${offer.merchant.name} is linked`, link !== undefined, offer.url);

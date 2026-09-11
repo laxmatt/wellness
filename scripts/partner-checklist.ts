@@ -56,21 +56,30 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
   // real and belongs to something else, or to a configuration nobody matched,
   // so a partner reading "on record" would be reading a price the site itself
   // refuses to show.
-  const realOffers = p.offers.filter((o) => o.source.kind !== "demo" && o.disputed !== true);
+  // Discontinued joins demo and disputed. An amount from a seller that has
+  // stopped selling is not an amount a partner can quote, and the site does not
+  // price the product from it either.
+  const realOffers = p.offers.filter((o) => o.source.kind !== "demo" && o.disputed !== true && o.availability !== "discontinued");
   const withheldOffers = p.offers.filter((o) => o.disputed === true);
+  const goneOffers = p.offers.filter((o) => o.disputed !== true && o.availability === "discontinued");
   const cheapestReal = [...realOffers].sort((a, b) => a.priceMinor - b.priceMinor)[0];
   const merchantOf = (id: string) => cat.merchants.find((m) => m.id === id)?.name ?? id;
   const withheldNote =
     withheldOffers.length === 0
       ? ""
       : ` ${withheldOffers.length} further ${withheldOffers.length === 1 ? "amount is" : "amounts are"} on the record and withheld: the record cannot show ${withheldOffers.length === 1 ? "it belongs" : "they belong"} to this product, so ${withheldOffers.length === 1 ? "it prices" : "they price"} nothing.`;
+  const goneNote =
+    goneOffers.length === 0
+      ? ""
+      : ` ${goneOffers.length} further ${goneOffers.length === 1 ? "amount is" : "amounts are"} on the record from ${goneOffers.length === 1 ? "a seller" : "sellers"} no longer selling this product, so ${goneOffers.length === 1 ? "it prices" : "they price"} nothing. Other sellers may still list it; none is on record.`;
   const priceDetail = !cheapestReal
-    ? `no amount on record; the page shows Check current price.${withheldNote}`.trimEnd()
+    ? `no amount on record; the page shows Check current price.${withheldNote}${goneNote}`.trimEnd()
     : `${formatMoney({ amountMinor: cheapestReal.priceMinor, currency: cheapestReal.currency })} on record from ${merchantOf(cheapestReal.merchantId)}, ${cheapestReal.source.method === "secondhand" ? "relayed from a search summary rather than read from the merchant" : `read from the page${cheapestReal.source.ref ? ` (${cheapestReal.source.ref.replace(/\.$/, "")})` : ""}`} on ${cheapestReal.source.retrievedAt ?? cheapestReal.lastChecked}, not re-checked since` +
       (v.price.isDemo
         ? ". The page still shows Check current price: a lower prototype amount is the selected offer"
         : "") +
-      withheldNote;
+      withheldNote +
+      goneNote;
   // Never "complete": an amount on record is an amount somebody wrote down on
   // a date, and nothing here re-checked it. Only a fresh reading could earn
   // that, and this file has never made one.

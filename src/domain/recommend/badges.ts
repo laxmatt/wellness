@@ -65,7 +65,18 @@ export function rankByScore(inputs: ScoringInput[], scores: Map<string, ScoreRes
 //                 to one scoring zero.
 //   Best Premium: same rule at or above premiumMinMinor.
 // Offers and affiliate data are not inputs to any step.
-export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): RecommendationSet {
+/**
+ * `sellable` is the ids a shopper can be sent somewhere for.
+ *
+ * It arrives as its own argument rather than on ScoringInput, because
+ * ScoringInput deliberately carries no offer data at all and a test enforces
+ * that: ranking must not be able to see anything about who sells a product or
+ * who pays us. Badges are a different question from scoring, and this is the
+ * only thing here that knows an offer exists. Omitted, everything is treated as
+ * sellable, which is what every caller outside this repository's own tests
+ * wants by default.
+ */
+export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition, sellable?: Set<string>): RecommendationSet {
   const scoreList = scoreProducts(inputs, cat);
   const scores = new Map(scoreList.map((s) => [s.id, s]));
   const valueList = computeValue(inputs, scoreList, cat);
@@ -73,6 +84,22 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
 
   const eligible = inputs.filter((i) => scores.get(i.id)!.eligible);
   const ranked = rankByScore(eligible, scores, cat);
+
+  // A badge is a recommendation, so it needs somewhere to send a shopper. A
+  // complete record can describe a product nobody can buy: every offer withheld,
+  // or a maker that has gone out of business and says so on its own site.
+  //
+  // Price-based picks already left such a product out, because a withheld offer
+  // prices nothing, and that was luck rather than a rule: Best Overall is not
+  // price-gated and would have handed the badge over on score alone.
+  //
+  // It gates the picks and nothing else. Filtering `eligible` instead was the
+  // first attempt and it was wrong: it took these products out of `ranked` too,
+  // which sent Plunge Original, scoring 64.8 with a disputed price, below a tub
+  // scoring zero. A product that cannot be bought today still ranks where its
+  // specifications put it, keeps its page and its id, and keeps its place in
+  // the comparison.
+  const sellableRanked = sellable ? ranked.filter((i) => sellable.has(i.id)) : ranked;
   const taken = new Set<string>();
   const badges: BadgeAssignment[] = [];
   const withheld: { badge: Badge; reason: string }[] = [];
@@ -81,14 +108,14 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
   // different reasons keep a product out: its amount is a placeholder, or it
   // has no amount at all because every offer on its record was withheld. The
   // copy names the first, because that is the one a reader can act on.
-  const priced = eligible.filter((i) => !i.priceIsDemo && i.priceMinor !== undefined);
+  const priced = sellableRanked.filter((i) => !i.priceIsDemo && i.priceMinor !== undefined);
   const demoPricedCount = eligible.filter((i) => i.priceIsDemo).length;
   const demoPriceNote =
     demoPricedCount === 0
       ? ""
       : ` ${demoPricedCount} of ${eligible.length} products carry placeholder prices and were left out of price-based picks.`;
 
-  const overall = ranked[0];
+  const overall = sellableRanked[0];
   if (overall) {
     taken.add(overall.id);
     badges.push({
@@ -128,7 +155,7 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
   const recommendable = (i: ScoringInput) => scores.get(i.id)!.score > 0;
 
   const basis = cat.badges.priceBasis;
-  const rankedPriced = ranked.filter((i) => !i.priceIsDemo);
+  const rankedPriced = sellableRanked.filter((i) => !i.priceIsDemo);
   const inTier = (pred: (p: number) => boolean) =>
     rankedPriced.filter((i) => {
       const p = numericFor(i, cat, basis);
