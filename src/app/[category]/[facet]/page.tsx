@@ -5,6 +5,7 @@ import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { facetSelection, getCategoryPage } from "@/lib/queries";
 import { social } from "@/lib/metadata";
+import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
 
@@ -49,6 +50,10 @@ export default async function FacetPage({ params }: Props) {
       assistantCategoryId={cat.id}
       compareSeeds={products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
+      {/* The trail, mirroring the one rendered below. No ItemList here: this
+          page shows the category's products with one chip pressed, and the
+          category page already describes that list. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbList([{ name: "Home", path: "/" }, { name: cat.name, path: `/${cat.slug}` }])) }} />
       <Container className="pt-4">
         {/* The trail stops at the category, because that is the page. The facet
             is a selection on it, named by the line above the chips while it is

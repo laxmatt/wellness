@@ -17,6 +17,7 @@ import { getCatalog } from "@/providers";
 import { getProductPage } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
 import { social } from "@/lib/metadata";
+import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -99,7 +100,19 @@ export default async function ProductPage({ params }: Props) {
       assistantCategoryId={cat.id}
       compareSeeds={page.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: cat.name, path: `/${cat.slug}` },
+              { name: `${view.brand.name} ${view.name}` },
+            ]),
+          ),
+        }}
+      />
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: `${view.brand.name} ${view.name}` }]} />
         <div className="mt-4 grid gap-8 lg:grid-cols-12 lg:gap-12">

@@ -2,6 +2,7 @@ import { BrandStrip, CategoryTiles, DiscoveryModules, Hero, HowWeChooseCallout, 
 import { ProductCard } from "@/components/product/ProductCard";
 import { Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
+import { jsonLdScript, publisher } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
 // The home page inherits its title and description from the root layout. It
@@ -22,6 +23,11 @@ export default async function HomePage() {
 
   return (
     <Shell current="/">
+      {/* Who publishes this, once, on the page that represents the site. No
+          logo, no social accounts and no search action: this site has none of
+          the three, and naming one it does not have is how a knowledge panel
+          ends up describing somebody else. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(publisher()) }} />
       <Hero pages={pages} />
       <div className="mt-4 flex flex-col gap-20">
         <CategoryTiles pages={pages} />
