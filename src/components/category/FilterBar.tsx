@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useSyncExternalStore, type ReactNode } from "react";
+import { NeedsHeldBack, NeedsInvitation } from "@/components/needs/NeedsFit";
 import { cn } from "@/lib/cn";
 import { useCategoryFilters } from "./FilterContext";
 
@@ -94,6 +95,11 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
         </div>
       ) : null}
 
+      {/* An offer, not a claim. With nothing selected there is no fit to
+          report, and the section says what it would do rather than inventing a
+          shopper to do it for. */}
+      {f.categoryId ? <NeedsInvitation categoryId={f.categoryId} className="mb-3" /> : null}
+
       <div className="mb-4 flex items-center gap-3 text-sm text-fg-muted">
         <span aria-live="polite">
           {f.visible.size} of {f.ids.length} shown
@@ -114,6 +120,7 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           <button type="button" onClick={f.dropLast} className="tap mt-4 inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover">
             Remove the last filter
           </button>
+          {f.categoryId ? <NeedsHeldBack categoryId={f.categoryId} ids={f.ids} visible={f.visible} /> : null}
           {emptyHref ? (
             <p className="mt-3 text-sm">
               <a href={emptyHref} className="font-semibold text-accent-strong hover:underline">
@@ -123,10 +130,13 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           ) : null}
         </div>
       ) : (
-        <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {/* The assistant's order when it has one, the page's otherwise. A
-              preference that reorders nothing is not a preference. */}
-          {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+        <div>
+          <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {/* The assistant's order when it has one, the page's otherwise. A
+                preference that reorders nothing is not a preference. */}
+            {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+          </div>
+          {f.categoryId ? <NeedsHeldBack categoryId={f.categoryId} ids={f.ids} visible={f.visible} /> : null}
         </div>
       )}
     </div>

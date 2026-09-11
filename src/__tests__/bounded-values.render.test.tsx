@@ -83,7 +83,7 @@ describe("the comparison table", () => {
       ["ag1-pouch-30", "lmnt-citrus-salt-30"].includes(p.view.id),
     );
     const model = buildCompareModel(items, cat);
-    render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
+    render(<CompareView model={model} ids={items.map((i) => i.view.id)} categoryId={cat.id} />);
     const cell = screen.getByText("less than 1 g");
     const row = cell.closest("tr")!;
     expect(within(row).getByText(/a stated bound, not an exact value/)).toBeTruthy();
@@ -101,7 +101,7 @@ describe("the comparison table", () => {
     disputed.attributes.power!.source.note = "Stated as 60 in one place and 80 in another.";
     const items = recommendCategory([disputed, miniProduct("exact", 20000, { power: 50, size: "m" })].map(miniView), miniCategory).products;
     const model = buildCompareModel(items, miniCategory);
-    render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
+    render(<CompareView model={model} ids={items.map((i) => i.view.id)} categoryId={miniCategory.id} />);
     const row = screen.getByText("60, disputed").closest("tr")!;
     expect(within(row).getByText(/states its figure two ways/)).toBeTruthy();
     expect(within(row).queryAllByLabelText("Strongest in this row").length).toBe(0);
@@ -178,7 +178,7 @@ describe("the comparison table's group keys", () => {
     const errors: unknown[][] = [];
     const spy = vi.spyOn(console, "error").mockImplementation((...args) => void errors.push(args));
     try {
-      render(<CompareView model={model} ids={items.map((i) => i.view.id)} />);
+      render(<CompareView model={model} ids={items.map((i) => i.view.id)} categoryId={cat.id} />);
     } finally {
       spy.mockRestore();
     }

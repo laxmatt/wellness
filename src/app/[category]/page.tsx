@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
-import { getCategoryPage, liveFacets } from "@/lib/queries";
+import { buildNeeds, getCategoryPage, liveFacets } from "@/lib/queries";
 import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ category: string }> };
@@ -37,6 +37,7 @@ export default async function CategoryPage({ params }: Props) {
   const { cat, products, set } = page;
   const filterGroups = buildFilterGroups(products.map((p) => p.view), cat);
   const ids = products.map((p) => p.view.id);
+  const needs = buildNeeds(page);
 
   return (
     <Shell
@@ -49,7 +50,7 @@ export default async function CategoryPage({ params }: Props) {
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: cat.name }]} />
       </Container>
       <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} />
-      <CategoryFilterProvider groups={filterGroups} ids={ids}>
+      <CategoryFilterProvider groups={filterGroups} ids={ids} needs={needs} categoryId={cat.id}>
         <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
           <FacetChips cat={cat} available={liveFacets(page)} />

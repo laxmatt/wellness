@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { buttonStyles } from "@/components/ui/Button";
 import { CompareToggle } from "@/components/compare/CompareToggle";
+import { NeedsFit } from "@/components/needs/NeedsFit";
 import { Badge } from "@/components/ui/Badge";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
@@ -79,6 +80,11 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             {tradeoff}
           </p>
         ) : null}
+        {/* Only when the shopper has asked for something. No filters means no
+            fit, and nothing here guesses at one. Three rows on a card, the rest
+            behind a control: conflicts first, because a shopper scanning a grid
+            is looking for the reason to stop. */}
+        <NeedsFit productId={view.id} categoryId={view.categoryId} limit={3} />
         <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a

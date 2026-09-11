@@ -8,7 +8,7 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories } from "@/domain/categories";
 import { buildFilterGroups } from "@/domain/filters";
-import { facetProducts, getCategoryPage, liveFacets } from "@/lib/queries";
+import { buildNeeds, facetProducts, getCategoryPage, liveFacets } from "@/lib/queries";
 import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ category: string; facet: string }> };
@@ -39,6 +39,8 @@ export default async function FacetPage({ params }: Props) {
   if (!fp) notFound();
   const { cat } = page;
   const filterGroups = buildFilterGroups(fp.products.map((p) => p.view), cat);
+  // Over the whole category, and carrying this facet as a requirement of its own.
+  const needs = buildNeeds(page, fp.facet.slug);
 
   return (
     <Shell
@@ -73,7 +75,7 @@ export default async function FacetPage({ params }: Props) {
               </Link>
             </div>
           ) : (
-            <CategoryFilterProvider groups={filterGroups} ids={fp.products.map((p) => p.view.id)}>
+            <CategoryFilterProvider groups={filterGroups} ids={fp.products.map((p) => p.view.id)} needs={needs} categoryId={cat.id} activeFacetId={`facet:${fp.facet.slug}`}>
               <div className="mt-6">
                 <FilterChips />
               </div>

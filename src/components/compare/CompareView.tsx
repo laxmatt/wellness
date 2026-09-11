@@ -6,14 +6,24 @@ import { Badge } from "@/components/ui/Badge";
 import { ImageFrame } from "@/components/ui/ImageFrame";
 import { VerificationTag } from "@/components/ui/VerificationTag";
 import type { CompareModel } from "@/domain/compare";
+import { NeedsFit } from "@/components/needs/NeedsFit";
+import { useNeeds } from "@/components/needs/NeedsStore";
 import { buttonStyles } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
 // One table, two behaviours. Wide screens see every column at once. Narrow
 // screens scroll horizontally with snap points on each product column while
 // the attribute labels stay pinned to the left edge.
-export function CompareView({ model, ids }: { model: CompareModel; ids: string[] }) {
+export function CompareView({ model, ids, categoryId }: { model: CompareModel; ids: string[]; categoryId: string }) {
   const [diffOnly, setDiffOnly] = useState(false);
+  // The requirements the shopper set on this category's own page. A comparison
+  // has no chips, and the products in it are exactly the ones a filter may have
+  // excluded: that conflict is the thing worth seeing, not hiding.
+  //
+  // Read by category, so a column is only ever measured against requirements
+  // from its own. The page admits one category at a time, and this keeps that
+  // true rather than assuming it.
+  const needs = useNeeds(categoryId);
   const removeHref = (id: string) => `/compare?ids=${ids.filter((x) => x !== id).join(",")}`;
   const groups = model.groups
     .map((g) => ({ ...g, rows: diffOnly ? g.rows.filter((r) => !r.same) : g.rows }))
@@ -112,6 +122,25 @@ export function CompareView({ model, ids }: { model: CompareModel; ids: string[]
             </tr>
           </thead>
           <tbody>
+            {needs.length > 0 ? (
+              <>
+                <tr>
+                  <th scope="rowgroup" colSpan={model.columns.length + 1} className="sticky left-0 z-10 bg-surface px-2 pb-1 pt-4 text-left">
+                    <span className="eyebrow">How it fits your needs</span>
+                  </th>
+                </tr>
+                <tr>
+                  <th scope="row" className="sticky left-0 z-10 bg-surface p-2 text-left align-top text-xs font-semibold text-fg-soft">
+                    Your selections
+                  </th>
+                  {model.columns.map((c) => (
+                    <td key={c.id} className="p-2 align-top">
+                      <NeedsFit productId={c.id} categoryId={categoryId} heading="Against what you picked" />
+                    </td>
+                  ))}
+                </tr>
+              </>
+            ) : null}
             {/* Keyed by position, not by label. Two groups can carry the same
                 label: Wellness Drinks defines a "Buying" group of subscription
                 specs, and every category gets a "Buying" group of retailers

@@ -77,7 +77,7 @@ export default async function ComparePage({ searchParams }: Props) {
                 <p className="text-sm text-fg-muted">Optional. Ask what the differences mean for you.</p>
               </div>
               <div className="mt-6">
-                <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} />
+                <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} categoryId={cat.id} />
               </div>
             </>
           </>

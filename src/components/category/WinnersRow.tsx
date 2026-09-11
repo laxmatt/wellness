@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { buttonStyles } from "@/components/ui/Button";
 import { CompareToggle } from "@/components/compare/CompareToggle";
+import { NeedsFit } from "@/components/needs/NeedsFit";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
 import { buyableOffers, displayPrice } from "@/domain/view";
@@ -85,6 +86,12 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                       outbound action rather than a fabricated one, and a
                       product whose amount is a placeholder keeps its retailer.
                       Nothing here claims stock. */}
+                  {/* A badge is decided across the whole category and says
+                      nothing about what this shopper asked for. Without this,
+                      a pick could sit above a grid of cards all reading "does
+                      not match" and be the only card on the page that never
+                      said whether it fits. */}
+                  <NeedsFit productId={w.view.id} categoryId={w.view.categoryId} limit={3} />
                   <div className="mt-auto flex flex-col gap-2 pt-3">
                     {merchants.map((o) => (
                       <a
