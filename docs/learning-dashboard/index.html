@@ -306,6 +306,16 @@
   }
   var MAX_REGISTER_BYTES = 2e6;
   var serialiseRegister = (entries2, now = /* @__PURE__ */ new Date()) => JSON.stringify({ version: 1, exportedAt: now.toISOString(), entries: entries2 }, null, 2);
+  function uniqueId(makeId, taken) {
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const candidate = makeId();
+      if (candidate !== "" && !taken.has(candidate)) return candidate;
+    }
+    const base = makeId() || "L";
+    let n = 2;
+    while (taken.has(`${base}-${n}`)) n += 1;
+    return `${base}-${n}`;
+  }
   function parseRegister(raw, makeId = newId) {
     if (raw.length > MAX_REGISTER_BYTES) return { ok: false, reason: `That file is ${Math.round(raw.length / 1e3)} kB. A register is notes, not a database.` };
     let parsed;
@@ -329,10 +339,10 @@
       const entry = candidate;
       let id = typeof entry.id === "string" ? entry.id.trim() : "";
       if (id === "") {
-        id = makeId();
+        id = uniqueId(makeId, seen);
         notes.push(`Entry ${i + 1} had no id and was kept under "${id}".`);
       } else if (seen.has(id)) {
-        id = makeId();
+        id = uniqueId(makeId, seen);
         notes.push(`Entry ${i + 1} repeated the id "${entry.id}", which would make editing one edit both. It was kept under "${id}".`);
       }
       seen.add(id);
@@ -396,7 +406,7 @@
   var KEY = "wc.learning.v1";
   var entries = [];
   var editing = null;
-  var unreadable = null;
+  var rescue = null;
   var pending = null;
   var el = (tag, className, text2) => {
     const node = document.createElement(tag);
@@ -413,21 +423,31 @@
     try {
       raw = window.localStorage.getItem(KEY);
     } catch {
-      unreadable = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file." };
+      rescue = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file.", kind: "unreadable", notes: [] };
       return;
     }
     if (!raw) return;
     const parsed = parseRegister(raw);
     if (!parsed.ok) {
-      unreadable = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}` };
+      rescue = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}`, kind: "unreadable", notes: [] };
       return;
     }
     entries = parsed.entries;
-    if (parsed.notes.length > 0) setSaveState(`Loaded from this browser. ${parsed.notes.join(" ")}`, true);
+    if (parsed.notes.length > 0) {
+      rescue = {
+        raw,
+        reason: `${parsed.notes.length} of the notes saved in this browser could not be read. The rest are shown below and have not been changed.`,
+        kind: "partial",
+        notes: parsed.notes
+      };
+    }
   }
   function save() {
-    if (unreadable) {
-      setSaveState("Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.", true);
+    if (rescue) {
+      setSaveState(
+        rescue.kind === "partial" ? "Nothing was saved: part of what is stored here could not be read, and writing now would replace it with less than it holds. Save the raw text first." : "Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.",
+        true
+      );
       return false;
     }
     try {
@@ -702,7 +722,7 @@
             taken.add(entry.id);
             return entry;
           }
-          const id = newId();
+          const id = uniqueId(newId, taken);
           taken.add(id);
           return { ...entry, id };
         })
@@ -717,26 +737,28 @@
   function renderRescue() {
     const host = byId("rescue");
     clear(host);
-    host.hidden = unreadable === null;
-    if (!unreadable) return;
+    host.hidden = rescue === null;
+    if (!rescue) return;
+    const state = rescue;
     const box = el("div", "banner bad-banner");
-    box.appendChild(el("strong", void 0, "Saved notes could not be read."));
-    box.appendChild(el("p", void 0, unreadable.reason));
-    box.appendChild(el("p", void 0, "They have not been changed and nothing will be written over them while this message is here. Save the raw text first, then decide what to do with it."));
-    if (unreadable.raw !== "") {
-      const rescue = el("button", void 0, "Save the raw text to a file");
-      rescue.type = "button";
-      rescue.addEventListener("click", () => download(`learning-register-unreadable-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.txt`, unreadable.raw));
-      box.appendChild(rescue);
-      const discard = el("button", "link", "I have a copy: start a new register");
-      discard.type = "button";
-      discard.addEventListener("click", () => {
-        unreadable = null;
+    box.appendChild(el("strong", void 0, state.kind === "partial" ? "Part of the saved notes could not be read." : "Saved notes could not be read."));
+    box.appendChild(el("p", void 0, state.reason));
+    for (const note of state.notes) box.appendChild(el("p", "problem", note));
+    box.appendChild(el("p", void 0, "Nothing has been written over the stored text, and nothing will be while this message is here. Save the raw text first, then decide."));
+    if (state.raw !== "") {
+      const keep = el("button", void 0, "Save the raw text to a file");
+      keep.type = "button";
+      keep.addEventListener("click", () => download(`learning-register-unreadable-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.txt`, state.raw));
+      box.appendChild(keep);
+      const go = el("button", "link", state.kind === "partial" ? "I have a copy: keep the readable ones" : "I have a copy: start a new register");
+      go.type = "button";
+      go.addEventListener("click", () => {
+        rescue = null;
         renderRescue();
         save();
         render();
       });
-      box.appendChild(discard);
+      box.appendChild(go);
     }
     host.appendChild(box);
   }
@@ -766,7 +788,7 @@
     renderMetrics();
     render();
     fillForm();
-    if (unreadable) setSaveState("Saved notes could not be read. Nothing has been written over them.", true);
+    if (rescue) setSaveState(rescue.kind === "partial" ? "Part of the saved notes could not be read. Nothing has been written over them." : "Saved notes could not be read. Nothing has been written over them.", true);
     else setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
     byId("f-source").addEventListener("change", syncMeasurementFields);
     byId("save-entry").addEventListener("click", submit);

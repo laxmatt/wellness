@@ -221,6 +221,26 @@ export const serialiseRegister = (entries: LearningEntry[], now = new Date()): s
  * dropping it would lose a note. The second one is renamed and the rename is
  * reported, since two entries sharing an id means editing one edits both.
  */
+/**
+ * An id nothing else is using.
+ *
+ * `newId` is a date and six random digits, which is nearly always free and is
+ * not guaranteed to be: two repairs in one pass can collide, and a caller
+ * passing a fixed generator collides every time. Trying again a bounded number
+ * of times handles the first; counting up from the last attempt handles the
+ * second and always terminates, because the set is finite.
+ */
+export function uniqueId(makeId: () => string, taken: ReadonlySet<string>): string {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const candidate = makeId();
+    if (candidate !== "" && !taken.has(candidate)) return candidate;
+  }
+  const base = makeId() || "L";
+  let n = 2;
+  while (taken.has(`${base}-${n}`)) n += 1;
+  return `${base}-${n}`;
+}
+
 export function parseRegister(raw: string, makeId: () => string = newId): { ok: true; entries: LearningEntry[]; notes: string[] } | { ok: false; reason: string } {
   if (raw.length > MAX_REGISTER_BYTES) return { ok: false, reason: `That file is ${Math.round(raw.length / 1000)} kB. A register is notes, not a database.` };
   let parsed: unknown;
@@ -246,10 +266,10 @@ export function parseRegister(raw: string, makeId: () => string = newId): { ok: 
     const entry = candidate as LearningEntry;
     let id = typeof entry.id === "string" ? entry.id.trim() : "";
     if (id === "") {
-      id = makeId();
+      id = uniqueId(makeId, seen);
       notes.push(`Entry ${i + 1} had no id and was kept under "${id}".`);
     } else if (seen.has(id)) {
-      id = makeId();
+      id = uniqueId(makeId, seen);
       notes.push(`Entry ${i + 1} repeated the id "${entry.id}", which would make editing one edit both. It was kept under "${id}".`);
     }
     seen.add(id);

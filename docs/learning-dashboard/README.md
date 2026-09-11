@@ -77,6 +77,13 @@ the entry would lose a note. They are given an id and the change is reported.
 anything over them, and offers the raw text as a file so you can rescue it.
 Nothing is overwritten until you say you have a copy.
 
+The same holds when only *part* of them reads. The readable entries are shown,
+because they are useful, but the stored text held more than that, so nothing is
+written back until you decide. Saving an entry while that warning stands is
+refused and says why. Only pressing "keep the readable ones" replaces what is
+stored, and by then you have been told what will be lost and offered the raw
+text to keep.
+
 `example-register.json` in this folder is a saved file you can load to see it
 work. Its entries are invented and marked.
 

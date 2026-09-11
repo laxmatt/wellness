@@ -12,6 +12,7 @@ import {
   registerSummary,
   serialiseRegister,
   sortEntries,
+  uniqueId,
   validateEntry,
   type LearningEntry,
 } from "@/domain/learning/register";
@@ -293,6 +294,45 @@ describe("the vocabularies the page offers", () => {
   it("offers no source the validator would refuse", () => {
     for (const s of EVIDENCE_SOURCES) {
       expect(validateEntry(entry({ evidence: { source: s.id } })), s.id).toEqual([]);
+    }
+  });
+});
+
+describe("a repaired id is one nothing else is using", () => {
+  it("tries again when the generator hands back one that is taken", () => {
+    // newId is a date and six random digits: nearly always free, not
+    // guaranteed to be, and never free at all when a caller passes a fixed
+    // generator.
+    const taken = new Set(["L-fixed"]);
+    let calls = 0;
+    const sometimes = () => {
+      calls += 1;
+      return calls < 3 ? "L-fixed" : "L-free";
+    };
+    expect(uniqueId(sometimes, taken)).toBe("L-free");
+  });
+
+  it("still terminates when the generator only ever returns one id", () => {
+    const always = () => "L-same";
+    expect(uniqueId(always, new Set())).toBe("L-same");
+    expect(uniqueId(always, new Set(["L-same"]))).toBe("L-same-2");
+    expect(uniqueId(always, new Set(["L-same", "L-same-2", "L-same-3"]))).toBe("L-same-4");
+  });
+
+  it("never hands a repair an id another entry in the same file already has", () => {
+    // Two entries repeating one id, and a generator that returns an id the file
+    // also uses: the collision has to be caught on the way out, not left to be
+    // discovered when editing one entry edits another.
+    const file = JSON.stringify({
+      version: 1,
+      entries: [entry({ id: "a" }), entry({ id: "a" }), entry({ id: "a" }), entry({ id: "collides" })],
+    });
+    const back = parseRegister(file, () => "collides");
+    expect(back.ok).toBe(true);
+    if (back.ok) {
+      const ids = back.entries.map((e) => e.id);
+      expect(ids.length).toBe(4);
+      expect(new Set(ids).size, `ids were ${ids.join(", ")}`).toBe(4);
     }
   });
 });

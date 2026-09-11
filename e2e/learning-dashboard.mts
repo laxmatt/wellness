@@ -188,7 +188,7 @@ async function run() {
   await page.waitForSelector("#rescue .banner", { timeout: 5000 });
   const rescue = await page.locator("#rescue").innerText();
   ok("the page says the saved notes could not be read", rescue.includes("Saved notes could not be read"), rescue.slice(0, 120));
-  ok("and that nothing has been written over them", rescue.includes("have not been changed"), rescue.slice(0, 200));
+  ok("and that nothing has been written over them", rescue.includes("Nothing has been written over the stored text"), rescue.slice(0, 220));
   ok("the status line agrees, rather than saying nothing is saved", (await page.locator("#save-state").innerText()).includes("could not be read"), await page.locator("#save-state").innerText());
 
   // Writing while the old text is unread would destroy it, so it is refused.
@@ -203,7 +203,46 @@ async function run() {
   await page.waitForFunction(() => !document.getElementById("rescue")!.innerText.includes("could not be read"), undefined, { timeout: 5000 });
   ok("and it can be cleared deliberately once the owner has a copy", (await page.evaluate(() => window.localStorage.getItem("wc.learning.v1")))?.startsWith("{") === true, "");
 
+  scenario = "a stored register that only partly reads";
+  // The one that nearly got away. Valid JSON, one entry the tool could not
+  // have written: the readable ones were shown, the warning was overwritten a
+  // moment later by "loaded from this browser", and the next save wrote the
+  // smaller set over the original with no sign the other note had existed.
+  const partial = JSON.stringify({
+    version: 1,
+    entries: [
+      { id: "keeps", observation: "This one reads.", evidence: { source: "reasoning" }, status: "open", createdAt: "2026-09-01T00:00:00.000Z", updatedAt: "2026-09-01T00:00:00.000Z" },
+      { id: "loses", observation: "This one has no timestamp.", evidence: { source: "reasoning" }, status: "open" },
+    ],
+  });
+  await page.evaluate((text) => window.localStorage.setItem("wc.learning.v1", text), partial);
+  await page.reload();
+  await page.waitForSelector("#rescue .banner", { timeout: 5000 });
+
+  check("the readable entry is shown", await entryCards(page).count(), 1);
+  const partialBanner = await page.locator("#rescue").innerText();
+  ok("the page says part of it could not be read", partialBanner.includes("Part of the saved notes could not be read"), partialBanner.slice(0, 140));
+  ok("and names what was left out", partialBanner.includes("updatedAt"), partialBanner.slice(0, 260));
+  ok("the status line agrees rather than saying it loaded", (await page.locator("#save-state").innerText()).includes("Part of the saved notes"), await page.locator("#save-state").innerText());
+
+  // Editing and saving must not quietly write the smaller set over it.
+  await page.fill("#f-observation", "Something new while the warning stands.");
+  await page.selectOption("#f-source", "reasoning");
+  await page.click("#save-entry");
+  check("the stored text is still every byte of the original", await page.evaluate(() => window.localStorage.getItem("wc.learning.v1")), partial);
+  ok("and the refusal explains itself", (await page.locator("#save-state").innerText()).includes("less than it holds"), await page.locator("#save-state").innerText());
+
+  await page.locator("#rescue button", { hasText: "keep the readable ones" }).click();
+  await page.waitForFunction(() => !document.getElementById("rescue")!.innerText.includes("could not be read"), undefined, { timeout: 5000 });
+  const afterChoice = await page.evaluate(() => window.localStorage.getItem("wc.learning.v1"));
+  ok("only an explicit press replaces it", afterChoice !== partial, "");
+  ok("and what it kept is the readable one", (afterChoice ?? "").includes("This one reads."), "");
+  ok("the one that could not be read is gone, deliberately", !(afterChoice ?? "").includes("This one has no timestamp"), "");
+
   scenario = "export and import";
+  await page.evaluate(() => window.localStorage.clear());
+  await page.reload();
+  await addEntry(page, { observation: "One to export.", source: "reasoning", change: "" });
   const exported = await page.evaluate(async () => {
     // The Save button writes a file through a download, which this harness
     // cannot open. The same serialisation is read here from the storage the

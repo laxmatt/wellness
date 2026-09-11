@@ -25,6 +25,7 @@ import {
   registerSummary,
   serialiseRegister,
   sortEntries,
+  uniqueId,
   validateEntry,
   type LearningEntry,
   type StatusId,
@@ -36,12 +37,19 @@ const KEY = "wc.learning.v1";
 let entries: LearningEntry[] = [];
 let editing: string | null = null;
 /**
- * Set when stored notes could not be read. While it is set nothing is written
- * back, because writing would overwrite whatever is still in there. The page
- * offers the raw text as a file instead, so the owner can rescue it before
- * deciding anything.
+ * Set when the stored notes did not come back whole. While it is set nothing is
+ * written back, because writing would replace the stored text with less than it
+ * held. The page offers the raw text as a file, so the owner can rescue it
+ * before deciding anything.
+ *
+ * Two shapes, and the second is the one that nearly got away. `unreadable` is a
+ * file that would not parse at all, which is obvious. `partial` is a file that
+ * parsed and lost an entry on the way: the valid ones were shown, the warning
+ * was overwritten a moment later by the ordinary "loaded" message, and the next
+ * save wrote the smaller set over the original. The rejected note would have
+ * been gone with no sign it ever existed.
  */
-let unreadable: { raw: string; reason: string } | null = null;
+let rescue: { raw: string; reason: string; kind: "unreadable" | "partial"; notes: string[] } | null = null;
 /** A file that has been read and not yet applied. Applying it is a decision. */
 let pending: { entries: LearningEntry[]; notes: string[]; name: string } | null = null;
 
@@ -66,7 +74,7 @@ function load() {
   } catch {
     // Storage switched off, or a browser refusing it. Nothing was stored, so
     // nothing is at risk; the page says so rather than pretending it saved.
-    unreadable = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file." };
+    rescue = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file.", kind: "unreadable", notes: [] };
     return;
   }
   if (!raw) return;
@@ -74,17 +82,33 @@ function load() {
   const parsed = parseRegister(raw);
   if (!parsed.ok) {
     // The saved text is still there and this will not write over it.
-    unreadable = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}` };
+    rescue = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}`, kind: "unreadable", notes: [] };
     return;
   }
+
+  // The valid entries are shown, because they are readable and useful. But the
+  // stored text held more than this, so nothing is written back until somebody
+  // says what to do about the difference.
   entries = parsed.entries;
-  if (parsed.notes.length > 0) setSaveState(`Loaded from this browser. ${parsed.notes.join(" ")}`, true);
+  if (parsed.notes.length > 0) {
+    rescue = {
+      raw,
+      reason: `${parsed.notes.length} of the notes saved in this browser could not be read. The rest are shown below and have not been changed.`,
+      kind: "partial",
+      notes: parsed.notes,
+    };
+  }
 }
 
 /** Returns whether it actually saved, so a caller cannot report success over a failure. */
 function save(): boolean {
-  if (unreadable) {
-    setSaveState("Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.", true);
+  if (rescue) {
+    setSaveState(
+      rescue.kind === "partial"
+        ? "Nothing was saved: part of what is stored here could not be read, and writing now would replace it with less than it holds. Save the raw text first."
+        : "Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.",
+      true,
+    );
     return false;
   }
   try {
@@ -424,8 +448,9 @@ function applyPending(how: "merge" | "replace") {
           taken.add(entry.id);
           return entry;
         }
-        // Keeping both rather than overwriting one with the other.
-        const id = newId();
+        // Keeping both rather than overwriting one with the other, under an id
+        // nothing here is already using.
+        const id = uniqueId(newId, taken);
         taken.add(id);
         return { ...entry, id };
       }),
@@ -442,28 +467,33 @@ function applyPending(how: "merge" | "replace") {
 function renderRescue() {
   const host = byId("rescue");
   clear(host);
-  host.hidden = unreadable === null;
-  if (!unreadable) return;
+  host.hidden = rescue === null;
+  if (!rescue) return;
+  const state = rescue;
 
   const box = el("div", "banner bad-banner");
-  box.appendChild(el("strong", undefined, "Saved notes could not be read."));
-  box.appendChild(el("p", undefined, unreadable.reason));
-  box.appendChild(el("p", undefined, "They have not been changed and nothing will be written over them while this message is here. Save the raw text first, then decide what to do with it."));
-  if (unreadable.raw !== "") {
-    const rescue = el("button", undefined, "Save the raw text to a file");
-    rescue.type = "button";
-    rescue.addEventListener("click", () => download(`learning-register-unreadable-${new Date().toISOString().slice(0, 10)}.txt`, unreadable!.raw));
-    box.appendChild(rescue);
+  box.appendChild(el("strong", undefined, state.kind === "partial" ? "Part of the saved notes could not be read." : "Saved notes could not be read."));
+  box.appendChild(el("p", undefined, state.reason));
+  for (const note of state.notes) box.appendChild(el("p", "problem", note));
+  box.appendChild(el("p", undefined, "Nothing has been written over the stored text, and nothing will be while this message is here. Save the raw text first, then decide."));
 
-    const discard = el("button", "link", "I have a copy: start a new register");
-    discard.type = "button";
-    discard.addEventListener("click", () => {
-      unreadable = null;
+  if (state.raw !== "") {
+    const keep = el("button", undefined, "Save the raw text to a file");
+    keep.type = "button";
+    keep.addEventListener("click", () => download(`learning-register-unreadable-${new Date().toISOString().slice(0, 10)}.txt`, state.raw));
+    box.appendChild(keep);
+
+    const go = el("button", "link", state.kind === "partial" ? "I have a copy: keep the readable ones" : "I have a copy: start a new register");
+    go.type = "button";
+    go.addEventListener("click", () => {
+      rescue = null;
       renderRescue();
+      // Only now does the smaller set replace what was stored, and only
+      // because somebody pressed this.
       save();
       render();
     });
-    box.appendChild(discard);
+    box.appendChild(go);
   }
   host.appendChild(box);
 }
@@ -499,7 +529,9 @@ export function start() {
   renderMetrics();
   render();
   fillForm();
-  if (unreadable) setSaveState("Saved notes could not be read. Nothing has been written over them.", true);
+  // Set after everything else, so nothing overwrites it. The partial case used
+  // to have its warning replaced by "loaded from this browser" a line later.
+  if (rescue) setSaveState(rescue.kind === "partial" ? "Part of the saved notes could not be read. Nothing has been written over them." : "Saved notes could not be read. Nothing has been written over them.", true);
   else setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
 
   byId("f-source").addEventListener("change", syncMeasurementFields);
