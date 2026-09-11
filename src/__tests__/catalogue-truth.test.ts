@@ -91,11 +91,27 @@ describe("the catalogue records what the source states, and nothing else", () =>
     expect(byId("cure-hydration-lemonade-14").provenance["attributes.caffeine_mg"].source.note).toMatch(/does not state that there is none/i);
   });
 
-  it("keeps the figures that were stated", () => {
-    // LMNT states zero. CELSIUS states 200. Neither is touched.
-    expect(byId("lmnt-citrus-salt-30").attributes.caffeine_mg).toBe(0);
+  it("keeps the figure that was stated", () => {
+    // CELSIUS states 200 on its own back label, read on 2026-09-11.
     expect(byId("celsius-sparkling-orange-12").attributes.caffeine_mg).toBe(200);
-    expect(byId("lmnt-citrus-salt-30").provenance["attributes.caffeine_mg"].verification).toBe("manufacturer_reported");
+    expect(byId("celsius-sparkling-orange-12").provenance["attributes.caffeine_mg"].verification).toBe("manufacturer_reported");
+  });
+
+  // This asserted LMNT's zero for as long as the zero stood. It came from a
+  // 2026-09-08 search summary, and three direct readings of the maker's own
+  // pages then failed to find any caffeine statement for this flavour: the
+  // product page on 2026-09-09, the FAQ and the ingredients page on 2026-09-11.
+  // The only amount the maker states is 50 mg, for Lemonade Iced Tea.
+  //
+  // Withdrawing it does not say the product contains caffeine. It says this
+  // catalogue does not know, which is what was true all along.
+  it("withdrew a zero that three readings could not find", () => {
+    const lmnt = byId("lmnt-citrus-salt-30");
+    expect(lmnt.attributes.caffeine_mg).toBeUndefined();
+    const p = lmnt.provenance["attributes.caffeine_mg"];
+    expect(p.verification).toBe("not_stated");
+    expect(p.source.note).toMatch(/Lemonade Iced Tea/);
+    expect(p.source.note).toMatch(/does not say this product contains caffeine/i);
   });
 
   // Silence is still not a zero. This one is not silence: the maker's own page

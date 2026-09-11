@@ -206,6 +206,16 @@ feature. Three are worth naming.
 "Caffeine free" can settle one product as a yes and one as a no and says nothing
 about the other four. It is the weakest filter on the site.
 
+The count is the same as when this was written and the products are not. Two
+readings on 2026-09-11 changed which. OLIPOP Classic Root Beer closed: the
+maker's own page about caffeine names its four caffeinated flavours and states
+that the rest are caffeine-free, so the record holds a sourced zero. LMNT Citrus
+Salt opened: its zero came from a 2026-09-08 search summary, and three direct
+readings of the maker's pages since then have found no caffeine statement for
+that flavour, so it was withdrawn. The one yes this filter gives is OLIPOP now,
+not LMNT, and it rests on a page written to answer the question rather than on a
+summary. Same arithmetic, better evidence under it.
+
 **Mounting, on red light.** Four of eight hold nothing usable, so every mounting
 chip leaves half the category unplaced.
 

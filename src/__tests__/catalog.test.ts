@@ -33,10 +33,28 @@ describe("local catalog", () => {
     for (const p of catalog().products) {
       for (const [k, sv] of Object.entries(p.attributes)) {
         if (sv.verification === "manufacturer_reported") {
-          expect(sv.source.kind, `${p.id}.${k}`).toBe("manufacturer");
           expect(sv.source.url, `${p.id}.${k}`).toBeTruthy();
           expect(sv.source.retrievedAt, `${p.id}.${k}`).toBeTruthy();
         }
+      }
+    }
+  });
+
+  // `manufacturer_reported` says whose claim it is, not who was read. A
+  // retailer's listing usually relays the maker's own specification, and such a
+  // record is still the maker's claim at one remove.
+  //
+  // This used to require kind "manufacturer" outright, which is what let four
+  // Cold Pod attributes and five CELSIUS ones point at Amazon while saying the
+  // maker had spoken: the only way to satisfy the rule was to mislabel the
+  // source. The rule now allows the honest label and demands the remove be
+  // admitted instead.
+  it("never says a maker's claim was read direct from anywhere but the maker", () => {
+    for (const p of catalog().products) {
+      for (const [k, sv] of Object.entries(p.attributes)) {
+        if (sv.verification !== "manufacturer_reported") continue;
+        if (sv.source.kind === "manufacturer") continue;
+        expect(sv.source.method, `${p.id}.${k} cites a ${sv.source.kind}, so it cannot be a direct reading of the maker`).toBe("secondhand");
       }
     }
   });

@@ -2,6 +2,16 @@ import { z } from "zod";
 
 export const SourceKind = z.enum([
   "manufacturer",
+  // A retailer's own listing, read or relayed. Distinct from "merchant_feed",
+  // which is a structured feed a merchant publishes, and distinct from
+  // "manufacturer", which is the maker speaking on its own page.
+  //
+  // This exists because the catalogue held records that claimed the maker while
+  // citing an Amazon listing, and neither of the other two words was true of
+  // them. A listing usually relays the maker's own specification, which is why
+  // such a record can still be manufacturer_reported: the claim is the maker's
+  // and the reading is not. `method: "secondhand"` is what says so.
+  "retailer",
   "merchant_feed",
   "independent_test",
   "editorial",

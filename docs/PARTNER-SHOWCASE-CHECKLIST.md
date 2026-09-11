@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **168 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
+Records whose source was read: **169 of 274**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -565,7 +565,7 @@ Specifications that are missing, unsupported or relayed:
 
 | Evidence | | |
 | --- | --- | --- |
-| Comparison facts | partly | 7 of 7 required specifications carry a usable value; 1 with no recorded source |
+| Comparison facts | partly | 6 of 7 required specifications carry a usable value; 1 with no recorded source |
 | Price evidence | partly | $45 on record from LMNT (direct), read from the page (Read by Codex on the manufacturer's page and supplied to this repository; not fetched here) on 2026-09-09, not re-checked since |
 | Image readiness | no | 1 procedural placeholder, no rights evidence |
 
@@ -574,9 +574,9 @@ Specifications that are missing, unsupported or relayed:
 | Record | `lmnt-citrus-salt-30`, `/products/lmnt-citrus-salt-30-stick-packs` |
 | Offers | LMNT (direct) ($45, unknown, affiliate status not recorded); Amazon (no amount on record, unknown, affiliate status not recorded) |
 | Links | https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink<br>https://www.amazon.com/dp/B07TT8B1JJ |
-| Sources on file | https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink<br>https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266 |
-| Retrieval | 7 of 17 recorded fields were relayed rather than read from the source |
-| Ranking | score 100, completeness 100%, badges: best_overall, best_value |
+| Sources on file | https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink<br>https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink?variant=16358367199266<br>https://drinklmnt.com/pages/ingredients |
+| Retrieval | 6 of 17 recorded fields were relayed rather than read from the source |
+| Ranking | score 100, completeness 86%, badges: best_overall, best_value |
 
 Specifications that are missing, unsupported or relayed:
 
@@ -585,7 +585,7 @@ Specifications that are missing, unsupported or relayed:
 - `serving_size` (required): relayed, maker's page not fetched
 - `added_sugar_g`: relayed, maker's page not fetched
 - `calories`: relayed, maker's page not fetched
-- `caffeine_mg` (required): relayed, maker's page not fetched
+- `caffeine_mg` (required): no value, recorded as `not_stated`
 - `fiber_g`: **absent from the record**
 - `sweeteners`: prototype value `["stevia"]`
 - `dietary`: relayed, maker's page not fetched
@@ -641,7 +641,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 59 of 274 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 58 of 274 records and 6 of 26 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

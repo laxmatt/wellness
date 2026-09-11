@@ -76,11 +76,11 @@
     "chiller_included": {
       "value": false,
       "source": {
-        "kind": "manufacturer",
+        "kind": "retailer",
         "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Relayed via search summary; manufacturer page not fetched directly. Recorded as a retailer's listing rather than the maker's page: the URL is an Amazon listing, and calling it the manufacturer claimed a page nobody had read. The value, its verification, its dispute flag and its URL are unchanged."
       },
       "verification": "manufacturer_reported"
     },
@@ -99,11 +99,11 @@
       "value": 88,
       "unit": "gal",
       "source": {
-        "kind": "manufacturer",
+        "kind": "retailer",
         "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "88 gallons, relayed from an Amazon search summary on 2026-09-08; the listing was not fetched. The maker's own page for the standard USA model, read by Codex on 2026-09-09 at 16:04 (https://www.thecoldpod.com/products/the-cold-pod-usa), states 85 gallons. Nothing establishes whether that is the same tub as this Amazon listing, so this is either a conflict about one product or a figure belonging to another. Either way the number cannot be relied on here: both figures stay on record and neither matches or scores."
+        "note": "88 gallons, relayed from an Amazon search summary on 2026-09-08; the listing was not fetched. The maker's own page for the standard USA model, read by Codex on 2026-09-09 at 16:04 (https://www.thecoldpod.com/products/the-cold-pod-usa), states 85 gallons. Nothing establishes whether that is the same tub as this Amazon listing, so this is either a conflict about one product or a figure belonging to another. Either way the number cannot be relied on here: both figures stay on record and neither matches or scores. Recorded as a retailer's listing rather than the maker's page: the URL is an Amazon listing, and calling it the manufacturer claimed a page nobody had read. The value, its verification, its dispute flag and its URL are unchanged."
       },
       "verification": "manufacturer_reported",
       "disputed": true
@@ -112,22 +112,22 @@
       "value": 79,
       "unit": "in",
       "source": {
-        "kind": "manufacturer",
+        "kind": "retailer",
         "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Users up to 6 ft 7 in. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Users up to 6 ft 7 in. Relayed via search summary; manufacturer page not fetched directly. Recorded as a retailer's listing rather than the maker's page: the URL is an Amazon listing, and calling it the manufacturer claimed a page nobody had read. The value, its verification, its dispute flag and its URL are unchanged."
       },
       "verification": "manufacturer_reported"
     },
     "insulated": {
       "value": true,
       "source": {
-        "kind": "manufacturer",
+        "kind": "retailer",
         "url": "https://www.amazon.com/dp/B0CPKYNJ9Q",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Pearl foam middle layer between PVC and nylon. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Pearl foam middle layer between PVC and nylon. Relayed via search summary; manufacturer page not fetched directly. Recorded as a retailer's listing rather than the maker's page: the URL is an Amazon listing, and calling it the manufacturer claimed a page nobody had read. The value, its verification, its dispute flag and its URL are unchanged."
       },
       "verification": "manufacturer_reported"
     },

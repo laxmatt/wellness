@@ -186,16 +186,16 @@
       "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
-      "value": 0,
       "unit": "mg",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinklmnt.com/products/lmnt-recharge-electrolyte-drink",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the maker's product, FAQ and ingredients pages and supplied to this repository; not fetched here.",
+        "url": "https://drinklmnt.com/pages/ingredients",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "No caffeine figure is stated for Citrus Salt. This record carried 0 mg as manufacturer_reported from a 2026-09-08 search summary, relayed rather than read. Three direct readings of the maker's own pages have since failed to confirm it: the product page on 2026-09-09, and the FAQ and ingredients pages on 2026-09-11. The only explicit caffeine amount the maker states is 50 mg, and it belongs to Lemonade Iced Tea, a different flavour, so it says nothing about this one. The figure is withdrawn rather than kept: a zero nobody stated for this flavour was answering a caffeine-free filter as though the maker had said so. Withdrawing it does not say this product contains caffeine. It says this catalogue does not know, which is the true state, and the field costs the record completeness until a page states it."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "sodium_mg": {
       "value": 1000,
