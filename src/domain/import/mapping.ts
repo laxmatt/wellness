@@ -12,6 +12,10 @@
  */
 
 import { DRINK_FIELDS, normaliseHeader, type TargetField } from "./fields";
+import { SUPPORTED_CURRENCIES, SUPPORTED_UNITS } from "./values";
+
+/** A mapping file is a small JSON object, not a payload. */
+export const MAX_MAPPING_BYTES = 64_000;
 
 export type ColumnMapping = {
   version: 1;
@@ -20,11 +24,24 @@ export type ColumnMapping = {
   /** Target field key to the exact heading in the file. */
   columns: Record<string, string>;
   /**
-   * The currency of the price column, when the file does not carry one in the
-   * cells. Stated by a person, because a price with an assumed currency is a
-   * wrong price waiting to happen.
+   * The currency of the price column, when neither the cells nor the heading
+   * state one. Stated by a person, because a price with an assumed currency is
+   * a wrong price waiting to happen. It does not override a currency the file
+   * states: where the two disagree, nothing is read.
    */
   currency?: string;
+  /**
+   * The unit of a measure column, per field, when neither the cells nor the
+   * heading state one. Same rule: it fills a silence, it does not overrule a
+   * statement.
+   */
+  units?: Record<string, string>;
+  /**
+   * The operator states that one item in a pack is one serving. Without it a
+   * cell reading "12 cans" is a count of cans, and this will not call it 12
+   * servings on its own.
+   */
+  servingsBasis?: boolean;
 };
 
 export type MappingSuggestion = {
@@ -60,6 +77,9 @@ export function suggestMapping(headers: string[], name = "Suggested"): MappingSu
 
 /** A mapping read back from JSON, or the reason it was refused. */
 export function parseMapping(text: string, headers: string[]): { ok: true; mapping: ColumnMapping; notes: string[] } | { ok: false; reason: string } {
+  // Bounded like the supplier file it sits beside. A mapping is a handful of
+  // column names, and anything large enough to matter is not one.
+  if (text.length > MAX_MAPPING_BYTES) return { ok: false, reason: `A mapping file is a few hundred bytes. This one is ${Math.round(text.length / 1000)} kB.` };
   let raw: unknown;
   try {
     raw = JSON.parse(text);
@@ -85,7 +105,40 @@ export function parseMapping(text: string, headers: string[]): { ok: true; mappi
     }
     columns[key] = header;
   }
-  return { ok: true, mapping: { version: 1, name: typeof obj.name === "string" ? obj.name : "Imported", columns, currency: typeof obj.currency === "string" ? obj.currency : undefined }, notes };
+  let currency: string | undefined;
+  if (typeof obj.currency === "string" && obj.currency !== "") {
+    const code = obj.currency.toUpperCase();
+    if ((SUPPORTED_CURRENCIES as readonly string[]).includes(code)) currency = code;
+    else notes.push(`"${obj.currency}" is not a currency this reads, so no currency was set. It handles ${SUPPORTED_CURRENCIES.join(", ")}.`);
+  }
+
+  const units: Record<string, string> = {};
+  for (const [key, unit] of Object.entries(obj.units ?? {})) {
+    if (typeof unit !== "string") continue;
+    const field = DRINK_FIELDS.find((f) => f.key === key);
+    if (!field || field.kind !== "measure") {
+      notes.push(`"${key}" is not a field that takes a unit, so that unit was left out.`);
+      continue;
+    }
+    if (!(SUPPORTED_UNITS as readonly string[]).includes(unit)) {
+      notes.push(`"${unit}" is not a unit this reads, so ${key} was left without one.`);
+      continue;
+    }
+    units[key] = unit;
+  }
+
+  return {
+    ok: true,
+    mapping: {
+      version: 1,
+      name: typeof obj.name === "string" ? obj.name : "Imported",
+      columns,
+      currency,
+      units: Object.keys(units).length > 0 ? units : undefined,
+      servingsBasis: obj.servingsBasis === true ? true : undefined,
+    },
+    notes,
+  };
 }
 
 export const serialiseMapping = (mapping: ColumnMapping): string => JSON.stringify(mapping, null, 2);

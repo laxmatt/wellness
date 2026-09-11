@@ -123,7 +123,7 @@ export const DRINK_FIELDS: TargetField[] = [
     kind: "reference",
     catalogPath: "attributes.*.source.url or .ref",
     required: true,
-    review: "Where the supplier's figures came from. Held as text and never opened by this tool. A reviewer decides whether it is evidence, and a supplier page is a retailer speaking, not the maker.",
+    review: "Where the supplier says the figures came from. Held as text and never opened by this tool. Whose page it is, and whether that makes it evidence, is a reviewer's call: a feed can come from the maker or from somebody reselling them.",
     synonyms: ["source", "source_url", "source reference", "reference", "ref", "datasheet", "spec sheet", "spec_url", "url", "link"],
   },
 ];

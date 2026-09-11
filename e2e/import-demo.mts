@@ -91,7 +91,7 @@ async function run() {
 
   // Every field the file states is mapped by name, and the mapping is shown as
   // controls a person can change.
-  const mappedCount = await page.locator("#mapping select").evaluateAll((s) => s.filter((x) => (x as HTMLSelectElement).value !== "").length);
+  const mappedCount = await page.locator("#mapping select").evaluateAll((s) => s.filter((x) => x.id.startsWith("map-") && (x as HTMLSelectElement).value !== "").length);
   check("every field the engine matched is shown as mapped", mappedCount, Object.keys(suggestMapping(a.table.headers, "a").mapping.columns).length);
 
   const firstCard = draftCards(page).first();
@@ -101,11 +101,17 @@ async function run() {
   const aFlags = await page.locator("#drafts .flag.blocker").count();
   check("nothing in supplier A is blocked", aFlags, 0);
   ok(
-    "the currency comes from the column heading, and says so",
-    (await page.locator("#drafts").innerText()).includes('Currency read from the column heading "unit_price_usd"'),
+    "the currency comes from the column heading, and says where from",
+    (await page.locator("#drafts").innerText()).includes('Currency taken from the column heading "unit_price_usd"'),
     "",
   );
   ok("and the price is read in it", (await page.locator("#drafts").innerText()).includes("45.00 USD"), "");
+  ok(
+    "a unit the heading states is used, and says where from",
+    (await page.locator("#drafts").innerText()).includes('Unit taken from the column heading "sugar_g"'),
+    "",
+  );
+  check("a heading that states the unit locks the unit control", await page.locator("#unit-sugar_g").isDisabled(), true);
   ok(
     "an empty caffeine cell is held as unknown, not as zero",
     (await page.locator("#drafts").innerText()).includes("Held as unknown, which is not the same as zero"),
@@ -132,8 +138,29 @@ async function run() {
   ok("and its text is shown as text", drafts.includes("=SUM(B2:B9)"), "");
   ok("a category outside this site is blocked", drafts.includes("is not a category this site compares"), "");
   ok("a function word this site does not use is blocked", drafts.includes('"detox" is not a value'), "");
-  ok("a pack count keeps what it ignored", drafts.includes('with "sticks" ignored'), "");
+  // A count of sticks is a count of sticks until somebody says one stick is one
+  // serving. The tool used to say it for them.
+  ok("a count of items is not read as servings on its own", drafts.includes("is 20 servings only if one stick is one serving"), "");
+  check("the price with no code in the cell reads from the box", (await page.locator("#drafts").innerText()).includes("24.99 EUR"), true);
+
+  scenario = "the operator states the serving basis";
+  await page.check("#servings-basis");
+  await page.waitForTimeout(100);
+  const withBasis = await page.locator("#drafts").innerText();
+  ok("now the count reads, and says whose statement it rests on", withBasis.includes("because one item per serving was stated for this column"), "");
+  await page.uncheck("#servings-basis");
+  await page.waitForTimeout(100);
   ok("a decimal comma is reported rather than assumed silently", drafts.includes("Read as a decimal comma"), "");
+
+  scenario = "a currency this does not store";
+  await page.fill("#currency", "JPY");
+  await page.dispatchEvent("#currency", "change");
+  await page.waitForTimeout(100);
+  ok("JPY is refused, with the reason", (await statusText(page)).includes("divide into a hundred"), await statusText(page));
+  check("and the box does not keep it", await page.locator("#currency").inputValue(), "JPY");
+  await page.fill("#currency", "EUR");
+  await page.dispatchEvent("#currency", "change");
+  await page.waitForTimeout(100);
 
   // The link in the file is text on the page, not something to click or fetch.
   scenario = "a supplier's link is never opened";
@@ -144,8 +171,12 @@ async function run() {
   // ------------------------------------------------------------ a refusal
   scenario = "a format this does not read";
   await page.setInputFiles("#file", join(SAMPLES, "not-a-csv-SYNTHETIC.pdf"));
-  await page.waitForFunction(() => (document.querySelector("#status")?.className ?? "").includes("bad"), undefined, { timeout: 5000 });
-  ok("refused with the reason", (await statusText(page)).includes("This looks like a PDF"), await statusText(page));
+  // Wait for this file's own message. Waiting for the status to merely be bad
+  // passes instantly when the previous check left it bad, and then reads
+  // whichever message happens to be there.
+  await page.waitForFunction(() => (document.querySelector("#status")?.textContent ?? "").includes("was not read"), undefined, { timeout: 5000 });
+  const refusal = await statusText(page);
+  ok("refused with the reason", refusal.includes("This looks like a PDF"), refusal);
   check("and no drafts are shown", await draftCards(page).count(), 0);
 
   // ------------------------------------------------- a mapping, saved and reused
@@ -154,8 +185,8 @@ async function run() {
   const saved = await page.evaluate(() => {
     // The same JSON the Save button writes, read here rather than through a
     // download dialog the harness cannot see.
-    const selects = [...document.querySelectorAll<HTMLSelectElement>("#mapping select")];
-    return JSON.stringify({ version: 1, name: "harness", columns: Object.fromEntries(selects.filter((s) => s.value).map((s) => [s.id.replace("map-", ""), s.value])) });
+    const selects = [...document.querySelectorAll<HTMLSelectElement>("#mapping select")].filter((s) => s.id.startsWith("map-"));
+    return JSON.stringify({ version: 1, name: "harness", columns: Object.fromEntries(selects.filter((s) => s.value).map((s) => [s.id.slice("map-".length), s.value])) });
   });
   ok("the saved mapping names ten fields", Object.keys(JSON.parse(saved).columns).length === 10, saved);
 

@@ -18,8 +18,8 @@
 import { readCsv, LIMITS, type CsvTable } from "../../domain/import/csv";
 import { DRINK_FIELDS } from "../../domain/import/fields";
 import { buildDrafts, STANDING_REVIEW, type DraftSet } from "../../domain/import/draft";
-import { parseMapping, serialiseMapping, suggestMapping, type ColumnMapping } from "../../domain/import/mapping";
-import type { CellValue } from "../../domain/import/values";
+import { MAX_MAPPING_BYTES, parseMapping, serialiseMapping, suggestMapping, type ColumnMapping } from "../../domain/import/mapping";
+import { SUPPORTED_CURRENCIES, SUPPORTED_UNITS, unitFromHeader, type CellValue } from "../../domain/import/values";
 
 type State = { table?: CsvTable; mapping?: ColumnMapping; fileName?: string };
 const state: State = {};
@@ -108,6 +108,56 @@ function renderMapping() {
 
     row.appendChild(label);
     row.appendChild(select);
+
+    // A measure column that states no unit anywhere reads nothing. This is
+    // where a person states one, rather than the tool assuming the one it
+    // happens to store.
+    if (field.kind === "measure") {
+      const chosen = state.mapping.columns[field.key];
+      const stated = chosen ? unitFromHeader(chosen) : undefined;
+      const unitLabel = el("label", "unit");
+      unitLabel.htmlFor = `unit-${field.key}`;
+      unitLabel.textContent = stated ? `Unit: ${stated}, from the heading` : "Unit, if the file states none";
+      const unitSelect = el("select");
+      unitSelect.id = `unit-${field.key}`;
+      unitSelect.disabled = stated !== undefined;
+      const blank = el("option", undefined, stated ? stated : "not stated");
+      blank.value = "";
+      unitSelect.appendChild(blank);
+      if (!stated) {
+        for (const u of SUPPORTED_UNITS) {
+          const option = el("option", undefined, u);
+          option.value = u;
+          if (state.mapping.units?.[field.key] === u) option.selected = true;
+          unitSelect.appendChild(option);
+        }
+      }
+      unitSelect.addEventListener("change", () => {
+        const units = { ...(state.mapping!.units ?? {}) };
+        if (unitSelect.value === "") delete units[field.key];
+        else units[field.key] = unitSelect.value;
+        state.mapping!.units = Object.keys(units).length > 0 ? units : undefined;
+        render();
+      });
+      row.appendChild(unitLabel);
+      row.appendChild(unitSelect);
+    }
+
+    if (field.kind === "count") {
+      const basis = el("label", "basis");
+      const box = el("input");
+      box.type = "checkbox";
+      box.id = "servings-basis";
+      box.checked = state.mapping.servingsBasis === true;
+      box.addEventListener("change", () => {
+        state.mapping!.servingsBasis = box.checked ? true : undefined;
+        render();
+      });
+      basis.appendChild(box);
+      basis.appendChild(el("span", undefined, " One item in a pack is one serving"));
+      row.appendChild(basis);
+    }
+
     row.appendChild(el("p", "review", field.review));
     row.appendChild(el("p", "path", `Would land in ${field.catalogPath}`));
     grid.appendChild(row);
@@ -237,7 +287,14 @@ export function start() {
   currency.addEventListener("change", () => {
     if (!state.mapping) return;
     const value = currency.value.trim().toUpperCase();
+    if (value !== "" && !(SUPPORTED_CURRENCIES as readonly string[]).includes(value)) {
+      state.mapping.currency = undefined;
+      status(`"${currency.value.trim()}" is not a currency this reads. It handles ${SUPPORTED_CURRENCIES.join(", ")}, all of which divide into a hundred.`, "bad");
+      render();
+      return;
+    }
     state.mapping.currency = value === "" ? undefined : value;
+    currency.value = value;
     render();
   });
 
@@ -250,13 +307,19 @@ export function start() {
     const input = e.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file || !state.table) return;
+    if (file.size > MAX_MAPPING_BYTES) {
+      status(`That mapping file is ${Math.round(file.size / 1000)} kB. A mapping is a handful of column names.`, "bad");
+      return;
+    }
     const parsed = parseMapping(await file.text(), state.table.headers);
     if (!parsed.ok) {
       status(`That mapping was not used. ${parsed.reason}`, "bad");
       return;
     }
     state.mapping = parsed.mapping;
-    if (parsed.mapping.currency) (byId("currency") as HTMLInputElement).value = parsed.mapping.currency;
+    // Cleared, not left behind. A mapping that states no currency must not
+    // leave the previous one showing in a box the state no longer holds.
+    (byId("currency") as HTMLInputElement).value = parsed.mapping.currency ?? "";
     status(`Mapping "${parsed.mapping.name}" applied.${parsed.notes.length > 0 ? ` ${parsed.notes.join(" ")}` : ""}`, "ok");
     render();
   });

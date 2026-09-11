@@ -27,6 +27,9 @@
       .row .field { display: block; font-weight: 600; font-size: .85rem; }
       .row select { width: 100%; margin: .3rem 0; padding: .3rem; }
       .row .review, .row .path { font-size: .8rem; color: var(--soft); margin: .3rem 0 0; }
+      .row .unit, .row .basis { display: block; font-size: .78rem; color: var(--soft); margin-top: .35rem; }
+      .row .basis { display: flex; align-items: center; gap: .35rem; }
+      .row select[disabled] { background: #f3efe8; color: var(--soft); }
       .row .path { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .72rem; }
       .note { font-size: .85rem; color: var(--soft); }
       .totals { font-weight: 600; }
@@ -319,7 +322,7 @@
       kind: "reference",
       catalogPath: "attributes.*.source.url or .ref",
       required: true,
-      review: "Where the supplier's figures came from. Held as text and never opened by this tool. A reviewer decides whether it is evidence, and a supplier page is a retailer speaking, not the maker.",
+      review: "Where the supplier says the figures came from. Held as text and never opened by this tool. Whose page it is, and whether that makes it evidence, is a reviewer's call: a feed can come from the maker or from somebody reselling them.",
       synonyms: ["source", "source_url", "source reference", "reference", "ref", "datasheet", "spec sheet", "spec_url", "url", "link"]
     }
   ];
@@ -332,6 +335,7 @@
   var blocker = (message) => ({ severity: "blocker", message });
   var check = (message) => ({ severity: "check", message });
   var onlyBlockers = (flags) => flags.filter((f) => f.severity === "blocker");
+  var rejected = (raw, flags) => ({ raw, flags: onlyBlockers(flags) });
   function looksLikeFormula(raw) {
     const t = raw.trim();
     if (t === "") return false;
@@ -339,19 +343,36 @@
     if (/^[+-]/.test(t) && !/^[+-]?\d/.test(t)) return true;
     return false;
   }
-  var CURRENCY_SYMBOLS = { $: "USD", "\xA3": "GBP", "\u20AC": "EUR" };
-  var KNOWN_CURRENCIES = ["USD", "GBP", "EUR", "CAD", "AUD"];
-  function currencyFromHeader(header) {
-    const words = header.toLowerCase().split(/[^a-z]+/).filter(Boolean);
-    for (const code of KNOWN_CURRENCIES) if (words.includes(code.toLowerCase())) return code;
-    for (const [symbol, code] of Object.entries(CURRENCY_SYMBOLS)) if (header.includes(symbol)) return code;
-    return void 0;
-  }
+  var SUPPORTED_CURRENCIES = ["USD", "GBP", "EUR", "CAD", "AUD", "NZD", "CHF"];
+  var CURRENCY_SYMBOLS = ["$", "\xA3", "\u20AC", "\xA5", "\u20B9"];
+  var UNIT_WORDS = {
+    g: "g",
+    gram: "g",
+    grams: "g",
+    gramme: "g",
+    grammes: "g",
+    mg: "mg",
+    milligram: "mg",
+    milligrams: "mg",
+    milligramme: "mg",
+    milligrammes: "mg"
+  };
+  var SUPPORTED_UNITS = ["g", "mg"];
   var CONVERSIONS = {
     g: { mg: 1e-3, g: 1 },
     mg: { g: 1e3, mg: 1 }
   };
-  function readNumber(text) {
+  var words = (text) => text.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  function unitFromHeader(header) {
+    const found = new Set(words(header).map((w) => UNIT_WORDS[w]).filter((u) => u !== void 0));
+    return found.size === 1 ? [...found][0] : void 0;
+  }
+  function currencyFromHeader(header) {
+    const found = new Set(words(header).map((w) => w.toUpperCase()).filter((w) => SUPPORTED_CURRENCIES.includes(w)));
+    return found.size === 1 ? [...found][0] : void 0;
+  }
+  function strictDecimal(text) {
+    if (!/^\d+(\.\d+)?$/.test(text)) return void 0;
     const n = Number(text);
     return Number.isFinite(n) ? n : void 0;
   }
@@ -360,93 +381,116 @@
     const hasDot = text.includes(".");
     if (!hasComma) return { text };
     if (hasDot) {
-      return text.lastIndexOf(",") > text.lastIndexOf(".") ? { text: text.replace(/\./g, "").replace(",", "."), note: "Read with a comma as the decimal separator and a period grouping thousands." } : { text: text.replace(/,/g, ""), note: "Read with a period as the decimal separator and a comma grouping thousands." };
+      const commaLast = text.lastIndexOf(",") > text.lastIndexOf(".");
+      const grouped = commaLast ? /^\d{1,3}(\.\d{3})+,\d+$/.test(text) : /^\d{1,3}(,\d{3})+\.\d+$/.test(text);
+      if (!grouped) return { ambiguous: `"${text}" mixes a comma and a period in a way that is not a number: the grouping does not run in threes.` };
+      return commaLast ? { text: text.replace(/\./g, "").replace(",", "."), note: "Read with a comma as the decimal separator and a period grouping thousands." } : { text: text.replace(/,/g, ""), note: "Read with a period as the decimal separator and a comma grouping thousands." };
     }
     const single = /^(\d+),(\d+)$/.exec(text);
-    if (single && single[2].length !== 3) return { text: text.replace(",", "."), note: "Read as a decimal comma." };
-    return { ambiguous: true };
+    if (!single) return { ambiguous: `"${text}" has more than one comma and no decimal point, so what any of them mean is not stated.` };
+    if (single[2].length === 3) return { ambiguous: `"${text}" could be read two ways: the comma is either a decimal point or a thousands separator.` };
+    return { text: text.replace(",", "."), note: "Read as a decimal comma." };
   }
-  function readMeasure(raw, field) {
+  var MAX_MEASURE = 1e6;
+  var MAX_MINOR = 1e9;
+  var MAX_COUNT = 1e5;
+  function readMeasure(raw, field, ctx) {
     const t = raw.trim();
     const match = /^([+-]?[\d.,]+)\s*([a-zA-Zµ]*)$/.exec(t);
-    if (!match) return { raw, flags: [blocker(`"${t}" is not a number with an optional unit.`)] };
-    const decimal = normaliseDecimal(match[1]);
-    if ("ambiguous" in decimal) {
-      return { raw, flags: [blocker(`"${t}" could be read two ways: the comma is either a decimal point or a thousands separator. Refused rather than guessed.`)] };
-    }
-    const n = readNumber(decimal.text);
-    if (n === void 0) return { raw, flags: [blocker(`"${t}" is not a number.`)] };
+    if (!match) return rejected(raw, [blocker(`"${t}" is not a number with an optional unit.`)]);
+    const decimal = normaliseDecimal(match[1].replace(/^[+-]/, ""));
+    if ("ambiguous" in decimal) return rejected(raw, [blocker(`${decimal.ambiguous} Refused rather than guessed.`)]);
     const flags = [];
     if (decimal.note) flags.push(check(decimal.note));
-    if (n < 0) flags.push(blocker("A negative amount is not a nutrition figure."));
-    const stated = match[2].toLowerCase();
+    if (match[1].startsWith("-")) return rejected(raw, [...flags, blocker("A negative amount is not a nutrition figure, so nothing is read from this cell.")]);
+    const n = strictDecimal(decimal.text);
+    if (n === void 0) return rejected(raw, [...flags, blocker(`"${t}" is not a plain decimal number.`)]);
+    if (n > MAX_MEASURE) return rejected(raw, [...flags, blocker(`${n} is past anything this reads as a nutrition figure.`)]);
+    const cellUnit = match[2] === "" ? void 0 : UNIT_WORDS[match[2].toLowerCase()] ?? match[2].toLowerCase();
+    const column = ctx.unit;
+    if (cellUnit && column && cellUnit !== column.value) {
+      return rejected(raw, [...flags, blocker(`The cell says ${match[2]} and the ${column.from} says ${column.value}. Those disagree, so the figure is not read.`)]);
+    }
+    const unit = cellUnit ?? column?.value;
+    if (!unit) {
+      return rejected(raw, [
+        ...flags,
+        blocker(
+          `No unit. Neither the cell nor the column states one, so this is a bare number. This site stores ${field.unit}, and taking the number as ${field.unit} for that reason would be an assumption rather than a reading. Put the unit in the column heading, or set it beside the column.`
+        )
+      ]);
+    }
+    if (cellUnit === void 0 && column) flags.push(check(`Unit taken from the ${column.from}: ${column.value}. The cell itself states none.`));
     const target = field.unit;
-    if (stated === "") {
-      flags.push(check(`No unit stated. Taken as ${target}, which is what this site stores, and worth confirming against the supplier's own sheet.`));
-      return { raw, value: { kind: "number", value: n, unit: target }, flags };
-    }
-    if (stated === target) return { raw, value: { kind: "number", value: n, unit: target }, flags };
-    const factor = CONVERSIONS[target]?.[stated];
-    if (factor === void 0) {
-      flags.push(blocker(`Stated in ${match[2]}, and this site stores ${target}. Those do not convert, so the figure is not read.`));
-      return { raw, flags: onlyBlockers(flags) };
-    }
-    flags.push(check(`Stated in ${match[2]} and converted to ${target}: ${n} ${match[2]} is ${n * factor} ${target}. Confirm the supplier meant ${match[2]}.`));
+    if (unit === target) return { raw, value: { kind: "number", value: n, unit: target }, flags };
+    const factor = CONVERSIONS[target]?.[unit];
+    if (factor === void 0) return rejected(raw, [...flags, blocker(`Stated in ${unit}, and this site stores ${target}. Those do not convert, so the figure is not read.`)]);
+    flags.push(check(`Stated in ${unit} and converted to ${target}: ${n} ${unit} is ${n * factor} ${target}. Confirm the supplier meant ${unit}.`));
     return { raw, value: { kind: "number", value: n * factor, unit: target }, flags };
   }
-  function readMoney(raw, columnCurrency) {
+  function readMoney(raw, ctx) {
     const t = raw.trim();
     const flags = [];
-    let currency = columnCurrency;
     let rest = t;
-    for (const [symbol, code2] of Object.entries(CURRENCY_SYMBOLS)) {
-      if (rest.includes(symbol)) {
-        if (currency && currency !== code2) flags.push(blocker(`The column says ${currency} and the cell says ${symbol}. Those disagree, so the price is not read.`));
-        currency = currency ?? code2;
-        rest = rest.replace(symbol, "");
-      }
-    }
-    const code = /\b([A-Z]{3})\b/.exec(rest);
-    if (code && KNOWN_CURRENCIES.includes(code[1])) {
-      if (currency && currency !== code[1]) flags.push(blocker(`The column says ${currency} and the cell says ${code[1]}. Those disagree, so the price is not read.`));
-      currency = currency ?? code[1];
-      rest = rest.replace(code[1], "");
-    }
+    const symbol = CURRENCY_SYMBOLS.find((s) => rest.includes(s));
+    const codeMatch = /(?:^|[^A-Za-z])([A-Za-z]{3})(?:[^A-Za-z]|$)/.exec(rest);
+    const cellCode = codeMatch ? codeMatch[1].toUpperCase() : void 0;
+    if (codeMatch) rest = rest.replace(codeMatch[1], "");
+    if (symbol) rest = rest.split(symbol).join("");
     rest = rest.trim();
+    if (cellCode && !SUPPORTED_CURRENCIES.includes(cellCode)) {
+      return rejected(raw, [
+        blocker(
+          `${cellCode} is not a currency this reads. It handles ${SUPPORTED_CURRENCIES.join(", ")}, all of which divide into a hundred. A currency with no minor unit, or with three digits, would come out a hundred times wrong, so it is refused until this stores an exponent per currency.`
+        )
+      ]);
+    }
+    const column = ctx.currency;
+    if (cellCode && column && cellCode !== column.value) {
+      return rejected(raw, [blocker(`The cell says ${cellCode} and the ${column.from} says ${column.value}. Those disagree, so the price is not read.`)]);
+    }
+    const currency = cellCode ?? column?.value;
     if (!currency) {
-      flags.push(blocker("No currency. A bare number is not a price, and the currency is not assumed from anything."));
-      return { raw, flags: onlyBlockers(flags) };
+      const because = symbol ? `"${symbol}" is not a currency: more than one country spends it.` : "Neither the cell nor the column states one.";
+      return rejected(raw, [blocker(`No currency. ${because} Put a code such as ${SUPPORTED_CURRENCIES[0]} in the heading, or set one beside the column.`)]);
     }
-    if (flags.some((f) => f.severity === "blocker")) return { raw, flags: onlyBlockers(flags) };
+    if (!cellCode && column) flags.push(check(`Currency taken from the ${column.from}: ${column.value}. The cell itself states none.`));
+    if (rest === "") return rejected(raw, [...flags, blocker(`"${t}" states no amount.`)]);
     const decimal = normaliseDecimal(rest);
-    if ("ambiguous" in decimal) {
-      return { raw, flags: [blocker(`"${t}" could be read two ways: the comma is either a decimal point or a thousands separator. Refused rather than guessed.`)] };
-    }
+    if ("ambiguous" in decimal) return rejected(raw, [...flags, blocker(`${decimal.ambiguous} Refused rather than guessed.`)]);
     if (decimal.note) flags.push(check(decimal.note));
-    const n = readNumber(decimal.text);
-    if (n === void 0 || n < 0) return { raw, flags: onlyBlockers([...flags, blocker(`"${t}" is not an amount.`)]) };
+    const n = strictDecimal(decimal.text);
+    if (n === void 0) return rejected(raw, [...flags, blocker(`"${t}" is not a plain decimal amount.`)]);
     const minor = Math.round(n * 100);
+    if (!Number.isSafeInteger(minor) || minor > MAX_MINOR) return rejected(raw, [...flags, blocker(`${n} is past anything this reads as a price.`)]);
     if (Math.abs(n * 100 - minor) > 1e-9) flags.push(check(`Rounded to ${(minor / 100).toFixed(2)} ${currency}, because prices are stored in whole cents.`));
     return { raw, value: { kind: "money", minor, currency }, flags };
   }
-  function readCount(raw) {
+  function readCount(raw, ctx) {
     const t = raw.trim();
     const match = /^(\d+)\s*(.*)$/.exec(t);
-    if (!match) return { raw, flags: [blocker(`"${t}" is not a whole number.`)] };
+    if (!match) return rejected(raw, [blocker(`"${t}" is not a whole number of servings.`)]);
     const n = Number(match[1]);
+    if (!Number.isSafeInteger(n) || n > MAX_COUNT) return rejected(raw, [blocker(`"${match[1]}" is past anything this reads as a pack size.`)]);
+    if (n === 0) return rejected(raw, [blocker("A pack of zero is not a pack.")]);
     const trailing = match[2].trim();
-    const flags = [];
-    if (trailing !== "") {
-      flags.push(
-        check(`Counted as ${n}, with "${trailing}" ignored. A pack of ${n} ${trailing} is ${n} servings only if one ${trailing.replace(/s$/, "")} is one serving, which this file does not say.`)
-      );
+    if (trailing === "") return { raw, value: { kind: "integer", value: n }, flags: [] };
+    if (!ctx.servingsBasis) {
+      return rejected(raw, [
+        blocker(
+          `This counts ${n} ${trailing}, and the field holds servings. ${n} ${trailing} is ${n} servings only if one ${trailing.replace(/s$/, "")} is one serving, which the file does not say. State that basis beside the column if it is true, or map servings from a column that counts servings.`
+        )
+      ]);
     }
-    if (n === 0) flags.push(blocker("A pack of zero is not a pack."));
-    return { raw, value: { kind: "integer", value: n }, flags };
+    return {
+      raw,
+      value: { kind: "integer", value: n },
+      flags: [check(`Counted as ${n} servings from ${n} ${trailing}, because one item per serving was stated for this column. The file itself does not say it.`)]
+    };
   }
   function readList(raw, field) {
     const parts = raw.split(/[|,;/]/).map((p) => p.trim().toLowerCase().replace(/\s+/g, "_")).filter((p) => p !== "");
-    if (parts.length === 0) return { raw, flags: [blocker("No value.")] };
+    if (parts.length === 0) return rejected(raw, [blocker("No value.")]);
     const allowed = field.allowed ?? [];
     const unknown = parts.filter((p) => !allowed.includes(p));
     const flags = [];
@@ -459,34 +503,29 @@
     }
     const known = parts.filter((p) => allowed.includes(p));
     const value = known.length > 0 ? { kind: "list", value: known } : void 0;
-    return { raw, value, flags: value ? flags : onlyBlockers(flags) };
+    return value ? { raw, value, flags } : rejected(raw, flags);
   }
   function readClassification(raw, field) {
     const t = raw.trim().toLowerCase().replace(/\s+/g, "-");
     const allowed = field.allowed ?? [];
-    if (!allowed.includes(t)) {
-      return { raw, flags: [blocker(`"${raw.trim()}" is not a category this site compares. It holds ${allowed.join(", ")}.`)] };
-    }
+    if (!allowed.includes(t)) return rejected(raw, [blocker(`"${raw.trim()}" is not a category this site compares. It holds ${allowed.join(", ")}.`)]);
     return { raw, value: { kind: "text", value: t }, flags: [] };
   }
-  function readCell(raw, field, columnCurrency) {
+  function readCell(raw, field, ctx = {}) {
     const t = raw.trim();
     if (t === "") {
       return { raw, flags: field.required ? [blocker("Nothing in this cell, and a draft needs this field.")] : [check("Nothing in this cell. Held as unknown, which is not the same as zero.")] };
     }
     if (looksLikeFormula(t)) {
-      return {
-        raw,
-        flags: [blocker("This cell starts like a spreadsheet formula. It is kept as text and never run here, and it is almost certainly a broken export rather than a value.")]
-      };
+      return rejected(raw, [blocker("This cell starts like a spreadsheet formula. It is kept as text and never run here, and it is almost certainly a broken export rather than a value.")]);
     }
     switch (field.kind) {
       case "measure":
-        return readMeasure(raw, field);
+        return readMeasure(raw, field, ctx);
       case "money":
-        return readMoney(raw, columnCurrency);
+        return readMoney(raw, ctx);
       case "count":
-        return readCount(raw);
+        return readCount(raw, ctx);
       case "list":
         return readList(raw, field);
       case "classification":
@@ -504,6 +543,28 @@
   }
 
   // src/domain/import/draft.ts
+  function columnContext(field, header, mapping) {
+    const ctx = { servingsBasis: mapping.servingsBasis === true };
+    if (field.kind === "money") {
+      const fromHeader = currencyFromHeader(header);
+      const fromOperator = mapping.currency;
+      if (fromHeader && fromOperator && fromHeader !== fromOperator) {
+        return { ctx, clash: `The heading "${header}" says ${fromHeader} and the currency set beside the column says ${fromOperator}. Those disagree, so no price is read from this column until one of them changes.` };
+      }
+      const value = fromHeader ?? fromOperator;
+      if (value) ctx.currency = { value, from: fromHeader ? `column heading "${header}"` : "currency set beside the column" };
+    }
+    if (field.kind === "measure") {
+      const fromHeader = unitFromHeader(header);
+      const fromOperator = mapping.units?.[field.key];
+      if (fromHeader && fromOperator && fromHeader !== fromOperator) {
+        return { ctx, clash: `The heading "${header}" says ${fromHeader} and the unit set beside the column says ${fromOperator}. Those disagree, so no figure is read from this column until one of them changes.` };
+      }
+      const value = fromHeader ?? fromOperator;
+      if (value) ctx.unit = { value, from: fromHeader ? `column heading "${header}"` : "unit set beside the column" };
+    }
+    return { ctx };
+  }
   function buildDrafts(headers, rows, mapping) {
     const indexOf = new Map(headers.map((h, i) => [h, i]));
     const missingRequired = DRINK_FIELDS.filter((f) => f.required && mapping.columns[f.key] === void 0);
@@ -514,12 +575,8 @@
         const column = indexOf.get(header);
         if (!field || column === void 0) continue;
         const raw = row[column] ?? "";
-        const fromHeader = field.kind === "money" ? currencyFromHeader(header) : void 0;
-        const currency = field.kind === "money" ? mapping.currency ?? fromHeader : void 0;
-        const cell = readCell(raw, field, currency);
-        if (field.kind === "money" && !mapping.currency && fromHeader && cell.value) {
-          cell.flags = [...cell.flags, { severity: "check", message: `Currency read from the column heading "${header}". Confirm the supplier means ${fromHeader} in every row.` }];
-        }
+        const { ctx, clash } = columnContext(field, header, mapping);
+        const cell = clash ? { raw, flags: [{ severity: "blocker", message: clash }] } : readCell(raw, field, ctx);
         fields.push({ field, ...cell });
       }
       fields.sort((a, b) => DRINK_FIELDS.indexOf(a.field) - DRINK_FIELDS.indexOf(b.field));
@@ -555,8 +612,8 @@
       detail: "Flavour, size and pack count separate records that otherwise look identical. A row reading a brand and a product name usually settles none of the three, and a wrong variant is a wrong price, a wrong sugar figure and a wrong caffeine figure at once."
     },
     {
-      title: "Whether the supplier is evidence",
-      detail: "Every figure here is a supplier's claim. On this site that is a retailer speaking, not the maker: it is recorded as merchant_feed, method secondhand, and never as manufacturer_reported unless the maker's own page has been read."
+      title: "Who is actually speaking",
+      detail: "A feed can come from the maker, from a distributor, or from a reseller, and the file usually does not say which. That decides what a figure is worth here, and it is not readable from the rows. Until somebody establishes it, the origin of every figure in this tool is unverified and pending review: no verification, no source kind and no method is recorded, because writing one down from a file that did not state it would be inventing the evidence rather than recording it."
     },
     {
       title: "What date the figures carry",
@@ -573,6 +630,7 @@
   ];
 
   // src/domain/import/mapping.ts
+  var MAX_MAPPING_BYTES = 64e3;
   function suggestMapping(headers, name = "Suggested") {
     const byNormalised = new Map(headers.map((h) => [normaliseHeader(h), h]));
     const columns = {};
@@ -594,6 +652,7 @@
     };
   }
   function parseMapping(text, headers) {
+    if (text.length > MAX_MAPPING_BYTES) return { ok: false, reason: `A mapping file is a few hundred bytes. This one is ${Math.round(text.length / 1e3)} kB.` };
     let raw;
     try {
       raw = JSON.parse(text);
@@ -618,7 +677,38 @@
       }
       columns[key] = header;
     }
-    return { ok: true, mapping: { version: 1, name: typeof obj.name === "string" ? obj.name : "Imported", columns, currency: typeof obj.currency === "string" ? obj.currency : void 0 }, notes };
+    let currency;
+    if (typeof obj.currency === "string" && obj.currency !== "") {
+      const code = obj.currency.toUpperCase();
+      if (SUPPORTED_CURRENCIES.includes(code)) currency = code;
+      else notes.push(`"${obj.currency}" is not a currency this reads, so no currency was set. It handles ${SUPPORTED_CURRENCIES.join(", ")}.`);
+    }
+    const units = {};
+    for (const [key, unit] of Object.entries(obj.units ?? {})) {
+      if (typeof unit !== "string") continue;
+      const field = DRINK_FIELDS.find((f) => f.key === key);
+      if (!field || field.kind !== "measure") {
+        notes.push(`"${key}" is not a field that takes a unit, so that unit was left out.`);
+        continue;
+      }
+      if (!SUPPORTED_UNITS.includes(unit)) {
+        notes.push(`"${unit}" is not a unit this reads, so ${key} was left without one.`);
+        continue;
+      }
+      units[key] = unit;
+    }
+    return {
+      ok: true,
+      mapping: {
+        version: 1,
+        name: typeof obj.name === "string" ? obj.name : "Imported",
+        columns,
+        currency,
+        units: Object.keys(units).length > 0 ? units : void 0,
+        servingsBasis: obj.servingsBasis === true ? true : void 0
+      },
+      notes
+    };
   }
   var serialiseMapping = (mapping) => JSON.stringify(mapping, null, 2);
 
@@ -693,6 +783,50 @@
       });
       row.appendChild(label);
       row.appendChild(select);
+      if (field.kind === "measure") {
+        const chosen = state.mapping.columns[field.key];
+        const stated = chosen ? unitFromHeader(chosen) : void 0;
+        const unitLabel = el("label", "unit");
+        unitLabel.htmlFor = `unit-${field.key}`;
+        unitLabel.textContent = stated ? `Unit: ${stated}, from the heading` : "Unit, if the file states none";
+        const unitSelect = el("select");
+        unitSelect.id = `unit-${field.key}`;
+        unitSelect.disabled = stated !== void 0;
+        const blank = el("option", void 0, stated ? stated : "not stated");
+        blank.value = "";
+        unitSelect.appendChild(blank);
+        if (!stated) {
+          for (const u of SUPPORTED_UNITS) {
+            const option = el("option", void 0, u);
+            option.value = u;
+            if (state.mapping.units?.[field.key] === u) option.selected = true;
+            unitSelect.appendChild(option);
+          }
+        }
+        unitSelect.addEventListener("change", () => {
+          const units = { ...state.mapping.units ?? {} };
+          if (unitSelect.value === "") delete units[field.key];
+          else units[field.key] = unitSelect.value;
+          state.mapping.units = Object.keys(units).length > 0 ? units : void 0;
+          render();
+        });
+        row.appendChild(unitLabel);
+        row.appendChild(unitSelect);
+      }
+      if (field.kind === "count") {
+        const basis = el("label", "basis");
+        const box = el("input");
+        box.type = "checkbox";
+        box.id = "servings-basis";
+        box.checked = state.mapping.servingsBasis === true;
+        box.addEventListener("change", () => {
+          state.mapping.servingsBasis = box.checked ? true : void 0;
+          render();
+        });
+        basis.appendChild(box);
+        basis.appendChild(el("span", void 0, " One item in a pack is one serving"));
+        row.appendChild(basis);
+      }
       row.appendChild(el("p", "review", field.review));
       row.appendChild(el("p", "path", `Would land in ${field.catalogPath}`));
       grid.appendChild(row);
@@ -802,7 +936,14 @@
     currency.addEventListener("change", () => {
       if (!state.mapping) return;
       const value = currency.value.trim().toUpperCase();
+      if (value !== "" && !SUPPORTED_CURRENCIES.includes(value)) {
+        state.mapping.currency = void 0;
+        status(`"${currency.value.trim()}" is not a currency this reads. It handles ${SUPPORTED_CURRENCIES.join(", ")}, all of which divide into a hundred.`, "bad");
+        render();
+        return;
+      }
       state.mapping.currency = value === "" ? void 0 : value;
+      currency.value = value;
       render();
     });
     byId("export-mapping").addEventListener("click", () => {
@@ -813,13 +954,17 @@
       const input = e.target;
       const file = input.files?.[0];
       if (!file || !state.table) return;
+      if (file.size > MAX_MAPPING_BYTES) {
+        status(`That mapping file is ${Math.round(file.size / 1e3)} kB. A mapping is a handful of column names.`, "bad");
+        return;
+      }
       const parsed = parseMapping(await file.text(), state.table.headers);
       if (!parsed.ok) {
         status(`That mapping was not used. ${parsed.reason}`, "bad");
         return;
       }
       state.mapping = parsed.mapping;
-      if (parsed.mapping.currency) byId("currency").value = parsed.mapping.currency;
+      byId("currency").value = parsed.mapping.currency ?? "";
       status(`Mapping "${parsed.mapping.name}" applied.${parsed.notes.length > 0 ? ` ${parsed.notes.join(" ")}` : ""}`, "ok");
       render();
     });

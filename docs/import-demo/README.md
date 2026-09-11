@@ -19,11 +19,14 @@ Then choose a sample:
 - `samples/supplier-a-northwind-SYNTHETIC.csv` — commas, a byte-order mark, one
   description with a line break inside it, column names close to this site's own.
 - `samples/supplier-b-contoso-SYNTHETIC.csv` — semicolons, European decimals,
-  units inside the values, the supplier's own vocabulary, and four rows with
+  units inside the values, the supplier's own vocabulary, and several rows with
   something wrong in them.
 - `samples/not-a-csv-SYNTHETIC.pdf` — refused, with the reason.
 
-For supplier B, type `EUR` into the currency box to see the price column read.
+Two things to try on supplier B. Type `EUR` into the currency box: one row states
+no currency of its own and only reads once you do. Then tick "one item in a pack
+is one serving" beside the servings column: this supplier counts sticks and cans,
+and until somebody states that basis the tool will not call them servings.
 
 **The sample files are invented.** The suppliers, the products and every figure
 in them were made up for this demonstration. They are not real products and
@@ -37,6 +40,10 @@ their numbers are not facts about anything.
 - Suggests which column means which field, from names written down in
   `src/domain/import/fields.ts`. A heading nothing recognises is left unmapped
   and listed as unread. Nothing is matched by resemblance.
+- Reads a unit or a currency only where one is stated: in the cell, in the
+  column heading (`sugar_g`, `unit_price_usd`), or by you, beside the column.
+  Where two of those disagree, nothing is read from that column until one of
+  them changes.
 - Shows a draft per row: the raw text from the file, what was read out of it,
   and every reason it cannot be trusted yet.
 - Lets you change any column mapping by hand, save it as JSON, and load it back
@@ -51,8 +58,17 @@ their numbers are not facts about anything.
 - Run anything from a file. A cell starting like a spreadsheet formula is kept
   as text, shown as text, and blocked.
 - Guess. A format it does not read is refused with the reason. A number it could
-  read two ways is refused. A price with no stated currency is refused.
+  read two ways is refused. A bare figure with no unit stated anywhere is
+  refused, rather than taken as the unit this site happens to store. A price
+  with no stated currency is refused, and `$` is not a currency: it is the
+  dollar of a dozen countries.
 - Fill a gap. An empty cell is unknown, never zero.
+- Turn a count of cans into a count of servings. It says so and stops, until you
+  state that one item in a pack is one serving.
+- Read a currency it cannot store. It handles USD, GBP, EUR, CAD, AUD, NZD and
+  CHF, all of which divide into a hundred. JPY has no minor unit and KWD has
+  three digits, so both would come out a hundred times wrong and both are
+  refused until prices here carry an exponent.
 
 It is bounded at 1 MB, 500 rows and 64 columns.
 
@@ -73,15 +89,20 @@ The page ends with the list that no file answers, however clean it parses:
 
 1. Which product this is.
 2. Which variant this is.
-3. Whether the supplier counts as evidence for a figure.
+3. Who is actually speaking, and whether that counts as evidence.
 4. What date the figures carry.
 5. Whether a price is an offer from one merchant on one day.
 6. What the file says nothing about.
 
-A supplier feed is a retailer speaking, not the maker. On this site that means
-`merchant_feed`, `method: secondhand`, and never `manufacturer_reported` unless
-somebody has read the maker's own page. Nothing in this tool matches a row to a
-product in the catalogue, by name or by code, because that is a judgement.
+A feed can come from the maker, from a distributor, or from a reseller, and the
+file usually does not say which. That decides what a figure is worth here and it
+is not readable from the rows, so until somebody establishes it the origin of
+every figure is unverified and pending review: no verification, no source kind
+and no method is recorded. Writing one down from a file that did not state it
+would be inventing the evidence rather than recording it.
+
+Nothing in this tool matches a row to a product in the catalogue, by name or by
+code, because that is a judgement.
 
 ## Rebuilding it
 

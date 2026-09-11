@@ -15,7 +15,7 @@
 
 import { DRINK_FIELDS, fieldByKey, type TargetField } from "./fields";
 import type { ColumnMapping } from "./mapping";
-import { currencyFromHeader, readCell, type Flag, type ReadCell } from "./values";
+import { currencyFromHeader, readCell, unitFromHeader, type CellContext, type Flag, type ReadCell } from "./values";
 
 export type DraftField = ReadCell & { field: TargetField };
 
@@ -36,6 +36,40 @@ export type DraftSet = {
   totals: { rows: number; clean: number; withChecks: number; withBlockers: number };
 };
 
+/**
+ * What a column states about itself, and who stated it.
+ *
+ * Three places can say what a measure column's unit or a price column's
+ * currency is: the cell, the column heading, and the operator. The cell is
+ * handled where the cell is read. This resolves the other two, and refuses when
+ * they disagree rather than ranking them.
+ */
+function columnContext(field: TargetField, header: string, mapping: ColumnMapping): { ctx: CellContext; clash?: string } {
+  const ctx: CellContext = { servingsBasis: mapping.servingsBasis === true };
+
+  if (field.kind === "money") {
+    const fromHeader = currencyFromHeader(header);
+    const fromOperator = mapping.currency;
+    if (fromHeader && fromOperator && fromHeader !== fromOperator) {
+      return { ctx, clash: `The heading "${header}" says ${fromHeader} and the currency set beside the column says ${fromOperator}. Those disagree, so no price is read from this column until one of them changes.` };
+    }
+    const value = fromHeader ?? fromOperator;
+    if (value) ctx.currency = { value, from: fromHeader ? `column heading "${header}"` : "currency set beside the column" };
+  }
+
+  if (field.kind === "measure") {
+    const fromHeader = unitFromHeader(header);
+    const fromOperator = mapping.units?.[field.key];
+    if (fromHeader && fromOperator && fromHeader !== fromOperator) {
+      return { ctx, clash: `The heading "${header}" says ${fromHeader} and the unit set beside the column says ${fromOperator}. Those disagree, so no figure is read from this column until one of them changes.` };
+    }
+    const value = fromHeader ?? fromOperator;
+    if (value) ctx.unit = { value, from: fromHeader ? `column heading "${header}"` : "unit set beside the column" };
+  }
+
+  return { ctx };
+}
+
 export function buildDrafts(headers: string[], rows: string[][], mapping: ColumnMapping): DraftSet {
   const indexOf = new Map(headers.map((h, i) => [h, i]));
   const missingRequired = DRINK_FIELDS.filter((f) => f.required && mapping.columns[f.key] === undefined);
@@ -47,16 +81,12 @@ export function buildDrafts(headers: string[], rows: string[][], mapping: Column
       const column = indexOf.get(header);
       if (!field || column === undefined) continue;
       const raw = row[column] ?? "";
-      // A currency the operator stated for the column wins. Failing that, one
-      // the heading itself states is read, the same way a unit inside a cell is
-      // read: stated, not assumed. A heading saying nothing still gets nothing,
-      // and the price is refused rather than given a default.
-      const fromHeader = field.kind === "money" ? currencyFromHeader(header) : undefined;
-      const currency = field.kind === "money" ? (mapping.currency ?? fromHeader) : undefined;
-      const cell = readCell(raw, field, currency);
-      if (field.kind === "money" && !mapping.currency && fromHeader && cell.value) {
-        cell.flags = [...cell.flags, { severity: "check", message: `Currency read from the column heading "${header}". Confirm the supplier means ${fromHeader} in every row.` }];
-      }
+      const { ctx, clash } = columnContext(field, header, mapping);
+      // A disagreement between the heading and the operator is a disagreement,
+      // not a precedence question. Letting the operator's box quietly overrule a
+      // heading that says something else is how a column of euros gets read as
+      // dollars with nothing on screen to show for it.
+      const cell = clash ? { raw, flags: [{ severity: "blocker" as const, message: clash }] } : readCell(raw, field, ctx);
       fields.push({ field, ...cell });
     }
     // In the order this file declares them, so the list reads the same way twice.
@@ -105,9 +135,9 @@ export const STANDING_REVIEW: { title: string; detail: string }[] = [
       "Flavour, size and pack count separate records that otherwise look identical. A row reading a brand and a product name usually settles none of the three, and a wrong variant is a wrong price, a wrong sugar figure and a wrong caffeine figure at once.",
   },
   {
-    title: "Whether the supplier is evidence",
+    title: "Who is actually speaking",
     detail:
-      "Every figure here is a supplier's claim. On this site that is a retailer speaking, not the maker: it is recorded as merchant_feed, method secondhand, and never as manufacturer_reported unless the maker's own page has been read.",
+      "A feed can come from the maker, from a distributor, or from a reseller, and the file usually does not say which. That decides what a figure is worth here, and it is not readable from the rows. Until somebody establishes it, the origin of every figure in this tool is unverified and pending review: no verification, no source kind and no method is recorded, because writing one down from a file that did not state it would be inventing the evidence rather than recording it.",
   },
   {
     title: "What date the figures carry",
