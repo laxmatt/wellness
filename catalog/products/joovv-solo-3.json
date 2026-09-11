@@ -152,13 +152,13 @@
     },
     "irradiance_mw_cm2": {
       "value": 100,
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "url": "https://joovv.com/products/joovv-solo-3-0",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Brand states over 100 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Brand states over 100 mW/cm\u00b2; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
       },
       "verification": "manufacturer_reported",
       "bound": "greater_than"
@@ -223,6 +223,17 @@
         "note": "Returns page states 60 days from receipt for Gen 3 modular devices. The 30-day window on the same page is the Joovv Go's and is not this product's. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+        "url": "https://joovv.com/blogs/joovv-blog/red-light-therapy-buyers-guide",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The maker's buyer guide names a Boot Floor stand, a Door mount and a Nano Wall mount as options for the Solo, and a Mobile Stand for the Max, Quad and Elite only. It sets out what a buyer chooses between; it does not state which of them the unit this record prices includes. Recording all three would claim the panel ships with a door mount, a floor stand and a wall mount together, and recording one would be picking. No value is recorded. This is a configuration question, like Plunge's cold-only and heater tubs, rather than a figure nobody has published."
+      },
+      "verification": "not_stated"
     }
   },
   "source": {
