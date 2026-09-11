@@ -15,7 +15,9 @@ deployment configuration exists in this repository.
 
 Updated 2026-09-11: section 2 now describes a reporting command that did not
 exist when this was compiled, and separates what that command does from the
-deletion it does not do.
+deletion it does not do. Corrected the same day after review: an earlier version
+of that command treated old `assistant_session` rows as prunable, which they are
+not. See the last row of the table in section 2.
 
 **What this inventory cannot tell you.** It is a reading of application code in
 this repository and nothing else. It says nothing about what a hosting platform
@@ -189,11 +191,19 @@ npm run retention:report -- --before=2026-06-30
 
 `scripts/retention-report.ts` counts how many rows a stated cutoff would reach
 and prints the figures. `src/domain/retention.ts` holds the categories and the
-predicates, and refuses to send any statement that is not a `SELECT count(*)`.
-`src/__tests__/retention.test.ts` holds that refusal to it, and
-`src/__tests__/retention-postgres.test.ts` runs the predicates against a real
-throwaway Postgres and checks that every row count, and every accounting row's
-id, session, outcome and cost, is the same after the report as before it.
+predicates. Every count runs inside one `BEGIN TRANSACTION ISOLATION LEVEL
+REPEATABLE READ, READ ONLY`, rolled back on every path, with no commit anywhere
+in the module: Postgres refuses a write inside that transaction whatever the
+code intends. A regular-expression check that every statement is a
+`SELECT count(*)` sits in front of it, but that one is a review aid rather than
+the boundary, and says so.
+
+`src/__tests__/retention.test.ts` covers the cutoff rules, the transaction and
+the category rules. `src/__tests__/retention-postgres.test.ts` runs the
+predicates against a real throwaway Postgres, checks that every row count and
+every accounting row's id, session, outcome and cost is the same after a report
+as before it, and checks that a `DELETE`, an `UPDATE`, a `TRUNCATE` and a
+`DROP TABLE` are each refused by the database inside that transaction.
 
 Three things the command deliberately does not do:
 
@@ -210,15 +220,20 @@ What it classifies, so a period can be argued about against real figures:
 
 | category | what a job would do | why |
 | --- | --- | --- |
-| `assistant_client` rows older than the cutoff | prune | the row enforces a limit for an hour that has already passed, and this is the only table holding anything derived from an IP address |
-| `assistant_session` rows older than the cutoff | prune | a per-session turn limit that the session will not reach again |
-| `assistant_usage.session_id` on settled, reconciled rows | keep the row, drop the link | the row is the ledger and deleting it would change what the site has spent; the session id is the only part of it pointing at a visitor |
+| `assistant_client` rows older than the cutoff | prune | the row's own key names the hour it enforces, and `reserve` only ever reads the hour in progress, so a passed hour can never be read again; this is also the only table holding anything derived from an IP address |
+| `assistant_usage.session_id` on settled, reconciled rows | keep the row, drop the link | the row is the ledger and deleting it would change what the site has spent; the session id is the only part of it pointing at a visitor, and nothing enforcing a limit reads it |
 | open reservations, unreconciled uncertain charges, `assistant_budget` | nothing, at any age | an operator still has to close each one against the provider's record, and the monthly totals are the financial history |
+| `assistant_session` rows, at any age | nothing, and the report says why | **Corrected after review.** An earlier version pruned these on `first_seen`. A session does not expire: `reserve` increments `turns` on the existing row whenever the same `session_id` is presented, with no TTL and no reference to `first_seen`, which is written once and read by nothing that enforces anything. Deleting an old row hands its `session_id` a fresh turn allowance, so a rule that looks like an age rule is really a way to reset the limit it is meant to leave alone. When a session ends is a question about how the limit works, and nobody has answered it. |
 | rows carrying an outcome this code does not recognise | nothing, and reported separately | nothing here can say whether such a row is finished |
 
-Two things still do not exist: a chosen period, and any code that would act on
-one. The report exists so the first can be decided with the shape of the second
-already visible, not as a substitute for either.
+The report prints the last two rows under a heading that calls them unclassified
+rather than eligible, with the open question beside the figure, so a count there
+cannot be read as a number of rows somebody could delete.
+
+Three things still do not exist: a chosen period, any code that would act on one,
+and an answer to when a session ends. The report exists so the first can be
+decided with the shape of the second already visible, not as a substitute for
+any of them.
 
 ## 3. Where data goes outside this system
 
@@ -289,10 +304,15 @@ These need the owner or a document this repository does not hold:
 - **Done, and only this:** a dry run that counts what a stated cutoff would
   reach (section 2). It requires the cutoff as an argument, prints counts alone,
   deletes nothing and runs on no schedule.
-- **Not started: the deletion itself.** Three separate pieces of work, none
-  written: a prune of `assistant_client`, a prune of `assistant_session`, and an
-  update that clears `session_id` on settled, reconciled `assistant_usage` rows.
-  Each needs the window first, which is the owner's to choose.
+- **Not started: the deletion itself.** Two pieces of work, neither written: a
+  prune of `assistant_client`, and an update that clears `session_id` on settled,
+  reconciled `assistant_usage` rows. Each needs the window first, which is the
+  owner's to choose.
+- **A question before any of it, and not the owner's:** when does a session end?
+  `assistant_session` rows cannot be aged out until the turn limit stops
+  depending on the row surviving (section 2). A last-seen column, an expiry, or a
+  limit keyed on something that does expire would each answer it. Until then the
+  table grows, and the report says so rather than proposing a rule for it.
 - Whether `assistant_usage` needs `session_id` at all after reconciliation is
   now answered in code as a proposal rather than a question: the report counts
   the link as droppable once the row is settled and reconciled, and keeps the

@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { PostgresUsageStore } from "@/providers/usage/PostgresUsageStore";
-import { countRetentionCandidates } from "@/domain/retention";
+import { BEGIN_READ_ONLY, END_READ_ONLY, countRetentionCandidates } from "@/domain/retention";
 import { assertDisposable } from "./support/disposable-db";
 
 // The predicates are the whole point of the counting layer, and a fake query
@@ -73,7 +73,6 @@ suite("retention counts, against a real ledger", () => {
     const counts = await run();
 
     expect(counts.client_buckets).toBe(2);
-    expect(counts.sessions).toBe(1);
     // billed, not_billed, legacy and a reconciled uncertain charge. Not the
     // recent row, not the open reservation, not the unreconciled charge, not
     // the row already anonymised, not the unrecognised outcome.
@@ -86,8 +85,35 @@ suite("retention counts, against a real ledger", () => {
 
     expect(counts.open_reservations).toBe(1);
     expect(counts.uncertain_charges).toBe(1);
-    expect(counts.unrecognised_outcomes).toBe(1);
     expect(counts.budget_totals).toBe(1);
+  });
+
+  it("counts sessions in full and does not date-classify them", async () => {
+    await fixtures();
+    const counts = await run();
+    // Both rows, the old one included. A session has no expiry in this codebase,
+    // so there is no age at which one becomes eligible for anything.
+    expect(counts.sessions).toBe(2);
+    expect(counts.unrecognised_outcomes).toBe(1);
+  });
+
+  it("is refused by Postgres if it ever tries to write, whatever this code intends", async () => {
+    await fixtures();
+    // The regex guard in retention.ts is a review aid. This is the boundary:
+    // 25006 is read_only_sql_transaction, raised by Postgres itself. One
+    // statement per transaction, because the first refusal aborts it.
+    for (const write of ["DELETE FROM assistant_client", "UPDATE assistant_usage SET session_id = ''", "TRUNCATE assistant_session", "DROP TABLE assistant_budget"]) {
+      const client = await admin.connect();
+      try {
+        await client.query(BEGIN_READ_ONLY);
+        await expect(client.query(write), write).rejects.toMatchObject({ code: "25006" });
+      } finally {
+        await client.query(END_READ_ONLY).catch(() => {});
+        client.release();
+      }
+    }
+    const left = await admin.query<{ n: string }>("SELECT count(*) AS n FROM assistant_client");
+    expect(left.rows[0].n).toBe("3");
   });
 
   it("changes nothing it reads", async () => {
