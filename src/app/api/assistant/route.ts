@@ -9,6 +9,7 @@ import { resolveClientIdentity } from "@/domain/client-identity";
 import { resolveCredential } from "@/domain/credential";
 import { boundInput } from "@/domain/request-bounds";
 import { evaluateCondition, matchesAll, unconfirmedByPrice } from "@/domain/conditions";
+import { classifyConditions } from "@/domain/needs";
 import { engineSummary } from "@/domain/match-claims";
 import { FIXED_INVITATION, FIXED_LIMITATION, categoryLink, clarifyingQuestion, composeReply, outOfScopeReply, questionForKey } from "@/domain/reply-composer";
 import { negatedCategoryIds, resolveSubjectScope } from "@/domain/subject-scope";
@@ -16,7 +17,7 @@ import { toEngineConstraints } from "@/domain/model-constraints";
 import { namedButUnconstrained, namedValues } from "@/domain/named-values";
 import { isMoneyKey, moneyContractText } from "@/domain/money-contract";
 import { PreferenceSet, type HardConstraint, type SoftPreference } from "@/domain/personalization";
-import { describeConstraint } from "@/domain/personalization/describe";
+import { describeConstraint, describeSoftPreference } from "@/domain/personalization/describe";
 import { applyPreferences } from "@/domain/personalization/match";
 import { displayPrice, type ProductView } from "@/domain/view";
 import { detectMedicalIntent } from "@/providers/ai/AIProvider";
@@ -442,8 +443,14 @@ export async function POST(req: Request) {
           // Every constraint on the key, together: what the key admits is what
           // survives all of them.
           matchIds: views.filter((v) => onKey.every((c) => evaluateCondition(v, cat, c as Condition))).map((v) => v.id),
+          // The same constraints, classified. A product whose weight is
+          // unrecorded is not admitted and is not ruled out either, and the
+          // engine's single false cannot tell the two apart.
+          unknownIds: views.filter((v) => classifyConditions(v, cat, onKey as Condition[]) === "unknown").map((v) => v.id),
         };
       }),
+      // Composed here, with the same words the reply uses.
+      softLabels: proposedSoft.map((s) => describeSoftPreference(cat, s)),
       matchCount: shown.matching.length,
     });
   }

@@ -8,7 +8,23 @@ import type { HardConstraint, SoftPreference } from "@/domain/personalization";
 
 export type CompareSeed = { id: string; slug: string; name: string; categoryId: string };
 
-export type AppliedPreferences = { hard: HardConstraint[]; soft: SoftPreference[]; matchingIds: string[] | null; labels: string[]; nonce: number };
+export type AppliedBreakdown = { key: string; label: string; matchIds: string[]; unknownIds: string[] };
+
+export type AppliedPreferences = {
+  hard: HardConstraint[];
+  soft: SoftPreference[];
+  matchingIds: string[] | null;
+  labels: string[];
+  // Per constraint key, what it admits and what it cannot settle. Carried so a
+  // screen can say where a product conflicts with an accepted constraint and
+  // where the catalogue simply cannot answer, which `matchingIds` alone cannot
+  // distinguish.
+  breakdown: AppliedBreakdown[];
+  // Accepted soft preferences, in words. Kept apart from `breakdown` on
+  // purpose: a preference orders the list and decides nothing.
+  softLabels: string[];
+  nonce: number;
+};
 
 export type AssistantState = {
   available: boolean;
@@ -34,7 +50,7 @@ export type AssistantState = {
   // the constraint, so the other requirements it carried are kept rather than
   // being left behind unapplied. Without it, the applied state is filtered
   // instead, which is what an alternative offered on its own can do.
-  setAside: (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: { key: string; label: string; matchIds: string[] }[] }) => void;
+  setAside: (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: AppliedBreakdown[] }) => void;
   dismiss: (index: number) => void;
   dismissed: number[];
   removeConstraint: (key: string) => void;
@@ -83,7 +99,11 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   // remains after any number of removals is the intersection of the sets for
   // the constraints still standing. A set precomputed for removing one would
   // be wrong the moment a second was removed.
-  const [matchesByKey, setMatchesByKey] = useState<{ key: string; label: string; matchIds: string[] }[]>([]);
+  const [matchesByKey, setMatchesByKey] = useState<AppliedBreakdown[]>([]);
+  // Accepted soft preferences, in the site's words. A ref, not state: nothing
+  // renders from it directly, and `setAside` is memoised on state it must not
+  // be re-created for. It reaches the screen through `applied`.
+  const softWords = useRef<string[]>([]);
   const sessionId = useRef<string | null>(null);
   const nonce = useRef(0);
 
@@ -202,10 +222,16 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   );
 
   // Nothing here changes the page until the shopper presses Apply.
-  const publish = useCallback((h: HardConstraint[], s: SoftPreference[], matchingIds: string[] | null, labels: string[]) => {
-    nonce.current += 1;
-    setApplied({ hard: h, soft: s, matchingIds, labels, nonce: nonce.current });
-  }, []);
+  const publish = useCallback(
+    (h: HardConstraint[], s: SoftPreference[], matchingIds: string[] | null, labels: string[], breakdown: AppliedBreakdown[], softWords: string[]) => {
+      nonce.current += 1;
+      // Only the keys still standing. A constraint the shopper set aside must
+      // not go on describing a product's fit.
+      const held = new Set(h.map((c) => c.key));
+      setApplied({ hard: h, soft: s, matchingIds, labels, breakdown: breakdown.filter((b) => held.has(b.key)), softLabels: softWords, nonce: nonce.current });
+    },
+    [],
+  );
 
   /**
    * What the engine admits for a set of hard constraints, from the breakdown
@@ -217,7 +243,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
    * the last one is set aside.
    */
   const admittedBy = useCallback(
-    (keys: string[], breakdown: { key: string; label: string; matchIds: string[] }[]): string[] | null => {
+    (keys: string[], breakdown: AppliedBreakdown[]): string[] | null => {
       if (keys.length === 0) return null;
       // By key, once each: the breakdown holds one entry per key covering every
       // constraint on it, so a key named twice is the same set twice.
@@ -229,7 +255,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
   );
 
   const setAside = useCallback(
-    (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: { key: string; label: string; matchIds: string[] }[] }) => {
+    (key: string, from?: { hard: HardConstraint[]; soft: SoftPreference[]; matchesByKey: AppliedBreakdown[] }) => {
       setRemoved((prev) => (prev.includes(key) ? prev : [...prev, key]));
       // The breakdown of the proposal being acted on, not of whatever was
       // applied last: an alternative offered beside a proposal can name a
@@ -247,7 +273,7 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         // Named by the site, from the labels it sent with the proposal. One
         // label per key, so two bounds on one key read as one entry.
         const labels = keys.map((k) => breakdown.find((m) => m.key === k)?.label).filter((l): l is string => l !== undefined);
-        publish(nextHard, nextSoft, ids, labels);
+        publish(nextHard, nextSoft, ids, labels, breakdown, softWords.current);
       };
       if (from) {
         const nextHard = from.hard.filter((c) => c.key !== key);
@@ -275,9 +301,10 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
         const named = new Set([...action.hard.map((c) => c.key), ...action.soft.map((p) => p.key)]);
         setRemoved((prev) => prev.filter((k) => !named.has(k)));
         setMatchesByKey(action.matchesByKey);
+        softWords.current = action.softLabels;
         // The engine's answer for these exact constraints, not a chip
         // approximation and not the previous turn's answer.
-        publish(action.hard, action.soft, action.matchingIds, [action.summary]);
+        publish(action.hard, action.soft, action.matchingIds, [action.summary], action.matchesByKey, action.softLabels);
       } else if (action.kind === "add_to_compare") {
         for (const id of action.productIds) {
           const seed = compareSeeds.find((x) => x.id === id);
@@ -302,8 +329,9 @@ export function AssistantProvider({ categoryId, compareSeeds = [], children }: {
     setDismissed([]);
     setRemoved([]);
     setMatchesByKey([]);
+    softWords.current = [];
     setError(null);
-    publish([], [], null, []);
+    publish([], [], null, [], [], []);
   }, [publish]);
 
   const value = useMemo<AssistantState>(

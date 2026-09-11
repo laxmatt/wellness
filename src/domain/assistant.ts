@@ -47,7 +47,18 @@ export const ProposedAction = z.discriminatedUnion("kind", [
     //
     // Empty is not "nothing matches": it means the breakdown is unavailable,
     // and the caller must treat the result as unknown rather than as none.
-    matchesByKey: z.array(z.object({ key: z.string(), label: z.string(), matchIds: z.array(z.string()) })).default([]),
+    // `unknownIds` are the products this constraint can neither admit nor rule
+    // out: the catalogue holds nothing usable for the key, or holds a figure it
+    // will not match on. They are not in `matchIds`, because the engine may not
+    // admit them, and they are not failures either. The fit section reports
+    // them as something to confirm.
+    matchesByKey: z
+      .array(z.object({ key: z.string(), label: z.string(), matchIds: z.array(z.string()), unknownIds: z.array(z.string()).default([]) }))
+      .default([]),
+    // The soft preferences this proposal would rank by, in the site's own
+    // words. Carried so a screen can say what is ordering the list without
+    // presenting it as a requirement: a preference never decides fit.
+    softLabels: z.array(z.string()).default([]),
   }),
   z.object({
     kind: z.literal("add_to_compare"),
