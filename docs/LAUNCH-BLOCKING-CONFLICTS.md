@@ -106,7 +106,11 @@ time will return 85 again.
 
 **Read instead:** a page that names an 88-gallon model, if the maker publishes
 one, or the Amazon listing itself, `https://www.amazon.com/dp/B0CPKYNJ9Q`, which
-is where the 88 came from and which has never been fetched.
+is where the 88 came from and which has never been fetched. That listing was
+tried once from this container on 2026-09-11 and the domain is refused at the
+egress proxy; see `source-checks/2026-09-11-cold-pod-identity-bounded.md`, which
+also assesses how the page reads today and proposes the one edit that would
+close the remaining gap.
 
 **The question:** whether 85 and 88 are two models or one figure stated two
 ways. If they are two models, this record has to pick one and its name, slug and
