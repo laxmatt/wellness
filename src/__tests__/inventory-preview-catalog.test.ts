@@ -20,6 +20,7 @@ import { readCsv } from "@/domain/import/csv";
 import { buildDrafts } from "@/domain/import/draft";
 import { suggestMapping } from "@/domain/import/mapping";
 import { stageDrafts } from "@/domain/inventory/stage";
+import { applyEdit } from "@/domain/inventory/edit";
 import { transition, type InventoryAction } from "@/domain/inventory/status";
 import type { ProductStatus } from "@/domain/product";
 import { PreviewStore } from "@/providers/catalog/PreviewStore";
@@ -181,6 +182,46 @@ describe("a staged record, and the storefront on this machine", () => {
 });
 
 describe("a change made while the site is running", () => {
+  it("carries an approved edit through category, detail and comparison, then hides and restores it", async () => {
+    const before = fingerprint(join(REPO, "catalog"));
+    // Hold the same query module throughout: resetting it would hide a stale cache.
+    const queries = await storefront();
+    const categoryIds = async () => (await queries.getCategoryPage("wellness-drinks"))!.products.map((p) => p.view.id);
+    const originalIds = await categoryIds();
+    stageSample();
+    expect(await categoryIds()).toEqual(originalIds);
+    expect(await queries.getProductPage(ENERGY)).toBeNull();
+
+    operate(ENERGY, "approve");
+    expect(await categoryIds()).toContain(ENERGY);
+    const edited = applyEdit(store.product(ENERGY), {
+      name: "Berry Sparkling Energy — reviewed demo",
+      figures: [{ key: "caffeine_mg", raw: "160" }],
+    }, { editedOn: "2026-09-12" });
+    expect(edited.ok).toBe(true);
+    if (!edited.ok) throw new Error("Demo edit rejected");
+    store.write("products", ENERGY, edited.product);
+
+    const detail = await queries.getProductPage(ENERGY);
+    expect(detail?.item.view.name).toBe(edited.product.name);
+    const category = await queries.getCategoryPage("wellness-drinks");
+    expect(category!.products.find((p) => p.view.id === ENERGY)?.view.name).toBe(edited.product.name);
+    expect((await queries.getProductViewsByIds([ENERGY]))[0]?.name).toBe(edited.product.name);
+    expect(detail!.item.view.attributes.caffeine_mg).toBeUndefined();
+    expect(store.product(ENERGY).attributes.caffeine_mg).toMatchObject({ value: 160, verification: "demo" });
+
+    operate(ENERGY, "hide");
+    expect(await categoryIds()).toEqual(originalIds);
+    expect(await queries.getProductPage(ENERGY)).toBeNull();
+    expect(await queries.getProductViewsByIds([ENERGY])).toEqual([]);
+    expect(new PreviewStore(join(root, "catalog-preview")).product(ENERGY).name).toBe(edited.product.name);
+
+    operate(ENERGY, "unhide");
+    expect(await categoryIds()).toContain(ENERGY);
+    expect((await queries.getProductPage(ENERGY))?.item.view.name).toBe(edited.product.name);
+    expect(fingerprint(join(REPO, "catalog"))).toBe(before);
+  });
+
   it("reaches the catalogue the running process reads, with nothing restarted", async () => {
     vi.resetModules();
     // One module instance, one `getCatalog`, held across every change below.

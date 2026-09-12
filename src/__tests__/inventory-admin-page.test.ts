@@ -249,3 +249,19 @@ describe("what the operator said about one file does not carry to the next", () 
     expect(control("fileName")?.textContent).toContain("b.csv");
   });
 });
+
+
+describe("demo inventory without a supplier file", () => {
+  it("previews fictional data without staging or approving anything", async () => {
+    replyTo = (command, body) => command === "preview" ? previewReply(String(body.fileName), body) : { ok: true, records: [], standingReview: [] };
+    await mount();
+    buttonNamed("Try demo inventory")!.click();
+    await flush();
+    const request = lastSent("preview")!;
+    expect(request.fileName).toContain("SYNTHETIC");
+    expect(request.text).toContain("NW-1005");
+    expect(request.supplierName).toContain("fictional demo");
+    expect(request.pricedOn).toBe("");
+    expect(sent.map(r => r.command)).toEqual(["state", "preview"]);
+  });
+});

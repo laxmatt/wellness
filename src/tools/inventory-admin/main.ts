@@ -265,6 +265,8 @@ function messagePanel(message: NonNullable<State["message"]>): HTMLElement {
   return panel;
 }
 
+const DEMO_CSV = "sku,product_name,brand,category,function,sugar_g,caffeine_mg,unit_price_usd,servings_per_pack,source_url\nNW-1001,\"Citrus Salt Sticks, 30 pack\",Northwind Hydration,wellness-drinks,electrolytes,0,0,45.00,30,https://example.invalid/northwind/citrus-salt\nNW-1002,\"Berry Sparkling Energy, 12 cans\",Northwind Hydration,wellness-drinks,energy,0,200,16.12,12,https://example.invalid/northwind/berry-sparkling\nNW-1003,\"Daily Greens Scoop, 30 servings\n(new formula)\",Northwind Hydration,wellness-drinks,greens,1,,99.00,30,https://example.invalid/northwind/daily-greens\nNW-1004,\"Lemon Hydration Sticks, 16 pack\",Northwind Hydration,wellness-drinks,\"electrolytes|hydration\",11,,24.99,16,https://example.invalid/northwind/lemon-hydration\nNW-1005,\"Root Beer Prebiotic, 12 cans\",Northwind Hydration,wellness-drinks,prebiotic,3,,35.99,12,https://example.invalid/northwind/root-beer\n";
+
 function uploadSection(): HTMLElement {
   const section = el("section", {}, [el("h2", { text: "1. Add from a supplier file" })]);
   const panel = el("div", { class: "panel" });
@@ -312,6 +314,14 @@ function uploadSection(): HTMLElement {
       ]),
     ]),
   );
+  panel.prepend(el("p", { class: "note", text: "No supplier file yet? Try five fictional drinks. Loading the demo only previews them; you choose what to stage and approve." }), button("Try demo inventory", () => {
+    clearFileInterpretation();
+    state.file = { name: "supplier-a-northwind-SYNTHETIC.csv", text: DEMO_CSV };
+    state.supplier = "Northwind Hydration (fictional demo)";
+    state.pricedOn = "";
+    state.message = null;
+    void preview();
+  }));
   section.append(panel);
   if (state.file) section.append(mappingPanel());
   return section;
