@@ -49,6 +49,24 @@ type Preview = {
   staged: { fatal: string[]; refusals: Refusal[]; records: { row: number; id: string; name: string; alreadyStaged: boolean }[]; merchantId: string | null } | null;
 };
 
+/**
+ * What the operator has typed into the edit form, held here rather than in the
+ * inputs.
+ *
+ * The form used to read its values from the saved record on every draw, and the
+ * page redraws whenever a command is sent. So a refused save, or a tool that
+ * could not be reached, put the saved values back into the boxes and threw away
+ * everything the operator had typed, including the parts that were fine. The
+ * draft lives until a save succeeds or the operator presses Cancel.
+ */
+type EditDraft = {
+  id: string;
+  name: string;
+  description: string;
+  offer: { price: string; url: string; lastChecked: string } | null;
+  figures: { key: string; raw: string; basis: boolean }[];
+};
+
 type State = {
   records: Record_[];
   storefront: string;
@@ -63,7 +81,7 @@ type State = {
   columns: Record<string, string> | null;
   replace: boolean;
   preview: Preview | null;
-  editing: string | null;
+  draft: EditDraft | null;
   fieldErrors: { field: string; message: string }[];
   busy: boolean;
 };
@@ -93,7 +111,7 @@ const state: State = {
   columns: null,
   replace: false,
   preview: null,
-  editing: null,
+  draft: null,
   fieldErrors: [],
   busy: false,
 };
@@ -186,6 +204,26 @@ async function send(command: string, payload: Record<string, unknown> = {}, onOk
 
 const refresh = () => send("state");
 
+/**
+ * The answers that belong to one file, and nothing else.
+ *
+ * A unit, a currency, whether one packed item is one serving, and consent to
+ * replace what is already staged are all statements about the file in front of
+ * you. Carrying them to the next file means the second supplier's bare numbers
+ * quietly take the first supplier's unit, and a tick that meant "replace these
+ * five" silently means "replace those five". Who supplied the file and the date
+ * the prices were current stay in their boxes, where they can be seen and
+ * changed.
+ */
+function clearFileInterpretation(): void {
+  state.columns = null;
+  state.preview = null;
+  state.currency = "";
+  state.units = {};
+  state.servingsBasis = false;
+  state.replace = false;
+}
+
 async function preview(): Promise<void> {
   if (!state.file) return;
   await send(
@@ -231,15 +269,15 @@ function uploadSection(): HTMLElement {
   const section = el("section", {}, [el("h2", { text: "1. Add from a supplier file" })]);
   const panel = el("div", { class: "panel" });
 
-  const file = el("input", { type: "file" });
+  const file = mark(el("input", { type: "file" }), { control: "file" });
   file.setAttribute("accept", ".csv,.tsv,.txt,text/csv,text/plain");
   file.addEventListener("change", async () => {
     const chosen = file.files?.[0];
     if (!chosen) return;
     const text = await chosen.text();
+    clearFileInterpretation();
     state.file = { name: chosen.name, text };
-    state.columns = null;
-    state.preview = null;
+    state.message = null;
     await preview();
   });
 
@@ -257,7 +295,15 @@ function uploadSection(): HTMLElement {
 
   panel.append(
     el("div", { class: "fields" }, [
-      el("div", {}, [el("label", { text: "Supplier file (CSV or TSV)" }), file]),
+      el("div", {}, [
+        el("label", { text: "Supplier file (CSV or TSV)" }),
+        file,
+        mark(el("p", { class: "note", text: state.file ? `Reading ${state.file.name}.` : "Nothing chosen yet." }), { control: "fileName" }),
+        el("p", {
+          class: "note",
+          text: "Choosing another file clears the units, the currency and the servings answer you gave for this one, and any consent to replace what is already staged. They are statements about one file.",
+        }),
+      ]),
       el("div", {}, [el("label", { text: "Supplied by" }), supplier, el("p", { class: "note", text: "A price belongs to a named merchant. The file rarely says which." })]),
       el("div", {}, [
         el("label", { text: "These prices were current on" }),
@@ -285,7 +331,7 @@ function mappingPanel(): HTMLElement {
   const grid = el("div", { class: "grid" });
   for (const field of DRINK_FIELDS) {
     const row = el("div", { class: "panel" }, [el("label", { text: `${field.label}${field.required ? " (required)" : ""}` })]);
-    const select = doc.createElement("select");
+    const select = mark(doc.createElement("select"), { control: `column.${field.key}` });
     select.append(el("option", { value: "", text: "not mapped" }));
     for (const header of p.headers) {
       const option = el("option", { value: header, text: header });
@@ -302,7 +348,7 @@ function mappingPanel(): HTMLElement {
     row.append(select);
 
     if (field.kind === "measure") {
-      const unit = doc.createElement("select");
+      const unit = mark(doc.createElement("select"), { control: `unit.${field.key}` });
       unit.append(el("option", { value: "", text: "unit: whatever the file states" }));
       for (const u of SUPPORTED_UNITS) {
         const option = el("option", { value: u, text: `unit: ${u}` });
@@ -316,7 +362,7 @@ function mappingPanel(): HTMLElement {
       row.append(unit);
     }
     if (field.kind === "money") {
-      const currency = doc.createElement("select");
+      const currency = mark(doc.createElement("select"), { control: "currency" });
       currency.append(el("option", { value: "", text: "currency: whatever the file states" }));
       for (const c of SUPPORTED_CURRENCIES) {
         const option = el("option", { value: c, text: `currency: ${c}` });
@@ -331,7 +377,7 @@ function mappingPanel(): HTMLElement {
     }
     if (field.kind === "count") {
       const label = el("label", { class: "note" });
-      const box = el("input", { type: "checkbox", checked: state.servingsBasis });
+      const box = mark(el("input", { type: "checkbox", checked: state.servingsBasis }), { control: "basis" });
       box.addEventListener("change", () => {
         state.servingsBasis = box.checked;
         void preview();
@@ -369,7 +415,7 @@ function previewSection(p: Preview): HTMLElement {
   const actions = el("div", { class: "actions" });
   if (clashes > 0) {
     const label = el("label", { class: "note" });
-    const box = el("input", { type: "checkbox", checked: state.replace });
+    const box = mark(el("input", { type: "checkbox", checked: state.replace }), { control: "replace" });
     box.addEventListener("change", () => {
       state.replace = box.checked;
     });
@@ -395,9 +441,8 @@ function previewSection(p: Preview): HTMLElement {
             replace: state.replace,
           },
           () => {
-            state.preview = null;
+            clearFileInterpretation();
             state.file = null;
-            state.replace = false;
           },
         );
       },
@@ -448,7 +493,7 @@ function recordsSection(): HTMLElement {
   const published = state.records.filter((r) => r.status === "published").length;
   section.append(el("p", { class: "note", text: `${state.records.length} staged, ${published} in the storefront.` }));
   section.append(el("p", { class: "note", text: WITHHELD }));
-  for (const record of state.records) section.append(state.editing === record.id ? editForm(record) : recordPanel(record));
+  for (const record of state.records) section.append(state.draft?.id === record.id ? editForm(record, state.draft) : recordPanel(record));
   return section;
 }
 
@@ -483,8 +528,9 @@ function recordPanel(record: Record_): HTMLElement {
   const actions = el("div", { class: "actions" });
   actions.append(
     button("Edit", () => {
-      state.editing = record.id;
+      state.draft = draftFrom(record);
       state.fieldErrors = [];
+      state.message = null;
       render();
     }),
   );
@@ -511,27 +557,61 @@ function errorsFor(field: string): HTMLElement[] {
   return state.fieldErrors.filter((e) => e.field === field).map((e) => mark(el("p", { class: "err", text: e.message }), { error: field }));
 }
 
-function editForm(record: Record_): HTMLElement {
+/** The form's starting values, taken from the record once and then owned by the operator. */
+function draftFrom(record: Record_): EditDraft {
+  return {
+    id: record.id,
+    name: record.name,
+    description: record.description,
+    offer: record.offer ? { price: (record.offer.priceMinor / 100).toFixed(2), url: record.offer.url, lastChecked: record.offer.lastChecked } : null,
+    figures: EDITABLE_FIGURES.filter((key) => record.figures.some((f) => f.key === key)).map((key) => {
+      const figure = record.figures.find((f) => f.key === key)!;
+      const raw = figure.value === null ? "" : Array.isArray(figure.value) ? (figure.value as string[]).join("|") : String(figure.value);
+      return { key, raw, basis: false };
+    }),
+  };
+}
+
+/** Every box writes straight back into the draft, so a redraw cannot lose it. */
+function bind(input: HTMLInputElement | HTMLTextAreaElement, read: (value: string) => void): void {
+  input.addEventListener("input", () => read(input.value));
+  input.addEventListener("change", () => read(input.value));
+}
+
+function editForm(record: Record_, draft: EditDraft): HTMLElement {
   const panel = mark(el("div", { class: `record ${record.status}` }, [el("header", {}, [el("h3", { text: `Editing ${record.name}` })]), el("p", { class: "id", text: record.id })]), {
     record: record.id,
     editing: "true",
   });
 
-  const name = mark(el("input", { type: "text", value: record.name }), { field: "name" });
+  const name = mark(el("input", { type: "text", value: draft.name }), { field: "name" });
+  bind(name, (v) => {
+    draft.name = v;
+  });
   const description = doc.createElement("textarea");
   description.dataset.field = "description";
-  description.value = record.description;
+  description.value = draft.description;
+  bind(description, (v) => {
+    draft.description = v;
+  });
 
   panel.append(el("div", {}, [el("label", { text: "Name" }), name, ...errorsFor("name")]));
   panel.append(el("div", {}, [el("label", { text: "Description" }), description, ...errorsFor("description")]));
 
-  let price: HTMLInputElement | undefined;
-  let url: HTMLInputElement | undefined;
-  let checked: HTMLInputElement | undefined;
-  if (record.offer) {
-    price = mark(el("input", { type: "text", value: (record.offer.priceMinor / 100).toFixed(2) }), { field: "offer.price" });
-    url = mark(el("input", { type: "text", value: record.offer.url }), { field: "offer.url" });
-    checked = mark(el("input", { type: "date", value: record.offer.lastChecked }), { field: "offer.lastChecked" });
+  if (record.offer && draft.offer) {
+    const offer = draft.offer;
+    const price = mark(el("input", { type: "text", value: offer.price }), { field: "offer.price" });
+    const url = mark(el("input", { type: "text", value: offer.url }), { field: "offer.url" });
+    const checked = mark(el("input", { type: "date", value: offer.lastChecked }), { field: "offer.lastChecked" });
+    bind(price, (v) => {
+      offer.price = v;
+    });
+    bind(url, (v) => {
+      offer.url = v;
+    });
+    bind(checked, (v) => {
+      offer.lastChecked = v;
+    });
     panel.append(
       el("div", { class: "fields" }, [
         el("div", {}, [el("label", { text: `Price (${record.offer.currency})` }), price, ...errorsFor("offer.price")]),
@@ -541,26 +621,28 @@ function editForm(record: Record_): HTMLElement {
     );
   }
 
-  const figureInputs: { key: string; input: HTMLInputElement; basis?: HTMLInputElement }[] = [];
   const figures = el("div", { class: "fields" });
-  for (const key of EDITABLE_FIGURES) {
-    const figure = record.figures.find((f) => f.key === key);
+  for (const entry of draft.figures) {
+    const figure = record.figures.find((f) => f.key === entry.key);
     if (!figure) continue;
-    const field = DRINK_FIELDS.find((f) => f.key === key);
-    const current = figure.value === null ? "" : Array.isArray(figure.value) ? (figure.value as string[]).join("|") : String(figure.value);
-    const input = mark(el("input", { type: "text", value: current, placeholder: "empty means the source does not state this" }), { field: key });
+    const field = DRINK_FIELDS.find((f) => f.key === entry.key);
+    const input = mark(el("input", { type: "text", value: entry.raw, placeholder: "empty means the source does not state this" }), { field: entry.key });
+    bind(input, (v) => {
+      entry.raw = v;
+    });
     const wrap = el("div", {}, [el("label", { text: `${figure.label}${field?.unit ? ` (${field.unit})` : ""}` }), input]);
-    let basis: HTMLInputElement | undefined;
     if (field?.kind === "count") {
-      basis = mark(el("input", { type: "checkbox" }), { field: `${key}.basis` });
+      const basis = mark(el("input", { type: "checkbox", checked: entry.basis }), { field: `${entry.key}.basis` });
+      basis.addEventListener("change", () => {
+        entry.basis = basis.checked;
+      });
       const label = el("label", { class: "note" });
       label.append(basis, doc.createTextNode(" one packed item is one serving"));
       wrap.append(label);
     }
     wrap.append(el("p", { class: "note", text: VERIFICATION_WORDS[figure.verification] ?? figure.verification }));
-    for (const e of errorsFor(key)) wrap.append(e);
+    for (const e of errorsFor(entry.key)) wrap.append(e);
     figures.append(wrap);
-    figureInputs.push({ key, input, basis });
   }
   panel.append(el("label", { text: "Figures" }), figures);
   panel.append(el("p", { class: "note", text: "Changing a figure does not make it evidence. It stays demo data and its note records that you changed it." }));
@@ -570,11 +652,12 @@ function editForm(record: Record_): HTMLElement {
     button(
       "Save",
       () => {
-        const edit: RecordEdit = { name: name.value, description: description.value };
-        if (price && url && checked) edit.offer = { price: price.value, url: url.value, lastChecked: checked.value };
-        edit.figures = figureInputs.map(({ key, input, basis }): FigureEdit => ({ key, raw: input.value, servingsBasis: basis?.checked === true }));
+        const edit: RecordEdit = { name: draft.name, description: draft.description };
+        if (draft.offer) edit.offer = { ...draft.offer };
+        edit.figures = draft.figures.map(({ key, raw, basis }): FigureEdit => ({ key, raw, servingsBasis: basis }));
         void send("edit", { id: record.id, edit }, (reply) => {
-          if (reply.ok === true) state.editing = null;
+          // Only a save that landed may throw the typed values away.
+          if (reply.ok === true) state.draft = null;
         });
       },
       "primary",
@@ -582,7 +665,7 @@ function editForm(record: Record_): HTMLElement {
   );
   actions.append(
     button("Cancel", () => {
-      state.editing = null;
+      state.draft = null;
       state.fieldErrors = [];
       state.message = null;
       render();

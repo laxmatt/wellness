@@ -23,6 +23,17 @@ Then, in the tool: say who supplied the file, pick
 press **Stage 5 drafts**, edit one, press **Approve**, and reload the
 storefront. Nothing restarts.
 
+Choosing another file clears the units, the currency, the servings answer and
+any consent to replace what is already staged. Those are statements about one
+file: the second supplier's bare numbers must not take the first supplier's
+unit, and a tick that meant "replace these five" must not come to mean "replace
+those five". Who supplied the file and the date stay in their boxes, where you
+can see and change them.
+
+The edit form keeps what you typed until a save lands or you press Cancel. A
+refused save, or a tool that cannot be reached, leaves every box as you left it
+and puts the reason beside the one that caused it.
+
 Try `supplier-b-contoso-SYNTHETIC.csv` to see refusals: a price in EUR against a
 catalogue that stores USD, a category this site does not compare, a cell that
 starts like a spreadsheet formula, sugar in ounces, a pack of sticks nobody has
@@ -159,6 +170,7 @@ page lets you change the mapping but does not save one yet.
 ```
 npx vitest run src/__tests__/inventory-stage.test.ts            # rows to records, and the rows refused
 npx vitest run src/__tests__/inventory-admin.test.ts            # the request guards, and editing
+npx vitest run src/__tests__/inventory-admin-page.test.ts       # the page's own state, in jsdom
 npx vitest run src/__tests__/inventory-preview-catalog.test.ts  # the storefront, over the real catalogue
 WELLNESS_PREVIEW_INVENTORY=1 npm run e2e:inventory              # the page and a running storefront, in a browser
 npm run build                                                   # unchanged without the flag

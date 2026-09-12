@@ -21,6 +21,7 @@ import { chromium, type Page } from "playwright";
 const ROOT = process.cwd();
 const PREVIEW = join(ROOT, "catalog-preview");
 const SAMPLE = join(ROOT, "docs", "import-demo", "samples", "supplier-a-northwind-SYNTHETIC.csv");
+const OTHER_SAMPLE = join(ROOT, "docs", "import-demo", "samples", "supplier-b-contoso-SYNTHETIC.csv");
 const EXECUTABLE = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium";
 const TOOL_PORT = Number(process.env.INVENTORY_PORT ?? 4329);
 const SITE_PORT = Number(process.env.STOREFRONT_PORT ?? 3129);
@@ -113,7 +114,7 @@ async function run() {
     scenario = "upload";
     await page.locator('[data-field="supplier"]').fill("Northwind Hydration");
     await page.locator('[data-field="supplier"]').blur();
-    await page.setInputFiles('input[type="file"]', SAMPLE);
+    await page.setInputFiles('[data-control="file"]', SAMPLE);
     await page.waitForSelector(".draft", { timeout: 15_000 });
     check("every row is shown", await page.locator(".draft").count(), 5);
     ok("nothing is blocked in this file", (await page.locator(".draft.blocked").count()) === 0);
@@ -127,26 +128,57 @@ async function run() {
     check("and they are on disk", stagedCount(), 5);
     ok("none of them is in the storefront yet", !(await servedProducts()).some((slug) => slug.startsWith("preview-")));
 
+    scenario = "another file";
+    // The answers below belong to the file in front of you. Carrying them over
+    // would give the next supplier's bare numbers this supplier's unit, and
+    // would turn "replace these five" into "replace those five".
+    await page.setInputFiles('[data-control="file"]', SAMPLE);
+    await page.waitForSelector('[data-control="replace"]', { timeout: 15_000 });
+    // Answers that agree with this file's own headings, so the rows still
+    // stage and the replace question stays on screen. What is being tested is
+    // that they are answers about this file, not that they are right.
+    await page.locator('[data-control="currency"]').selectOption("USD");
+    await page.waitForTimeout(400);
+    await page.locator('[data-control="unit.sugar_g"]').selectOption("g");
+    await page.waitForTimeout(400);
+    await page.locator('[data-control="basis"]').check();
+    await page.waitForTimeout(400);
+    await page.locator('[data-control="replace"]').check();
+    ok("the answers are on for this file", await page.locator('[data-control="basis"]').isChecked());
+    ok("and so is consent to replace", await page.locator('[data-control="replace"]').isChecked());
+
+    await page.setInputFiles('[data-control="file"]', OTHER_SAMPLE);
+    await page.waitForSelector('[data-control="fileName"]:has-text("supplier-b")', { timeout: 15_000 });
+    check("the currency answer is cleared", await page.locator('[data-control="currency"]').inputValue(), "");
+    check("the unit answer is cleared", await page.locator('[data-control="unit.sugar_g"]').inputValue(), "");
+    ok("the servings answer is cleared", !(await page.locator('[data-control="basis"]').isChecked()));
+
+    await page.setInputFiles('[data-control="file"]', SAMPLE);
+    await page.waitForSelector('[data-control="replace"]', { timeout: 15_000 });
+    ok("and consent to replace is asked again", !(await page.locator('[data-control="replace"]').isChecked()));
+
     scenario = "edit";
     await cardFor(page, ENERGY).getByRole("button", { name: "Edit" }).click();
     await page.waitForSelector(`[data-record="${ENERGY}"][data-editing="true"]`);
     const form = page.locator(`[data-record="${ENERGY}"][data-editing="true"]`);
 
     // A figure typed by hand is read exactly as a cell in a file is read.
+    await form.locator('[data-field="name"]').fill("Berry Sparkling Energy, 12 cans (checked)");
     await form.locator('[data-field="servings_per_pack"]').fill("1.5");
     await form.getByRole("button", { name: "Save" }).click();
     await page.waitForSelector('[data-error="servings_per_pack"]', { timeout: 10_000 });
     ok("a count with a decimal point is refused", (await page.locator('[data-error="servings_per_pack"]').first().innerText()).includes("whole"));
-    ok("and the form is still open, with nothing saved", await form.isVisible());
+    ok("the form is still open", await form.isVisible());
+    // A refusal must not put the record's own values back into the boxes.
+    check("the typed name survives the refusal", await form.locator('[data-field="name"]').inputValue(), "Berry Sparkling Energy, 12 cans (checked)");
+    check("and so does the value that was refused", await form.locator('[data-field="servings_per_pack"]').inputValue(), "1.5");
 
     await form.locator('[data-field="servings_per_pack"]').fill("12");
     await form.locator('[data-field="offer.price"]').fill("17.50");
-    await form.locator('[data-field="name"]').fill("Berry Sparkling Energy, 12 cans (checked)");
     await form.getByRole("button", { name: "Save" }).click();
     await page.waitForSelector(`[data-record="${ENERGY}"]:not([data-editing])`, { timeout: 10_000 });
-    ok("the new name is shown", (await cardFor(page, ENERGY).innerText()).includes("(checked)"));
-    ok("and the new price", (await cardFor(page, ENERGY).innerText()).includes("17.50"));
-    // The pill is upper-cased by the stylesheet, and innerText reads what is rendered.
+    ok("the name typed before the refusal is what was saved", (await cardFor(page, ENERGY).innerText()).includes("(checked)"));
+    ok("and the corrected price", (await cardFor(page, ENERGY).innerText()).includes("17.50"));
     ok("the edited figure is still demo data", (await cardFor(page, ENERGY).innerText()).toLowerCase().includes("demo data: invented, answers no filter"));
 
     scenario = "approve";
