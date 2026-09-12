@@ -7,6 +7,7 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
+import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers, displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
@@ -133,7 +134,7 @@ export function OfferList({ view }: { view: ProductView }) {
                 <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
               ) : null}
             </div>
-            <a href={o.url} target="_blank" rel="sponsored nofollow noopener" className={buttonStyles("primary", "md")}>
+            <a href={o.url} {...outboundLinkProps(o.affiliateStatus)} className={buttonStyles("primary", "md")}>
               Visit {o.merchant.name.replace(/\s*\(direct\)$/, "")}
             </a>
           </div>

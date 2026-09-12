@@ -27,6 +27,7 @@ import { formatMoney } from "@/domain/money";
 import { isUsable } from "@/domain/provenance";
 import { recommendCategory } from "@/domain/recommend";
 import { BADGE_LABELS } from "@/domain/recommend/badges";
+import { outboundRel } from "@/domain/outbound";
 import { buyableOffers, toProductView, type ProductView } from "@/domain/view";
 import { loadLocalCatalog } from "@/providers/catalog/LocalCatalogProvider";
 
@@ -637,7 +638,7 @@ async function run(browser: Browser) {
       const ld = (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "";
       ok("publishes no offer in structured data", !ld.includes('"@type":"Offer"'), ld.slice(0, 200));
       const retailersText = (await page.locator("#retailers").textContent()) ?? "";
-      const shopLinks = await page.$$eval('a[rel*="sponsored"]', (as) => as.map((a) => (a as HTMLAnchorElement).href));
+      const shopLinks = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       for (const o of view.offers) {
         ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price)), block.text);
         ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price)), retailersText.slice(0, 160));
@@ -681,7 +682,7 @@ async function run(browser: Browser) {
       // What must not exist is a way to buy at it.
       ok(`the ${offer.merchant.name} row is gone from the retailers section`, !retailers.includes(offer.merchant.name), retailers.slice(0, 160));
       ok(`its amount ${amount} is not quoted there either`, !retailers.includes(amount), retailers.slice(0, 160));
-      const shopping = await page.$$eval('a[rel*="sponsored"]', (as) => as.map((a) => (a as HTMLAnchorElement).href));
+      const shopping = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       ok("nothing offers to shop it", !shopping.some((h) => new URL(h).href === new URL(offer.url).href), offer.url);
       ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
       ok("but the page tells a shopper the listing is not shown", retailers.includes("is not shown here"));
@@ -749,7 +750,7 @@ async function run(browser: Browser) {
     const links = await page.evaluate(() =>
       [...document.querySelectorAll<HTMLAnchorElement>("a[href^='http']")]
         .filter((a) => new URL(a.href).origin !== location.origin)
-        .map((a) => ({ href: a.href, rel: a.getAttribute("rel") ?? "", target: a.getAttribute("target") ?? "" })),
+        .map((a) => ({ href: a.href, rel: a.getAttribute("rel") ?? "", target: a.getAttribute("target") ?? "", shop: a.hasAttribute("data-shop-link") })),
     );
     // Buyable only. A disputed offer is deliberately unlinked, and the checks
     // above prove its link is absent rather than present.
@@ -761,9 +762,11 @@ async function run(browser: Browser) {
       ok(`offer ${offer.merchant.name} is linked`, link !== undefined, offer.url);
       if (!link) continue;
       ok(`offer ${offer.merchant.name} link is https`, link.href.startsWith("https://"), link.href);
-      for (const token of ["sponsored", "nofollow", "noopener"]) {
-        ok(`offer ${offer.merchant.name} rel has ${token}`, link.rel.includes(token), link.rel);
-      }
+      // The rel says what the record says. "sponsored" is Google's word for a
+      // paid link, so it belongs on an offer recorded as an affiliate link and
+      // on no other, and no offer in this catalogue is one.
+      check(`offer ${offer.merchant.name} rel follows its affiliate status`, link.rel, outboundRel(offer.affiliateStatus));
+      ok(`offer ${offer.merchant.name} is marked as a shopping link`, link.shop, link.rel);
       check(`offer ${offer.merchant.name} opens in a new tab`, link.target, "_blank");
     }
 

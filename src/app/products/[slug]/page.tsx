@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import { primaryStrength } from "@/domain/recommend";
+import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
 import { getProductPage } from "@/lib/queries";
@@ -143,7 +144,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <CompareToggle size="lg" item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
               {lowest ? (
-                <a href={buyable.length > 1 ? "#retailers" : lowest.url} target={buyable.length > 1 ? undefined : "_blank"} rel={buyable.length > 1 ? undefined : "sponsored nofollow noopener"} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
+                <a href={buyable.length > 1 ? "#retailers" : lowest.url} {...(buyable.length > 1 ? {} : outboundLinkProps(lowest.affiliateStatus))} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
                   {buyable.length > 1 ? `See ${buyable.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
                 </a>
               ) : null}

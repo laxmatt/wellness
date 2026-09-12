@@ -7,7 +7,7 @@ import { buildNeedCatalogue, type NeedDefinition } from "@/domain/needs";
 import type { Brand } from "@/domain/product";
 import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory, type RecommendedProduct, type RecommendationSet } from "@/domain/recommend";
-import type { ProductView } from "@/domain/view";
+import { buyableOffers, type ProductView } from "@/domain/view";
 import { getCatalog } from "@/providers";
 
 // Server-side read helpers. Every page reads the catalog through these so
@@ -114,6 +114,17 @@ export const getProductViewsByIds = cache(async (ids: string[]): Promise<Product
   return getCatalog().listProductViews({ ids, status: ["published"] });
 });
 
+/**
+ * The cheapest listing a shopper can actually be sent to, or nothing.
+ *
+ * `view.offers` is every offer on the record, cheapest first, and that includes
+ * the ones no buying surface may link: an amount that belongs to another
+ * product, and a listing that is no longer current. Reading `offers[0]` took
+ * whichever of those happened to be cheapest. Two records in the catalogue make
+ * that concrete: Plunge's only offer is disputed and Edge Theory Labs' only
+ * offer is discontinued, and this returned a shopping link for both while every
+ * surface that renders them correctly shows none.
+ */
 export function lowestOfferUrl(view: ProductView): string | undefined {
-  return view.offers[0]?.url;
+  return buyableOffers(view)[0]?.url;
 }

@@ -7,6 +7,7 @@ import { CompareToggle } from "@/components/compare/CompareToggle";
 import { NeedsFit } from "@/components/needs/NeedsFit";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
+import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers, displayPrice } from "@/domain/view";
 import { BADGES, BADGE_LABELS, primaryStrength, type RecommendationSet, type RecommendedProduct } from "@/domain/recommend";
 import { formatMoney } from "@/domain/money";
@@ -97,8 +98,7 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                       <a
                         key={o.id}
                         href={o.url}
-                        target="_blank"
-                        rel="sponsored nofollow noopener"
+                        {...outboundLinkProps(o.affiliateStatus)}
                         className={cn(buttonStyles("primary", "md"), "w-full justify-between gap-2 px-4")}
                       >
                         <span className="truncate">Visit {o.merchant.name}</span>

@@ -145,6 +145,23 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
       if (o.disputed === true && !o.source.note) {
         issues.push({ file, message: `offer ${o.id} is marked disputed with no note saying why the amount cannot be shown to belong to this product.` });
       }
+      // An offer that says it pays has to say what pays it. `rel="sponsored"`
+      // and the words "we may earn a commission" both key off this status, so
+      // it is the switch that turns a disclosure on, and a record can flip it
+      // long before an account exists. A programme reference is the cheapest
+      // evidence that one does: the network's own identifier for this site.
+      // Nothing here invents or checks a tracking parameter, and nothing here
+      // is proof an application was approved.
+      if (o.affiliate.status === "affiliate") {
+        if (!o.affiliate.network) {
+          issues.push({ file, message: `offer ${o.id} says it is an affiliate link and names no network. The page will tell a shopper it may earn a commission, so the record has to say through whom.` });
+        }
+        if (!o.affiliate.programRef) {
+          issues.push({ file, message: `offer ${o.id} says it is an affiliate link with no programRef. Record the programme's own reference for this site, or set the status back to "unknown" until there is one.` });
+        }
+      } else if (o.affiliate.programRef) {
+        issues.push({ file, message: `offer ${o.id} carries a programRef and is recorded as "${o.affiliate.status}". One of the two is wrong, and the status is what the page shows a shopper.` });
+      }
       if (o.disputed === true && o.source.kind === "demo") {
         issues.push({ file, message: `offer ${o.id} is marked disputed and is also prototype data. A made-up amount is not a mismatched one; use one marker or the other.` });
       }

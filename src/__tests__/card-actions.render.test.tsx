@@ -47,7 +47,9 @@ describe("the action on a product card", () => {
     expect(screen.queryByText("2 retailers")).toBeNull();
     const action = screen.getByText("Shop").closest("a")!;
     expect(action.getAttribute("href")).toBe(buyableOffers(view)[0].url);
-    expect(action.getAttribute("rel")).toBe("sponsored nofollow noopener");
+    // Not "sponsored": nothing in this catalogue is a recorded affiliate link,
+    // and the markup says what the record says. See src/domain/outbound.ts.
+    expect(action.getAttribute("rel")).toBe("nofollow noopener");
   });
 
   it("offers details, not a shop, when there is nothing to shop", () => {

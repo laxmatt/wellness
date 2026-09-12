@@ -6,6 +6,7 @@ import { formatMoney } from "./money";
 import type { Badge } from "./recommend/badges";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "./recommend";
 import type { Verification } from "./provenance";
+import type { AffiliateStatus } from "./product";
 import { buyableOffers, displayPrice, type ProductView } from "./view";
 
 // Serializable comparison model. Built on the server so the client component
@@ -47,6 +48,10 @@ export type CompareMerchant = {
   // quoted. Never a stock claim: this record's freshness is a date, not a
   // promise, and the product page is where that date is shown.
   price?: string;
+  // What the record says the relationship with this merchant is, so the link
+  // can be marked up as what it is. Carried for `outboundRel` and for nothing
+  // else: see the note at `merchants` below.
+  affiliateStatus: AffiliateStatus;
 };
 
 export type CompareColumn = {
@@ -146,15 +151,19 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     // Retailers with a real amount first, cheapest first, then the ones whose
     // amount is a placeholder. The same rule the shown price already follows:
     // an invented figure is not a cheaper offer, so it does not sort like one.
-    // Affiliate status is not read here and cannot be. `ProductView` carries it
-    // for display; nothing in this file sorts, filters or picks on it, and the
-    // affiliate-neutrality test would fail if it did.
+    // Affiliate status is passed through and never acted on. Nothing in this
+    // file sorts, filters, picks or scores on it, and the affiliate-neutrality
+    // test would fail if it did. It travels because the link has to say what
+    // the relationship is: `rel="sponsored"` is a claim that a link was paid
+    // for, and the column used to make that claim about every retailer on a
+    // site with no affiliate programme at all.
     merchants: buyableOffers(it.view)
       .map((o) => ({
         offerId: o.id,
         merchant: o.merchant.name,
         url: o.url,
         price: o.priceIsDemo ? undefined : formatMoney(o.price),
+        affiliateStatus: o.affiliateStatus,
       })),
   }));
 

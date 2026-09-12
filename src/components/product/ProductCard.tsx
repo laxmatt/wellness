@@ -8,6 +8,7 @@ import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import type { CategoryDefinition } from "@/domain/category";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "@/domain/recommend";
+import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers } from "@/domain/view";
 
 // Card budget: image, one badge, brand, name, price, three specs, one why
@@ -89,8 +90,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a
             href={shopHref}
-            target={external ? "_blank" : undefined}
-            rel={external ? "sponsored nofollow noopener" : undefined}
+            {...(external ? outboundLinkProps(buyable[0].affiliateStatus) : {})}
             className={buttonStyles("primary", "md")}
           >
             {shopLabel}

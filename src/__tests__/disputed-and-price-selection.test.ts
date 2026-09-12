@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { categoryById, redLight } from "@/domain/categories";
 import { CategoryDefinition as CategorySchema } from "@/domain/category";
 import { evaluateCondition } from "@/domain/conditions";
-import { buildCompareModel } from "@/domain/compare";
+import { buildCompareModel, type CompareModel } from "@/domain/compare";
 import { assignBadges, recommendCategory } from "@/domain/recommend";
 import { scoreProducts, toScoringInput } from "@/domain/recommend/score";
 import { applyPreferences } from "@/domain/personalization/match";
@@ -498,7 +498,14 @@ describe("the comparison offers retailers directly", () => {
     const ids = ["lmnt-citrus-salt-30", "cure-hydration-lemonade-14"];
     const before = buildCompareModel(recommendCategory(viewsFor("wellness-drinks"), cat).products.filter((p) => ids.includes(p.view.id)), cat);
     const after = buildCompareModel(recommendCategory(flip(viewsFor("wellness-drinks")), cat).products.filter((p) => ids.includes(p.view.id)), cat);
-    expect(after.columns.map((c) => c.merchants)).toEqual(before.columns.map((c) => c.merchants));
+    // Everything but the status itself, which is now carried so the link can
+    // be marked up as what it is. What must not move is which retailers appear
+    // and in what order: marking every offer as paying changes neither.
+    const ordering = (m: CompareModel) => m.columns.map((c) => c.merchants.map(({ offerId, merchant, url, price }) => ({ offerId, merchant, url, price })));
+    expect(ordering(after)).toEqual(ordering(before));
+    // And it is carried faithfully rather than assumed.
+    expect(after.columns.flatMap((c) => c.merchants.map((m) => m.affiliateStatus))).toEqual(after.columns.flatMap((c) => c.merchants.map(() => "affiliate")));
+    expect(before.columns.flatMap((c) => c.merchants.map((m) => m.affiliateStatus))).toEqual(before.columns.flatMap((c) => c.merchants.map(() => "unknown")));
     // Real amounts first, cheapest first, placeholders last.
     for (const c of before.columns) {
       const shown = c.merchants.filter((m) => m.price !== undefined).length;
