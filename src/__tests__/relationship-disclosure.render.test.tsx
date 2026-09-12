@@ -14,19 +14,18 @@
  * denial and it must not read as a claim.
  */
 
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { CompareProvider } from "@/components/compare/CompareProvider";
 import { ProductCard } from "@/components/product/ProductCard";
+import { OfferList } from "@/components/product/detail";
 import { WinnersRow } from "@/components/category/WinnersRow";
 import { categoryById } from "@/domain/categories";
 import type { AffiliateStatus } from "@/domain/product";
 import { relationshipNote, RELATIONSHIP_COPY } from "@/domain/outbound";
 import { BADGES, recommendCategory } from "@/domain/recommend";
 import { buyableOffers, type ProductView } from "@/domain/view";
-import { catalog, viewsFor } from "./fixtures";
+import { viewsFor } from "./fixtures";
 
 afterEach(cleanup);
 
@@ -176,22 +175,66 @@ describe("one line for a set of links", () => {
   });
 });
 
-describe("the product page's site-level sentence", () => {
-  // It is hard-coded and it is true today: this site has no affiliate
-  // programme. It becomes false the moment one offer says it pays, and it sits
-  // directly above a row that would then read "we may earn a commission". This
-  // fails at that moment rather than after somebody reads the page.
-  it("is only allowed to stand while no offer in the catalogue is an affiliate link", () => {
-    const paid = catalog().products.flatMap((p) => p.offers).filter((o) => o.affiliate.status === "affiliate");
-    const detail = readFileSync(join(process.cwd(), "src/components/product/detail.tsx"), "utf8");
-    const sentence = "No affiliate programme is in place for this site, so none of these links earns a commission.";
-    if (paid.length === 0) {
-      expect(detail).toContain(sentence);
-    } else {
-      expect(
-        detail.includes(sentence),
-        `${paid.length} offers now record an affiliate link, so this sentence is false. Replace it with something computed from the offers shown.`,
-      ).toBe(false);
+describe("the product page's line above the retailers", () => {
+  // It used to read "No affiliate programme is in place for this site, so none
+  // of these links earns a commission." That was true the day it was written
+  // and would have gone on printing above a row saying "we may earn a
+  // commission" on the first day it stopped being true. It is read off the
+  // offers now.
+  const drawOffers = (status: AffiliateStatus) => {
+    const view = asIf(ONE_OFFER.category, status).find((v) => v.id === ONE_OFFER.product)!;
+    render(<OfferList view={view} />);
+    return view;
+  };
+
+  it("says what the offers say, for each of the three answers", () => {
+    // Matched loosely on purpose: the line carries the disclosure link beside
+    // it, and each offer row folds its status into a longer sentence.
+    drawOffers("affiliate");
+    expect(screen.getAllByText(/We may earn a commission/).length).toBeGreaterThan(0);
+    cleanup();
+
+    drawOffers("non_affiliate");
+    expect(screen.getAllByText(/Ordinary links?\. No commission\./).length).toBeGreaterThan(0);
+    cleanup();
+
+    drawOffers("unknown");
+    const notes = screen.getAllByText(/Affiliate status not recorded/);
+    expect(notes.length).toBeGreaterThan(0);
+    for (const note of notes) expect(note.textContent).not.toMatch(/no commission/i);
+  });
+
+  it("never prints a blanket denial over a paid link", () => {
+    drawOffers("affiliate");
+    expect(screen.queryByText(/none of these links earns a commission/i)).toBeNull();
+    expect(screen.queryByText(/No affiliate programme is in place/i)).toBeNull();
+  });
+
+  it("keeps the way to the disclosure page whatever the answer is", () => {
+    for (const status of ["affiliate", "non_affiliate", "unknown"] as AffiliateStatus[]) {
+      drawOffers(status);
+      expect(screen.getAllByText("How this site is paid").length).toBeGreaterThan(0);
+      expect(screen.getByRole("link", { name: "How this site is paid" }).getAttribute("href")).toBe("/disclosure");
+      cleanup();
     }
+  });
+});
+
+describe("a programme reference is identity, not a commission", () => {
+  // An account can be open while this site is not registered to it, which is
+  // where this project actually is. Recording the reference against the offer
+  // it will apply to must change nothing a shopper is told.
+  const withRef = (status: AffiliateStatus) =>
+    viewsFor(ONE_OFFER.category).map((v) => ({ ...v, offers: v.offers.map((o) => ({ ...o, affiliateStatus: status, network: "amazon" as const })) }));
+
+  it("changes neither the wording nor the rel while the status is unknown", () => {
+    const { cat, item } = cardFor(ONE_OFFER.category, ONE_OFFER.product, withRef("unknown"));
+    render(
+      <CompareProvider>
+        <ProductCard item={item} cat={cat} />
+      </CompareProvider>,
+    );
+    expect(screen.getByText(RELATIONSHIP_COPY.unknown)).toBeTruthy();
+    expect(screen.getByText("Shop").closest("a")!.getAttribute("rel")).toBe("nofollow noopener");
   });
 });

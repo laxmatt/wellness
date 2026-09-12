@@ -1,22 +1,29 @@
 /**
  * What an outbound link to a merchant claims, against what the record says.
  *
- * The site has no affiliate programme. `/disclosure` says so in as many words,
- * every offer in the catalogue records an unknown affiliate status, and not one
- * names a programme reference. Every one of those links carried
- * `rel="sponsored"`, which is Google's declaration that a link was paid for.
- * These are the tests that keep the markup and the page telling the same story.
+ * `rel="sponsored"` is Google's declaration that a link was paid for, and every
+ * outbound link on this site carried it while no offer recorded an affiliate
+ * relationship at all. The rule these tests hold is not "this site has no
+ * affiliate links", which is a fact about today and the thing the whole launch
+ * is meant to change. It is that the markup says what the record says, and goes
+ * on saying it when the record changes.
+ *
+ * Written against fixtures wherever a rule can be stated without the catalogue,
+ * so nothing here has to be rewritten on the day something starts paying. The
+ * shipped catalogue is checked against the same rule rather than for a
+ * particular answer; its state on a given date belongs in
+ * docs/launch-monetization-readiness.md, where a snapshot is labelled as one.
  */
 
-import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { categoryById } from "@/domain/categories";
 import { outboundLinkProps, outboundRel } from "@/domain/outbound";
-import type { Product } from "@/domain/product";
+import type { AffiliateStatus, MerchantOffer, Product } from "@/domain/product";
 import { buyableOffers, toProductView } from "@/domain/view";
 import { loadLocalCatalog, validateCatalog, type LoadedCatalog } from "@/providers/catalog/LocalCatalogProvider";
 import { lowestOfferUrl } from "@/lib/queries";
+import { miniProduct, miniView, offer } from "./fixtures";
 
 const CATALOG_DIR = join(process.cwd(), "catalog");
 const catalog: LoadedCatalog = loadLocalCatalog(CATALOG_DIR);
@@ -50,33 +57,42 @@ describe("a link says it is sponsored only when it pays", () => {
   });
 });
 
-describe("the catalogue as it stands", () => {
-  const offers = catalog.products.flatMap((p) => p.offers);
+/** A record carrying exactly the offers a test is about. */
+function withOffers(id: string, offers: MerchantOffer[]): Product {
+  return { ...miniProduct(id, offers[0]?.priceMinor ?? 1000, { power: 50 }), offers };
+}
 
-  it("holds no affiliate link at all, so no link on the site may claim one", () => {
+/** One offer, with whatever relationship the test is about. */
+function offerWith(affiliate: Partial<MerchantOffer["affiliate"]> & { status: AffiliateStatus }): MerchantOffer {
+  return { ...offer("fixture-offer", 1000), affiliate: { ...affiliate } };
+}
+
+describe("the markup agrees with the record, whatever the record says", () => {
+  it("claims payment for an affiliate link and for nothing else", () => {
+    // Written as a rule rather than a census. An earlier version asserted that
+    // the shipped catalogue holds no affiliate link at all, which was true the
+    // day it was written and would have started failing on the first day this
+    // site was actually paid for something. What has to hold forever is that
+    // the markup follows the record.
+    for (const status of ["affiliate", "non_affiliate", "unknown"] as const) {
+      expect(outboundRel(status).includes("sponsored")).toBe(status === "affiliate");
+    }
+  });
+
+  it("holds for every offer the catalogue currently ships", () => {
+    const offers = catalog.products.flatMap((p) => p.offers);
     expect(offers.length).toBeGreaterThan(0);
-    expect(offers.filter((o) => o.affiliate.status === "affiliate")).toEqual([]);
-    for (const view of views) {
-      for (const offer of buyableOffers(view)) expect(outboundRel(offer.affiliateStatus)).not.toContain("sponsored");
+    for (const o of offers) {
+      expect(outboundRel(o.affiliate.status).includes("sponsored"), o.id).toBe(o.affiliate.status === "affiliate");
     }
   });
 
-  it("names no programme reference and no Amazon tracking id", () => {
-    for (const offer of offers) {
-      expect(offer.affiliate.programRef).toBeUndefined();
-      // A network name is not an approved account, and `network: "amazon"` on
-      // three offers is exactly that: the name of where the listing is, not a
-      // programme this site has been accepted into.
-      const url = new URL(offer.url);
-      expect(url.searchParams.get("tag")).toBeNull();
-      expect(url.searchParams.get("ascsubtag")).toBeNull();
-    }
-  });
-
-  it("says the same thing on the disclosure page", () => {
-    const page = readFileSync(join(process.cwd(), "src/app/disclosure/page.tsx"), "utf8");
-    expect(page).toContain("There is no affiliate programme behind this site today");
-    expect(page).toContain("No tracking");
+  it("is not moved by a programme reference, only by the status", () => {
+    // The reference is retained identity. It says which programme an offer
+    // would belong to, not that this one pays today.
+    const retained = outboundRel(offerWith({ status: "unknown", network: "amazon", programRef: "some-store-id" }).affiliate.status);
+    expect(retained).toBe("nofollow noopener");
+    expect(retained).not.toContain("sponsored");
   });
 });
 
@@ -99,10 +115,16 @@ describe("what the catalogue refuses to record", () => {
     expect(issuesFor(product).filter((i) => i.message.includes("affiliate"))).toEqual([]);
   });
 
-  it("refuses a programme reference on a link that says it is not paid", () => {
-    const product = first();
-    product.offers[0].affiliate = { status: "unknown", programRef: "some-programme-reference" };
-    expect(issuesFor(product).some((i) => i.message.includes("carries a programRef"))).toBe(true);
+  it("permits a programme reference on a link that is not yet paid", () => {
+    // Refusing this was wrong. An account can be open while this site is not
+    // registered to it, which is the state this project is in, and recording
+    // the reference against the offer it will apply to is how somebody keeps
+    // that straight. Nothing on screen reads it.
+    for (const status of ["unknown", "non_affiliate"] as const) {
+      const product = first();
+      product.offers[0].affiliate = { status, network: "amazon", programRef: "some-store-id" };
+      expect(issuesFor(product).filter((i) => i.message.includes(product.offers[0].id)), status).toEqual([]);
+    }
   });
 
   it("is satisfied by the catalogue that ships", () => {
@@ -126,9 +148,18 @@ describe("the cheapest link a shopper can be sent to", () => {
     }
   });
 
-  it("finds the withheld records this is about", () => {
-    const withheld = views.filter((v) => v.offers.length > 0 && buyableOffers(v).length === 0);
-    expect(withheld.map((v) => v.id).sort()).toEqual(["edge-tub-elite", "plunge-original"]);
-    for (const view of withheld) expect(lowestOfferUrl(view)).toBeUndefined();
+  it("has nothing to offer when every listing on a record is withheld", () => {
+    // Proved on a record built here, so the rule survives any change to the
+    // catalogue. Two shipped records sit on it today, named in the audit
+    // document: Plunge's only offer is disputed and Edge Theory Labs' only
+    // offer is discontinued.
+    const withheldOnly = miniView(withOffers("withheld-only", [{ ...offer("w-1", 1000), disputed: true }, { ...offer("w-2", 2000), availability: "discontinued" }]));
+    expect(withheldOnly.offers).toHaveLength(2);
+    expect(buyableOffers(withheldOnly)).toEqual([]);
+    expect(lowestOfferUrl(withheldOnly)).toBeUndefined();
+
+    // And the cheapest of what remains, not the cheapest on the record.
+    const oneGood = miniView(withOffers("one-good", [{ ...offer("g-1", 1000), disputed: true }, offer("g-2", 2000)]));
+    expect(lowestOfferUrl(oneGood)).toBe("https://example.com/g-2");
   });
 });

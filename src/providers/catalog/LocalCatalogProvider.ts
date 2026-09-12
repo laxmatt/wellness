@@ -159,9 +159,15 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
         if (!o.affiliate.programRef) {
           issues.push({ file, message: `offer ${o.id} says it is an affiliate link with no programRef. Record the programme's own reference for this site, or set the status back to "unknown" until there is one.` });
         }
-      } else if (o.affiliate.programRef) {
-        issues.push({ file, message: `offer ${o.id} carries a programRef and is recorded as "${o.affiliate.status}". One of the two is wrong, and the status is what the page shows a shopper.` });
       }
+      // A programme reference on an offer that is not an affiliate link is
+      // allowed, and refusing it was wrong. Holding a programme's identity is
+      // not the same as a link being commissioned: an account can exist and be
+      // open while this site is not yet registered to it, which is the state
+      // this project is actually in. Recording the reference against the offer
+      // it will apply to is how a person keeps that straight, and nothing on
+      // screen reads it. The status alone decides what a shopper is told and
+      // whether a link says it was paid for.
       if (o.disputed === true && o.source.kind === "demo") {
         issues.push({ file, message: `offer ${o.id} is marked disputed and is also prototype data. A made-up amount is not a mismatched one; use one marker or the other.` });
       }

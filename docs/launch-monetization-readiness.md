@@ -32,6 +32,14 @@ programme has approved this site.
 
 ## What the repository actually holds
 
+**A snapshot, taken 2026-09-12.** These figures are the state of the catalogue
+on a date, not a rule. The tests deliberately no longer assert them: a test
+demanding that this site hold no affiliate link would be a test against the
+launch succeeding, and it would fail on the first day something paid. The tests
+assert that the markup and the copy follow the record, whatever the record says.
+This table is where the count lives, and it has to be re-read rather than
+trusted.
+
 | | |
 |---|---|
 | Products | 20, all `published`. No drafts, no hidden records. |
@@ -119,12 +127,20 @@ path, waiting for a caller.
 ### 3. Nothing stopped a record from claiming a commission it could not earn
 
 `affiliate.status` is the switch that turns on both `rel="sponsored"` and the
-words "Affiliate link. We may earn a commission." on the product page, and any
-record could flip it long before an account existed. `validateCatalog` now
-refuses an offer that says `affiliate` without a `network` and a `programRef`,
-and refuses a `programRef` on an offer that says it is not paid. It checks no
-tracking parameter and it is not evidence of approval; it is the cheapest
-consistency the record can carry.
+words "Affiliate link. We may earn a commission.", and any record could flip it
+long before an account existed. `validateCatalog` now refuses an offer that says
+`affiliate` without a `network` and a `programRef`. It checks no tracking
+parameter and it is not evidence of approval; it is the cheapest consistency the
+record can carry.
+
+A first version also refused a `programRef` on an offer recorded as `unknown` or
+`non_affiliate`, and that was wrong. Holding a programme's identity is not the
+same as a link being commissioned. An account can be open while this site is not
+registered to it, which is exactly where this project stands, and recording the
+reference against the offer it will apply to is how somebody keeps that
+straight. Retained metadata is now permitted on any status, nothing on screen
+reads it, and the status alone still decides what a shopper is told and whether
+a link says it was paid for.
 
 ### 4. Two surfaces sent shoppers out with no statement beside the link
 
@@ -157,18 +173,20 @@ On `/wellness-drinks` today, rendered from a production build: nine cards read
 "Affiliate status not recorded for this offer" and one winners card with two
 retailers reads "…for these offers". That is what all 26 records say.
 
-The product page's own site-level sentence, "No affiliate programme is in place
-for this site, so none of these links earns a commission", is hard-coded and is
-true today. It becomes false the moment one offer records an affiliate link,
-sitting directly above a row that would then read "we may earn a commission". A
-test now fails at that moment rather than after somebody reads the page.
+The product page's own line above the retailers used to be hard-coded: "No
+affiliate programme is in place for this site, so none of these links earns a
+commission." True on the day it was written, and printed directly above a row
+that would read "we may earn a commission" on the first day it stopped being
+true. It is read off the offers now, through the same helper, and a rendered
+test holds that a paid link never has a blanket denial above it. The link to
+`/disclosure` stays beside it whatever the answer is.
 
 ### Checks
 
 ```
-npx vitest run src/__tests__/outbound-links.test.ts              # the rules and the catalogue
+npx vitest run src/__tests__/outbound-links.test.ts              # the rules, on fixtures and on the catalogue
 npx vitest run src/__tests__/relationship-disclosure.render.test.tsx  # the three statuses, rendered
-npx vitest run                                                   # 1071 pass, 26 skipped
+npx vitest run                                                   # 1074 pass, 26 skipped
 npm run catalog:check                                 # Catalog OK: 20 products
 npm run build && npm run e2e:public                   # 880 browser checks pass
 ```
@@ -268,8 +286,12 @@ Nobody but Matt can supply these, and none of them is a code change.
    because a rule that refused it would fail the catalogue check on the
    catalogue that ships and block work on data nobody can currently supply.
 5. **Whether click-outs should be counted, and how.** See below.
-6. **The disclosure wording for the day a programme exists.** The current page
-   is accurate today and says what will change. Somebody has to write the next
+6. **The disclosure wording for the day a programme exists.** `/disclosure`
+   states, in prose, that there is no affiliate programme behind this site. No
+   test pins that sentence, deliberately: a test that did would fail the moment
+   the page was correctly updated. It is a page somebody has to rewrite, and it
+   is on this list because nothing will remind them. The current page is
+   accurate today and says what will change. Somebody has to write the next
    version and decide where a per-link disclosure sits on the category card and
    the compare table, which have none today. The product page already carries
    one, above the retailer list.

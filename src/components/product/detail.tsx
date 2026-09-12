@@ -7,7 +7,7 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
-import { outboundLinkProps, RELATIONSHIP_COPY } from "@/domain/outbound";
+import { outboundLinkProps, relationshipNote, RELATIONSHIP_COPY } from "@/domain/outbound";
 import { buyableOffers, displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
@@ -92,11 +92,14 @@ export function OfferList({ view }: { view: ProductView }) {
   }
   return (
     <>
-      {/* One statement, at the top, about the site rather than about a record:
-          nothing here is an affiliate link today. Per-offer status stays as
-          whatever each record actually says. */}
+      {/* One statement for the set, read off the records rather than written
+          down here. It used to say that no affiliate programme is in place for
+          this site, which was true on the day it was written and would have
+          gone on being printed above a row reading "we may earn a commission"
+          on the first day it stopped being true. Per-offer status still appears
+          on every row. */}
       <p className="mb-2 text-xs text-fg-muted">
-        No affiliate programme is in place for this site, so none of these links earns a commission.{" "}
+        {relationshipNote(offers.map((o) => o.affiliateStatus))}{" "}
         <Link href="/disclosure" className="underline-offset-2 hover:underline">
           How this site is paid
         </Link>
