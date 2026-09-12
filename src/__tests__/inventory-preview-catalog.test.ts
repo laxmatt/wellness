@@ -180,6 +180,54 @@ describe("a staged record, and the storefront on this machine", () => {
   });
 });
 
+describe("a change made while the site is running", () => {
+  it("reaches the catalogue the running process reads, with nothing restarted", async () => {
+    vi.resetModules();
+    // One module instance, one `getCatalog`, held across every change below.
+    // This is the whole claim: an approval is not something a restart delivers.
+    const { getCatalog } = await import("@/providers");
+    const published = async () => (await getCatalog().listProductViews({ status: ["published"] })).map((v) => v.id);
+
+    stageSample();
+    expect(await published()).not.toContain(ENERGY);
+
+    operate(ENERGY, "approve");
+    expect(await published()).toContain(ENERGY);
+
+    operate(ENERGY, "hide");
+    expect(await published()).not.toContain(ENERGY);
+
+    operate(ENERGY, "unhide");
+    expect(await published()).toContain(ENERGY);
+
+    store.remove(ENERGY);
+    expect(await published()).not.toContain(ENERGY);
+  });
+
+  it("notices two changes inside one filesystem timestamp tick", async () => {
+    vi.resetModules();
+    const { getCatalog } = await import("@/providers");
+    stageSample();
+    const name = async () => (await getCatalog().getProductView(ENERGY))?.name;
+    const original = await name();
+    const record = store.product(ENERGY);
+    store.write("products", ENERGY, { ...record, name: "First" });
+    expect(await name()).toBe("First");
+    store.write("products", ENERGY, { ...record, name: "Second" });
+    expect(await name()).toBe("Second");
+    expect(original).not.toBe("Second");
+  });
+
+  it("builds the catalogue once where there is no preview catalogue to watch", async () => {
+    vi.resetModules();
+    delete process.env.WELLNESS_PREVIEW_INVENTORY;
+    const { getCatalog } = await import("@/providers");
+    // The same object, so the real site reads no directory on any call but the
+    // first. The preview path is the only one that looks at anything twice.
+    expect(getCatalog()).toBe(getCatalog());
+  });
+});
+
 describe("what an approved sample does to the filters", () => {
   async function groupsNow() {
     const { getCategoryPage } = await storefront();

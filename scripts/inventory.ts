@@ -12,6 +12,10 @@
  *   npm run inventory -- remove <id>
  *   npm run inventory -- clear
  *
+ * The same operations in a browser, on this machine:
+ *
+ *   WELLNESS_PREVIEW_INVENTORY=1 npm run inventory:review
+ *
  * A command line, not a route. There is no HTTP endpoint here, so there is
  * nothing to leave unauthenticated: the only way to reach this is a shell on
  * the machine the catalogue lives on.
@@ -234,7 +238,8 @@ function show(id: string): void {
     console.log(`    ${key.padEnd(20)} ${value}   [${sv.verification}]`);
   }
   console.log(WITHHELD);
-  console.log(`\nEdit it at catalog-preview/products/${previewFileName(p.id)} and run show again.`);
+  console.log(`\nEdit it at catalog-preview/products/${previewFileName(p.id)} and run show again, or edit it in a browser:`);
+  console.log(`  ${PREVIEW_INVENTORY_FLAG}=1 npm run inventory:review`);
 }
 
 // --------------------------------------------------------------- publishing

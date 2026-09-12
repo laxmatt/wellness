@@ -25,7 +25,9 @@
  * is not a reason for a storefront to stop rendering.
  */
 
-import { existsSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { isPreviewId } from "@/domain/inventory/identity";
 import { categories } from "@/domain/categories";
 import { previewInventoryDecision, type PreviewInventoryEnv } from "@/lib/preview-inventory";
@@ -99,6 +101,33 @@ export function applyPreviewOverlay(base: LoadedCatalog, previewRoot: string): O
     catalog: mergeCatalog(base, overlay),
     added: { products: overlay.products.length, brands: overlay.brands.length, merchants: overlay.merchants.length },
   };
+}
+
+/**
+ * What the preview directory holds right now, as one string.
+ *
+ * The point is to notice a change made while the site is running. An operator
+ * approves a record and reloads the page; nothing has restarted, and the page
+ * has to show it.
+ *
+ * Contents, not modification times. Two writes inside one filesystem timestamp
+ * tick are exactly the case this has to catch, and an operator pressing approve
+ * twice in a second is not unusual. The directory holds a handful of small JSON
+ * files and this runs only where the preview catalogue is allowed at all, so
+ * the real site never reads a byte of it.
+ */
+export function previewSignature(root: string): string {
+  if (!existsSync(root)) return "absent";
+  const hash = createHash("sha256");
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      const path = join(dir, entry.name);
+      if (entry.isDirectory()) walk(path);
+      else hash.update(path).update("\u0000").update(readFileSync(path));
+    }
+  };
+  walk(root);
+  return hash.digest("hex");
 }
 
 export type CatalogLoad = { catalog: LoadedCatalog; notices: string[] };

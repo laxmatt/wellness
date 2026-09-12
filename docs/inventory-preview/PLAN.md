@@ -1,6 +1,8 @@
 # Admin inventory: the plan
 
-Written before the code, from what the repository already does.
+Written before the code, from what the repository already does. It describes the
+persistence layer and the command line. The editable page that sits on top of
+them came after a review, and `README.md` beside this file is what shipped.
 
 ## What the architecture already provides
 
@@ -53,6 +55,9 @@ overlay does not load, whatever the flag says. The check runs inside
 `getCatalog()`, so it cannot be bypassed by a caller.
 
 ### 3. A CLI, not a route
+
+(Both still true. A page was added after review, served by a separate
+loopback-bound server rather than by the Next app, for the same reason.)
 
 `npm run inventory -- <command>`. No HTTP endpoint is added, so there is nothing
 to leave unauthenticated. The existing `src/domain/admin-auth.ts` guards the one

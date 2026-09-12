@@ -25,7 +25,10 @@
     "preview:shots": "tsx scripts/preview-shots.mts",
     "preview": "next build && next start -p ${PORT:-3000}",
     "dashboard": "tsx scripts/build-local-tool.ts learning-dashboard",
-    "inventory": "tsx scripts/inventory.ts"
+    "inventory": "tsx scripts/inventory.ts",
+    "inventory:server": "tsx scripts/inventory-server.ts",
+    "inventory:review": "tsx scripts/inventory-review.ts",
+    "e2e:inventory": "tsx e2e/inventory-admin.mts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

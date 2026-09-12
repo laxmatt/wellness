@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Inventory (local preview only)</title>
+    <style>
+      :root { color-scheme: light; --edge: #ddd6cc; --bad: #8a2b1f; --warn: #7a5a12; --ok: #245b3a; --ink: #22201d; --soft: #5d574f; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0 0 4rem; background: #faf7f2; color: var(--ink); font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+      h1 { font-size: 1.6rem; margin: 1rem 0 .25rem; }
+      h2 { font-size: 1.15rem; margin: 2rem 0 .5rem; }
+      h3 { font-size: 1rem; margin: 0; }
+      p { margin: .4rem 0; }
+      .banner { border: 1px solid var(--edge); border-left: 4px solid var(--bad); background: #fff; padding: .75rem 1rem; border-radius: 6px; margin: 1rem 0; }
+      .banner strong { display: block; }
+      .status { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .6rem .9rem; margin: 1rem 0; }
+      .status.ok { border-left: 4px solid var(--ok); }
+      .status.bad { border-left: 4px solid var(--bad); }
+      .status ul { margin: .4rem 0 0; padding-left: 1.1rem; }
+      .panel { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: 1rem; margin: .75rem 0; }
+      label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .25rem; }
+      input[type="text"], input[type="date"], select, textarea { width: 100%; padding: .35rem; font: inherit; border: 1px solid var(--edge); border-radius: 4px; background: #fff; }
+      textarea { min-height: 4.5rem; }
+      .fields { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .grid { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+      button { font: inherit; padding: .35rem .8rem; border: 1px solid var(--edge); background: #fff; border-radius: 4px; cursor: pointer; }
+      button:hover:not([disabled]) { background: #f3efe8; }
+      button[disabled] { color: var(--soft); cursor: default; }
+      button.primary { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+      button.danger { border-color: var(--bad); color: var(--bad); }
+      .record { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .8rem; margin: .8rem 0; }
+      .record.published { border-left-color: var(--ok); }
+      .record.hidden { border-left-color: var(--warn); }
+      .record header { display: flex; gap: .75rem; align-items: baseline; flex-wrap: wrap; }
+      .record .id, .record .meta { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; color: var(--soft); }
+      .pill { font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; border: 1px solid var(--edge); border-radius: 999px; padding: .05rem .5rem; color: var(--soft); }
+      .pill.demo { border-color: var(--warn); color: var(--warn); }
+      .pill.not_stated { border-color: var(--soft); }
+      .actions { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .6rem; }
+      table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+      th, td { text-align: left; vertical-align: top; padding: .35rem .5rem; border-top: 1px solid var(--edge); }
+      th { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); border-top: 0; }
+      td.k { white-space: nowrap; font-weight: 600; }
+      td.raw, td.val { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; white-space: pre-wrap; word-break: break-word; }
+      .flag { margin: 0 0 .25rem; font-size: .8rem; }
+      .flag.blocker { color: var(--bad); }
+      .flag.check { color: var(--warn); }
+      .note { font-size: .85rem; color: var(--soft); }
+      .err { color: var(--bad); font-size: .82rem; margin: .2rem 0 0; }
+      .draft { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .7rem; margin: .6rem 0; }
+      .draft.blocked { border-left-color: var(--bad); }
+      .draft.checks { border-left-color: var(--warn); }
+      .draft.clean { border-left-color: var(--ok); }
+      details summary { cursor: pointer; font-size: .88rem; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
+      a { color: #1d4e89; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Inventory</h1>
+      <div class="banner">
+        <strong>Local preview only.</strong>
+        These records are invented, they live in <code>catalog-preview/</code> on this machine, and approving one puts it in the
+        storefront running here and nowhere else. Nothing is published anywhere.
+      </div>
+      <div id="app"></div>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
