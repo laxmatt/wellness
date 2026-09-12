@@ -24,7 +24,8 @@
     "partner:checklist": "tsx scripts/partner-checklist.ts",
     "preview:shots": "tsx scripts/preview-shots.mts",
     "preview": "next build && next start -p ${PORT:-3000}",
-    "dashboard": "tsx scripts/build-local-tool.ts learning-dashboard"
+    "dashboard": "tsx scripts/build-local-tool.ts learning-dashboard",
+    "inventory": "tsx scripts/inventory.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

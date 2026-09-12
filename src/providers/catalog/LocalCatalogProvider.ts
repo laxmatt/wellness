@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { validateAttributeAgainstDefinition } from "@/domain/attributes";
@@ -18,7 +18,13 @@ export type LoadedCatalog = {
 
 export type CatalogIssue = { file: string; message: string };
 
-function readJsonDir(dir: string): { file: string; data: unknown }[] {
+function readJsonDir(dir: string, optional = false): { file: string; data: unknown }[] {
+  // The base catalogue's directories are not optional: a missing `products/`
+  // there is a broken checkout, and returning nothing would render empty
+  // categories with no sign that anything was wrong. An overlay directory is
+  // different. It is an operator's scratch directory and may hold products
+  // without having grown a `merchants/` yet.
+  if (optional && !existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .sort()
@@ -149,23 +155,37 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
   return issues;
 }
 
-export function loadLocalCatalog(root: string): LoadedCatalog {
-  const products = readJsonDir(join(root, "products")).map(({ file, data }) => {
+export type CatalogRecords = { products: Product[]; brands: Brand[]; merchants: Merchant[] };
+
+/**
+ * Every record in a directory, parsed and no further.
+ *
+ * Split out from `loadLocalCatalog` because the cross-entity checks only make
+ * sense over a whole catalogue, and an overlay is not one: a preview product
+ * may belong to a brand the base directory holds. The overlay is read with
+ * this, merged, and checked once.
+ */
+export function readCatalogRecords(root: string, optionalDirs = false): CatalogRecords {
+  const products = readJsonDir(join(root, "products"), optionalDirs).map(({ file, data }) => {
     const r = Product.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const brands = readJsonDir(join(root, "brands")).map(({ file, data }) => {
+  const brands = readJsonDir(join(root, "brands"), optionalDirs).map(({ file, data }) => {
     const r = Brand.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const merchants = readJsonDir(join(root, "merchants")).map(({ file, data }) => {
+  const merchants = readJsonDir(join(root, "merchants"), optionalDirs).map(({ file, data }) => {
     const r = Merchant.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const loaded = { categories, products, brands, merchants };
+  return { products, brands, merchants };
+}
+
+export function loadLocalCatalog(root: string): LoadedCatalog {
+  const loaded = { categories, ...readCatalogRecords(root) };
   const issues = validateCatalog(loaded);
   if (issues.length > 0) {
     throw new Error(`Catalog invalid:\n${issues.map((i) => `  ${i.file}: ${i.message}`).join("\n")}`);

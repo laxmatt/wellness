@@ -48,3 +48,7 @@ next-env.d.ts
 
 # private live-test diagnostics: rejected model output, never committed
 /.diagnostics
+
+# local preview catalogue: invented products staged from a sample supplier
+# file, an operator's working directory. Never committed and never deployed.
+/catalog-preview
