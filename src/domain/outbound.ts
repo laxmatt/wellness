@@ -46,3 +46,49 @@ export function outboundLinkProps(affiliateStatus: AffiliateStatus): {
 } {
   return { target: "_blank", rel: outboundRel(affiliateStatus), "data-shop-link": "" };
 }
+
+/**
+ * What the record says about a relationship with one merchant, in a shopper's
+ * words.
+ *
+ * Three answers, and the third is the one that matters. "Unknown" is not "no
+ * commission": it is what the catalogue says when nobody recorded the
+ * relationship, and every offer on this site says it today. Reading it as a
+ * denial would be as wrong as reading it as a claim.
+ */
+export const RELATIONSHIP_COPY: Record<AffiliateStatus, string> = {
+  affiliate: "Affiliate link. We may earn a commission.",
+  non_affiliate: "Ordinary link. No commission.",
+  unknown: "Affiliate status not recorded for this offer.",
+};
+
+/**
+ * One line for a set of outbound links, saying only what their records say.
+ *
+ * A card carries one link and a winners row carries several, and both used to
+ * carry no statement at all: a shopper who never opened a product page saw an
+ * outbound button with nothing beside it. The product page has said this per
+ * offer for a long time, so the wording is the same wording, and the whole set
+ * is described rather than each button annotated.
+ *
+ * Nothing here counts as a denial that a mixed set contains a paid link, and
+ * nothing infers a commission from silence.
+ */
+export function relationshipNote(statuses: AffiliateStatus[]): string | undefined {
+  if (statuses.length === 0) return undefined;
+  const kinds = new Set(statuses);
+  const many = statuses.length > 1;
+
+  if (kinds.size === 1) {
+    const [only] = kinds;
+    if (only === "affiliate") return many ? "Affiliate links. We may earn a commission." : RELATIONSHIP_COPY.affiliate;
+    if (only === "non_affiliate") return many ? "Ordinary links. No commission." : RELATIONSHIP_COPY.non_affiliate;
+    return many ? "Affiliate status not recorded for these offers." : RELATIONSHIP_COPY.unknown;
+  }
+
+  // A mixed set is described by the part a shopper needs: that some of it pays.
+  if (kinds.has("affiliate")) return "Some of these are affiliate links. We may earn a commission on those.";
+  // Ordinary links and unrecorded ones. Saying "no commission" would turn the
+  // unrecorded ones into a denial nobody has evidence for.
+  return "Some of these have no affiliate status recorded.";
+}

@@ -7,7 +7,7 @@ import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
-import { outboundLinkProps } from "@/domain/outbound";
+import { outboundLinkProps, RELATIONSHIP_COPY } from "@/domain/outbound";
 import { buyableOffers, displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
@@ -16,11 +16,8 @@ import { cn } from "@/lib/cn";
 // reading it as "no commission" would quietly answer for an imported offer
 // nobody has checked. The site-wide fact, that no programme exists at all, is
 // stated once above the list where it belongs, by whoever can confirm it.
-const affiliateCopy: Record<OfferView["affiliateStatus"], string> = {
-  affiliate: "Affiliate link. We may earn a commission.",
-  non_affiliate: "Ordinary link. No commission.",
-  unknown: "Affiliate status not recorded for this offer.",
-};
+// The same words the category card and the winners row use, from one place.
+const affiliateCopy = RELATIONSHIP_COPY;
 
 const availabilityCopy: Record<OfferView["availability"], string> = {
   in_stock: "In stock",

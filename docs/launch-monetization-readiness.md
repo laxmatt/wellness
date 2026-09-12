@@ -4,15 +4,31 @@ What is traced here: every outbound link to a merchant, the affiliate disclosure
 around it, and the data behind both. Read against the repository at the commit
 this file lands in, not against a plan.
 
-**The headline. This site earns nothing today, and until this batch its own
-markup said otherwise.** All 26 offers in `catalog/` record
-`affiliate.status: "unknown"`, none carries a programme reference, no URL
-carries a tracking parameter, and `/disclosure` tells a reader in as many words
-that every link is ordinary. Every outbound link nonetheless carried
-`rel="sponsored"`, which is Google's declaration that a link was paid for.
+**The headline. No link on this site is configured to earn anything, and
+nothing here measures whether anything is earned.** Those are two separate
+statements and neither of them is "revenue is zero".
 
-No tracking id has been invented here, no account has been created, and nothing
-in this document claims any programme has approved this site.
+What the repository proves: all 26 offers in `catalog/` record
+`affiliate.status: "unknown"`, none carries a programme reference, and no URL
+carries a tracking parameter. A network attributes a commission to an account
+by a parameter on the link, so a click from any of these links is attributable
+to nobody. That is a fact about configuration, read off the files.
+
+What the repository cannot show: what anybody has earned. Nothing in this
+project counts a click-out, there is no redirect, no event has ever been
+emitted, and no store exists. Earnings live in a network's own reports and this
+codebase has never seen one. **Revenue here is unmeasured, which is not the same
+as measured and found to be zero**, and Matt's Amazon storefront exists
+independently of this site and may have activity of its own that this repository
+knows nothing about.
+
+Until this batch the markup said something else again: every outbound link
+carried `rel="sponsored"`, Google's declaration that a link was paid for, while
+`/disclosure` told a reader in as many words that every link is ordinary.
+
+No tracking id has been invented here, no account has been created, no catalogue
+affiliate status has been changed, and nothing in this document claims any
+programme has approved this site.
 
 ## What the repository actually holds
 
@@ -110,11 +126,49 @@ and refuses a `programRef` on an offer that says it is not paid. It checks no
 tracking parameter and it is not evidence of approval; it is the cheapest
 consistency the record can carry.
 
+### 4. Two surfaces sent shoppers out with no statement beside the link
+
+The product page has said what the relationship with each retailer is for a long
+time. The category card and the winners row carried the same outbound buttons
+with nothing beside them, so a shopper who never opened a product page saw a way
+out of the site and no statement about who pays for it.
+
+Both now carry one line, in the product page's own words, from the same map in
+`src/domain/outbound.ts` that the product page now reads. It is computed from
+the offer records and from nothing else:
+
+| The record says | The line |
+|---|---|
+| `affiliate` | Affiliate link. We may earn a commission. |
+| `non_affiliate` | Ordinary link. No commission. |
+| `unknown` | Affiliate status not recorded for this offer. |
+
+A winners card can hold several retailers, so a set is described once rather
+than each button annotated, and a mixed set is described by the part a shopper
+needs: "Some of these are affiliate links. We may earn a commission on those."
+A set of ordinary and unrecorded links says "Some of these have no affiliate
+status recorded", never "no commission", because that would turn an unrecorded
+relationship into a denial nobody has evidence for.
+
+A card whose action leads to this site rather than out of it carries no line.
+The statement is about the link on the card, and there is no link on the card.
+
+On `/wellness-drinks` today, rendered from a production build: nine cards read
+"Affiliate status not recorded for this offer" and one winners card with two
+retailers reads "…for these offers". That is what all 26 records say.
+
+The product page's own site-level sentence, "No affiliate programme is in place
+for this site, so none of these links earns a commission", is hard-coded and is
+true today. It becomes false the moment one offer records an affiliate link,
+sitting directly above a row that would then read "we may earn a commission". A
+test now fails at that moment rather than after somebody reads the page.
+
 ### Checks
 
 ```
-npx vitest run src/__tests__/outbound-links.test.ts   # 12, the rules and the catalogue
-npx vitest run                                        # 1060 pass, 26 skipped
+npx vitest run src/__tests__/outbound-links.test.ts              # the rules and the catalogue
+npx vitest run src/__tests__/relationship-disclosure.render.test.tsx  # the three statuses, rendered
+npx vitest run                                                   # 1071 pass, 26 skipped
 npm run catalog:check                                 # Catalog OK: 20 products
 npm run build && npm run e2e:public                   # 880 browser checks pass
 ```
@@ -155,15 +209,54 @@ field. Its subject is unchanged and slightly sharper: marking every offer as
 paying still moves no retailer and no ordering, and the status is now asserted
 to be carried faithfully rather than assumed.
 
+## What Matt's Amazon account does and does not establish
+
+Matt supplied an email from Amazon support confirming that his existing
+**Influencer account and storefront are open and active**:
+
+- Storefront: `amazon.com/shop/dtnmatt`
+- Store ID: `mattthedorr-20`
+
+A Store ID is the public identifier that appears in every affiliate URL a
+programme issues. It is not a credential and nothing is protected by keeping it
+out of this file. It has **not** been written into any code, any catalogue
+record or any URL, and no offer's affiliate status was changed on the strength
+of that email.
+
+**What it establishes.** An account exists and Amazon has not closed it. That is
+a real precondition, and it is the one on the list below that is now met.
+
+**What it does not establish.** Four separate things, none of which follows from
+an open account:
+
+1. **That this website is registered to that account.** A programme approves
+   the places a link may appear. A storefront being open says nothing about
+   whether a new domain has been added to it and accepted.
+2. **That tax information is complete.** Networks withhold payment, not
+   linking, until it is, so this can be true and unnoticed for months.
+3. **That product tracking is verified.** A tag that is issued is not a tag that
+   has been seen to attribute a click to a product, and nothing in this project
+   can observe whether it does.
+4. **That anything has been earned, here or anywhere.** The storefront predates
+   this site and is not connected to it. Its activity is its own and this
+   repository has no view of it.
+
+Until the first is settled, an affiliate link on this site would appear
+somewhere the programme has not approved. That is why nothing here was
+activated, and why `validateCatalog` now asks for a programme reference before
+an offer may say it pays.
+
 ## Remaining owner inputs
 
 Nobody but Matt can supply these, and none of them is a code change.
 
-1. **Which programmes to apply to.** Amazon Associates covers 8 of the 26
-   offers. The other 15 merchants are makers' own shops, each with its own
-   programme, its own terms and its own application.
-2. **The associate tag or tracking id for each accepted programme**, once
-   accepted. Nothing here has invented one and nothing should.
+1. **Registering this website with the Amazon account that already exists.**
+   The account is open; the site is not known to be on it. Amazon covers 8 of
+   the 26 offers. The other 15 merchants are makers' own shops, each with its
+   own programme, its own terms and its own application.
+2. **Confirmation that tax information is complete**, and that a link from this
+   domain attributes to `mattthedorr-20` when it is clicked. Neither can be
+   read from here. Nothing has invented a tag and nothing should.
 3. **The programme reference to record per offer**, which is what
    `validateCatalog` now asks for before an offer may say it pays.
 4. **A decision on the Amazon search link.** `hooga-hg300`'s Amazon offer is
@@ -189,19 +282,21 @@ Nobody but Matt can supply these, and none of them is a code change.
    paid relationship the site does not have.
 2. An accepted programme, with its reference recorded per offer. The catalogue
    now refuses the claim without it.
-3. Disclosure copy on the surfaces that carry none: the category card, the
-   winners row and the compare table all link out with no statement beside the
-   link. Only the product page has one. This is the largest gap between what
-   the site does and what a shopper reading one page can see.
+3. Disclosure on the compare table, which is the one surface still linking out
+   with no statement beside the link. The card and the winners row now carry
+   one and the product page always did. The same `relationshipNote` helper
+   covers it, and `CompareMerchant` already carries the status it needs.
 
 **Before any of it can be measured**
 
-4. **Nothing counts a click-out.** `src/domain/analytics.ts:10` types a
-   `retailer_clicked` event and `getAnalytics()` builds a provider that would
-   write it to the console. Nothing calls either. No event has ever been
-   emitted and no store exists, which the owner dashboard already states. With
-   no redirect and no event, a click that leaves this site is invisible here,
-   and revenue could only ever be read from the network's own reports.
+4. **Nothing counts a click-out, so nothing here can report revenue as zero or
+   as anything else.** `src/domain/analytics.ts:10` types a `retailer_clicked`
+   event and `getAnalytics()` builds a provider that would write it to the
+   console. Nothing calls either. No event has ever been emitted and no store
+   exists, which the owner dashboard already states. With no redirect and no
+   event, a click that leaves this site is invisible here. Earnings could only
+   ever be read from a network's own reports, and a figure of zero from this
+   codebase would mean "nobody counted", not "nobody bought".
 5. **No public address, and indexing is off.** `indexingAllowed()` in
    `src/lib/site-url.ts` requires a real `NEXT_PUBLIC_SITE_URL`, an explicit
    opt-in, and a non-preview deployment. All three are unset. The sitemap is

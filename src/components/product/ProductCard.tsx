@@ -8,7 +8,7 @@ import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import type { CategoryDefinition } from "@/domain/category";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "@/domain/recommend";
-import { outboundLinkProps } from "@/domain/outbound";
+import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
 import { buyableOffers } from "@/domain/view";
 
 // Card budget: image, one badge, brand, name, price, three specs, one why
@@ -36,6 +36,11 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   // Nothing to shop is not a shop button. The product page still says what is
   // known and why no retailer is listed, so the way in stays.
   const shopLabel = buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
+  // Only where the card itself sends somebody out. The other two labels lead to
+  // this site's own product page, which states the relationship per retailer,
+  // and a disclosure over an internal link would be about links that are not
+  // on this card.
+  const relationship = external ? relationshipNote([buyable[0].affiliateStatus]) : undefined;
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
@@ -96,6 +101,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             {shopLabel}
           </a>
         </div>
+        {relationship ? <p className="text-[11px] leading-snug text-fg-muted">{relationship}</p> : null}
       </div>
     </article>
   );

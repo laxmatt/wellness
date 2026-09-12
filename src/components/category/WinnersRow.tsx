@@ -7,7 +7,7 @@ import { CompareToggle } from "@/components/compare/CompareToggle";
 import { NeedsFit } from "@/components/needs/NeedsFit";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
-import { outboundLinkProps } from "@/domain/outbound";
+import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
 import { buyableOffers, displayPrice } from "@/domain/view";
 import { BADGES, BADGE_LABELS, primaryStrength, type RecommendationSet, type RecommendedProduct } from "@/domain/recommend";
 import { formatMoney } from "@/domain/money";
@@ -49,6 +49,10 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
             const why = primaryStrength(w.view, cat);
             const isOutside = f?.active === true && !f.visible.has(w.view.id);
             const merchants = buyableOffers(w.view);
+            // One line for the set, in the product page's words. Every button
+            // here leaves the site, and until now none of them said what the
+            // relationship with that retailer is.
+            const relationship = relationshipNote(merchants.map((o) => o.affiliateStatus));
             return (
               // An article, not a link. The whole card used to be one anchor,
               // which left no way to add a retailer link or a compare control
@@ -105,6 +109,7 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                         {o.priceIsDemo ? null : <span className="tabular shrink-0 opacity-80">{formatMoney(o.price)}</span>}
                       </a>
                     ))}
+                    {relationship ? <p className="text-[11px] leading-snug text-fg-muted">{relationship}</p> : null}
                     <div className="grid grid-cols-2 gap-2">
                       <CompareToggle item={{ id: w.view.id, slug: w.view.slug, name: w.view.name, categoryId: w.view.categoryId }} />
                       <Link href={`/products/${w.view.slug}`} className={buttonStyles("secondary", "md")}>
