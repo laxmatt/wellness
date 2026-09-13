@@ -7,6 +7,8 @@ const input: ConverseInput = {
   categoryName: "Red light therapy",
   filterVocabulary: "price",
   products: [],
+      catalogueSize: 0,
+  moneyContract: "MONEY: price is money.",
   messages: [{ role: "user", text: "hi" }],
   activeConstraints: [],
 };

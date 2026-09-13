@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { getAllCategoryPages, getBrands } from "@/lib/queries";
+import { social } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "Brands", description: "Every brand in the catalog and what we compare from each." };
+const description = "Every brand in the catalog and what we compare from each.";
+export const metadata: Metadata = {
+  title: "Brands",
+  description,
+  alternates: { canonical: "/brands" },
+  ...social({ title: "Brands", description, path: "/brands" }),
+};
 
 export default async function BrandsPage() {
   const [brands, pages] = await Promise.all([getBrands(), getAllCategoryPages()]);

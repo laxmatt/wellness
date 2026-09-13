@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { buttonStyles } from "@/components/ui/Button";
 import { CompareToggle } from "@/components/compare/CompareToggle";
+import { NeedsFit } from "@/components/needs/NeedsFit";
 import { Badge } from "@/components/ui/Badge";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import type { CategoryDefinition } from "@/domain/category";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "@/domain/recommend";
+import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
+import { buyableOffers } from "@/domain/view";
 
 // Card budget: image, one badge, brand, name, price, three specs, one why
 // line, one tradeoff line (hidden on phones), two actions. Nothing else.
@@ -16,8 +19,28 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   const primaryBadge = item.badges[0];
   const strength = primaryStrength(view, cat);
   const tradeoff = primaryTradeoff(view, cat);
-  const shopHref = view.offers.length === 1 ? view.offers[0].url : `${href}#retailers`;
-  const external = view.offers.length === 1;
+  // Only offers a shopper can be sent to. A card sent people straight to a
+  // withheld listing whenever a product had exactly one offer and that offer
+  // was the withheld one: Plunge's card carried a Shop button to a page whose
+  // configuration nobody has matched, which the product page already refuses
+  // to link.
+  const buyable = buyableOffers(view);
+  // Destination AND label from the same list. The href already came from
+  // `buyable` and the label still counted `view.offers`, which holds the
+  // withheld ones too, so a product with two offers and one of them withheld
+  // advertised "2 retailers" over a link to the single one a shopper can
+  // actually be sent to. With none buyable it said "Shop" over an anchor that
+  // goes nowhere a shopper can buy.
+  const external = buyable.length === 1;
+  const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
+  // Nothing to shop is not a shop button. The product page still says what is
+  // known and why no retailer is listed, so the way in stays.
+  const shopLabel = buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
+  // Only where the card itself sends somebody out. The other two labels lead to
+  // this site's own product page, which states the relationship per retailer,
+  // and a disclosure over an internal link would be about links that are not
+  // on this card.
+  const relationship = external ? relationshipNote([buyable[0].affiliateStatus]) : undefined;
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
@@ -52,21 +75,33 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             {strength}
           </p>
         ) : null}
-        <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
-          <span className="font-semibold text-accent-strong">Tradeoff: </span>
-          {tradeoff ?? "Not assessed"}
-        </p>
+        {/* Only when there is one. A card said "Tradeoff: Not assessed"
+            whenever no rule fired, which is every category winner, so all four
+            cards on the home page carried the same empty line. The statement
+            still exists where it can be read properly: the product page says
+            what "not assessed" means, and the compare table keeps its row. */}
+        {tradeoff ? (
+          <p className="hidden line-clamp-1 text-sm text-fg-soft sm:block">
+            <span className="font-semibold text-accent-strong">Tradeoff: </span>
+            {tradeoff}
+          </p>
+        ) : null}
+        {/* Only when the shopper has asked for something. No filters means no
+            fit, and nothing here guesses at one. Three rows on a card, the rest
+            behind a control: conflicts first, because a shopper scanning a grid
+            is looking for the reason to stop. */}
+        <NeedsFit productId={view.id} categoryId={view.categoryId} limit={3} />
         <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a
             href={shopHref}
-            target={external ? "_blank" : undefined}
-            rel={external ? "sponsored nofollow noopener" : undefined}
+            {...(external ? outboundLinkProps(buyable[0].affiliateStatus) : {})}
             className={buttonStyles("primary", "md")}
           >
-            {view.offers.length > 1 ? `${view.offers.length} retailers` : "Shop"}
+            {shopLabel}
           </a>
         </div>
+        {relationship ? <p className="text-[11px] leading-snug text-fg-muted">{relationship}</p> : null}
       </div>
     </article>
   );

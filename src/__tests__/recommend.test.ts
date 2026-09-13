@@ -106,6 +106,39 @@ describe("badges", () => {
     expect(set.badges.some((b) => b.badge === "best_premium")).toBe(false);
   });
 
+  it("withholds a tier badge from a zero-scoring product when the better budget candidate took Best Value", () => {
+    // The defect this guards: in Cold Plunges, Best Value went to the only
+    // decent budget tub, and Best Budget then fell through to a tub scoring 0
+    // on every weighted criterion, whose product URL now redirects to the
+    // maker's home page. A badge is a recommendation; nothing recommends a
+    // zero.
+    const ps = [
+      miniProduct("top", 90000, { power: 100, noise: 10, size: "l", wifi: true }),
+      miniProduct("second-premium", 85000, { power: 90, noise: 15, size: "l", wifi: true }),
+      miniProduct("budget-good", 15000, { power: 50, noise: 30, size: "m", wifi: true }),
+      miniProduct("budget-zero", 18000, { power: 10, noise: 90, size: "s", wifi: false }),
+    ];
+    const set = assignBadges(inputs(ps), miniCategory);
+
+    // The zero is eligible and priced and sits in the tier. It is only the
+    // score that stops it.
+    expect(set.scores["budget-zero"].eligible).toBe(true);
+    expect(set.scores["budget-zero"].score).toBe(0);
+    expect(set.badgesByProduct["budget-good"]).toEqual(["best_value"]);
+    expect(set.badgesByProduct["budget-zero"]).toBeUndefined();
+    expect(set.badges.some((b) => b.badge === "best_budget")).toBe(false);
+    expect(set.withheld.find((w) => w.badge === "best_budget")!.reason).toBe(
+      "No remaining priced product at or under the budget line scores above zero across the weighted criteria.",
+    );
+
+    // And the guard is only that: give the same product one point and it wins
+    // the badge on the same rules.
+    const scoring = [...ps.slice(0, 3), miniProduct("budget-zero", 18000, { power: 10, noise: 90, size: "s", wifi: true })];
+    const after = assignBadges(inputs(scoring), miniCategory);
+    expect(after.scores["budget-zero"].score).toBeGreaterThan(0);
+    expect(after.badgesByProduct["budget-zero"]).toEqual(["best_budget"]);
+  });
+
   it("breaks exact ties deterministically", () => {
     const ps = [miniProduct("z", 50000, { power: 100, size: "l" }), miniProduct("y", 50000, { power: 100, size: "l" })];
     const set = assignBadges(inputs(ps), miniCategory);
@@ -138,24 +171,34 @@ describe("affiliate neutrality", () => {
   it("ScoringInput carries no offer or affiliate data", () => {
     const v = viewsFor("red-light")[0];
     const input = toScoringInput(v);
-    expect(Object.keys(input).sort()).toEqual(["attributes", "demoKeys", "id", "priceIsDemo", "priceMinor"]);
+    expect(Object.keys(input).sort()).toEqual(["attributes", "demoKeys", "disputedKeys", "id", "priceIsDemo", "priceMinor"]);
     expect(JSON.stringify(input)).not.toMatch(/affiliate|merchant|offer|http/i);
   });
 });
 
 describe("review decisions", () => {
   it("caps warranty at 5 years inside scoring while the card shows the product's own warranty text", () => {
+    // Built, because the catalogue no longer holds a number above the cap:
+    // both Ice Barrels said 10 years, which no source ever stated, and the
+    // numeric is withdrawn on both. The cap is the thing under test.
     const cat = categoryById("cold-plunge")!;
-    const views = viewsFor("cold-plunge");
-    const ib400 = views.find((v) => v.id === "ice-barrel-400")!;
-    const renu = views.find((v) => v.id === "renu-cold-stoic-2")!;
-    const scores = scoreProducts(views.map(toScoringInput), cat);
+    const long = miniProduct("long-warranty", 100000, { power: 50, size: "m" });
+    const capped = miniProduct("at-the-cap", 100000, { power: 50, size: "m" });
+    const inputs = [
+      { ...toScoringInput(miniView(long)), attributes: { power: 50, size: "m", warranty_years: 10 } },
+      { ...toScoringInput(miniView(capped)), attributes: { power: 50, size: "m", warranty_years: 5 } },
+    ];
+    const scores = scoreProducts(inputs, cat);
     const w = (id: string) => scores.find((s) => s.id === id)!.criteria.find((c) => c.key === "warranty_years")!;
-    expect(w("ice-barrel-400").raw).toBe(5);
-    expect(w("ice-barrel-400").normalized).toBe(w("renu-cold-stoic-2").normalized);
-    expect(ib400.attributes.warranty_years).toBe(10);
-    expect(ib400.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("Lifetime warranty");
+    expect(w("long-warranty").raw).toBe(5);
+    expect(w("long-warranty").normalized).toBe(w("at-the-cap").normalized);
+
+    // And the card still shows the maker's own words, whatever the number is.
+    const renu = viewsFor("cold-plunge").find((v) => v.id === "renu-cold-stoic-2")!;
     expect(renu.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("5-year limited warranty");
+    const ib400 = viewsFor("cold-plunge").find((v) => v.id === "ice-barrel-400")!;
+    expect(ib400.attributes.warranty_years).toBeUndefined();
+    expect(ib400.cardSpecs.find((s) => s.key === "warranty_years")!.formatted).toBe("Lifetime warranty");
   });
 
   it("cold plunge value weights are 0.50 / 0.50 and Best Value no longer lands on the priciest tub", () => {

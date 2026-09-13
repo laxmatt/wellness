@@ -1,3 +1,4 @@
+import { isUsable } from "@/domain/provenance";
 import type { AttributePrimitive } from "../attributes";
 import type { CategoryDefinition } from "../category";
 import { attributeDef } from "../category";
@@ -9,24 +10,41 @@ import type { ProductView } from "../view";
 // tier rules, never inside the capability score.
 export type ScoringInput = {
   id: string;
-  priceMinor: number;
+  // Undefined when nothing on the record can price the product: every offer is
+  // withheld and there is no reference price. Price-based steps leave such a
+  // product out rather than substituting a number for it.
+  priceMinor?: number;
   priceIsDemo: boolean;
   attributes: Record<string, AttributePrimitive>;
   // Attributes withheld because their value is a placeholder. They score zero
   // and count against completeness, exactly like a missing value.
   demoKeys: string[];
+  // Attributes withheld because their own source states them two ways. They
+  // score zero as well, and the breakdown says which of the two reasons
+  // applies rather than calling both "not stated".
+  disputedKeys: string[];
 };
 
 // Demo values never reach the score. A placeholder is not evidence, so it is
 // treated as absent rather than as a measurement.
 export function toScoringInput(view: ProductView): ScoringInput {
-  const attributes: Record<string, AttributePrimitive> = {};
-  const demoKeys: string[] = [];
-  for (const [key, value] of Object.entries(view.attributes)) {
-    if (view.provenance[`attributes.${key}`]?.verification === "demo") demoKeys.push(key);
-    else attributes[key] = value;
-  }
-  return { id: view.id, priceMinor: view.price.money.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys };
+  const attributes: Record<string, AttributePrimitive> = { ...view.attributes };
+  // Read from provenance, not from the attributes: a value that cannot be used
+  // as fact no longer reaches `view.attributes` at all, and iterating those
+  // would report an empty list for exactly the products this exists to name.
+  // The withholding happens earlier now; the reporting has to look where the
+  // record still is.
+  const demoKeys = Object.entries(view.provenance)
+    .filter(([field, p]) => field.startsWith("attributes.") && !isUsable(p.verification))
+    .map(([field]) => field.slice("attributes.".length));
+  const disputedKeys = Object.entries(view.provenance)
+    .filter(([field, p]) => field.startsWith("attributes.") && p.disputed === true)
+    .map(([field]) => field.slice("attributes.".length));
+  for (const key of [...demoKeys, ...disputedKeys]) delete attributes[key];
+  // `priceMinor` is undefined when nothing on the record can price the
+  // product. Every price-based step treats that the way it treats a
+  // placeholder: by leaving the product out, never by substituting a number.
+  return { id: view.id, priceMinor: view.price.money?.amountMinor, priceIsDemo: view.price.isDemo, attributes, demoKeys, disputedKeys };
 }
 
 export type CriterionContribution = {
@@ -47,6 +65,9 @@ export type ScoreResult = {
   criteria: CriterionContribution[];
   // Scoring criteria whose value was withheld as demo data.
   demoCriteria: string[];
+  // Scoring criteria whose value was withheld because the source disagrees
+  // with itself.
+  disputedCriteria: string[];
 };
 
 export function numericFor(input: ScoringInput, cat: CategoryDefinition, key: string): number | undefined {
@@ -95,6 +116,7 @@ export function scoreProducts(inputs: ScoringInput[], cat: CategoryDefinition): 
     const score = Math.round(criteria.reduce((s, c) => s + c.contribution, 0) * 1000) / 10;
     const completeness = completenessOf(input, cat);
     const demoCriteria = cat.scoring.criteria.map((c) => c.key).filter((k) => input.demoKeys.includes(k));
-    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria, demoCriteria };
+    const disputedCriteria = cat.scoring.criteria.map((c) => c.key).filter((k) => input.disputedKeys.includes(k));
+    return { id: input.id, score, completeness, eligible: completeness >= cat.scoring.completenessFloor, criteria, demoCriteria, disputedCriteria };
   });
 }

@@ -61,10 +61,22 @@ export function rankByScore(inputs: ScoringInput[], scores: Map<string, ScoreRes
 // toScoringInput drops them.
 //   Best Budget:  highest score among products at or under budgetMaxMinor,
 //                 awarded only when at least minQualifying products sit in the
-//                 tier, and never to a product already holding a badge.
+//                 tier, never to a product already holding a badge, and never
+//                 to one scoring zero.
 //   Best Premium: same rule at or above premiumMinMinor.
 // Offers and affiliate data are not inputs to any step.
-export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): RecommendationSet {
+/**
+ * `sellable` is the ids a shopper can be sent somewhere for.
+ *
+ * It arrives as its own argument rather than on ScoringInput, because
+ * ScoringInput deliberately carries no offer data at all and a test enforces
+ * that: ranking must not be able to see anything about who sells a product or
+ * who pays us. Badges are a different question from scoring, and this is the
+ * only thing here that knows an offer exists. Omitted, everything is treated as
+ * sellable, which is what every caller outside this repository's own tests
+ * wants by default.
+ */
+export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition, sellable?: Set<string>): RecommendationSet {
   const scoreList = scoreProducts(inputs, cat);
   const scores = new Map(scoreList.map((s) => [s.id, s]));
   const valueList = computeValue(inputs, scoreList, cat);
@@ -72,19 +84,38 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
 
   const eligible = inputs.filter((i) => scores.get(i.id)!.eligible);
   const ranked = rankByScore(eligible, scores, cat);
+
+  // A badge is a recommendation, so it needs somewhere to send a shopper. A
+  // complete record can describe a product nobody can buy: every offer withheld,
+  // or a maker that has gone out of business and says so on its own site.
+  //
+  // Price-based picks already left such a product out, because a withheld offer
+  // prices nothing, and that was luck rather than a rule: Best Overall is not
+  // price-gated and would have handed the badge over on score alone.
+  //
+  // It gates the picks and nothing else. Filtering `eligible` instead was the
+  // first attempt and it was wrong: it took these products out of `ranked` too,
+  // which sent Plunge Original, scoring 64.8 with a disputed price, below a tub
+  // scoring zero. A product that cannot be bought today still ranks where its
+  // specifications put it, keeps its page and its id, and keeps its place in
+  // the comparison.
+  const sellableRanked = sellable ? ranked.filter((i) => sellable.has(i.id)) : ranked;
   const taken = new Set<string>();
   const badges: BadgeAssignment[] = [];
   const withheld: { badge: Badge; reason: string }[] = [];
 
-  // Price-based badges only consider products with an observed price.
-  const priced = eligible.filter((i) => !i.priceIsDemo);
-  const demoPricedCount = eligible.length - priced.length;
+  // Price-based badges only consider products with an observed price. Two
+  // different reasons keep a product out: its amount is a placeholder, or it
+  // has no amount at all because every offer on its record was withheld. The
+  // copy names the first, because that is the one a reader can act on.
+  const priced = sellableRanked.filter((i) => !i.priceIsDemo && i.priceMinor !== undefined);
+  const demoPricedCount = eligible.filter((i) => i.priceIsDemo).length;
   const demoPriceNote =
     demoPricedCount === 0
       ? ""
       : ` ${demoPricedCount} of ${eligible.length} products carry placeholder prices and were left out of price-based picks.`;
 
-  const overall = ranked[0];
+  const overall = sellableRanked[0];
   if (overall) {
     taken.add(overall.id);
     badges.push({
@@ -115,8 +146,16 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
     });
   }
 
+  // A tier badge is a recommendation, and a product that scores zero on every
+  // weighted criterion is not the best of anything. Eligibility does not cover
+  // this: it only says the record is complete enough to score, and a complete
+  // record can still normalize to zero everywhere. Without this, Cold Plunges
+  // handed Best Budget to a tub scoring 0, because the one better budget
+  // candidate had already taken Best Value.
+  const recommendable = (i: ScoringInput) => scores.get(i.id)!.score > 0;
+
   const basis = cat.badges.priceBasis;
-  const rankedPriced = ranked.filter((i) => !i.priceIsDemo);
+  const rankedPriced = sellableRanked.filter((i) => !i.priceIsDemo);
   const inTier = (pred: (p: number) => boolean) =>
     rankedPriced.filter((i) => {
       const p = numericFor(i, cat, basis);
@@ -125,13 +164,22 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
 
   const budgetTier = inTier((p) => p <= cat.badges.budgetMaxMinor);
   if (budgetTier.length >= cat.badges.minQualifying) {
-    const winner = budgetTier.find((i) => !taken.has(i.id));
+    const free = budgetTier.filter((i) => !taken.has(i.id));
+    const winner = free.find(recommendable);
     if (winner) {
       taken.add(winner.id);
       badges.push({
         badge: "best_budget",
         productId: winner.id,
         reason: `Highest ${cat.scoring.label.toLowerCase()} among ${budgetTier.length} priced products at or under the budget line.${demoPriceNote}`,
+      });
+    } else {
+      withheld.push({
+        badge: "best_budget",
+        reason:
+          free.length === 0
+            ? `Every priced product at or under the budget line already holds another badge.${demoPriceNote}`
+            : `No remaining priced product at or under the budget line scores above zero across the weighted criteria.${demoPriceNote}`,
       });
     }
   } else {
@@ -143,13 +191,22 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition): R
 
   const premiumTier = inTier((p) => p >= cat.badges.premiumMinMinor);
   if (premiumTier.length >= cat.badges.minQualifying) {
-    const winner = premiumTier.find((i) => !taken.has(i.id));
+    const free = premiumTier.filter((i) => !taken.has(i.id));
+    const winner = free.find(recommendable);
     if (winner) {
       taken.add(winner.id);
       badges.push({
         badge: "best_premium",
         productId: winner.id,
         reason: `Highest ${cat.scoring.label.toLowerCase()} among ${premiumTier.length} priced products at or above the premium line.${demoPriceNote}`,
+      });
+    } else {
+      withheld.push({
+        badge: "best_premium",
+        reason:
+          free.length === 0
+            ? `Every priced product at or above the premium line already holds another badge.${demoPriceNote}`
+            : `No remaining priced product at or above the premium line scores above zero across the weighted criteria.${demoPriceNote}`,
       });
     }
   } else {

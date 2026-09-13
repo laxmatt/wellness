@@ -1,4 +1,15 @@
-import type { BudgetSnapshot, CallOutcome, MeterConfig, Reservation, ReserveResult, UncertainCharge, UsageStore } from "./UsageMeter";
+import type {
+  BudgetSnapshot,
+  CallOutcome,
+  CloseOpenResult,
+  MeterConfig,
+  OpenReservation,
+  OpenResolution,
+  Reservation,
+  ReserveResult,
+  UncertainCharge,
+  UsageStore,
+} from "./UsageMeter";
 
 // Single process only: correct for tests and for `next dev` on one machine,
 // and wrong the moment a second instance exists. `isShared` is false so the
@@ -13,6 +24,8 @@ export class MemoryUsageStore implements UsageStore {
   private clients = new Map<string, number>();
   private settled = new Set<string>();
   private uncertain = new Map<string, UncertainCharge>();
+  private open = new Map<string, OpenReservation>();
+  private closedByOperator = new Map<string, { movedTo: "uncertain" | "billed"; amountUsd: number }>();
   readonly records: { reservationId: string; outcome: CallOutcome; costUsd: number }[] = [];
 
   async init() {}
@@ -43,13 +56,45 @@ export class MemoryUsageStore implements UsageStore {
     this.sessions.set(sessionId, turns + 1);
     this.clients.set(clientSlot, clientCount + 1);
     const id = `r_${month}_${sessionId}_${this.records.length}_${Math.random().toString(36).slice(2, 8)}`;
+    // Recorded before the call, as the shared store does, so a reservation that
+    // never settles is visible rather than lost with the process.
+    this.open.set(id, { reservationId: id, month, sessionId, heldUsd: estimateUsd, at: new Date().toISOString() });
     return { ok: true, reservation: { id, month, sessionId, estimateUsd } };
   }
 
   async settle(reservation: Reservation, outcome: CallOutcome, costUsd: number) {
-    if (this.settled.has(reservation.id)) return;
-    this.settled.add(reservation.id);
+    const closed = this.closedByOperator.get(reservation.id);
+    if (this.settled.has(reservation.id) && !closed) return;
+
     const b = this.bucket(reservation.month);
+
+    if (closed) {
+      // A real outcome turning up after an operator gave up on the request.
+      // Better information, so it replaces the held estimate rather than being
+      // dropped as a duplicate.
+      if (closed.movedTo === "uncertain") b.uncertain = Math.max(0, b.uncertain - closed.amountUsd);
+      else b.spent = Math.max(0, b.spent - closed.amountUsd);
+      this.uncertain.delete(reservation.id);
+      this.closedByOperator.delete(reservation.id);
+      if (outcome.kind === "uncertain") {
+        b.uncertain += costUsd;
+        this.uncertain.set(reservation.id, {
+          reservationId: reservation.id,
+          month: reservation.month,
+          sessionId: reservation.sessionId,
+          reason: outcome.reason,
+          heldUsd: costUsd,
+          at: new Date().toISOString(),
+        });
+      } else {
+        b.spent += costUsd;
+      }
+      this.records.push({ reservationId: reservation.id, outcome, costUsd });
+      return;
+    }
+
+    this.settled.add(reservation.id);
+    this.open.delete(reservation.id);
     b.reserved = Math.max(0, b.reserved - reservation.estimateUsd);
     if (outcome.kind === "uncertain") {
       // Held, not written off. It keeps counting against the cap until an
@@ -84,6 +129,40 @@ export class MemoryUsageStore implements UsageStore {
 
   async listUncertain(month: string): Promise<UncertainCharge[]> {
     return [...this.uncertain.values()].filter((u) => u.month === month);
+  }
+
+  async listOpen(month: string, olderThanMs = 0): Promise<OpenReservation[]> {
+    const cutoff = Date.now() - olderThanMs;
+    return [...this.open.values()].filter((o) => o.month === month && Date.parse(o.at) <= cutoff);
+  }
+
+  async closeOpen(reservationId: string, resolution: OpenResolution, minAgeMs = 0): Promise<CloseOpenResult> {
+    const o = this.open.get(reservationId);
+    if (!o) return { ok: false, reason: this.settled.has(reservationId) ? "already_settled" : "not_found" };
+    if (Date.now() - Date.parse(o.at) < minAgeMs) return { ok: false, reason: "too_recent" };
+
+    this.open.delete(reservationId);
+    const b = this.bucket(o.month);
+    b.reserved = Math.max(0, b.reserved - o.heldUsd);
+
+    if (resolution.kind === "confirmed") {
+      b.spent += resolution.actualUsd;
+      this.closedByOperator.set(reservationId, { movedTo: "billed", amountUsd: resolution.actualUsd });
+      return { ok: true, movedTo: "billed", amountUsd: resolution.actualUsd };
+    }
+
+    // Unknown cost is held, not forgiven.
+    b.uncertain += o.heldUsd;
+    this.uncertain.set(reservationId, {
+      reservationId,
+      month: o.month,
+      sessionId: o.sessionId,
+      reason: "No outcome was ever recorded for this request. Held at the reservation estimate until the provider's record is checked.",
+      heldUsd: o.heldUsd,
+      at: new Date().toISOString(),
+    });
+    this.closedByOperator.set(reservationId, { movedTo: "uncertain", amountUsd: o.heldUsd });
+    return { ok: true, movedTo: "uncertain", amountUsd: o.heldUsd };
   }
 
   async reconcile(reservationId: string, actualUsd: number): Promise<boolean> {

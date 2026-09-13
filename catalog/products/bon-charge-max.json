@@ -37,19 +37,21 @@
       "merchantId": "bon-charge-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 109900,
+      "priceMinor": 99900,
       "url": "https://boncharge.com/products/max-red-light-device",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Price not found in sources. Super Max listed at $1,599. Demo value."
+        "note": "Page listed $999 USD. Availability is not recorded from this reading: the page showed a Sold out label, an In Stock line and an Add to cart control, which do not agree. Previously carried $1,099 as prototype data."
       }
     }
   ],
@@ -62,35 +64,38 @@
     "unit": "in",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://boncharge.com/products/max-red-light-device",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 91 x 21 x 6.5 cm as its own figures and gives 35.8 x 8.37 x 2.56 in as an approximate conversion. The inches recorded here are the page's own conversion, not one computed here. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "warranty": {
-    "value": "One-year manufacturer's warranty from date of purchase",
+    "value": "One-year manufacturer's warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://boncharge.com/products/max-red-light-device",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a one-year warranty. The words 'from date of purchase' were in this record before and are not in the reading, so they are gone. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "attributes": {
     "coverage": {
-      "value": "full_body",
+      "value": "half_body",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+        "note": "Page describes the panel as targeted half-body, with flexibility for small full-body sessions. Recorded as half body, the description's own primary class; the full-body flexibility is the maker's qualifier and does not change what the panel is sold as. Carried as full_body until 2026-09-09, from this catalogue's editorial class by panel height (targeted under 20 in, half body 20 to 35 in, full body 35 in and over), which put this 35.8-inch panel one class above its maker's own description."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "standard",
@@ -111,10 +116,11 @@
       "unit": "nm",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://boncharge.com/products/max-red-light-device",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 660 nm and 850 nm. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -123,23 +129,27 @@
       "unit": "mW/cm²",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://boncharge.com/products/max-red-light-device",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Brand states greater than 142 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states greater than 142 mW/cm2, once and strictly, with no measurement distance anywhere in its specifications. Kept as a floor for that reason, and no distance is recorded. Previously recorded as relayed via a search summary on 2026-09-08."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "bound": "greater_than"
     },
     "led_count": {
       "value": 200,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://boncharge.com/products/max-red-light-device",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 660 nm 200 pcs and 850 nm 200 pcs, described as 5 W dual-chip LEDs. Whether that is 200 packages carrying both wavelengths or 400 emitters is not stated, so no single count is recorded and the figure is withheld from matching and scoring. The 200 carried here was one of the two numbers, taken from a summary. Previously recorded as relayed via a search summary on 2026-09-08."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "mounting": {
       "value": [
@@ -147,10 +157,11 @@
       ],
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://boncharge.com/products/max-red-light-device",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists a door mount, a height-adjusting pulley, cables, goggles and a power cord as included. No stand is offered or implied. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -159,10 +170,23 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://boncharge.com/products/max-red-light-device",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a one-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 30,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://boncharge.com/products/max-red-light-device",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 30-day easy returns."
       },
       "verification": "manufacturer_reported"
     }
@@ -173,5 +197,30 @@
     "retrievedAt": "2026-09-08",
     "method": "direct",
     "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  },
+  "weight": {
+    "value": 17.64,
+    "unit": "lb",
+    "verification": "manufacturer_reported",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://boncharge.com/products/max-red-light-device",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 8 kg, with 17.64 lb as its own conversion."
+    }
+  },
+  "returnPolicy": {
+    "value": "30-day returns",
+    "verification": "manufacturer_reported",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://boncharge.com/products/max-red-light-device",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 30-day easy returns."
+    }
   }
 }

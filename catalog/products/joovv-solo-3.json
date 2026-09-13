@@ -89,24 +89,26 @@
     "verification": "manufacturer_reported"
   },
   "warranty": {
-    "value": "2-year warranty",
+    "value": "2-year limited warranty, consumer purchases from joovv.com",
     "source": {
       "kind": "manufacturer",
-      "url": "https://joovv.com/products/joovv-solo-3-0",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
+      "url": "https://joovv.com/pages/warranty",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Warranty page states 2 years for Gen 2 and Gen 3 modular devices, limited, for consumer purchases made through joovv.com. Commercial use is not covered. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "returnPolicy": {
-    "value": "60-day return period",
+    "value": "60 days from receipt, conditions apply",
     "source": {
       "kind": "manufacturer",
-      "url": "https://joovv.com/products/joovv-solo-3-0",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
+      "url": "https://joovv.com/pages/returns",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Returns page states 60 days from receipt for Gen 3 modular devices, with the return postmarked inside the window. It requires authorization, like-new condition and the original packaging; the customer pays return shipping and the original shipping is not refunded; final sale, closeout and open-box items are excluded. The 30-day window and $50 fee on that page belong to the Joovv Go and are not carried here. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -150,15 +152,16 @@
     },
     "irradiance_mw_cm2": {
       "value": 100,
-      "unit": "mW/cm²",
+      "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
         "url": "https://joovv.com/products/joovv-solo-3-0",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Brand states over 100 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Brand states over 100 mW/cm\u00b2; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "bound": "greater_than"
     },
     "led_count": {
       "value": 150,
@@ -175,10 +178,11 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
         "url": "https://joovv.com/products/joovv-solo-3-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page states app controls. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -186,10 +190,11 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
         "url": "https://joovv.com/products/joovv-solo-3-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Recovery+ pulsed NIR mode. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Product page states the Recovery+ pulsing mode. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -198,10 +203,11 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
-        "url": "https://joovv.com/products/joovv-solo-3-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
+        "url": "https://joovv.com/pages/warranty",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Warranty page states a 2-year limited warranty for Gen 2 and Gen 3 modular devices bought by a consumer through joovv.com. Commercial purchases are excluded, and this catalogue records the consumer term. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -210,12 +216,24 @@
       "unit": "days",
       "source": {
         "kind": "manufacturer",
-        "url": "https://joovv.com/products/joovv-solo-3-0",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's own pages and supplied to this repository; not fetched here.",
+        "url": "https://joovv.com/pages/returns",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Returns page states 60 days from receipt for Gen 3 modular devices. The 30-day window on the same page is the Joovv Go's and is not this product's. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+        "url": "https://joovv.com/blogs/joovv-blog/red-light-therapy-buyers-guide",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The maker's buyer guide names a Boot Floor stand, a Door mount and a Nano Wall mount as options for the Solo, and a Mobile Stand for the Max, Quad and Elite only. It sets out what a buyer chooses between; it does not state which of them the unit this record prices includes. Recording all three would claim the panel ships with a door mount, a floor stand and a wall mount together, and recording one would be picking. No value is recorded. This is a configuration question, like Plunge's cold-only and heater tubs, rather than a figure nobody has published."
+      },
+      "verification": "not_stated"
     }
   },
   "source": {

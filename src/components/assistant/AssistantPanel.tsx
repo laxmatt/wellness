@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { AssistantProductRef, AssistantReply, ProposedAction } from "@/domain/assistant";
+import { introFor } from "@/domain/assistant-intro";
+import { categories } from "@/domain/categories";
 import { cn } from "@/lib/cn";
 import { useAssistant } from "./AssistantProvider";
 
@@ -15,9 +17,21 @@ export function AssistantPanel() {
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [keyboardInset, setKeyboardInset] = useState(0);
+  // Whoever opened the panel gets focus back when it closes. Without this,
+  // closing with Escape dropped focus onto the body: a keyboard shopper who
+  // opened the assistant from the middle of a category page had to tab from
+  // the top of the document again to get back to where they were.
+  const openerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (a?.open) inputRef.current?.focus();
+    if (a?.open) {
+      openerRef.current = document.activeElement as HTMLElement | null;
+      inputRef.current?.focus();
+      return;
+    }
+    const opener = openerRef.current;
+    openerRef.current = null;
+    if (opener?.isConnected) opener.focus();
   }, [a?.open]);
 
   useEffect(() => {
@@ -116,6 +130,7 @@ function PanelBody({
   keyboardInset: number;
 }) {
   const latest = a.latest;
+  const intro = introFor(a.entry, categories);
   // With the keyboard up there is far less room, so the sheet takes what is
   // left rather than a fixed share of a viewport that no longer exists.
   const heightClass = keyboardInset > 0 ? "max-h-[min(60dvh,26rem)]" : "max-h-[74dvh]";
@@ -172,17 +187,20 @@ function PanelBody({
 
       <div ref={logRef} className="flex-1 overflow-y-auto overscroll-contain px-4 py-3">
         {a.messages.length === 0 ? (
-          <div className="text-base leading-relaxed text-fg-soft">
-            <p>Tell me what you need and I will narrow the list. For example:</p>
+          <div className="text-base leading-relaxed text-fg-soft" data-testid="assistant-intro" data-entry={a.entry.kind === "category" ? a.entry.categoryId : "general"}>
+            {/* The opening copy belongs to the door the shopper came through.
+                This used to be one hardcoded list for every page: two red-light
+                examples and one about drinks, offered on all three categories. */}
+            <p>{intro.lead}</p>
             <ul className="mt-3 flex flex-col gap-2">
-              {["A full-body panel under $700 for a small apartment", "Something I can set up without an electrician", "Zero sugar, no caffeine"].map((s) => (
-                <li key={s}>
+              {intro.examples.map((s) => (
+                <li key={s.text}>
                   <button
                     type="button"
-                    onClick={() => void a.send(s)}
+                    onClick={() => void a.send(s.text)}
                     className="tap w-full rounded-card border border-edge bg-surface px-3.5 py-2 text-left text-sm font-semibold text-fg hover:border-fg"
                   >
-                    {s}
+                    {s.text}
                   </button>
                 </li>
               ))}
@@ -251,7 +269,16 @@ function ProductLine({ p }: { p: AssistantProductRef }) {
       <Link href={`/products/${p.slug}`} className="font-semibold hover:underline">
         {p.brand} {p.name}
       </Link>
-      <span className="text-fg-soft"> · {p.price}</span>
+      <span className="text-fg-soft"> · {p.priceIsPlaceholder ? "price not stated" : p.price}</span>
+      {p.facts.length > 0 ? (
+        <ul className="mt-1 flex flex-col gap-0.5">
+          {p.facts.map((f) => (
+            <li key={f.label} className="text-sm leading-snug text-fg-soft">
+              <span className="font-medium text-fg">{f.label}:</span> {f.value} <span className="text-fg-muted">({f.attribution})</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {p.fits.length > 0 ? <p className="mt-0.5 text-sm leading-snug text-positive">Fits: {p.fits.slice(0, 2).join("; ")}</p> : null}
       {p.misses.length > 0 ? <p className="mt-0.5 text-sm leading-snug text-accent-strong">Misses: {p.misses.slice(0, 2).join("; ")}</p> : null}
     </li>
@@ -260,6 +287,22 @@ function ProductLine({ p }: { p: AssistantProductRef }) {
 
 function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number; a: NonNullable<ReturnType<typeof useAssistant>> }) {
   const dismissed = a.dismissed.includes(index);
+  // Each is its own decision, taken on its own button, and it stays available
+  // after Apply: applying what the assistant proposed is not a reason to
+  // withdraw the choice it was asking about.
+  const [primaryDone, setPrimaryDone] = useState(false);
+  const [setAside, setSetAside] = useState<string[]>([]);
+  const alternatives = reply.proposals
+    .filter((p): p is Extract<ProposedAction, { kind: "relax_constraint" }> => p.kind === "relax_constraint")
+    .filter((p) => !setAside.includes(p.key));
+  const primary = reply.proposals.filter((p) => p.kind !== "relax_constraint");
+  const proposed = reply.proposals.find((p): p is Extract<ProposedAction, { kind: "apply_preferences" }> => p.kind === "apply_preferences");
+  // Once a constraint has been set aside, the original Apply would put it back:
+  // it still carries the proposal as first offered. It is retired rather than
+  // left standing, because the alternative has already applied the same
+  // proposal without that constraint.
+  const showPrimary = !dismissed && !primaryDone && setAside.length === 0 && primary.length > 0;
+  const showAlternatives = !dismissed && alternatives.length > 0;
   return (
     <div className="flex w-full flex-col gap-2.5">
       {reply.medicalRedirect ? (
@@ -276,7 +319,7 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
               <button
                 key={o}
                 type="button"
-                onClick={() => void a.send(o)}
+                onClick={() => void a.answerQuestion(o, reply.question!, index)}
                 className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg"
               >
                 {o}
@@ -284,6 +327,17 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
             ))}
           </div>
         </div>
+      ) : null}
+
+      {/* The site's own count, not the assistant's. Rendered on every reply,
+          including the ones with nothing to show and the ones where the
+          assistant's answer could not be read, because those are exactly the
+          cases where the prose above is least trustworthy. */}
+      {reply.matchSummary ? (
+        <p data-testid="match-summary" className="rounded-card border border-edge bg-surface px-3.5 py-2.5 text-sm leading-snug">
+          <span className="font-semibold">{reply.matchSummary}</span>{" "}
+          <span className="text-fg-soft">Counted by this site, not by the assistant.</span>
+        </p>
       ) : null}
 
       {reply.products.length > 0 ? (
@@ -318,36 +372,105 @@ function ReplyExtras({ reply, index, a }: { reply: AssistantReply; index: number
 
       {reply.notice ? <p className="text-sm leading-snug text-fg-soft">{reply.notice}</p> : null}
 
-      {reply.proposals.length > 0 && !dismissed ? (
-        <div className="rounded-card border border-dashed border-edge-strong bg-surface px-3.5 py-3">
-          <p className="text-sm font-semibold text-fg-soft">Apply this to the page?</p>
-          <ul className="mt-1.5 flex flex-col gap-1">
-            {reply.proposals.map((p, i) => (
-              <li key={i} className="text-base leading-snug">
-                {p.summary}
+      {/* Offered, never taken. The shopper stays where they are, with the
+          filters they set, until they press one of these themselves. */}
+      {reply.links && reply.links.length > 0 ? (
+        <div data-testid="reply-links" className="rounded-card border border-edge bg-surface px-3.5 py-3">
+          <p className="text-sm font-semibold text-fg-soft">Sections of this site</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {reply.links.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg">
+                  {l.label}
+                </Link>
               </li>
             ))}
           </ul>
-          <div className="mt-3 flex gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                reply.proposals.forEach((p: ProposedAction) => a.accept(p));
-                a.dismiss(index);
-              }}
-              className="tap inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover"
-            >
-              Apply
-            </button>
-            <button
-              type="button"
-              onClick={() => a.dismiss(index)}
-              className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-5 text-sm font-semibold hover:border-fg"
-            >
-              No thanks
-            </button>
-          </div>
-          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing changes on the page until you choose Apply.</p>
+          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing here changes until you open one.</p>
+        </div>
+      ) : null}
+
+      {showPrimary || showAlternatives ? (
+        <div className="rounded-card border border-dashed border-edge-strong bg-surface px-3.5 py-3">
+          {/* Two kinds of action, and they must not travel together. Apply runs
+              what the assistant is proposing to do. Setting a constraint aside
+              is an alternative to that, offered one at a time: a reply that
+              kept two constraints and asked about both used to hand Apply the
+              power to remove both, so pressing the affirmative button silently
+              did the thing the question was asking permission for. */}
+          {showPrimary ? (
+            <>
+              <p className="text-sm font-semibold text-fg-soft">Apply this to the page?</p>
+              <ul className="mt-1.5 flex flex-col gap-1">
+                {primary.map((p, i) => (
+                  <li key={i} className="text-base leading-snug">
+                    {p.summary}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    primary.forEach((p: ProposedAction) => a.accept(p));
+                    setPrimaryDone(true);
+                    if (alternatives.length === 0) a.dismiss(index);
+                  }}
+                  className="tap inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover"
+                >
+                  Apply
+                </button>
+                <button
+                  type="button"
+                  onClick={() => a.dismiss(index)}
+                  className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-5 text-sm font-semibold hover:border-fg"
+                >
+                  No thanks
+                </button>
+              </div>
+            </>
+          ) : null}
+
+          {showAlternatives ? (
+            <div className={showPrimary ? "mt-3 border-t border-edge pt-3" : ""}>
+              <p className="text-sm font-semibold text-fg-soft">Or set one aside:</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {alternatives.map((p) => (
+                  <button
+                    key={p.key}
+                    type="button"
+                    onClick={() => {
+                      // The alternative applies the proposal it was offered
+                      // beside, without this constraint and without any set
+                      // aside before it. Its other requirements are kept: the
+                      // choice was about one constraint, not about the answer.
+                      const dropped = [...setAside, p.key];
+                      a.setAside(
+                        p.key,
+                        proposed
+                          ? {
+                              hard: proposed.hard.filter((c) => !dropped.includes(c.key)),
+                              soft: proposed.soft.filter((sp) => !dropped.includes(sp.key)),
+                              // The whole breakdown, not the reduced one: what
+                              // remains is the intersection of the sets still
+                              // standing, so the second removal is answered
+                              // from the same numbers as the first.
+                              matchesByKey: proposed.matchesByKey,
+                            }
+                          : undefined,
+                      );
+                      setSetAside(dropped);
+                    }}
+                    className="tap inline-flex items-center rounded-pill border border-edge-strong bg-surface-raised px-3.5 text-sm font-semibold hover:border-fg"
+                  >
+                    {p.summary}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <p className="mt-2 text-sm leading-snug text-fg-soft">Nothing changes on the page until you choose.</p>
         </div>
       ) : null}
     </div>

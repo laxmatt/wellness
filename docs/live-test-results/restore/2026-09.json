@@ -1,0 +1,41 @@
+{
+  "month": "2026-09",
+  "source": "Reconstructed from docs/live-test-results/2026-09-08T18-51.md, 2026-09-08T19-20.md and 2026-09-08T19-29.md, written while the rows still existed.",
+  "lostAt": "2026-09-08",
+  "lostBecause": "npx vitest run with TEST_DATABASE_URL pointed at the application's own database; postgres-ledger.test.ts drops every ledger table after each test.",
+  "entries": [
+    {
+      "reservationId": "r_2026-09_1788893470513_izs521g0",
+      "sessionId": "s_livetest_1788893470404_0",
+      "outcome": "uncertain",
+      "costUsd": 0.00156,
+      "settledAt": "2026-09-08T18:51:10.556Z",
+      "reason": "The provider returned 403.",
+      "fidelity": "exact",
+      "fromReport": "2026-09-08T18-51.md"
+    },
+    {
+      "reservationId": "r_2026-09_1788895256959_7woysl5a",
+      "sessionId": "unknown: not captured before the loss",
+      "outcome": "uncertain",
+      "costUsd": 0.00156,
+      "settledAt": "2026-09-08T19:20:57.001Z",
+      "reason": "The provider returned 403.",
+      "fidelity": "exact",
+      "fromReport": "2026-09-08T19-20.md"
+    },
+    {
+      "reservationId": "recovered_2026-09_billed_aggregate",
+      "sessionId": "aggregate of 14 calls; individual ids were never recorded",
+      "outcome": "billed",
+      "costUsd": 0.003837,
+      "model": "gpt-4o-mini",
+      "inputTokens": 19851,
+      "outputTokens": 1430,
+      "settledAt": "2026-09-08T19:29:00.000Z",
+      "reason": "Aggregate of 14 billed calls from the completed run. Per-call detail was not recorded anywhere and is unrecoverable.",
+      "fidelity": "aggregate",
+      "fromReport": "2026-09-08T19-29.md"
+    }
+  ]
+}

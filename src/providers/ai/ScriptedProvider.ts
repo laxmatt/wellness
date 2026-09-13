@@ -1,3 +1,7 @@
+import type { ModelHardConstraint, ModelSoftPreference } from "@/domain/assistant";
+import type { CategoryDefinition } from "@/domain/category";
+import { MONEY_CURRENCY, isMoneyKey } from "@/domain/money-contract";
+import type { HardConstraint, SoftPreference } from "@/domain/personalization";
 import type { ConversationProvider, ConverseInput, ConverseResult } from "./OpenAIProvider";
 import { MockAIProvider } from "./AIProvider";
 
@@ -14,7 +18,29 @@ export class ScriptedConversationProvider implements ConversationProvider {
   readonly isLive = false;
   private readonly extractor = new MockAIProvider();
 
-  constructor(private readonly categoryForExtraction: Parameters<MockAIProvider["extractPreferences"]>[0]["category"]) {}
+  constructor(private readonly categoryForExtraction: CategoryDefinition) {}
+
+  /**
+   * The extractor's constraints, in the shape the route accepts.
+   *
+   * The extractor speaks the engine's units: it reads "under $700" and returns
+   * 70000, in cents, because that is what the engine compares. The route accepts
+   * only the model's contract, where money crosses as {amount, currency} in
+   * whole dollars, and refuses a bare number rather than guessing its unit. Both
+   * are right and they are not the same contract, and nothing converted between
+   * them: every budget this stand-in read was rejected on arrival and the
+   * shopper was told "I could not read that reliably". A budget is the single
+   * most common thing anyone types into it.
+   *
+   * So the conversion happens here, once, on the boundary it belongs to.
+   */
+  private toModelMoney<T extends HardConstraint | SoftPreference>(c: T): T | (Omit<T, "value"> & { value: { amount: number; currency: typeof MONEY_CURRENCY } }) {
+    if (!isMoneyKey(this.categoryForExtraction, c.key)) return c;
+    if (typeof c.value !== "number") return c;
+    // Minor units to whole units. `dollarsToCents` reverses this through the
+    // decimal string, so 199 cents goes out as 1.99 and comes back as 199.
+    return { ...c, value: { amount: c.value / 100, currency: MONEY_CURRENCY } };
+  }
 
   async converse(input: ConverseInput): Promise<ConverseResult> {
     const last = [...input.messages].reverse().find((m) => m.role === "user")?.text ?? "";
@@ -44,8 +70,8 @@ export class ScriptedConversationProvider implements ConversationProvider {
     return {
       intent: {
         reply,
-        hard: prefs.hard,
-        soft: prefs.soft,
+        hard: prefs.hard.map((c) => this.toModelMoney(c)) as ModelHardConstraint[],
+        soft: prefs.soft.map((c) => this.toModelMoney(c)) as ModelSoftPreference[],
         unmapped: prefs.unmapped,
         question,
         medicalIntent: prefs.medicalIntent,
@@ -54,6 +80,7 @@ export class ScriptedConversationProvider implements ConversationProvider {
       // Costs nothing and is never metered, so zero here is a fact.
       usage: { inputTokens: 0, outputTokens: 0 },
       model: "scripted",
+      status: "ok" as const,
     };
   }
 }

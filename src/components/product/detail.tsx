@@ -1,17 +1,23 @@
+import Link from "next/link";
+import { isUsable } from "@/domain/provenance";
 import { VerificationTag } from "@/components/ui/VerificationTag";
+import type { Attributed } from "@/domain/provenance";
 import { buttonStyles } from "@/components/ui/Button";
 import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Insight } from "@/domain/recommend";
 import type { Provenance, Verification } from "@/domain/provenance";
-import type { OfferView, ProductView } from "@/domain/view";
+import { outboundLinkProps, relationshipNote, RELATIONSHIP_COPY } from "@/domain/outbound";
+import { buyableOffers, displayOfferPrice, type OfferView, type ProductView } from "@/domain/view";
 import { cn } from "@/lib/cn";
 
-const affiliateCopy: Record<OfferView["affiliateStatus"], string> = {
-  affiliate: "Affiliate link. We may earn a commission.",
-  non_affiliate: "No affiliate relationship.",
-  unknown: "No affiliate relationship established.",
-};
+// What the shopper is told about the link they are about to follow, per
+// offer. `unknown` means the record does not say, and it keeps meaning that:
+// reading it as "no commission" would quietly answer for an imported offer
+// nobody has checked. The site-wide fact, that no programme exists at all, is
+// stated once above the list where it belongs, by whoever can confirm it.
+// The same words the category card and the winners row use, from one place.
+const affiliateCopy = RELATIONSHIP_COPY;
 
 const availabilityCopy: Record<OfferView["availability"], string> = {
   in_stock: "In stock",
@@ -27,21 +33,85 @@ function shortDate(iso: string): string {
 }
 
 export function OfferList({ view }: { view: ProductView }) {
-  if (view.offers.length === 0) {
+  // A disputed offer is not a buy option. Its amount belongs to a different
+  // product, or to a configuration nobody matched, so rendering the row at all
+  // would put a wrong price and a wrong destination in front of a shopper,
+  // however it was labelled. The row is withheld and the page says a listing
+  // exists that we could not confirm, in a sentence a shopper can act on.
+  //
+  // The bookkeeping stays off the shopping page. Why an amount was withheld,
+  // what it was, and where it came from live on the record, in
+  // `docs/source-checks/` and in the partner checklist, which are where
+  // somebody auditing this looks. A shopper needs to know the price is not
+  // available and where to get it.
+  // The same rule the cards and the comparison use, so one page cannot offer a
+  // way to buy that another refuses.
+  const offers = buyableOffers(view);
+  const unconfirmed = view.offers.filter((o) => o.disputed).length;
+  const gone = view.offers.filter((o) => !o.disputed && o.availability === "discontinued").length;
+  const withheldLine =
+    unconfirmed > 0 || (gone > 0 && view.availability !== "discontinued") ? (
+      <div className="mt-2 flex flex-col gap-1 text-xs text-fg-muted">
+        {unconfirmed > 0 ? (
+          <p>
+            {unconfirmed === 1 ? "One listing is not shown here" : `${unconfirmed} listings are not shown here`}: we could not confirm{" "}
+            {unconfirmed === 1 ? "it is" : "they are"} for this product. Check the price with the retailer.
+          </p>
+        ) : null}
+        {/* About the listing, and nothing beyond it. Why a seller stopped
+            listing something is not knowable from the fact that it did. */}
+        {gone > 0 && view.availability !== "discontinued" ? (
+          <p>
+            {gone === 1 ? "One listing is no longer current" : `${gone} listings are no longer current`}, so {gone === 1 ? "it is" : "they are"} not shown. Others may still list this
+            product.
+          </p>
+        ) : null}
+      </div>
+    ) : null;
+
+  if (offers.length === 0) {
     return (
       <div className="rounded-card border border-edge bg-surface-raised p-5 text-sm text-fg-soft">
-        No retailer listed yet. Reference price {formatMoney(view.price.money)} from the maker, checked {shortDate(view.price.checkedAt)}.
+        {view.price.isDemo
+          ? "No retailer listed yet, and the reference price on file is prototype data rather than a quote, so no amount is shown."
+          : view.price.money
+            ? `No retailer listed yet. Reference price ${formatMoney(view.price.money)} from the maker, checked ${shortDate(view.price.checkedAt)}.`
+            : view.availability === "discontinued"
+              ? // Neutral on purpose. `discontinued` says a product is no longer
+                // sold and says nothing about why, and a maker that has retired
+                // one model is in exactly this state. Asserting a closure from
+                // it would put a claim on the page that the record does not
+                // hold. Where a closure IS the evidence, as for Edge Theory
+                // Labs, it is a sourced note on that product's own record and
+                // it appears above with the rest of them.
+                "No current listing. This product is no longer sold by any retailer on our record, so we are not quoting a price and there is nothing to link to. Other sellers may still have stock."
+              : "Current price unavailable. We could not confirm a price for this product, so we are not quoting one."}
+        {withheldLine}
       </div>
     );
   }
   return (
-    <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
-      {view.offers.map((o, i) => (
+    <>
+      {/* One statement for the set, read off the records rather than written
+          down here. It used to say that no affiliate programme is in place for
+          this site, which was true on the day it was written and would have
+          gone on being printed above a row reading "we may earn a commission"
+          on the first day it stopped being true. Per-offer status still appears
+          on every row. */}
+      <p className="mb-2 text-xs text-fg-muted">
+        {relationshipNote(offers.map((o) => o.affiliateStatus))}{" "}
+        <Link href="/disclosure" className="underline-offset-2 hover:underline">
+          How this site is paid
+        </Link>
+        .
+      </p>
+      <ul className="divide-y divide-edge overflow-hidden rounded-card border border-edge bg-surface-raised">
+      {offers.map((o, i) => (
         <li key={o.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <p className="font-semibold">{o.merchant.name}</p>
-              {i === 0 && view.offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
+              {i === 0 && offers.length > 1 ? <span className="rounded-pill bg-positive-soft px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-positive">Lowest</span> : null}
             </div>
             <p className="mt-0.5 text-xs text-fg-muted">
               {availabilityCopy[o.availability]} · checked {shortDate(o.lastChecked)} · {affiliateCopy[o.affiliateStatus]}
@@ -59,28 +129,47 @@ export function OfferList({ view }: { view: ProductView }) {
           </div>
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <div className="text-right">
-              <p className="tabular text-xl font-semibold">{formatMoney(o.price)}</p>
-              {o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p> : null}
+              <p className={o.priceIsDemo ? "text-sm font-semibold" : "tabular text-xl font-semibold"}>{displayOfferPrice(o)}</p>
+              {!o.priceIsDemo && o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? (
+                <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
+              ) : null}
             </div>
-            <a href={o.url} target="_blank" rel="sponsored nofollow noopener" className={buttonStyles("primary", "md")}>
+            <a href={o.url} {...outboundLinkProps(o.affiliateStatus)} className={buttonStyles("primary", "md")}>
               Visit {o.merchant.name.replace(/\s*\(direct\)$/, "")}
             </a>
           </div>
         </li>
       ))}
-    </ul>
+      </ul>
+      {withheldLine}
+    </>
   );
 }
 
 const groupAccent = ["bg-accent", "bg-secondary", "bg-warm", "bg-positive", "bg-tertiary"];
 
-function SpecBlock({ label, value, verification, muted = false }: { label: string; value: string; verification?: Verification; muted?: boolean }) {
+function SpecBlock({
+  label,
+  value,
+  verification,
+  source,
+  muted = false,
+}: {
+  label: string;
+  value: string;
+  verification?: Verification;
+  // Only changes the tag's wording. A maker's figure that reached this site
+  // through a retailer's listing says so rather than reading as a page we
+  // opened.
+  source?: Attributed["source"];
+  muted?: boolean;
+}) {
   return (
     <div className="min-w-0">
       <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-fg-muted">{label}</p>
       <p className={cn("mt-0.5 flex flex-wrap items-center gap-1.5 text-base", muted ? "text-fg-muted" : "font-semibold text-fg")}>
         <span className="tabular">{value}</span>
-        {verification ? <VerificationTag verification={verification} /> : null}
+        {verification ? <VerificationTag verification={verification} source={source} /> : null}
       </p>
     </div>
   );
@@ -104,8 +193,17 @@ export function SpecGroups({ view, cat }: { view: ProductView; cat: CategoryDefi
               <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
                 {specs.map((s) => {
                   const missing = s.raw === undefined;
-                  const showTag = !missing && s.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo");
-                  return <SpecBlock key={s.key} label={s.shortLabel} value={s.formatted} verification={showTag ? s.provenance?.verification : undefined} muted={missing} />;
+                  const showTag = !missing && s.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification));
+                  return (
+                    <SpecBlock
+                      key={s.key}
+                      label={s.shortLabel}
+                      value={s.formatted}
+                      verification={showTag ? s.provenance?.verification : undefined}
+                      source={s.provenance?.source}
+                      muted={missing}
+                    />
+                  );
                 })}
               </div>
             </section>
@@ -189,19 +287,48 @@ export function InsightsPanel({ insights, view }: { insights: Insight[]; view: P
 
 export function ProvenanceBlock({ view }: { view: ProductView }) {
   const entries = Object.entries(view.provenance) as [string, Provenance][];
-  const byUrl = new Map<string, { url?: string; kind: string; retrievedAt?: string; method: string; fields: string[]; note?: string }>();
+  const fieldName = (path: string) => path.replace(/^attributes\./, "").replace(/_/g, " ");
+  type Group = {
+    url?: string;
+    kind: string;
+    retrievedAt?: string;
+    method: string;
+    fields: string[];
+    // One entry per distinct note, with the fields that carry it. The notes
+    // were being collected and never rendered, so the reason a figure is a
+    // bound, or absent, or relayed, existed in the file and nowhere a reader
+    // could see it.
+    notes: { note: string; fields: string[] }[];
+  };
+  const byUrl = new Map<string, Group>();
   for (const [path, p] of entries) {
     const key = p.source.url ?? `${p.source.kind}:${p.source.ref ?? ""}`;
-    const cur = byUrl.get(key) ?? { url: p.source.url, kind: p.source.kind, retrievedAt: p.source.retrievedAt, method: p.source.method, fields: [], note: undefined };
-    cur.fields.push(path.replace(/^attributes\./, "").replace(/_/g, " "));
+    const cur = byUrl.get(key) ?? { url: p.source.url, kind: p.source.kind, retrievedAt: p.source.retrievedAt, method: p.source.method, fields: [], notes: [] };
+    cur.fields.push(fieldName(path));
+    if (p.source.note) {
+      const existing = cur.notes.find((n) => n.note === p.source.note);
+      if (existing) existing.fields.push(fieldName(path));
+      else cur.notes.push({ note: p.source.note, fields: [fieldName(path)] });
+    }
     byUrl.set(key, cur);
   }
+  // Three different things, counted and named separately. Lumping them under
+  // "demo values" called a figure nobody stated an invention, which is a
+  // different accusation and the wrong one.
   const demoCount = entries.filter(([, p]) => p.verification === "demo").length;
+  const notStatedCount = entries.filter(([, p]) => p.verification === "not_stated").length;
+  const boundCount = entries.filter(([, p]) => p.bound !== undefined).length;
+  const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+  const sentences = [
+    demoCount > 0 ? `${plural(demoCount, "field carries", "fields carry")} demo data, marked on the page.` : null,
+    notStatedCount > 0 ? `${plural(notStatedCount, "field is", "fields are")} not stated by the source, so no value is recorded and none is guessed.` : null,
+    boundCount > 0 ? `${plural(boundCount, "figure is", "figures are")} a bound the source states rather than an exact value, shown in the words the source used.` : null,
+  ].filter(Boolean);
   return (
     <section className="rounded-card border border-edge bg-surface-raised p-5 text-sm">
       <h3 className="eyebrow">Sources and updates</h3>
       <p className="mt-2 text-fg-soft">
-        Last updated {shortDate(view.lastUpdated)}. {demoCount > 0 ? `${demoCount} field${demoCount === 1 ? "" : "s"} carry demo values, marked on the page.` : ""} Maker-reported figures are not independently verified here.
+        Last updated {shortDate(view.lastUpdated)}. {sentences.join(" ")} Maker-reported figures are not independently verified here.
       </p>
       <ul className="mt-3 flex flex-col gap-2">
         {[...byUrl.values()].map((s, i) => (
@@ -217,6 +344,15 @@ export function ProvenanceBlock({ view }: { view: ProductView }) {
               {s.method === "secondhand" ? <span className="rounded-pill border border-edge-strong px-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-fg-soft">Relayed, not fetched</span> : null}
             </div>
             <p className="text-xs text-fg-muted">{s.fields.join(", ")}</p>
+            {s.notes.length > 0 ? (
+              <ul className="mt-1 flex flex-col gap-1">
+                {s.notes.map((n, j) => (
+                  <li key={j} className="text-xs text-fg-soft">
+                    <span className="font-semibold">{n.fields.join(", ")}:</span> {n.note}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </li>
         ))}
       </ul>

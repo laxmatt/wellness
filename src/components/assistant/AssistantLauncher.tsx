@@ -1,11 +1,17 @@
 "use client";
 
+import type { AssistantEntry } from "@/domain/assistant-intro";
 import { cn } from "@/lib/cn";
 import { useAssistant } from "./AssistantProvider";
 
 // A plain button in the page flow. Not a floating bubble, not a pop-up, and it
 // never opens by itself. When the panel is open the button reflects that.
-export function AssistantLauncher({ className, size = "md" }: { className?: string; size?: "md" | "lg" }) {
+//
+// `entry` is what this button is: the invitation on a category page, the button
+// beside a product, the one on a comparison. It is stated here rather than
+// worked out in the panel, because the panel is mounted once for the page and
+// several buttons can open it.
+export function AssistantLauncher({ className, size = "md", entry = { kind: "general" } }: { className?: string; size?: "md" | "lg"; entry?: AssistantEntry }) {
   const a = useAssistant();
   if (!a) return null;
   return (
@@ -13,7 +19,7 @@ export function AssistantLauncher({ className, size = "md" }: { className?: stri
       type="button"
       aria-expanded={a.open}
       aria-controls="assistant-panel"
-      onClick={() => a.setOpen(!a.open)}
+      onClick={() => (a.open ? a.setOpen(false) : a.openFrom(entry))}
       className={cn(
         "tap inline-flex items-center justify-center gap-2 rounded-pill border font-semibold transition-colors",
         size === "lg" ? "h-13 px-6 text-base" : "h-11 px-5 text-sm",

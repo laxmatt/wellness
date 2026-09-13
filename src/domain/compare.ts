@@ -1,3 +1,4 @@
+import { isUsable, type Attributed } from "@/domain/provenance";
 import type { CategoryDefinition } from "./category";
 import { attributeDef } from "./category";
 import { comparable } from "./conditions";
@@ -5,7 +6,8 @@ import { formatMoney } from "./money";
 import type { Badge } from "./recommend/badges";
 import { primaryStrength, primaryTradeoff, type RecommendedProduct } from "./recommend";
 import type { Verification } from "./provenance";
-import type { ProductView } from "./view";
+import type { AffiliateStatus } from "./product";
+import { buyableOffers, displayPrice, type ProductView } from "./view";
 
 // Serializable comparison model. Built on the server so the client component
 // carries no domain code, only rows to render.
@@ -13,6 +15,8 @@ import type { ProductView } from "./view";
 export type CompareCell = {
   text: string;
   verification?: Verification;
+  // Carried only to word the tag. Nothing here decides comparability.
+  source?: Attributed["source"];
   best: boolean;
 };
 
@@ -29,6 +33,27 @@ export type CompareRow = {
 
 export type CompareGroup = { label: string; rows: CompareRow[] };
 
+// A retailer a shopper can actually go to from this column.
+//
+// Not every offer on a record is one. A withheld offer's amount belongs to
+// another product or an unmatched configuration, so it is not a way to buy this
+// one and never appears here. A prototype amount is different: the amount is a
+// placeholder but the retailer and the link are real, so the link stands and
+// the price simply is not quoted.
+export type CompareMerchant = {
+  offerId: string;
+  merchant: string;
+  url: string;
+  // What to show beside the merchant, or undefined when no amount can be
+  // quoted. Never a stock claim: this record's freshness is a date, not a
+  // promise, and the product page is where that date is shown.
+  price?: string;
+  // What the record says the relationship with this merchant is, so the link
+  // can be marked up as what it is. Carried for `outboundRel` and for nothing
+  // else: see the note at `merchants` below.
+  affiliateStatus: AffiliateStatus;
+};
+
 export type CompareColumn = {
   id: string;
   slug: string;
@@ -38,6 +63,9 @@ export type CompareColumn = {
   badge: Badge | null;
   image: ProductView["images"][number] | undefined;
   score: number;
+  // Empty when nothing on the record can send a shopper anywhere. The column
+  // then offers no outbound action at all rather than a fabricated one.
+  merchants: CompareMerchant[];
 };
 
 export type CompareModel = {
@@ -46,7 +74,8 @@ export type CompareModel = {
 };
 
 function isDemoValue(view: ProductView, key: string): boolean {
-  return view.provenance[`attributes.${key}`]?.verification === "demo";
+  const v = view.provenance[`attributes.${key}`]?.verification;
+  return v !== undefined && !isUsable(v);
 }
 
 // A winner is only marked when the numbers mean the same thing. Three ways a
@@ -76,6 +105,20 @@ function comparability(items: RecommendedProduct[], cat: CategoryDefinition, key
       return { ok: false, reason: `Not ranked: these figures were measured at a different ${condLabel}.` };
     }
   }
+
+  // A figure its own source states two ways cannot be ranked against one that
+  // is stated once. The value is shown, marked, and left out of the ordering.
+  if (key !== "price" && items.some((it) => it.view.provenance[`attributes.${key}`]?.disputed === true)) {
+    return { ok: false, reason: "Not ranked: at least one source states its figure two ways, and this table does not pick one." };
+  }
+
+  // Last, because the conditions a figure was taken under are the more useful
+  // thing to say when both are wrong. A bound is not an exact value: "more than
+  // 189 mW/cm2" beats a stated 185, and against a stated 200 nobody knows, so
+  // no winner is marked in a row where any figure is a bound.
+  if (key !== "price" && items.some((it) => it.view.bounds[key] !== undefined)) {
+    return { ok: false, reason: "Not ranked: at least one figure here is a stated bound, not an exact value." };
+  }
   return { ok: true };
 }
 
@@ -101,10 +144,27 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
     slug: it.view.slug,
     name: it.view.name,
     brand: it.view.brand.name,
-    price: formatMoney(it.view.price.money),
+    price: displayPrice(it.view.price),
     badge: it.badges[0] ?? null,
     image: it.view.images.find((i) => i.role === "card") ?? it.view.images.find((i) => i.role === "primary") ?? it.view.images[0],
     score: it.score,
+    // Retailers with a real amount first, cheapest first, then the ones whose
+    // amount is a placeholder. The same rule the shown price already follows:
+    // an invented figure is not a cheaper offer, so it does not sort like one.
+    // Affiliate status is passed through and never acted on. Nothing in this
+    // file sorts, filters, picks or scores on it, and the affiliate-neutrality
+    // test would fail if it did. It travels because the link has to say what
+    // the relationship is: `rel="sponsored"` is a claim that a link was paid
+    // for, and the column used to make that claim about every retailer on a
+    // site with no affiliate programme at all.
+    merchants: buyableOffers(it.view)
+      .map((o) => ({
+        offerId: o.id,
+        merchant: o.merchant.name,
+        url: o.url,
+        price: o.priceIsDemo ? undefined : formatMoney(o.price),
+        affiliateStatus: o.affiliateStatus,
+      })),
   }));
 
   const priceBest = bestIndexes(items, cat, "price");
@@ -118,8 +178,10 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "price",
         label: "Price",
-        cells: items.map((it, i) => ({ text: formatMoney(it.view.price.money), best: priceBest.has(i) })),
-        same: new Set(items.map((it) => it.view.price.money.amountMinor)).size === 1,
+        cells: items.map((it, i) => ({ text: displayPrice(it.view.price), best: priceBest.has(i) })),
+        // Two products with no amount are not "the same price". A missing
+        // amount is not a value that can match another one.
+        same: items.every((it) => it.view.price.money !== undefined) && new Set(items.map((it) => it.view.price.money!.amountMinor)).size === 1,
         notComparable: priceComparable.ok ? undefined : priceComparable.reason,
       },
       {
@@ -157,7 +219,12 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         notComparable: comp.ok ? undefined : comp.reason,
         cells: specs.map((s, i) => ({
           text: texts[i],
-          verification: s?.provenance && (s.alwaysShowVerification || s.provenance.verification === "demo") ? s.provenance.verification : undefined,
+          // The source travels with the verification, so a column can say a
+          // maker's figure reached this site through a retailer rather than
+          // showing a tag that reads as a page somebody opened.
+          ...(s?.provenance && (s.alwaysShowVerification || !isUsable(s.provenance.verification))
+            ? { verification: s.provenance.verification, source: s.provenance.source }
+            : {}),
           best: best.has(i),
         })),
         same: new Set(texts).size === 1,
@@ -171,7 +238,19 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
       {
         key: "retailers",
         label: "Retailers",
-        cells: items.map((it) => ({ text: it.view.offers.length === 0 ? "None listed" : `${it.view.offers.length}, from ${formatMoney(it.view.price.money)}`, best: false })),
+        // The count and the amount come from the same set: retailers whose
+        // amount is real. Retailers carrying only a prototype amount are named
+        // separately rather than folded into a "from $X" that they had no part
+        // in setting.
+        cells: items.map((it) => {
+          const priced = it.view.offers.filter((o) => !o.priceIsDemo).length;
+          const unpriced = it.view.offers.length - priced;
+          const tail = unpriced > 0 ? `, ${unpriced} with no amount on record` : "";
+          if (it.view.offers.length === 0) return { text: "None listed", best: false };
+          if (priced === 0) return { text: `${it.view.offers.length}, none with an amount on record`, best: false };
+          if (!it.view.price.money) return { text: `${it.view.offers.length}, none that can price this product`, best: false };
+          return { text: `${priced}, from ${formatMoney(it.view.price.money)}${tail}`, best: false };
+        }),
         same: new Set(items.map((it) => it.view.offers.length)).size === 1,
       },
     ],

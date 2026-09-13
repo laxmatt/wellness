@@ -1,8 +1,8 @@
 {
   "status": "published",
-  "availability": "unknown",
+  "availability": "out_of_stock",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": false
@@ -17,11 +17,11 @@
   },
   "id": "olipop-root-beer-12",
   "slug": "olipop-classic-root-beer-12-pack",
-  "name": "Classic Root Beer, 12 pack",
+  "name": "Classic Root Beer, refrigerated 9 g fiber formula, 12 pack",
   "brandId": "olipop",
   "categoryId": "wellness-drinks",
   "subcategoryId": "prebiotic-soda",
-  "description": "Prebiotic soda with 9 g of fiber per can and low sugar. Caffeine free.",
+  "description": "Prebiotic soda with 9 g of fiber and 3 g of total sugar per 12 fl oz can, sweetened with stevia, cassava root syrup and fruit juice.",
   "images": [
     {
       "id": "olipop-root-beer-12-primary",
@@ -37,19 +37,21 @@
       "merchantId": "olipop-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 3588,
-      "url": "https://drinkolipop.com",
+      "priceMinor": 3599,
+      "url": "https://drinkolipop.com/products/classic-root-beer",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
-      "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "availability": "out_of_stock",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Direct 12-pack price not confirmed. Sources say $2 to $3 per can. Demo value."
+        "note": "The 12 pack shows $35.99 one-time, read at 16:15 Pacific on 2026-09-09, with a subscription price of $30.59 at 15% off offered separately and not recorded as this offer's price. The page showed the product as currently out of stock while still presenting a cart control; the out-of-stock state is what it stated and is recorded, and nothing here claims it is buyable now. The record previously carried a placeholder $35.88 built from a relayed $2 to $3 a can. This page is explicitly the refrigerated 9 g fiber formula. OLIPOP also sells a separate 6 g formula, which this record does not describe and whose figures must not be mixed in here."
       }
     }
   ],
@@ -71,10 +73,11 @@
       "value": "rtd_can",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinkolipop.com/pages/ingredients",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A 12 fl oz can."
       },
       "verification": "manufacturer_reported"
     },
@@ -82,93 +85,106 @@
       "value": "1 can (12 fl oz)",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinkolipop.com/pages/ingredients",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "One can, 12 fl oz or 355 mL. The nutrition figures are stated against it."
       },
       "verification": "manufacturer_reported"
     },
     "servings_per_pack": {
       "value": 12,
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "12-pack."
+        "note": "A 12 pack."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "price_per_serving_minor": {
-      "value": 299,
+      "value": 300,
       "unit": "USD_minor",
       "source": {
         "kind": "editorial",
         "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Pack price divided by cans."
+        "note": "Pack price divided by cans: $35.99 over 12. Was 299, from the placeholder $35.88 the reading has replaced."
       },
-      "verification": "unknown"
+      "verification": "unknown",
+      "derivedFrom": "price"
     },
     "sugar_g": {
-      "value": 2,
+      "value": 3,
       "unit": "g",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Sources give 2 to 5 g across flavors. Root Beer figure not confirmed. Demo value."
+        "note": "3 g of total sugars per can, of which 1 g is added. The record carried a placeholder 2 g taken from a 2 to 5 g range across flavours; that figure did not describe this formula and does not now. This page is explicitly the refrigerated 9 g fiber formula. OLIPOP also sells a separate 6 g formula, which this record does not describe and whose figures must not be mixed in here."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "calories": {
-      "value": 35,
+      "value": 40,
       "unit": "kcal",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Sources give 30 to 50 kcal across flavors. Demo value."
+        "note": "40 kcal per can. The record carried a placeholder 35 kcal taken from a 30 to 50 kcal range across flavours; that figure did not describe this formula. This page is explicitly the refrigerated 9 g fiber formula. OLIPOP also sells a separate 6 g formula, which this record does not describe and whose figures must not be mixed in here."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "caffeine_mg": {
       "value": 0,
       "unit": "mg",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's own caffeine page and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/blogs/digest/does-olipop-have-caffeine",
+        "retrievedAt": "2026-09-11",
         "method": "direct",
-        "note": "Caffeine content for this flavor not confirmed. Demo value."
+        "note": "The brand's own page about caffeine names its caffeinated flavours exhaustively, as Vintage Cola, Cherry Cola, Doctor Goodwin and Citrus Rush, and then states \"The rest of our flavors are caffeine-free!\". Its cheat sheet repeats that the remaining flavours have zero caffeine. Classic Root Beer appears on that same page and is not among the four. This is the maker stating a figure for this flavour through an exhaustive statement, not an absence of one: the earlier records stayed not_stated because the product page and the label simply did not mention caffeine, and silence is still not a zero. A statement that covers every remaining flavour is different in kind, and it covers this one. A search summary retrieved on 2026-09-11 named a fourth flavour differently; a search summary is not a reading and is recorded here only so a later reader knows why the names may not match."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "fiber_g": {
       "value": 9,
       "unit": "g",
       "source": {
         "kind": "manufacturer",
-        "url": "https://drinkolipop.com/pages/ingredients",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "9 g of fiber per can. This page is explicitly the refrigerated 9 g fiber formula. OLIPOP also sells a separate 6 g formula, which this record does not describe and whose figures must not be mixed in here."
       },
       "verification": "manufacturer_reported"
     },
     "sweeteners": {
       "value": [
         "stevia",
+        "cassava_root_syrup",
         "fruit_juice"
       ],
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Not confirmed from the source. Demo value."
+        "note": "The page lists stevia and cassava root syrup, with apple juice and lemon juice among the ingredients. The record previously carried an unconfirmed stevia and fruit_juice placeholder."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "dietary": {
       "value": [
@@ -190,12 +206,53 @@
     "subscription_available": {
       "value": true,
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Not confirmed from the source. Demo value."
+        "note": "A subscription option is offered on the page."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
+    },
+    "added_sugar_g": {
+      "value": 1,
+      "unit": "g",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "1 g of added sugar per can."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sodium_mg": {
+      "value": 30,
+      "unit": "mg",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "30 mg of sodium per can."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "subscription_discount_pct": {
+      "value": 15,
+      "unit": "%",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page for this formula and supplied to this repository; not fetched here.",
+        "url": "https://drinkolipop.com/products/classic-root-beer",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states $30.59 on subscription against $35.99 one-time, at 15% off."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "source": {
@@ -203,6 +260,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the Classic Root Beer page was read by Codex on 2026-09-09 at 16:15 Pacific and the price, nutrition, sweeteners and subscription terms replaced on that reading. This page is explicitly the refrigerated 9 g fiber formula. OLIPOP also sells a separate 6 g formula, which this record does not describe and whose figures must not be mixed in here. The page stated the product was currently out of stock. Images and any health claim remain unverified."
   }
 }

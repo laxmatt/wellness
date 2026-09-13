@@ -211,6 +211,12 @@ describe("spend control", () => {
       async listUncertain() {
         throw new Error("ledger offline");
       },
+      async listOpen() {
+        throw new Error("ledger offline");
+      },
+      async closeOpen(): Promise<never> {
+        throw new Error("ledger offline");
+      },
       async reconcile() {
         throw new Error("ledger offline");
       },
@@ -263,6 +269,8 @@ describe("medical boundary", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
+  moneyContract: "MONEY: price is money.",
       messages: [{ role: "user", text: "which one will cure my eczema?" }],
       activeConstraints: [],
     });
@@ -282,6 +290,8 @@ describe("scripted stand-in", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
+  moneyContract: "MONEY: price is money.",
       messages: [{ role: "user", text: "I want something for my knees" }],
       activeConstraints: [],
     });
@@ -291,16 +301,25 @@ describe("scripted stand-in", () => {
       categoryName: redLight.name,
       filterVocabulary: "price",
       products: [],
+      catalogueSize: 0,
+  moneyContract: "MONEY: price is money.",
       messages: [{ role: "user", text: "under $700" }],
       activeConstraints: [],
     });
-    expect(second.intent.hard).toContainEqual({ key: "price", op: "lte", value: 70000 });
+    // Dollars with a currency, which is what the route accepts. This asserted
+    // 70000 cents, the engine's unit, and the route rejects a bare number for a
+    // money key rather than guessing what it counts. Every budget typed into the
+    // prototype was refused with "I could not read that reliably", and this test
+    // held the refusal in place.
+    expect(second.intent.hard).toContainEqual({ key: "price", op: "lte", value: { amount: 700, currency: "USD" } });
     expect(second.intent.question).toBeUndefined();
   });
 
   it("costs nothing", async () => {
     const p = new ScriptedConversationProvider(redLight);
-    const res = await p.converse({ categoryName: "x", filterVocabulary: "price", products: [], messages: [], activeConstraints: [] });
+    const res = await p.converse({ categoryName: "x", filterVocabulary: "price", products: [],
+      catalogueSize: 0,
+  moneyContract: "MONEY: price is money.", messages: [], activeConstraints: [] });
     expect(res.usage).toEqual({ inputTokens: 0, outputTokens: 0 });
   });
 });
@@ -328,9 +347,36 @@ describe("what the model is allowed to see", () => {
   });
 
   it("passes real manufacturer figures through", () => {
+    // Asserted over the category rather than over one product. This named
+    // whichever panel still had a recorded irradiance figure, and that keeps
+    // changing: MitoPRO 1500+ carried a relayed 76.5 until its page was read
+    // and turned out to state two figures under contradictory method labels.
+    // The rule is that a usable, sourced value reaches the model, and it holds
+    // for every product whether or not any one of them has irradiance.
+    let checked = 0;
+    for (const v of views) {
+      const g = ground(v);
+      for (const [key, value] of Object.entries(v.attributes)) {
+        if (value === undefined) continue;
+        const p = v.provenance[`attributes.${key}`];
+        if (p?.verification !== "manufacturer_reported") continue;
+        expect(g.facts, `${v.id}.${key}`).toContain(key);
+        expect(g.notStated, `${v.id}.${key}`).not.toContain(key);
+        checked++;
+      }
+    }
+    // A guard on the guard: an empty loop would pass silently.
+    expect(checked).toBeGreaterThan(20);
+  });
+
+  it("withholds a figure whose own source states it two ways", () => {
+    // Hooga's page says "over 73 mW/cm2" in its highlights and 73 in its
+    // table. The model is told the figure is not stated rather than handed
+    // whichever reading someone typed in first.
     const hg300 = views.find((v) => v.id === "hooga-hg300")!;
     const g = ground(hg300);
-    expect(g.facts).toContain("irradiance_mw_cm2");
+    expect(g.facts).not.toContain("irradiance_mw_cm2");
+    expect(g.notStated).toContain("irradiance_mw_cm2");
     expect(g.facts).toContain("warranty_years");
   });
 });

@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "exportedAt": "2026-09-11T00:00:00.000Z",
+  "entries": [
+    {
+      "id": "L-example-1",
+      "observation": "Two people opening a category page went straight to the chips and ignored the picks band above them.",
+      "evidence": {
+        "source": "usability_session",
+        "reference": "Example entry. Not an observation about this site."
+      },
+      "hypothesis": "The picks read as advertising rather than as a shortcut.",
+      "proposedChange": "Try naming what each pick is best at in the card itself, rather than above the row.",
+      "status": "open",
+      "createdAt": "2026-09-01T00:00:00.000Z",
+      "updatedAt": "2026-09-01T00:00:00.000Z",
+      "demo": true
+    },
+    {
+      "id": "L-example-2",
+      "observation": "A partner asked which of two products was cheaper per serving and could not tell from the cards.",
+      "evidence": {
+        "source": "partner_feedback",
+        "reference": "Example entry. Not an observation about this site."
+      },
+      "hypothesis": "Pack price is what the card shows, and per-serving cost is what the question is about.",
+      "proposedChange": "Show cost per serving on the card for drinks, beside the pack price rather than instead of it.",
+      "status": "planned",
+      "createdAt": "2026-09-03T00:00:00.000Z",
+      "updatedAt": "2026-09-05T00:00:00.000Z",
+      "demo": true
+    },
+    {
+      "id": "L-example-3",
+      "observation": "Reading the code: a filter that matched nothing was hidden, so a shopper arriving on a facet URL with no matches had no control to undo it.",
+      "evidence": {
+        "source": "code_review",
+        "reference": "Example entry. Not an observation about this site."
+      },
+      "proposedChange": "Keep a selected option visible even when it matches nothing.",
+      "status": "done",
+      "outcome": "Changed. The chip is kept when it is the selection the page arrived with.",
+      "createdAt": "2026-09-07T00:00:00.000Z",
+      "updatedAt": "2026-09-10T00:00:00.000Z",
+      "demo": true
+    }
+  ]
+}

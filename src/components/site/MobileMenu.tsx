@@ -56,7 +56,7 @@ export function MobileMenu({ current }: { current?: string }) {
           ))}
           <li>
             <Link href="/disclosure" onClick={() => setOpen(false)} className="flex min-h-14 items-center text-sm font-semibold text-fg-soft">
-              Affiliate disclosure
+              How this site is paid
             </Link>
           </li>
         </ul>

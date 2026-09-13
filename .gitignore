@@ -45,3 +45,10 @@ next-env.d.ts
 
 # The example file holds no values, only names and comments.
 !.env.example
+
+# private live-test diagnostics: rejected model output, never committed
+/.diagnostics
+
+# local preview catalogue: invented products staged from a sample supplier
+# file, an operator's working directory. Never committed and never deployed.
+/catalog-preview

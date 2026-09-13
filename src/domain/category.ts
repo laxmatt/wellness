@@ -6,9 +6,14 @@ import { Id, ImageAsset, Slug } from "./product";
 // A filter key is an attribute key or the reserved "price" key (minor units).
 export const FilterKey = z.string();
 
+// Named, and exported, so the model's instructions can be generated from the
+// same list that validates its answer. A prompt that describes a contract the
+// validator does not enforce, or omits one it does, silently discards replies.
+export const CONDITION_OPS = ["lt", "lte", "gt", "gte", "eq", "neq", "in", "includes", "exists", "missing"] as const;
+
 export const Condition = z.object({
   key: FilterKey,
-  op: z.enum(["lt", "lte", "gt", "gte", "eq", "neq", "in", "includes", "exists", "missing"]),
+  op: z.enum(CONDITION_OPS),
   value: z.union([z.number(), z.string(), z.boolean(), z.array(z.string()), z.array(z.number())]).optional(),
 });
 export type Condition = z.infer<typeof Condition>;
@@ -119,6 +124,12 @@ export const CategoryDefinition = z.object({
   facets: z.array(FacetPage),
   // Synonyms the matcher maps to enum values. Deterministic, hand-maintained.
   matcherVocabulary: z.record(FilterKey, z.record(z.string(), z.array(z.string()))).default({}),
+  // Other names for the category itself, as a shopper would type them.
+  // Hand-maintained, like matcherVocabulary, and used for one thing: deciding
+  // that a message is about a different section of this site. It is a written
+  // list, not a model of language, and a phrase nobody wrote down here is not
+  // recognised. See src/domain/subject-scope.ts.
+  aliases: z.array(z.string()).default([]),
 }).superRefine((cat, ctx) => {
   const keys = new Set(cat.attributeDefinitions.map((a) => a.key));
   keys.add("price");

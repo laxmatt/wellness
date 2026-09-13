@@ -48,6 +48,19 @@ export const DEFAULT_METER_CONFIG: MeterConfig = {
 
 export type Reservation = { id: string; month: string; sessionId: string; estimateUsd: number };
 
+// A reservation that took budget and never recorded an outcome.
+export type OpenReservation = { reservationId: string; month: string; sessionId: string; heldUsd: number; at: string };
+
+// How an operator closes one. "unknown" is the honest default: nobody can say
+// whether the provider charged, so the estimate stays held as uncertain and
+// counts against the cap until it is reconciled. "confirmed" carries a figure
+// the operator read from the provider's own record, which may be zero.
+export type OpenResolution = { kind: "unknown" } | { kind: "confirmed"; actualUsd: number };
+
+export type CloseOpenResult =
+  | { ok: true; movedTo: "uncertain" | "billed"; amountUsd: number }
+  | { ok: false; reason: "not_found" | "too_recent" | "already_settled" };
+
 export type ReserveResult =
   | { ok: true; reservation: Reservation }
   | { ok: false; kind: "monthly_cap" | "session_limit" | "client_limit" | "store_error"; reason: string };
@@ -94,6 +107,19 @@ export interface UsageStore {
   settle(reservation: Reservation, outcome: CallOutcome, costUsd: number): Promise<void>;
   snapshot(sessionId: string, month: string, config: MeterConfig): Promise<BudgetSnapshot>;
   listUncertain(month: string): Promise<UncertainCharge[]>;
+  // Reservations taken and never settled. A crash between the call and its
+  // settlement leaves budget held with no outcome; without this an operator
+  // cannot see it, let alone act on it.
+  listOpen(month: string, olderThanMs?: number): Promise<OpenReservation[]>;
+  // Operator action on a reservation no process will ever settle. A missing
+  // outcome is not a zero cost: the request may have reached the provider and
+  // been charged. So closing one either holds the estimate as uncertain, which
+  // keeps it against the cap until the provider's record is checked, or
+  // records an amount the operator has actually confirmed.
+  //
+  // `minAgeMs` refuses to close a reservation young enough to still be in
+  // flight, so an operator cannot cancel a live request's accounting.
+  closeOpen(reservationId: string, resolution: OpenResolution, minAgeMs?: number): Promise<CloseOpenResult>;
   // Operator action: replace a held uncertain amount with the real figure from
   // the provider's usage record. Returns false when the id is unknown or was
   // already reconciled.
@@ -176,6 +202,19 @@ export class UsageMeter {
   async listUncertain(): Promise<UncertainCharge[]> {
     await this.store.init();
     return this.store.listUncertain(monthKey());
+  }
+
+  // Default: only reservations old enough that no live request could still be
+  // holding them. A request is bounded by ASSISTANT_TIMEOUT_MS, so anything
+  // older than a few minutes is orphaned rather than in flight.
+  async listOpen(olderThanMs = 10 * 60 * 1000): Promise<OpenReservation[]> {
+    await this.store.init();
+    return this.store.listOpen(monthKey(), olderThanMs);
+  }
+
+  async closeOpen(reservationId: string, resolution: OpenResolution, minAgeMs = 10 * 60 * 1000): Promise<CloseOpenResult> {
+    await this.store.init();
+    return this.store.closeOpen(reservationId, resolution, minAgeMs);
   }
 
   async reconcile(reservationId: string, actualUsd: number): Promise<boolean> {

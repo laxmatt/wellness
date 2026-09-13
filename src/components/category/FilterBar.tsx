@@ -1,17 +1,44 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import Link from "next/link";
+import { useMemo, useSyncExternalStore, type ReactNode } from "react";
+import { NeedsHeldBack, NeedsInvitation } from "@/components/needs/NeedsFit";
 import { cn } from "@/lib/cn";
 import { useCategoryFilters } from "./FilterContext";
 
 // Filters run in the browser over id sets built on the server. Every product
 // card is server-rendered and stays in the HTML; filtering hides children.
 // Works without the assistant and without a round trip.
+// Hydration, as a value: the server snapshot is false and the client snapshot
+// is true, so this flips exactly when React takes over. Nothing ever changes
+// after that, so the store has nothing to notify.
+const subscribeNothing = () => () => {};
+
 export function FilterChips() {
   const f = useCategoryFilters();
+  // The chips are server-rendered and do nothing until React attaches its
+  // handlers. Nothing on the page said when that had happened, so a test could
+  // only tap and hope, and a tap that lands early looks exactly like a tap the
+  // page ignored. This flips on mount and says which is which.
+  const ready = useSyncExternalStore(subscribeNothing, () => true, () => false);
   if (!f || f.groups.length === 0) return null;
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3" data-filters-ready={ready ? "true" : "false"}>
+      {/* The rule the chips already follow, said out loud. Picking two chips in
+          one row widens the result and picking one in each row narrows it, and
+          nothing on the page said so: a shopper who picked "Under $300" and
+          watched five other chips grey out had no way to know why.
+
+          The sentence about the number is written from what `countFor` does,
+          not from what a number beside a chip looks like it should mean. It
+          drops every selection in the chip's own row and counts that one option
+          against the other rows, so it is what the chip matches on its own, not
+          what pressing it would leave. Those differ the moment a second chip in
+          the same row is already on. */}
+      <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
+        Pick more than one in a row to widen the result. Pick across rows to narrow it. A chip&apos;s number counts that chip on its own against your other rows, so it ignores anything
+        else you have picked in its own row. A chip at zero is dimmed because nothing in your other rows matches it.
+      </p>
       {f.groups.map((g) => (
         <div key={g.key} className="flex flex-wrap items-center gap-2">
           <span className="eyebrow w-full sm:w-28 sm:shrink-0">{g.label}</span>
@@ -25,6 +52,12 @@ export function FilterChips() {
                 type="button"
                 aria-pressed={on}
                 disabled={dead}
+                // A disabled control with no name but its own label tells a
+                // screen reader nothing about why it cannot be pressed, and
+                // sighted shoppers only got a dimmer pill. Both now get the
+                // reason.
+                aria-label={dead ? `${o.label}, no products in your other rows match this` : undefined}
+                title={dead ? "Nothing in your other rows matches this. Clear a filter in another row to reach it." : undefined}
                 onClick={() => f.toggle(o.id)}
                 className={cn(
                   "tap inline-flex items-center gap-1.5 rounded-pill border px-3.5 text-sm font-medium transition-colors",
@@ -43,10 +76,13 @@ export function FilterChips() {
   );
 }
 
-export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: ReactNode[]; emptyHref?: string; emptyLabel?: string }) {
+export function FilterableGrid({ children, emptyHref, emptyLabel, sortLabel }: { children: ReactNode[]; emptyHref?: string; emptyLabel?: string; sortLabel?: string }) {
   const f = useCategoryFilters();
   const indexOf = useMemo(() => new Map((f?.ids ?? []).map((id, i) => [id, i])), [f?.ids]);
-  if (!f) return <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{children}</div>;
+  // `data-product-grid` names the grid a filter acts on. The picks row above
+  // it is also a row of <article> cards now, and anything identifying the grid
+  // by shape confused the two once a filter shrank the grid below four.
+  if (!f) return <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{children}</div>;
 
   return (
     <div>
@@ -60,10 +96,36 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
         </div>
       ) : null}
 
-      <div className="mb-4 flex items-center gap-3 text-sm text-fg-muted">
+      {/* An offer, not a claim. With nothing selected there is no fit to
+          report, and the section says what it would do rather than inventing a
+          shopper to do it for. */}
+      {f.categoryId ? <NeedsInvitation categoryId={f.categoryId} className="mb-3" /> : null}
+
+      {/* The sort context, beside the results it describes. Both pages carried a
+          large "Ranked by label score." heading above the grid, repeated on
+          every facet URL, and it stated the page's order rather than the one on
+          screen: the assistant reorders the grid, and the heading went on
+          claiming the category ranking. This reads from the same state the grid
+          renders from, so it cannot say one and show the other. The methodology
+          stays where it was, in full, further down the page. */}
+      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-fg-muted">
         <span aria-live="polite">
           {f.visible.size} of {f.ids.length} shown
         </span>
+        {sortLabel ? (
+          <span data-testid="sort-context">
+            {f.assistantOrder ? (
+              "Ordered by your answers"
+            ) : (
+              <>
+                Ranked by {sortLabel}.{" "}
+                <Link href="/how-we-choose" className="font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
+                  How
+                </Link>
+              </>
+            )}
+          </span>
+        ) : null}
         {f.active ? (
           <button type="button" onClick={f.clear} className="font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
             Clear filters
@@ -80,6 +142,7 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           <button type="button" onClick={f.dropLast} className="tap mt-4 inline-flex items-center rounded-pill bg-control px-5 text-sm font-semibold text-control-fg hover:bg-control-hover">
             Remove the last filter
           </button>
+          {f.categoryId ? <NeedsHeldBack categoryId={f.categoryId} ids={f.ids} visible={f.visible} /> : null}
           {emptyHref ? (
             <p className="mt-3 text-sm">
               <a href={emptyHref} className="font-semibold text-accent-strong hover:underline">
@@ -89,8 +152,13 @@ export function FilterableGrid({ children, emptyHref, emptyLabel }: { children: 
           ) : null}
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {f.ids.map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+        <div>
+          <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {/* The assistant's order when it has one, the page's otherwise. A
+                preference that reorders nothing is not a preference. */}
+            {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+          </div>
+          {f.categoryId ? <NeedsHeldBack categoryId={f.categoryId} ids={f.ids} visible={f.visible} /> : null}
         </div>
       )}
     </div>

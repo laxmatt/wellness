@@ -4,8 +4,15 @@ import { VerificationTag } from "@/components/ui/VerificationTag";
 import { categories } from "@/domain/categories";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
+import { social } from "@/lib/metadata";
 
-export const metadata: Metadata = { title: "How We Choose", description: "The rules behind every badge, score and label on this site." };
+const description = "The rules behind every badge, score and label on this site.";
+export const metadata: Metadata = {
+  title: "How We Choose",
+  description,
+  alternates: { canonical: "/how-we-choose" },
+  ...social({ title: "How We Choose", description, path: "/how-we-choose" }),
+};
 
 export default function HowWeChoosePage() {
   return (
@@ -24,9 +31,18 @@ export default function HowWeChoosePage() {
           </Card>
           <Card title="What the labels mean">
             <ul className="flex flex-col gap-2">
-              <li className="flex items-center gap-2"><VerificationTag verification="manufacturer_reported" /> The maker published this figure. We did not measure it.</li>
+              <li className="flex items-center gap-2"><VerificationTag verification="manufacturer_reported" /> The maker published this figure, on its own page, which somebody here read. We did not measure it.</li>
+              <li className="flex items-center gap-2">
+                <VerificationTag verification="manufacturer_reported" source={{ kind: "manufacturer", method: "secondhand" }} /> The maker&apos;s figure, reaching us relayed rather
+                than read: nobody has opened the maker&apos;s page for it yet. Still the maker&apos;s claim.
+              </li>
+              <li className="flex items-center gap-2">
+                <VerificationTag verification="manufacturer_reported" source={{ kind: "retailer", method: "secondhand" }} /> The maker&apos;s figure, reaching us through a
+                retailer&apos;s listing rather than the maker&apos;s own page. Still the maker&apos;s claim, and still not measured here.
+              </li>
               <li className="flex items-center gap-2"><VerificationTag verification="independently_verified" /> Measured by an independent test we cite. None yet in this prototype.</li>
               <li className="flex items-center gap-2"><VerificationTag verification="demo" /> Placeholder value in the prototype. Not a real measurement.</li>
+              <li className="flex items-center gap-2"><VerificationTag verification="not_stated" /> The source was read and does not state this. We do not fill the gap with a number.</li>
               <li className="flex items-center gap-2"><VerificationTag verification="unknown" /> Source did not state who measured it.</li>
             </ul>
           </Card>

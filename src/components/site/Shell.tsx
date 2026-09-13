@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { AssistantDock } from "@/components/assistant/AssistantDock";
 import { AssistantProvider, type CompareSeed } from "@/components/assistant/AssistantProvider";
 import { CompareTray } from "@/components/compare/CompareTray";
+import { CompareReconciler, type CompareAuthority } from "@/components/compare/CompareProvider";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -14,6 +15,7 @@ export function Shell({
   // Pages that do not simply omit it and render exactly as before.
   assistantCategoryId,
   compareSeeds,
+  compareAuthority,
 }: {
   children: ReactNode;
   current?: string;
@@ -21,6 +23,7 @@ export function Shell({
   tray?: boolean;
   assistantCategoryId?: string;
   compareSeeds?: CompareSeed[];
+  compareAuthority?: CompareAuthority;
 }) {
   const body = (
     <>
@@ -31,6 +34,7 @@ export function Shell({
   return (
     <>
       <SiteHeader current={current} />
+      <CompareReconciler authority={compareAuthority} />
       {assistantCategoryId ? (
         <AssistantProvider categoryId={assistantCategoryId} compareSeeds={compareSeeds}>
           <AssistantDock>{body}</AssistantDock>

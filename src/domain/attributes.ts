@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sourced } from "./provenance";
+import { BOUND_WORDS, type Bound, sourced } from "./provenance";
 
 export const AttributeType = z.enum([
   "number",
@@ -70,8 +70,13 @@ export type AttributeValue = z.infer<typeof AttributeValue>;
 export const AttributeMap = z.record(z.string(), AttributeValue);
 export type AttributeMap = z.infer<typeof AttributeMap>;
 
-export function formatAttribute(def: AttributeDefinition, value: AttributePrimitive | undefined): string {
+// `bound` is the qualifier the source stated: "less than 1 g", not "1 g". It
+// applies to numbers only, which is the only shape a bound can take, and it is
+// carried here rather than at each call site so that every screen reading a
+// spec gets the qualifier without having to remember it.
+export function formatAttribute(def: AttributeDefinition, value: AttributePrimitive | undefined, bound?: Bound): string {
   if (value === undefined || value === null) return "Not stated";
+  if (bound && typeof value === "number") return `${BOUND_WORDS[bound]} ${formatAttribute(def, value)}`;
   switch (def.type) {
     case "boolean":
       return value ? "Yes" : "No";

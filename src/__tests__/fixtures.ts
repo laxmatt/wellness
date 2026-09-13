@@ -107,3 +107,36 @@ export function miniProduct(
 export function miniView(p: Product): ProductView {
   return toProductView(p, { category: miniCategory, brands: [testBrand], merchants: [testMerchant] });
 }
+
+// A category with two money attributes: one that says it was computed from the
+// price, and one that stands on its own source.
+//
+// Tests that need a withheld money figure build on this rather than naming
+// whichever catalogue product still carries a prototype price. That product
+// keeps changing: it was Liquid I.V., then OLIPOP, and each real price read
+// broke a test that was never about that product.
+export const moneyCategory: CategoryDefinition = CategorySchema.parse({
+  ...JSON.parse(JSON.stringify(miniCategory)),
+  attributeDefinitions: [
+    ...JSON.parse(JSON.stringify(miniCategory.attributeDefinitions)),
+    { key: "cost_per_use_minor", label: "Cost per use", type: "integer", unit: "USD_minor", group: "g", compareOrder: 9, preferenceDirection: "lower_better" },
+    { key: "shipping_minor", label: "Shipping", type: "integer", unit: "USD_minor", group: "g", compareOrder: 10, preferenceDirection: "lower_better" },
+  ],
+});
+
+// `cost_per_use_minor` is derived from the price; `shipping_minor` is not.
+export function moneyView(
+  id: string,
+  priceMinor: number,
+  demoPrice: boolean,
+  amounts: { derived?: number; stated?: number } = {},
+): ProductView {
+  const p = miniProduct(id, priceMinor, { power: 50, size: "m" }, "unknown", [], demoPrice);
+  const src = { url: "https://example.com", retrievedAt: "2026-09-09", unit: "USD_minor" };
+  p.attributes.cost_per_use_minor = {
+    ...manufacturer(amounts.derived ?? 120, { ...src, note: "Pack price divided by uses." }),
+    derivedFrom: "price" as const,
+  };
+  p.attributes.shipping_minor = manufacturer(amounts.stated ?? 499, { ...src, note: "Flat shipping, stated on the merchant's own page." });
+  return toProductView(p, { category: moneyCategory, brands: [testBrand], merchants: [testMerchant] });
+}

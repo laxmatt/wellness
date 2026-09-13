@@ -2,11 +2,19 @@ import { Pool } from "pg";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { PostgresUsageStore } from "@/providers/usage/PostgresUsageStore";
 import { UsageMeter, monthKey, type MeterConfig } from "@/providers/usage/UsageMeter";
+import { assertDisposable } from "./support/disposable-db";
 
 // These run against a real Postgres. The in-memory store cannot show that the
 // conditional UPDATE actually serialises, nor that an upgrade from the previous
 // schema keeps existing rows. Set TEST_DATABASE_URL to enable them.
 const URL = process.env.TEST_DATABASE_URL;
+
+// This suite drops every ledger table after each test. Pointed at a database an
+// application instance is using, it destroys that instance's accounting: real
+// spend, open reservations and uncertain charges awaiting reconciliation. That
+// happened, to a ledger holding two uncertain charges and $0.003837 of recorded
+// spend. The guard is assertDisposable; see src/__tests__/support/disposable-db.ts.
+
 const suite = URL ? describe : describe.skip;
 
 const config: MeterConfig = {
@@ -57,7 +65,9 @@ suite("postgres ledger", () => {
     return s;
   };
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    // Before anything is dropped, and before any connection is reused.
+    await assertDisposable(URL!);
     admin = new Pool({ connectionString: URL, max: 2 });
   });
 

@@ -2,10 +2,12 @@ import { cache } from "react";
 import { categories, categoryBySlug } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { matchesAll } from "@/domain/conditions";
+import { facetOptionId, filterOptionSpecs } from "@/domain/filters";
+import { buildNeedCatalogue, type NeedDefinition } from "@/domain/needs";
 import type { Brand } from "@/domain/product";
 import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory, type RecommendedProduct, type RecommendationSet } from "@/domain/recommend";
-import type { ProductView } from "@/domain/view";
+import { buyableOffers, type ProductView } from "@/domain/view";
 import { getCatalog } from "@/providers";
 
 // Server-side read helpers. Every page reads the catalog through these so
@@ -30,10 +32,49 @@ export const getAllCategoryPages = cache(async (): Promise<CategoryPage[]> => {
   return pages.filter((p): p is CategoryPage => p !== null);
 });
 
-export function facetProducts(page: CategoryPage, facetSlug: string): { facet: CategoryDefinition["facets"][number]; products: RecommendedProduct[] } | null {
-  const facet = page.cat.facets.find((f) => f.slug === facetSlug);
-  if (!facet) return null;
-  return { facet, products: page.products.filter((p) => matchesAll(p.view, page.cat, facet.conditions)) };
+// Facets whose filter still matches something. A facet that matches nothing is
+// a chip that leads to a page saying "nothing fits this filter yet", and the
+// category's own filter chips already refuse to offer a dead end. Removing the
+// assumed `placement` values left `/cold-plunge/indoor` empty and still linked
+// from the category page and the home page.
+export function liveFacets(page: CategoryPage): string[] {
+  return page.cat.facets.filter((f) => page.products.some((p) => matchesAll(p.view, page.cat, f.conditions))).map((f) => f.slug);
+}
+
+/**
+ * The requirements this category can express, classified against every product
+ * in it.
+ *
+ * Over the whole category, always. A comparison can hold a product the current
+ * filters exclude, and that is the case worth showing: the shopper put it there
+ * and needs to see where it conflicts. Classifying against a page's visible
+ * subset would report every such product as a mismatch on every requirement,
+ * including the ones it meets.
+ *
+ * A facet is in here because `filterOptionSpecs` puts it there, as the chip it
+ * is. It used to be appended separately, under its own id, which meant a
+ * shopper arriving at /red-light/under-1000 and one pressing "Under $1,000" had
+ * two different requirements for one thing.
+ */
+export function buildNeeds(page: CategoryPage): NeedDefinition[] {
+  const views = page.products.map((p) => p.view);
+  return buildNeedCatalogue(
+    views,
+    page.cat,
+    filterOptionSpecs(views, page.cat).map((o) => ({ id: o.id, label: o.label, groupLabel: o.groupLabel, groupKey: o.groupKey, conditions: o.conditions, source: o.source })),
+  );
+}
+
+/**
+ * The chips a facet URL arrives with already pressed.
+ *
+ * This is the whole of what a facet page now is: the category, and a selection.
+ * The products are the category's, the groups are the category's, and the
+ * shopper can turn this off.
+ */
+export function facetSelection(page: CategoryPage, facetSlug: string): string[] {
+  const id = facetOptionId(page.products.map((p) => p.view), page.cat, facetSlug);
+  return id ? [id] : [];
 }
 
 export type ProductPage = {
@@ -73,6 +114,17 @@ export const getProductViewsByIds = cache(async (ids: string[]): Promise<Product
   return getCatalog().listProductViews({ ids, status: ["published"] });
 });
 
+/**
+ * The cheapest listing a shopper can actually be sent to, or nothing.
+ *
+ * `view.offers` is every offer on the record, cheapest first, and that includes
+ * the ones no buying surface may link: an amount that belongs to another
+ * product, and a listing that is no longer current. Reading `offers[0]` took
+ * whichever of those happened to be cheapest. Two records in the catalogue make
+ * that concrete: Plunge's only offer is disputed and Edge Theory Labs' only
+ * offer is discontinued, and this returned a shopping link for both while every
+ * surface that renders them correctly shows none.
+ */
 export function lowestOfferUrl(view: ProductView): string | undefined {
-  return view.offers[0]?.url;
+  return buyableOffers(view)[0]?.url;
 }

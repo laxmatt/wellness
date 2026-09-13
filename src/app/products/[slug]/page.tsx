@@ -12,9 +12,13 @@ import { Badge } from "@/components/ui/Badge";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import { primaryStrength } from "@/domain/recommend";
+import { outboundLinkProps } from "@/domain/outbound";
+import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
 import { getProductPage } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
+import { social } from "@/lib/metadata";
+import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,10 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getProductPage(slug);
   if (!data) return {};
   const { view } = data.item;
+  const title = `${view.brand.name} ${view.name}`;
   return {
-    title: `${view.brand.name} ${view.name}`,
+    title,
     description: view.description,
     alternates: { canonical: `/products/${view.slug}` },
+    ...social({ title, description: view.description, path: `/products/${view.slug}` }),
   };
 }
 
@@ -52,7 +58,20 @@ export default async function ProductPage({ params }: Props) {
   const cat = page.cat;
   const primaryBadge = item.badges[0];
   const alsoValue = item.badges.includes("best_overall") && item.badges.includes("best_value");
-  const lowest = view.offers[0];
+  // The shared rule, not a fourth copy of it. This page held its own
+  // `!o.disputed` filter, so when discontinued joined the rule everywhere else,
+  // this page kept publishing a buy button and a schema.org Offer for a maker
+  // that states on its own site it has gone out of business. The harness caught
+  // it; the duplication is why there was anything to catch.
+  const buyable = buyableOffers(view);
+  const lowest = buyable[0];
+
+  // Structured data is a price claim made to search engines, which will quote
+  // it back to people. It carries only amounts that price this product:
+  // nothing disputed, and nothing whose amount is prototype data. The page
+  // itself has said "Check current price" for a placeholder since 2026-09-09;
+  // this markup was still publishing the invented number underneath it.
+  const publishedOffers = buyable.filter((o) => !o.priceIsDemo);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -61,9 +80,9 @@ export default async function ProductPage({ params }: Props) {
     brand: { "@type": "Brand", name: view.brand.name },
     description: view.description,
     url: `${SITE_URL}/products/${view.slug}`,
-    ...(view.offers.length > 0
+    ...(publishedOffers.length > 0
       ? {
-          offers: view.offers.map((o) => ({
+          offers: publishedOffers.map((o) => ({
             "@type": "Offer",
             price: (o.price.amountMinor / 100).toFixed(2),
             priceCurrency: o.price.currency,
@@ -79,10 +98,23 @@ export default async function ProductPage({ params }: Props) {
     <Shell
       current={`/${cat.slug}`}
       trayCategoryId={cat.id}
+      compareAuthority={{ categoryId: cat.id, publishedIds: page.products.map((p) => p.view.id) }}
       assistantCategoryId={cat.id}
       compareSeeds={page.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: cat.name, path: `/${cat.slug}` },
+              { name: `${view.brand.name} ${view.name}` },
+            ]),
+          ),
+        }}
+      />
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: `${view.brand.name} ${view.name}` }]} />
         <div className="mt-4 grid gap-8 lg:grid-cols-12 lg:gap-12">
@@ -113,8 +145,8 @@ export default async function ProductPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <CompareToggle size="lg" item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
               {lowest ? (
-                <a href={view.offers.length > 1 ? "#retailers" : lowest.url} target={view.offers.length > 1 ? undefined : "_blank"} rel={view.offers.length > 1 ? undefined : "sponsored nofollow noopener"} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
-                  {view.offers.length > 1 ? `See ${view.offers.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
+                <a href={buyable.length > 1 ? "#retailers" : lowest.url} {...(buyable.length > 1 ? {} : outboundLinkProps(lowest.affiliateStatus))} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
+                  {buyable.length > 1 ? `See ${buyable.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
                 </a>
               ) : null}
             </div>
@@ -125,7 +157,7 @@ export default async function ProductPage({ params }: Props) {
               </p>
             ) : null}
             <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
-              <AssistantLauncher />
+              <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
               <p className="text-xs text-fg-muted">Optional. Ask how this compares to the alternatives.</p>
             </div>
           </div>

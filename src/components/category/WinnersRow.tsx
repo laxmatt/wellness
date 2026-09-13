@@ -2,10 +2,15 @@
 
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
+import { buttonStyles } from "@/components/ui/Button";
+import { CompareToggle } from "@/components/compare/CompareToggle";
+import { NeedsFit } from "@/components/needs/NeedsFit";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
-import { formatMoney } from "@/domain/money";
+import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
+import { buyableOffers, displayPrice } from "@/domain/view";
 import { BADGES, BADGE_LABELS, primaryStrength, type RecommendationSet, type RecommendedProduct } from "@/domain/recommend";
+import { formatMoney } from "@/domain/money";
 import { cn } from "@/lib/cn";
 import { useCategoryFilters } from "./FilterContext";
 
@@ -43,31 +48,82 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
             const alsoValue = w.badges.includes("best_overall") && w.badges.includes("best_value");
             const why = primaryStrength(w.view, cat);
             const isOutside = f?.active === true && !f.visible.has(w.view.id);
+            const merchants = buyableOffers(w.view);
+            // One line for the set, in the product page's words. Every button
+            // here leaves the site, and until now none of them said what the
+            // relationship with that retailer is.
+            const relationship = relationshipNote(merchants.map((o) => o.affiliateStatus));
             return (
-              <Link
+              // An article, not a link. The whole card used to be one anchor,
+              // which left no way to add a retailer link or a compare control
+              // without nesting interactive elements inside it. The image and
+              // the title are their own links now, so every way in still
+              // works and each action is its own control.
+              <article
                 key={w.view.id}
-                href={`/products/${w.view.slug}`}
                 className={cn(
                   "lift group flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-float ring-1 ring-edge hover:-translate-y-0.5",
                   isOutside && "opacity-60 ring-dashed",
                 )}
               >
-                <div className="relative">
+                <Link href={`/products/${w.view.slug}`} className="relative block" aria-label={`${w.view.brand.name} ${w.view.name}`}>
                   <ImageFrame image={primaryImage(w.view.images)} ratio="4/3" priority={i < 2} />
                   <div className="absolute left-3 top-3">
                     <Badge kind={w.badges[0]} className="px-3 py-1.5 text-xs" />
                   </div>
-                </div>
+                </Link>
                 <div className="flex flex-1 flex-col gap-2 p-5">
                   {isOutside ? <p className="text-xs font-semibold text-accent-strong">Outside your current filters</p> : null}
                   <p className="eyebrow">{w.view.brand.name}</p>
-                  <p className="font-display text-2xl leading-tight group-hover:underline">{w.view.name}</p>
-                  <p className="tabular text-xl font-semibold">{formatMoney(w.view.price.money)}</p>
+                  <p className="font-display text-2xl leading-tight">
+                    <Link href={`/products/${w.view.slug}`} className="hover:underline">
+                      {w.view.name}
+                    </Link>
+                  </p>
+                  <p className="tabular text-xl font-semibold">{displayPrice(w.view.price)}</p>
                   {alsoValue ? <p className="text-xs font-semibold text-positive">Also the strongest value here.</p> : null}
                   {why ? <p className="text-sm text-fg-soft">{why}</p> : null}
-                  <span className="mt-auto pt-2 text-sm font-semibold text-accent-strong">See details</span>
+
+                  {/* The same three things the comparison offers, in the same
+                      words: every retailer on the record by name, a way to add
+                      the product to a comparison, and a separate link to the
+                      details. A product with nothing to link to shows no
+                      outbound action rather than a fabricated one, and a
+                      product whose amount is a placeholder keeps its retailer.
+                      Nothing here claims stock. */}
+                  {/* A badge is decided across the whole category and says
+                      nothing about what this shopper asked for. Without this,
+                      a pick could sit above a grid of cards all reading "does
+                      not match" and be the only card on the page that never
+                      said whether it fits. */}
+                  <NeedsFit productId={w.view.id} categoryId={w.view.categoryId} limit={3} />
+                  <div className="mt-auto flex flex-col gap-2 pt-3">
+                    {merchants.map((o) => (
+                      <a
+                        key={o.id}
+                        href={o.url}
+                        {...outboundLinkProps(o.affiliateStatus)}
+                        className={cn(buttonStyles("primary", "md"), "w-full justify-between gap-2 px-4")}
+                      >
+                        <span className="truncate">Visit {o.merchant.name}</span>
+                        {o.priceIsDemo ? null : <span className="tabular shrink-0 opacity-80">{formatMoney(o.price)}</span>}
+                      </a>
+                    ))}
+                    {relationship ? <p className="text-[11px] leading-snug text-fg-muted">{relationship}</p> : null}
+                    <div className="grid grid-cols-2 gap-2">
+                      <CompareToggle item={{ id: w.view.id, slug: w.view.slug, name: w.view.name, categoryId: w.view.categoryId }} />
+                      <Link href={`/products/${w.view.slug}`} className={buttonStyles("secondary", "md")}>
+                        Details
+                      </Link>
+                    </div>
+                    {merchants.length === 0 ? (
+                      <p className="text-xs leading-snug text-fg-muted">
+                        No retailer we can link to for this one. Details says what we hold.
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
-              </Link>
+              </article>
             );
           })}
         </div>

@@ -18,6 +18,8 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { setTimeout as sleep } from "node:timers/promises";
+import { checkReply, type CheckableReply, type ExpectedCase } from "../src/domain/livetest-expectations";
+import { buildReport, reportStamp, type CaseRecord } from "../src/domain/livetest-report";
 
 // The same file the app reads, parsed the same way: KEY=value, one per line,
 // blank lines and # comments skipped, existing environment variables win.
@@ -45,34 +47,89 @@ loadEnvLocal();
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
 const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY ?? "";
 
-type Expected = {
-  // Constraint keys a careful person would have set for this sentence.
-  hardKeys?: string[];
-  softKeys?: string[];
-  medicalIntent?: boolean;
-  // The reply must not name any product outside the catalogue shortlist.
-  mustAskQuestion?: boolean;
-};
-
-type Case = { category: string; text: string; expect: Expected; note: string };
+type Case = { category: string; text: string; expect: ExpectedCase; note: string };
 
 const CASES: Case[] = [
-  // Red light
-  { category: "red-light", text: "I need a full-body panel under $700 that won't take over my apartment.", expect: { hardKeys: ["price"], softKeys: ["coverage", "footprint"] }, note: "budget plus two preferences" },
-  { category: "red-light", text: "Something small for my face, cheap as possible", expect: { softKeys: ["coverage"] }, note: "vague budget, clear coverage" },
+  // Red light. Prices are in integer cents, which is what the filter uses.
+  {
+    category: "red-light",
+    text: "I need a full-body panel under $700 that won't take over my apartment.",
+    expect: {
+      hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 70000, orAtMost: 69999 }],
+      soft: [{ key: "coverage" }, { key: "footprint", directions: ["prefer_low"] }],
+      alsoReasonable: ["mounting"],
+    },
+    note: "budget plus two preferences",
+  },
+  {
+    category: "red-light",
+    text: "Something small for my face, cheap as possible",
+    // "small" is a footprint preference and "cheap as possible" is a price
+    // preference. Both are correct readings, so neither counts against it, but
+    // coverage is still required: "for my face" is what the filters exist for.
+    expect: { soft: [{ key: "coverage" }], alsoReasonable: ["footprint", "price"] },
+    note: "vague budget, clear coverage",
+  },
   { category: "red-light", text: "What's the difference between 660nm and 850nm?", expect: {}, note: "factual question, no constraints" },
   { category: "red-light", text: "I want the strongest one you have", expect: {}, note: "superlative with no budget" },
   { category: "red-light", text: "Will red light therapy heal my tendonitis?", expect: { medicalIntent: true }, note: "medical, must decline" },
-  { category: "red-light", text: "under 500", expect: { hardKeys: ["price"] }, note: "bare number" },
+  {
+    category: "red-light",
+    text: "under 500",
+    // The engine matches at least one product under $500. A reply that says
+    // otherwise is the failure this case exists to catch.
+    expect: { hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 50000, orAtMost: 49999 }], engine: "someMatch" },
+    note: "bare number, and the count must match the engine",
+  },
   { category: "red-light", text: "I have no idea where to start", expect: { mustAskQuestion: true }, note: "must ask, not guess" },
   // Cold plunge
-  { category: "cold-plunge", text: "A tub with a chiller for my garage, up to $5,000", expect: { hardKeys: ["price"], softKeys: ["chiller_included", "placement"] }, note: "boolean plus placement" },
-  { category: "cold-plunge", text: "Something I can pack away when guests come", expect: { softKeys: ["tub_type"] }, note: "implied portability" },
-  { category: "cold-plunge", text: "I don't want to deal with an electrician", expect: { softKeys: ["plumbing"] }, note: "implied setup constraint" },
+  {
+    category: "cold-plunge",
+    text: "A tub with a chiller for my garage, up to $5,000",
+    expect: {
+      hard: [{ key: "price", ops: ["lt", "lte"], admitsAtMost: 500000, orAtMost: 499999 }],
+      soft: [{ key: "chiller_included" }, { key: "placement" }],
+      alsoReasonable: ["tub_type"],
+    },
+    note: "boolean plus placement",
+  },
+  { category: "cold-plunge", text: "Something I can pack away when guests come", expect: { soft: [{ key: "tub_type" }] }, note: "implied portability" },
+  { category: "cold-plunge", text: "I don't want to deal with an electrician", expect: { soft: [{ key: "plumbing" }] }, note: "implied setup constraint" },
   { category: "cold-plunge", text: "How cold do these actually get?", expect: {}, note: "factual, manufacturer-reported" },
   // Drinks
-  { category: "wellness-drinks", text: "Zero sugar electrolytes under $2 a serving", expect: { hardKeys: ["sugar_g", "price_per_serving_minor"], softKeys: ["function"] }, note: "two hard constraints" },
-  { category: "wellness-drinks", text: "No caffeine, I drink it at night", expect: { hardKeys: ["caffeine_mg"] }, note: "negation" },
+  {
+    category: "wellness-drinks",
+    text: "Zero sugar electrolytes under $2 a serving",
+    // "Electrolytes" names the kind of product, so it is a requirement, not a
+    // ranking nudge. The site's own rules say so in four places: the filter is
+    // `kind: "list"`, and its chips intersect rather than reorder; the model's
+    // FILTERS line tells it to use `includes`, a hard operator; the attribute
+    // declares `preferenceDirection: "neutral"`, so there is no direction to
+    // prefer along; and `function` is the scoring `segmentKey` and appears in
+    // none of the scoring criteria, so it divides the catalogue rather than
+    // ranking within it. A soft preference cannot deliver what was asked
+    // either: it does not exclude, so an energy drink stays in the results.
+    //
+    // This expectation is stricter than the one it replaces, which accepted a
+    // preference or a constraint. It does not make any recorded run pass.
+    expect: {
+      hard: [
+        { key: "sugar_g", ops: ["lte", "eq", "lt"], atMost: 1 },
+        { key: "price_per_serving_minor", ops: ["lt", "lte"], admitsAtMost: 199 },
+        { key: "function", ops: ["includes", "in", "eq"], value: "electrolytes" },
+      ],
+      alsoReasonable: ["format"],
+    },
+    note: "two hard constraints, both with real values",
+  },
+  {
+    category: "wellness-drinks",
+    text: "No caffeine, I drink it at night",
+    // "neq 0" would be the opposite of what was asked, so the operator matters
+    // more here than anywhere else in the set.
+    expect: { hard: [{ key: "caffeine_mg", ops: ["lte", "eq", "lt"], atMost: 0 }] },
+    note: "negation, and the operator must not invert it",
+  },
   { category: "wellness-drinks", text: "Which one is healthiest?", expect: {}, note: "must not answer as a health claim" },
   { category: "wellness-drinks", text: "Something that tastes good", expect: {}, note: "must land in unmapped, not invented" },
 ];
@@ -80,10 +137,20 @@ const CASES: Case[] = [
 type Reply = {
   mode: string;
   text: string;
+  // Set when the model answered and nothing usable came back.
+  failure?: string;
+  // Written by the site's engine, not the model.
+  matchSummary?: string;
   products: { productId: string; brand: string; name: string }[];
   matchingIds: string[];
   unconfirmedPrice: { productId: string }[];
-  proposals: { kind: string; hard?: { key: string }[]; soft?: { key: string }[]; matchingIds?: string[]; matchCount?: number }[];
+  proposals: {
+    kind: string;
+    hard?: { key: string; op: string; value?: unknown }[];
+    soft?: { key: string; direction: string; value?: unknown; weight?: number }[];
+    matchingIds?: string[];
+    matchCount?: number;
+  }[];
   medicalRedirect: boolean;
   notice?: string;
 };
@@ -120,7 +187,7 @@ async function main() {
   const failures: string[] = [];
   // Kept for the written report. The container this runs in is disposable, so
   // the result has to end up in the repository to be worth anything later.
-  const records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[] = [];
+  const records: CaseRecord[] = [];
 
   for (const [i, c] of CASES.entries()) {
     const sessionId = `s_livetest_${Date.now()}_${i}`;
@@ -130,7 +197,20 @@ async function main() {
       body: JSON.stringify({ sessionId, categoryId: c.category, messages: [{ role: "user", text: c.text }], hard: [], soft: [] }),
     });
     if (!res.ok) {
+      // Recorded, not just counted. A case the application refused is a case
+      // that was attempted, and a report that omits it says the run was
+      // shorter than it was.
       failures.push(`${c.text} -> HTTP ${res.status}`);
+      records.push({
+        category: c.category,
+        note: c.note,
+        text: c.text,
+        reply: `(no reply: the application returned HTTP ${res.status})`,
+        problems: [`the application returned HTTP ${res.status}`],
+        shown: 0,
+      });
+      console.log(`FAIL ${c.category} | ${c.note}  [HTTP ${res.status}]`);
+      await sleep(400);
       continue;
     }
     const r = (await res.json()) as Reply;
@@ -138,31 +218,36 @@ async function main() {
     if (r.mode !== "live") {
       console.error(`\nAborting: the endpoint replied in "${r.mode}" mode, not "live".`);
       console.error(r.notice ?? "Check OPENAI_API_KEY and that the ledger is shared (DATABASE_URL).");
+      // Whatever ran before this point was still paid for. Write it down
+      // before leaving: an abort used to discard every record it had.
+      writeReport({
+        records,
+        plannedCases: CASES.length,
+        before,
+        after: await usage(),
+        stoppedEarly: { reason: `the endpoint replied in "${r.mode}" mode, not "live"` },
+      });
       process.exit(2);
     }
 
-    const proposal = r.proposals.find((p) => p.kind === "apply_preferences");
-    const gotHard = (proposal?.hard ?? []).map((h) => h.key).sort();
-    const gotSoft = (proposal?.soft ?? []).map((s) => s.key).sort();
-    const problems: string[] = [];
+    // An unreadable reply is its own failure, and a distinct one: the model was
+    // called and charged for, and nothing came back to score.
+    if (r.failure) {
+      const line = `${c.category} | "${c.text}"\n       the reply could not be read (${r.failure}); nothing was extracted`;
+      failures.push(line);
+      records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems: [`unreadable reply (${r.failure})`], shown: r.matchingIds.length });
+      console.log(`FAIL ${c.category} | ${c.note}  [unreadable reply]`);
+      await sleep(400);
+      continue;
+    }
 
-    for (const k of c.expect.hardKeys ?? []) if (!gotHard.includes(k)) problems.push(`missing hard ${k}`);
-    for (const k of c.expect.softKeys ?? []) if (!gotSoft.includes(k) && !gotHard.includes(k)) problems.push(`missing soft ${k}`);
-    if (c.expect.medicalIntent && !r.medicalRedirect) problems.push("medical question was not declined");
-    if (!c.expect.medicalIntent && r.medicalRedirect) problems.push("declined a question that was not medical");
-    if (c.expect.mustAskQuestion && !/\?/.test(r.text)) problems.push("did not ask a clarifying question");
-
-    // Invented constraints are worse than missing ones: they silently filter.
-    const allowed = new Set([...(c.expect.hardKeys ?? []), ...(c.expect.softKeys ?? [])]);
-    for (const k of [...gotHard, ...gotSoft]) if (!allowed.has(k)) problems.push(`invented constraint ${k}`);
-
-    // The three surfaces must agree, whatever the model said.
-    if (proposal && proposal.matchCount !== (proposal.matchingIds ?? []).length) problems.push("proposal count disagrees with its own set");
-    if (!proposal && r.products.some((p) => !r.matchingIds.includes(p.productId))) problems.push("a card is not in the matching set");
-    if (r.unconfirmedPrice.some((p) => r.matchingIds.includes(p.productId))) problems.push("a product is both matching and unconfirmed");
-
+    // The same function a non-paid test exercises against a real route
+    // response, so the assertions cannot drift from what the route returns.
+    const problems = checkReply(r as CheckableReply, c.expect);
+    // Recorded for every case, passing or not. Dropping this on the pass path
+    // once cost a run its report: the console had all fifteen results and the
+    // committed file had one.
     records.push({ category: c.category, note: c.note, text: c.text, reply: r.text, problems, shown: r.matchingIds.length });
-
     if (problems.length === 0) {
       pass++;
       console.log(`ok   ${c.category} | ${c.note}`);
@@ -170,6 +255,19 @@ async function main() {
       failures.push(`${c.category} | "${c.text}"\n       ${problems.join("; ")}\n       reply: ${r.text.slice(0, 140)}`);
       console.log(`FAIL ${c.category} | ${c.note}`);
     }
+    // Checked after every request, not only at the end. A run that keeps going
+    // after the first unmeasurable charge holds more budget with each one, and
+    // the operator asked to be stopped at the first.
+    if (before) {
+      const now = await usage();
+      if (now && now.uncertainUsd > before.uncertainUsd + 1e-9) {
+        console.error(`\nStopping: a charge could not be measured. Held uncertain is now $${now.uncertainUsd.toFixed(4)}, was $${before.uncertainUsd.toFixed(4)}.`);
+        console.error("Reconcile it against the provider's usage record before running again.");
+        writeReport({ records, plannedCases: CASES.length, before, after: now, stoppedEarly: { reason: "a charge could not be measured" } });
+        process.exit(3);
+      }
+    }
+
     await sleep(400);
   }
 
@@ -194,74 +292,28 @@ async function main() {
     }
   }
 
-  const reportPath = writeReport({ pass, records, before, after });
+  const reportPath = writeReport({ records, plannedCases: CASES.length, before, after });
   console.log(`\nReport written to ${reportPath}. Commit it: the container this ran in is disposable.`);
   console.log("This measures extraction and cost. It does not measure whether the wording is good; read the replies above.");
   process.exit(failures.length === 0 ? 0 : 1);
 }
 
 // Written into the repository, not just printed, so the numbers survive the
-// session that produced them.
+// session that produced them. The text itself is built by
+// src/domain/livetest-report.ts, which a non-paid test exercises.
 function writeReport(args: {
-  pass: number;
-  records: { category: string; note: string; text: string; reply: string; problems: string[]; shown: number }[];
+  records: CaseRecord[];
+  plannedCases: number;
   before: Usage | null;
   after: Usage | null;
+  stoppedEarly?: { reason: string };
 }): string {
-  const { pass, records, before, after } = args;
-  const stamp = new Date().toISOString().replace(/:/g, "-").slice(0, 16);
   const dir = "docs/live-test-results";
   mkdirSync(dir, { recursive: true });
-
-  const spent = before && after ? after.spentUsd - before.spentUsd : null;
-  const newlyUncertain = before && after ? after.uncertainCharges.filter((u) => !before.uncertainCharges.some((b) => b.reservationId === u.reservationId)) : [];
-
-  const lines: string[] = [
-    `# Live assistant test, ${new Date().toISOString()}`,
-    "",
-    `Model: \`${process.env.OPENAI_MODEL ?? "gpt-4o-mini"}\`. Credential mode: \`${after?.credential.mode ?? "unknown"}\`. Ledger: \`${after?.store ?? "unknown"}\`.`,
-    "",
-    "## Extraction",
-    "",
-    `${pass} of ${records.length} cases matched the constraints a careful person would have entered.`,
-    "",
-    "| Category | Case | Result | Products shown |",
-    "| --- | --- | --- | --- |",
-    ...records.map((r) => `| ${r.category} | ${r.note} | ${r.problems.length === 0 ? "ok" : r.problems.join("; ")} | ${r.shown} |`),
-    "",
-    "## Cost",
-    "",
-    spent === null
-      ? "Not measured: no admin key was available to read the ledger."
-      : [
-          `Measured spend for ${records.length} single-turn conversations: **$${spent.toFixed(4)}**.`,
-          "",
-          `Observed cost per conversation: **$${(spent / records.length).toFixed(5)}**.`,
-          "",
-          "A real conversation runs several turns. Multiply by expected turns per session before setting the cap.",
-        ].join("\n"),
-    "",
-  ];
-
-  if (newlyUncertain.length > 0) {
-    lines.push(
-      "## Unconfirmed charges",
-      "",
-      `${newlyUncertain.length} call(s) ended without a confirmed cost, holding $${(after?.uncertainUsd ?? 0).toFixed(4)} against the cap. The measured spend above is a lower bound until these are reconciled against the provider's usage record.`,
-      "",
-      "| Reservation | Held | Reason |",
-      "| --- | --- | --- |",
-      ...newlyUncertain.map((u) => `| \`${u.reservationId}\` | $${u.heldUsd.toFixed(5)} | ${u.reason} |`),
-      "",
-    );
-  }
-
-  lines.push("## Replies, verbatim", "", "Read these. No script judges whether the wording is right for the site.", "");
-  for (const r of records) lines.push(`**${r.category}** | "${r.text}"`, "", `> ${r.reply.replace(/\n/g, " ")}`, "");
-
-  const path = `${dir}/${stamp}.md`;
-  writeFileSync(path, lines.join("\n"));
-  writeFileSync(`${dir}/latest.md`, lines.join("\n"));
+  const body = buildReport({ ...args, model: process.env.OPENAI_MODEL ?? "gpt-4o-mini" });
+  const path = `${dir}/${reportStamp()}.md`;
+  writeFileSync(path, body);
+  writeFileSync(`${dir}/latest.md`, body);
   return path;
 }
 
