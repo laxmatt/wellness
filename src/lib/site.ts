@@ -1,5 +1,5 @@
-export const SITE_NAME = "Wellness Compare";
-export const SITE_TAGLINE = "The specs, side by side.";
+export const SITE_NAME = "Wellness Fit Check";
+export const SITE_TAGLINE = "Compare the details. Find your fit.";
 // The site is hosted at an origin, not below a path. Use one normalized base
 // for canonical, social and sitemap URLs so a trailing slash cannot double it.
 export function siteOrigin(raw: string | undefined): string | undefined {
