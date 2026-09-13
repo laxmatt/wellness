@@ -20,18 +20,17 @@ export default function DisclosurePage() {
           <p className="eyebrow">Disclosure</p>
           <h1 className="font-display mt-2 text-5xl leading-none text-fg">How this site is paid.</h1>
           <p className="mt-4 text-lg">
-            It is not. There is no affiliate programme behind this site today, no commission on anything you buy, and no
-            partnership with any brand or retailer listed here.
+            We may earn a commission when you buy through a link marked as an affiliate link. The notice beside each
+            retailer link tells you its recorded relationship with this site.
           </p>
           <p className="mt-3">
-            Every &ldquo;Visit&rdquo; and &ldquo;Shop&rdquo; link is an ordinary link to the maker&rsquo;s or retailer&rsquo;s own page. No tracking
-            parameter is added, no network sits in the middle, and nobody is told you came from here. Each retailer link
-            says what the relationship is, and today every one of them says there is none.
+            A non-affiliate notice means the link is recorded as not earning us a commission. An unconfirmed notice
+            means we have not established the relationship; it is not a promise that the link is paid or unpaid.
           </p>
           <p className="mt-3">
-            That may change. If this site joins an affiliate programme later, the links that earn a commission will say so
-            on the page where they appear, this page will be updated before that happens, and the rule below will not
-            change with it.
+            An account with an affiliate service does not by itself make every product link an affiliate link. We label
+            the individual offer. These notices describe commission relationships, not the retailer&rsquo;s privacy or
+            tracking practices.
           </p>
           <p className="mt-3">
             <strong className="text-fg">The rule.</strong> Affiliate status is not an input to how products are scored,

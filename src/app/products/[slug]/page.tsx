@@ -98,6 +98,7 @@ export default async function ProductPage({ params }: Props) {
     <Shell
       current={`/${cat.slug}`}
       trayCategoryId={cat.id}
+      compareAuthority={{ categoryId: cat.id, publishedIds: page.products.map((p) => p.view.id) }}
       assistantCategoryId={cat.id}
       compareSeeds={page.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { hasPublicSiteUrl, indexingAllowed, isPreviewDeployment, type IndexingEnv } from "@/lib/site-url";
+import { siteOrigin } from "@/lib/site";
 
 // Three separate questions decide whether a deployment may be indexed, and
 // every one of them has to answer yes. The first version asked only the first,
@@ -38,6 +39,18 @@ describe("whether a deployment knows its own public address", () => {
   it("says yes only for a real public origin", () => {
     expect(check("https://example.com")).toBe(true);
     expect(check("https://staging.example.com")).toBe(true);
+  });
+
+  it("normalizes a trailing slash and host case for every emitted URL base", () => {
+    expect(siteOrigin(" https://EXAMPLE.com/ ")).toBe("https://example.com");
+    expect(`${siteOrigin("https://EXAMPLE.com/")}/sitemap.xml`).toBe("https://example.com/sitemap.xml");
+    expect(check("https://EXAMPLE.com/")).toBe(true);
+  });
+
+  it("refuses a deployment subpath instead of emitting conflicting canonical paths", () => {
+    expect(siteOrigin("https://example.com/wellness")).toBeUndefined();
+    expect(check("https://example.com/wellness/")).toBe(false);
+    expect(indexingAllowed({ NEXT_PUBLIC_SITE_URL: "https://example.com/wellness", NEXT_PUBLIC_ALLOW_INDEXING: "1" })).toBe(false);
   });
 });
 

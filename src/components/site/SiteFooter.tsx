@@ -24,7 +24,8 @@ export function SiteFooter() {
         <div className="text-xs text-fg-muted">
           <p>
             Prototype. Specifications are relayed from public sources and each one says who reported it. Where no price
-            has been confirmed, the page says so instead of showing an amount. No affiliate programme, no commission.
+            has been confirmed, the page says so instead of showing an amount. Retailer links state whether we may earn
+            a commission or whether the relationship is unconfirmed.
           </p>
           <p className="mt-2">
             This site helps you compare products by their stated specifications and price. It does not give medical advice, and no product here is presented as treating any condition.
