@@ -37,11 +37,13 @@ export default async function ComparePage({ searchParams }: Props) {
     <Shell
       current="/compare"
       tray={false}
+      compareAuthority={cat && page ? { categoryId: cat.id, publishedIds: page.products.map((p) => p.view.id) } : undefined}
       assistantCategoryId={cat?.id}
       compareSeeds={(page?.products ?? []).map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: p.view.categoryId }))}
     >
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Compare" }]} />
+        {list.some((id) => !views.some((view) => view.id === id)) ? <p className="mt-2 text-sm text-fg-muted">Some selected products are no longer listed and were left out.</p> : null}
         {items.length === 0 || !cat || !page ? (
           <div className="mt-10 max-w-2xl">
             <p className="eyebrow">Compare</p>

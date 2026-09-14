@@ -1,4 +1,4 @@
-import { SITE_URL } from "./site";
+import { SITE_URL, siteOrigin } from "./site";
 
 // Whether a real public address has been configured for this deployment.
 //
@@ -14,17 +14,9 @@ import { SITE_URL } from "./site";
 //
 // Nothing here guesses a domain.
 export function hasPublicSiteUrl(env: { NEXT_PUBLIC_SITE_URL?: string } = { NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL }): boolean {
-  const raw = env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (!raw) return false;
-  let url: URL;
-  try {
-    url = new URL(raw);
-  } catch {
-    return false;
-  }
-  if (url.protocol !== "https:" && url.protocol !== "http:") return false;
-  if (url.username || url.password) return false;
-  if (url.search || url.hash) return false;
+  const origin = siteOrigin(env.NEXT_PUBLIC_SITE_URL);
+  if (!origin) return false;
+  const url = new URL(origin);
   const host = url.hostname.toLowerCase();
   return host !== "localhost" && host !== "127.0.0.1" && host !== "0.0.0.0" && !host.endsWith(".local");
 }

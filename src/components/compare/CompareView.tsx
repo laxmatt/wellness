@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { ImageFrame } from "@/components/ui/ImageFrame";
 import { VerificationTag } from "@/components/ui/VerificationTag";
+import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
 import type { CompareModel } from "@/domain/compare";
 import { NeedsFit } from "@/components/needs/NeedsFit";
 import { useNeeds } from "@/components/needs/NeedsStore";
@@ -66,6 +67,15 @@ export function CompareView({ model, ids, categoryId }: { model: CompareModel; i
               </th>
               {model.columns.map((c) => (
                 <th key={c.id} className="sticky top-0 z-20 snap-start border-b border-edge-strong bg-surface p-2 text-left align-bottom font-normal">
+                  <div className="mb-2 flex justify-end">
+                    <Link
+                      href={removeHref(c.id)}
+                      aria-label={`Remove ${c.name} from comparison`}
+                      className="inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-semibold text-fg-muted hover:bg-surface-raised hover:text-fg"
+                    >
+                      Remove product
+                    </Link>
+                  </div>
                   <div className="flex gap-3 rounded-xl bg-surface-raised p-2 shadow-card">
                     <Link href={`/products/${c.slug}`} className="relative block w-14 shrink-0 overflow-hidden rounded-lg">
                       <ImageFrame image={c.image} ratio="1/1" />
@@ -76,12 +86,7 @@ export function CompareView({ model, ids, categoryId }: { model: CompareModel; i
                       <Link href={`/products/${c.slug}`} className="block truncate font-display text-base leading-tight hover:underline">
                         {c.name}
                       </Link>
-                      <div className="flex items-baseline gap-2">
-                        <p className="tabular font-semibold">{c.price}</p>
-                        <Link href={removeHref(c.id)} className="text-xs font-semibold text-fg-muted hover:text-fg">
-                          Remove
-                        </Link>
-                      </div>
+                      <p className="tabular font-semibold">{c.price}</p>
                     </div>
                   </div>
 
@@ -97,16 +102,17 @@ export function CompareView({ model, ids, categoryId }: { model: CompareModel; i
                       shows and this column does not. */}
                   <div className="mt-2 flex flex-col gap-1.5">
                     {c.merchants.map((m) => (
+                      <div key={m.offerId}>
                       <a
-                        key={m.offerId}
                         href={m.url}
-                        target="_blank"
-                        rel="sponsored nofollow noopener"
+                        {...outboundLinkProps(m.affiliateStatus)}
                         className={cn(buttonStyles("primary", "sm"), "w-full justify-between gap-2 px-3")}
                       >
                         <span className="truncate">Visit {m.merchant}</span>
                         {m.price ? <span className="tabular shrink-0 opacity-80">{m.price}</span> : null}
                       </a>
+                      <p className="mt-1 text-[11px] font-normal leading-snug text-fg-muted">{relationshipNote([m.affiliateStatus])}</p>
+                      </div>
                     ))}
                     <Link href={`/products/${c.slug}`} className={cn(buttonStyles("ghost", "sm"), "w-full")}>
                       Details
