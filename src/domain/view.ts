@@ -175,6 +175,11 @@ export type ProductView = {
   specs: SpecView[];
   cardSpecs: SpecView[];
   editorial: { strengths: string[]; tradeoffs: string[] };
+  /**
+   * Set when this record is a configuration of another and is compared as part
+   * of it. A listing shows the record it names, not this one.
+   */
+  family?: { of: string; because: string };
   provenance: Record<string, Provenance>;
   flags: { demo: boolean; newArrival: boolean; incomplete: boolean; completeness: number };
   lastUpdated: string;
@@ -412,6 +417,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     bounds,
     specs,
     cardSpecs,
+    ...(product.family ? { family: product.family } : {}),
     editorial: {
       strengths: product.editorial.strengths.map((n) => n.text),
       tradeoffs: product.editorial.tradeoffs.map((n) => n.text),

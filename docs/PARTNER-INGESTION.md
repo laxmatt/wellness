@@ -60,6 +60,17 @@ built from this feed answers a price filter and nothing else, and the coverage
 table says so before anybody imports rather than after somebody notices an
 empty category page.
 
+## What this became
+
+Saunas went live on 2026-09-14. Seventeen source records from this feed are
+published, presented as fifteen models, under signed plan
+`plan-4fd9b3d35fddbff4` (`docs/promotion-plans/`). The launch was made with
+three things unresolved and recorded as unresolved: the feed images carry no
+permission, the feed states no sauna specification, and five records already in
+the catalogue were merged. The merge was exact: every mapped field of all five
+agreed to the byte, and `scripts/promote-saunas.ts` stops rather than guessing
+if that ever stops being true.
+
 ## Source records and comparable models
 
 They are two numbers and the report shows both. This feed's 17 sauna pages
@@ -235,7 +246,10 @@ an action and still exists after it.
 
 ## What it will not do
 
-- Publish, deploy, or write to `catalog/`.
+- Write to `catalog/` from the tool. The one thing that does is
+  `scripts/promote-saunas.ts`, run by hand, from a signed plan, and it refuses
+  a plan that does not hash to its own name or that was signed against a
+  different file.
 - Read a format with no adapter. CSV and TSV are read; XLSX, XML, JSON and an
   API are named so an upload is refused by name, with the reason, instead of
   being mis-parsed.
@@ -275,22 +289,23 @@ an action and still exists after it.
 - **Promotion is missing.** There is no way to move a draft from the workspace
   into the catalogue, by design for this batch. Somebody has to build it, with
   its own review step, before any of this reaches a page.
-- **Nothing carries a plan out.** There is no promotion executor. A signed
-  plan is a record of a decision, and moving records into `catalog/` is the
-  next batch's work with its own review.
+- **Carrying a plan out is a separate command.** `executePlan` reads a signed
+  plan and writes the records it names into `catalog/`. It refuses a plan whose
+  contents no longer hash to its identifier, a workspace that has been
+  re-imported since the signature, a record the plan did not name, and any
+  result that would not validate as a catalogue. It is not in the tool's UI.
 - **Image rights are recorded, not verified.** The tool holds what a person
   wrote down and checks that it names the picture the record carries. It does
   not read the partner's terms and cannot tell a careful reading from a
   careless one.
 - **A shadow merge is field-level, not word-level.** A reviewer takes a whole
   description from one side or the other; there is no way to take half of one.
-- **The family layer is not wired into the storefront.** `groupIntoFamilies`
-  in `src/domain/family.ts` turns records into comparables, and the preflight
-  reports the count, but no category page, compare tray or query calls it. No
-  sauna is published, so wiring it now would change the storefront for the
-  three live categories on the strength of a field none of their records
-  carries. That is a change to shopper-facing behaviour and belongs with
-  whoever builds promotion.
+- **Image rights can be accepted rather than resolved, and only by the owner.**
+  `image_rights` is the one blocker a written, attributed acceptance can move
+  out of the way. It is not deleted: it is recorded in the signed plan and
+  stamped onto the provenance of every record it covers, which goes on saying
+  that no permission has been established. Saunas launched on 2026-09-14 under
+  such an acceptance.
 - **Shadowing is reported, not resolved.** Five Sweat Kingdom records already
   exist in `catalog/`, imported by hand through
   `src/domain/intake/awin-sweat-kingdom.ts`. The report marks a workspace draft

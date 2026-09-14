@@ -130,7 +130,7 @@ describe("a subject this site has no catalogue for", () => {
     goScripted();
     const body: Body = await (await POST(ask("red-light", "do you have vitamins?"))).json();
     expect(body.text).toContain("no vitamins catalogue");
-    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/cold-plunge", "/wellness-drinks"]);
+    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/cold-plunge", "/wellness-drinks", "/saunas"]);
     expect(body.proposals).toEqual([]);
     expect(body.products).toEqual([]);
     expect(body.matchSummary).toBe("");
@@ -166,7 +166,7 @@ describe("messages that must not move anybody", () => {
     // "panels" is not in this category's vocabulary, so nothing was read and the
     // reply is the invitation, which offers this site's sections. Cold plunges
     // is not among them: the sentence has already said so.
-    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/wellness-drinks"]);
+    expect(body.links?.map((l) => l.href)).toEqual(["/red-light", "/wellness-drinks", "/saunas"]);
   });
 
   it("asks which one when the message names two", async () => {
@@ -186,7 +186,7 @@ describe("messages that must not move anybody", () => {
 });
 
 describe("a dead end always offers a way out", () => {
-  const SECTIONS = ["/red-light", "/cold-plunge", "/wellness-drinks"];
+  const SECTIONS = ["/red-light", "/cold-plunge", "/wellness-drinks", "/saunas"];
 
   it("puts the section links under the fixed limitation", async () => {
     goScripted();

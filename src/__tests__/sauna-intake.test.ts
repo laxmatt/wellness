@@ -1,11 +1,11 @@
 /**
  * The approved sauna intake, through the catalogue the site actually reads.
  *
- * Three real products, read on 2026-09-13, imported as drafts. What is proved
- * here is not that the import ran: it is that nothing it wrote can reach a
- * shopper, that running it again cannot undo a reviewer's work, and that the
- * four things the pages could not settle are recorded as unsettled rather than
- * rounded off.
+ * Two real products, read on 2026-09-13, imported as drafts and still drafts.
+ * What is proved here is not that the import ran: it is that nothing it wrote
+ * can reach a shopper even now that its category is live, that running it again
+ * cannot undo a reviewer's work, and that the four things the pages could not
+ * settle are recorded as unsettled rather than rounded off.
  */
 
 import { readFileSync } from "node:fs";
@@ -54,47 +54,54 @@ describe("the intake landed", () => {
   });
 });
 
-describe("a draft cannot reach a shopper", () => {
-  it("is absent from every published read", async () => {
-    const ids = everySauna.map((p) => p.id);
-    expect(ids.length).toBeGreaterThan(SAUNA_IDS.length);
+describe("a draft cannot reach a shopper, in a category that is now live", () => {
+  // Saunas launched on 2026-09-14 with Sweat Kingdom's feed behind it. These
+  // two records were not in that promotion: they were read from listings by
+  // hand, nobody reviewed them for it, and a category going live is not a
+  // reason to sweep up whatever else happens to sit in it. So the rule they
+  // proved before is proved here on a live category, which is the harder case.
+  it("is absent from every published read, though its category has pages now", async () => {
     const published = await provider.listProductViews({ status: ["published"] });
-    for (const id of ids) expect(published.map((v) => v.id)).not.toContain(id);
-    expect(await provider.listProductViews({ ids, status: ["published"] })).toEqual([]);
+    for (const id of SAUNA_IDS) expect(published.map((v) => v.id), id).not.toContain(id);
+    expect(await provider.listProductViews({ ids: SAUNA_IDS, status: ["published"] })).toEqual([]);
+    // And the category itself is not empty: the drafts are held out, not the category.
+    expect(published.filter((v) => v.categoryId === "saunas").length).toBeGreaterThan(0);
   });
 
-  it("sits in a category that has no page", () => {
-    // The whole of the public separation. An id resolves so a record can
-    // validate and render in review; a slug does not, so no URL reaches it.
+  it("sits in a category a shopper can now reach, and is still not in it", () => {
     expect(categoryById("saunas")).toBeDefined();
-    expect(categoryBySlug("saunas")).toBeUndefined();
-    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "wellness-drinks"]);
+    expect(categoryBySlug("saunas")?.id).toBe("saunas");
+    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "wellness-drinks", "saunas"]);
     expect(allCategories.map((c) => c.id)).toContain("saunas");
+    expect(saunaProducts.every((p) => p.status === "draft")).toBe(true);
   });
 
-  it("does not announce its brands anywhere a shopper looks", async () => {
-    // The one place the published-only rule was missing. Listing every brand in
-    // the catalogue put SaunaCloud, Dynamic Saunas and Sweat Kingdom on the
-    // home page, on /brands and in the sitemap while their products were
-    // drafts, each linking to a page with nothing on it.
+  it("does not announce a brand with nothing published behind it", async () => {
     vi.resetModules();
     const { getBrands, getBrandPage } = await import("@/lib/queries");
     const listed = (await getBrands()).map((b) => b.id);
-    for (const id of ["saunacloud", "dynamic-saunas", "sweat-kingdom"]) {
+    for (const id of ["saunacloud", "dynamic-saunas"]) {
       expect(catalog.brands.map((b) => b.id), "the record exists").toContain(id);
       expect(listed, "and is not listed").not.toContain(id);
       expect(await getBrandPage(id), "and has no page").toBeNull();
     }
-    // The brands behind published products are untouched.
+    // Sweat Kingdom has published products now, so it is listed. The rule is
+    // about what is published, not about who the partner is.
+    expect(listed).toContain("sweat-kingdom");
+    expect(await getBrandPage("sweat-kingdom")).not.toBeNull();
     expect(listed).toContain("lmnt");
     expect(await getBrandPage("lmnt")).not.toBeNull();
   });
 
-  it("would still have no product page even if somebody published it", () => {
-    // `getProductPage` resolves the category through the published list, so
-    // publishing a record is not on its own enough to expose the category.
+  it("has no product page, because status is what decides that", async () => {
+    // The category resolves now, so the draft's own status is the whole of
+    // what holds it back. `getProductPage` refuses anything not published.
+    vi.resetModules();
+    const { getProductPage } = await import("@/lib/queries");
     const view = viewOf("saunacloud-atlas-one");
-    expect(categories.find((c) => c.id === view.categoryId)).toBeUndefined();
+    expect(categories.find((c) => c.id === view.categoryId)).toBeDefined();
+    expect(view.status).toBe("draft");
+    expect(await getProductPage("saunacloud-atlas-one")).toBeNull();
   });
 });
 

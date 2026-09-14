@@ -1,0 +1,84 @@
+{
+  "id": "sweat-kingdom-the-sweat-cabin-blackout-edition",
+  "slug": "sweat-kingdom-the-sweat-cabin-blackout-edition",
+  "name": "The Sweat Cabin (4 Person) - Blackout Edition - Harvia 8kw KIP With Built In Controls / 6 Feet - For Shorter Spaces",
+  "brandId": "sweat-kingdom",
+  "categoryId": "saunas",
+  "description": "Availability: 5 week lead time The blackout package levels up your sauna by adding an additional 2 layers of protection on the side walls and roof, ensuring it is water resistant and protected from the elements. These will last up to 2X longer than your typical kit sauna and are built to withstand the harshest conditions.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sweat-kingdom-the-sweat-cabin-blackout-edition-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_19_12_PM.png?v=1785266408",
+      "alt": "The Sweat Cabin (4 Person) - Blackout Edition - Harvia 8kw KIP With Built In Controls / 6 Feet - For Shorter Spaces",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796",
+        "retrievedAt": "2026-09-14",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sweat-kingdom-the-sweat-cabin-blackout-edition-offer",
+      "merchantId": "sweat-kingdom-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 924500,
+      "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-125462-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "50678466117796",
+      "lastChecked": "2026-09-14",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796",
+        "retrievedAt": "2026-09-14",
+        "method": "direct",
+        "note": "Chosen from 6 rows sharing /products/the-sweat-cabin-blackout-edition, ranging $9,245 to $11,545. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Compared as part of."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "mpn": "bc3",
+    "merchantSkus": {
+      "sweat-kingdom-store": "50678466117796"
+    }
+  },
+  "attributes": {},
+  "family": {
+    "of": "sweat-kingdom-the-sweat-cabin",
+    "because": "\"The Sweat Cabin (4 Person) - Blackout Edition\" is the same cabin in a blackout finish. A shopper choosing a four-person cabin is not choosing between it and its own paint."
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+    "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796",
+    "retrievedAt": "2026-09-14",
+    "method": "direct",
+    "note": "Chosen from 6 rows sharing /products/the-sweat-cabin-blackout-edition, ranging $9,245 to $11,545. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Compared as part of."
+  },
+  "lastUpdated": "2026-09-14",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

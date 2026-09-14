@@ -54,6 +54,16 @@ const BY_CATEGORY: Record<string, IntroExample[]> = {
     { text: "Something I can set up without plumbing", keys: ["plumbing"] },
     { text: "An inflatable tub for outdoors", keys: ["tub_type", "placement"] },
   ],
+  // Price only, and deliberately so. Saunas launched from a retailer feed that
+  // states no heating type, no circuit, no footprint and no capacity, so an
+  // example offering to filter on any of those would invite a shopper to ask
+  // for something this catalogue cannot answer. When the makers supply the
+  // figures, this list grows.
+  saunas: [
+    { text: "Under $6,000", keys: ["price"] },
+    { text: "The cheapest one you list", keys: ["price"] },
+    { text: "Under $2,500", keys: ["price"] },
+  ],
   "red-light": [
     { text: "A full-body panel under $1,000", keys: ["coverage", "price"] },
     { text: "Something targeted, for face and joints", keys: ["coverage"] },

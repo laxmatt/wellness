@@ -200,33 +200,62 @@ describe("what the records claim", () => {
 });
 
 describe("importing the same feed again", () => {
-  it("changes nothing once the catalogue already says what the feed says", () => {
+  // These five records were rebuilt on 2026-09-14 through the ingestion flow
+  // and published, so their provenance now cites that flow rather than this
+  // adapter. What the adapter reads out of the feed has not moved, and that is
+  // what is checked: the facts agree, the wording of where they came from does
+  // not, and an import reports the difference rather than applying it.
+  it("still reads the same facts the catalogue holds", () => {
     const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
     const built = buildFromFeed(FEED_ROWS, OPTIONS);
-    const plan = planIntake(catalog.products, built.products);
+    expect(built.products).toHaveLength(5);
+    for (const product of built.products) {
+      const live = catalog.products.find((p) => p.id === product.id)!;
+      expect(live, product.id).toBeDefined();
+      expect(live.name, product.id).toBe(product.name);
+      expect(live.description, product.id).toBe(product.description);
+      expect(live.offers[0].priceMinor, product.id).toBe(product.offers[0].priceMinor);
+      expect(live.offers[0].url, product.id).toBe(product.offers[0].url);
+      expect(live.offers[0].availability, product.id).toBe(product.offers[0].availability);
+      expect(live.images[0].src, product.id).toBe(product.images[0].src);
+    }
+  });
+
+  it("creates nothing, because every one of them is already there", () => {
+    const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
+    const plan = planIntake(catalog.products, buildFromFeed(FEED_ROWS, OPTIONS).products);
     expect(plan.creates).toEqual([]);
-    expect(plan.differs).toEqual([]);
-    expect(plan.unchanged).toHaveLength(5);
+    expect(plan.differs).toHaveLength(5);
   });
 
   it("reports a reviewer's edit instead of overwriting it", () => {
     const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
     const built = buildFromFeed(FEED_ROWS, OPTIONS);
-    const edited = catalog.products.map((p) => (p.id === "sweat-kingdom-the-ascent" ? { ...p, name: "The Ascent, checked by a person", status: "published" as const } : p));
-    const plan = planIntake(edited, built.products);
-    expect(plan.differs).toEqual(["sweat-kingdom-the-ascent"]);
-    expect(plan.records.find((r) => r.id === "sweat-kingdom-the-ascent")!.reviewed).toBe(true);
+    const plan = planIntake(catalog.products, built.products);
+    const ascent = plan.records.find((r) => r.id === "sweat-kingdom-the-ascent")!;
+    // Published, so somebody has moved it on, and an import says so rather
+    // than writing over it.
+    expect(ascent.action).toBe("differs");
+    expect(ascent.reviewed).toBe(true);
+    expect(ascent.differences).toContain("status");
   });
 });
 
-describe("nothing from this feed is public", () => {
-  it("lands as drafts in a category with no page", async () => {
+describe("what this feed became", () => {
+  it("is published, as 17 records in a category a shopper can reach", async () => {
     const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
-    const fromFeed = catalog.products.filter((p) => p.id.startsWith("sweat-kingdom-the-"));
-    expect(fromFeed).toHaveLength(5);
-    expect(fromFeed.every((p) => p.status === "draft")).toBe(true);
+    const fromFeed = catalog.products.filter((p) => p.id.startsWith("sweat-kingdom-"));
+    expect(fromFeed).toHaveLength(17);
+    expect(fromFeed.every((p) => p.status === "published")).toBe(true);
     expect(fromFeed.every((p) => p.categoryId === "saunas")).toBe(true);
     const { categoryBySlug } = await import("@/domain/categories");
-    expect(categoryBySlug("saunas")).toBeUndefined();
+    expect(categoryBySlug("saunas")?.id).toBe("saunas");
+  });
+
+  it("still carries no specification, having been published", () => {
+    const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
+    for (const product of catalog.products.filter((p) => p.id.startsWith("sweat-kingdom-"))) {
+      expect(Object.keys(product.attributes), product.id).toEqual([]);
+    }
   });
 });

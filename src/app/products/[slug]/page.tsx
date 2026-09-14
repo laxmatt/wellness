@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { CompareToggle } from "@/components/compare/CompareToggle";
 import { InsightsPanel, OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
@@ -15,7 +15,7 @@ import { primaryStrength } from "@/domain/recommend";
 import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
-import { getProductPage } from "@/lib/queries";
+import { getProductPage, getProductRedirect } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
 import { social } from "@/lib/metadata";
 import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
@@ -51,9 +51,14 @@ const schemaAvailability: Record<string, string> = {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
+  // A configuration is not a second product. Its record stays published,
+  // priced and linked, and its address leads to the model it belongs to, where
+  // its own price and its own link are listed.
+  const to = await getProductRedirect(slug);
+  if (to) redirect(to);
   const data = await getProductPage(slug);
   if (!data) notFound();
-  const { item, page, similar } = data;
+  const { item, page, similar, configurations } = data;
   const { view } = item;
   const cat = page.cat;
   const primaryBadge = item.badges[0];
@@ -191,6 +196,40 @@ export default async function ProductPage({ params }: Props) {
               <OfferList view={view} />
             </div>
           </section>
+
+          {configurations.length > 0 ? (
+            <section id="configurations">
+              <h2 className="font-display text-3xl">Configurations</h2>
+              <p className="mt-1 text-sm text-fg-muted">
+                The retailer sells this on more than one page: a finish, or a size. They are the same model, so they are here rather than as separate listings to choose between. Each
+                carries its own price and its own link.
+              </p>
+              <ul className="mt-5 divide-y divide-edge border-y border-edge">
+                {configurations.map((c) => {
+                  const offers = buyableOffers(c.view);
+                  return (
+                    <li key={c.view.id} className="flex flex-wrap items-baseline justify-between gap-3 py-3">
+                      <div className="min-w-0">
+                        <p className="font-semibold">{c.view.name}</p>
+                        <p className="text-sm text-fg-muted">
+                          {c.view.availability === "unknown" ? "Availability not stated" : c.view.availability.replace(/_/g, " ")}
+                          {c.view.family ? ` · ${c.view.family.because}` : ""}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <PriceDisplay price={c.view.price} compact />
+                        {offers[0] ? (
+                          <a href={offers[0].url} {...outboundLinkProps(offers[0].affiliateStatus)} className="tap text-sm font-semibold text-accent-strong hover:underline">
+                            Shop
+                          </a>
+                        ) : null}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : null}
 
           {similar.length > 0 ? (
             <section>

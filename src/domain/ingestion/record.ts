@@ -157,7 +157,8 @@ export function productFromFields(
           alt: name!,
           source: {
             ...base,
-            note: "Supplied in this partner's feed. No licence is recorded, because a feed carrying an image is not a grant to publish it and this partner's image terms have not been read here.",
+            note:
+              "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product.",
           },
         },
       ]

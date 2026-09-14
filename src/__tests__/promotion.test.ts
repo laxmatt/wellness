@@ -15,6 +15,7 @@ import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { comparisonCount } from "@/domain/family";
 import { planIdFor, type PlanRequest, type PromotionPlan } from "@/domain/promotion/plan";
+import type { ShadowResolution } from "@/domain/promotion/shadow";
 import { imageRightsFor, type ImageRightsRecord } from "@/domain/promotion/rights";
 import { planIdMatches, renderPlan, signPlan } from "@/domain/promotion/signed";
 import { saunas } from "@/domain/categories/saunas";
@@ -81,6 +82,20 @@ const plan = (store: IngestionStore, request: Partial<PlanRequest> = {}): Promot
 
 const codes = (p: PromotionPlan): string[] => [...new Set(p.blockers.map((b) => b.code))].sort();
 
+/**
+ * Answer every collision a selection has, by merging.
+ *
+ * Since the saunas launch the catalogue holds all seventeen of these records,
+ * so every selection shadows something. The drafts and the catalogue records
+ * agree on every mapped field, which is why a merge with nothing named is a
+ * complete answer: `resolutionProblems` refuses one only when the two
+ * disagree about a field nobody has decided.
+ */
+function mergeAll(store: IngestionStore, familyIds: string[]): ShadowResolution[] {
+  const built = plan(store, { familyIds });
+  return built.shadows.map((s) => ({ id: s.id, choice: "merge_fields" as const, fields: {}, note: "" }));
+}
+
 /** Permission covering whatever picture a record currently carries. */
 function clearRights(store: IngestionStore, ids: string[]): void {
   for (const id of ids) {
@@ -103,32 +118,34 @@ describe("the planner writes nothing to the catalogue", () => {
     const before = catalogFingerprint();
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    const built = plan(store, { familyIds: [CABIN] });
+    const shadows = mergeAll(store, [CABIN]);
+    const built = plan(store, { familyIds: [CABIN], shadows });
     expect(built.blockers).toEqual([]);
     const signed = signPromotion({
       store,
       catalogDir: CATALOG,
       sourceId: SWEAT_KINGDOM.id,
-      request: { familyIds: [CABIN], shadows: [], reviewer: "a reviewer" },
+      request: { familyIds: [CABIN], shadows, reviewer: "a reviewer" },
       today: TODAY,
     });
     expect(signed.ok).toBe(true);
     expect(catalogFingerprint()).toBe(before);
   });
 
-  it("publishes nothing: every promoted record would arrive as a draft and the workspace still holds drafts", () => {
+  it("publishes nothing itself: the workspace still holds drafts and the catalogue is untouched", () => {
+    const before = catalogFingerprint();
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: [], reviewer: "a reviewer" }, today: TODAY });
+    signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]), reviewer: "a reviewer" }, today: TODAY });
     expect(store.drafts().products.every((p) => p.status === "draft")).toBe(true);
-    expect(loadLocalCatalog(CATALOG).products.filter((p) => p.id.startsWith("sweat-kingdom-")).every((p) => p.status === "draft")).toBe(true);
+    expect(catalogFingerprint()).toBe(before);
     expect(store.plans()[0].executed).toBe(false);
   });
 
   it("says in the signed record and in the document that nothing was carried out", () => {
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    const signed = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: [], reviewer: "a reviewer" }, today: TODAY });
+    const signed = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]), reviewer: "a reviewer" }, today: TODAY });
     expect(signed.ok).toBe(true);
     if (!signed.ok) return;
     expect(signed.document).toContain("Nothing has been promoted or published");
@@ -234,7 +251,7 @@ describe("permission to publish a picture", () => {
   it("clears once somebody records what they read, naming the picture", () => {
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    const built = plan(store, { familyIds: [CABIN] });
+    const built = plan(store, { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]) });
     expect(built.rights.every((r) => r.state === "cleared")).toBe(true);
     expect(codes(built)).toEqual([]);
   });
@@ -265,13 +282,17 @@ describe("permission to publish a picture", () => {
 
 // ------------------------------------------------------- catalogue collisions
 
-describe("the five records the catalogue already holds", () => {
+describe("records the catalogue already holds", () => {
+  // Since the saunas launch that is all seventeen of them. The behaviour under
+  // test is the collision, not how many there happen to be, so this reads the
+  // number off the catalogue rather than pinning one.
   const catalogIds = loadLocalCatalog(CATALOG).products.filter((p) => p.id.startsWith("sweat-kingdom-")).map((p) => p.id);
 
-  it("finds all five", () => {
-    expect(catalogIds).toHaveLength(5);
+  it("finds every one of them", () => {
+    expect(catalogIds.length).toBeGreaterThanOrEqual(5);
     const store = imported();
-    const shadowed = plan(store, { familyIds: catalogIds }).families.flatMap((f) => f.records).filter((r) => r.shadowsCatalog);
+    const heads = plan(store, { familyIds: [] }).selectable.map((f) => f.id);
+    const shadowed = plan(store, { familyIds: heads }).families.flatMap((f) => f.records).filter((r) => r.shadowsCatalog);
     expect(shadowed.map((r) => r.id).sort()).toEqual([...catalogIds].sort());
   });
 
@@ -425,6 +446,7 @@ describe("signing", () => {
   it("writes a plan once and refuses to write over one", () => {
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
+    const cabinRequest = { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]), reviewer: "a reviewer" };
     const first = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: cabinRequest, today: TODAY });
     expect(first.ok).toBe(true);
     const again = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: cabinRequest, today: TODAY });
@@ -460,7 +482,7 @@ describe("a later import and an earlier plan", () => {
   it("does not touch a signed plan, byte for byte", () => {
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    const signed = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: [], reviewer: "a reviewer" }, today: TODAY });
+    const signed = signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]), reviewer: "a reviewer" }, today: TODAY });
     expect(signed.ok).toBe(true);
     if (!signed.ok) return;
     const path = join(store.root, "plans", `${signed.plan.planId}.json`);
@@ -510,16 +532,14 @@ describe("the catalogue this would produce", () => {
   it("is validated in full, family integrity included, before anything can be signed", () => {
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    const built = plan(store, { familyIds: [CABIN] });
+    const built = plan(store, { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]) });
     expect(built.catalogueIssues).toEqual([]);
     expect(built.familyIntegrityIssues).toEqual([]);
-    expect(built.hypotheticalProducts).toBe(loadLocalCatalog(CATALOG).products.length + 2);
-    // Seven sauna records are in the catalogue already, none of them in a
-    // family. Two more would join them, and those two are one family, so the
-    // category would offer eight comparable models rather than nine records.
-    const saunasNow = loadLocalCatalog(CATALOG).products.filter((p) => p.categoryId === "saunas");
-    expect(saunasNow).toHaveLength(7);
-    expect(built.hypotheticalFamilies).toBe(8);
+    // Both records are in the catalogue already, so promoting them again adds
+    // nothing and the counts do not move.
+    const now = loadLocalCatalog(CATALOG).products;
+    expect(built.hypotheticalProducts).toBe(now.length);
+    expect(built.hypotheticalFamilies).toBe(comparisonCount(now.filter((p) => p.categoryId === "saunas")));
   });
 
   it("refuses a selection whose result would not be a valid catalogue", () => {
@@ -547,12 +567,12 @@ describe("the catalogue this would produce", () => {
     expect(built.signable).toBe(false);
   });
 
-  it("keeps sauna records out of the shopper's way: the category is still unpublished", () => {
+  it("leaves the catalogue exactly as it found it, published records included", () => {
+    const before = catalogFingerprint();
     const store = imported();
     clearRights(store, [CABIN, BLACKOUT_CABIN]);
-    signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: [], reviewer: "a reviewer" }, today: TODAY });
+    signPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request: { familyIds: [CABIN], shadows: mergeAll(store, [CABIN]), reviewer: "a reviewer" }, today: TODAY });
     expect(saunas.id).toBe("saunas");
-    const published = loadLocalCatalog(CATALOG).products.filter((p) => p.categoryId === "saunas" && p.status === "published");
-    expect(published).toEqual([]);
+    expect(catalogFingerprint()).toBe(before);
   });
 });

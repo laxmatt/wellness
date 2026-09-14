@@ -33,7 +33,8 @@
     "e2e:inventory": "tsx e2e/inventory-admin.mts",
     "ingestion:seed": "tsx scripts/ingestion-seed.ts",
     "ingestion:server": "tsx scripts/ingestion-server.ts",
-    "e2e:ingestion": "tsx e2e/ingestion-admin.mts"
+    "e2e:ingestion": "tsx e2e/ingestion-admin.mts",
+    "promote:saunas": "tsx scripts/promote-saunas.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

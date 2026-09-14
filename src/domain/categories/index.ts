@@ -11,10 +11,14 @@ import { wellnessDrinks } from "./wellness-drinks";
  * home page, `/explore`, the sitemap, `getAllCategoryPages`, and the route
  * lookup below. Adding a category here publishes it.
  */
-export const categories: CategoryDefinition[] = [redLight, coldPlunge, wellnessDrinks];
+export const categories: CategoryDefinition[] = [redLight, coldPlunge, wellnessDrinks, saunas];
 
 /**
  * Categories that exist for records and review, and are not published.
+ *
+ * Empty today. Saunas launched on 2026-09-14 and moved to the list above; the
+ * mechanism stays because it is how the next category is built before anybody
+ * can reach it.
  *
  * A record needs its category to resolve before it can validate or render: the
  * catalogue check reads the attribute definitions, and `toProductView` needs
@@ -28,11 +32,11 @@ export const categories: CategoryDefinition[] = [redLight, coldPlunge, wellnessD
  * category is not in the published list even if the product itself were
  * published.
  *
- * Moving saunas from this list to the one above is the act of launching the
- * category. It is one line, and it is deliberately one line somebody has to
- * write on purpose.
+ * Moving a category from this list to the one above is the act of launching
+ * it. It is one line, and it is deliberately one line somebody has to write on
+ * purpose.
  */
-export const unpublishedCategories: CategoryDefinition[] = [saunas];
+export const unpublishedCategories: CategoryDefinition[] = [];
 
 /** Every category, published or not. For validation and review only. */
 export const allCategories: CategoryDefinition[] = [...categories, ...unpublishedCategories];

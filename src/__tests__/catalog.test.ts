@@ -90,7 +90,15 @@ describe("local catalog", () => {
     //
     // Infraredi Flex Max is the last one here, and it is the last unread
     // product in Red Light Therapy.
-    expect(short.sort()).toEqual(["infraredi-flex-max"]);
+    //
+    // And every sauna, since 2026-09-14. That category launched from a
+    // retailer feed that states no specification at all, so not one of its
+    // required attributes is filled and every record sits under the floor.
+    // Recorded here rather than papered over: the figures come from the makers
+    // or they do not come, and until they do this is what the catalogue knows.
+    const saunas = short.filter((id) => id.startsWith("sweat-kingdom-"));
+    expect(saunas).toHaveLength(17);
+    expect(short.filter((id) => !id.startsWith("sweat-kingdom-")).sort()).toEqual(["infraredi-flex-max"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {

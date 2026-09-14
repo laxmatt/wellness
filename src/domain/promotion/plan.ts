@@ -55,6 +55,34 @@ export type BlockerCode =
 
 export type Blocker = { code: BlockerCode; about: string; message: string };
 
+/**
+ * A blocker the owner has decided to publish despite, in writing.
+ *
+ * Only `image_rights` may be accepted this way, and that is the point of the
+ * list being closed. The other codes are not judgements anybody is entitled to
+ * make: a catalogue that would not validate, a family whose members are not
+ * there, a collision nobody answered and a selection that names a record this
+ * workspace does not hold are all wrong rather than risky, and accepting one
+ * would publish something broken rather than something uncertain.
+ *
+ * An accepted risk does not delete the blocker. It moves it out of the way and
+ * into the signed plan, named, attributed and dated, so the record of the
+ * launch says what was unresolved when it happened. Nothing here invents
+ * evidence: accepting that the rights are unknown is the opposite of recording
+ * that they are settled, and the provenance on every affected record goes on
+ * saying so.
+ */
+export const ACCEPTABLE_RISKS: BlockerCode[] = ["image_rights"];
+
+export type AcceptedRisk = {
+  code: BlockerCode;
+  /** The record, or "all" for every record this plan touches. */
+  about: string;
+  acceptedBy: string;
+  /** Why, in the owner's words. Not evidence, and never rendered as any. */
+  because: string;
+};
+
 export type ComparisonField = {
   key: string;
   label: string;
@@ -97,6 +125,8 @@ export type PlanRequest = {
   familyIds: string[];
   shadows: ShadowResolution[];
   reviewer: string;
+  /** Blockers the owner has decided to publish despite. Only `image_rights` may be one. */
+  acceptedRisks?: AcceptedRisk[];
 };
 
 export type PromotionPlan = {
@@ -129,6 +159,8 @@ export type PromotionPlan = {
   hypotheticalFamilies: number;
 
   blockers: Blocker[];
+  /** Blockers an owner accepted in writing. Out of the way, and in the record. */
+  accepted: { blocker: Blocker; risk: AcceptedRisk }[];
   signable: boolean;
   /** A function of everything above that a reviewer decides. Recomputable, and checked on read. */
   planId: string;
@@ -338,6 +370,18 @@ export function buildPromotionPlan(input: PlanInput): PromotionPlan {
   for (const issue of catalogueIssues) blockers.push({ code: "catalogue_invalid", about: "catalogue", message: issue });
   for (const issue of integrity) blockers.push({ code: "family_integrity", about: "catalogue", message: issue });
 
+  // An accepted risk moves a blocker into the record rather than out of
+  // existence. Anything the closed list does not cover stays a blocker however
+  // it was written.
+  const risks = (request.acceptedRisks ?? []).filter((r) => ACCEPTABLE_RISKS.includes(r.code) && r.acceptedBy.trim() !== "" && r.because.trim() !== "");
+  const accepted: { blocker: Blocker; risk: AcceptedRisk }[] = [];
+  const outstanding: Blocker[] = [];
+  for (const blocker of blockers) {
+    const risk = risks.find((r) => r.code === blocker.code && (r.about === blocker.about || r.about === "all"));
+    if (risk) accepted.push({ blocker, risk });
+    else outstanding.push(blocker);
+  }
+
   const plan: Omit<PromotionPlan, "planId"> = {
     sourceId: source.id,
     sourceName: source.name,
@@ -373,12 +417,13 @@ export function buildPromotionPlan(input: PlanInput): PromotionPlan {
     familyIntegrityIssues: integrity,
     hypotheticalProducts: hypothetical.products.length,
     hypotheticalFamilies: groupIntoFamilies(hypothetical.products.filter((p) => p.categoryId === source.categoryId)).length,
-    blockers,
+    blockers: outstanding,
+    accepted,
     // About the plan, and only about the plan. Whether a name has been typed
     // into the signing box is a separate precondition, checked when somebody
     // signs: mixing the two made a plan with nothing unresolved report itself
     // as unsignable because the box was still empty.
-    signable: blockers.length === 0,
+    signable: outstanding.length === 0,
   };
 
   return {
@@ -386,6 +431,9 @@ export function buildPromotionPlan(input: PlanInput): PromotionPlan {
     planId: planIdFor({
       ...plan,
       shadows: plan.shadows.map((s) => ({ id: s.id, choice: s.resolution.choice, fields: s.resolution.fields })),
+      // The blocker's own subject, not the risk's, so a risk written once as
+      // "all" and a plan read back with one entry per record hash the same.
+      accepted: plan.accepted.map((a) => ({ code: a.blocker.code, about: a.blocker.about, acceptedBy: a.risk.acceptedBy })),
     }),
   };
 }
@@ -407,6 +455,8 @@ export type PlanIdentity = {
   selectedFamilyIds: string[];
   selectedRecordIds: string[];
   shadows: { id: string; choice: string; fields: Record<string, string> }[];
+  /** What was published despite, which is part of what was decided. */
+  accepted?: { code: string; about: string; acceptedBy: string }[];
   reviewer: string;
   builtOn: string;
 };
@@ -421,6 +471,10 @@ export function planIdFor(identity: PlanIdentity): string {
     shadows: [...identity.shadows]
       .map((s) => ({ id: s.id, choice: s.choice, fields: Object.fromEntries(Object.entries(s.fields).sort()) }))
       .sort((a, b) => a.id.localeCompare(b.id)),
+    // What was published despite is part of what was decided, so it is part of
+    // the plan's name. A plan signed with the risk accepted is not the same
+    // decision as one signed without it.
+    accepted: [...(identity.accepted ?? [])].map((a) => ({ code: a.code, about: a.about, by: a.acceptedBy })).sort((a, b) => `${a.code}${a.about}`.localeCompare(`${b.code}${b.about}`)),
     reviewer: identity.reviewer.trim(),
     builtOn: identity.builtOn,
   };

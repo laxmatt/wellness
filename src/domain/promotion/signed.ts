@@ -6,7 +6,8 @@
  * writes nothing to `catalog/`, publishes nothing and changes no status. What
  * it records is that a named person, on a named day, looked at named drafts
  * built from a named file through a named mapping, answered every collision,
- * cleared every picture, and would promote these families.
+ * settled or knowingly accepted the question of every picture, and would
+ * promote these families.
  *
  * The record is deliberately complete enough to be read on its own a month
  * later, by somebody who does not have the workspace in front of them, and
@@ -15,8 +16,11 @@
  * out of date, and the tool says when it has, but out of date is a thing a
  * reader is told rather than a thing done to the file.
  *
- * `executed` is always false and there is no code anywhere that sets it. It is
- * in the shape so that the record says what it is.
+ * `executed` is false on every signed plan and nothing sets it: a plan records
+ * a decision and is not a log of it being carried out. Carrying one out is a
+ * separate command with its own refusals, in
+ * `src/providers/ingestion/execute.ts`, and it reads this file rather than
+ * writing to it.
  */
 
 import { z } from "zod";
@@ -81,10 +85,27 @@ export const SignedPlan = z.object({
 
   hypotheticalProducts: z.number().int().nonnegative(),
   hypotheticalFamilies: z.number().int().nonnegative(),
-  /** Empty by construction: a plan with a blocker cannot be signed. Kept so the record says so. */
+  /** Empty by construction: a plan with an outstanding blocker cannot be signed. Kept so the record says so. */
   unresolvedBlockers: z.array(z.string()).default([]),
+  /**
+   * What the owner decided to publish despite, named and attributed.
+   *
+   * Not evidence, and never to be read as any. An accepted image-rights risk
+   * says the rights are unknown and the owner published anyway; the provenance
+   * on every affected record goes on saying the same thing.
+   */
+  acceptedRisks: z.array(z.object({
+    code: z.string(),
+    about: z.string(),
+    acceptedBy: z.string().min(1),
+    because: z.string().min(1),
+    blocker: z.string().min(1),
+  })).default([]),
 
-  /** Never true. Nothing in this project sets it, and promotion is not published here. */
+  /**
+   * Never true. A plan is a decision, not a log of it being carried out, and
+   * nothing sets this. `execute.ts` refuses a plan that claims otherwise.
+   */
   executed: z.literal(false),
 });
 export type SignedPlan = z.infer<typeof SignedPlan>;
@@ -151,6 +172,7 @@ export function signPlan(plan: PromotionPlan, signedBy: string, signedOn: string
     hypotheticalProducts: plan.hypotheticalProducts,
     hypotheticalFamilies: plan.hypotheticalFamilies,
     unresolvedBlockers: [],
+    acceptedRisks: plan.accepted.map((a) => ({ code: a.blocker.code, about: a.blocker.about, acceptedBy: a.risk.acceptedBy, because: a.risk.because, blocker: a.blocker.message })),
     executed: false,
   });
   if (!signed.success) {
@@ -168,6 +190,7 @@ export const planIdMatches = (plan: SignedPlan): boolean =>
     selectedFamilyIds: plan.selectedFamilyIds,
     selectedRecordIds: plan.selectedRecordIds,
     shadows: plan.shadows.map((s) => ({ id: s.id, choice: s.choice, fields: s.fields })),
+    accepted: plan.acceptedRisks.map((a) => ({ code: a.code, about: a.about, acceptedBy: a.acceptedBy })),
     reviewer: plan.signedBy,
     builtOn: plan.builtOn,
   }) === plan.planId;
@@ -187,6 +210,16 @@ export function renderPlan(plan: SignedPlan): string {
   lines.push(`- Selected: ${plan.selectedFamilyIds.length} families, ${plan.selectedRecordIds.length} records`);
   lines.push(`- Catalogue afterwards, if this were ever carried out: ${plan.hypotheticalProducts} products, ${plan.hypotheticalFamilies} comparable models in this category`);
   lines.push("");
+
+  if (plan.acceptedRisks.length > 0) {
+    lines.push("## Published despite", "");
+    lines.push("These were unresolved when this plan was signed. They were accepted, not settled, and nothing here is evidence that they were resolved.", "");
+    for (const risk of plan.acceptedRisks) {
+      lines.push(`- **${risk.code}** on ${risk.about}, accepted by ${risk.acceptedBy}: ${risk.because}`);
+      lines.push(`  - What was unresolved: ${risk.blocker}`);
+    }
+    lines.push("");
+  }
 
   if (plan.shadows.length > 0) {
     lines.push("## Records the catalogue already holds", "");

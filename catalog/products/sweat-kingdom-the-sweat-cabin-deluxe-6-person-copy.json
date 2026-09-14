@@ -1,24 +1,24 @@
 {
-  "id": "sweat-kingdom-the-summit",
-  "slug": "sweat-kingdom-the-summit",
-  "name": "The Summit (2-6 Person) - Small (2 Person) / Harvia KIP 8kw With Built In Controls / Default (Door on Left Window on Left)",
+  "id": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy",
+  "slug": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy",
+  "name": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
   "brandId": "sweat-kingdom",
   "categoryId": "saunas",
-  "description": "Availability: 5 week lead time Blackout Stain: Additional $1000 - Contact Sales@sweatkingdom.com for custom quote",
+  "description": "Availability: 6-8 week lead time Product Overview: The Deluxe Sweat Cabin is a sauna designed for efficiency. Handcrafted in East Idaho with the highest quality red cedar, this sauna brings the heat and recovery benefits of traditional saunas to your personal space. The heater included with your sauna will reach temperatures of 110-230F in 45-90 minutes depending on desired temperature & weather conditions. Product Standard Dimensions Assembled Size: Height 89\" - Depth 72 1/2\" - Width 83\" Seating: 6 People",
   "status": "published",
   "availability": "out_of_stock",
   "market": "US",
   "images": [
     {
-      "id": "sweat-kingdom-the-summit-primary",
+      "id": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy-primary",
       "kind": "affiliate_feed",
       "role": "primary",
-      "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/Regular_Summit_2_person_03a2f42d-19ec-4e9d-bba5-b816a27e14a8.png?v=1781124479",
-      "alt": "The Summit (2-6 Person) - Small (2 Person) / Harvia KIP 8kw With Built In Controls / Default (Door on Left Window on Left)",
+      "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/42.png?v=1775057952",
+      "alt": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
-        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
         "retrievedAt": "2026-09-14",
         "method": "direct",
         "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
@@ -27,12 +27,12 @@
   ],
   "offers": [
     {
-      "id": "sweat-kingdom-the-summit-offer",
+      "id": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy-offer",
       "merchantId": "sweat-kingdom-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 694500,
-      "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052",
+      "priceMinor": 1199500,
+      "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
       "affiliate": {
         "status": "affiliate",
         "network": "awin",
@@ -40,23 +40,22 @@
       },
       "discountCodes": [],
       "availability": "out_of_stock",
-      "merchantSku": "51305356198052",
+      "merchantSku": "51322435567780",
       "lastChecked": "2026-09-14",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
-        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Chosen from 18 rows sharing /products/the-summit, ranging $6,945 to $11,745. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+        "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
       }
     }
   ],
   "identifiers": {
     "gtin": [],
-    "mpn": "S1",
     "merchantSkus": {
-      "sweat-kingdom-store": "51305356198052"
+      "sweat-kingdom-store": "51322435567780"
     }
   },
   "attributes": {},
@@ -67,10 +66,10 @@
   "source": {
     "kind": "merchant_feed",
     "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
-    "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052",
+    "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
     "retrievedAt": "2026-09-14",
     "method": "direct",
-    "note": "Chosen from 18 rows sharing /products/the-summit, ranging $6,945 to $11,745. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+    "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
   },
   "lastUpdated": "2026-09-14",
   "flags": {

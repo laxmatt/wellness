@@ -34,7 +34,11 @@ describe("the partner showcase checklist", () => {
         const at = doc.indexOf(`\`${p.id}\``);
         const entry = doc.slice(Math.max(0, at - 1200), at + 1200);
         if (shown) expect(entry, p.id).not.toContain(formatMoney(shown));
-        expect(entry, p.id).toContain("no amount on record");
+        // Two situations, two sentences, and the quote-only one says more: a
+        // merchant that quotes on request is selling the thing, which is a
+        // different fact from a record nothing prices. Both have to say that no
+        // amount can be quoted, and neither may show a figure.
+        expect(entry, p.id).toMatch(/no amount on record|no listed amount; every merchant on record quotes on request/);
         // A withheld amount is reported as withheld, never as evidence.
         for (const o of p.offers.filter((o) => o.disputed === true)) {
           expect(entry, `${p.id} ${o.id}`).toContain("withheld");

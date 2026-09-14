@@ -1,12 +1,15 @@
 import { CategoryDefinition } from "../category";
 
 /**
- * Saunas. Approved on 2026-09-13, and not published.
+ * Saunas. Approved on 2026-09-13, launched on 2026-09-14.
  *
- * This definition exists so sauna records can validate and render in review.
- * It is deliberately absent from the public `categories` list, so nothing links
- * to it, no page resolves `/saunas`, and it is in no sitemap. See
- * `src/domain/categories/index.ts`.
+ * It launched knowing what it does not know. Every record comes from Sweat
+ * Kingdom's Awin feed, that feed states no specification at all, and so no
+ * sauna here carries a heating type, a footprint, a circuit or a capacity.
+ * Those attributes stay defined, stay filterable, and read "Not stated" on
+ * every record until somebody gets the figures from the makers. Nothing is
+ * read out of a product title to fill them: a cabin sold as "2-3 Person" is a
+ * name, and a name is not a specification.
  *
  * **No ranking.** `scoring.criteria` is empty and stays empty until somebody
  * establishes what would justify one. Type, footprint, power draw and price
@@ -23,8 +26,7 @@ export const saunas = CategoryDefinition.parse({
   navLabel: "Saunas",
   tagline: "Type, footprint and what it takes to power one.",
   intro:
-    "Home saunas differ on four things a buyer can check before anything else: whether they heat the air or the body, how much floor they take, what circuit they need, and what they cost. Those are compared here. Nothing on this page rates how good a sauna is for you.",
-  images: [],
+    "Home saunas differ on whether they heat the air or the body, how much floor they take, what circuit they need, and what they cost. Only price is stated by the retailer these listings come from; the rest read as not stated until the makers supply them. Nothing here rates a sauna, and nothing here is a figure read out of a product name.",  images: [],
   subcategories: [],
   attributeDefinitions: [
     {

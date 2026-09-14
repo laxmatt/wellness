@@ -17,6 +17,7 @@
  */
 
 import { chromium, type Browser, type Page } from "playwright";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { categories, categoryById, categoryBySlug } from "@/domain/categories";
@@ -32,7 +33,32 @@ import { buyableOffers, toProductView, type ProductView } from "@/domain/view";
 import { loadLocalCatalog } from "@/providers/catalog/LocalCatalogProvider";
 
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
-const EXECUTABLE = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium";
+/**
+ * Which Chromium to drive, without naming a path on one machine.
+ *
+ * `CHROMIUM_PATH` wins. Failing that, Playwright's own answer when the build it
+ * names is installed; failing that, a browser under a plain name in the
+ * configured browsers directory, which is how some pre-provisioned images ship
+ * one. When none is there nothing is passed and Playwright raises its own
+ * error, which says how to install a browser.
+ */
+function chromiumPath(): string | undefined {
+  const named = process.env.CHROMIUM_PATH?.trim();
+  if (named) return named;
+  try {
+    const own = chromium.executablePath();
+    if (own && existsSync(own)) return own;
+  } catch {
+    // Playwright has no path for this platform; its own error beats one made up here.
+  }
+  const browsers = process.env.PLAYWRIGHT_BROWSERS_PATH?.trim();
+  if (browsers) {
+    for (const candidate of [join(browsers, "chromium"), join(browsers, "chrome")]) {
+      if (existsSync(candidate)) return candidate;
+    }
+  }
+  return undefined;
+}
 const DESKTOP = { width: 1280, height: 900 };
 const MOBILE = { width: 390, height: 844 };
 
@@ -46,13 +72,29 @@ const cat = loadLocalCatalog(join(process.cwd(), "catalog"));
  * for it asserted that the catalogue and the storefront are the same thing,
  * which they stopped being the day a draft was imported.
  */
-const servedProducts = cat.products.filter((p) => p.status === "published" && categoryBySlug(categoryById(p.categoryId)?.slug ?? "") !== undefined);
+const servedProducts = cat.products.filter(
+  (p) => p.status === "published" && p.family === undefined && categoryBySlug(categoryById(p.categoryId)?.slug ?? "") !== undefined,
+);
+/** Published records that are a configuration of another. Their own address leads to the model. */
+const configurations = cat.products.filter((p) => p.status === "published" && p.family !== undefined);
+/**
+ * What a category page actually lists.
+ *
+ * Published, because a draft has no card, and not a configuration of another
+ * record, because a finish is compared as part of the model it belongs to and
+ * is not a card of its own. Walking the catalogue instead asserted that the
+ * catalogue and the storefront are the same list, which they have not been
+ * since the first draft was imported and are not since the first family was
+ * grouped.
+ */
 const viewsOf = (categoryId: string): ProductView[] =>
   cat.products
-    .filter((p) => p.categoryId === categoryId)
+    .filter((p) => p.categoryId === categoryId && p.status === "published" && p.family === undefined)
     .map((p) => toProductView(p, { category: categoryById(p.categoryId)!, brands: cat.brands, merchants: cat.merchants }));
 
 const failures: string[] = [];
+/** Pages whose third-party images this machine could not fetch. Reported, not failed. */
+const unreachable = new Set<string>();
 let scenario = "";
 function check(name: string, actual: unknown, expected: unknown) {
   const ok = JSON.stringify(actual) === JSON.stringify(expected);
@@ -70,7 +112,14 @@ const pageProblems: string[] = [];
 function watch(page: Page) {
   page.on("pageerror", (e) => pageProblems.push(`${page.url()}: ${e.message}`));
   page.on("console", (m) => {
-    if (m.type() === "error") pageProblems.push(`${page.url()}: console ${m.text()}`);
+    // A resource on somebody else's host that this machine cannot reach is a
+    // fact about the machine, not about the page. Product images are served
+    // from the merchant's own CDN, and a sandbox with no route to it reports a
+    // tunnel failure for every one of them. Anything from this site's own
+    // origin, and every other kind of console error, still fails.
+    const unreachableThirdParty = /ERR_TUNNEL_CONNECTION_FAILED|ERR_NAME_NOT_RESOLVED|ERR_PROXY_CONNECTION_FAILED/.test(m.text()) && m.text().includes("Failed to load resource");
+    if (m.type() === "error" && !unreachableThirdParty) pageProblems.push(`${page.url()}: console ${m.text()}`);
+    if (unreachableThirdParty) unreachable.add(page.url());
   });
   page.on("response", (r) => {
     const u = new URL(r.url());
@@ -556,7 +605,10 @@ async function run(browser: Browser) {
     const mine = introExamplesFor(c.id)!.map((e) => e.text);
     const theirs = categories.filter((x) => x.id !== c.id).flatMap((x) => introExamplesFor(x.id)!.map((e) => e.text));
 
-    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+    // A category may have no facets. Saunas has none: a facet is a filter worth
+    // a URL, and this one can filter on price alone until the makers supply
+    // the figures.
+    for (const path of [`/${c.slug}`, ...(c.facets[0] ? [`/${c.slug}/${c.facets[0].slug}`] : [])]) {
       await goto(page, path);
       await page.getByRole("button", { name: "Help me choose" }).first().click();
       await page.waitForSelector("[data-testid='assistant-intro']", { timeout: 5000 });
@@ -603,7 +655,10 @@ async function run(browser: Browser) {
   // --------------------------------------- one chip bar, not two, on every page
   for (const c of categories) {
     scenario = `controls ${c.slug}`;
-    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+    // A category may have no facets. Saunas has none: a facet is a filter worth
+    // a URL, and this one can filter on price alone until the makers supply
+    // the figures.
+    for (const path of [`/${c.slug}`, ...(c.facets[0] ? [`/${c.slug}/${c.facets[0].slug}`] : [])]) {
       await goto(page, path);
       // The facet pills navigated to other pages while looking exactly like the
       // chips below them. A shopper could not tell which of two rows of pills
@@ -617,6 +672,20 @@ async function run(browser: Browser) {
       const bigHeading = await page.getByRole("heading", { name: /^Ranked by/ }).count();
       check(`${path} no longer repeats the ranking as a heading`, bigHeading, 0);
     }
+  }
+
+  // ------------------------------------------------- configurations
+  // A finish is not a second product. Its record is published, priced and
+  // linked, and its own address leads to the model it belongs to rather than
+  // competing with it.
+  for (const p of configurations) {
+    scenario = `configuration ${p.id}`;
+    const model = cat.products.find((x) => x.id === p.family!.of)!;
+    const response = await page.goto(`${BASE}/products/${p.slug}`, { waitUntil: "domcontentloaded" });
+    check("its address leads to the model it belongs to", new URL(page.url()).pathname, `/products/${model.slug}`);
+    ok("and answers rather than erroring", (response?.status() ?? 0) < 400, response?.status());
+    ok("the model's page names it as a configuration", ((await page.locator("body").textContent()) ?? "").includes(p.name));
+    ok("it is not a card in its category", !(await shownSlugs(page)).includes(p.slug));
   }
 
   // ------------------------------------------------------------ product
@@ -1199,7 +1268,8 @@ if (!homeHtml.includes(expectedBuildId)) {
 }
 console.log(`ok   build identity :: serving ${expectedBuildId}`);
 
-const browser = await chromium.launch({ executablePath: EXECUTABLE });
+const executablePath = chromiumPath();
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 try {
   await run(browser);
 } finally {
@@ -1211,5 +1281,8 @@ for (const p of [...new Set(pageProblems)]) {
   failures.push(`browser reported :: ${p}`);
 }
 
+if (unreachable.size > 0) {
+  console.log(`\nnote: ${unreachable.size} page(s) could not load an image from a third-party host on this machine. Those loads were not checked; every other console error still fails.`);
+}
 console.log(failures.length === 0 ? "\nAll checks passed." : `\n${failures.length} failed:\n${failures.map((f) => `  ${f}`).join("\n")}`);
 process.exit(failures.length === 0 ? 0 : 1);

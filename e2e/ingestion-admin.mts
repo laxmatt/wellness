@@ -329,7 +329,9 @@ async function run() {
     check("17 source records still in view", await attribute(page, '[data-testid="promotion-counts"]', "data-source-records"), "17");
     check("and 15 comparison families", await attribute(page, '[data-testid="promotion-counts"]', "data-families"), "15");
     check("three pictures with no permission", await attribute(page, '[data-testid="promotion-status"]', "data-image-rights"), "3");
-    check("one collision with the catalogue", await attribute(page, '[data-testid="promotion-status"]', "data-shadow-unresolved"), "1");
+    // Since the saunas launch every one of these ids is in the catalogue, so
+    // each selected record is a collision that has to be answered.
+    check("every selected record collides with the catalogue", await attribute(page, '[data-testid="promotion-status"]', "data-shadow-unresolved"), "3");
     check("the plan is not signable", await attribute(page, '[data-testid="promotion-status"]', "data-signable"), "false");
     ok("and signing is refused", await page.locator('[data-testid="sign-plan"]').isDisabled());
 
@@ -345,15 +347,19 @@ async function run() {
     for (const id of [CABIN, BLACKOUT, ASCENT]) {
       check(`${id} is cleared`, await attribute(page, `[data-testid="rights-${id}"]`, "data-state"), "cleared");
     }
-    check("but the collision still is not", await attribute(page, '[data-testid="promotion-status"]', "data-shadow-unresolved"), "1");
+    check("but the collisions still are not", await attribute(page, '[data-testid="promotion-status"]', "data-shadow-unresolved"), "3");
 
     scenario = "shadow";
     ok("the difference is shown field by field", (await page.locator(`[data-testid="shadow-diff-${ASCENT}"] tr`).count()) > 5);
     check("and nothing is chosen by default", await attribute(page, `[data-testid="shadow-${ASCENT}"]`, "data-choice"), "unresolved");
-    await page.locator(`[data-testid="shadow-${ASCENT}-replace_with_draft"]`).check();
-    await attributeBecomes(page, `[data-testid="shadow-${ASCENT}"]`, "data-choice", "replace_with_draft");
+    for (const id of [CABIN, BLACKOUT, ASCENT]) {
+      await page.locator(`[data-testid="shadow-${id}-replace_with_draft"]`).check();
+      await attributeBecomes(page, `[data-testid="shadow-${id}"]`, "data-choice", "replace_with_draft");
+    }
     await act(page, () => page.locator('[data-testid="build-plan"]').click());
-    check("the collision is answered", await attribute(page, `[data-testid="shadow-${ASCENT}"]`, "data-resolved"), "true");
+    for (const id of [CABIN, BLACKOUT, ASCENT]) {
+      check(`${id} is answered`, await attribute(page, `[data-testid="shadow-${id}"]`, "data-resolved"), "true");
+    }
     check("nothing is unresolved", await attribute(page, '[data-testid="promotion-status"]', "data-blockers"), "0");
     check("the plan is signable", await attribute(page, '[data-testid="promotion-status"]', "data-signable"), "true");
     ok("and signing is offered", !(await page.locator('[data-testid="sign-plan"]').isDisabled()));

@@ -183,7 +183,10 @@ describe("catalogue integrity after the guards", () => {
   it("still awards Best Overall in every category", () => {
     for (const cat of categories) {
       const set = assignBadges(viewsFor(cat.id).map(toScoringInput), cat);
-      expect(set.badges.some((b) => b.badge === "best_overall"), cat.id).toBe(true);
+      // Saunas is not ranked: its scoring criteria are empty on purpose,
+      // so it awards nothing and that is the behaviour being checked here.
+      const ranked = cat.scoring.criteria.length > 0;
+      expect(set.badges.some((b) => b.badge === "best_overall"), cat.id).toBe(ranked);
     }
   });
 
