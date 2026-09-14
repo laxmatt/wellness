@@ -91,51 +91,7 @@
         "Stock was not verified. Availability is recorded as unknown rather than guessed."
       ],
       "mpn": "DYN-6106-01"
-    },
-    {
-      "key": "sweat-kingdom-sweat-box-1p",
-      "name": "The Sweat Box, 1 person",
-      "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
-      "sourceKind": "manufacturer",
-      "brand": {
-        "id": "sweat-kingdom",
-        "name": "Sweat Kingdom",
-        "websiteUrl": "https://sweatkingdom.com"
-      },
-      "merchant": {
-        "id": "sweat-kingdom-store",
-        "name": "Sweat Kingdom",
-        "websiteUrl": "https://sweatkingdom.com",
-        "network": "awin",
-        "programRef": "awin-advertiser-125462-publisher-3090899",
-        "issuedLinkNote": "Approved through Awin on 2026-09-13, advertiser 125462, publisher 3090899. No tracking link has been supplied here, so the link below earns nothing and none is invented. A payment warning on the Awin account is unresolved."
-      },
-      "price": {
-        "amountMinor": 554500,
-        "currency": "USD"
-      },
-      "description": "One-person traditional sauna heated by a 4 kW Homecraft Revive Slim element.",
-      "attributes": {
-        "sauna_type": "traditional",
-        "capacity_label": "1 person",
-        "capacity_max_people": 1,
-        "width_in": 42,
-        "depth_in": 42,
-        "height_in": 80,
-        "placement": "indoor_outdoor",
-        "connection": "hardwired",
-        "amperage_a": 30,
-        "heater_kw": 4,
-        "heater_model": "Homecraft Revive Slim 4kW WiFi"
-      },
-      "notStated": [
-        "voltage"
-      ],
-      "availabilityConflict": "The page states the product is sold out and also states a five-week lead time. Those are two different claims about the same product and the page makes both, so availability is recorded as unknown. Nothing here may say it is in stock, and nothing here may say it cannot be bought.",
-      "caveats": [
-        "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded.",
-        "The heater is named with its rating. That is the heater's output, not a temperature."
-      ]
     }
-  ]
+  ],
+  "supersededNote": "The Sweat Box reading was superseded on 2026-09-14 by Sweat Kingdom's own Awin feed F3219. See intake/sweat-kingdom/. A page read by hand is not the merchant's catalogue, and where the merchant publishes one, that is the record."
 }

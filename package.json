@@ -29,6 +29,7 @@
     "inventory:server": "tsx scripts/inventory-server.ts",
     "inventory:review": "tsx scripts/inventory-review.ts",
     "intake": "tsx scripts/import-intake.ts",
+    "feed:sweatkingdom": "tsx scripts/import-awin-feed.ts",
     "e2e:inventory": "tsx e2e/inventory-admin.mts"
   },
   "dependencies": {

@@ -1,0 +1,78 @@
+{
+  "id": "sweat-kingdom-the-sweat-box-1-person",
+  "slug": "sweat-kingdom-the-sweat-box-1-person",
+  "name": "The Sweat Box (1 Person) - Homecraft Revive Slim 4kw WiFi Controlled Sauna Heater",
+  "brandId": "sweat-kingdom",
+  "categoryId": "saunas",
+  "description": "Availability: 5 week lead time Product Overview: The Sweat Box is a sauna designed for efficiency. Handcrafted in East Idaho with the highest quality red cedar, this sauna brings the heat and recovery benefits of traditional saunas to your personal space. The heater included with your sauna will reach temperatures of 110-200F in 20-30 minutes depending on desired temperature & weather conditions.",
+  "status": "draft",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sweat-kingdom-the-sweat-box-1-person-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_41_14_PM.png?v=1785267730",
+      "alt": "The Sweat Box (1 Person) - Homecraft Revive Slim 4kw WiFi Controlled Sauna Heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Awin advertiser 125462, feed F3219, downloaded 2026-09-13: intake/sweat-kingdom/awin-125462-f3219-2026-09-13.csv",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person?variant=51172149821604",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "Supplied in the feed's image_link. No licence has been established: a feed carrying an image is not a grant to publish it, and the partner's image terms have not been read. The file name suggests a generated render rather than a photograph, which is the merchant's own file name and not a finding about the product."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sweat-kingdom-the-sweat-box-1-person-offer",
+      "merchantId": "sweat-kingdom-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 554500,
+      "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-box-1-person%3Fvariant%3D51172149821604",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-125462-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "lastChecked": "2026-09-13",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Awin advertiser 125462, feed F3219, downloaded 2026-09-13: intake/sweat-kingdom/awin-125462-f3219-2026-09-13.csv",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person?variant=51172149821604",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "One configuration in the feed."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sweat-kingdom-store": "51172149821604"
+    }
+  },
+  "attributes": {},
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Awin advertiser 125462, feed F3219, downloaded 2026-09-13: intake/sweat-kingdom/awin-125462-f3219-2026-09-13.csv",
+    "url": "https://sweatkingdom.com/products/the-sweat-box-1-person?variant=51172149821604",
+    "retrievedAt": "2026-09-13",
+    "method": "direct",
+    "note": "One configuration in the feed."
+  },
+  "lastUpdated": "2026-09-13",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

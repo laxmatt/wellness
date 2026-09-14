@@ -25,8 +25,14 @@ const CATALOG_DIR = join(process.cwd(), "catalog");
 const catalog = loadLocalCatalog(CATALOG_DIR);
 const provider = new LocalCatalogProvider(catalog);
 
-const SAUNA_IDS = ["saunacloud-atlas-one", "dynamic-barcelona-dyn-6106-01", "sweat-kingdom-sweat-box-1p"];
-const saunaProducts = catalog.products.filter((p) => p.categoryId === "saunas");
+/**
+ * The two records still sourced from a page read by hand. Sweat Kingdom's was
+ * superseded on 2026-09-14 by that merchant's own Awin feed, which is a
+ * different and better kind of evidence; see `awin-sweat-kingdom.test.ts`.
+ */
+const SAUNA_IDS = ["saunacloud-atlas-one", "dynamic-barcelona-dyn-6106-01"];
+const saunaProducts = catalog.products.filter((p) => SAUNA_IDS.includes(p.id));
+const everySauna = catalog.products.filter((p) => p.categoryId === "saunas");
 const productById = (id: string) => catalog.products.find((p) => p.id === id)!;
 const viewOf = (id: string) => toProductView(productById(id), { category: categoryById("saunas")!, brands: catalog.brands, merchants: catalog.merchants });
 
@@ -35,22 +41,26 @@ const intake = IntakeFile.parse(JSON.parse(readFileSync(join(process.cwd(), "int
 describe("the intake landed", () => {
   it("wrote every approved reading as a draft, and nothing else", () => {
     expect(saunaProducts.map((p) => p.id).sort()).toEqual([...SAUNA_IDS].sort());
+    // The Sweat Kingdom reading is gone: its merchant publishes a feed, and a
+    // page read by hand is not a merchant's catalogue.
+    expect(catalog.products.map((p) => p.id)).not.toContain("sweat-kingdom-sweat-box-1p");
     expect(saunaProducts.every((p) => p.status === "draft")).toBe(true);
     // Real products from real pages. Nothing here is prototype data.
     expect(saunaProducts.every((p) => p.flags.demo === false)).toBe(true);
   });
 
-  it("carries no image, because no right to one has been established", () => {
+  it("carries no image, because these two pages granted no right to one", () => {
     expect(saunaProducts.every((p) => p.images.length === 0)).toBe(true);
   });
 });
 
 describe("a draft cannot reach a shopper", () => {
   it("is absent from every published read", async () => {
+    const ids = everySauna.map((p) => p.id);
+    expect(ids.length).toBeGreaterThan(SAUNA_IDS.length);
     const published = await provider.listProductViews({ status: ["published"] });
-    for (const id of SAUNA_IDS) expect(published.map((v) => v.id)).not.toContain(id);
-    const byIds = await provider.listProductViews({ ids: SAUNA_IDS, status: ["published"] });
-    expect(byIds).toEqual([]);
+    for (const id of ids) expect(published.map((v) => v.id)).not.toContain(id);
+    expect(await provider.listProductViews({ ids, status: ["published"] })).toEqual([]);
   });
 
   it("sits in a category that has no page", () => {
@@ -93,7 +103,7 @@ describe("running the import again", () => {
 
   it("builds every reading without refusing one", () => {
     expect(built.refusals).toEqual([]);
-    expect(built.records.products).toHaveLength(3);
+    expect(built.records.products).toHaveLength(2);
   });
 
   it("changes nothing when the catalogue already says what the reading says", () => {
@@ -167,34 +177,6 @@ describe("a merchant that quotes on request", () => {
   });
 });
 
-describe("a page that says two things about stock", () => {
-  it("claims neither", () => {
-    const sweat = productById("sweat-kingdom-sweat-box-1p");
-    expect(sweat.availability).toBe("unknown");
-    expect(sweat.offers[0].availability).toBe("unknown");
-    for (const p of saunaProducts) {
-      expect(p.availability).not.toBe("in_stock");
-      for (const o of p.offers) expect(o.availability).not.toBe("in_stock");
-    }
-  });
-
-  it("keeps both statements on the record", () => {
-    const note = productById("sweat-kingdom-sweat-box-1p").offers[0].source.note ?? "";
-    expect(note).toContain("sold out");
-    expect(note).toContain("five-week lead time");
-  });
-
-  it("still links to the merchant, so a shopper can check for themselves", () => {
-    // A lead time is how a made-to-order sauna is sold. The page is where
-    // availability is settled, and the record's job is to send somebody there
-    // without claiming either of the two things that page says.
-    const view = viewOf("sweat-kingdom-sweat-box-1p");
-    expect(buyableOffers(view)).toHaveLength(1);
-    expect(buyableOffers(view)[0].url).toBe("https://sweatkingdom.com/products/the-sweat-box-1-person");
-    expect(view.price.money?.amountMinor).toBe(554500);
-  });
-});
-
 describe("who is speaking, and who is selling", () => {
   it("keeps a brand and a retailer apart", () => {
     const dynamic = productById("dynamic-barcelona-dyn-6106-01");
@@ -221,19 +203,16 @@ describe("who is speaking, and who is selling", () => {
   it("marks every field the pages do not state", () => {
     expect(viewOf("saunacloud-atlas-one").provenance["attributes.heater_kw"].verification).toBe("not_stated");
     expect(viewOf("dynamic-barcelona-dyn-6106-01").provenance["attributes.placement"].verification).toBe("not_stated");
-    // The circuit is stated and the voltage is not. Both are recorded.
-    expect(viewOf("sweat-kingdom-sweat-box-1p").attributes.amperage_a).toBe(30);
-    expect(viewOf("sweat-kingdom-sweat-box-1p").provenance["attributes.voltage"].verification).toBe("not_stated");
+    expect(viewOf("dynamic-barcelona-dyn-6106-01").provenance["attributes.heater_kw"].verification).toBe("not_stated");
   });
 });
 
 describe("what each link is", () => {
   it("calls the two product-page links ordinary, because nobody has issued a tracking link for them", () => {
-    // Select Saunas and Sweat Kingdom are approved programmes with no link
-    // supplied. Whether a commission link exists is a different question from
-    // whether an ordinary merchant link can be shown honestly, and the answer
-    // to the second is yes.
-    for (const id of ["dynamic-barcelona-dyn-6106-01", "sweat-kingdom-sweat-box-1p"]) {
+    // Select Saunas is an approved programme with no link supplied. Whether a
+    // commission link exists is a different question from whether an ordinary
+    // merchant link can be shown honestly, and the answer to the second is yes.
+    for (const id of ["dynamic-barcelona-dyn-6106-01"]) {
       const offer = productById(id).offers[0];
       expect(offer.affiliate.status).toBe("non_affiliate");
       expect(outboundRel(offer.affiliate.status)).not.toContain("sponsored");
@@ -250,13 +229,6 @@ describe("what each link is", () => {
     // It earns, so it says so, in the markup and in the words beside it.
     expect(outboundRel(offer.affiliate.status)).toContain("sponsored");
     expect(RELATIONSHIP_COPY.affiliate).toContain("commission");
-  });
-
-  it("keeps a programme's identity on a link that does not pay", () => {
-    const sweat = productById("sweat-kingdom-sweat-box-1p").offers[0];
-    expect(sweat.affiliate.network).toBe("awin");
-    expect(sweat.affiliate.programRef).toBe("awin-advertiser-125462-publisher-3090899");
-    expect(sweat.affiliate.status).toBe("non_affiliate");
   });
 
   it("composes no deep link anywhere", () => {
@@ -279,12 +251,13 @@ describe("saunas are not ranked", () => {
   });
 
   it("awards no badge and computes no score", () => {
-    const views = saunaProducts.map((p) => toProductView(p, { category: saunas, brands: catalog.brands, merchants: catalog.merchants }));
+    const views = everySauna.map((p) => toProductView(p, { category: saunas, brands: catalog.brands, merchants: catalog.merchants }));
     // Nothing is published, so nothing is ranked either way. Feeding published
     // copies in proves the ranking itself refuses rather than the status gate.
     const published = views.map((v) => ({ ...v, status: "published" as const }));
     const { products, set } = recommendCategory(published, saunas);
-    expect(products).toHaveLength(3);
+    expect(products).toHaveLength(everySauna.length);
+    expect(everySauna.length).toBeGreaterThan(4);
     expect(products.every((p) => p.score === 0)).toBe(true);
     expect(products.flatMap((p) => p.badges)).toEqual([]);
     expect(set.badges).toEqual([]);
