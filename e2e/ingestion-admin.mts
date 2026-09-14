@@ -1,7 +1,7 @@
 /**
  * The whole ingestion flow, in a real browser, on the real Sweat Kingdom feed.
  *
- *   WELLNESS_INGESTION_ADMIN=1 npx tsx e2e/ingestion-admin.mts
+ *   WELLNESS_INGESTION_ADMIN=1 npm run e2e:ingestion
  *
  * Upload, inspect the columns, load a saved mapping, see what it would do,
  * approve it, import drafts, edit a listing by hand, upload the same file again
@@ -10,21 +10,24 @@
  * the unit tests already cover.
  *
  * It runs against its own workspace directory and removes it at the end, so it
- * cannot throw away anything somebody imported. It starts no storefront,
+ * cannot throw away anything somebody imported. It runs the project's own `tsx`
+ * through the Node already running it rather than looking `npx` up on PATH, and
+ * it asks Playwright where its browser is rather than naming a path that exists
+ * on one machine. `CHROMIUM_PATH` still overrides. It starts no storefront,
  * because there is nothing to look at: drafts live in a directory the site does
  * not read, and publishing them is not part of this flow.
  */
 
 import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
-import { join } from "node:path";
+import { createRequire } from "node:module";
+import { dirname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
 
 const ROOT = process.cwd();
 const WORKSPACE = "ingestion-e2e";
 const WORKSPACE_DIR = join(ROOT, WORKSPACE);
 const FEED = join(ROOT, "intake", "sweat-kingdom", "awin-125462-f3219-2026-09-13.csv");
-const EXECUTABLE = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium";
 const PORT = Number(process.env.INGESTION_PORT ?? 4331);
 const TOOL = `http://127.0.0.1:${PORT}`;
 const ASCENT = "sweat-kingdom-the-ascent";
@@ -64,6 +67,59 @@ async function waitFor(url: string, what: string, timeoutMs = 60_000): Promise<v
   throw new Error(`${what} did not come up at ${url}`);
 }
 
+const require_ = createRequire(import.meta.url);
+
+/**
+ * The project's own `tsx`, run by the Node already running this.
+ *
+ * Not `npx`. `npx` is a shell lookup on PATH for a program that may not be
+ * there, and on a machine where it is not there the failure is an ENOENT with
+ * nothing in it about what this check wanted. `tsx` is a declared dependency of
+ * this project, so it is resolved from the dependency tree and handed to
+ * `process.execPath`: the same interpreter, the same tree, no PATH.
+ */
+function tsxCli(): string {
+  const manifest = require_.resolve("tsx/package.json");
+  const bin = (require_(manifest) as { bin?: string | Record<string, string> }).bin;
+  const entry = typeof bin === "string" ? bin : (bin?.tsx ?? Object.values(bin ?? {})[0]);
+  if (!entry) throw new Error(`The tsx package at ${manifest} declares no executable, so this check cannot run its scripts.`);
+  return resolve(dirname(manifest), entry);
+}
+
+/**
+ * Which Chromium to drive, without naming a path on one machine.
+ *
+ * `CHROMIUM_PATH` wins, so an environment that keeps its browser somewhere of
+ * its own still works. Failing that, Playwright's own answer, which already
+ * honours `PLAYWRIGHT_BROWSERS_PATH` and is right on any machine where
+ * `playwright install` has run. Failing that, a browser sitting in the
+ * configured browsers directory under a plain name, which is how some
+ * pre-provisioned images ship one: Playwright's answer names the build its
+ * version expects, and an image carrying a different build has the browser
+ * without having that path.
+ *
+ * When none of them is there this returns nothing and Playwright raises its
+ * own error, which says how to install a browser. A guess would say ENOENT on
+ * a path nobody chose.
+ */
+function chromiumPath(): string | undefined {
+  const named = process.env.CHROMIUM_PATH?.trim();
+  if (named) return named;
+  try {
+    const own = chromium.executablePath();
+    if (own && existsSync(own)) return own;
+  } catch {
+    // Playwright has no path for this platform. Its own error is better than one made up here.
+  }
+  const browsers = process.env.PLAYWRIGHT_BROWSERS_PATH?.trim();
+  if (browsers) {
+    for (const candidate of [join(browsers, "chromium"), join(browsers, "chrome")]) {
+      if (existsSync(candidate)) return candidate;
+    }
+  }
+  return undefined;
+}
+
 function launch(command: string, args: string[], env: Record<string, string>): ChildProcess {
   const child = spawn(command, args, { cwd: ROOT, env: { ...process.env, ...env }, stdio: ["ignore", "pipe", "pipe"] });
   child.stdout?.on("data", () => {});
@@ -79,14 +135,17 @@ async function run() {
 
   // The source and a first mapping, as an administrator would have typed them.
   // Unapproved: approving it is one of the steps below.
-  await new Promise<void>((resolve, reject) => {
-    const seed = launch("npx", ["tsx", "scripts/ingestion-seed.ts"], env);
-    seed.on("exit", (code) => (code === 0 ? resolve() : reject(new Error(`the seed exited with ${code}`))));
+  const tsx = tsxCli();
+  await new Promise<void>((done, reject) => {
+    const seed = launch(process.execPath, [tsx, "scripts/ingestion-seed.ts"], env);
+    seed.on("error", reject);
+    seed.on("exit", (code) => (code === 0 ? done() : reject(new Error(`the seed exited with ${code}`))));
   });
 
   const catalogBefore = catalogCount();
-  const tool = launch("npx", ["tsx", "scripts/ingestion-server.ts"], env);
-  const browser = await chromium.launch({ executablePath: EXECUTABLE });
+  const tool = launch(process.execPath, [tsx, "scripts/ingestion-server.ts"], env);
+  const executablePath = chromiumPath();
+  const browser = await chromium.launch(executablePath ? { executablePath } : {});
 
   try {
     await waitFor(`${TOOL}/`, "the ingestion tool");
