@@ -52,3 +52,8 @@ next-env.d.ts
 # local preview catalogue: invented products staged from a sample supplier
 # file, an operator's working directory. Never committed and never deployed.
 /catalog-preview
+
+# The ingestion workspace: uploaded partner files, draft records and what the
+# last import wrote. Local working data, and the uploads are large.
+/ingestion/
+/ingestion-e2e/

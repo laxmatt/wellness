@@ -30,7 +30,10 @@
     "inventory:review": "tsx scripts/inventory-review.ts",
     "intake": "tsx scripts/import-intake.ts",
     "feed:sweatkingdom": "tsx scripts/import-awin-feed.ts",
-    "e2e:inventory": "tsx e2e/inventory-admin.mts"
+    "e2e:inventory": "tsx e2e/inventory-admin.mts",
+    "ingestion:seed": "tsx scripts/ingestion-seed.ts",
+    "ingestion:server": "tsx scripts/ingestion-server.ts",
+    "e2e:ingestion": "tsx e2e/ingestion-admin.mts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",
