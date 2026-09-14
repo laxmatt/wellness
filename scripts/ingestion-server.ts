@@ -42,6 +42,10 @@ import type { Product } from "@/domain/product";
 import { IngestionStore } from "@/providers/ingestion/IngestionStore";
 import { ingestionRoot } from "@/providers/ingestion/root";
 import { buildReport, draftIssues, runIngestionImport } from "@/providers/ingestion/import";
+import { planPromotion, signPromotion } from "@/providers/ingestion/promote";
+import { ImageRightsRecord } from "@/domain/promotion/rights";
+import { renderPlan, planIdMatches } from "@/domain/promotion/signed";
+import { ShadowResolution } from "@/domain/promotion/shadow";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 
 const ROOT = process.cwd();
@@ -110,6 +114,23 @@ function state(): Reply {
           records: Object.keys(st.snapshot).length,
         };
       }),
+      plans: store.plans().map((p) => ({
+        planId: p.planId,
+        signedBy: p.signedBy,
+        signedOn: p.signedOn,
+        sourceId: p.sourceId,
+        profileVersion: p.profileVersion,
+        uploadFile: p.uploadFile ?? null,
+        uploadHash: p.uploadHash ?? null,
+        families: p.selectedFamilyIds.length,
+        records: p.selectedRecordIds.length,
+        executed: p.executed,
+        // A later import can make a plan out of date. Saying so is information;
+        // the file itself is never touched.
+        stillCurrent: p.uploadHash !== undefined && p.uploadHash === store.state(p.sourceId).lastUploadHash,
+        selfConsistent: planIdMatches(p),
+        document: renderPlan(p),
+      })),
       drafts: drafts.products
         .map((p) => ({
           id: p.id,
@@ -304,6 +325,57 @@ function edit(input: { id?: unknown; name?: unknown; description?: unknown; by?:
   };
 }
 
+function readRequest(input: Record<string, unknown>): { familyIds: string[]; shadows: ShadowResolution[]; reviewer: string } {
+  const familyIds = Array.isArray(input.familyIds) ? input.familyIds.filter((v): v is string => typeof v === "string") : [];
+  const shadows: ShadowResolution[] = [];
+  for (const raw of Array.isArray(input.shadows) ? input.shadows : []) {
+    const parsed = ShadowResolution.safeParse(raw);
+    if (parsed.success) shadows.push(parsed.data);
+  }
+  return { familyIds, shadows, reviewer: text(input.reviewer).trim() };
+}
+
+function plan(input: Record<string, unknown>): Reply {
+  const found = sourceOr(input.sourceId);
+  if (!found.ok) return found.reply;
+  const outcome = planPromotion({ store, catalogDir: CATALOG_DIR, sourceId: found.source.id, request: readRequest(input), today: today() });
+  if (!outcome.ok) return fail(outcome.errors[0], { errors: outcome.errors });
+  return { status: 200, body: { ok: true, plan: outcome.plan } };
+}
+
+function sign(input: Record<string, unknown>): Reply {
+  const found = sourceOr(input.sourceId);
+  if (!found.ok) return found.reply;
+  const request = readRequest(input);
+  if (request.reviewer === "") return fail("Say who is signing this plan. An approval nobody signed is not one.");
+  const outcome = signPromotion({ store, catalogDir: CATALOG_DIR, sourceId: found.source.id, request, today: today() });
+  if (!outcome.ok) return fail(outcome.errors[0], { errors: outcome.errors });
+  return {
+    status: 200,
+    body: {
+      ok: true,
+      message: `Signed as ${outcome.plan.planId} by ${outcome.plan.signedBy}. Nothing was promoted and nothing was published: the plan is a record of a decision, in ingestion/plans, and this tool has no command that carries it out.`,
+      signed: outcome.plan,
+      document: outcome.document,
+      ...(state().body as object),
+    },
+  };
+}
+
+function recordRights(input: Record<string, unknown>): Reply {
+  const parsed = ImageRightsRecord.safeParse({ ...input, recordedOn: today() });
+  if (!parsed.success) {
+    return fail("That is not a usable record of permission.", { fieldErrors: parsed.error.issues.map((i) => ({ field: i.path.join(".") || "rights", message: i.message })) });
+  }
+  const draft = store.draft(parsed.data.recordId);
+  if (!draft) return fail(`There is no draft with id "${parsed.data.recordId}".`);
+  if (draft.images[0]?.src !== parsed.data.src) {
+    return fail(`That permission names a picture this record does not carry. The record's image is ${draft.images[0]?.src ?? "absent"}.`);
+  }
+  store.recordRights(parsed.data);
+  return { status: 200, body: { ok: true, message: `Recorded for ${parsed.data.recordId}. A permission covers the picture it names and no other.`, ...(state().body as object) } };
+}
+
 function run(body: Record<string, unknown>): Reply {
   switch (body.command) {
     case "state":
@@ -322,6 +394,12 @@ function run(body: Record<string, unknown>): Reply {
       return runImport(body);
     case "edit":
       return edit(body);
+    case "plan":
+      return plan(body);
+    case "sign":
+      return sign(body);
+    case "recordRights":
+      return recordRights(body);
     default:
       return fail(`"${String(body.command)}" is not a command this answers.`);
   }

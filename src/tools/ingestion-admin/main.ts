@@ -18,6 +18,9 @@
  */
 
 import type { Preflight, RecordPlan } from "@/domain/ingestion/preflight";
+import type { PromotionPlan, RecordReview, ShadowReview } from "@/domain/promotion/plan";
+import { RIGHTS_BASIS_WORDS, type RightsBasis } from "@/domain/promotion/rights";
+import { SHADOW_CHOICE_WORDS, type FieldSide, type ShadowChoice } from "@/domain/promotion/shadow";
 import type { AttributeRule, ColumnMapping, ExclusionRule, FieldOwnership, Grouping, MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
 import type { Suggestion } from "@/domain/ingestion/suggest";
 import { OPERATOR_HEADER } from "@/domain/inventory/local-request";
@@ -47,12 +50,37 @@ type DraftRow = {
   image: string | null;
   attributes: { key: string; value: unknown; verification: string; note: string | null }[];
 };
+type PlanRow = {
+  planId: string;
+  signedBy: string;
+  signedOn: string;
+  sourceId: string;
+  profileVersion: number;
+  uploadFile: string | null;
+  families: number;
+  records: number;
+  executed: boolean;
+  stillCurrent: boolean;
+  selfConsistent: boolean;
+  document: string;
+};
+type Promotion = {
+  familyIds: string[];
+  shadows: Record<string, { choice: ShadowChoice; fields: Record<string, FieldSide>; note: string }>;
+  reviewer: string;
+  plan: PromotionPlan | null;
+  /** Cleared whenever a choice changes, so a stale report never sits beside new choices. */
+  stale: boolean;
+  document: string | null;
+  rightsForm: { recordId: string; src: string; basis: RightsBasis; evidence: string } | null;
+};
 type ServerState = {
   today: string;
   formats: { format: string; label: string; supported: boolean; note: string }[];
   targets: { target: string; label: string; catalogPath: string; required: boolean; note: string }[];
   sources: SourceRow[];
   drafts: DraftRow[];
+  plans: PlanRow[];
 };
 type CategoryInfo = {
   id: string;
@@ -92,6 +120,7 @@ type State = {
   approver: string;
   edit: { id: string; name: string; description: string } | null;
   newSource: Record<string, string> | null;
+  promotion: Promotion;
   message: { text: string; bad: boolean; details: string[] } | null;
   busy: boolean;
 };
@@ -114,6 +143,7 @@ const state: State = {
   approver: "",
   edit: null,
   newSource: null,
+  promotion: { familyIds: [], shadows: {}, reviewer: "", plan: null, stale: false, document: null, rightsForm: null },
   message: null,
   busy: false,
 };
@@ -810,6 +840,330 @@ function draftsSection(): HTMLElement {
   return panel;
 }
 
+
+// -------------------------------------------------- promotion review (dry run)
+
+const touchPlan = (): void => {
+  // A report is about the choices that produced it. Keeping one on screen
+  // beside changed choices is how somebody signs the plan they were not looking
+  // at, so it is marked stale and worked out again.
+  if (state.promotion.plan) state.promotion.stale = true;
+  render();
+};
+
+function familyPicker(): HTMLElement {
+  const promotion = state.promotion;
+  const selectable = promotion.plan?.selectable ?? [];
+  const panel = el("div", { class: "panel", "data-testid": "family-picker" });
+
+  if (selectable.length === 0) {
+    panel.append(text_("p", "note", "Press the button below once and the families in this workspace appear here to choose from."));
+  }
+  for (const family of selectable) {
+    const row = el("div", { class: "row", "data-testid": `pick-${family.id}` });
+    const box = el("input", {
+      type: "checkbox",
+      "data-testid": `pick-box-${family.id}`,
+      ...(promotion.familyIds.includes(family.id) ? { checked: true } : {}),
+      onchange: (e) => {
+        const on = (e.target as HTMLInputElement).checked;
+        promotion.familyIds = on ? [...promotion.familyIds, family.id] : promotion.familyIds.filter((id) => id !== family.id);
+        touchPlan();
+      },
+    });
+    const head = el("header", {}, [box, text_("strong", "", family.name), text_("span", "mono", family.id)]);
+    if (family.shadowIds.length > 0) head.append(el("span", { class: "pill warn" }, [`${family.shadowIds.length} already in the catalogue`]));
+    row.append(head);
+    // Configurations are listed and are not selectable on their own. That is
+    // the whole prevention: there is no control here that selects a blackout
+    // finish without the model it is a finish of.
+    row.append(
+      text_(
+        "p",
+        "note",
+        family.memberIds.length === 0
+          ? "One record."
+          : `Comes with ${family.memberIds.length} ${family.memberIds.length === 1 ? "configuration" : "configurations"}: ${family.memberIds.join(", ")}. A family is taken whole.`,
+      ),
+    );
+    panel.append(row);
+  }
+  return panel;
+}
+
+function rightsForm(): HTMLElement {
+  const form = state.promotion.rightsForm!;
+  const box = el("div", { class: "panel", "data-testid": "rights-form" }, [
+    text_("h3", "", `Permission for ${form.recordId}`),
+    text_("p", "mono", form.src),
+    text_("p", "note", "A feed carrying a picture is not permission to publish it. Record what you read, where it is, and what it covers."),
+  ]);
+  box.append(
+    field(
+      "This rests on",
+      select(form.basis, (Object.keys(RIGHTS_BASIS_WORDS) as RightsBasis[]).map((b) => ({ value: b, label: RIGHTS_BASIS_WORDS[b] })), (v) => {
+        form.basis = v as RightsBasis;
+      }, { "data-testid": "rights-basis" }),
+    ),
+  );
+  box.append(
+    field(
+      "What you read, and where it is",
+      el("textarea", { "data-testid": "rights-evidence", oninput: (e) => { form.evidence = (e.target as HTMLTextAreaElement).value; } }, [form.evidence]),
+      "At least a sentence, detailed enough that somebody else could check it.",
+    ),
+  );
+  box.append(
+    el("div", { class: "actions" }, [
+      el("button", {
+        class: "primary",
+        "data-testid": "save-rights",
+        onclick: async () => {
+          const reply = await send("recordRights", { recordId: form.recordId, src: form.src, basis: form.basis, evidence: form.evidence, recordedBy: state.promotion.reviewer || "operator" });
+          if (reply.ok !== false) {
+            state.promotion.rightsForm = null;
+            state.promotion.stale = true;
+            render();
+          }
+        },
+      }, ["Record this permission"]),
+      el("button", { onclick: () => { state.promotion.rightsForm = null; render(); } }, ["Cancel"]),
+    ]),
+  );
+  return box;
+}
+
+function recordCard(record: RecordReview): HTMLElement {
+  const box = el("div", { class: "row", "data-testid": `review-${record.id}` });
+  const head = el("header", {}, [
+    text_("strong", "", record.name),
+    el("span", { class: "pill" }, [record.role]),
+    el("span", { class: "pill" }, [record.price.display]),
+    el("span", { class: "pill" }, [record.availability]),
+    text_("span", "mono", record.id),
+  ]);
+  if (record.shadowsCatalog) head.append(el("span", { class: "pill warn" }, ["already in the catalogue"]));
+  box.append(head);
+  box.append(text_("p", "note", `Price checked ${record.price.lastChecked}. Link ${record.link.url} (${record.link.affiliateStatus}${record.link.network ? `, ${record.link.network}` : ""}).`));
+  box.append(text_("p", "note", `Provenance: ${record.provenance.kind}, ${record.provenance.method}${record.provenance.ref ? `, ${record.provenance.ref}` : ""}.`));
+
+  const rights = el("p", { "data-testid": `rights-${record.id}` }, [
+    el("span", { class: `pill ${record.image.state === "cleared" ? "ok" : "bad"}` }, [`image rights: ${record.image.state}`]),
+  ]);
+  box.append(rights, text_("p", "note", record.image.why));
+  if (record.image.src && record.image.state !== "cleared") {
+    box.append(
+      el("div", { class: "actions" }, [
+        el("button", {
+          "data-testid": `record-rights-${record.id}`,
+          onclick: () => {
+            state.promotion.rightsForm = { recordId: record.id, src: record.image.src!, basis: "partner_terms_reviewed", evidence: "" };
+            render();
+          },
+        }, ["Record a permission for this picture"]),
+      ]),
+    );
+  }
+
+  const mapped = record.comparison.filter((c) => c.state === "mapped");
+  const missing = record.comparison.filter((c) => c.state === "missing");
+  box.append(
+    text_("p", "note", `Comparison fields present: ${mapped.map((c) => `${c.label} (${c.display})`).join(", ") || "none"}.`),
+    text_("p", "note", `Missing: ${missing.map((c) => c.label).join(", ") || "none"}.`),
+  );
+  if (record.editorial.changes.length > 0) {
+    box.append(text_("p", "note", `Changed here since the last import: ${record.editorial.changes.map((c) => c.label).join(", ")}.`));
+  }
+  for (const conflict of record.editorial.conflicts) {
+    box.append(text_("p", "err", `Open conflict on ${conflict.label}: the file says ${display(conflict.incoming)}, this site says ${display(conflict.current)}.`));
+  }
+  return box;
+}
+
+function shadowCard(shadow: ShadowReview): HTMLElement {
+  const held = state.promotion.shadows[shadow.id] ?? { choice: "unresolved" as ShadowChoice, fields: {}, note: "" };
+  const box = el("div", { class: `row ${shadow.problems.length > 0 ? "conflict" : "added"}`, "data-testid": `shadow-${shadow.id}` });
+  box.append(el("header", {}, [text_("strong", "", shadow.id), el("span", { class: `pill ${shadow.problems.length > 0 ? "bad" : "ok"}` }, [held.choice])]));
+  box.append(text_("p", "note", `The catalogue holds "${shadow.diff.existingName}". The workspace holds "${shadow.diff.draftName}". Nothing is chosen for you.`));
+
+  for (const choice of ["keep_existing", "replace_with_draft", "merge_fields"] as ShadowChoice[]) {
+    const label = el("label", { style: "font-weight:400" });
+    label.append(
+      el("input", {
+        type: "radio",
+        name: `shadow-${shadow.id}`,
+        "data-testid": `shadow-${shadow.id}-${choice}`,
+        ...(held.choice === choice ? { checked: true } : {}),
+        onchange: () => {
+          state.promotion.shadows[shadow.id] = { ...held, choice };
+          touchPlan();
+        },
+      }),
+      document.createTextNode(` ${SHADOW_CHOICE_WORDS[choice]}`),
+    );
+    box.append(label);
+  }
+
+  const table = el("table", { "data-testid": `shadow-diff-${shadow.id}` });
+  table.append(el("tr", {}, [text_("th", "", "Field"), text_("th", "", "Catalogue"), text_("th", "", "Workspace"), text_("th", "", "Take")]));
+  for (const f of shadow.diff.fields) {
+    const cell = el("td");
+    if (f.locked) cell.append(el("span", { class: "pill" }, ["editorial, locked to the workspace"]));
+    else if (f.same) cell.append(text_("span", "note", "same"));
+    else if (held.choice === "merge_fields") {
+      cell.append(
+        select(held.fields[f.key] ?? "", [{ value: "", label: "— choose —" }, { value: "existing", label: "catalogue" }, { value: "draft", label: "workspace" }], (v) => {
+          const fields = { ...held.fields };
+          if (v === "") delete fields[f.key];
+          else fields[f.key] = v as FieldSide;
+          state.promotion.shadows[shadow.id] = { ...held, fields };
+          touchPlan();
+        }, { "data-testid": `shadow-field-${shadow.id}-${f.key}` }),
+      );
+    } else cell.append(text_("span", "note", held.choice === "keep_existing" ? "catalogue" : held.choice === "replace_with_draft" ? "workspace" : "—"));
+    table.append(el("tr", {}, [text_("td", "", f.label), text_("td", "mono", display(f.existing)), text_("td", "mono", display(f.draft)), cell]));
+  }
+  box.append(table);
+
+  if (shadow.outcome) {
+    box.append(text_("p", "note", `This would keep the ${shadow.outcome.from === "existing" ? "catalogue record" : shadow.outcome.from === "draft" ? "workspace draft" : "merged record"}.`));
+    if (shadow.outcome.discards.length > 0) box.append(text_("p", "note", `Given up: ${shadow.outcome.discards.map((d) => d.label).join(", ")}.`));
+  }
+  for (const problem of shadow.problems) box.append(text_("p", "err", problem.message));
+  return box;
+}
+
+function promotionSection(): HTMLElement {
+  const promotion = state.promotion;
+  const panel = el("section", { class: "panel", "data-testid": "promotion" }, [
+    text_("h2", "", "Promotion review (dry run)"),
+    text_(
+      "p",
+      "note",
+      "Works out what promoting some families into the catalogue would do, and writes none of it. Signing records a decision in ingestion/plans and performs no catalogue write. There is no command in this tool that carries a plan out.",
+    ),
+  ]);
+
+  panel.append(familyPicker());
+  panel.append(
+    el("div", { class: "actions" }, [
+      el("button", {
+        class: "primary",
+        "data-testid": "build-plan",
+        ...(state.busy ? { disabled: true } : {}),
+        onclick: async () => {
+          const reply = await send("plan", {
+            sourceId: state.sourceId,
+            familyIds: promotion.familyIds,
+            shadows: Object.entries(promotion.shadows).map(([id, r]) => ({ id, ...r })),
+            reviewer: promotion.reviewer,
+          });
+          if (reply.ok !== false) {
+            promotion.plan = reply.plan as PromotionPlan;
+            promotion.stale = false;
+            render();
+          }
+        },
+      }, ["Work out what this would do"]),
+    ]),
+  );
+
+  if (promotion.rightsForm) panel.append(rightsForm());
+  if (promotion.stale) panel.append(text_("p", "err", "The choices have changed since this was worked out. Work it out again before signing."));
+
+  const plan = promotion.plan;
+  if (!plan) return panel;
+
+  panel.append(
+    el("p", { "data-testid": "promotion-counts" }, [
+      `${plan.sourceRecords} source records, ${plan.comparisonFamilies} comparison families, ${plan.selectedFamilyIds.length} selected, ${plan.selectedRecordIds.length} records in the selection.`,
+    ]),
+  );
+  panel.append(
+    text_(
+      "p",
+      "note",
+      `The catalogue afterwards, if this were ever carried out: ${plan.hypotheticalProducts} products, ${plan.hypotheticalFamilies} comparable models in this category. Read from ${plan.uploadFile ?? "no recorded file"} through mapping v${plan.profileVersion}.`,
+    ),
+  );
+
+  if (plan.blockers.length > 0) {
+    const list = el("ul", { "data-testid": "promotion-blockers" });
+    for (const blocker of plan.blockers) list.append(el("li", { class: "err", "data-testid": `blocker-${blocker.code}` }, [`${blocker.code}: ${blocker.message}`]));
+    panel.append(text_("h3", "", `${plan.blockers.length} unresolved`), list);
+  } else {
+    panel.append(text_("p", "note", "Nothing unresolved. Signing is still not promoting, and promoting is still not publishing."));
+  }
+
+  for (const family of plan.families) {
+    panel.append(text_("h3", "", `${family.name} (${family.records.length} records)`));
+    for (const record of family.records) panel.append(recordCard(record));
+  }
+
+  if (plan.shadows.length > 0) {
+    panel.append(text_("h3", "", "Records the catalogue already holds"));
+    for (const shadow of plan.shadows) panel.append(shadowCard(shadow));
+  }
+
+  for (const issue of plan.catalogueIssues) panel.append(text_("p", "err", `The catalogue this would produce: ${issue}`));
+  for (const issue of plan.familyIntegrityIssues) panel.append(text_("p", "err", `Family integrity: ${issue}`));
+
+  panel.append(text_("p", "mono", `Plan identifier: ${plan.planId}`));
+  const actions = el("div", { class: "actions" });
+  actions.append(el("input", { type: "text", value: promotion.reviewer, placeholder: "who signs this", "data-testid": "plan-reviewer", oninput: (e) => { promotion.reviewer = (e.target as HTMLInputElement).value; } }));
+  actions.append(
+    el("button", {
+      class: "primary",
+      "data-testid": "sign-plan",
+      ...(plan.blockers.length > 0 || promotion.stale || state.busy ? { disabled: true } : {}),
+      onclick: async () => {
+        const reply = await send("sign", {
+          sourceId: state.sourceId,
+          familyIds: promotion.familyIds,
+          shadows: Object.entries(promotion.shadows).map(([id, r]) => ({ id, ...r })),
+          reviewer: promotion.reviewer,
+        });
+        if (reply.ok !== false) {
+          promotion.document = typeof reply.document === "string" ? reply.document : null;
+          promotion.plan = null;
+          render();
+        }
+      },
+    }, ["Sign this plan"]),
+  );
+  // Present, and it does nothing, because carrying a plan out is not in this
+  // batch. A button that quietly was not there would read as an oversight.
+  actions.append(el("button", { disabled: true, "data-testid": "execute-plan", title: "Out of scope" }, ["Carry this plan out — not built"]));
+  panel.append(actions);
+  panel.append(text_("p", "note", "Carrying a plan out would write to catalog/. No code in this project does that, and this button is here to say so rather than to hide it."));
+  return panel;
+}
+
+function historySection(): HTMLElement {
+  const plans = state.server?.plans ?? [];
+  const panel = el("section", { class: "panel", "data-testid": "plan-history" }, [text_("h2", "", `Signed plans (${plans.length})`)]);
+  panel.append(text_("p", "note", "A record of decisions, in ingestion/plans. Written once, never edited, and never touched by an import. None of them has been carried out."));
+  if (state.promotion.document) {
+    panel.append(el("pre", { "data-testid": "plan-document", class: "mono" }, [state.promotion.document]));
+  }
+  for (const row of plans) {
+    const box = el("div", { class: "row", "data-testid": `plan-${row.planId}` });
+    box.append(
+      el("header", {}, [
+        text_("strong", "", row.planId),
+        el("span", { class: "pill" }, [`signed by ${row.signedBy} on ${row.signedOn}`]),
+        el("span", { class: `pill ${row.stillCurrent ? "ok" : "warn"}` }, [row.stillCurrent ? "matches the current file" : "the workspace has moved on"]),
+        el("span", { class: `pill ${row.selfConsistent ? "ok" : "bad"}` }, [row.selfConsistent ? "names itself" : "does not name itself"]),
+        el("span", { class: "pill" }, [row.executed ? "carried out" : "not carried out"]),
+      ]),
+    );
+    box.append(text_("p", "note", `${row.families} families, ${row.records} records, mapping v${row.profileVersion}, file ${row.uploadFile ?? "not recorded"}.`));
+    box.append(el("details", {}, [el("summary", {}, ["Read the plan"]), el("pre", { class: "mono" }, [row.document])]));
+    panel.append(box);
+  }
+  return panel;
+}
+
 // ------------------------------------------------------------------ drawing
 
 function render(): void {
@@ -827,6 +1181,9 @@ function render(): void {
   }
   if (state.preflight) root.append(reportSection());
   root.append(draftsSection());
+  if (state.sourceId !== "" && (state.server.drafts.length > 0 || (state.server.plans?.length ?? 0) > 0)) {
+    root.append(promotionSection(), historySection());
+  }
 }
 
 export function start(doc: Document): void {

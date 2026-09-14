@@ -160,6 +160,62 @@ A proposed filter the category does not define is recorded in the profile and
 applied by nothing. Changing what the site compares products on is a schema
 change in a commit somebody reviews.
 
+## Promotion review (dry run)
+
+The last step in the tool, and it promotes nothing. It works out what moving
+some drafts into `catalog/` would do, shows it, and lets a reviewer sign the
+decision. No file in `catalog/` is written by any of it, and there is no
+command in this project that carries a signed plan out. The button that would
+is present and disabled, because a button quietly missing reads as an
+oversight.
+
+**Families are the unit of selection.** The picker offers the 15 comparison
+families. A configuration has no checkbox of its own: promoting "The Sweat
+Cabin in blackout" without the cabin it is a finish of would put a record on
+the site whose own family is not there, which reads as a model in its own
+right. Passing a member's id to the planner directly is refused by name, and
+the refusal says which family to select instead.
+
+For every record in a selected family the review shows its price and the date
+that price was checked, its availability, its image and what is known about the
+right to publish it, the issued affiliate link, its provenance, anything
+changed here since the last import, any open conflict, and which of the
+category's high-level comparison fields it fills. On this feed that last line
+reads: price present, heating, connection, placement, capacity and capacity
+label missing.
+
+**A picture needs a permission.** The default is unresolved and unresolved
+blocks signing. A feed carrying an image is not a grant: nothing in the file
+says who owns the photograph or what an affiliate may do with it. The only
+thing that clears it is somebody recording what they read, what it rests on,
+and which picture it covers. A partner replacing the photograph behind the URL
+supersedes the permission and the blocker comes back.
+
+**A collision needs an answer.** Five Sweat Kingdom ids are in `catalog/`
+already, built by hand through the partner adapter before this flow existed.
+Each selected one has to be answered: keep the catalogue record, replace it
+with the draft, or merge field by field. The default is unresolved, nothing is
+chosen for anybody, and the exact field-by-field difference is shown behind
+each choice with what that choice gives up. A merge has to name every field the
+two disagree on; a merge with unnamed fields is a replace wearing a merge's
+name. A field the mapping profile calls editorial is locked to the workspace
+and is never offered to a merge.
+
+**The whole hypothetical catalogue is validated.** The catalogue that would
+exist afterwards, with the resolutions applied and the brands and merchants
+that travel with the records, is run through `validateCatalog` and the family
+integrity rules before a plan can be signed.
+
+Signing writes one file into `ingestion/plans`, recording the reviewer, the
+date, the source, the mapping version, the exact bytes of the upload by content
+hash, the selected families and records, every shadow resolution and what it
+gave up, the empty blocker list, and a plan identifier that is a hash of all of
+it. The same decisions produce the same identifier; a plan edited on disk stops
+naming itself and the tool says so. A signed plan is written once and nothing,
+including the next import of the same feed, edits it. A later import can make a
+plan out of date and the history says which plans still match the current file.
+That is a thing a reader is told, not a thing done to the file.
+
 ## What it will not do
 
 - Publish, deploy, or write to `catalog/`.
@@ -202,6 +258,15 @@ change in a commit somebody reviews.
 - **Promotion is missing.** There is no way to move a draft from the workspace
   into the catalogue, by design for this batch. Somebody has to build it, with
   its own review step, before any of this reaches a page.
+- **Nothing carries a plan out.** There is no promotion executor. A signed
+  plan is a record of a decision, and moving records into `catalog/` is the
+  next batch's work with its own review.
+- **Image rights are recorded, not verified.** The tool holds what a person
+  wrote down and checks that it names the picture the record carries. It does
+  not read the partner's terms and cannot tell a careful reading from a
+  careless one.
+- **A shadow merge is field-level, not word-level.** A reviewer takes a whole
+  description from one side or the other; there is no way to take half of one.
 - **The family layer is not wired into the storefront.** `groupIntoFamilies`
   in `src/domain/family.ts` turns records into comparables, and the preflight
   reports the count, but no category page, compare tray or query calls it. No

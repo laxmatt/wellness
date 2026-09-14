@@ -19,7 +19,8 @@
  */
 
 import { spawn, type ChildProcess } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
@@ -52,6 +53,24 @@ const draftFiles = (): string[] => {
 };
 const draft = (id: string): { name: string; description: string } => JSON.parse(readFileSync(join(WORKSPACE_DIR, "drafts", "products", `${id}.json`), "utf8"));
 const catalogCount = (): number => readdirSync(join(ROOT, "catalog", "products")).length;
+const planFiles = (): string[] => {
+  const dir = join(WORKSPACE_DIR, "plans");
+  return existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".json")).sort() : [];
+};
+
+/** Every byte of the catalogue. The promotion planner must not move one. */
+function catalogFingerprint(): string {
+  const parts: string[] = [];
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir).sort()) {
+      const path = join(dir, entry);
+      if (statSync(path).isDirectory()) walk(path);
+      else parts.push(`${path}:${createHash("sha256").update(readFileSync(path)).digest("hex")}`);
+    }
+  };
+  walk(join(ROOT, "catalog"));
+  return createHash("sha256").update(parts.join("\n")).digest("hex");
+}
 
 async function waitFor(url: string, what: string, timeoutMs = 60_000): Promise<void> {
   const deadline = Date.now() + timeoutMs;
@@ -236,6 +255,68 @@ async function run() {
     ok("nothing else moved either", (await page.locator('[data-testid="preflight"] p').first().textContent())?.includes("17 unchanged") === true);
     ok("and the refresh date is recorded", (await page.locator('[data-testid="staleness"]').textContent())?.includes("Last successful refresh") === true);
     ok("and the 15 comparables survive the refresh", (await page.locator('[data-testid="comparison-counts"]').textContent())?.startsWith("17 source records, 15 things") === true);
+
+    scenario = "promote";
+    const catalogBytes = catalogFingerprint();
+    await page.locator('[data-testid="build-plan"]').click();
+    await page.waitForSelector('[data-testid="promotion-counts"]', { timeout: 30_000 });
+    ok("nothing selected is said plainly", (await page.locator('[data-testid="blocker-no_selection"]').count()) === 1);
+    ok(
+      "a blackout configuration has no checkbox of its own",
+      (await page.locator('[data-testid="pick-box-sweat-kingdom-the-sweat-cabin-blackout-edition"]').count()) === 0,
+    );
+    ok(
+      "it is listed as coming with the model it is a finish of",
+      (await page.locator('[data-testid="pick-sweat-kingdom-the-sweat-cabin"]').textContent())?.includes("sweat-kingdom-the-sweat-cabin-blackout-edition") === true,
+    );
+    check("all 15 families are offered", await page.locator('[data-testid^="pick-box-"]').count(), 15);
+
+    await page.locator('[data-testid="pick-box-sweat-kingdom-the-sweat-cabin"]').check();
+    await page.locator('[data-testid="pick-box-sweat-kingdom-the-ascent"]').check();
+    await page.locator('[data-testid="build-plan"]').click();
+    await page.waitForSelector('[data-testid="promotion-counts"]', { timeout: 30_000 });
+    check("three records in the selection", await page.locator('[data-testid="promotion-counts"]').textContent(), "17 source records, 15 comparison families, 2 selected, 3 records in the selection.");
+    ok("a feed picture is not permission", (await page.locator('[data-testid="blocker-image_rights"]').count()) > 0);
+    ok("the collision with the catalogue is unresolved", (await page.locator('[data-testid="blocker-shadow_unresolved"]').count()) === 1);
+    ok("and signing is refused", await page.locator('[data-testid="sign-plan"]').isDisabled());
+
+    scenario = "rights";
+    for (const id of ["sweat-kingdom-the-sweat-cabin", "sweat-kingdom-the-sweat-cabin-blackout-edition", "sweat-kingdom-the-ascent"]) {
+      await page.locator(`[data-testid="record-rights-${id}"]`).click();
+      await page.locator('[data-testid="rights-evidence"]').fill("Awin programme terms for advertiser 125462, creative clause, read on this date and saved beside the partner file.");
+      await page.locator('[data-testid="save-rights"]').click();
+      await page.waitForSelector('[data-testid="message"]');
+    }
+    await page.locator('[data-testid="build-plan"]').click();
+    await page.waitForSelector('[data-testid="promotion-counts"]', { timeout: 30_000 });
+    check("no picture is unresolved now", await page.locator('[data-testid="blocker-image_rights"]').count(), 0);
+    ok("but the collision still is", (await page.locator('[data-testid="blocker-shadow_unresolved"]').count()) === 1);
+
+    scenario = "shadow";
+    ok("the difference is shown field by field", (await page.locator('[data-testid="shadow-diff-sweat-kingdom-the-ascent"] tr').count()) > 5);
+    await page.locator('[data-testid="shadow-sweat-kingdom-the-ascent-replace_with_draft"]').check();
+    await page.locator('[data-testid="build-plan"]').click();
+    await page.waitForSelector('[data-testid="promotion-counts"]', { timeout: 30_000 });
+    check("nothing is unresolved", await page.locator('[data-testid="promotion-blockers"]').count(), 0);
+    ok("and signing is offered", !(await page.locator('[data-testid="sign-plan"]').isDisabled()));
+    ok("carrying it out is not", await page.locator('[data-testid="execute-plan"]').isDisabled());
+    check("nothing has been written to the catalogue", catalogFingerprint(), catalogBytes);
+    check("and no plan is signed yet", planFiles().length, 0);
+
+    scenario = "sign";
+    await page.locator('[data-testid="plan-reviewer"]').fill("e2e reviewer");
+    await page.locator('[data-testid="sign-plan"]').click();
+    await page.waitForSelector('[data-testid="plan-document"]', { timeout: 30_000 });
+    check("one plan is on disk", planFiles().length, 1);
+    check("the catalogue is still untouched", catalogFingerprint(), catalogBytes);
+    check("and still has the same number of products", catalogCount(), catalogBefore);
+    const document_ = (await page.locator('[data-testid="plan-document"]').textContent()) ?? "";
+    ok("the plan says nothing was promoted or published", document_.includes("Nothing has been promoted or published"));
+    ok("it names who signed it", document_.includes("Signed by e2e reviewer"));
+    ok("it names the file and the mapping", document_.includes("mapping profile v1"));
+    ok("it records the collision decision", document_.includes("replace_with_draft"));
+    ok("and it lists the comparison fields this feed does not fill", document_.includes("Comparison fields missing:"));
+    ok("the history shows it as not carried out", (await page.locator('[data-testid="plan-history"]').textContent())?.includes("not carried out") === true);
   } finally {
     await browser.close();
     tool.kill("SIGTERM");

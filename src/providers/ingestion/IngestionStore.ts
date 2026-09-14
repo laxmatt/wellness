@@ -31,6 +31,8 @@ import { join, resolve, sep } from "node:path";
 import { MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
 import type { RecordFields } from "@/domain/ingestion/record";
 import { Id, type Brand, type Merchant, type Product } from "@/domain/product";
+import { ImageRightsRecord } from "@/domain/promotion/rights";
+import { SignedPlan } from "@/domain/promotion/signed";
 import { readCatalogRecords, type CatalogRecords } from "@/providers/catalog/LocalCatalogProvider";
 import { z } from "zod";
 
@@ -40,8 +42,26 @@ export const SourceState = z.object({
   lastSuccessfulRefresh: z.iso.date().optional(),
   lastProfileVersion: z.number().int().positive().optional(),
   lastFile: z.string().optional(),
+  /**
+   * The exact bytes the last import read, by content hash.
+   *
+   * A promotion plan names the file it was reviewed against, and a file name is
+   * not a file: two exports a week apart carry the same name and different
+   * contents. The hash is what lets a signed plan say whether the drafts under
+   * it are still the drafts somebody read.
+   */
+  lastUploadHash: z.string().optional(),
   /** The fields the last import wrote, per record. The third value the merge needs. */
   snapshot: z.record(z.string(), z.record(z.string(), z.unknown())).default({}),
+  /**
+   * Fields the last import would not write, per record, because the file and
+   * this site had both moved.
+   *
+   * Kept so a reviewer sees an open disagreement without the feed in front of
+   * them. An import resolves nothing; it reports, and the report has to outlive
+   * the run that produced it.
+   */
+  conflicts: z.record(z.string(), z.array(z.object({ key: z.string(), label: z.string(), incoming: z.unknown(), current: z.unknown(), last: z.unknown() }))).default({}),
 });
 export type SourceState = z.infer<typeof SourceState>;
 
@@ -219,7 +239,7 @@ export class IngestionStore {
   // -------------------------------------------------------------------- state
 
   state(sourceId: string): SourceState {
-    return this.readJson(this.inside("state", `${this.id(sourceId)}.json`), SourceState) ?? { sourceId, snapshot: {} };
+    return this.readJson(this.inside("state", `${this.id(sourceId)}.json`), SourceState) ?? { sourceId, snapshot: {}, conflicts: {} };
   }
 
   saveState(state: SourceState): void {
@@ -249,5 +269,65 @@ export class IngestionStore {
 
   draft(id: string): Product | undefined {
     return this.draftsById().get(id);
+  }
+
+  // ------------------------------------------------------------ image rights
+
+  /**
+   * What somebody recorded about permission to publish a picture.
+   *
+   * A list per record rather than one entry, because a partner replacing the
+   * photograph behind a URL does not undo the reading somebody did of the old
+   * one: both stay, and `imageRightsFor` decides which covers the picture the
+   * record carries now.
+   */
+  rights(recordId: string): ImageRightsRecord[] {
+    return this.readJson(this.inside("rights", `${this.id(recordId)}.json`), z.array(ImageRightsRecord)) ?? [];
+  }
+
+  allRights(): ImageRightsRecord[] {
+    const dir = this.inside("rights");
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir)
+      .filter((f) => f.endsWith(".json"))
+      .flatMap((f) => this.readJson(join(dir, f), z.array(ImageRightsRecord)) ?? []);
+  }
+
+  recordRights(record: ImageRightsRecord): void {
+    const existing = this.rights(record.recordId);
+    this.writeJson(this.inside("rights", `${this.id(record.recordId)}.json`), [...existing.filter((r) => r.src !== record.src), record]);
+  }
+
+  // ------------------------------------------------------------ signed plans
+
+  private planFile(planId: string): string {
+    if (!/^plan-[0-9a-f]{16}$/.test(planId)) throw new Error(`"${planId}" is not a plan identifier.`);
+    return this.inside("plans", `${planId}.json`);
+  }
+
+  plans(): SignedPlan[] {
+    const dir = this.inside("plans");
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir)
+      .filter((f) => /^plan-[0-9a-f]{16}\.json$/.test(f))
+      .map((f) => this.readJson(join(dir, f), SignedPlan)!)
+      .sort((a, b) => b.signedOn.localeCompare(a.signedOn) || a.planId.localeCompare(b.planId));
+  }
+
+  plan(planId: string): SignedPlan | undefined {
+    return this.readJson(this.planFile(planId), SignedPlan);
+  }
+
+  /**
+   * Written once, and never again.
+   *
+   * A signed plan is what somebody decided on a day. Editing one in place would
+   * make its own identifier a lie, and an import of the next feed must not
+   * reach it at all: nothing else in this store writes to `plans/`.
+   */
+  savePlan(plan: SignedPlan): void {
+    const path = this.planFile(plan.planId);
+    if (existsSync(path)) throw new Error(`${plan.planId} is already signed. A signed plan is written once; make a new plan instead.`);
+    this.writeJson(path, plan);
   }
 }

@@ -21,7 +21,7 @@ import { isApproved, type MappingProfile, type PartnerSource } from "@/domain/in
 import type { RecordFields } from "@/domain/ingestion/record";
 import type { Brand, Merchant, Product } from "@/domain/product";
 import { loadLocalCatalog, validateCatalog, type CatalogRecords } from "@/providers/catalog/LocalCatalogProvider";
-import type { CredentialFinding, IngestionStore } from "./IngestionStore";
+import type { CredentialFinding, IngestionStore, SourceState } from "./IngestionStore";
 
 export type ReportInput = {
   store: IngestionStore;
@@ -134,11 +134,25 @@ export function runIngestionImport(input: ImportInput): ImportOutcome {
 
   const previous = store.state(source.id);
   const snapshot: Record<string, RecordFields> = { ...(previous.snapshot as Record<string, RecordFields>) };
+  const conflicts: SourceState["conflicts"] = { ...previous.conflicts };
   for (const plan of report.plans) {
     if (plan.product === undefined) continue;
     snapshot[plan.id] = nextSnapshot(plan.outcomes, previous.snapshot[plan.id] as RecordFields | undefined);
+    // Open disagreements outlive the run that found them, so a reviewer looking
+    // at a draft next week sees them without the feed in front of them.
+    const open = plan.outcomes.filter((o) => o.outcome === "conflict").map((o) => ({ key: o.key, label: o.label, incoming: o.incoming, current: o.current, last: o.last }));
+    if (open.length > 0) conflicts[plan.id] = open;
+    else delete conflicts[plan.id];
   }
-  store.saveState({ sourceId: source.id, lastSuccessfulRefresh: today, lastProfileVersion: profile.version, lastFile: fileName, snapshot });
+  store.saveState({
+    sourceId: source.id,
+    lastSuccessfulRefresh: today,
+    lastProfileVersion: profile.version,
+    lastFile: fileName,
+    lastUploadHash: saved.hash,
+    snapshot,
+    conflicts,
+  });
 
   return { ok: true, report, written: writing.map((w) => w.id), upload: { path: saved.path, hash: saved.hash, bytes: saved.bytes } };
 }
