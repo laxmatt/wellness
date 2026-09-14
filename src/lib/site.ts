@@ -19,6 +19,7 @@ export const NAV = [
   { href: "/explore", label: "Explore" },
   { href: "/red-light", label: "Red Light" },
   { href: "/cold-plunge", label: "Cold Plunge" },
+  { href: "/saunas", label: "Saunas" },
   { href: "/wellness-drinks", label: "Wellness Drinks" },
   { href: "/compare", label: "Compare" },
   { href: "/brands", label: "Brands" },

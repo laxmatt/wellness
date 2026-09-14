@@ -173,7 +173,7 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
       }
     }
     const hasPrimary = p.images.some((i) => i.role === "primary");
-    if (!hasPrimary) issues.push({ file, message: "no primary image" });
+    if (!hasPrimary && p.status !== "draft") issues.push({ file, message: "no primary image" });
   }
   return issues;
 }

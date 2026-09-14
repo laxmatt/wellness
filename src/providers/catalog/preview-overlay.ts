@@ -161,7 +161,7 @@ export function loadCatalogWithPreview(baseRoot: string, previewRoot: string, en
   return {
     catalog: outcome.catalog,
     notices: [
-      `Preview catalogue loaded: ${products} product${products === 1 ? "" : "s"}, ${brands} brand${brands === 1 ? "" : "s"}, ${merchants} supplier${merchants === 1 ? "" : "s"}. These are invented records staged from a sample file and must not be served to anybody.`,
+      `Preview catalogue loaded: ${products} product${products === 1 ? "" : "s"}, ${brands} brand${brands === 1 ? "" : "s"}, ${merchants} supplier${merchants === 1 ? "" : "s"}. These are local review records and must not be served publicly.`,
     ],
   };
 }

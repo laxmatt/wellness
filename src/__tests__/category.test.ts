@@ -4,8 +4,8 @@ import { CategoryDefinition } from "@/domain/category";
 import { miniCategory } from "./fixtures";
 
 describe("category definitions", () => {
-  it("all three launch categories parse", () => {
-    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "wellness-drinks"]);
+  it("all four launch categories parse", () => {
+    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "saunas", "wellness-drinks"]);
   });
 
   it("rejects references to unknown attribute keys", () => {

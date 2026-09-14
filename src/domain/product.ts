@@ -155,8 +155,8 @@ export const Product = z.object({
     demo: z.boolean().default(false),
     newArrival: z.boolean().default(false),
   }).default({ demo: false, newArrival: false }),
-}).refine((p) => p.offers.length > 0 || p.referencePrice !== undefined, {
-  message: "Product needs at least one offer or a referencePrice",
+}).refine((p) => p.status === "draft" || p.offers.length > 0 || p.referencePrice !== undefined, {
+  message: "Published products need at least one offer or a referencePrice",
 });
 export type Product = z.infer<typeof Product>;
 

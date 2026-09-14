@@ -111,6 +111,7 @@ function makerClaim(source: Attributed["source"]): "direct" | "relayed" | "retai
 /** Short enough for a pill beside a value. */
 export function attributionTag(p: Attributed): string {
   if (p.verification !== "manufacturer_reported") return TAGS[p.verification];
+  if (p.source.kind === "merchant_feed") return "Supplier feed";
   const shape = makerClaim(p.source);
   if (shape === "retailer") return "Via retailer";
   return shape === "relayed" ? "Maker, relayed" : "Maker reported";
@@ -120,6 +121,7 @@ export function attributionTag(p: Attributed): string {
 export function attributionSentence(p: Attributed): string {
   if (p.verification === "independently_verified") return "verified by this site";
   if (p.verification !== "manufacturer_reported") return "source not recorded";
+  if (p.source.kind === "merchant_feed") return "reported in the supplier's inventory feed, not independently verified here";
   const shape = makerClaim(p.source);
   if (shape === "retailer") return "the maker's figure, relayed by a retailer listing";
   // The direct case keeps its short wording. It is the common one, 111 records,

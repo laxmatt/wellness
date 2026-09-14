@@ -439,6 +439,8 @@ Specifications that are missing, unsupported or relayed:
 - `sanitation_methods`: **absent from the record**
 - `warranty_years` (required): **absent from the record**
 
+## Saunas
+
 ## Wellness Drinks
 
 ### AG1 AG1 Greens Powder, Next Gen Original, 30 servings
@@ -621,6 +623,7 @@ Specifications that are missing, unsupported or relayed:
 | --- | --- | --- | --- | --- | --- |
 | Red Light Therapy | 8 | 6 | 6 | 0 | 0 |
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
+| Saunas | 0 | 0 | 0 | 0 | 0 |
 | Wellness Drinks | 6 | 6 | 5 | 0 | 0 |
 
 ## Totals

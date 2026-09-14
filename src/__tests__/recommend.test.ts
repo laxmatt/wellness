@@ -215,7 +215,7 @@ describe("real catalog badges", () => {
     const c = catalog();
     for (const cat of c.categories) {
       const set = assignBadges(viewsFor(cat.id).map(toScoringInput), cat);
-      expect(set.badges.some((b) => b.badge === "best_overall"), cat.id).toBe(true);
+      if (viewsFor(cat.id).length > 0) expect(set.badges.some((b) => b.badge === "best_overall"), cat.id).toBe(true);
     }
     const drinks = assignBadges(viewsFor("wellness-drinks").map(toScoringInput), categoryById("wellness-drinks")!);
     expect(drinks.badges.some((b) => b.badge === "best_budget")).toBe(false);

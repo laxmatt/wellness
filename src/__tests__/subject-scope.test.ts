@@ -55,7 +55,7 @@ describe("negation", () => {
 describe("subjects this site has no catalogue for", () => {
   it("names the listed subject", () => {
     expect(on(redLight, "do you have vitamins?")).toEqual({ kind: "absent_subject", labels: ["vitamins"] });
-    expect(on(coldPlunge, "looking for a sauna")).toEqual({ kind: "absent_subject", labels: ["saunas"] });
+    expect(on(coldPlunge, "looking for a sauna")).toEqual({ kind: "other_category", categoryIds: ["saunas"] });
     expect(on(redLight, "massage guns")).toEqual({ kind: "absent_subject", labels: ["massage guns"] });
   });
 
@@ -63,7 +63,7 @@ describe("subjects this site has no catalogue for", () => {
   // asking the same question.
   it("survives an ordinary misspelling", () => {
     expect(on(redLight, "do you sell vitimens")).toEqual({ kind: "absent_subject", labels: ["vitamins"] });
-    expect(on(redLight, "any sauna's?")).toEqual({ kind: "absent_subject", labels: ["saunas"] });
+    expect(on(redLight, "any sauna's?")).toEqual({ kind: "other_category", categoryIds: ["saunas"] });
   });
 
   // The drinks catalogue lists "vitamins" for its greens filter. A drinks
