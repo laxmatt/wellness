@@ -1,29 +1,38 @@
 import { CategoryDefinition } from "../category";
 
-// Staging definition. Keep out of public navigation until the first reviewed
-// batch is ready. Setup score measures installation convenience, not health.
+// Family-level comparison only. Cosmetic choices and checkout options remain
+// beneath each family and never become cards or comparison dimensions.
 export const saunas = CategoryDefinition.parse({
   id: "saunas", slug: "saunas", name: "Saunas", navLabel: "Saunas",
-  tagline: "Compare saunas by space, heat type and installation needs.",
-  intro: "Start with your space, budget and electrical setup. Compare the published specifications and check installation requirements with the merchant before buying.",
-  subcategories: [{id:"infrared",label:"Infrared"},{id:"traditional",label:"Traditional"}],
+  tagline: "Compare sauna families, then choose the exact configuration with the maker.",
+  intro: "Compare model-level space, capacity, heating and electrical information stated in the supplier feed. Configuration choices and final pricing are confirmed on Sweat Kingdom's product page.",
+  subcategories: [{ id: "traditional", label: "Traditional" }],
   attributeDefinitions: [
-    {key:"heat_type",label:"Heat type",type:"enum",enumOptions:[{value:"infrared",label:"Far infrared"},{value:"traditional",label:"Traditional"}],group:"Type",compareOrder:1,required:true},
-    {key:"capacity",label:"Seating capacity",type:"string",group:"Space",compareOrder:2,required:true},
-    {key:"width_in",label:"Exterior width",type:"number",unit:"in",group:"Space",compareOrder:3},
-    {key:"depth_in",label:"Exterior depth",type:"number",unit:"in",group:"Space",compareOrder:4},
-    {key:"height_in",label:"Exterior height",type:"number",unit:"in",group:"Space",compareOrder:5},
-    {key:"placement",label:"Placement",type:"list",group:"Setup",compareOrder:6},
-    {key:"connection",label:"Electrical connection",type:"enum",enumOptions:[{value:"plug_in",label:"Plug-in",rank:1},{value:"hardwired",label:"Hardwired",rank:2}],group:"Setup",compareOrder:7,required:true,preferenceDirection:"lower_better"},
-    {key:"voltage",label:"Voltage",type:"number",unit:"V",group:"Setup",compareOrder:8},
-    {key:"circuit_amps",label:"Circuit requirement",type:"number",unit:"A",group:"Setup",compareOrder:9}
+    { key: "form", label: "Form / style", type: "list", group: "Model", compareOrder: 1, required: true },
+    { key: "capacity", label: "Capacity range", type: "string", group: "Model", compareOrder: 2, required: true },
+    { key: "placement", label: "Placement", type: "list", group: "Model", compareOrder: 3 },
+    { key: "footprint", label: "Footprint", type: "string", group: "Space", compareOrder: 4 },
+    { key: "heating_options", label: "Heating options", type: "list", group: "Heat and power", compareOrder: 5, required: true },
+    { key: "electrical", label: "Electrical needs", type: "list", group: "Heat and power", compareOrder: 6 },
+    { key: "lead_time", label: "Lead time", type: "string", group: "Buying", compareOrder: 7 },
+    { key: "configuration_categories", label: "Configuration categories", type: "list", group: "Buying", compareOrder: 8 },
+    { key: "standout_features", label: "Feed highlights", type: "list", group: "Buying", compareOrder: 9, alwaysShowVerification: true },
   ],
-  cardSpecKeys:["heat_type","capacity","connection"],
-  compareGroups:[{label:"Type and space",keys:["heat_type","capacity","width_in","depth_in","height_in"]},{label:"Installation",keys:["placement","connection","voltage","circuit_amps"]}],
-  filters:[{key:"price",label:"Price",kind:"range",presets:[{label:"Under $5,000",condition:{key:"price",op:"lt",value:500000}}]},{key:"heat_type",label:"Heat type",kind:"enum"},{key:"placement",label:"Placement",kind:"list"},{key:"connection",label:"Electrical connection",kind:"enum"}],
-  scoring:{criteria:[{key:"connection",weight:1}],label:"Setup simplicity",meaning:"Rewards a plug-in connection over hardwiring. It does not measure build quality, health benefits or personal fit.",completenessFloor:1},
-  value:{qualityWeight:0,affordabilityWeight:1,priceBasis:"price"},
-  badges:{budgetMaxMinor:500000,premiumMinMinor:1000000,minQualifying:100,tieBreak:[]},
-  insightRules:[],relaxationOrder:["price","placement","connection","heat_type"],
-  priceTiers:[{id:"entry",label:"Under $5,000",maxMinor:500000},{id:"higher",label:"$5,000 and up"}],facets:[],aliases:["sauna","saunas"]
+  cardSpecKeys: ["form", "capacity", "heating_options"],
+  compareGroups: [
+    { label: "Model", keys: ["form", "capacity", "placement"] },
+    { label: "Space", keys: ["footprint"] },
+    { label: "Heat and power", keys: ["heating_options", "electrical"] },
+    { label: "Buying", keys: ["lead_time", "configuration_categories", "standout_features"] },
+  ],
+  filters: [
+    { key: "price", label: "Starting price", kind: "range", presets: [{ label: "From under $5,000", condition: { key: "price", op: "lt", value: 500000 } }] },
+    { key: "form", label: "Form / style", kind: "list" },
+  ],
+  scoring: { criteria: [{ key: "price", weight: 1 }], label: "Starting-price position", meaning: "Orders families by the lowest active configuration price in this feed. It does not measure quality, health effects or fit.", completenessFloor: 0 },
+  value: { qualityWeight: 0, affordabilityWeight: 1, priceBasis: "price" },
+  badges: { budgetMaxMinor: 500000, premiumMinMinor: 1000000, minQualifying: 2, tieBreak: [] },
+  insightRules: [], relaxationOrder: ["price", "form"],
+  priceTiers: [{ id: "entry", label: "From under $5,000", maxMinor: 500000 }, { id: "higher", label: "From $5,000 and up" }],
+  facets: [], aliases: ["sauna", "saunas"],
 });

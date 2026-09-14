@@ -95,6 +95,7 @@ export function miniProduct(
     market: "US",
     images: [{ id: `${id}-primary`, kind: "demo_placeholder", role: "primary", src: `demo:${id}`, alt: id }],
     offers: [offer(`${id}-o`, priceMinor, status, demoPrice)],
+    variants: [],
     identifiers: { gtin: [], merchantSkus: {} },
     attributes,
     editorial: { strengths: [], tradeoffs: [] },

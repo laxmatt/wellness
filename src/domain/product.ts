@@ -95,6 +95,18 @@ export const MerchantOffer = z.object({
 });
 export type MerchantOffer = z.infer<typeof MerchantOffer>;
 
+// Supplier rows retained beneath a reviewed family. These are inventory
+// evidence, not additional storefront products and not a replacement checkout.
+export const ProductVariant = z.object({
+  id: Id,
+  supplierVariantId: z.string().min(1),
+  label: z.string().min(1),
+  options: z.array(z.object({ category: z.string().min(1), value: z.string().min(1) })),
+  offer: MerchantOffer,
+  source: Source,
+});
+export type ProductVariant = z.infer<typeof ProductVariant>;
+
 // Stable identifiers for automatic entity resolution against feeds.
 export const ProductIdentifiers = z.object({
   gtin: z.array(z.string().regex(/^\d{8,14}$/)).default([]),
@@ -137,6 +149,7 @@ export const Product = z.object({
   market: Market.default("US"),
   images: z.array(ImageAsset).default([]),
   offers: z.array(MerchantOffer).default([]),
+  variants: z.array(ProductVariant).default([]),
   // Used when there are zero offers, or as a manufacturer list price anchor.
   referencePrice: sourced(Money).optional(),
   identifiers: ProductIdentifiers.default({ gtin: [], merchantSkus: {} }),

@@ -65,6 +65,7 @@ export type PriceView = {
   // A missing price is a different thing and is not flagged as a placeholder:
   // see `money`.
   isDemo: boolean;
+  configurationCount?: number;
 };
 
 // The amount a product can be ranked, filtered or compared on, or undefined
@@ -82,7 +83,8 @@ export function priceMinorOf(view: { price: PriceView }): number | undefined {
 export const PRICE_UNCONFIRMED = "Check current price";
 
 export function displayPrice(price: PriceView): string {
-  return price.money === undefined || price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
+  if (price.money === undefined || price.isDemo) return PRICE_UNCONFIRMED;
+  return `${price.configurationCount ? "From " : ""}${formatMoney(price.money)}`;
 }
 
 // The offers a shopper can be sent to, in the order a shopper should see them:
@@ -208,6 +210,7 @@ export function derivePrice(product: Product): PriceView {
       // and must not count one whose amount belongs to another product.
       offerCount: pricedOffers(product.offers).length || liveOffers(product.offers).length,
       isDemo: best.source.kind === "demo",
+      configurationCount: product.variants.length || undefined,
     };
   }
   if (!product.referencePrice?.value) {

@@ -9,7 +9,7 @@ function shortDate(iso: string): string {
 }
 
 export function PriceDisplay({ price, size = "md", compact = false, className }: { price: PriceView; size?: "md" | "lg"; compact?: boolean; className?: string }) {
-  const basis = price.basis === "reference" ? "Reference" : price.offerCount > 1 ? (compact ? `${price.offerCount} retailers` : `Lowest of ${price.offerCount} retailers`) : "1 retailer";
+  const basis = price.configurationCount ? `From · ${price.configurationCount} configurations` : price.basis === "reference" ? "Reference" : price.offerCount > 1 ? (compact ? `${price.offerCount} retailers` : `Lowest of ${price.offerCount} retailers`) : "1 retailer";
 
   // No amount at all: nothing on the record can price this product. Neither
   // the retailer count nor the date belongs here. The count would be "1
