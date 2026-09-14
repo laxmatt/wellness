@@ -71,7 +71,10 @@ export default async function ProductPage({ params }: Props) {
   // nothing disputed, and nothing whose amount is prototype data. The page
   // itself has said "Check current price" for a placeholder since 2026-09-09;
   // this markup was still publishing the invented number underneath it.
-  const publishedOffers = buyable.filter((o) => !o.priceIsDemo);
+  // An Offer in structured data carries a price. A merchant that quotes on
+  // request has not given one, so the listing appears on the page and not in
+  // the markup a search engine would quote back.
+  const publishedOffers = buyable.filter((o) => o.price !== undefined && !o.priceIsDemo);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -84,8 +87,8 @@ export default async function ProductPage({ params }: Props) {
       ? {
           offers: publishedOffers.map((o) => ({
             "@type": "Offer",
-            price: (o.price.amountMinor / 100).toFixed(2),
-            priceCurrency: o.price.currency,
+            price: (o.price!.amountMinor / 100).toFixed(2),
+            priceCurrency: o.price!.currency,
             url: o.url,
             seller: { "@type": "Organization", name: o.merchant.name },
             ...(schemaAvailability[o.availability] ? { availability: schemaAvailability[o.availability] } : {}),

@@ -8,7 +8,7 @@ import { NeedsFit } from "@/components/needs/NeedsFit";
 import { ImageFrame, primaryImage } from "@/components/ui/ImageFrame";
 import type { CategoryDefinition } from "@/domain/category";
 import { outboundLinkProps, relationshipNote } from "@/domain/outbound";
-import { buyableOffers, displayPrice } from "@/domain/view";
+import { buyableOffers, displayPrice, PRICE_ON_REQUEST } from "@/domain/view";
 import { BADGES, BADGE_LABELS, primaryStrength, type RecommendationSet, type RecommendedProduct } from "@/domain/recommend";
 import { formatMoney } from "@/domain/money";
 import { cn } from "@/lib/cn";
@@ -106,7 +106,7 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                         className={cn(buttonStyles("primary", "md"), "w-full justify-between gap-2 px-4")}
                       >
                         <span className="truncate">Visit {o.merchant.name}</span>
-                        {o.priceIsDemo ? null : <span className="tabular shrink-0 opacity-80">{formatMoney(o.price)}</span>}
+                        {o.price === undefined ? <span className="shrink-0 text-xs opacity-80">{PRICE_ON_REQUEST}</span> : o.priceIsDemo ? null : <span className="tabular shrink-0 opacity-80">{formatMoney(o.price)}</span>}
                       </a>
                     ))}
                     {relationship ? <p className="text-[11px] leading-snug text-fg-muted">{relationship}</p> : null}

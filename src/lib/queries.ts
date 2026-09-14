@@ -99,13 +99,34 @@ export const getProductPage = cache(async (slug: string): Promise<ProductPage | 
   return { item, page, similar };
 });
 
-export const getBrands = cache(async (): Promise<Brand[]> => getCatalog().listBrands());
+/**
+ * Brands a shopper can actually get to a product from.
+ *
+ * The catalogue holds a brand record for every product it holds, drafts
+ * included, and a draft is nobody's to see. Listing every brand published three
+ * sauna partners on `/brands`, on the home page and in the sitemap while their
+ * products were still drafts and their category was not published: three names
+ * announced, each linking to a page with nothing on it.
+ *
+ * It is the same rule the rest of the site follows and the brand list was the
+ * one place it was missing. A brand with no published product is not a dead end
+ * to hide, it is a page with nothing to say.
+ */
+export const getBrands = cache(async (): Promise<Brand[]> => {
+  const pages = await getAllCategoryPages();
+  const withProducts = new Set(pages.flatMap((p) => p.products.map((x) => x.view.brand.id)));
+  return (await getCatalog().listBrands()).filter((b) => withProducts.has(b.id));
+});
 
 export const getBrandPage = cache(async (slug: string) => {
   const brand = await getCatalog().getBrand(slug);
   if (!brand) return null;
   const pages = await getAllCategoryPages();
   const products = pages.flatMap((p) => p.products.filter((x) => x.view.brand.id === brand.id).map((item) => ({ item, cat: p.cat })));
+  // No published product, no page. The route already 404s on an unknown slug
+  // and this is the same answer for a slug that resolves to nothing a shopper
+  // can reach.
+  if (products.length === 0) return null;
   return { brand, products };
 });
 

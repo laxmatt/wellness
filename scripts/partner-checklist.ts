@@ -1,6 +1,6 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { categories, categoryById } from "@/domain/categories";
+import { allCategories, categoryById, isPublishedCategory } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
 import { formatMoney } from "@/domain/money";
 import type { Product } from "@/domain/product";
@@ -62,7 +62,8 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
   const realOffers = p.offers.filter((o) => o.source.kind !== "demo" && o.disputed !== true && o.availability !== "discontinued");
   const withheldOffers = p.offers.filter((o) => o.disputed === true);
   const goneOffers = p.offers.filter((o) => o.disputed !== true && o.availability === "discontinued");
-  const cheapestReal = [...realOffers].sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  const quoteOnly = realOffers.filter((o) => o.priceMinor === undefined);
+  const cheapestReal = [...realOffers.filter((o) => o.priceMinor !== undefined)].sort((a, b) => a.priceMinor! - b.priceMinor!)[0];
   const merchantOf = (id: string) => cat.merchants.find((m) => m.id === id)?.name ?? id;
   const withheldNote =
     withheldOffers.length === 0
@@ -72,12 +73,16 @@ function evidenceFor(p: Product, v: ProductView, c: CategoryDefinition, eligible
     goneOffers.length === 0
       ? ""
       : ` ${goneOffers.length} further ${goneOffers.length === 1 ? "amount is" : "amounts are"} on the record from ${goneOffers.length === 1 ? "a seller" : "sellers"} no longer selling this product, so ${goneOffers.length === 1 ? "it prices" : "they price"} nothing. Other sellers may still list it; none is on record.`;
+  const quoteNote = quoteOnly.length === 0 ? "" : ` ${quoteOnly.length === 1 ? "One merchant quotes" : `${quoteOnly.length} merchants quote`} on request rather than listing an amount, and the page says so and links to ${quoteOnly.length === 1 ? "them" : "each"}.`;
   const priceDetail = !cheapestReal
-    ? `no amount on record; the page shows Check current price.${withheldNote}${goneNote}`.trimEnd()
-    : `${formatMoney({ amountMinor: cheapestReal.priceMinor, currency: cheapestReal.currency })} on record from ${merchantOf(cheapestReal.merchantId)}, ${cheapestReal.source.method === "secondhand" ? "relayed from a search summary rather than read from the merchant" : `read from the page${cheapestReal.source.ref ? ` (${cheapestReal.source.ref.replace(/\.$/, "")})` : ""}`} on ${cheapestReal.source.retrievedAt ?? cheapestReal.lastChecked}, not re-checked since` +
+    ? (quoteOnly.length > 0
+        ? `no listed amount; every merchant on record quotes on request.${quoteNote}${withheldNote}${goneNote}`.trimEnd()
+        : `no amount on record; the page shows Check current price.${withheldNote}${goneNote}`.trimEnd())
+    : `${formatMoney({ amountMinor: cheapestReal.priceMinor!, currency: cheapestReal.currency })} on record from ${merchantOf(cheapestReal.merchantId)}, ${cheapestReal.source.method === "secondhand" ? "relayed from a search summary rather than read from the merchant" : `read from the page${cheapestReal.source.ref ? ` (${cheapestReal.source.ref.replace(/\.$/, "")})` : ""}`} on ${cheapestReal.source.retrievedAt ?? cheapestReal.lastChecked}, not re-checked since` +
       (v.price.isDemo
         ? ". The page still shows Check current price: a lower prototype amount is the selected offer"
         : "") +
+      quoteNote +
       withheldNote +
       goneNote;
   // Never "complete": an amount on record is an amount somebody wrote down on
@@ -190,17 +195,25 @@ push();
 const empty = (): Record<Dimension, string[]> => ({ complete: [], partial: [], missing: [] });
 const tally: Record<keyof Evidence, Record<Dimension, string[]>> = { facts: empty(), price: empty(), images: empty() };
 
-for (const c of categories) {
+for (const c of allCategories) {
   const products = cat.products.filter((p) => p.categoryId === c.id);
   const views = products.map(viewOf);
   const ranked = recommendCategory(views, c);
   push(`## ${c.name}`);
   push();
+  if (!isPublishedCategory(c.id)) {
+    push(`**Not published.** ${c.name} are absent from the site's category list, so nothing links to them, no page resolves and no sitemap holds them. Every record below is a draft and no shopper can reach one. See \`src/domain/categories/index.ts\`.`);
+    push();
+  }
   for (const p of products) {
     const v = viewOf(p);
-    const item = ranked.products.find((x) => x.view.id === p.id)!;
-    const ev = evidenceFor(p, v, c, item.eligible);
-    const badges = item.badges.length > 0 ? item.badges.join(", ") : "none";
+    // A record that is not published is not ranked: `recommendCategory` reads
+    // published views only. It still belongs in this document, because a draft
+    // is exactly what a reviewer opens this to read, so its ranking row says
+    // why there is no ranking rather than asserting a score of zero.
+    const item = ranked.products.find((x) => x.view.id === p.id);
+    const ev = evidenceFor(p, v, c, item?.eligible ?? false);
+    const badges = item && item.badges.length > 0 ? item.badges.join(", ") : "none";
     const sources = [...new Set(Object.values(v.provenance).map((pr) => pr.source.url).filter(Boolean))] as string[];
     const secondhand = Object.values(v.provenance).filter((pr) => pr.source.method === "secondhand").length;
     const total = Object.values(v.provenance).length;
@@ -220,12 +233,18 @@ for (const c of categories) {
     push("| --- | --- |");
     push(`| Record | \`${v.id}\`, \`/products/${v.slug}\` |`);
     push(
-      `| Offers | ${v.offers.length === 0 ? "none" : v.offers.map((o) => `${o.merchant.name} (${o.priceIsDemo ? "no amount on record" : formatMoney(o.price)}${o.disputed ? ", withheld: not shown to belong to this product" : ""}, ${o.availability}, ${o.affiliateStatus === "unknown" ? "affiliate status not recorded" : o.affiliateStatus})`).join("; ")} |`,
+      `| Offers | ${v.offers.length === 0 ? "none" : v.offers.map((o) => `${o.merchant.name} (${o.price === undefined ? "quoted on request" : o.priceIsDemo ? "no amount on record" : formatMoney(o.price)}${o.disputed ? ", withheld: not shown to belong to this product" : ""}, ${o.availability}, ${o.affiliateStatus === "unknown" ? "affiliate status not recorded" : o.affiliateStatus})`).join("; ")} |`,
     );
     push(`| Links | ${v.offers.length === 0 ? "none" : v.offers.map((o) => o.url).join("<br>")} |`);
     push(`| Sources on file | ${sources.length === 0 ? "none" : sources.join("<br>")} |`);
     push(`| Retrieval | ${secondhand} of ${total} recorded fields were relayed rather than read from the source |`);
-    push(`| Ranking | score ${item.score}, completeness ${Math.round(v.flags.completeness * 100)}%, badges: ${badges}${item.eligible ? "" : ", **ineligible**"} |`);
+    push(
+      `| Ranking | ${
+        item
+          ? `score ${item.score}, completeness ${Math.round(v.flags.completeness * 100)}%, badges: ${badges}${item.eligible ? "" : ", **ineligible**"}`
+          : `not ranked: this record is ${p.status}, and ranking reads published records only. Completeness ${Math.round(v.flags.completeness * 100)}%.`
+      } |`,
+    );
     push();
     const gaps = attributeLines(p, v, c);
     if (gaps.length > 0) {
@@ -244,21 +263,24 @@ for (const c of categories) {
 // which category to lead with: that is a decision, and this file reports.
 push("## By category");
 push();
+push("Unpublished categories are marked. Their records are drafts and no shopper can reach one.");
+push();
 push("| Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |");
 push("| --- | --- | --- | --- | --- | --- |");
-for (const c of categories) {
+for (const c of allCategories) {
   const products = cat.products.filter((p) => p.categoryId === c.id);
   const views = products.map(viewOf);
   const ranked = recommendCategory(views, c);
   const priced = products.filter((p) => p.offers.some((o) => o.source.kind !== "demo")).length;
   const direct = products.filter((p) => p.offers.some((o) => o.source.kind !== "demo" && o.source.method === "direct")).length;
+  const label = isPublishedCategory(c.id) ? c.name : `${c.name} (not published)`;
   const clean = products.filter((p) => {
     const v = viewOf(p);
-    const item = ranked.products.find((x) => x.view.id === p.id)!;
-    return evidenceFor(p, v, c, item.eligible).facts.level === "complete";
+    const item = ranked.products.find((x) => x.view.id === p.id);
+    return evidenceFor(p, v, c, item?.eligible ?? false).facts.level === "complete";
   }).length;
   const withImages = views.filter((v) => v.images.some((i) => i.kind !== "demo_placeholder")).length;
-  push(`| ${c.name} | ${views.length} | ${priced} | ${direct} | ${clean} | ${withImages} |`);
+  push(`| ${label} | ${views.length} | ${priced} | ${direct} | ${clean} | ${withImages} |`);
 }
 push();
 

@@ -71,7 +71,14 @@ export const MerchantOffer = z.object({
   merchantId: Id,
   market: Market,
   currency: Currency,
-  priceMinor: z.number().int().nonnegative(),
+  // Absent when the merchant quotes no amount. A quote-only listing is a real
+  // way to buy a real product, and the commonest thing sold that way is a
+  // made-to-order cabinet: refusing to list one, or writing a zero so the
+  // record parses, are both worse than saying what the page says. Exactly one
+  // of `priceMinor` and `quoteOnly` is set, and the refine below enforces it.
+  priceMinor: z.number().int().nonnegative().optional(),
+  /** The merchant asks for a quote instead of listing a price. */
+  quoteOnly: z.boolean().optional(),
   listPriceMinor: z.number().int().nonnegative().optional(),
   url: z.url(),
   affiliate: z.object({
@@ -92,6 +99,8 @@ export const MerchantOffer = z.object({
   // variety pack, and that amount was the shown price of a 16-stick Lemon
   // Lime box. `check-catalog` refuses a disputed offer with no note.
   disputed: z.boolean().optional(),
+}).refine((o) => (o.priceMinor !== undefined) !== (o.quoteOnly === true), {
+  message: "An offer states an amount or says the merchant quotes one. Not both, and not neither.",
 });
 export type MerchantOffer = z.infer<typeof MerchantOffer>;
 

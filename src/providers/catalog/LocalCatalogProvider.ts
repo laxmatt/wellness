@@ -172,8 +172,19 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
         issues.push({ file, message: `offer ${o.id} is marked disputed and is also prototype data. A made-up amount is not a mismatched one; use one marker or the other.` });
       }
     }
+    // An image is required of a record a shopper can see, and of no other.
+    //
+    // The rule exists so a published card is never a blank frame, which is a
+    // statement about the storefront rather than about the record. A draft has
+    // no shopper: it is a record somebody is still working on, and for saunas
+    // it is a record whose images cannot be settled yet, because no brand has
+    // granted any right to reuse a photograph and a publicly visible image is
+    // not a licence. Demanding one before a reviewer can even read the draft
+    // would have exactly one effect: a placeholder invented to satisfy a check.
     const hasPrimary = p.images.some((i) => i.role === "primary");
-    if (!hasPrimary) issues.push({ file, message: "no primary image" });
+    if (!hasPrimary && p.status === "published") {
+      issues.push({ file, message: "no primary image, and it is published. A record a shopper can see needs one." });
+    }
   }
   return issues;
 }

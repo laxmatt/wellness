@@ -1,0 +1,10 @@
+{
+  "id": "select-saunas",
+  "slug": "select-saunas",
+  "name": "Select Saunas",
+  "websiteUrl": "https://selectsaunas.com",
+  "network": "other",
+  "markets": [
+    "US"
+  ]
+}

@@ -231,7 +231,10 @@ function show(id: string): void {
   console.log(`  brand     ${p.brandId}`);
   console.log(`  source    ${p.source.ref ?? "not recorded"}`);
   for (const [merchantId, sku] of Object.entries(p.identifiers.merchantSkus)) console.log(`  sku       ${sku} at ${merchantId}`);
-  for (const o of p.offers) console.log(`  offer     ${(o.priceMinor / 100).toFixed(2)} ${o.currency} at ${o.merchantId}, stated current on ${o.lastChecked}\n            ${o.url}`);
+  for (const o of p.offers) {
+    const amount = o.priceMinor === undefined ? "quoted on request" : `${(o.priceMinor / 100).toFixed(2)} ${o.currency}`;
+    console.log(`  offer     ${amount} at ${o.merchantId}, stated current on ${o.lastChecked}\n            ${o.url}`);
+  }
   console.log("  figures");
   for (const [key, sv] of Object.entries(p.attributes)) {
     const value = sv.value === undefined ? "not stated in the file" : JSON.stringify(sv.value);

@@ -19,7 +19,7 @@
 import { chromium, type Browser, type Page } from "playwright";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { categories, categoryById } from "@/domain/categories";
+import { categories, categoryById, categoryBySlug } from "@/domain/categories";
 import { introExamplesFor } from "@/domain/assistant-intro";
 import { buildCompareModel } from "@/domain/compare";
 import { applyFilters, buildFilterGroups, facetOptionId } from "@/domain/filters";
@@ -37,6 +37,16 @@ const DESKTOP = { width: 1280, height: 900 };
 const MOBILE = { width: 390, height: 844 };
 
 const cat = loadLocalCatalog(join(process.cwd(), "catalog"));
+
+/**
+ * The products this site actually serves.
+ *
+ * The catalogue holds drafts and holds records in categories that are not
+ * published, and neither has a page. Walking every record and demanding a page
+ * for it asserted that the catalogue and the storefront are the same thing,
+ * which they stopped being the day a draft was imported.
+ */
+const servedProducts = cat.products.filter((p) => p.status === "published" && categoryBySlug(categoryById(p.categoryId)?.slug ?? "") !== undefined);
 const viewsOf = (categoryId: string): ProductView[] =>
   cat.products
     .filter((p) => p.categoryId === categoryId)
@@ -296,7 +306,7 @@ async function run(browser: Browser) {
       ok(`${v.slug} card offers to check the price it does not have`, card.includes("Check current price"), card.slice(0, 200));
       ok(`${v.slug} card invents no retailer count`, !/\d+ retailers?|Lowest of/.test(card), card.slice(0, 200));
       for (const o of v.offers) {
-        ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price)), formatMoney(o.price));
+        ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price!)), formatMoney(o.price!));
       }
     }
     for (const v of views.filter((v) => !v.price.isDemo && v.price.money)) {
@@ -610,7 +620,7 @@ async function run(browser: Browser) {
   }
 
   // ------------------------------------------------------------ product
-  for (const p of cat.products) {
+  for (const p of servedProducts) {
     const view = viewsOf(p.categoryId).find((v) => v.id === p.id)!;
     scenario = `product ${view.slug}`;
     await goto(page, `/products/${view.slug}`);
@@ -640,8 +650,8 @@ async function run(browser: Browser) {
       const retailersText = (await page.locator("#retailers").textContent()) ?? "";
       const shopLinks = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       for (const o of view.offers) {
-        ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price)), block.text);
-        ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price)), retailersText.slice(0, 160));
+        ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price!)), block.text);
+        ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price!)), retailersText.slice(0, 160));
         // Not "the URL is absent": a withheld offer's URL can be the same
         // manufacturer page that legitimately sources the specs, and a
         // citation under Sources is provenance, not a way to buy. What must
@@ -664,7 +674,7 @@ async function run(browser: Browser) {
     }
     for (const offer of view.offers.filter((o) => o.priceIsDemo && !o.disputed)) {
       const row = await offerRowText(page, offer.merchant.name);
-      ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price)), row);
+      ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price!)), row);
       ok(`the ${offer.merchant.name} row says to check instead`, row.includes("Check current price"), row);
     }
 
@@ -675,7 +685,7 @@ async function run(browser: Browser) {
     const jsonLd = (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "";
     const retailers = (await page.locator("#retailers").textContent()) ?? "";
     for (const offer of view.offers.filter((o) => o.disputed)) {
-      const amount = formatMoney(offer.price);
+      const amount = formatMoney(offer.price!);
       // Scoped to the retailers section on purpose. A source note elsewhere on
       // the page may recount what this amount used to be and why it stopped
       // being the price, and that history is the point of keeping the record.
@@ -684,7 +694,7 @@ async function run(browser: Browser) {
       ok(`its amount ${amount} is not quoted there either`, !retailers.includes(amount), retailers.slice(0, 160));
       const shopping = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       ok("nothing offers to shop it", !shopping.some((h) => new URL(h).href === new URL(offer.url).href), offer.url);
-      ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
+      ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price!.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
       ok("but the page tells a shopper the listing is not shown", retailers.includes("is not shown here"));
     }
 
@@ -789,7 +799,7 @@ async function run(browser: Browser) {
     // A check that cannot fail proves nothing. The amount is put back into the
     // page and the same predicate is asked again: it has to notice. The page
     // is reloaded afterwards.
-    const demoPriced = cat.products
+    const demoPriced = servedProducts
       .map((p) => viewsOf(p.categoryId).find((v) => v.id === p.id)!)
       .find((v) => v.price.isDemo && v.price.money !== undefined)!;
     scenario = `price check, proved sensitive on ${demoPriced.slug}`;

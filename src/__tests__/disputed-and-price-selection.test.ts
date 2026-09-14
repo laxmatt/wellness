@@ -186,7 +186,7 @@ describe("the shown price comes from the offers whose amounts are real", () => {
     const v = hg300();
     expect(v.price.money!.amountMinor).toBe(19900);
     expect(v.price.isDemo).toBe(false);
-    expect(v.offers.find((o) => o.priceIsDemo)!.price.amountMinor).toBe(14900);
+    expect(v.offers.find((o) => o.priceIsDemo)!.price!.amountMinor).toBe(14900);
     // The provenance shown for the price is the offer the price came from.
     expect(v.provenance.price.source.url).toContain("hoogahealth.com");
   });
@@ -313,7 +313,7 @@ describe("an offer whose amount belongs to another product prices nothing", () =
   it("stays visible on the record, with what is known about it", () => {
     const v = withOffers([offer("real", 2499), disputedOffer("mismatched", 1999)]);
     const row = v.offers.find((o) => o.id === "mismatched")!;
-    expect(row.price.amountMinor).toBe(1999);
+    expect(row.price!.amountMinor).toBe(1999);
     expect(row.disputed).toBe(true);
     expect(row.disputeNote).toBe("Reported for a different pack.");
     expect(v.offers.find((o) => o.id === "real")!.disputed).toBeUndefined();
@@ -323,7 +323,7 @@ describe("an offer whose amount belongs to another product prices nothing", () =
     const v = viewsFor("wellness-drinks").find((x) => x.id === "liquid-iv-hydration-multiplier-16")!;
     const amazon = v.offers.find((o) => o.merchant.name.toLowerCase().includes("amazon"))!;
     expect(amazon.disputed).toBe(true);
-    expect(amazon.price.amountMinor).toBe(2799);
+    expect(amazon.price!.amountMinor).toBe(2799);
     expect(v.price.money!.amountMinor).toBe(2499);
     expect(v.price.offerCount).toBe(1);
 
@@ -386,7 +386,7 @@ describe("a product whose every offer is withheld has no price, and still works"
 
   it("keeps the withheld amount on the record with its reason", () => {
     const row = unpriced().offers.find((o) => o.id === "mismatched")!;
-    expect(row.price.amountMinor).toBe(1999);
+    expect(row.price!.amountMinor).toBe(1999);
     expect(row.disputed).toBe(true);
     expect(row.disputeNote).toBe("Reported for a different configuration.");
   });
@@ -441,7 +441,7 @@ describe("a product whose every offer is withheld has no price, and still works"
     const v = viewsFor("cold-plunge").find((x) => x.id === "plunge-original")!;
     expect(v.price.money).toBeUndefined();
     expect(v.offers[0].disputed).toBe(true);
-    expect(v.offers[0].price.amountMinor).toBe(699000);
+    expect(v.offers[0].price!.amountMinor).toBe(699000);
     const set = assignBadges(viewsFor("cold-plunge").map(toScoringInput), categoryById("cold-plunge")!);
     expect(set.scores["plunge-original"].eligible).toBe(true);
     expect(set.badgesByProduct["plunge-original"]).toBeUndefined();

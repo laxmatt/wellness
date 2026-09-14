@@ -33,7 +33,13 @@ export const ScoringCriterion = z.object({
 });
 
 export const ScoringConfig = z.object({
-  criteria: z.array(ScoringCriterion).min(1),
+  // May be empty. A category with no criteria is one nobody has established a
+  // ranking for, and the honest way to say so is to write none rather than to
+  // pick an attribute and call it quality. Every product then scores 0, no
+  // badge is assigned, and `scoreProducts` divides by nothing because it maps
+  // over an empty list. Saunas are the live case: type, footprint, power and
+  // price separate them, and not one of those says a sauna is better.
+  criteria: z.array(ScoringCriterion),
   // What the number measures, in the UI's words. Never "quality" unless the
   // criteria genuinely measure build quality: a weighted sum over capability
   // attributes ranks suitability for the category's dominant use, and a

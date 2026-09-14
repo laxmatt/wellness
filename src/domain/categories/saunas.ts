@@ -1,0 +1,153 @@
+import { CategoryDefinition } from "../category";
+
+/**
+ * Saunas. Approved on 2026-09-13, and not published.
+ *
+ * This definition exists so sauna records can validate and render in review.
+ * It is deliberately absent from the public `categories` list, so nothing links
+ * to it, no page resolves `/saunas`, and it is in no sitemap. See
+ * `src/domain/categories/index.ts`.
+ *
+ * **No ranking.** `scoring.criteria` is empty and stays empty until somebody
+ * establishes what would justify one. Type, footprint, power draw and price
+ * separate these products, and not one of them says a sauna is better: a
+ * one-person far-infrared cabin that plugs into a wall socket is not a worse
+ * product than a hardwired traditional room, it is a different one. No
+ * capability score, no wellness claim, and no score derived from how hard a
+ * thing is to install.
+ */
+export const saunas = CategoryDefinition.parse({
+  id: "saunas",
+  slug: "saunas",
+  name: "Saunas",
+  navLabel: "Saunas",
+  tagline: "Type, footprint and what it takes to power one.",
+  intro:
+    "Home saunas differ on four things a buyer can check before anything else: whether they heat the air or the body, how much floor they take, what circuit they need, and what they cost. Those are compared here. Nothing on this page rates how good a sauna is for you.",
+  images: [],
+  subcategories: [],
+  attributeDefinitions: [
+    {
+      key: "sauna_type",
+      label: "Heating",
+      type: "enum",
+      enumOptions: [
+        { value: "far_infrared", label: "Far infrared" },
+        { value: "traditional", label: "Traditional (heated air)" },
+      ],
+      group: "Basics",
+      compareOrder: 10,
+      filterable: true,
+      required: true,
+      showOnCard: true,
+      tooltip: "Far infrared warms the body directly. A traditional sauna heats the air in the cabin.",
+    },
+    {
+      key: "capacity_label",
+      label: "Capacity",
+      type: "string",
+      group: "Basics",
+      compareOrder: 20,
+      required: true,
+      showOnCard: true,
+      tooltip: "The maker's own words. A cabin sold as 1-2 person is recorded as the maker states it, not rounded.",
+    },
+    {
+      key: "capacity_max_people",
+      label: "Seats up to",
+      shortLabel: "Seats",
+      type: "integer",
+      unit: "people",
+      group: "Basics",
+      compareOrder: 21,
+      filterable: true,
+      required: true,
+      tooltip: "The upper end of the maker's stated capacity, so a filter has a number to work with. More seats is not better.",
+    },
+    {
+      key: "width_in",
+      label: "Exterior width",
+      type: "number",
+      unit: "in",
+      group: "Space",
+      compareOrder: 30,
+      required: true,
+      showOnCard: true,
+    },
+    { key: "depth_in", label: "Exterior depth", type: "number", unit: "in", group: "Space", compareOrder: 31, required: true },
+    { key: "height_in", label: "Exterior height", type: "number", unit: "in", group: "Space", compareOrder: 32, required: true },
+    {
+      key: "placement",
+      label: "Placement",
+      type: "enum",
+      enumOptions: [
+        { value: "indoor", label: "Indoor" },
+        { value: "outdoor", label: "Outdoor" },
+        { value: "indoor_outdoor", label: "Indoor or outdoor" },
+      ],
+      group: "Space",
+      compareOrder: 33,
+      filterable: true,
+    },
+    {
+      key: "connection",
+      label: "Connection",
+      type: "enum",
+      enumOptions: [
+        { value: "plug_in", label: "Plugs into a wall socket" },
+        { value: "hardwired", label: "Hardwired circuit" },
+      ],
+      group: "Power",
+      compareOrder: 40,
+      filterable: true,
+      required: true,
+      showOnCard: true,
+      tooltip: "A hardwired sauna needs an electrician and a dedicated circuit. That is a cost and a decision, not a fault.",
+    },
+    { key: "voltage", label: "Voltage", type: "enum", enumOptions: [{ value: "120v", label: "120V" }, { value: "240v", label: "240V" }], group: "Power", compareOrder: 41, filterable: true },
+    { key: "amperage_a", label: "Circuit", type: "integer", unit: "A", group: "Power", compareOrder: 42 },
+    { key: "heater_kw", label: "Heater output", type: "number", unit: "kW", group: "Power", compareOrder: 43 },
+    { key: "heater_model", label: "Heater", type: "string", group: "Power", compareOrder: 44 },
+  ],
+  cardSpecKeys: ["sauna_type", "capacity_label", "connection"],
+  compareGroups: [
+    { label: "Basics", keys: ["sauna_type", "capacity_label", "capacity_max_people"] },
+    { label: "Space", keys: ["width_in", "depth_in", "height_in", "placement"] },
+    { label: "Power", keys: ["connection", "voltage", "amperage_a", "heater_kw", "heater_model"] },
+  ],
+  filters: [
+    {
+      key: "price",
+      label: "Price",
+      kind: "range",
+      presets: [
+        { label: "Under $2,500", condition: { key: "price", op: "lt", value: 250000 } },
+        { label: "Under $6,000", condition: { key: "price", op: "lt", value: 600000 } },
+      ],
+    },
+    { key: "sauna_type", label: "Heating", kind: "enum" },
+    { key: "connection", label: "Connection", kind: "enum" },
+    { key: "placement", label: "Placement", kind: "enum" },
+    { key: "capacity_max_people", label: "Seats up to", kind: "range" },
+  ],
+  // Empty, and it is the point. See the note at the top of this file.
+  scoring: { criteria: [], label: "Not ranked", meaning: "Saunas are not ranked here. Nothing in this catalogue establishes that one sauna is better than another, so no score is shown and no badge is awarded.", completenessFloor: 1 },
+  value: { qualityWeight: 0, affordabilityWeight: 1, priceBasis: "price", minQualityShare: 0 },
+  // Never reached today: no sauna is published, and a price-tier badge needs
+  // priced products. Three rather than two, because with two products a
+  // "budget" badge says nothing but "the cheaper of the pair".
+  badges: { priceBasis: "price", budgetMaxMinor: 250000, premiumMinMinor: 600000, minQualifying: 3, tieBreak: [] },
+  insightRules: [],
+  relaxationOrder: ["placement", "voltage", "capacity_max_people", "connection", "sauna_type"],
+  priceTiers: [
+    { id: "under-2500", label: "Under $2,500", maxMinor: 250000 },
+    { id: "mid-2500-6000", label: "$2,500 to $6,000", maxMinor: 600000 },
+    { id: "over-6000", label: "Over $6,000" },
+  ],
+  facets: [],
+  matcherVocabulary: {
+    sauna_type: { far_infrared: ["infrared", "far infrared", "ir"], traditional: ["traditional", "finnish", "steam", "rocks"] },
+    connection: { plug_in: ["plug in", "plugs in", "standard outlet", "no electrician"], hardwired: ["hardwired", "hard wired", "dedicated circuit"] },
+  },
+  aliases: ["sauna", "saunas", "home sauna", "infrared sauna", "sweat room"],
+});

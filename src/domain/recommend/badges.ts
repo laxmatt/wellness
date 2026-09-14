@@ -100,6 +100,36 @@ export function assignBadges(inputs: ScoringInput[], cat: CategoryDefinition, se
   // specifications put it, keeps its page and its id, and keeps its place in
   // the comparison.
   const sellableRanked = sellable ? ranked.filter((i) => sellable.has(i.id)) : ranked;
+
+  // A category with no scoring criteria awards no badge at all.
+  //
+  // Every badge here rests on a score. Best Overall is "the highest score
+  // across N weighted criteria" and Best Value blends that score with price.
+  // With no criteria every product scores zero, so the highest score is
+  // whichever product the tie-break reached first and the best value is simply
+  // the cheapest thing in the category. Both would be presented as judgements
+  // and neither would be one.
+  //
+  // This was found by a test rather than reasoned about: saunas were given an
+  // empty criteria list precisely so that nothing would rank them, and the
+  // first run handed out Best Overall and Best Value anyway. Refusing to write
+  // criteria is not enough on its own; the refusal has to reach the badges.
+  if (cat.scoring.criteria.length === 0) {
+    return {
+      scores: Object.fromEntries(scoreList.map((s) => [s.id, s])),
+      values: Object.fromEntries(valueList.map((v) => [v.id, v])),
+      ranking: ranked.map((i) => i.id),
+      badges: [],
+      badgesByProduct: {},
+      withheld: [
+        {
+          badge: "best_overall" as const,
+          reason: `${cat.name} are not ranked here. No criteria have been established for them, so no product is called the best one.`,
+        },
+      ],
+    };
+  }
+
   const taken = new Set<string>();
   const badges: BadgeAssignment[] = [];
   const withheld: { badge: Badge; reason: string }[] = [];

@@ -26,7 +26,10 @@ import { provenanceOf } from "./provenance";
 export type OfferView = {
   id: string;
   merchant: Pick<Merchant, "id" | "slug" | "name">;
-  price: Money;
+  /** Absent when the merchant quotes on request. See `quoteOnly`. */
+  price?: Money;
+  /** The merchant sells this and asks for a quote rather than listing an amount. */
+  quoteOnly?: true;
   // This offer's amount is prototype data, not a price anybody quoted. The
   // number is never shown; the page says to check the merchant instead.
   priceIsDemo: boolean;
@@ -57,7 +60,10 @@ export type PriceView = {
   // throw. Keeping a contradicted amount on a shopping page to satisfy a type
   // is not a reason.
   money?: Money;
-  basis: "lowest_offer" | "reference" | "none";
+  // "quote" means a merchant sells this and asks for a quote. That is a
+  // different answer from "none", which is nothing on the record pricing it,
+  // and from a placeholder, which is a number this project invented.
+  basis: "lowest_offer" | "reference" | "none" | "quote";
   checkedAt: string;
   offerCount: number;
   // The price shown is a placeholder, not a real observed price. Price-based
@@ -80,8 +86,11 @@ export function priceMinorOf(view: { price: PriceView }): number | undefined {
 // easiest way to lose a reader's trust: they click through, see something
 // else, and every other figure on the page is suspect.
 export const PRICE_UNCONFIRMED = "Check current price";
+/** A merchant that sells this and quotes on request. Not a missing price. */
+export const PRICE_ON_REQUEST = "Request pricing";
 
 export function displayPrice(price: PriceView): string {
+  if (price.basis === "quote") return PRICE_ON_REQUEST;
   return price.money === undefined || price.isDemo ? PRICE_UNCONFIRMED : formatMoney(price.money);
 }
 
@@ -102,10 +111,19 @@ export function buyableOffers(view: { offers: OfferView[] }): OfferView[] {
     // business, and its record would have kept sending shoppers to the maker.
     .filter((o) => !o.disputed && o.availability !== "discontinued")
     .slice()
-    .sort((a, b) => Number(a.priceIsDemo) - Number(b.priceIsDemo) || a.price.amountMinor - b.price.amountMinor);
+    // Real amounts first and cheapest first, then placeholders, then the ones
+    // whose merchant quotes on request. A quote is not a cheap price and not
+    // an expensive one, so it sorts on neither.
+    .sort(
+      (a, b) =>
+        Number(a.price === undefined) - Number(b.price === undefined) ||
+        Number(a.priceIsDemo) - Number(b.priceIsDemo) ||
+        (a.price?.amountMinor ?? 0) - (b.price?.amountMinor ?? 0),
+    );
 }
 
 export function displayOfferPrice(offer: OfferView): string {
+  if (offer.price === undefined) return PRICE_ON_REQUEST;
   return offer.priceIsDemo ? PRICE_UNCONFIRMED : formatMoney(offer.price);
 }
 
@@ -173,7 +191,9 @@ export type ViewContext = {
 // pricing purposes. Neither is a real amount recorded against something else:
 // a disputed offer is a price for a product this record does not describe.
 export function pricedOffers(offers: MerchantOffer[]): MerchantOffer[] {
-  return offers.filter((o) => o.availability !== "discontinued" && o.source.kind !== "demo" && o.disputed !== true);
+  // A quote-only offer prices nothing, by definition. It is still a live way
+  // to reach the merchant, which is why `liveOffers` keeps it.
+  return offers.filter((o) => o.availability !== "discontinued" && o.source.kind !== "demo" && o.disputed !== true && o.priceMinor !== undefined);
 }
 
 // The offer a price is taken from. Real amounts first, and only when there is
@@ -193,12 +213,18 @@ export function liveOffers(offers: MerchantOffer[]): MerchantOffer[] {
 
 export function lowestOffer(offers: MerchantOffer[]): MerchantOffer | undefined {
   const real = pricedOffers(offers);
-  return (real.length > 0 ? real : liveOffers(offers)).sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  // Sorted on the amount where there is one. A quote-only offer only surfaces
+  // here when nothing on the record carries an amount at all, and then it is
+  // the offer, not the cheapest of several.
+  return (real.length > 0 ? real : liveOffers(offers)).slice().sort((a, b) => (a.priceMinor ?? Number.POSITIVE_INFINITY) - (b.priceMinor ?? Number.POSITIVE_INFINITY))[0];
 }
 
 export function derivePrice(product: Product): PriceView {
   const best = lowestOffer(product.offers);
-  if (best) {
+  if (best && best.priceMinor === undefined) {
+    return { basis: "quote", checkedAt: best.lastChecked, offerCount: liveOffers(product.offers).length, isDemo: false };
+  }
+  if (best && best.priceMinor !== undefined) {
     return {
       money: { amountMinor: best.priceMinor, currency: best.currency },
       basis: "lowest_offer",
@@ -339,7 +365,8 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     return {
       id: o.id,
       merchant: { id: merchant.id, slug: merchant.slug, name: merchant.name },
-      price: { amountMinor: o.priceMinor, currency: o.currency },
+      price: o.priceMinor === undefined ? undefined : { amountMinor: o.priceMinor, currency: o.currency },
+      quoteOnly: o.quoteOnly === true ? (true as const) : undefined,
       priceIsDemo: o.source.kind === "demo",
       listPrice: o.listPriceMinor !== undefined ? { amountMinor: o.listPriceMinor, currency: o.currency } : undefined,
       url: o.url,
@@ -352,7 +379,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
       disputed: o.disputed === true ? true : undefined,
       disputeNote: o.disputed === true ? o.source.note : undefined,
     };
-  }).sort((a, b) => a.price.amountMinor - b.price.amountMinor);
+  }).sort((a, b) => (a.price?.amountMinor ?? Number.POSITIVE_INFINITY) - (b.price?.amountMinor ?? Number.POSITIVE_INFINITY));
 
   const specs = [...ctx.category.attributeDefinitions]
     .sort((a, b) => a.compareOrder - b.compareOrder)

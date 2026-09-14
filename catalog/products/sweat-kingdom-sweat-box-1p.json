@@ -1,0 +1,204 @@
+{
+  "id": "sweat-kingdom-sweat-box-1p",
+  "slug": "sweat-kingdom-sweat-box-1p",
+  "name": "The Sweat Box, 1 person",
+  "brandId": "sweat-kingdom",
+  "categoryId": "saunas",
+  "description": "One-person traditional sauna heated by a 4 kW Homecraft Revive Slim element.",
+  "status": "draft",
+  "availability": "unknown",
+  "market": "US",
+  "images": [],
+  "offers": [
+    {
+      "id": "sweat-kingdom-sweat-box-1p-offer",
+      "merchantId": "sweat-kingdom-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 554500,
+      "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+      "affiliate": {
+        "status": "non_affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-125462-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-13",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states the product is sold out and also states a five-week lead time. Those are two different claims about the same product and the page makes both, so availability is recorded as unknown. Nothing here may say it is in stock, and nothing here may say it cannot be bought. Approved through Awin on 2026-09-13, advertiser 125462, publisher 3090899. No tracking link has been supplied here, so the link below earns nothing and none is invented. A payment warning on the Awin account is unresolved. The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "1 person",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 1,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 42,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 80,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor_outdoor",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "hardwired",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_kw": {
+      "value": 4,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_model": {
+      "value": "Homecraft Revive Slim 4kW WiFi",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page was read for this and states none. The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+      },
+      "verification": "not_stated"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "manufacturer",
+    "ref": "Read by Codex on 2026-09-13",
+    "url": "https://sweatkingdom.com/products/the-sweat-box-1-person",
+    "retrievedAt": "2026-09-13",
+    "method": "direct",
+    "note": "Approved for intake: Approved by Matt by email on 2026-09-13: SaunaCloud direct, Select Saunas via UpPromote, Sweat Kingdom via Awin advertiser 125462, publisher 3090899. The circuit is stated as 30 A hardwired. No voltage is stated on the page, so none is recorded. The heater is named with its rating. That is the heater's output, not a temperature."
+  },
+  "lastUpdated": "2026-09-13",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

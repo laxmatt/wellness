@@ -131,10 +131,15 @@ export function applyEdit(product: Product, edit: RecordEdit, opts: { editedOn: 
 
       if (read.value?.kind === "money" && url && date) {
         const changed = read.value.minor !== offer.priceMinor || url !== offer.url || date !== offer.lastChecked;
+        // Typing an amount into a quote-only offer turns it into a priced one,
+        // so the marker has to come off with it or the record contradicts
+        // itself.
+        const quoteCleared = offer.quoteOnly === true ? { quoteOnly: undefined } : {};
         if (changed) {
           next.offers = [
             {
               ...offer,
+              ...quoteCleared,
               priceMinor: read.value.minor,
               url,
               lastChecked: date,
@@ -142,7 +147,7 @@ export function applyEdit(product: Product, edit: RecordEdit, opts: { editedOn: 
             },
             ...product.offers.slice(1),
           ];
-          changes.push(`offer: ${(offer.priceMinor / 100).toFixed(2)} to ${(read.value.minor / 100).toFixed(2)} USD`);
+          changes.push(`offer: ${offer.priceMinor === undefined ? "quoted on request" : (offer.priceMinor / 100).toFixed(2)} to ${(read.value.minor / 100).toFixed(2)} USD`);
         }
       }
     }

@@ -17,8 +17,16 @@ describe("local catalog", () => {
     expect(count("wellness-drinks")).toBe(6);
   });
 
-  it("marks every prototype product as demo", () => {
-    for (const p of catalog().products) expect(p.flags.demo).toBe(true);
+  it("marks every prototype product as demo, and no real one", () => {
+    // The three prototype categories are invented data and say so. Saunas are
+    // not: those three records were read from real pages on a stated date, and
+    // flagging them as prototype would withhold their figures for a reason
+    // that is not true. The flag has to follow the evidence, not the age of the
+    // catalogue.
+    const prototype = ["red-light", "cold-plunge", "wellness-drinks"];
+    for (const p of catalog().products) {
+      expect(p.flags.demo, `${p.id}`).toBe(prototype.includes(p.categoryId));
+    }
   });
 
   it("never claims independent verification in the prototype", () => {
@@ -105,6 +113,6 @@ describe("local catalog", () => {
     const v = viewsFor("wellness-drinks").find((x) => x.id === "lmnt-citrus-salt-30")!;
     expect(v.offers.length).toBe(2);
     expect(v.offers.some((o) => o.discountCodes.length > 0)).toBe(true);
-    expect(v.offers[0].price.amountMinor).toBeLessThanOrEqual(v.offers[1].price.amountMinor);
+    expect(v.offers[0].price!.amountMinor).toBeLessThanOrEqual(v.offers[1].price!.amountMinor);
   });
 });
