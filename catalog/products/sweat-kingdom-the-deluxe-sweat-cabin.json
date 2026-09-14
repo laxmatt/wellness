@@ -1,7 +1,7 @@
 {
   "id": "sweat-kingdom-the-deluxe-sweat-cabin",
   "slug": "sweat-kingdom-the-deluxe-sweat-cabin",
-  "name": "The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls",
+  "name": "The Sweat Cabin Deluxe (6 Person)",
   "brandId": "sweat-kingdom",
   "categoryId": "saunas",
   "description": "Availability: 5 week lead time",
@@ -14,14 +14,14 @@
       "kind": "affiliate_feed",
       "role": "primary",
       "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_07_48_PM.png?v=1785265726",
-      "alt": "The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls",
+      "alt": "The Sweat Cabin Deluxe (6 Person)",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-3d117476659f1244. That is a decision to publish without permission having been established, not a record that permission exists."
       }
     }
   ],
@@ -48,7 +48,7 @@
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+        "note": "One row in this file. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style."
       }
     }
   ],
@@ -59,7 +59,53 @@
       "sweat-kingdom-store": "51156729921700"
     }
   },
-  "attributes": {},
+  "attributes": {
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(?:\\\\d+\\\\s*[-\\\\u2013]\\\\s*)?(\\\\d+)\\\\s*Person\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        "version": 1,
+        "field": "title",
+        "sourceText": "The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile)",
+        "version": 1,
+        "field": "title",
+        "sourceText": "The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    }
+  },
+  "sourceTitle": "The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
@@ -70,7 +116,7 @@
     "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700",
     "retrievedAt": "2026-09-14",
     "method": "direct",
-    "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+    "note": "One row in this file. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style."
   },
   "lastUpdated": "2026-09-14",
   "flags": {

@@ -45,20 +45,32 @@ own workspace and removes it afterwards.
 
 Measured on the real file, through the seeded mapping:
 
-| Filter | Filled by | Records with a value |
+| Filter | Filled by | Models with a value |
 | --- | --- | --- |
-| Price | the mapped price column | 17 of 17 |
-| Heating | nothing | 0 of 17 |
-| Connection | nothing | 0 of 17 |
-| Placement | nothing | 0 of 17 |
-| Seats up to | an unapproved extraction rule | 0 of 17 |
+| Price | the mapped price column | 15 of 15 |
+| Style | an approved rule over the retailer's model name | 9 of 15 |
+| Seats up to | an approved rule over the retailer's model name | 15 of 15 |
+| Heating | nothing | 0 of 15 |
+| Connection | nothing | 0 of 15 |
+| Placement | nothing | 0 of 15 |
 
 That is the finding, not a gap in the tool. The feed carries 62 columns and 47
-are empty in every row: no dimensions, no power, no capacity, no material.
-Everything a shopper compares a sauna on is absent or inside prose. A record
-built from this feed answers a price filter and nothing else, and the coverage
-table says so before anybody imports rather than after somebody notices an
-empty category page.
+are empty in every row: no dimensions, no power, no capacity, no material. Not
+one field states a specification.
+
+Two things are readable anyway, and only because the retailer puts them in its
+own model names as tokens: "The Sweat Cabin (4 Person)" names a shape and a
+capacity. Approved rules read those, and every value they write keeps the
+pattern, the profile version that approved it, the whole title it read, exactly
+what matched, and who approved it. `validateCatalog` refuses a published record
+carrying a derivation nobody approved, or one claiming a match its own source
+text does not contain.
+
+Heating type, connection and placement are read from nothing. Neither
+"infrared" nor "traditional" appears in any title; "traditional" appears in
+prose in 24 descriptions and prose is not read. Neither "indoor" nor "outdoor"
+appears anywhere in the feed at all. Those three stay Not stated on every
+record, and the chip bar draws no row for them.
 
 ## What this became
 

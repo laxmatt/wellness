@@ -674,6 +674,53 @@ async function run(browser: Browser) {
     }
   }
 
+  // ------------------------------------------------------- discovery
+  // Every published category has to be reachable from the bar at the top of
+  // every page, not only from the home grid. Saunas launched without that.
+  for (const path of ["/", "/explore", "/red-light", `/products/${servedProducts[0].slug}`]) {
+    scenario = `discovery ${path}`;
+    await goto(page, path);
+    const nav = page.locator('nav[aria-label="Primary"]');
+    for (const c of categories) {
+      ok(`the primary nav links to /${c.slug}`, (await nav.locator(`a[href="/${c.slug}"]`).count()) > 0);
+    }
+    ok("and the footer does too", (await page.locator(`footer a[href="/saunas"]`).count()) > 0);
+  }
+
+  // ------------------------------------------------- narrowing saunas
+  // A category a shopper can only sort by price is a list, not a comparison.
+  scenario = "narrowing saunas";
+  await goto(page, "/saunas");
+  const rows = await page.getByTestId("filter-guidance").locator("..").locator('[data-testid^="filter-group-"]').count();
+  const chips = await page.locator('[data-testid="filter-guidance"] ~ * button, [data-testid="filter-guidance"]').count();
+  ok("more than one dimension to narrow on", rows > 1 || chips > 1, `${rows} rows, ${chips} chips`);
+  // The chip bar's own text, not the page's: the serialized requirement
+  // catalogue names every dimension the category defines, and a row is only a
+  // row if it was drawn.
+  const bar = (await page.getByTestId("filter-guidance").locator("xpath=..").textContent()) ?? "";
+  for (const label of ["Price", "Style", "Seats up to", "Under $7,000", "$15,000 and up", "Cabin", "Mobile (towable)", "1 to 2 people", "5 or more"]) {
+    ok(`offers "${label}"`, bar.includes(label), bar.slice(0, 200));
+  }
+  for (const label of ["Connection", "Placement", "Heating"]) {
+    ok(`offers no row for "${label}", which nothing states`, !bar.includes(label), bar.slice(0, 200));
+  }
+  check("fifteen models before anything is picked", await shownCount(page), "15 of 15 shown");
+
+  // A combination that would lead nowhere is not offered. Picking the one-person
+  // box leaves the expensive bands matching nothing, and a chip matching
+  // nothing is dimmed and cannot be pressed rather than taking a shopper to an
+  // empty page.
+  const chipBar = page.getByTestId("filter-guidance").locator("xpath=..");
+  await chipBar.getByRole("button", { name: /^Box\b/ }).first().click();
+  check("picking a style narrows to that style", await shownCount(page), "1 of 15 shown");
+  ok(
+    "and a band that would leave nothing is not pressable",
+    await chipBar.getByRole("button", { name: /^\$15,000 and up\b/ }).first().isDisabled(),
+  );
+  ok("while a band that would leave something still is", !(await chipBar.getByRole("button", { name: /^Under \$7,000\b/ }).first().isDisabled()));
+  await chipBar.getByRole("button", { name: /^Box\b/ }).first().click();
+  check("and clearing it restores all fifteen", await shownCount(page), "15 of 15 shown");
+
   // ------------------------------------------------- configurations
   // A finish is not a second product. Its record is published, priced and
   // linked, and its own address leads to the model it belongs to rather than

@@ -25,8 +25,12 @@
  * that rather than assuming it: if any field of any of the five disagreed, it
  * would stop and say which.
  *
- * What it does not do: infer a specification from a title, approve the capacity
- * extraction rule, or record any rights evidence.
+ * What it does not do: read a figure out of a sentence, or record any rights
+ * evidence. Capacity and style are read from explicit tokens in the retailer's
+ * own model names by rules the owner approved, and every value carries the
+ * rule, the profile version that approved it, the whole title it read and
+ * exactly what matched. Heating type and placement are read from nothing,
+ * because this feed states neither anywhere, and they stay Not stated.
  */
 
 import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync } from "node:fs";
@@ -91,26 +95,45 @@ function main(): void {
     const familyIds = families.plan.selectable.map((f) => f.id);
     console.log(`${familyIds.length} comparison families, ${families.plan.sourceRecords} source records.`);
 
-    // The five the catalogue already holds. Merged field by field, and the
-    // merge is only valid if there is nothing to argue about: a field the two
-    // disagree on would have to be decided by a person, so this stops.
+    // The records the catalogue already holds. Merged field by field, and a
+    // field the two disagree on has to be decided rather than guessed.
+    //
+    // Exactly four fields may move, and only because the approved rules below
+    // now read them: the model name, the retailer's own title kept beside it,
+    // the capacity and the style. Anything else disagreeing means somebody
+    // edited a record here, or the feed moved, and either way a person decides
+    // rather than this script.
+    const DERIVED = ["name", "source_title", "attr:capacity_max_people", "attr:sauna_style"];
     const catalog = loadLocalCatalog(CATALOG);
     const profile = store.profile(SWEAT_KINGDOM.id, 1)!;
     const shadows = [];
+    let moved = 0;
     for (const existing of catalog.products.filter((p) => drafts.some((d) => d.id === p.id))) {
       const diff = shadowDiff(existing, store.draft(existing.id)!, profile, SWEAT_KINGDOM.merchantId);
-      if (diff.contested.length > 0) {
+      const unexpected = diff.contested.filter((key) => !DERIVED.includes(key));
+      if (unexpected.length > 0) {
         die(
-          `${existing.id} disagrees with the feed on ${diff.contested.length} field(s), so an exact merge is not possible and nothing was written.`,
-          diff.fields.filter((f) => !f.same).map((f) => `${f.key} (${f.ownership}): catalogue ${JSON.stringify(f.existing)} vs feed ${JSON.stringify(f.draft)}`),
+          `${existing.id} disagrees with the feed on ${unexpected.length} field(s) the approved rules do not derive, so an exact merge is not possible and nothing was written.`,
+          diff.fields
+            .filter((f) => unexpected.includes(f.key))
+            .map((f) => `${f.key} (${f.ownership}): catalogue ${JSON.stringify(f.existing)} vs feed ${JSON.stringify(f.draft)}`),
         );
       }
-      // Nothing contested, so a merge takes every field from the side that owns
-      // it and changes none of them. The record keeps its editorial and
-      // review-on-change values because they are the same values.
-      shadows.push({ id: existing.id, choice: "merge_fields" as const, fields: {}, note: "Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values." });
-      console.log(`  ${existing.id}: every mapped field agrees, merged with nothing lost.`);
+      // Every contested field is one the rules derive, so the rules decide it.
+      const fields = Object.fromEntries(diff.contested.map((key) => [key, "draft" as const]));
+      shadows.push({
+        id: existing.id,
+        choice: "merge_fields" as const,
+        fields,
+        note:
+          diff.contested.length === 0
+            ? "Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values."
+            : `Re-derived by approved rules in mapping profile v${profile.version}: ${diff.contested.join(", ")}. Every other mapped field agrees to the byte.`,
+      });
+      moved += diff.contested.length;
+      console.log(`  ${existing.id}: ${diff.contested.length === 0 ? "every mapped field agrees" : `re-derives ${diff.contested.join(", ")}`}, nothing else moved.`);
     }
+    console.log(`${moved} field(s) re-derived across ${shadows.length} record(s) the catalogue already held.`);
 
     const request = { familyIds, shadows, reviewer: REVIEWER, acceptedRisks: [IMAGE_RIGHTS_RISK] };
     const built = planPromotion({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, request, today: ON });

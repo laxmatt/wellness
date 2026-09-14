@@ -102,17 +102,39 @@ export const targetInfo = (target: CanonicalTarget): TargetInfo => CANONICAL_TAR
 export const ValueMap = z.record(z.string(), z.string());
 export type ValueMap = z.infer<typeof ValueMap>;
 
+/** A pattern is small, and a large one is a mistake rather than a mapping. */
+export const MAX_PATTERN_CHARS = 200;
+
+/**
+ * Reading a shorter thing out of a longer one, for a text field.
+ *
+ * A retailer's title is a model and a configuration in one string. A card
+ * wants the model; the record has to keep the whole of it. This says how to
+ * separate them, in one pattern with one capture group, approved like any other
+ * rule that reads a value out of something not stating it.
+ *
+ * The full text is never thrown away: the record keeps it in `sourceTitle` and
+ * the product page shows it.
+ */
+export const TextExtraction = z.object({
+  pattern: z.string().min(1).max(MAX_PATTERN_CHARS),
+  flags: z.string().regex(/^[ims]*$/).default(""),
+  /** Set by a person who has seen what it does to every row. */
+  approved: z.boolean().default(false),
+  approvedBy: z.string().min(1).optional(),
+});
+export type TextExtraction = z.infer<typeof TextExtraction>;
+
 export const ColumnMapping = z.object({
   target: CanonicalTarget,
   column: z.string().min(1),
   ownership: FieldOwnership.default("review_on_change"),
   /** For availability, and for anything else whose vocabulary differs from ours. */
   valueMap: ValueMap.optional(),
+  /** Only for `name`. Shortens a title to the model it names, keeping the whole. */
+  extract: TextExtraction.optional(),
 });
 export type ColumnMapping = z.infer<typeof ColumnMapping>;
-
-/** A pattern is small, and a large one is a mistake rather than a mapping. */
-export const MAX_PATTERN_CHARS = 200;
 
 /**
  * How one of the category's attributes gets filled.
@@ -378,6 +400,13 @@ export function checkProfile(
     if (seen.has(c.target)) problems.push({ where: `columns.${c.target}`, message: `Two columns are mapped to ${targetInfo(c.target).label}. A field takes one column: two are two different claims about the same thing.` });
     seen.add(c.target);
     if (!has(c.column)) problems.push({ where: `columns.${c.target}`, message: `"${c.column}" is not a column in this file.` });
+    if (c.extract) {
+      if (c.target !== "name") {
+        problems.push({ where: `columns.${c.target}`, message: `Only the product name is read out of a longer string. ${targetInfo(c.target).label} takes the whole of its column.` });
+      }
+      const compiled = compilePattern(c.extract.pattern, c.extract.flags);
+      if (!compiled.ok) problems.push({ where: `columns.${c.target}`, message: compiled.reason });
+    }
   }
   for (const t of CANONICAL_TARGETS.filter((t) => t.required)) {
     if (!seen.has(t.target)) problems.push({ where: `columns.${t.target}`, message: `${t.label} has no column, and a record cannot be built without one.` });

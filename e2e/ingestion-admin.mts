@@ -263,8 +263,10 @@ async function run() {
     check("a price filter this mapping fills", await pill(page, "coverage-price").textContent(), "price");
     check("and how many records it fills it for", await page.locator('[data-testid="coverage-price"] td').nth(2).textContent(), "17 of 17");
     check("a heating filter nothing fills", await pill(page, "coverage-sauna_type").textContent(), "unmapped");
-    check("a capacity filter an unapproved rule would fill", await pill(page, "coverage-capacity_max_people").textContent(), "extracted");
-    check("and fills for nobody while it is unapproved", await page.locator('[data-testid="coverage-capacity_max_people"] td').nth(2).textContent(), "0 of 17");
+    check("a capacity filter an approved rule fills", await pill(page, "coverage-capacity_max_people").textContent(), "extracted");
+    check("for every record, out of the retailer's own model names", await page.locator('[data-testid="coverage-capacity_max_people"] td').nth(2).textContent(), "17 of 17");
+    check("a style filter the same rules fill for most of them", await pill(page, "coverage-sauna_style").textContent(), "extracted");
+    check("and leave unfilled where the name says nothing", await page.locator('[data-testid="coverage-sauna_style"] td').nth(2).textContent(), "11 of 17");
     ok("rows the feed does not call saunas are excluded and counted", (await page.locator('[data-testid="excluded-details"] summary').textContent())?.includes("rows excluded") === true);
     ok("importing is blocked while nobody has approved the mapping", (await page.locator('[data-testid="preflight"] .err').first().textContent())?.includes("has not been approved") === true);
     check("nothing has been written", draftFiles().length, 0);

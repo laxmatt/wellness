@@ -188,6 +188,17 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
     }
   }
 
+  for (const p of cat.products) {
+    for (const [key, value] of Object.entries(p.attributes)) {
+      if (value.derivation && value.derivation.reviewState !== "approved" && p.status === "published") {
+        issues.push({ file: `product ${p.id}`, message: `attributes.${key} was read out of "${value.derivation.field}" by a rule nobody approved, and this record is published.` });
+      }
+      if (value.derivation && !value.derivation.sourceText.includes(value.derivation.matched)) {
+        issues.push({ file: `product ${p.id}`, message: `attributes.${key} says it matched ${JSON.stringify(value.derivation.matched)} in a text that does not contain it.` });
+      }
+    }
+  }
+
   // Family membership is checked over the whole catalogue because every way of
   // getting it wrong is about a pair: a representative that is not there, a
   // record pointing at itself, a record claimed twice, and a chain. Refusing

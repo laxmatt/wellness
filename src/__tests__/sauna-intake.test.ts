@@ -172,8 +172,13 @@ describe("a merchant that quotes on request", () => {
   });
 
   it("is not swept up by a budget filter as though it cost nothing", () => {
+    // The cheapest band. Its edge moved with the catalogue: the fifteen models
+    // now in this category start at $5,145, and the old $2,500 line matched
+    // none of them.
     const under = saunas.filters.find((f) => f.key === "price")!.presets![0];
-    expect(under.condition.value).toBe(250000);
+    expect(under.label).toBe("Under $7,000");
+    expect(under.condition.value).toBe(700000);
+    // A record quoting on request has no amount, so no band may claim it.
     expect(matchesAll(atlas, saunas, [under.condition])).toBe(false);
     // And the priced one it should catch, it catches.
     expect(matchesAll(viewOf("dynamic-barcelona-dyn-6106-01"), saunas, [under.condition])).toBe(true);

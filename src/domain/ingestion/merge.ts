@@ -30,6 +30,7 @@
  */
 
 import type { FieldMeta } from "./build";
+import type { Derivation } from "@/domain/provenance";
 import type { RecordFields } from "./record";
 
 export type FieldOutcome = {
@@ -51,6 +52,7 @@ export type RecordAction = "added" | "changed" | "conflict" | "review" | "unchan
 export type MergeResult = {
   fields: RecordFields;
   notes: Record<string, string>;
+  derivations: Record<string, Derivation>;
   outcomes: FieldOutcome[];
   action: RecordAction;
 };
@@ -60,20 +62,22 @@ const same = (a: unknown, b: unknown): boolean => JSON.stringify(a ?? null) === 
 export type MergeInput = {
   incoming: RecordFields;
   incomingNotes: Record<string, string>;
+  incomingDerivations: Record<string, Derivation>;
   meta: Record<string, FieldMeta>;
   /** The record as it stands, when there is one. */
-  current?: { fields: RecordFields; notes: Record<string, string> };
+  current?: { fields: RecordFields; notes: Record<string, string>; derivations: Record<string, Derivation> };
   /** The fields the last import of this source wrote for this record. */
   last?: RecordFields;
 };
 
 export function mergeRecord(input: MergeInput): MergeResult {
-  const { incoming, incomingNotes, meta, current, last } = input;
+  const { incoming, incomingNotes, incomingDerivations, meta, current, last } = input;
 
   if (!current) {
     return {
       fields: { ...incoming },
       notes: { ...incomingNotes },
+      derivations: { ...incomingDerivations },
       outcomes: Object.keys(incoming).map((key) => ({
         key,
         label: meta[key]?.label ?? key,
@@ -88,6 +92,7 @@ export function mergeRecord(input: MergeInput): MergeResult {
 
   const fields: RecordFields = { ...current.fields };
   const notes: Record<string, string> = { ...current.notes };
+  const derivations: Record<string, Derivation> = { ...current.derivations };
   const outcomes: FieldOutcome[] = [];
   const keys = [...new Set([...Object.keys(incoming), ...Object.keys(current.fields)])].sort();
 
@@ -111,6 +116,7 @@ export function mergeRecord(input: MergeInput): MergeResult {
     if (C === undefined) {
       fields[key] = I;
       if (incomingNotes[key]) notes[key] = incomingNotes[key];
+      if (incomingDerivations[key]) derivations[key] = incomingDerivations[key];
       record("written", "The record holds nothing here, so the file's value is written.");
       continue;
     }
@@ -142,6 +148,8 @@ export function mergeRecord(input: MergeInput): MergeResult {
       fields[key] = I;
       if (incomingNotes[key]) notes[key] = incomingNotes[key];
       else delete notes[key];
+      if (incomingDerivations[key]) derivations[key] = incomingDerivations[key];
+      else delete derivations[key];
       record("written", "The record still says what the last import wrote, so the file's newer value is written.");
       continue;
     }
@@ -154,7 +162,7 @@ export function mergeRecord(input: MergeInput): MergeResult {
 
   const has = (o: FieldOutcome["outcome"]): boolean => outcomes.some((x) => x.outcome === o);
   const action: RecordAction = has("conflict") ? "conflict" : has("written") ? "changed" : has("review") ? "review" : "unchanged";
-  return { fields, notes, outcomes, action };
+  return { fields, notes, derivations, outcomes, action };
 }
 
 /** Records the last import wrote that this upload no longer carries. Reported, never deleted. */

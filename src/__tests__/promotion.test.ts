@@ -193,8 +193,11 @@ describe("what the reviewer is shown", () => {
     const record = plan(store, { familyIds: [CABIN] }).families[0].records[0];
     const mapped = record.comparison.filter((c) => c.state === "mapped").map((c) => c.key);
     const missing = record.comparison.filter((c) => c.state === "missing").map((c) => c.key);
-    expect(mapped).toEqual(["price"]);
-    for (const key of ["sauna_type", "connection", "placement", "capacity_max_people", "capacity_label"]) {
+    // Price from a field, style and capacity from the retailer's own model
+    // name by approved rules. Everything else this category compares on is
+    // stated nowhere in this feed.
+    expect(mapped).toEqual(["price", "sauna_style", "capacity_max_people"]);
+    for (const key of ["sauna_type", "connection", "placement"]) {
       expect(missing, key).toContain(key);
     }
   });

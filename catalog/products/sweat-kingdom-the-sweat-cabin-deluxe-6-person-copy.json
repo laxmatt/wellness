@@ -1,7 +1,7 @@
 {
   "id": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy",
   "slug": "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy",
-  "name": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
+  "name": "REGEN The Sweat Cabin Deluxe (6 Person)",
   "brandId": "sweat-kingdom",
   "categoryId": "saunas",
   "description": "Availability: 6-8 week lead time Product Overview: The Deluxe Sweat Cabin is a sauna designed for efficiency. Handcrafted in East Idaho with the highest quality red cedar, this sauna brings the heat and recovery benefits of traditional saunas to your personal space. The heater included with your sauna will reach temperatures of 110-230F in 45-90 minutes depending on desired temperature & weather conditions. Product Standard Dimensions Assembled Size: Height 89\" - Depth 72 1/2\" - Width 83\" Seating: 6 People",
@@ -14,14 +14,14 @@
       "kind": "affiliate_feed",
       "role": "primary",
       "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/42.png?v=1775057952",
-      "alt": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
+      "alt": "REGEN The Sweat Cabin Deluxe (6 Person)",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-3d117476659f1244. That is a decision to publish without permission having been established, not a record that permission exists."
       }
     }
   ],
@@ -48,7 +48,7 @@
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
+        "note": "One row in this file. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability, Seats up to, Style."
       }
     }
   ],
@@ -58,7 +58,53 @@
       "sweat-kingdom-store": "51322435567780"
     }
   },
-  "attributes": {},
+  "attributes": {
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(?:\\\\d+\\\\s*[-\\\\u2013]\\\\s*)?(\\\\d+)\\\\s*Person\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        "version": 1,
+        "field": "title",
+        "sourceText": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile)",
+        "version": 1,
+        "field": "title",
+        "sourceText": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    }
+  },
+  "sourceTitle": "REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
@@ -69,7 +115,7 @@
     "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780",
     "retrievedAt": "2026-09-14",
     "method": "direct",
-    "note": "One row in this file. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
+    "note": "One row in this file. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability, Seats up to, Style."
   },
   "lastUpdated": "2026-09-14",
   "flags": {

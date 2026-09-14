@@ -61,7 +61,7 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
     format: "csv",
     createdOn: on,
     createdBy: "seed script",
-    note: "First mapping of the Awin feed as it arrived on 2026-09-13. 17 source pages, 15 comparable models: two of the pages are blackout finishes of two others.",
+    note: "Mapping of the Awin feed as it arrived on 2026-09-13. 17 source pages, 15 comparable models: two of the pages are blackout finishes of two others. Model name, capacity and style are read from the retailer's own title by approved rules; the whole title is kept on every record.",
     grouping: {
       // 225 rows share 38 merchant product pages. `item_group_id` is empty on
       // every row, so the page is the only grouping the feed carries, and it is
@@ -71,7 +71,18 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
       representative: "cheapest",
     },
     columns: [
-      { target: "name", column: "title", ownership: "review_on_change" },
+      {
+        target: "name",
+        column: "title",
+        ownership: "review_on_change",
+        // A title is a model and a configuration in one string:
+        // "The Sweat Cabin (4 Person) - Blackout Edition - Harvia 8kw KIP / 6 Feet".
+        // Everything up to the first " - " is the model, and the one edition
+        // token that changes which thing you are buying rather than how it is
+        // fitted is kept with it. The whole title stays on the record and is
+        // shown on the product page.
+        extract: { pattern: "^(.*?(?: - Blackout Edition)?)(?: - (?!Blackout Edition)|$)", flags: "", approved: true, approvedBy: "Matt (site owner), relayed through Codex" },
+      },
       { target: "description", column: "description", ownership: "feed" },
       { target: "brand", column: "brand", ownership: "review_on_change" },
       { target: "price", column: "price", ownership: "feed" },
@@ -88,13 +99,30 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
         from: "extract",
         key: "capacity_max_people",
         column: "title",
-        pattern: "(\\d+)\\s*-?\\s*person",
-        flags: "i",
+        // The upper end of a stated capacity token: "(4 Person)" is four,
+        // "(2-6 Person)" is six, "2-3 Person" is three. The first such token in
+        // a title belongs to the model, because the model comes first in it;
+        // configuration tokens like "Regular (2 Person)" come after and are not
+        // reached. Nothing here reads a number out of a sentence.
+        pattern: "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        flags: "",
         ownership: "review_on_change",
-        // Left for a person. A title reading "2-3 Person" is how the shop sells
-        // the cabin, and the upper number is a capacity only if somebody says
-        // it is.
-        approved: false,
+        approved: true,
+        approvedBy: "Matt (site owner), relayed through Codex",
+      },
+      {
+        from: "extract",
+        key: "sauna_style",
+        column: "title",
+        // A closed vocabulary of shape words the retailer puts in its own model
+        // names. Case-sensitive, so it matches the name and not a stray word,
+        // and every value is translated by the map below rather than guessed.
+        pattern: "(Barrel|Cabin|Pod|Box|Mobile)",
+        flags: "",
+        valueMap: { Barrel: "barrel", Cabin: "cabin", Pod: "pod", Box: "box", Mobile: "mobile" },
+        ownership: "review_on_change",
+        approved: true,
+        approvedBy: "Matt (site owner), relayed through Codex",
       },
     ],
     exclusions: [
@@ -127,7 +155,9 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
       },
     ],
     proposedFilters: [
-      { key: "heater_kw", label: "Heater output", reason: "The category compares it and this feed states it nowhere. It would have to come from the maker or from a second source.", proposedBy: "seed script" },
+      { key: "heater_kw", label: "Heater output", reason: "The category compares it and this feed states it nowhere in a field. Titles name a heater model and a kW figure, which is the fitted heater rather than the sauna, so it is not read here.", proposedBy: "seed script" },
+      { key: "sauna_type", label: "Heating", reason: "Nothing in this feed says infrared or traditional: neither word appears in any title, and the descriptions are prose. It stays Not stated on all 17 records.", proposedBy: "seed script" },
+      { key: "placement", label: "Placement", reason: "Neither indoor nor outdoor appears anywhere in this feed. It stays Not stated on all 17 records.", proposedBy: "seed script" },
       { key: "material", label: "Wood", reason: "Not a filter this category defines. Buyers ask about cedar against hemlock, and adding it is a change to the category schema rather than to a mapping.", proposedBy: "seed script" },
     ],
   });

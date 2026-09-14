@@ -18,6 +18,7 @@ import type { AttributeDefinition } from "@/domain/attributes";
 import type { CategoryDefinition } from "@/domain/category";
 import { differencesBetween } from "@/domain/intake/plan";
 import type { Brand, Product } from "@/domain/product";
+import type { Derivation } from "@/domain/provenance";
 import { ATTR_PREFIX, buildCandidates, type BuildOutput, type Candidate, type ExcludedRow, type ValueError } from "./build";
 import type { Extraction } from "./extract";
 import { mergeRecord, withdrawnRecords, type FieldOutcome, type RecordAction } from "./merge";
@@ -62,6 +63,7 @@ export type RecordPlan = {
   shadowsCatalog: boolean;
   merged: RecordFields;
   mergedNotes: Record<string, string>;
+  mergedDerivations: Record<string, Derivation>;
   product?: Product;
   brand?: Brand;
 };
@@ -269,6 +271,7 @@ function plan(candidate: Candidate, input: PreflightInput, defs: Map<string, Att
   const merged = mergeRecord({
     incoming: candidate.fields,
     incomingNotes: candidate.notes,
+    incomingDerivations: candidate.derivations,
     meta: candidate.meta,
     current,
     last: snapshot[candidate.id],
@@ -289,10 +292,11 @@ function plan(candidate: Candidate, input: PreflightInput, defs: Map<string, Att
     shadowsCatalog: catalogIds.has(candidate.id) && !workspace.has(candidate.id),
     merged: merged.fields,
     mergedNotes: merged.notes,
+    mergedDerivations: merged.derivations,
   };
   if (candidate.failures.length > 0) return { ...base, action: "failed" };
 
-  const assembled = productFromFields(candidate.id, merged.fields, merged.notes, merged.outcomes, {
+  const assembled = productFromFields(candidate.id, merged.fields, merged.notes, merged.derivations, merged.outcomes, {
     source,
     profileVersion: profile.version,
     fileName,

@@ -55,6 +55,23 @@ export const saunas = CategoryDefinition.parse({
       tooltip: "The maker's own words. A cabin sold as 1-2 person is recorded as the maker states it, not rounded.",
     },
     {
+      key: "sauna_style",
+      label: "Style",
+      type: "enum",
+      enumOptions: [
+        { value: "cabin", label: "Cabin" },
+        { value: "barrel", label: "Barrel" },
+        { value: "pod", label: "Pod" },
+        { value: "box", label: "Box" },
+        { value: "mobile", label: "Mobile (towable)" },
+      ],
+      group: "Basics",
+      compareOrder: 15,
+      filterable: true,
+      showOnCard: true,
+      tooltip: "The shape the retailer sells it as, read from the model name. It says what the thing looks like and where it will go, and nothing about how well it works.",
+    },
+    {
       key: "capacity_max_people",
       label: "Seats up to",
       shortLabel: "Seats",
@@ -111,9 +128,9 @@ export const saunas = CategoryDefinition.parse({
     { key: "heater_kw", label: "Heater output", type: "number", unit: "kW", group: "Power", compareOrder: 43 },
     { key: "heater_model", label: "Heater", type: "string", group: "Power", compareOrder: 44 },
   ],
-  cardSpecKeys: ["sauna_type", "capacity_label", "connection"],
+  cardSpecKeys: ["sauna_style", "capacity_max_people", "sauna_type"],
   compareGroups: [
-    { label: "Basics", keys: ["sauna_type", "capacity_label", "capacity_max_people"] },
+    { label: "Basics", keys: ["sauna_type", "sauna_style", "capacity_label", "capacity_max_people"] },
     { label: "Space", keys: ["width_in", "depth_in", "height_in", "placement"] },
     { label: "Power", keys: ["connection", "voltage", "amperage_a", "heater_kw", "heater_model"] },
   ],
@@ -122,15 +139,35 @@ export const saunas = CategoryDefinition.parse({
       key: "price",
       label: "Price",
       kind: "range",
+      // Four bands over the fifteen models this category actually lists, which
+      // run from $5,145 to $28,500. They split 4 / 4 / 3 / 4. Bands chosen to
+      // sit where the prices are, rather than at round numbers with nothing
+      // between them: the old "Under $2,500" matched nothing at all.
       presets: [
-        { label: "Under $2,500", condition: { key: "price", op: "lt", value: 250000 } },
-        { label: "Under $6,000", condition: { key: "price", op: "lt", value: 600000 } },
+        { label: "Under $7,000", condition: { key: "price", op: "lt", value: 700000 } },
+        { label: "$7,000 to $10,000", condition: { key: "price", op: "gte", value: 700000 }, and: { key: "price", op: "lt", value: 1000000 } },
+        { label: "$10,000 to $15,000", condition: { key: "price", op: "gte", value: 1000000 }, and: { key: "price", op: "lt", value: 1500000 } },
+        { label: "$15,000 and up", condition: { key: "price", op: "gte", value: 1500000 } },
+      ],
+    },
+    { key: "sauna_style", label: "Style", kind: "enum" },
+    {
+      key: "capacity_max_people",
+      label: "Seats up to",
+      kind: "range",
+      // Bands rather than every stated number. The fifteen models state six
+      // different capacities, the generic row offers four of them, and a
+      // shopper choosing between a one-person box and a six-person cabin is
+      // not choosing between four and five. These three cover all fifteen.
+      presets: [
+        { label: "1 to 2 people", condition: { key: "capacity_max_people", op: "lte", value: 2 } },
+        { label: "3 to 4 people", condition: { key: "capacity_max_people", op: "gte", value: 3 }, and: { key: "capacity_max_people", op: "lte", value: 4 } },
+        { label: "5 or more", condition: { key: "capacity_max_people", op: "gte", value: 5 } },
       ],
     },
     { key: "sauna_type", label: "Heating", kind: "enum" },
     { key: "connection", label: "Connection", kind: "enum" },
     { key: "placement", label: "Placement", kind: "enum" },
-    { key: "capacity_max_people", label: "Seats up to", kind: "range" },
   ],
   // Empty, and it is the point. See the note at the top of this file.
   scoring: { criteria: [], label: "Not ranked", meaning: "Saunas are not ranked here. Nothing in this catalogue establishes that one sauna is better than another, so no score is shown and no badge is awarded.", completenessFloor: 1 },
@@ -140,7 +177,7 @@ export const saunas = CategoryDefinition.parse({
   // "budget" badge says nothing but "the cheaper of the pair".
   badges: { priceBasis: "price", budgetMaxMinor: 250000, premiumMinMinor: 600000, minQualifying: 3, tieBreak: [] },
   insightRules: [],
-  relaxationOrder: ["placement", "voltage", "capacity_max_people", "connection", "sauna_type"],
+  relaxationOrder: ["placement", "voltage", "sauna_style", "capacity_max_people", "connection", "sauna_type"],
   priceTiers: [
     { id: "under-2500", label: "Under $2,500", maxMinor: 250000 },
     { id: "mid-2500-6000", label: "$2,500 to $6,000", maxMinor: 600000 },

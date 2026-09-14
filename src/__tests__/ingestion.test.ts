@@ -278,17 +278,39 @@ describe("reading the real feed through the seeded profile", () => {
     expect(big.groupNote).toContain("cheapest");
   });
 
-  it("writes no specification, because this feed states none", () => {
+  it("writes only what the two approved rules read out of the retailer's model names", () => {
     for (const candidate of built.candidates) {
       const written = Object.keys(candidate.fields).filter((k) => k.startsWith("attr:"));
-      expect(written, candidate.id).toEqual([]);
+      for (const key of written) expect(["attr:capacity_max_people", "attr:sauna_style"], candidate.id).toContain(key);
+      // Capacity is in every model name; style is in nine of the fifteen.
+      expect(written, candidate.id).toContain("attr:capacity_max_people");
+    }
+    // Eleven of the seventeen source records name a shape: nine of the fifteen
+    // models, plus the two blackout configurations of two of them.
+    const styled = built.candidates.filter((c) => c.fields["attr:sauna_style"] !== undefined);
+    expect(styled).toHaveLength(11);
+  });
+
+  it("keeps the rule, the whole title and the match beside every value it writes", () => {
+    for (const candidate of built.candidates) {
+      for (const [key, derivation] of Object.entries(candidate.derivations)) {
+        expect(derivation.field, `${candidate.id}.${key}`).toBe("title");
+        expect(derivation.reviewState, `${candidate.id}.${key}`).toBe("approved");
+        expect(derivation.sourceText, `${candidate.id}.${key}`).toContain(derivation.matched);
+      }
     }
   });
 
-  it("still shows what the unapproved capacity rule would produce", () => {
-    const withMatch = built.candidates.filter((c) => c.extractions.some((x) => x.value !== undefined));
-    expect(withMatch.length).toBeGreaterThan(0);
-    expect(withMatch[0].extractions[0].reviewState).toBe("needs_approval");
+  it("writes nothing from a rule nobody approved", () => {
+    const unapproved = MappingProfile.parse({
+      ...FIRST_PROFILE(1, TODAY),
+      attributes: [{ from: "extract", key: "capacity_max_people", column: "title", pattern: "(\\d+)\\s*Person", flags: "", ownership: "review_on_change", approved: false }],
+    });
+    const out = buildCandidates(TABLE, unapproved, SWEAT_KINGDOM, saunas);
+    for (const candidate of out.candidates) {
+      expect(Object.keys(candidate.fields).filter((k) => k.startsWith("attr:")), candidate.id).toEqual([]);
+      expect(candidate.extractions[0]?.reviewState, candidate.id).toBe("needs_approval");
+    }
   });
 
   it("takes the issued tracking link and never the plain merchant address", () => {
@@ -326,10 +348,11 @@ describe("what the report says before anything is written", () => {
       expect(coverage[key].covered, key).toBe("unmapped");
       expect(coverage[key].withValue, key).toBe(0);
     }
-    // Mapped by a rule nobody approved, so it fills nothing and says why.
+    // Filled by approved rules over the retailer's own model names.
     expect(coverage.capacity_max_people.covered).toBe("extracted");
-    expect(coverage.capacity_max_people.withValue).toBe(0);
-    expect(coverage.capacity_max_people.note).toContain("nobody has approved");
+    expect(coverage.capacity_max_people.withValue).toBe(17);
+    expect(coverage.sauna_style.covered).toBe("extracted");
+    expect(coverage.sauna_style.withValue).toBe(11);
   });
 
   it("says which records would shadow one the catalogue already holds", () => {
@@ -357,7 +380,7 @@ describe("who owns a field when the same file arrives again", () => {
     brand: { label: "Brand", ownership: "editorial" as const, provenance: "direct" as const },
   };
   const merge = (incoming: Record<string, unknown>, current: Record<string, unknown>, last?: Record<string, unknown>) =>
-    mergeRecord({ incoming, incomingNotes: {}, meta, current: { fields: current, notes: {} }, last });
+    mergeRecord({ incoming, incomingNotes: {}, incomingDerivations: {}, meta, current: { fields: current, notes: {}, derivations: {} }, last });
   const outcome = (r: ReturnType<typeof merge>, key: string) => r.outcomes.find((o) => o.key === key)!;
 
   it("writes a feed-owned field when the record still says what the last import wrote", () => {

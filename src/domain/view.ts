@@ -174,6 +174,8 @@ export type ProductView = {
   bounds: Record<string, Bound>;
   specs: SpecView[];
   cardSpecs: SpecView[];
+  /** The partner's own title, when `name` is a shortened form of it. */
+  sourceTitle?: string;
   editorial: { strengths: string[]; tradeoffs: string[] };
   /**
    * Set when this record is a configuration of another and is compared as part
@@ -417,6 +419,7 @@ export function toProductView(product: Product, ctx: ViewContext): ProductView {
     bounds,
     specs,
     cardSpecs,
+    ...(product.sourceTitle ? { sourceTitle: product.sourceTitle } : {}),
     ...(product.family ? { family: product.family } : {}),
     editorial: {
       strengths: product.editorial.strengths.map((n) => n.text),

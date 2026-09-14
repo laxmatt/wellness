@@ -180,6 +180,17 @@ export const Product = z.object({
   dimensions: sourced(Dimensions).optional(),
   weight: sourced(z.number().positive()).optional(),
   attributes: AttributeMap.default({}),
+  /**
+   * The partner's own title for the configuration this record was built from.
+   *
+   * Set when `name` is a shortened form of it. A retailer's title carries the
+   * model and the configuration in one string, and a card showing the whole
+   * thing reads as a warehouse label; a record that throws the rest away
+   * cannot say which configuration it priced. So the short form is the name
+   * and the whole of it is kept here, shown on the product page and quoted in
+   * provenance.
+   */
+  sourceTitle: z.string().min(1).optional(),
   /** Set when this record is a configuration of another and is compared as part of it. */
   family: FamilyMembership.optional(),
   editorial: z.object({

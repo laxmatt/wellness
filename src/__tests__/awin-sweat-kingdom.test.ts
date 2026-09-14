@@ -212,7 +212,11 @@ describe("importing the same feed again", () => {
     for (const product of built.products) {
       const live = catalog.products.find((p) => p.id === product.id)!;
       expect(live, product.id).toBeDefined();
-      expect(live.name, product.id).toBe(product.name);
+      // The adapter names a record by the whole title. The catalogue's name is
+      // the model read out of that title by an approved rule, and the title
+      // itself is kept on the record.
+      expect(live.sourceTitle, product.id).toBe(product.name);
+      expect(product.name.startsWith(live.name), product.id).toBe(true);
       expect(live.description, product.id).toBe(product.description);
       expect(live.offers[0].priceMinor, product.id).toBe(product.offers[0].priceMinor);
       expect(live.offers[0].url, product.id).toBe(product.offers[0].url);
@@ -252,10 +256,18 @@ describe("what this feed became", () => {
     expect(categoryBySlug("saunas")?.id).toBe("saunas");
   });
 
-  it("still carries no specification, having been published", () => {
+  it("carries only what an approved rule read out of the retailer's own model name", () => {
+    // This adapter writes no attribute at all, because the feed has no field
+    // stating one. What the catalogue holds was read from the title by a rule
+    // in the mapping profile, and every value says so.
+    const built = buildFromFeed(FEED_ROWS, OPTIONS);
+    expect(built.products.every((p) => Object.keys(p.attributes).length === 0)).toBe(true);
     const catalog = loadLocalCatalog(join(process.cwd(), "catalog"));
     for (const product of catalog.products.filter((p) => p.id.startsWith("sweat-kingdom-"))) {
-      expect(Object.keys(product.attributes), product.id).toEqual([]);
+      for (const [key, value] of Object.entries(product.attributes)) {
+        expect(["capacity_max_people", "sauna_style"], `${product.id}.${key}`).toContain(key);
+        expect(value.derivation?.field, `${product.id}.${key}`).toBe("title");
+      }
     }
   });
 });

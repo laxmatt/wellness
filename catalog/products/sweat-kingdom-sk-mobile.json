@@ -1,7 +1,7 @@
 {
   "id": "sweat-kingdom-sk-mobile",
   "slug": "sweat-kingdom-sk-mobile",
-  "name": "SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9",
+  "name": "SK Mobile",
   "brandId": "sweat-kingdom",
   "categoryId": "saunas",
   "description": "SK Mobile",
@@ -14,14 +14,14 @@
       "kind": "affiliate_feed",
       "role": "primary",
       "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/8_0fdb4d3c-07a1-47e6-a490-371148b31892.png?v=1765330635",
-      "alt": "SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9",
+      "alt": "SK Mobile",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-3d117476659f1244. That is a decision to publish without permission having been established, not a record that permission exists."
       }
     }
   ],
@@ -48,7 +48,7 @@
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Chosen from 2 rows sharing /products/sk-mobile, ranging $28,500 to $29,500. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
+        "note": "Chosen from 2 rows sharing /products/sk-mobile, ranging $28,500 to $29,500. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability, Seats up to, Style."
       }
     }
   ],
@@ -58,7 +58,53 @@
       "sweat-kingdom-store": "51197569532068"
     }
   },
-  "attributes": {},
+  "attributes": {
+    "capacity_max_people": {
+      "value": 5,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(?:\\\\d+\\\\s*[-\\\\u2013]\\\\s*)?(\\\\d+)\\\\s*Person\", found inside longer text in that cell. It matched \"5\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        "version": 1,
+        "field": "title",
+        "sourceText": "SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9",
+        "matched": "5",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    },
+    "sauna_style": {
+      "value": "mobile",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile)\", found inside longer text in that cell. It matched \"Mobile\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile)",
+        "version": 1,
+        "field": "title",
+        "sourceText": "SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9",
+        "matched": "Mobile",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    }
+  },
+  "sourceTitle": "SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
@@ -69,7 +115,7 @@
     "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068",
     "retrievedAt": "2026-09-14",
     "method": "direct",
-    "note": "Chosen from 2 rows sharing /products/sk-mobile, ranging $28,500 to $29,500. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability."
+    "note": "Chosen from 2 rows sharing /products/sk-mobile, ranging $28,500 to $29,500. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Image, Brand, Price, Availability, Seats up to, Style."
   },
   "lastUpdated": "2026-09-14",
   "flags": {

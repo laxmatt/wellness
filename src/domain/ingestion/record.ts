@@ -20,6 +20,7 @@
  */
 
 import type { AttributeDefinition, AttributeMap, AttributePrimitive } from "@/domain/attributes";
+import type { Derivation } from "@/domain/provenance";
 import { Brand, Product, type ImageAsset, type MerchantOffer } from "@/domain/product";
 import type { Source } from "@/domain/provenance";
 import { ATTR_PREFIX } from "./build";
@@ -29,7 +30,7 @@ import type { PartnerSource } from "./profile";
 export type RecordFields = Record<string, unknown>;
 
 /** A stored record, read back into the same shape a file produces. */
-export function fieldsFromProduct(product: Product, merchantId: string): { fields: RecordFields; notes: Record<string, string> } {
+export function fieldsFromProduct(product: Product, merchantId: string): { fields: RecordFields; notes: Record<string, string>; derivations: Record<string, Derivation> } {
   const offer = product.offers[0];
   const fields: RecordFields = {
     name: product.name,
@@ -37,6 +38,7 @@ export function fieldsFromProduct(product: Product, merchantId: string): { field
     brand: product.brandId,
   };
   const notes: Record<string, string> = {};
+  const derivations: Record<string, Derivation> = {};
 
   if (offer) {
     fields.link = offer.url;
@@ -44,6 +46,7 @@ export function fieldsFromProduct(product: Product, merchantId: string): { field
     fields.price = offer.priceMinor !== undefined ? { minor: offer.priceMinor, currency: offer.currency } : { quoteOnly: true };
   }
   if (product.images[0]) fields.image = product.images[0].src;
+  if (product.sourceTitle !== undefined) fields.source_title = product.sourceTitle;
   if (product.family) fields.family = product.family;
   const sku = product.identifiers.merchantSkus[merchantId];
   if (sku !== undefined) fields.merchant_sku = sku;
@@ -53,8 +56,9 @@ export function fieldsFromProduct(product: Product, merchantId: string): { field
     if (value.value === undefined) continue;
     fields[`${ATTR_PREFIX}${key}`] = value.value;
     if (value.source.note) notes[`${ATTR_PREFIX}${key}`] = value.source.note;
+    if (value.derivation) derivations[`${ATTR_PREFIX}${key}`] = value.derivation;
   }
-  return { fields, notes };
+  return { fields, notes, derivations };
 }
 
 export type AssembleContext = {
@@ -95,6 +99,7 @@ export function productFromFields(
   id: string,
   fields: RecordFields,
   notes: Record<string, string>,
+  derivations: Record<string, Derivation>,
   outcomes: FieldOutcome[],
   ctx: AssembleContext,
 ): Assembled {
@@ -172,6 +177,7 @@ export function productFromFields(
     attributes[attrKey] = {
       value: value as AttributePrimitive,
       verification: "manufacturer_reported",
+      ...(derivations[key] ? { derivation: derivations[key] } : {}),
       source: {
         ...base,
         // A specification in a shop's feed is the maker's claim reaching us
@@ -196,6 +202,7 @@ export function productFromFields(
     market: "US",
     images,
     offers: [offer],
+    ...(asString(fields.source_title) ? { sourceTitle: asString(fields.source_title) } : {}),
     identifiers: {
       gtin: [],
       merchantSkus: asString(fields.merchant_sku) ? { [ctx.source.merchantId]: asString(fields.merchant_sku)! } : {},

@@ -1,7 +1,7 @@
 {
   "id": "sweat-kingdom-regen-the-sweat-pod-2-4-person",
   "slug": "sweat-kingdom-regen-the-sweat-pod-2-4-person",
-  "name": "REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)",
+  "name": "REGEN The Sweat Pod (2-4 Person)",
   "brandId": "sweat-kingdom",
   "categoryId": "saunas",
   "description": "Availability: 6-8 week lead time Product Overview: The Sweat Pod is a sauna designed for efficiency. Handcrafted in East Idaho with the highest quality red cedar, this sauna brings the heat and recovery benefits of traditional saunas to your personal space. The heater included with your sauna should consistently reach temperatures of 175-230F in 30-90 minutes. Product Dimensions Regular Size: Assembled Size: Height 77 3/8\" - Depth 61 1/4\" - Width 53\" Interior Size: Height 70 3/8\" - Depth 51\" - Width 47 3/8\" Upper Bench Dimensions: Width 20 3/4\" - Length 47 3/8\" Lower Bench Dimensions: Width 10 3/8\" - Length 47 3/8\" Large Size Assembled Size: Height 89 3/8\" - Depth 85 1/4\" - Width 53\" Interior Size: Height 82 3/8\" - Depth 75\" - Width 47 3/8\" Upper Bench Dimensions: Width 20 3/4\" - Length 47 3/8\" Lower Bench Dimensions: Width 20 3/4\" - Length 47 3/8\"",
@@ -14,14 +14,14 @@
       "kind": "affiliate_feed",
       "role": "primary",
       "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/111.png?v=1775058014",
-      "alt": "REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)",
+      "alt": "REGEN The Sweat Pod (2-4 Person)",
       "source": {
         "kind": "merchant_feed",
         "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-4fd9b3d35fddbff4. That is a decision to publish without permission having been established, not a record that permission exists."
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-3d117476659f1244. That is a decision to publish without permission having been established, not a record that permission exists."
       }
     }
   ],
@@ -48,7 +48,7 @@
         "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348",
         "retrievedAt": "2026-09-14",
         "method": "direct",
-        "note": "Chosen from 2 rows sharing /products/regen-the-sweat-pod-2-4-person, ranging $8,695 to $9,695. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+        "note": "Chosen from 2 rows sharing /products/regen-the-sweat-pod-2-4-person, ranging $8,695 to $9,695. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style."
       }
     }
   ],
@@ -59,7 +59,53 @@
       "sweat-kingdom-store": "51322434781348"
     }
   },
-  "attributes": {},
+  "attributes": {
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(?:\\\\d+\\\\s*[-\\\\u2013]\\\\s*)?(\\\\d+)\\\\s*Person\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        "version": 1,
+        "field": "title",
+        "sourceText": "REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    },
+    "sauna_style": {
+      "value": "pod",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile)\", found inside longer text in that cell. It matched \"Pod\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile)",
+        "version": 1,
+        "field": "title",
+        "sourceText": "REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)",
+        "matched": "Pod",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    }
+  },
+  "sourceTitle": "REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
@@ -70,7 +116,7 @@
     "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348",
     "retrievedAt": "2026-09-14",
     "method": "direct",
-    "note": "Chosen from 2 rows sharing /products/regen-the-sweat-pod-2-4-person, ranging $8,695 to $9,695. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability."
+    "note": "Chosen from 2 rows sharing /products/regen-the-sweat-pod-2-4-person, ranging $8,695 to $9,695. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style."
   },
   "lastUpdated": "2026-09-14",
   "flags": {

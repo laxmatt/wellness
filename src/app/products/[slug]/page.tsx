@@ -197,6 +197,12 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </section>
 
+          {view.sourceTitle && view.sourceTitle !== view.name ? (
+            <p className="text-sm text-fg-muted">
+              <span className="font-semibold">Listed by {lowest?.merchant.name.replace(/\s*\(direct\)$/, "") ?? "the retailer"} as:</span> {view.sourceTitle}
+            </p>
+          ) : null}
+
           {configurations.length > 0 ? (
             <section id="configurations">
               <h2 className="font-display text-3xl">Configurations</h2>
@@ -211,9 +217,12 @@ export default async function ProductPage({ params }: Props) {
                     <li key={c.view.id} className="flex flex-wrap items-baseline justify-between gap-3 py-3">
                       <div className="min-w-0">
                         <p className="font-semibold">{c.view.name}</p>
+                        {/* The retailer's own title, whole. The name above is
+                            the short form of it, and a shopper clicking Shop
+                            arrives at exactly this configuration. */}
+                        {c.view.sourceTitle ? <p className="break-words text-sm text-fg-soft">{c.view.sourceTitle}</p> : null}
                         <p className="text-sm text-fg-muted">
                           {c.view.availability === "unknown" ? "Availability not stated" : c.view.availability.replace(/_/g, " ")}
-                          {c.view.family ? ` · ${c.view.family.because}` : ""}
                         </p>
                       </div>
                       <div className="flex items-center gap-4">

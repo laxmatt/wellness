@@ -150,16 +150,26 @@ describe("the five the catalogue already held", () => {
       });
       const priced = rows.map((r) => ({ r, p: readFeedPrice(r.price) })).filter((x) => x.p !== undefined);
       const cheapest = priced.reduce((a, b) => (b.p!.amountMinor < a.p!.amountMinor ? b : a)).r;
-      expect(record.name, id).toBe(cheapest.title.trim());
+      // The name is the model out of that title, and the whole of the title is
+      // kept beside it. Nothing about the configuration was lost.
+      expect(record.sourceTitle, id).toBe(cheapest.title.trim());
+      expect(cheapest.title.trim().startsWith(record.name), id).toBe(true);
       expect(record.description, id).toBe(cheapest.description.trim());
     }
   });
 });
 
 describe("what these records do not claim", () => {
-  it("states no sauna specification, because the feed states none", () => {
+  it("states only what the retailer's own model names carry, and says how it read them", () => {
+    // The feed has no specification field of any kind. Two things are readable
+    // from the model name itself, as tokens, by rules somebody approved, and
+    // every one of them carries the rule and the text it read.
     for (const product of fromFeed) {
-      expect(Object.keys(product.attributes), product.id).toEqual([]);
+      expect(Object.keys(product.attributes).sort(), product.id).toEqual(["capacity_max_people", "sauna_style"].filter((k) => product.attributes[k] !== undefined));
+      for (const value of Object.values(product.attributes)) {
+        expect(value.derivation, product.id).toBeDefined();
+        expect(value.derivation!.field, product.id).toBe("title");
+      }
     }
   });
 
@@ -181,12 +191,18 @@ describe("what these records do not claim", () => {
     }
   });
 
-  it("keeps the capacity extraction unapproved, so no capacity was written", () => {
+  it("reads nothing this feed does not say in a token: no heating, connection or placement", () => {
+    // "infrared" and "traditional" appear in no title; "traditional" appears in
+    // prose in 24 descriptions and prose is not read. Neither "indoor" nor
+    // "outdoor" appears anywhere at all.
     for (const product of fromFeed) {
-      expect(product.attributes.capacity_max_people, product.id).toBeUndefined();
       expect(product.attributes.sauna_type, product.id).toBeUndefined();
       expect(product.attributes.connection, product.id).toBeUndefined();
       expect(product.attributes.placement, product.id).toBeUndefined();
+      expect(product.attributes.width_in, product.id).toBeUndefined();
+    }
+    for (const word of [/infrared/i, /\bindoor\b/i, /\boutdoor\b/i]) {
+      expect(ROWS.every((r) => !word.test(r.title)), String(word)).toBe(true);
     }
   });
 });
@@ -224,13 +240,12 @@ describe("what a shopper is offered", () => {
     const { getCategoryPage } = await import("@/lib/queries");
     const page = await getCategoryPage("saunas");
     for (const item of page!.products) {
-      // The rows are there and they read "Not stated". A missing row would
+      // The heating row is there and reads "Not stated". A missing row would
       // leave a shopper to assume rather than to know it is unknown.
-      expect(item.view.cardSpecs.map((s) => s.key), item.view.id).toEqual(["sauna_type", "capacity_label", "connection"]);
-      for (const spec of item.view.cardSpecs) {
-        expect(spec.formatted, `${item.view.id}.${spec.key}`).toBe("Not stated");
-      }
-      expect(Object.keys(item.view.attributes), item.view.id).toEqual([]);
+      expect(item.view.cardSpecs.map((s) => s.key), item.view.id).toEqual(["sauna_style", "capacity_max_people", "sauna_type"]);
+      const byKey = Object.fromEntries(item.view.cardSpecs.map((s) => [s.key, s.formatted]));
+      expect(byKey.sauna_type, item.view.id).toBe("Not stated");
+      expect(Object.keys(item.view.attributes).sort(), item.view.id).not.toContain("sauna_type");
     }
   });
 
@@ -250,5 +265,184 @@ describe("what a shopper is offered", () => {
     const slugs = (await getAllCategoryPages()).flatMap((p) => p.products.map((x) => x.view.slug));
     for (const id of BLACKOUT) expect(slugs).not.toContain(id);
     expect(slugs).toContain("sweat-kingdom-the-sweat-cabin");
+  });
+});
+
+describe("a shopper can find it", () => {
+  it("is in the one list the header, the footer and the phone menu all read", async () => {
+    const { NAV } = await import("@/lib/nav");
+    expect(NAV.map((n) => n.href)).toContain("/saunas");
+    expect(NAV.find((n) => n.href === "/saunas")?.label).toBe("Saunas");
+  });
+
+  it("holds every published category, so a launch cannot forget the bar at the top", async () => {
+    const { NAV } = await import("@/lib/nav");
+    for (const cat of categories) {
+      expect(NAV.map((n) => n.href), cat.id).toContain(`/${cat.slug}`);
+      expect(NAV.find((n) => n.href === `/${cat.slug}`)?.label, cat.id).toBe(cat.navLabel);
+    }
+    expect(NAV.filter((n) => categories.some((c) => `/${c.slug}` === n.href))).toHaveLength(categories.length);
+  });
+
+  it("is on every surface that lists the other live categories", async () => {
+    const { getAllCategoryPages } = await import("@/lib/queries");
+    // The home grid, /explore and the sitemap are all built from this one read.
+    expect((await getAllCategoryPages()).map((p) => p.cat.slug)).toContain("saunas");
+  });
+});
+
+describe("names a shopper can read", () => {
+  const models = fromFeed.filter((p) => p.family === undefined);
+
+  it("shortens every card name and keeps the retailer's own title", () => {
+    expect(models).toHaveLength(15);
+    for (const product of models) {
+      expect(product.sourceTitle, product.id).toBeDefined();
+      expect(product.sourceTitle!.length, product.id).toBeGreaterThan(product.name.length);
+      expect(product.sourceTitle!.startsWith(product.name), product.id).toBe(true);
+      expect(product.name.length, `${product.id} is still a warehouse label`).toBeLessThanOrEqual(45);
+      // No configuration detail survives into the name.
+      expect(product.name, product.id).not.toMatch(/ \/ |kw|Included|Footprint/i);
+    }
+  });
+
+  it("collapses no two models into one name", () => {
+    const names = models.map((p) => p.name);
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("keeps each blackout configuration distinct from the model it belongs to", () => {
+    for (const id of BLACKOUT) {
+      const member = fromFeed.find((p) => p.id === id)!;
+      const model = fromFeed.find((p) => p.id === member.family!.of)!;
+      expect(member.name).toContain("Blackout Edition");
+      expect(member.name).not.toBe(model.name);
+      expect(member.sourceTitle).toContain("Blackout Edition");
+    }
+  });
+
+  it("records the rule that shortened it", () => {
+    for (const product of models) {
+      expect(product.source.note ?? "", product.id).toBeTruthy();
+    }
+  });
+});
+
+describe("what the titles do and do not state", () => {
+  const models = fromFeed.filter((p) => p.family === undefined);
+  const withValue = (key: string) => models.filter((p) => p.attributes[key]?.value !== undefined);
+
+  it("reads a capacity for every one of the fifteen", () => {
+    expect(withValue("capacity_max_people")).toHaveLength(15);
+  });
+
+  it("reads a style for nine of them and leaves six not stated", () => {
+    const styled = withValue("sauna_style");
+    expect(styled).toHaveLength(9);
+    const counts: Record<string, number> = {};
+    for (const p of styled) counts[String(p.attributes.sauna_style.value)] = (counts[String(p.attributes.sauna_style.value)] ?? 0) + 1;
+    expect(counts).toEqual({ cabin: 4, barrel: 1, pod: 2, box: 1, mobile: 1 });
+  });
+
+  it("reads no heating type, connection or placement, because this feed states none", () => {
+    for (const key of ["sauna_type", "connection", "placement", "voltage", "heater_kw"]) {
+      expect(withValue(key), key).toHaveLength(0);
+    }
+  });
+
+  it("keeps the rule, the version, the whole title and the match on every derived value", () => {
+    for (const product of models) {
+      for (const key of ["capacity_max_people", "sauna_style"]) {
+        const value = product.attributes[key];
+        if (!value?.value) continue;
+        const d = value.derivation!;
+        expect(d, `${product.id}.${key}`).toBeDefined();
+        expect(d.field).toBe("title");
+        expect(d.sourceText).toBe(product.sourceTitle);
+        expect(d.sourceText).toContain(d.matched);
+        expect(d.reviewState).toBe("approved");
+        expect(d.approvedBy).toBeTruthy();
+        expect(d.version).toBeGreaterThan(0);
+        expect(d.rule.length).toBeGreaterThan(0);
+      }
+    }
+  });
+});
+
+describe("narrowing by more than price", () => {
+  const loadPage = async () => {
+    const { getCategoryPage } = await import("@/lib/queries");
+    return (await getCategoryPage("saunas"))!;
+  };
+
+  it("offers three rows of chips, not one", async () => {
+    const { buildFilterGroups } = await import("@/domain/filters");
+    const page = await loadPage();
+    const groups = buildFilterGroups(page.products.map((p) => p.view), page.cat);
+    expect(groups.map((g) => g.key)).toEqual(["price", "sauna_style", "capacity_max_people"]);
+    expect(groups.flatMap((g) => g.options).length).toBeGreaterThanOrEqual(10);
+  });
+
+  it("splits the fifteen across four price bands that cover all of them", async () => {
+    const { buildFilterGroups } = await import("@/domain/filters");
+    const page = await loadPage();
+    const price = buildFilterGroups(page.products.map((p) => p.view), page.cat).find((g) => g.key === "price")!;
+    expect(price.options.map((o) => o.label)).toEqual(["Under $7,000", "$7,000 to $10,000", "$10,000 to $15,000", "$15,000 and up"]);
+    expect(price.options.map((o) => o.matchIds.length)).toEqual([4, 4, 3, 4]);
+    // Bands, not overlapping "Under" chips: every model is in exactly one.
+    const seen = price.options.flatMap((o) => o.matchIds);
+    expect(new Set(seen).size).toBe(15);
+    expect(seen).toHaveLength(15);
+  });
+
+  it("offers a style row of five and a capacity row of three, in order", async () => {
+    const { buildFilterGroups } = await import("@/domain/filters");
+    const page = await loadPage();
+    const groups = buildFilterGroups(page.products.map((p) => p.view), page.cat);
+    const style = groups.find((g) => g.key === "sauna_style")!;
+    expect(style.options.map((o) => [o.label, o.matchIds.length])).toEqual([
+      ["Cabin", 4],
+      ["Barrel", 1],
+      ["Pod", 2],
+      ["Box", 1],
+      ["Mobile (towable)", 1],
+    ]);
+    const seats = groups.find((g) => g.key === "capacity_max_people")!;
+    expect(seats.options.map((o) => [o.label, o.matchIds.length])).toEqual([
+      ["1 to 2 people", 2],
+      ["3 to 4 people", 6],
+      ["5 or more", 7],
+    ]);
+  });
+
+  it("renders no row for a dimension nothing states", async () => {
+    const { buildFilterGroups } = await import("@/domain/filters");
+    const page = await loadPage();
+    const keys = buildFilterGroups(page.products.map((p) => p.view), page.cat).map((g) => g.key);
+    for (const key of ["sauna_type", "connection", "placement"]) expect(keys, key).not.toContain(key);
+  });
+
+  it("answers a combination nothing matches with nothing, rather than with everything", async () => {
+    const { applyFilters, buildFilterGroups } = await import("@/domain/filters");
+    const page = await loadPage();
+    const views = page.products.map((p) => p.view);
+    const groups = buildFilterGroups(views, page.cat);
+    const ids = views.map((v) => v.id);
+    // A one-person box costing over $15,000 is not something this retailer sells.
+    expect(applyFilters(ids, groups, ["sauna_style:box", "price:$15,000 and up"])).toEqual([]);
+    // And a combination that does match returns exactly those.
+    const cabins = applyFilters(ids, groups, ["sauna_style:cabin", "capacity_max_people:5 or more"]);
+    expect(cabins.length).toBeGreaterThan(0);
+    expect(cabins.every((id) => views.find((v) => v.id === id)!.attributes.sauna_style === "cabin")).toBe(true);
+  });
+
+  it("still shows a missing dimension on the card rather than hiding the row", async () => {
+    const page = await loadPage();
+    for (const item of page.products) {
+      const byKey = Object.fromEntries(item.view.cardSpecs.map((s) => [s.key, s.formatted]));
+      expect(Object.keys(byKey), item.view.id).toEqual(["sauna_style", "capacity_max_people", "sauna_type"]);
+      expect(byKey.sauna_type, item.view.id).toBe("Not stated");
+      expect(byKey.capacity_max_people, item.view.id).toMatch(/\d+ people/);
+    }
   });
 });

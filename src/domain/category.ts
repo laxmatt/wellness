@@ -23,7 +23,12 @@ export const FilterSpec = z.object({
   label: z.string(),
   kind: z.enum(["range", "enum", "boolean", "list"]),
   // Range presets shown as chips, in minor units for price.
-  presets: z.array(z.object({ label: z.string(), condition: Condition })).optional(),
+  //
+  // `condition` is the common case, one bound. `and` carries the second one, so
+  // a band can be stated as the band it is rather than as another "Under". Two
+  // overlapping "Under" chips in one group are ORed, which makes the narrower
+  // of them do nothing.
+  presets: z.array(z.object({ label: z.string(), condition: Condition, and: Condition.optional() })).optional(),
 });
 export type FilterSpec = z.infer<typeof FilterSpec>;
 

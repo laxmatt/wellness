@@ -16,10 +16,12 @@
 
 import type { AttributeDefinition } from "@/domain/attributes";
 import type { CategoryDefinition } from "@/domain/category";
+import type { Derivation } from "@/domain/provenance";
 import { applyExtraction, extractionNote, type Extraction } from "./extract";
 import { normaliseAttribute, readAvailability, readPrice, slugPart } from "./normalize";
 import {
   checkFamilyRules,
+  compilePattern,
   mappingFor,
   targetInfo,
   type CanonicalTarget,
@@ -50,6 +52,8 @@ export type Candidate = {
   /** The feed's view of this record. Keys are `name`, `price`, `attr:<key>` and so on. */
   fields: Record<string, unknown>;
   notes: Record<string, string>;
+  /** How a value was read, for the values that were read rather than stated. */
+  derivations: Record<string, Derivation>;
   meta: Record<string, FieldMeta>;
   extractions: Extraction[];
   valueErrors: ValueError[];
@@ -195,6 +199,7 @@ function readGroup(
   const valueErrors: ValueError[] = [];
   const fields: Record<string, unknown> = {};
   const notes: Record<string, string> = {};
+  const derivations: Record<string, Derivation> = {};
   const meta: Record<string, FieldMeta> = {};
   const extractions: Extraction[] = [];
 
@@ -235,6 +240,31 @@ function readGroup(
     const value = cell(row, map.column);
     if (value === "") {
       if (targetInfo(target).required) failures.push(`${targetInfo(target).label} is empty on the row this record is built from.`);
+      continue;
+    }
+    // A name may be the model out of a longer title. The whole of the title is
+    // kept beside it, always: shortening is for the card, not for the record.
+    if (target === "name" && map.extract) {
+      const compiled = compilePattern(map.extract.pattern, map.extract.flags.replace(/g/g, ""));
+      if (!compiled.ok) {
+        valueErrors.push({ id, field: "name", raw: value, reason: compiled.reason });
+        put(target, targetInfo(target).label, map.ownership, "direct", value);
+        continue;
+      }
+      const match = compiled.regex.exec(value);
+      const short = match?.[1]?.trim();
+      if (!short) {
+        valueErrors.push({ id, field: "name", raw: value, reason: "The name rule found nothing in this title, so the whole title is the name." });
+        put(target, targetInfo(target).label, map.ownership, "direct", value);
+        continue;
+      }
+      if (!map.extract.approved) {
+        valueErrors.push({ id, field: "name", raw: value, reason: `The name rule would read "${short}" out of this title and nobody has approved it, so the whole title is the name.` });
+        put(target, targetInfo(target).label, map.ownership, "direct", value);
+        continue;
+      }
+      put(target, targetInfo(target).label, map.ownership, "extracted", short, `Shortened from the retailer's own title by an approved rule in mapping profile v${profile.version}: ${JSON.stringify(map.extract.pattern)}. The whole title is kept on the record.`);
+      put("source_title", "Retailer's own title", map.ownership, "direct", value);
       continue;
     }
     put(target, targetInfo(target).label, map.ownership, "direct", value);
@@ -296,6 +326,16 @@ function readGroup(
     // text, its output and its review state, and it stops there.
     if (extraction.reviewState === "approved" && extraction.value !== undefined) {
       put(`${ATTR_PREFIX}${rule.key}`, def.label, rule.ownership, "extracted", extraction.value, extractionNote(extraction));
+      derivations[`${ATTR_PREFIX}${rule.key}`] = {
+        rule: rule.pattern,
+        version: profile.version,
+        field: rule.column,
+        sourceText: raw,
+        matched: extraction.matchedText ?? "",
+        confidence: extraction.confidence === "whole_cell" ? "whole_field" : "within_text",
+        reviewState: "approved",
+        ...(rule.approvedBy ? { approvedBy: rule.approvedBy } : {}),
+      };
     } else if (extraction.reviewState === "refused") {
       valueErrors.push({ id, field: rule.key, raw: extraction.matchedText ?? raw, reason: extraction.notes.join(" ") });
     }
@@ -307,5 +347,5 @@ function readGroup(
     );
   }
 
-  return { id, groupKey, brandName, rows: bucket.numbers, representativeRow: bucket.numbers[chosen], fields, notes, meta, extractions, valueErrors, failures, groupNote };
+  return { id, groupKey, brandName, rows: bucket.numbers, representativeRow: bucket.numbers[chosen], fields, notes, derivations, meta, extractions, valueErrors, failures, groupNote };
 }
