@@ -34,7 +34,9 @@
     "ingestion:seed": "tsx scripts/ingestion-seed.ts",
     "ingestion:server": "tsx scripts/ingestion-server.ts",
     "e2e:ingestion": "tsx e2e/ingestion-admin.mts",
-    "promote:saunas": "tsx scripts/promote-saunas.ts"
+    "promote:saunas": "tsx scripts/promote-saunas.ts",
+    "fetch:shopify": "tsx scripts/fetch-shopify.ts",
+    "ingestion:seed:shopify": "tsx scripts/seed-shopify.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

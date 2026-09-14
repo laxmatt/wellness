@@ -29,6 +29,8 @@ const ROOT = process.cwd();
 const WORKSPACE = "ingestion-e2e";
 const WORKSPACE_DIR = join(ROOT, WORKSPACE);
 const FEED = join(ROOT, "intake", "sweat-kingdom", "awin-125462-f3219-2026-09-13.csv");
+const TOPTURE_SNAPSHOT = join(ROOT, "src", "__tests__", "fixtures", "shopify", "topture-shopify.json");
+const SELECT_SNAPSHOT = join(ROOT, "src", "__tests__", "fixtures", "shopify", "select-saunas-shopify.json");
 const PORT = Number(process.env.INGESTION_PORT ?? 4331);
 const TOOL = `http://127.0.0.1:${PORT}`;
 const ASCENT = "sweat-kingdom-the-ascent";
@@ -210,6 +212,12 @@ async function run() {
     const seed = launch(process.execPath, [tsx, "scripts/ingestion-seed.ts"], env);
     seed.on("error", reject);
     seed.on("exit", (code) => (code === 0 ? done() : reject(new Error(`the seed exited with ${code}`))));
+  });
+
+  await new Promise<void>((done, reject) => {
+    const seed = launch(process.execPath, [tsx, "scripts/seed-shopify.ts"], env);
+    seed.on("error", reject);
+    seed.on("exit", (code) => (code === 0 ? done() : reject(new Error(`the Shopify seed exited with ${code}`))));
   });
 
   const catalogBefore = catalogCount();
@@ -415,6 +423,55 @@ async function run() {
       Number(await attribute(page, ACTIVITY, "data-completed")) - completedBefore <= 2,
       await attribute(page, ACTIVITY, "data-completed"),
     );
+
+    scenario = "shopify";
+    // A second partner, in a different format, through the same flow.
+    await page.locator('[data-testid="source-select"]').selectOption("topture-shopify");
+    await page.waitForSelector('[data-testid="profile-v1"]');
+    await act(page, () => page.setInputFiles('[data-testid="file-input"]', TOPTURE_SNAPSHOT));
+    await page.waitForSelector('[data-testid="target-table"]', { timeout: 30_000 });
+    ok("a Shopify snapshot reads into rows", (await page.locator('[data-testid="columns"] tr').count()) > 1);
+    await page.locator('[data-testid="load-v1"]').click();
+    await act(page, () => page.locator('[data-testid="check"]').click());
+    check("two complete saunas out of the store's aisles", await page.locator('[data-testid="preflight"] [data-testid^="plan-"]').count(), 2);
+    const excluded = (await page.locator('[data-testid="excluded-details"]').textContent()) ?? "";
+    for (const reason of ["A heater is a part", "An accessory is not a complete sauna", "A cold plunge belongs to another category"]) {
+      ok(`excluded, and says why: "${reason}"`, excluded.includes(reason), excluded.slice(0, 160));
+    }
+    ok("nothing is imported before the rules are approved", (await page.locator('[data-testid="preflight"] .err').first().textContent())?.includes("has not been approved") === true);
+
+    await page.locator('[data-testid="approver"]').fill("e2e reviewer");
+    await act(page, () => page.locator('[data-testid="approve-profile"]').click());
+    await act(page, () => page.locator('[data-testid="import"]').click());
+    ok("two Topture drafts", (await page.locator('[data-testid="draft-topture-dundalk-luna-4-person"]').count()) === 1);
+
+    scenario = "cross-partner";
+    await page.locator('[data-testid="source-select"]').selectOption("select-saunas-shopify");
+    await page.waitForSelector('[data-testid="profile-v1"]');
+    await act(page, () => page.setInputFiles('[data-testid="file-input"]', SELECT_SNAPSHOT));
+    await page.waitForSelector('[data-testid="target-table"]', { timeout: 30_000 });
+    await page.locator('[data-testid="load-v1"]').click();
+    await page.locator('[data-testid="approver"]').fill("e2e reviewer");
+    await act(page, () => page.locator('[data-testid="approve-profile"]').click());
+    await act(page, () => page.locator('[data-testid="import"]').click());
+
+    await page.waitForSelector('[data-testid="canonical-counts"]', { timeout: 30_000 });
+    check("nothing settled by an identifier", await attribute(page, '[data-testid="canonical-counts"]', "data-confirmed"), "0");
+    check("one match waiting on a person", await attribute(page, '[data-testid="canonical-counts"]', "data-queued"), "1");
+    const group = page.locator('[data-testid^="canonical-"][data-strength]').first();
+    check("and it is a proposal, not a merge", await group.getAttribute("data-strength"), "proposed");
+    ok("naming both partners", ((await group.textContent()) ?? "").includes("topture-shopify") && ((await group.textContent()) ?? "").includes("select-saunas-shopify"));
+    // Nothing merged. Each partner's record is still its own draft with its own
+    // price, and the match is a queued proposal beside them.
+    for (const id of ["topture-dundalk-luna-4-person", "select-saunas-dundalk-luna-4-person"]) {
+      check(`${id} is still its own draft`, await page.locator(`[data-testid="draft-${id}"]`).count(), 1);
+    }
+
+    scenario = "blocked";
+    for (const id of ["lifepro", "therasage"]) {
+      ok(`${id} is recorded as unreadable`, (await page.locator(`[data-testid="blocked-${id}"]`).count()) === 1);
+    }
+    ok("with the reason", ((await page.locator('[data-testid="blocked-therasage"]').textContent()) ?? "").includes("CAPTCHA"));
 
   } finally {
     await browser.close();

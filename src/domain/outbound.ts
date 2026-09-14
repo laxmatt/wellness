@@ -59,6 +59,10 @@ export function outboundLinkProps(affiliateStatus: AffiliateStatus): {
 export const RELATIONSHIP_COPY: Record<AffiliateStatus, string> = {
   affiliate: "Affiliate link. We may earn a commission.",
   non_affiliate: "Ordinary link. No commission.",
+  // A programme this site has joined, and no way yet to link to this product so
+  // that the programme credits it. Not a claim that this link pays, and not a
+  // denial either.
+  affiliate_link_unresolved: "We have an affiliate arrangement with this retailer, and no tracked link for this product yet. This link earns nothing.",
   unknown: "Affiliate status not recorded for this offer.",
 };
 
@@ -83,12 +87,18 @@ export function relationshipNote(statuses: AffiliateStatus[]): string | undefine
     const [only] = kinds;
     if (only === "affiliate") return many ? "Affiliate links. We may earn a commission." : RELATIONSHIP_COPY.affiliate;
     if (only === "non_affiliate") return many ? "Ordinary links. No commission." : RELATIONSHIP_COPY.non_affiliate;
+    if (only === "affiliate_link_unresolved") {
+      return many
+        ? "We have affiliate arrangements with these retailers, and no tracked links for these products yet. These links earn nothing."
+        : RELATIONSHIP_COPY.affiliate_link_unresolved;
+    }
     return many ? "Affiliate status not recorded for these offers." : RELATIONSHIP_COPY.unknown;
   }
 
   // A mixed set is described by the part a shopper needs: that some of it pays.
   if (kinds.has("affiliate")) return "Some of these are affiliate links. We may earn a commission on those.";
-  // Ordinary links and unrecorded ones. Saying "no commission" would turn the
-  // unrecorded ones into a denial nobody has evidence for.
-  return "Some of these have no affiliate status recorded.";
+  // Ordinary links, unrecorded ones, and ones whose programme is joined but
+  // whose tracked link does not exist yet. None of them pays, and none of them
+  // is a denial that the retailer has a programme.
+  return "None of these is a tracked affiliate link. Some have no affiliate status recorded at all.";
 }

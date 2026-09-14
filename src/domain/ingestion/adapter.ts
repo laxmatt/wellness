@@ -15,6 +15,7 @@
  */
 
 import { LIMITS, readCsv } from "@/domain/import/csv";
+import { shopifyAdapter } from "./shopify";
 import type { SourceFormat } from "./profile";
 
 export type SourceTable = {
@@ -65,14 +66,13 @@ export const csvAdapter: SourceAdapter = {
 };
 
 /** Why each unimplemented format is unimplemented, in the words the tool shows. */
-const NOT_YET: Record<Exclude<SourceFormat, "csv">, string> = {
+const NOT_YET: Record<Exclude<SourceFormat, "csv" | "json">, string> = {
   xlsx: "A spreadsheet is a zip of XML with merged cells, formulas and several sheets, and which sheet holds the catalogue is a decision this has no way to make. No partner has sent one.",
   xml: "An XML feed carries its own schema, and mapping one means naming a repeating element and a path per field rather than a column per field. That is a second kind of mapping profile and no partner has sent an XML feed.",
-  json: "Same as XML: a path per field rather than a column per field. No partner has sent one.",
   api: "An API is a credential, a rate limit and a schedule as well as a format. None of those exist here, and this flow deliberately holds no credential.",
 };
 
-const ADAPTERS: SourceAdapter[] = [csvAdapter];
+const ADAPTERS: SourceAdapter[] = [csvAdapter, shopifyAdapter];
 
 export const adapters = (): SourceAdapter[] => [...ADAPTERS];
 
@@ -81,12 +81,13 @@ export function adapterFor(format: SourceFormat): { ok: true; adapter: SourceAda
   if (adapter) return { ok: true, adapter };
   return {
     ok: false,
-    reason: `This flow reads ${ADAPTERS.map((a) => a.label).join(", ")} and does not read ${format}. ${NOT_YET[format as Exclude<SourceFormat, "csv">] ?? ""}`.trim(),
+    reason: `This flow reads ${ADAPTERS.map((a) => a.label).join(", ")} and does not read ${format}. ${NOT_YET[format as Exclude<SourceFormat, "csv" | "json">] ?? ""}`.trim(),
   };
 }
 
 /** Which formats exist as a choice, and whether each can be read yet. */
 export const formatOptions = (): { format: SourceFormat; label: string; supported: boolean; note: string }[] => [
   { format: "csv", label: csvAdapter.label, supported: true, note: csvAdapter.note },
-  ...(Object.entries(NOT_YET) as [Exclude<SourceFormat, "csv">, string][]).map(([format, note]) => ({ format: format as SourceFormat, label: format.toUpperCase(), supported: false, note })),
+  { format: "json", label: shopifyAdapter.label, supported: true, note: shopifyAdapter.note },
+  ...(Object.entries(NOT_YET) as [Exclude<SourceFormat, "csv" | "json">, string][]).map(([format, note]) => ({ format: format as SourceFormat, label: format.toUpperCase(), supported: false, note })),
 ];

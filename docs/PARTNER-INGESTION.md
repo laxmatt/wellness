@@ -256,6 +256,48 @@ watching, or a check driving the page, should wait on. Waiting for an element
 to appear proves nothing here: almost every element on this page exists before
 an action and still exists after it.
 
+## More than one partner
+
+Four programmes are approved and three of them publish their own Shopify
+catalogue at `/products.json`: the store's own product and variant ids, SKUs,
+titles, product types, tags, prices, availability, images, handles and
+timestamps. A Shopify adapter reads a snapshot of one into rows, one row per
+variant, and everything downstream is the machinery the Awin feed already uses:
+the profile groups variants on the product handle, the cheapest represents the
+model, and ownership decides what a refresh may change.
+
+**Fetching is a separate command, run by a person.** `npm run fetch:shopify --
+<source>` pages through the store, writes one snapshot into `intake/shopify/`,
+and is the only thing in this project that requests anything from a partner.
+The admin tool cannot fetch: a loopback server that could be asked for an
+arbitrary address is a proxy into whatever else that machine can see. A failed
+run leaves the last good snapshot untouched, because pages land in a temporary
+file and move into place only when every page has arrived.
+
+**Inclusion is the store's own classification, never a keyword count.** Each
+partner's profile excludes by that store's `product_type` and `tags`: heaters,
+stones, accessories, parts, red-light products and cold plunges each get their
+own reason, ordered most specific first so the reason a reviewer reads is the
+useful one. No rule reads `body_text`, and no profile may: a merchant's
+marketing paragraph is not a classification.
+
+**Cross-partner matching reports and never merges.** A shared GTIN, or one
+maker's part number under one brand, settles a match. A brand and a model that
+agree exactly after lowercasing and dropping punctuation is a proposal for a
+person. A name under two brands, or identifiers that contradict each other, is
+a question. Nothing is matched on a title alone, nothing is scored for
+similarity, and a merge keeps the incumbent record's name, description and
+specifications while each partner contributes only its own offer.
+
+**A link that is not tracked says so.** Three programmes are approved and none
+has a demonstrated way to credit a link to an individual product, so offers
+carry no composed tracking parameter and the site says the arrangement exists
+and this link earns nothing.
+
+Two approved partners cannot be read and are recorded as such rather than left
+out: Lifepro answers automated requests with 403, and Therasage sits behind a
+login and a CAPTCHA.
+
 ## What it will not do
 
 - Write to `catalog/` from the tool. The one thing that does is

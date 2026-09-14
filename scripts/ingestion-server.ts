@@ -43,6 +43,7 @@ import { IngestionStore } from "@/providers/ingestion/IngestionStore";
 import { ingestionRoot } from "@/providers/ingestion/root";
 import { buildReport, draftIssues, runIngestionImport } from "@/providers/ingestion/import";
 import { planPromotion, signPromotion } from "@/providers/ingestion/promote";
+import { canonicalRecordOf, reviewCanonical } from "@/domain/canonical/match";
 import { ImageRightsRecord } from "@/domain/promotion/rights";
 import { renderPlan, planIdMatches } from "@/domain/promotion/signed";
 import { ShadowResolution } from "@/domain/promotion/shadow";
@@ -55,6 +56,31 @@ const TOOL = join(ROOT, "src", "tools", "ingestion-admin");
 const MAX_BODY = LIMITS.bytes + 200_000;
 
 const today = (): string => new Date().toISOString().slice(0, 10);
+
+/**
+ * The same sauna sold by two partners, across every draft in the workspace.
+ *
+ * A report and only a report: nothing here merges anything, and a group has to
+ * be acted on by a person. A record's source is read from its own id prefix,
+ * which is how the ingestion flow names records in the first place.
+ */
+function canonicalReview() {
+  const sources = store.sources();
+  const sourceOf = (id: string): string => sources.find((s) => id.startsWith(`${s.idPrefix}-`))?.id ?? "unknown";
+  const review = reviewCanonical(store.drafts().products.map((p) => canonicalRecordOf(p, sourceOf(p.id))));
+  return {
+    unmatched: review.unmatched,
+    confirmed: review.confirmed.length,
+    queued: review.queued.length,
+    groups: review.groups.map((g) => ({
+      key: g.key,
+      strength: g.strength,
+      evidence: g.evidence,
+      why: g.why,
+      members: g.members.map((m) => ({ id: m.id, sourceId: m.sourceId, name: m.name, brandId: m.brandId, priceMinor: m.priceMinor ?? null })),
+    })),
+  };
+}
 
 type Reply = { status: number; body: unknown };
 const fail = (message: string, extra: Record<string, unknown> = {}): Reply => ({ status: 200, body: { ok: false, errors: [message], ...extra } });
@@ -114,6 +140,8 @@ function state(): Reply {
           records: Object.keys(st.snapshot).length,
         };
       }),
+      blocked: store.blocked(),
+      canonical: canonicalReview(),
       plans: store.plans().map((p) => ({
         planId: p.planId,
         signedBy: p.signedBy,

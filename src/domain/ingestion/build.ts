@@ -79,13 +79,20 @@ const cell = (row: Record<string, string>, column: string): string => (row[colum
 function excludedBy(row: Record<string, string>, rules: ExclusionRule[]): ExclusionRule | undefined {
   for (const rule of rules) {
     const value = cell(row, rule.column);
+    // Case-insensitive for the two that read inside a string, because a store's
+    // own product type is written for a shopper: "Sauna Heaters", "sauna
+    // accessories" and "SAUNA ACCESSORIES" are one class, and a rule that
+    // caught two of the three would be a rule nobody could trust.
+    const needle = (rule.value ?? "").toLowerCase();
     const hit =
       rule.op === "equals" ? value === rule.value
       : rule.op === "not_equals" ? value !== rule.value
       : rule.op === "empty" ? value === ""
       : rule.op === "not_empty" ? value !== ""
       : rule.op === "starts_with" ? value.startsWith(rule.value ?? "")
-      : !value.startsWith(rule.value ?? "");
+      : rule.op === "not_starts_with" ? !value.startsWith(rule.value ?? "")
+      : rule.op === "contains" ? value.toLowerCase().includes(needle)
+      : !value.toLowerCase().includes(needle);
     if (hit) return rule;
   }
   return undefined;

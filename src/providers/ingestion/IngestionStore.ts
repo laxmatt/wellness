@@ -271,6 +271,16 @@ export class IngestionStore {
     return this.draftsById().get(id);
   }
 
+  /** Partners recorded as unreadable, and why. Written by the seed, read by the tool. */
+  blocked(): { id: string; name: string; state: string; why: string; recordedOn?: string }[] {
+    const dir = this.inside("blocked");
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir)
+      .filter((f) => f.endsWith(".json"))
+      .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as { id: string; name: string; state: string; why: string; recordedOn?: string })
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
   // ------------------------------------------------------------ image rights
 
   /**

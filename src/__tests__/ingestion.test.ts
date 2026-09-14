@@ -68,9 +68,12 @@ function seeded(): IngestionStore {
 // --------------------------------------------------------------- the adapter
 
 describe("the adapter boundary", () => {
-  it("reads CSV and refuses every other format by name rather than guessing", () => {
+  it("reads the two formats partners actually send, and refuses the rest by name", () => {
+    // CSV for the Awin feed, and a Shopify catalogue snapshot for the three
+    // stores that publish their own.
     expect(adapterFor("csv").ok).toBe(true);
-    for (const format of ["xlsx", "xml", "json", "api"] as const) {
+    expect(adapterFor("json").ok).toBe(true);
+    for (const format of ["xlsx", "xml", "api"] as const) {
       const result = adapterFor(format);
       expect(result.ok, format).toBe(false);
       if (!result.ok) expect(result.reason).toMatch(/does not read/);
@@ -79,7 +82,7 @@ describe("the adapter boundary", () => {
 
   it("offers the unimplemented formats as choices, marked unsupported", () => {
     const options = formatOptions();
-    expect(options.filter((o) => o.supported).map((o) => o.format)).toEqual(["csv"]);
+    expect(options.filter((o) => o.supported).map((o) => o.format)).toEqual(["csv", "json"]);
     expect(options).toHaveLength(5);
   });
 

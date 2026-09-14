@@ -1,0 +1,188 @@
+{
+  "sourceId": "select-saunas-shopify",
+  "storeUrl": "https://selectsaunas.com",
+  "requested": [
+    "https://selectsaunas.com/products.json?limit=250&page=1"
+  ],
+  "pages": 1,
+  "productCount": 5,
+  "variantCount": 4,
+  "fetchedAt": "2026-09-15T08:00:00Z",
+  "products": [
+    {
+      "id": 201,
+      "handle": "dundalk-luna-4-person",
+      "title": "Dundalk Luna (4 Person) - Outdoor Sauna",
+      "vendor": "Dundalk LeisureCraft",
+      "product_type": "Outdoor Sauna",
+      "tags": [
+        "sauna"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2011,
+          "title": "Default Title",
+          "sku": "SS-DUN-LUNA-4",
+          "price": "9250.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/dundalk-luna-4-person.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 202,
+      "handle": "harvia-solide-compact",
+      "title": "Harvia Solide Compact (2 Person)",
+      "vendor": "Harvia",
+      "product_type": "Indoor Sauna",
+      "tags": [
+        "sauna"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2021,
+          "title": "Default Title",
+          "sku": "HAR-SOL-CMP",
+          "price": "7450.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/harvia-solide-compact.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 203,
+      "handle": "sauna-stones-20kg",
+      "title": "Olivine Sauna Stones 20kg",
+      "vendor": "Harvia",
+      "product_type": "Sauna Accessories",
+      "tags": [
+        "sauna stones",
+        "consumable"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2031,
+          "title": "Default Title",
+          "sku": "HAR-STONE",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/sauna-stones-20kg.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 204,
+      "handle": "red-panel-900",
+      "title": "SelectLight 900 Red Light Panel",
+      "vendor": "Select Saunas",
+      "product_type": "Light Therapy",
+      "tags": [
+        "red light",
+        "recovery"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2041,
+          "title": "Default Title",
+          "sku": "SEL-RL900",
+          "price": "1299.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/red-panel-900.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 205,
+      "handle": "select-cabin-nohandle",
+      "title": "Select Cabin (6 Person)",
+      "vendor": "Select Saunas",
+      "product_type": "Outdoor Sauna",
+      "tags": [
+        "sauna"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [],
+      "images": [
+        {
+          "src": "https://cdn.example.test/select-cabin-nohandle.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    }
+  ]
+}

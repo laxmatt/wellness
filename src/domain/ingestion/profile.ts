@@ -172,7 +172,7 @@ export type AttributeRule = z.infer<typeof AttributeRule>;
 /** A row that is not a product of ours, named by a condition on a column. */
 export const ExclusionRule = z.object({
   column: z.string().min(1),
-  op: z.enum(["equals", "not_equals", "empty", "not_empty", "starts_with", "not_starts_with"]),
+  op: z.enum(["equals", "not_equals", "empty", "not_empty", "starts_with", "not_starts_with", "contains", "not_contains"]),
   value: z.string().optional(),
   /** Why, in a person's words. It appears beside every row this drops. */
   reason: z.string().min(1),
@@ -428,7 +428,7 @@ export function checkProfile(
 
   for (const [i, e] of profile.exclusions.entries()) {
     if (!has(e.column)) problems.push({ where: `exclusions[${i}]`, message: `"${e.column}" is not a column in this file.` });
-    const needsValue = e.op === "equals" || e.op === "not_equals" || e.op === "starts_with" || e.op === "not_starts_with";
+    const needsValue = e.op !== "empty" && e.op !== "not_empty";
     if (needsValue && (e.value ?? "") === "") problems.push({ where: `exclusions[${i}]`, message: `"${e.op}" needs a value to compare against.` });
   }
 

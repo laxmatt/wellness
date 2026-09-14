@@ -74,12 +74,21 @@ type Promotion = {
   document: string | null;
   rightsForm: { recordId: string; src: string; basis: RightsBasis; evidence: string } | null;
 };
+type CanonicalGroupRow = {
+  key: string;
+  strength: "confirmed" | "proposed" | "ambiguous";
+  evidence: string[];
+  why: string;
+  members: { id: string; sourceId: string; name: string; brandId: string; priceMinor: number | null }[];
+};
 type ServerState = {
   today: string;
   formats: { format: string; label: string; supported: boolean; note: string }[];
   targets: { target: string; label: string; catalogPath: string; required: boolean; note: string }[];
   sources: SourceRow[];
   drafts: DraftRow[];
+  blocked: { id: string; name: string; state: string; why: string; recordedOn?: string }[];
+  canonical: { unmatched: number; confirmed: number; queued: number; groups: CanonicalGroupRow[] };
   plans: PlanRow[];
 };
 type CategoryInfo = {
@@ -444,7 +453,7 @@ function newSourceForm(): HTMLElement {
 
 function fileSection(): HTMLElement {
   const panel = el("section", { class: "panel", "data-testid": "file" }, [text_("h2", "", "2. The file")]);
-  const input = el("input", { type: "file", accept: ".csv,.tsv,text/csv,text/plain", "data-testid": "file-input" });
+  const input = el("input", { type: "file", accept: ".csv,.tsv,.json,text/csv,text/plain,application/json", "data-testid": "file-input" });
   input.addEventListener("change", async () => {
     const file = input.files?.[0];
     if (!file) return;
@@ -590,7 +599,7 @@ function exclusionSection(): HTMLElement {
   for (const [i, rule] of profile.exclusions.entries()) {
     const row = el("div", { class: "fields", "data-testid": `exclusion-${i}` });
     row.append(field("Column", select(rule.column, columnOptions(), (v) => { rule.column = v; state.preflight = null; render(); })));
-    row.append(field("Test", select(rule.op, [{ value: "not_equals", label: "is not exactly" }, { value: "equals", label: "is exactly" }, { value: "empty", label: "is empty" }, { value: "not_empty", label: "is not empty" }, { value: "starts_with", label: "starts with" }, { value: "not_starts_with", label: "does not start with" }], (v) => { rule.op = v as ExclusionRule["op"]; state.preflight = null; render(); })));
+    row.append(field("Test", select(rule.op, [{ value: "not_equals", label: "is not exactly" }, { value: "equals", label: "is exactly" }, { value: "contains", label: "contains" }, { value: "not_contains", label: "does not contain" }, { value: "empty", label: "is empty" }, { value: "not_empty", label: "is not empty" }, { value: "starts_with", label: "starts with" }, { value: "not_starts_with", label: "does not start with" }], (v) => { rule.op = v as ExclusionRule["op"]; state.preflight = null; render(); })));
     row.append(field("Value", el("input", { type: "text", value: rule.value ?? "", oninput: (e) => { rule.value = (e.target as HTMLInputElement).value; state.preflight = null; }, "data-testid": `exclusion-value-${i}` })));
     row.append(field("Because", el("input", { type: "text", value: rule.reason, oninput: (e) => { rule.reason = (e.target as HTMLInputElement).value; state.preflight = null; }, "data-testid": `exclusion-reason-${i}` }), "Shown beside every row this drops."));
     const wrap = el("div", { class: "panel" }, [row]);
@@ -884,6 +893,69 @@ function draftsSection(): HTMLElement {
   return panel;
 }
 
+
+
+function crossPartnerSection(): HTMLElement {
+  const review = state.server?.canonical;
+  const panel = el("section", { class: "panel", "data-testid": "canonical" }, [text_("h2", "", "The same sauna, sold twice")]);
+  if (!review) return panel;
+  panel.append(
+    el("p", {
+      "data-testid": "canonical-counts",
+      "data-confirmed": String(review.confirmed),
+      "data-queued": String(review.queued),
+      "data-unmatched": String(review.unmatched),
+    }, [
+      `${review.confirmed} settled by a stable identifier, ${review.queued} waiting on a person, ${review.unmatched} sold by one partner and nobody else.`,
+    ]),
+  );
+  panel.append(
+    text_(
+      "p",
+      "note",
+      "Nothing here merges anything. A shared GTIN, or one maker's part number under one brand, settles a match; a brand and a model that agree exactly is a proposal; a name under two brands, or identifiers that contradict each other, is a question. Nothing is matched on a title alone and nothing is scored for similarity.",
+    ),
+  );
+
+  for (const group of review.groups) {
+    const box = el("div", { class: `row ${group.strength === "confirmed" ? "added" : group.strength === "ambiguous" ? "conflict" : "review"}`, "data-testid": `canonical-${group.key}`, "data-strength": group.strength });
+    box.append(
+      el("header", {}, [
+        el("span", { class: `pill ${group.strength === "confirmed" ? "ok" : group.strength === "ambiguous" ? "bad" : "warn"}` }, [group.strength]),
+        text_("strong", "", group.members[0]?.name ?? group.key),
+        ...group.evidence.map((e) => el("span", { class: "pill" }, [e])),
+      ]),
+    );
+    const table = el("table");
+    table.append(el("tr", {}, [text_("th", "", "Record"), text_("th", "", "Partner"), text_("th", "", "Brand"), text_("th", "", "Price")]));
+    for (const member of group.members) {
+      table.append(
+        el("tr", {}, [
+          el("td", {}, [text_("span", "", member.name), text_("p", "mono", member.id)]),
+          text_("td", "", member.sourceId),
+          text_("td", "", member.brandId),
+          text_("td", "", member.priceMinor === null ? "—" : `$${(member.priceMinor / 100).toLocaleString("en-US")}`),
+        ]),
+      );
+    }
+    box.append(table, text_("p", "note", group.why));
+    panel.append(box);
+  }
+  return panel;
+}
+
+function blockedSection(): HTMLElement {
+  const blocked = state.server?.blocked ?? [];
+  const panel = el("section", { class: "panel", "data-testid": "blocked" }, [text_("h2", "", `Partners that cannot be read (${blocked.length})`)]);
+  panel.append(text_("p", "note", "Approved programmes whose catalogue this cannot reach. Recorded so the inventory says why they are absent rather than leaving somebody to wonder. Neither was worked around."));
+  for (const partner of blocked) {
+    const box = el("div", { class: "row conflict", "data-testid": `blocked-${partner.id}` });
+    box.append(el("header", {}, [text_("strong", "", partner.name), el("span", { class: "pill bad" }, [partner.state])]));
+    box.append(text_("p", "note", partner.why));
+    panel.append(box);
+  }
+  return panel;
+}
 
 // -------------------------------------------------- promotion review (dry run)
 
@@ -1307,6 +1379,8 @@ function render(): void {
   }
   if (state.preflight) root.append(reportSection());
   root.append(draftsSection());
+  if ((state.server.canonical?.groups.length ?? 0) > 0) root.append(crossPartnerSection());
+  if ((state.server.blocked?.length ?? 0) > 0) root.append(blockedSection());
   if (state.sourceId !== "" && (state.server.drafts.length > 0 || (state.server.plans?.length ?? 0) > 0)) {
     root.append(promotionSection(), historySection());
   }

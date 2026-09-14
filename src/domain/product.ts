@@ -12,7 +12,18 @@ export type ProductStatus = z.infer<typeof ProductStatus>;
 export const Availability = z.enum(["in_stock", "backorder", "preorder", "out_of_stock", "unknown", "discontinued"]);
 export type Availability = z.infer<typeof Availability>;
 
-export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "unknown"]);
+/**
+ * What an outbound link to a merchant is.
+ *
+ * `affiliate_link_unresolved` is the newest and the most specific: a programme
+ * this site has joined, a store whose catalogue it reads, and no demonstrated
+ * way to link to an individual product so that the programme credits it. Three
+ * partners are in exactly that position. It is not `affiliate`, because nothing
+ * shows the link pays; it is not `non_affiliate`, because that is a denial; and
+ * it is not `unknown`, because plenty is known. Saying so is the difference
+ * between an honest gap and an invented tracking parameter.
+ */
+export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "affiliate_link_unresolved", "unknown"]);
 export type AffiliateStatus = z.infer<typeof AffiliateStatus>;
 
 export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "direct", "other"]);
@@ -212,5 +223,6 @@ export function deriveAffiliateStatus(offers: MerchantOffer[]): AffiliateStatus 
   if (offers.length === 0) return "unknown";
   if (offers.some((o) => o.affiliate.status === "affiliate")) return "affiliate";
   if (offers.every((o) => o.affiliate.status === "non_affiliate")) return "non_affiliate";
+  if (offers.every((o) => o.affiliate.status === "affiliate_link_unresolved")) return "affiliate_link_unresolved";
   return "unknown";
 }
