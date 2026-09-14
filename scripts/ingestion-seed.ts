@@ -61,7 +61,7 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
     format: "csv",
     createdOn: on,
     createdBy: "seed script",
-    note: "First mapping of the Awin feed as it arrived on 2026-09-13.",
+    note: "First mapping of the Awin feed as it arrived on 2026-09-13. 17 source pages, 15 comparable models: two of the pages are blackout finishes of two others.",
     grouping: {
       // 225 rows share 38 merchant product pages. `item_group_id` is empty on
       // every row, so the page is the only grouping the feed carries, and it is
@@ -103,6 +103,27 @@ export const FIRST_PROFILE = (version: number, on: string): MappingProfile =>
         op: "not_equals",
         value: "Home & Garden > Pool & Spa > Saunas",
         reason: "The feed's own classification. Accessories, covers and heaters ship in the same file, and a blank category is not a yes.",
+      },
+    ],
+    // Two pages that are one product each, in a finish. Written out, both of
+    // them, rather than matched by a rule: a pattern catching "Blackout
+    // Edition" would also fold two genuinely different saunas together the day
+    // their titles happened to agree, and nothing would show that it had.
+    //
+    // Both members keep everything that makes them a record: their own price,
+    // which is higher than the plain finish, their own stock, their own
+    // pictures and their own issued Awin link. What changes is what a shopper
+    // is asked to choose between.
+    families: [
+      {
+        member: "sweat-kingdom-the-sweat-cabin-blackout-edition",
+        family: "sweat-kingdom-the-sweat-cabin",
+        because: "\"The Sweat Cabin (4 Person) - Blackout Edition\" is the same cabin in a blackout finish. A shopper choosing a four-person cabin is not choosing between it and its own paint.",
+      },
+      {
+        member: "sweat-kingdom-the-sweat-pod-blackout-edition",
+        family: "sweat-kingdom-the-sweat-pod",
+        because: "\"The Sweat Pod (2-4 Person) - Blackout Edition\" is the same pod in a blackout finish, sold in the same two sizes.",
       },
     ],
     proposedFilters: [

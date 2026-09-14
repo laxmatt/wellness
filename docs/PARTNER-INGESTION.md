@@ -60,6 +60,56 @@ built from this feed answers a price filter and nothing else, and the coverage
 table says so before anybody imports rather than after somebody notices an
 empty category page.
 
+## Source records and comparable models
+
+They are two numbers and the report shows both. This feed's 17 sauna pages
+become 17 records and 15 things a shopper chooses between.
+
+| | |
+| --- | --- |
+| Source records | 17 |
+| Comparison families | 15 |
+
+Sweat Kingdom sells The Sweat Cabin on one page and the same cabin in a
+blackout finish on another, and the same for The Sweat Pod. Both pages are
+real, both are kept, and each keeps its own price (the blackout cabin is
+$9,245 against $7,445), its own stock, its own pictures, its own issued Awin
+link and its own provenance. What changes is what a comparison table offers: a
+shopper choosing a four-person cabin is not choosing between it and its own
+paint.
+
+The relationship is a pair of record ids and a sentence, written by a person in
+the mapping profile, versioned with it and approved with it:
+
+```
+member:  sweat-kingdom-the-sweat-cabin-blackout-edition
+family:  sweat-kingdom-the-sweat-cabin
+because: "The Sweat Cabin (4 Person) - Blackout Edition" is the same cabin in a
+         blackout finish. A shopper choosing a four-person cabin is not
+         choosing between it and its own paint.
+```
+
+**No title matching, and no global rule.** A pattern catching "Blackout
+Edition" would fold two genuinely different saunas together the day their names
+happened to agree, and nothing would show that it had. Two lines of
+configuration are cheaper than a rule nobody can audit.
+
+Four things are refused, three of them without the file:
+
+- a record given as a configuration of itself
+- one record in two families
+- a chain, where a representative is itself a configuration of something else
+- a rule naming a record this file does not produce
+
+Refusing chains is what refuses cycles: a cycle is a chain that closes, so a
+rule set with no chain cannot hold one, and there is no graph to walk looking
+for something a walk might miss. `validateCatalog` applies the same four checks
+to any catalogue, whatever path put the records there.
+
+A grouping added by a later approved profile version reaches the records on the
+next import, because it is merged like any other field: the record still says
+what the last import wrote, so the newer value is written.
+
 ## The four decisions
 
 Saving a mapping, approving it, importing drafts and publishing are separate,
@@ -152,6 +202,13 @@ change in a commit somebody reviews.
 - **Promotion is missing.** There is no way to move a draft from the workspace
   into the catalogue, by design for this batch. Somebody has to build it, with
   its own review step, before any of this reaches a page.
+- **The family layer is not wired into the storefront.** `groupIntoFamilies`
+  in `src/domain/family.ts` turns records into comparables, and the preflight
+  reports the count, but no category page, compare tray or query calls it. No
+  sauna is published, so wiring it now would change the storefront for the
+  three live categories on the strength of a field none of their records
+  carries. That is a change to shopper-facing behaviour and belongs with
+  whoever builds promotion.
 - **Shadowing is reported, not resolved.** Five Sweat Kingdom records already
   exist in `catalog/`, imported by hand through
   `src/domain/intake/awin-sweat-kingdom.ts`. The report marks a workspace draft

@@ -19,6 +19,7 @@ import type { CategoryDefinition } from "@/domain/category";
 import { applyExtraction, extractionNote, type Extraction } from "./extract";
 import { normaliseAttribute, readAvailability, readPrice, slugPart } from "./normalize";
 import {
+  checkFamilyRules,
   mappingFor,
   targetInfo,
   type CanonicalTarget,
@@ -61,6 +62,8 @@ export type Candidate = {
 export type BuildOutput = {
   candidates: Candidate[];
   excluded: ExcludedRow[];
+  /** Family rules naming a record this file does not produce. */
+  familyProblems: { where: string; message: string }[];
   /** Rows with no grouping key, which is a row this cannot place rather than a row it drops. */
   ungrouped: { row: number; reason: string }[];
 };
@@ -143,7 +146,42 @@ export function buildCandidates(
     candidates.push(readGroup(groupKey, bucket, profile, source, defs));
   }
   candidates.sort((a, b) => a.id.localeCompare(b.id));
-  return { candidates, excluded, ungrouped };
+  return { candidates, excluded, ungrouped, familyProblems: applyFamilies(candidates, profile) };
+}
+
+/**
+ * The editorial family layer, laid over records that are already complete.
+ *
+ * It changes nothing else about them. Every source page stays a record with its
+ * own price, stock, pictures, issued link and provenance; a member simply says
+ * which record it is compared as. The structural checks on the rules
+ * themselves, self-reference, a record in two families and a chain, run
+ * without a file in `checkFamilyRules`. What needs the file is whether the ids
+ * name records this file produces, and a rule that names one it does not is
+ * said out loud rather than quietly doing nothing.
+ */
+function applyFamilies(candidates: Candidate[], profile: MappingProfile): { where: string; message: string }[] {
+  const byId = new Map(candidates.map((c) => [c.id, c]));
+  const problems: { where: string; message: string }[] = [];
+  const structural = new Set(checkFamilyRules(profile.families).map((p) => p.where));
+
+  for (const [i, rule] of profile.families.entries()) {
+    const where = `families[${i}]`;
+    if (structural.has(where)) continue;
+    const member = byId.get(rule.member);
+    if (!member) {
+      problems.push({ where, message: `"${rule.member}" is not a record this file produces, so nothing was grouped under "${rule.family}".` });
+      continue;
+    }
+    if (!byId.has(rule.family)) {
+      problems.push({ where, message: `"${rule.member}" is given as a configuration of "${rule.family}", and this file produces no such record.` });
+      continue;
+    }
+    member.fields.family = { of: rule.family, because: rule.because };
+    member.meta.family = { label: "Compared as part of", ownership: "feed", provenance: "stated" };
+    member.notes.family = `Grouped by mapping profile v${profile.version}, approved before this import. ${rule.because}`;
+  }
+  return problems;
 }
 
 function readGroup(

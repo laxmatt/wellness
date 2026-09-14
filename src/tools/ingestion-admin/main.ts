@@ -76,6 +76,7 @@ type DraftProfile = {
   columns: ColumnMapping[];
   attributes: AttributeRule[];
   exclusions: ExclusionRule[];
+  families: MappingProfile["families"];
   proposedFilters: MappingProfile["proposedFilters"];
 };
 
@@ -250,7 +251,15 @@ function sourceSection(): HTMLElement {
                 onclick: () => {
                   // The saved decision, back in the editor. A version is never
                   // edited in place: changing this and saving writes a new one.
-                  state.profile = { note: p.note, grouping: { ...p.profile.grouping }, columns: p.profile.columns.map((c) => ({ ...c })), attributes: p.profile.attributes.map((a) => ({ ...a })), exclusions: p.profile.exclusions.map((e) => ({ ...e })), proposedFilters: p.profile.proposedFilters };
+                  state.profile = {
+                    note: p.note,
+                    grouping: { ...p.profile.grouping },
+                    columns: p.profile.columns.map((c) => ({ ...c })),
+                    attributes: p.profile.attributes.map((a) => ({ ...a })),
+                    exclusions: p.profile.exclusions.map((e) => ({ ...e })),
+                    families: p.profile.families.map((f) => ({ ...f })),
+                    proposedFilters: p.profile.proposedFilters,
+                  };
                   state.version = p.version;
                   state.preflight = null;
                   render();
@@ -383,6 +392,7 @@ function fileSection(): HTMLElement {
         columns: state.inspect.suggestion.columns,
         attributes: [],
         exclusions: [],
+        families: [],
         proposedFilters: [],
       };
       render();
@@ -521,9 +531,37 @@ function exclusionSection(): HTMLElement {
   return panel;
 }
 
+function familySection(): HTMLElement {
+  const profile = state.profile!;
+  const panel = el("section", { class: "panel", "data-testid": "families-editor" }, [
+    text_("h2", "", "6. Pages that are one product in another finish"),
+    text_(
+      "p",
+      "note",
+      "A merchant sometimes sells one product on two pages. Both pages stay records, with their own price, stock, pictures and link; only one of them is a thing a shopper chooses between. Written out pair by pair, because a rule matching titles would fold two different products together the day their names happened to agree and nothing would show that it had. Record ids are the ones in the report below.",
+    ),
+  ]);
+
+  for (const [i, rule] of profile.families.entries()) {
+    const row = el("div", { class: "fields", "data-testid": `family-rule-${i}` });
+    row.append(field("This record", el("input", { type: "text", class: "mono", value: rule.member, oninput: (e) => { rule.member = (e.target as HTMLInputElement).value.trim(); state.preflight = null; }, "data-testid": `family-member-${i}` })));
+    row.append(field("is compared as part of", el("input", { type: "text", class: "mono", value: rule.family, oninput: (e) => { rule.family = (e.target as HTMLInputElement).value.trim(); state.preflight = null; }, "data-testid": `family-of-${i}` })));
+    row.append(field("Because", el("input", { type: "text", value: rule.because, oninput: (e) => { rule.because = (e.target as HTMLInputElement).value; state.preflight = null; }, "data-testid": `family-because-${i}` }), "Written onto the record and shown wherever the grouping is."));
+    const wrap = el("div", { class: "panel" }, [row]);
+    wrap.append(el("div", { class: "actions" }, [el("button", { class: "danger", onclick: () => { profile.families.splice(i, 1); state.preflight = null; render(); } }, ["Remove this grouping"])]));
+    panel.append(wrap);
+  }
+  panel.append(
+    el("div", { class: "actions" }, [
+      el("button", { "data-testid": "add-family", onclick: () => { profile.families.push({ member: "", family: "", because: "" }); render(); } }, ["Add a grouping"]),
+    ]),
+  );
+  return panel;
+}
+
 function actionsSection(): HTMLElement {
   const row = currentSource()!;
-  const panel = el("section", { class: "panel", "data-testid": "actions" }, [text_("h2", "", "6. Check, save, approve, import")]);
+  const panel = el("section", { class: "panel", "data-testid": "actions" }, [text_("h2", "", "7. Check, save, approve, import")]);
   panel.append(field("Note on this version", el("input", { type: "text", value: state.profile!.note, oninput: (e) => { state.profile!.note = (e.target as HTMLInputElement).value; }, "data-testid": "profile-note" })));
 
   const buttons = el("div", { class: "actions" });
@@ -645,13 +683,34 @@ function reportSection(): HTMLElement {
     ),
   );
   panel.append(
-    text_(
-      "p",
-      "note",
+    el("p", { "data-testid": "comparison-counts" }, [
+      `${report.sourceRecords} source records, ${report.comparisonFamilies.length} things a shopper chooses between. ` +
+        `Every page stays a record with its own price, stock, pictures and link; the family layer decides how many of them are comparable models.`,
+    ]),
+  );
+  const grouped = report.comparisonFamilies.filter((f) => f.members.length > 0);
+  if (grouped.length > 0) {
+    const table = el("table", { "data-testid": "families" });
+    table.append(el("tr", {}, [text_("th", "", "Compared as"), text_("th", "", "Configurations of it"), text_("th", "", "Why")]));
+    for (const family of grouped) {
+      for (const member of family.members) {
+        table.append(
+          el("tr", { "data-testid": `family-${member.id}` }, [
+            el("td", {}, [text_("strong", "", family.name), text_("p", "mono", family.id)]),
+            el("td", {}, [text_("span", "", member.name), text_("p", "mono", member.id)]),
+            text_("td", "note", member.because),
+          ]),
+        );
+      }
+    }
+    panel.append(table);
+  }
+  panel.append(
+    el("p", { class: "note", "data-testid": "staleness" }, [
       report.lastSuccessfulRefresh
         ? `Last successful refresh ${report.lastSuccessfulRefresh}${report.stalenessDays !== undefined ? `, ${report.stalenessDays} ${report.stalenessDays === 1 ? "day" : "days"} ago` : ""}.`
         : "This source has never been imported, so there is no record of what a previous import wrote.",
-    ),
+    ]),
   );
 
   for (const blocker of report.blockers) panel.append(text_("p", "err", blocker));
@@ -764,7 +823,7 @@ function render(): void {
   root.append(sourceSection());
   if (state.sourceId !== "") root.append(fileSection());
   if (state.inspect && state.profile) {
-    root.append(mappingSection(), attributeSection(), exclusionSection(), actionsSection());
+    root.append(mappingSection(), attributeSection(), exclusionSection(), familySection(), actionsSection());
   }
   if (state.preflight) root.append(reportSection());
   root.append(draftsSection());

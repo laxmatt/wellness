@@ -133,6 +133,32 @@ export const EditorialNote = z.object({
 });
 export type EditorialNote = z.infer<typeof EditorialNote>;
 
+/**
+ * A record that is a configuration of another record, not a model of its own.
+ *
+ * A merchant sometimes sells one product on two pages: the cabin, and the same
+ * cabin in a blackout finish. Both pages are real, both carry their own price,
+ * stock, pictures and link, and both have to be kept. Neither is a second thing
+ * to compare against the first, and putting both in a comparison table asks a
+ * shopper to choose between a product and its own paint.
+ *
+ * So the second record says which record it is a configuration of, and a
+ * comparison groups on that. The membership is editorial: it is a person's
+ * judgement about what a shopper is choosing between, it is written down with
+ * the reason, and nothing infers it from a title. See `src/domain/family.ts`.
+ *
+ * One level only. The record named by `of` may not itself carry a `family`,
+ * which is what makes a chain, and therefore a cycle, impossible rather than
+ * merely unlikely. `validateCatalog` refuses both.
+ */
+export const FamilyMembership = z.object({
+  /** The record this one is a configuration of. Never a group key invented for the purpose. */
+  of: Id,
+  /** Why, in a person's words. It is the whole of the evidence for this grouping. */
+  because: z.string().min(1),
+});
+export type FamilyMembership = z.infer<typeof FamilyMembership>;
+
 export const Product = z.object({
   id: Id,
   slug: Slug,
@@ -154,6 +180,8 @@ export const Product = z.object({
   dimensions: sourced(Dimensions).optional(),
   weight: sourced(z.number().positive()).optional(),
   attributes: AttributeMap.default({}),
+  /** Set when this record is a configuration of another and is compared as part of it. */
+  family: FamilyMembership.optional(),
   editorial: z.object({
     strengths: z.array(EditorialNote).default([]),
     tradeoffs: z.array(EditorialNote).default([]),

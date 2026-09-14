@@ -66,6 +66,14 @@ export type RecordPlan = {
   brand?: Brand;
 };
 
+export type ComparisonFamily = {
+  /** The record a shopper is offered. */
+  id: string;
+  name: string;
+  /** The configurations it stands for, each still a record of its own. */
+  members: { id: string; name: string; because: string }[];
+};
+
 export type Preflight = {
   sourceId: string;
   sourceName: string;
@@ -83,6 +91,13 @@ export type Preflight = {
   valueErrors: ValueError[];
   extractions: Extraction[];
   plans: RecordPlan[];
+  /**
+   * One per source page, and one per thing a shopper chooses between. They are
+   * different numbers on purpose: every page is kept as a record, and the
+   * editorial family layer decides how many of them are comparable models.
+   */
+  sourceRecords: number;
+  comparisonFamilies: ComparisonFamily[];
   withdrawn: string[];
   counts: Record<RecordAction, number>;
   lastSuccessfulRefresh?: string;
@@ -176,6 +191,31 @@ function coverage(category: CategoryDefinition, profile: MappingProfile, plans: 
   });
 }
 
+/**
+ * The records a shopper would be offered, each with the configurations it
+ * stands for.
+ *
+ * Read off the merged fields rather than off the assembled products, so a
+ * record that failed to build still shows where it belongs and a family does
+ * not silently gain a member when a build starts succeeding.
+ */
+function comparisonFamilies(plans: RecordPlan[]): ComparisonFamily[] {
+  const nameOf = new Map(plans.map((p) => [p.id, p.name]));
+  const members = new Map<string, { id: string; name: string; because: string }[]>();
+  const heads: RecordPlan[] = [];
+  for (const p of plans) {
+    const family = p.merged.family as { of: string; because: string } | undefined;
+    if (family && family.of !== p.id && nameOf.has(family.of)) {
+      members.set(family.of, [...(members.get(family.of) ?? []), { id: p.id, name: p.name, because: family.because }]);
+    } else {
+      heads.push(p);
+    }
+  }
+  return heads
+    .map((h) => ({ id: h.id, name: h.name, members: (members.get(h.id) ?? []).sort((a, b) => a.id.localeCompare(b.id)) }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
 const daysBetween = (from: string, to: string): number => Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
 
 export function preflight(input: PreflightInput): Preflight {
@@ -186,6 +226,7 @@ export function preflight(input: PreflightInput): Preflight {
   const defs = new Map(category.attributeDefinitions.map((d) => [d.key, d]));
 
   const plans: RecordPlan[] = built.candidates.map((candidate) => plan(candidate, input, defs));
+  const families = comparisonFamilies(plans);
   const counts: Record<RecordAction, number> = { added: 0, changed: 0, conflict: 0, review: 0, unchanged: 0, failed: 0 };
   for (const p of plans) counts[p.action] += 1;
 
@@ -203,7 +244,7 @@ export function preflight(input: PreflightInput): Preflight {
     rows: table.rows.length,
     truncated: table.truncated,
     readerNotes: table.notes,
-    problems,
+    problems: [...problems, ...built.familyProblems],
     columns: columnReports(table, profile),
     excluded: built.excluded,
     ungrouped: built.ungrouped,
@@ -211,6 +252,8 @@ export function preflight(input: PreflightInput): Preflight {
     valueErrors: plans.flatMap((p) => p.valueErrors),
     extractions: plans.flatMap((p) => p.extractions),
     plans,
+    sourceRecords: plans.length,
+    comparisonFamilies: families,
     withdrawn: withdrawnRecords(Object.keys(snapshot), plans.map((p) => p.id)),
     counts,
     lastSuccessfulRefresh: input.lastSuccessfulRefresh,

@@ -44,6 +44,7 @@ export function fieldsFromProduct(product: Product, merchantId: string): { field
     fields.price = offer.priceMinor !== undefined ? { minor: offer.priceMinor, currency: offer.currency } : { quoteOnly: true };
   }
   if (product.images[0]) fields.image = product.images[0].src;
+  if (product.family) fields.family = product.family;
   const sku = product.identifiers.merchantSkus[merchantId];
   if (sku !== undefined) fields.merchant_sku = sku;
   if (product.identifiers.mpn !== undefined) fields.mpn = product.identifiers.mpn;
@@ -200,6 +201,10 @@ export function productFromFields(
       ...(asString(fields.mpn) ? { mpn: asString(fields.mpn) } : {}),
     },
     attributes,
+    // Editorial, and set by the approved mapping profile rather than read from
+    // the file: this record is a configuration of another and is compared as
+    // part of it. Everything else about it stays its own.
+    ...(fields.family ? { family: fields.family } : {}),
     editorial: { strengths: [], tradeoffs: [] },
     source: { ...base, note: recordNote || undefined },
     lastUpdated: ctx.readOn,

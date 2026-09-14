@@ -272,6 +272,7 @@ function runImport(input: FileInput & { version?: unknown }): Reply {
       message:
         `Imported with version ${input.version}. ${report.counts.added} added, ${report.counts.changed} changed, ${report.counts.unchanged} unchanged, ` +
         `${report.counts.conflict} in conflict, ${report.counts.review} waiting on review, ${report.counts.failed} failed. ` +
+        `${report.sourceRecords} source records, ${report.comparisonFamilies.length} things a shopper chooses between. ` +
         `Nothing is published: these are drafts in ingestion/, which the site does not read.`,
       preflight: report,
       upload: { path: outcome.upload.path.replace(ROOT + "/", ""), hash: outcome.upload.hash, bytes: outcome.upload.bytes },

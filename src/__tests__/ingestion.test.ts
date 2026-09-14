@@ -14,6 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { saunas } from "@/domain/categories/saunas";
+import { comparisonCount, familyIssues } from "@/domain/family";
 import { adapterFor, csvAdapter, formatOptions } from "@/domain/ingestion/adapter";
 import { buildCandidates } from "@/domain/ingestion/build";
 import { applyEditorialEdit } from "@/domain/ingestion/editorial";
@@ -21,7 +22,7 @@ import { applyExtraction } from "@/domain/ingestion/extract";
 import { mergeRecord, nextSnapshot } from "@/domain/ingestion/merge";
 import { normaliseAttribute, readAvailability, readPrice } from "@/domain/ingestion/normalize";
 import { preflight } from "@/domain/ingestion/preflight";
-import { checkProfile, compilePattern, MappingProfile } from "@/domain/ingestion/profile";
+import { checkFamilyRules, checkProfile, compilePattern, MappingProfile } from "@/domain/ingestion/profile";
 import { suggestColumns } from "@/domain/ingestion/suggest";
 import { findCredentials, IngestionStore } from "@/providers/ingestion/IngestionStore";
 import { runIngestionImport } from "@/providers/ingestion/import";
@@ -578,5 +579,170 @@ describe("importing, editing and importing again", () => {
     if (!second.ok) return;
     expect(second.report.withdrawn).toContain("sweat-kingdom-the-summit");
     expect(store.draft("sweat-kingdom-the-summit")).toBeDefined();
+  });
+});
+
+// ------------------------------------------------------- comparison families
+
+describe("the editorial family layer", () => {
+  const report = (profile = FIRST_PROFILE(1, TODAY)) =>
+    preflight({
+      table: TABLE,
+      profile,
+      source: SWEAT_KINGDOM,
+      category: saunas,
+      fileName: "awin-125462-f3219-2026-09-13.csv",
+      today: TODAY,
+      workspace: new Map(),
+      catalogIds: new Set(),
+      snapshot: {},
+    });
+
+  it("keeps all 17 source pages and compares 15 of them", () => {
+    const r = report();
+    expect(r.sourceRecords).toBe(17);
+    expect(r.plans).toHaveLength(17);
+    expect(r.comparisonFamilies).toHaveLength(15);
+  });
+
+  it("puts each blackout edition under the model it is a finish of", () => {
+    const families = Object.fromEntries(report().comparisonFamilies.map((f) => [f.id, f.members.map((m) => m.id)]));
+    expect(families["sweat-kingdom-the-sweat-cabin"]).toEqual(["sweat-kingdom-the-sweat-cabin-blackout-edition"]);
+    expect(families["sweat-kingdom-the-sweat-pod"]).toEqual(["sweat-kingdom-the-sweat-pod-blackout-edition"]);
+    // And nothing else was folded into anything.
+    expect(Object.values(families).flat()).toHaveLength(2);
+  });
+
+  it("says why, in the words of the person who decided it", () => {
+    const cabin = report().comparisonFamilies.find((f) => f.id === "sweat-kingdom-the-sweat-cabin")!;
+    expect(cabin.members[0].because).toContain("blackout finish");
+  });
+
+  it("leaves every member a record with its own price, stock, picture and issued link", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const member = store.draft("sweat-kingdom-the-sweat-cabin-blackout-edition")!;
+    const head = store.draft("sweat-kingdom-the-sweat-cabin")!;
+    expect(member.family).toEqual({ of: "sweat-kingdom-the-sweat-cabin", because: expect.stringContaining("blackout finish") });
+    expect(head.family).toBeUndefined();
+    // A blackout finish costs more, and the record says so rather than
+    // inheriting the model's price.
+    expect(member.offers[0].priceMinor).toBe(924500);
+    expect(head.offers[0].priceMinor).toBe(744500);
+    expect(member.offers[0].url).not.toBe(head.offers[0].url);
+    expect(member.offers[0].url).toMatch(/^https:\/\/www\.awin1\.com\//);
+    expect(member.images[0].src).not.toBe(head.images[0].src);
+    expect(member.offers[0].availability).toBeDefined();
+    expect(member.source.ref).toContain("Mapping profile sweat-kingdom-awin v1");
+  });
+
+  it("groups the written drafts into 15 comparables by the catalogue's own rule", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const products = store.drafts().products;
+    expect(products).toHaveLength(17);
+    expect(comparisonCount(products)).toBe(15);
+    expect(familyIssues(products)).toEqual([]);
+  });
+
+  it("keeps the grouping through a repeat import, and changes nothing", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const second = runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: "2026-09-15" });
+    expect(second.ok).toBe(true);
+    if (!second.ok) return;
+    expect(second.report.counts.unchanged).toBe(17);
+    expect(second.report.comparisonFamilies).toHaveLength(15);
+    expect(store.draft("sweat-kingdom-the-sweat-cabin-blackout-edition")!.family?.of).toBe("sweat-kingdom-the-sweat-cabin");
+    expect(comparisonCount(store.drafts().products)).toBe(15);
+  });
+
+  it("keeps the grouping through a repeat import that carries an editorial edit", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const id = "sweat-kingdom-the-sweat-cabin-blackout-edition";
+    const edited = applyEditorialEdit(store.draft(id)!, { name: "The Sweat Cabin, blackout" }, { by: "editor", on: TODAY });
+    if (!edited.ok) return;
+    store.writeDraft("products", id, edited.product);
+
+    const second = runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: "2026-09-15" });
+    expect(second.ok).toBe(true);
+    expect(store.draft(id)!.name).toBe("The Sweat Cabin, blackout");
+    expect(store.draft(id)!.family?.of).toBe("sweat-kingdom-the-sweat-cabin");
+    expect(comparisonCount(store.drafts().products)).toBe(15);
+  });
+
+  it("applies a family a later approved version adds, without rewriting anything else", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const v2 = MappingProfile.parse({
+      ...FIRST_PROFILE(2, TODAY),
+      families: [
+        ...FIRST_PROFILE(1, TODAY).families,
+        { member: "sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy", family: "sweat-kingdom-the-sweat-cabin", because: "A duplicate page the merchant left up for the same cabin." },
+      ],
+    });
+    store.saveProfile(v2);
+    store.approveProfile(SWEAT_KINGDOM.id, 2, "reviewer", TODAY);
+    const second = runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 2, fileName: "feed.csv", text: RAW, today: "2026-09-15" });
+    expect(second.ok).toBe(true);
+    if (!second.ok) return;
+    expect(second.written).toEqual(["sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy"]);
+    expect(second.report.comparisonFamilies).toHaveLength(14);
+    expect(comparisonCount(store.drafts().products)).toBe(14);
+  });
+});
+
+describe("family rules that would be wrong", () => {
+  const rules = (families: { member: string; family: string; because: string }[]) =>
+    checkFamilyRules(families as Parameters<typeof checkFamilyRules>[0]);
+
+  it("refuses a record given as a configuration of itself", () => {
+    expect(rules([{ member: "a-thing", family: "a-thing", because: "why" }])[0].message).toContain("configuration of itself");
+  });
+
+  it("refuses one record belonging to two families", () => {
+    const problems = rules([
+      { member: "a-thing", family: "b-thing", because: "why" },
+      { member: "a-thing", family: "c-thing", because: "why" },
+    ]);
+    expect(problems[0].message).toContain("One record belongs to one family");
+  });
+
+  it("refuses a chain, which is what makes a cycle impossible", () => {
+    const problems = rules([
+      { member: "a-thing", family: "b-thing", because: "why" },
+      { member: "b-thing", family: "c-thing", because: "why" },
+    ]);
+    expect(problems.some((p) => p.message.includes("one level deep"))).toBe(true);
+  });
+
+  it("refuses a two-record cycle for the same reason", () => {
+    const problems = rules([
+      { member: "a-thing", family: "b-thing", because: "why" },
+      { member: "b-thing", family: "a-thing", because: "why" },
+    ]);
+    expect(problems.some((p) => p.message.includes("one level deep"))).toBe(true);
+  });
+
+  it("names a rule pointing at a record this file does not produce", () => {
+    const profile = MappingProfile.parse({
+      ...FIRST_PROFILE(1, TODAY),
+      families: [{ member: "sweat-kingdom-the-ascent", family: "sweat-kingdom-a-sauna-nobody-sells", because: "why" }],
+    });
+    const built = buildCandidates(TABLE, profile, SWEAT_KINGDOM, saunas);
+    expect(built.familyProblems[0].message).toContain("no such record");
+    expect(built.candidates.find((c) => c.id === "sweat-kingdom-the-ascent")!.fields.family).toBeUndefined();
+  });
+
+  it("refuses a catalogue whose records point at a missing or chained family", () => {
+    const store = seeded();
+    runIngestionImport({ store, catalogDir: CATALOG, sourceId: SWEAT_KINGDOM.id, version: 1, fileName: "feed.csv", text: RAW, today: TODAY });
+    const products = store.drafts().products;
+    const head = products.find((p) => p.id === "sweat-kingdom-the-sweat-cabin")!;
+    const chained = products.map((p) => (p.id === head.id ? { ...p, family: { of: "sweat-kingdom-the-ascent", because: "invented" } } : p));
+    expect(familyIssues(chained).some((i) => i.message.includes("one level deep"))).toBe(true);
+    const orphaned = products.filter((p) => p.id !== head.id);
+    expect(familyIssues(orphaned).some((i) => i.message.includes("there is no such record"))).toBe(true);
   });
 });

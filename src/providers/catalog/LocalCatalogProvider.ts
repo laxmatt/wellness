@@ -4,6 +4,7 @@ import { z } from "zod";
 import { validateAttributeAgainstDefinition } from "@/domain/attributes";
 import { categories, categoryById } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
+import { familyIssues } from "@/domain/family";
 import { Brand, Merchant, Product } from "@/domain/product";
 import { isUsable } from "@/domain/provenance";
 import { toProductView, type ProductView } from "@/domain/view";
@@ -185,6 +186,14 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
     if (!hasPrimary && p.status === "published") {
       issues.push({ file, message: "no primary image, and it is published. A record a shopper can see needs one." });
     }
+  }
+
+  // Family membership is checked over the whole catalogue because every way of
+  // getting it wrong is about a pair: a representative that is not there, a
+  // record pointing at itself, a record claimed twice, and a chain. Refusing
+  // chains is what makes a cycle impossible rather than merely unlikely.
+  for (const issue of familyIssues(cat.products)) {
+    issues.push({ file: `product ${issue.id}`, message: issue.message });
   }
   return issues;
 }

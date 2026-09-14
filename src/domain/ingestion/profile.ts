@@ -175,6 +175,75 @@ export const Grouping = z.object({
 export type Grouping = z.infer<typeof Grouping>;
 
 /**
+ * One source record that is a configuration of another, not a model of its own.
+ *
+ * Sweat Kingdom sells The Sweat Cabin on one page and the same cabin in a
+ * blackout finish on another. Both pages are kept, with their own price, stock,
+ * pictures and issued link; only one of them is a thing a shopper chooses
+ * between. Which is which is a judgement about the products, so it is written
+ * down here as a pair of record ids and a reason, saved in a version, and
+ * approved with the rest of the mapping.
+ *
+ * Deliberately not a pattern, a prefix or a similarity score. A heuristic over
+ * titles would fold "Blackout Edition" into its family correctly and fold two
+ * genuinely different saunas together on the day their names happened to agree,
+ * and nobody would see that happen. Two lines of configuration are cheaper than
+ * a rule nobody can audit.
+ *
+ * Partner-specific by construction: these ids are this source's records, and
+ * this profile belongs to this source.
+ */
+export const FamilyRule = z.object({
+  /** The record that is a configuration. Its derived record id, not a title. */
+  member: Id,
+  /** The record it is compared as. */
+  family: Id,
+  /** Why. Shown in review and written onto the record. */
+  because: z.string().min(1),
+});
+export type FamilyRule = z.infer<typeof FamilyRule>;
+
+export type FamilyProblem = { where: string; message: string };
+
+/**
+ * Everything wrong with a set of family rules that can be seen without a file.
+ *
+ * Self-reference, a record claimed by two families, and a chain. The fourth
+ * failure, naming a record this file does not produce, needs the file and is
+ * checked where the records exist.
+ *
+ * Refusing chains is what refuses cycles. A cycle is a chain that closes, so a
+ * rule set where no representative is itself a member cannot contain one, and
+ * there is no graph to walk looking for something a walk might miss.
+ */
+export function checkFamilyRules(rules: FamilyRule[]): FamilyProblem[] {
+  const problems: FamilyProblem[] = [];
+  const members = new Set<string>();
+  for (const [i, rule] of rules.entries()) {
+    const where = `families[${i}]`;
+    if (rule.member === rule.family) {
+      problems.push({ where, message: `"${rule.member}" is given as a configuration of itself.` });
+      continue;
+    }
+    if (members.has(rule.member)) {
+      problems.push({ where, message: `"${rule.member}" is already a configuration of another record. One record belongs to one family.` });
+      continue;
+    }
+    members.add(rule.member);
+  }
+  for (const [i, rule] of rules.entries()) {
+    if (members.has(rule.family) && rule.member !== rule.family) {
+      const parent = rules.find((r) => r.member === rule.family)!;
+      problems.push({
+        where: `families[${i}]`,
+        message: `"${rule.member}" is given as a configuration of "${rule.family}", which is itself a configuration of "${parent.family}". A family is one level deep: point this at "${parent.family}", or decide that "${rule.family}" is a model of its own.`,
+      });
+    }
+  }
+  return problems;
+}
+
+/**
  * A filter an administrator wants and the category does not have.
  *
  * Recorded and never applied. Adding a filter changes what the site compares
@@ -262,6 +331,8 @@ export const MappingProfile = z.object({
   columns: z.array(ColumnMapping).default([]),
   attributes: z.array(AttributeRule).default([]),
   exclusions: z.array(ExclusionRule).default([]),
+  /** Records that are configurations of other records, for comparison. Editorial, and explicit. */
+  families: z.array(FamilyRule).default([]),
   proposedFilters: z.array(ProposedFilter).default([]),
   approvedOn: z.iso.date().optional(),
   approvedBy: z.string().min(1).optional(),
@@ -331,6 +402,8 @@ export function checkProfile(
     const needsValue = e.op === "equals" || e.op === "not_equals" || e.op === "starts_with" || e.op === "not_starts_with";
     if (needsValue && (e.value ?? "") === "") problems.push({ where: `exclusions[${i}]`, message: `"${e.op}" needs a value to compare against.` });
   }
+
+  problems.push(...checkFamilyRules(profile.families));
 
   const missing = profile.columnsSeen.filter((c) => !has(c));
   if (missing.length > 0) {

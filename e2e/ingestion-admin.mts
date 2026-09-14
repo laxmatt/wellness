@@ -174,6 +174,22 @@ async function run() {
     await page.locator('[data-testid="check"]').click();
     await page.waitForSelector('[data-testid="preflight"]', { timeout: 30_000 });
     check("17 records out of 225 rows", await page.locator('[data-testid^="plan-"]').count(), 17);
+    ok(
+      "and 15 things a shopper chooses between",
+      (await page.locator('[data-testid="comparison-counts"]').textContent())?.startsWith("17 source records, 15 things") === true,
+      await page.locator('[data-testid="comparison-counts"]').textContent(),
+    );
+    check(
+      "the blackout cabin is compared as part of the cabin",
+      await page.locator('[data-testid="family-sweat-kingdom-the-sweat-cabin-blackout-edition"] td').first().locator(".mono").textContent(),
+      "sweat-kingdom-the-sweat-cabin",
+    );
+    check(
+      "and the blackout pod as part of the pod",
+      await page.locator('[data-testid="family-sweat-kingdom-the-sweat-pod-blackout-edition"] td').first().locator(".mono").textContent(),
+      "sweat-kingdom-the-sweat-pod",
+    );
+    check("nothing else was folded into anything", await page.locator('[data-testid="families"] tr').count(), 3);
     check("a price filter this mapping fills", await pill(page, "coverage-price").textContent(), "price");
     check("and how many records it fills it for", await page.locator('[data-testid="coverage-price"] td').nth(2).textContent(), "17 of 17");
     check("a heating filter nothing fills", await pill(page, "coverage-sauna_type").textContent(), "unmapped");
@@ -218,7 +234,8 @@ async function run() {
       await page.locator(`[data-testid="outcome-${ASCENT}-name"] .pill`).textContent(),
     );
     ok("nothing else moved either", (await page.locator('[data-testid="preflight"] p').first().textContent())?.includes("17 unchanged") === true);
-    ok("and the refresh date is recorded", (await page.locator('[data-testid="preflight"] .note').first().textContent())?.includes("Last successful refresh") === true);
+    ok("and the refresh date is recorded", (await page.locator('[data-testid="staleness"]').textContent())?.includes("Last successful refresh") === true);
+    ok("and the 15 comparables survive the refresh", (await page.locator('[data-testid="comparison-counts"]').textContent())?.startsWith("17 source records, 15 things") === true);
   } finally {
     await browser.close();
     tool.kill("SIGTERM");
