@@ -23,7 +23,7 @@ export const saunas = CategoryDefinition.parse({
     { label: "Model", keys: ["form", "capacity", "placement"] },
     { label: "Space", keys: ["footprint"] },
     { label: "Heat and power", keys: ["heating_options", "electrical"] },
-    { label: "Buying", keys: ["lead_time", "configuration_categories", "standout_features"] },
+    { label: "Buying", keys: ["lead_time", "standout_features"] },
   ],
   filters: [
     { key: "price", label: "Starting price", kind: "range", presets: [{ label: "From under $5,000", condition: { key: "price", op: "lt", value: 500000 } }] },

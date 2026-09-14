@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFile
 import { basename, join, resolve } from "node:path";
 import { readCsv } from "../src/domain/import/csv";
 import { Brand, Merchant, Product, type Availability, type MerchantOffer, type Product as ProductRecord } from "../src/domain/product";
+import { partitionSaunaOptions, type SaunaOption } from "../src/domain/categories/sauna-policy";
 
 const input = resolve(process.argv[2] ?? "../outputs/partner-inventory/sweat-kingdom/2026-09-13.csv");
 const previewRoot = resolve("catalog-preview");
@@ -17,6 +18,13 @@ const sourceFor = (rowNumber: number, url?: string) => ({
 });
 const slugify = (text: string) => text.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 90);
 const familyName = (title: string) => title.split(" - ")[0].trim();
+// Reviewed adapter-owned identity decisions for this feed profile. An unseen
+// title remains a draft; it is never folded into the closest-looking family.
+const REVIEWED_FAMILIES = new Set([
+  "The Sweat Barrel (2-6 Person)", "The Sweat Pod (2-4 Person)", "The Sweat Cabin (4 Person)", "The Sweat Cabin Deluxe (6 Person)",
+  "SK 110", "SK 210", "SK 310", "The Sweat Box (1 Person)", "SK Mobile", "The Summit (2-6 Person)",
+  "REGEN The Sweat Cabin (4 Person)", "REGEN The Sweat Pod (2-4 Person)", "REGEN The Sweat Cabin Deluxe (6 Person)", "The Ridge (2 Person)", "The Ascent (6 Person)",
+]);
 const coreSauna = (title: string, category: string) => /sauna/i.test(category) && !/(heater package|stain|light kit|hat|bucket|ladle|thermometer|hygrometer|drip tray|backrest|cleaner|assembly|plunge|contrast)/i.test(title);
 const availability = (raw: string): Availability => raw === "in_stock" || raw === "out_of_stock" ? raw : "unknown";
 const unique = (values: string[]) => [...new Set(values.filter(Boolean))];
@@ -39,6 +47,10 @@ const optionCategory = (option: string): string => {
   if (/cedar|siding|finish|color|colour/i.test(option)) return "Finish";
   return "Configuration";
 };
+const policyKind = (category: string): string => ({
+  "Roof": "roof_kit", "Door / window orientation": "door_orientation", "Finish": "wood_finish",
+  "Heater and controls": "heating", "Size / capacity": "capacity",
+}[category] ?? "configuration");
 const heating = (titles: string[]) => unique(titles.flatMap(optionParts).filter((part) => optionCategory(part) === "Heater and controls"));
 const electrical = (titles: string[]) => unique(titles.flatMap((title) => title.match(/\b(?:120|208|240)V\b|\b\d+(?:\.\d+)?\s*kW\b/gi) ?? []));
 const leadTime = (descriptions: string[]): string | undefined => unique(descriptions.map((d) => d.match(/Availability:\s*([^.!]+)/i)?.[1]?.trim() ?? ""))[0];
@@ -56,8 +68,8 @@ const adjacent: Raw[] = [];
 for (const [index, row] of table.rows.entries()) {
   const raw = { row, rowNumber: index + 2 };
   const title = value(row, "title");
-  if (coreSauna(title, value(row, "google_product_category"))) {
-    const key = familyName(title);
+  const key = familyName(title);
+  if (coreSauna(title, value(row, "google_product_category")) && REVIEWED_FAMILIES.has(key)) {
     core.set(key, [...(core.get(key) ?? []), raw]);
   } else adjacent.push(raw);
 }
@@ -89,7 +101,15 @@ const families: ProductRecord[] = [...core.entries()].map(([name, raws]) => {
   const familySource = sourceFor(first.rowNumber, familyUrl);
   const capacity = statedCapacity(name);
   const heat = heating(titles);
-  const configCategories = unique(titles.flatMap(optionParts).map(optionCategory));
+  const normalizedOptions: SaunaOption[] = titles.flatMap(optionParts).map((option) => {
+    const category = optionCategory(option);
+    return { kind: policyKind(category), label: category, value: option };
+  });
+  // The category policy, not this partner parser, owns the default boundary.
+  // Both sides remain available as a detail-page summary, while only the
+  // comparison side can contribute a comparison-worthy attribute.
+  const partitioned = partitionSaunaOptions(normalizedOptions);
+  const configCategories = unique([...partitioned.comparison, ...partitioned.checkout].map((option) => option.label));
   const attrs: Record<string, unknown> = {
     form: { value: form(name), source: familySource, verification: "manufacturer_reported" },
     ...(capacity ? { capacity: { value: capacity, source: familySource, verification: "manufacturer_reported" } } : {}),
