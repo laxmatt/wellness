@@ -51,8 +51,7 @@ export type BlockerCode =
   | "shadow_unresolved"
   | "image_rights"
   | "catalogue_invalid"
-  | "family_integrity"
-  | "reviewer_missing";
+  | "family_integrity";
 
 export type Blocker = { code: BlockerCode; about: string; message: string };
 
@@ -375,7 +374,11 @@ export function buildPromotionPlan(input: PlanInput): PromotionPlan {
     hypotheticalProducts: hypothetical.products.length,
     hypotheticalFamilies: groupIntoFamilies(hypothetical.products.filter((p) => p.categoryId === source.categoryId)).length,
     blockers,
-    signable: blockers.length === 0 && request.reviewer.trim() !== "",
+    // About the plan, and only about the plan. Whether a name has been typed
+    // into the signing box is a separate precondition, checked when somebody
+    // signs: mixing the two made a plan with nothing unresolved report itself
+    // as unsignable because the box was still empty.
+    signable: blockers.length === 0,
   };
 
   return {

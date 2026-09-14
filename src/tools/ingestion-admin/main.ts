@@ -122,6 +122,15 @@ type State = {
   newSource: Record<string, string> | null;
   promotion: Promotion;
   message: { text: string; bad: boolean; details: string[] } | null;
+  /**
+   * What the tool is doing, and how many things it has finished.
+   *
+   * `completed` only ever goes up, once per request, after the answer has been
+   * folded into this state and before the redraw. It is the one signal that
+   * says a screen is showing the result of an action rather than the result of
+   * the one before it: every other thing on the page existed already.
+   */
+  activity: { inFlight: string | null; queued: number; completed: number; last: string | null; lastOk: boolean | null };
   busy: boolean;
 };
 
@@ -145,6 +154,7 @@ const state: State = {
   newSource: null,
   promotion: { familyIds: [], shadows: {}, reviewer: "", plan: null, stale: false, document: null, rightsForm: null },
   message: null,
+  activity: { inFlight: null, queued: 0, completed: 0, last: null, lastOk: null },
   busy: false,
 };
 
@@ -183,7 +193,32 @@ function field(label: string, control: Node, note?: string): HTMLElement {
 
 // ------------------------------------------------------------------ sending
 
+/**
+ * One request at a time, in the order they were asked for.
+ *
+ * Two requests in flight at once is not a race the answers resolve: each one
+ * ends by folding a reply into this state and redrawing, so the second to
+ * arrive wins whatever the first was about, and a redraw landing while
+ * somebody is typing into a form replaces the form under them. Both happened.
+ *
+ * So sends are chained. A second action waits for the first to finish rather
+ * than running beside it, nothing is dropped, and every control that starts a
+ * request is disabled while one is running, so the queue stays at most one deep
+ * in practice.
+ */
+let chain: Promise<unknown> = Promise.resolve();
+
 async function send(command: string, payload: Record<string, unknown> = {}): Promise<Record<string, unknown>> {
+  state.activity.queued += 1;
+  render();
+  const run = chain.then(() => perform(command, payload));
+  chain = run.catch(() => undefined);
+  return run;
+}
+
+async function perform(command: string, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
+  state.activity.queued -= 1;
+  state.activity.inFlight = command;
   state.busy = true;
   render();
   try {
@@ -201,16 +236,25 @@ async function send(command: string, payload: Record<string, unknown> = {}): Pro
         ...(((body.fieldErrors as { field: string; message: string }[]) ?? []).map((f) => `${f.field}: ${f.message}`)),
       ];
       state.message = { text: errors[0], bad: true, details: [...errors.slice(1), ...extra] };
-    } else if (typeof body.message === "string") {
-      state.message = { text: body.message, bad: false, details: [] };
+      state.activity.lastOk = false;
+    } else {
+      if (typeof body.message === "string") state.message = { text: body.message, bad: false, details: [] };
+      state.activity.lastOk = true;
     }
     if (body.sources) state.server = body as unknown as ServerState;
     if (body.preflight) state.preflight = body.preflight as Preflight;
     return body;
   } catch (e) {
     state.message = { text: `The tool could not be reached: ${e instanceof Error ? e.message : String(e)}`, bad: true, details: [] };
+    state.activity.lastOk = false;
     return { ok: false };
   } finally {
+    // The count goes up after the answer is in this state and before the
+    // redraw, so anything waiting on it is waiting on a screen that shows the
+    // answer rather than on an element that was already there.
+    state.activity.inFlight = null;
+    state.activity.last = command;
+    state.activity.completed += 1;
     state.busy = false;
     render();
   }
@@ -947,7 +991,7 @@ function recordCard(record: RecordReview): HTMLElement {
   box.append(text_("p", "note", `Price checked ${record.price.lastChecked}. Link ${record.link.url} (${record.link.affiliateStatus}${record.link.network ? `, ${record.link.network}` : ""}).`));
   box.append(text_("p", "note", `Provenance: ${record.provenance.kind}, ${record.provenance.method}${record.provenance.ref ? `, ${record.provenance.ref}` : ""}.`));
 
-  const rights = el("p", { "data-testid": `rights-${record.id}` }, [
+  const rights = el("p", { "data-testid": `rights-${record.id}`, "data-state": record.image.state }, [
     el("span", { class: `pill ${record.image.state === "cleared" ? "ok" : "bad"}` }, [`image rights: ${record.image.state}`]),
   ]);
   box.append(rights, text_("p", "note", record.image.why));
@@ -982,7 +1026,12 @@ function recordCard(record: RecordReview): HTMLElement {
 
 function shadowCard(shadow: ShadowReview): HTMLElement {
   const held = state.promotion.shadows[shadow.id] ?? { choice: "unresolved" as ShadowChoice, fields: {}, note: "" };
-  const box = el("div", { class: `row ${shadow.problems.length > 0 ? "conflict" : "added"}`, "data-testid": `shadow-${shadow.id}` });
+  const box = el("div", {
+    class: `row ${shadow.problems.length > 0 ? "conflict" : "added"}`,
+    "data-testid": `shadow-${shadow.id}`,
+    "data-choice": held.choice,
+    "data-resolved": shadow.problems.length === 0 ? "true" : "false",
+  });
   box.append(el("header", {}, [text_("strong", "", shadow.id), el("span", { class: `pill ${shadow.problems.length > 0 ? "bad" : "ok"}` }, [held.choice])]));
   box.append(text_("p", "note", `The catalogue holds "${shadow.diff.existingName}". The workspace holds "${shadow.diff.draftName}". Nothing is chosen for you.`));
 
@@ -1050,7 +1099,11 @@ function promotionSection(): HTMLElement {
       el("button", {
         class: "primary",
         "data-testid": "build-plan",
-        ...(state.busy ? { disabled: true } : {}),
+        // What this would ask for, readable before it is asked. A checkbox
+        // changes no server state, so this is the authoritative answer to
+        // "has the selection landed yet".
+        "data-selected": String(promotion.familyIds.length),
+        "data-stale": promotion.stale ? "true" : "false",
         onclick: async () => {
           const reply = await send("plan", {
             sourceId: state.sourceId,
@@ -1075,7 +1128,13 @@ function promotionSection(): HTMLElement {
   if (!plan) return panel;
 
   panel.append(
-    el("p", { "data-testid": "promotion-counts" }, [
+    el("p", {
+      "data-testid": "promotion-counts",
+      "data-source-records": String(plan.sourceRecords),
+      "data-families": String(plan.comparisonFamilies),
+      "data-selected": String(plan.selectedFamilyIds.length),
+      "data-records": String(plan.selectedRecordIds.length),
+    }, [
       `${plan.sourceRecords} source records, ${plan.comparisonFamilies} comparison families, ${plan.selectedFamilyIds.length} selected, ${plan.selectedRecordIds.length} records in the selection.`,
     ]),
   );
@@ -1087,12 +1146,29 @@ function promotionSection(): HTMLElement {
     ),
   );
 
+  const counts: Record<string, number> = {};
+  for (const blocker of plan.blockers) counts[blocker.code] = (counts[blocker.code] ?? 0) + 1;
+  // Always rendered, so "nothing unresolved" is a value somebody can read
+  // rather than the absence of an element that might simply not have been
+  // drawn yet.
+  panel.append(
+    el("p", {
+      "data-testid": "promotion-status",
+      "data-blockers": String(plan.blockers.length),
+      "data-signable": plan.signable && !promotion.stale ? "true" : "false",
+      "data-image-rights": String(counts.image_rights ?? 0),
+      "data-shadow-unresolved": String(counts.shadow_unresolved ?? 0),
+      class: plan.blockers.length > 0 ? "err" : "note",
+    }, [
+      plan.blockers.length > 0
+        ? `${plan.blockers.length} unresolved.`
+        : "Nothing unresolved. Signing is still not promoting, and promoting is still not publishing.",
+    ]),
+  );
   if (plan.blockers.length > 0) {
-    const list = el("ul", { "data-testid": "promotion-blockers" });
+    const list = el("ul", { "data-testid": "promotion-blockers", "data-count": String(plan.blockers.length) });
     for (const blocker of plan.blockers) list.append(el("li", { class: "err", "data-testid": `blocker-${blocker.code}` }, [`${blocker.code}: ${blocker.message}`]));
-    panel.append(text_("h3", "", `${plan.blockers.length} unresolved`), list);
-  } else {
-    panel.append(text_("p", "note", "Nothing unresolved. Signing is still not promoting, and promoting is still not publishing."));
+    panel.append(list);
   }
 
   for (const family of plan.families) {
@@ -1110,13 +1186,29 @@ function promotionSection(): HTMLElement {
 
   panel.append(text_("p", "mono", `Plan identifier: ${plan.planId}`));
   const actions = el("div", { class: "actions" });
-  actions.append(el("input", { type: "text", value: promotion.reviewer, placeholder: "who signs this", "data-testid": "plan-reviewer", oninput: (e) => { promotion.reviewer = (e.target as HTMLInputElement).value; } }));
+  actions.append(
+    el("input", {
+      type: "text",
+      value: promotion.reviewer,
+      placeholder: "who signs this",
+      "data-testid": "plan-reviewer",
+      oninput: (e) => { promotion.reviewer = (e.target as HTMLInputElement).value; },
+    }),
+  );
   actions.append(
     el("button", {
       class: "primary",
       "data-testid": "sign-plan",
-      ...(plan.blockers.length > 0 || promotion.stale || state.busy ? { disabled: true } : {}),
+      ...(plan.blockers.length > 0 || promotion.stale ? { disabled: true } : {}),
       onclick: async () => {
+        if (promotion.reviewer.trim() === "") {
+          // Refused here rather than sent and refused there: nothing about this
+          // needs the tool's opinion, and a round trip to be told to type a
+          // name is a round trip.
+          state.message = { text: "Say who is signing this plan. An approval nobody signed is not one.", bad: true, details: [] };
+          render();
+          return;
+        }
         const reply = await send("sign", {
           sourceId: state.sourceId,
           familyIds: promotion.familyIds,
@@ -1166,8 +1258,42 @@ function historySection(): HTMLElement {
 
 // ------------------------------------------------------------------ drawing
 
+/**
+ * What the tool is doing, in the markup rather than only in a spinner.
+ *
+ * `data-completed` counts finished requests and never goes down. Anything that
+ * needs to know a screen is showing the result of an action, a person watching
+ * or a check driving the page, reads that rather than looking for an element
+ * that was already on the page before the action started.
+ */
+function activityBar(): HTMLElement {
+  const { inFlight, queued, completed, last, lastOk } = state.activity;
+  const busy = inFlight !== null || queued > 0;
+  const bar = el("div", {
+    class: `status ${busy ? "" : lastOk === false ? "bad" : "ok"}`.trim(),
+    "data-testid": "activity",
+    "data-state": busy ? "busy" : "idle",
+    "data-command": inFlight ?? "",
+    "data-completed": String(completed),
+    "data-queued": String(queued),
+  });
+  bar.append(
+    text_(
+      "p",
+      "",
+      busy
+        ? `Working: ${inFlight ?? "queued"}${queued > 0 ? `, ${queued} waiting` : ""}. Everything is disabled until it finishes, so two things cannot be in flight at once.`
+        : completed === 0
+          ? "Ready."
+          : `Ready. ${completed} ${completed === 1 ? "action" : "actions"} finished, the last of them ${last}.`,
+    ),
+  );
+  return bar;
+}
+
 function render(): void {
   root.replaceChildren();
+  root.append(activityBar());
   const message = messageBox();
   if (message) root.append(message);
   if (!state.server) {
@@ -1183,6 +1309,17 @@ function render(): void {
   root.append(draftsSection());
   if (state.sourceId !== "" && (state.server.drafts.length > 0 || (state.server.plans?.length ?? 0) > 0)) {
     root.append(promotionSection(), historySection());
+  }
+
+  // One place, so it cannot drift as the page grows: while a request is in
+  // flight nothing on the page can start another or change what one would ask
+  // for. Sends are serialized anyway; this is what stops a second action being
+  // queued behind the first and a redraw landing in the middle of somebody
+  // filling in a form.
+  if (state.busy || state.activity.queued > 0) {
+    for (const node of root.querySelectorAll("button, input, select, textarea")) {
+      (node as HTMLButtonElement).disabled = true;
+    }
   }
 }
 

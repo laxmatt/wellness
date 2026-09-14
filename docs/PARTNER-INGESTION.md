@@ -216,6 +216,23 @@ including the next import of the same feed, edits it. A later import can make a
 plan out of date and the history says which plans still match the current file.
 That is a thing a reader is told, not a thing done to the file.
 
+### One action at a time
+
+The tool runs one request at a time. Two in flight at once is not a race the
+answers settle: each one ends by folding a reply into the page's state and
+redrawing, so the second to arrive wins whatever the first was about, and a
+redraw landing while somebody is filling in a form replaces the form under
+them. Sends are chained, and every control is disabled while a request is
+running.
+
+The page says what it is doing in its own markup. An element carries
+`data-state` (`busy` or `idle`), the command in flight, and `data-completed`, a
+count of finished requests that only goes up and is incremented after the
+answer is in the page's state and before the redraw. That is what a person
+watching, or a check driving the page, should wait on. Waiting for an element
+to appear proves nothing here: almost every element on this page exists before
+an action and still exists after it.
+
 ## What it will not do
 
 - Publish, deploy, or write to `catalog/`.
