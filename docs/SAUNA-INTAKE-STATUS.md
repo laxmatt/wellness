@@ -96,7 +96,22 @@ Live checks against a production build: `/saunas` 404, both sauna product pages
 404, `/brands/saunacloud` 404, and no occurrence of "sauna" on the home page,
 `/explore`, `/brands` or the sitemap.
 
-One transient console error was reported by the harness on a single run
-(React #418, a hydration text mismatch, on `/products/infraredi-flex-max`). It
-did not reproduce on three targeted loads of that page or on the following full
-run. Recorded rather than claimed fixed.
+**One open, intermittent console warning.** React #418, a hydration text
+mismatch, on `/products/infraredi-flex-max`. Seen on two of four full harness
+runs over identical code, including one run after the merge and one before. It
+never reproduced on direct loads of that page, and it fails no assertion: the
+880 checks pass on the runs where it appears. Both `shortDate` helpers pin
+`timeZone: "UTC"` and a fixed locale, so the obvious cause is ruled out.
+Intermittency over identical code points at a race in the harness's traversal
+rather than a mismatch in the markup, but that is a hypothesis and not a
+finding. Recorded as open, not as fixed and not as transient; worth one bounded
+look in a later batch.
+
+## Merged, not forced
+
+Codex's work landed on the branch while this was in progress: compare
+reconciliation, compare disclosure, site-origin normalisation, publication
+readiness and preview branding. It was merged rather than rebased or forced, and
+every check above was re-run on the merged tree. No file Codex holds was edited
+here: `CompareView.tsx`, `src/tools/inventory-admin/main.ts` and the inventory
+tests were left alone.
