@@ -248,6 +248,30 @@
         "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 220,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/forge-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Maximum operating temperature: 220°F”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/forge-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “weather-resistant”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "sourceTitle": "SaunaBox® Forge 1-Person: Traditional Finnish Sauna",

@@ -168,6 +168,18 @@
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
       }
+    },
+    "max_temperature_f": {
+      "value": 170,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-denali-4-person-traditional-outdoor-sauna-400d5?variant=52098034204936&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “heats up to 170°F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "editorial": {

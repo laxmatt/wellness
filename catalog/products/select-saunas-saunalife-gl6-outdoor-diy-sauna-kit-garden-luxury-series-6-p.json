@@ -146,6 +146,18 @@
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
       }
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/saunalife-gl6-outdoor-diy-sauna-kit-garden-luxury-series-6-persons-thermo-spruce?variant=51751291289943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “weather-ready”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "editorial": {

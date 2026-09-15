@@ -213,6 +213,18 @@
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
       }
+    },
+    "max_temperature_f": {
+      "value": 140,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “sauna can heat up to 140F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "editorial": {

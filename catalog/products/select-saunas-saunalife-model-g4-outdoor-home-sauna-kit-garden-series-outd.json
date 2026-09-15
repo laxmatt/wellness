@@ -168,6 +168,18 @@
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
       }
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/saunalife-model-g4-outdoor-home-sauna-kit-garden-series-outdoor-home-sauna-kit-up-to-6-persons?variant=46918126764375&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “weather-resistant”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "editorial": {

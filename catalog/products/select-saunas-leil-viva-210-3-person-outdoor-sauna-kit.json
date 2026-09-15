@@ -143,6 +143,18 @@
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
       }
+    },
+    "enclosure_protection": {
+      "value": "insulated_weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/leil-viva-210-3-person-outdoor-sauna-kit?variant=52629593456983&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “thermal insulation; Weather-Resistant”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "editorial": {

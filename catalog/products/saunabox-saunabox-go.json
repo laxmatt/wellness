@@ -236,6 +236,30 @@
         "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 130,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “heats up to a soothing 130°F”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "enclosure_protection": {
+      "value": "insulated",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “fully insulated”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "sourceTitle": "SaunaBox® SmartSteam XL",

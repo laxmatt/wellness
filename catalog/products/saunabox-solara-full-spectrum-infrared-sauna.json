@@ -325,6 +325,18 @@
         "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 158,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Heats up to 158° F”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "sourceTitle": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",

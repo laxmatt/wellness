@@ -111,6 +111,31 @@ export const saunas = CategoryDefinition.parse({
       filterable: true,
     },
     {
+      key: "enclosure_protection",
+      label: "Enclosure protection",
+      type: "enum",
+      enumOptions: [
+        { value: "insulated", label: "Insulated" },
+        { value: "weather_ready", label: "Weather-ready" },
+        { value: "insulated_weather_ready", label: "Insulated and weather-ready" },
+      ],
+      group: "Space",
+      compareOrder: 34,
+      filterable: true,
+      tooltip: "Shown only when the product source explicitly describes insulation or weather protection. Outdoor placement alone is not enough.",
+    },
+    {
+      key: "max_temperature_f",
+      label: "Maximum temperature",
+      shortLabel: "Max temperature",
+      type: "number",
+      unit: "°F",
+      group: "Heating",
+      compareOrder: 35,
+      filterable: true,
+      tooltip: "The maximum explicitly stated by the seller or maker; not independently tested.",
+    },
+    {
       key: "connection",
       label: "Connection",
       type: "enum",
@@ -133,7 +158,8 @@ export const saunas = CategoryDefinition.parse({
   cardSpecKeys: ["sauna_style", "capacity_max_people", "sauna_type"],
   compareGroups: [
     { label: "Basics", keys: ["sauna_type", "sauna_style", "capacity_label", "capacity_max_people"] },
-    { label: "Space", keys: ["width_in", "depth_in", "height_in", "placement"] },
+    { label: "Space", keys: ["width_in", "depth_in", "height_in", "placement", "enclosure_protection"] },
+    { label: "Heating", keys: ["max_temperature_f"] },
     { label: "Power", keys: ["connection", "voltage", "amperage_a", "heater_kw", "heater_model"] },
   ],
   filters: [
@@ -169,7 +195,32 @@ export const saunas = CategoryDefinition.parse({
     },
     { key: "sauna_type", label: "Heating", kind: "enum" },
     { key: "connection", label: "Connection", kind: "enum" },
-    { key: "placement", label: "Placement", kind: "enum" },
+    {
+      key: "placement", label: "Where it can go", kind: "enum",
+      presets: [
+        { label: "Indoor", condition: { key: "placement", op: "eq", value: "indoor" } },
+        { label: "Outdoor", condition: { key: "placement", op: "eq", value: "outdoor" } },
+        { label: "Indoor or outdoor", condition: { key: "placement", op: "eq", value: "indoor_outdoor" } },
+        { label: "Not stated", condition: { key: "placement", op: "missing" } },
+      ],
+    },
+    {
+      key: "enclosure_protection", label: "Protection", kind: "enum",
+      presets: [
+        { label: "Insulated", condition: { key: "enclosure_protection", op: "in", value: ["insulated", "insulated_weather_ready"] } },
+        { label: "Weather-ready", condition: { key: "enclosure_protection", op: "in", value: ["weather_ready", "insulated_weather_ready"] } },
+        { label: "Not stated", condition: { key: "enclosure_protection", op: "missing" } },
+      ],
+    },
+    {
+      key: "max_temperature_f", label: "Maximum temperature", kind: "range",
+      presets: [
+        { label: "Up to 140°F", condition: { key: "max_temperature_f", op: "lte", value: 140 } },
+        { label: "141°F to 170°F", condition: { key: "max_temperature_f", op: "gt", value: 140 }, and: { key: "max_temperature_f", op: "lte", value: 170 } },
+        { label: "Above 170°F", condition: { key: "max_temperature_f", op: "gt", value: 170 } },
+        { label: "Not stated", condition: { key: "max_temperature_f", op: "missing" } },
+      ],
+    },
   ],
   // Empty, and it is the point. See the note at the top of this file.
   scoring: { criteria: [], label: "Not ranked", meaning: "Saunas are not ranked here. Nothing in this catalogue establishes that one sauna is better than another, so no score is shown and no badge is awarded.", completenessFloor: 1 },
