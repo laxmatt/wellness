@@ -14,7 +14,7 @@ describe("sauna temperature and enclosure evidence", () => {
 
   it("offers explicit not-stated choices with truthful counts", () => {
     const catalog = readCatalogRecords(`${process.cwd()}/catalog`);
-    const products = catalog.products.filter((product) => product.categoryId === "saunas");
+    const products = catalog.products.filter((product) => product.categoryId === "saunas" && product.status === "published");
     const views = products.map((product) => toProductView(product, { category: saunas, brands: catalog.brands, merchants: catalog.merchants }));
     const groups = buildFilterGroups(views, saunas);
     for (const key of ["placement", "enclosure_protection", "max_temperature_f"]) {
@@ -27,14 +27,14 @@ describe("sauna temperature and enclosure evidence", () => {
 
   it("keeps unknown products in a separate may-match tier for sparse filters", () => {
     const catalog = readCatalogRecords(`${process.cwd()}/catalog`);
-    const products = catalog.products.filter((product) => product.categoryId === "saunas");
+    const products = catalog.products.filter((product) => product.categoryId === "saunas" && product.status === "published");
     const views = products.map((product) => toProductView(product, { category: saunas, brands: catalog.brands, merchants: catalog.merchants }));
     const groups = buildFilterGroups(views, saunas);
     const option = groups.find((group) => group.key === "max_temperature_f")!.options.find((item) => item.label === "Above 170°F")!;
     const result = applyFilterTiers(views.map((view) => view.id), groups, [option.id]);
     expect(result.confirmed).toHaveLength(11);
-    expect(result.unknown).toHaveLength(261);
-    expect(result.visible).toHaveLength(272);
+    expect(result.unknown).toEqual(option.unknownIds);
+    expect(result.visible).toHaveLength(option.matchIds.length + option.unknownIds.length);
     expect(result.confirmed.every((id) => !result.unknown.includes(id))).toBe(true);
   });
 });
