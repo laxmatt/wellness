@@ -289,10 +289,9 @@ a question. Nothing is matched on a title alone, nothing is scored for
 similarity, and a merge keeps the incumbent record's name, description and
 specifications while each partner contributes only its own offer.
 
-**A link that is not tracked says so.** Five programmes are joined and not one
-has a verified way to credit a link to an individual product, so offers carry
-no composed tracking parameter and the site says the arrangement exists and
-this link earns nothing.
+**A link that is not tracked says so.** Three of the five programmes now have a
+verified per-product transformation and their offers carry it. The other two do
+not, and their offers say the arrangement exists and this link earns nothing.
 
 ## Six programmes, and what each one issued
 
@@ -311,24 +310,55 @@ behind it throws rather than defaults.
 | SAUNABOX | direct | 5% | tracking code `MATT41058` | none |
 | Lifepro | unread | unread | nothing | refuses automated requests |
 
-**Generatable is not generated.** Four dashboards have a button that makes a
-link to one product: Topture's and Hooga's generators, Select Saunas' "Get
-product link" and "Get link with source", and Therasage's "Create link to a
-specific page". A person can press any of them. What each does to a product
-address is unverified, so `ProductLinkRoute` records the *name of the tool*
-and carries no template, no base and no parameter. `productLink()` is the only
-function that would build one and it returns a reason instead, naming the
-button. A template appears only on a `verified` route, set by a person who ran
-a real link and watched the click register, and today no route is verified.
-Guessing at the transformation would publish links that earn nothing while
-looking like they earn something, and the difference shows up months later in
-a payout that does not arrive.
+**One parameter, verified, on the merchant's own address.** Three dashboards
+were opened and a real link generated for a real product, then compared against
+the plain address. All three do the same thing:
 
-**A partner's terms are a blocker, not a footnote.** Therasage's terms
-restrict where its link and its coupon may be placed and require a disclosure
-before the click. Both are recorded as outstanding compliance requirements,
-the tool raises them above the partner list, and `productLink()` refuses a
-Therasage link even on a verified route while either stands.
+| Partner | Plain | Verified link |
+| --- | --- | --- |
+| Select Saunas | `/products/dynamic-saunas-dyn-6106-01-barcelona-...` | same, `?sca_ref=12323351.NbtdIcjAoO` |
+| Topture | `/products/thermasol-vue-sauna-cabin` | same, `?ref=MATTORR` |
+| Hooga | `/products/sauna-series-floor-stand` | same, `?ref=MATTORR` |
+
+So a `verified` route records a parameter and an origin, not a template. A
+template with a slot for an address is the shape of a redirector, and a
+redirector that accepts any address is an open redirect whether anybody meant
+one or not. `tagUrl` in `src/domain/affiliate/tag.ts` is the only thing that
+composes a link, and it refuses:
+
+- any address whose origin is not the one recorded when the transformation was
+  verified, so `https://evil.example/?u=https://topture.com/...`,
+  `https://topture.com.evil.example/...` and `https://shop.topture.com/...`
+  are all refused rather than tagged;
+- any address carrying credentials, which is how
+  `https://topture.com@evil.example/...` reads to a browser;
+- anything that is not `https`, and anything that is not an address;
+- any address already carrying the same parameter set to something else, because
+  overwriting it takes a referral off whoever it belongs to.
+
+What survives: the query string the address already had, and the fragment. A
+Shopify variant address is `/products/x?variant=1011`, and dropping that
+parameter would land a shopper on the wrong configuration of the right product.
+Composing twice changes nothing.
+
+An offer's link is the tagged one. Its provenance keeps the plain address,
+because that is where the facts were read, not where a shopper is sent.
+
+**A source has to say what makes its links pay.** `affiliate.status: "affiliate"`
+is refused unless the source records either a `linkPrefix`, the prefix every
+link a network issues starts with, which is how Sweat Kingdom's Awin deep links
+work, or a verified `tag`. Both together is refused too: an issued deep link
+already carries the tracking and belongs to the network's origin, which is
+exactly the address a tag will not touch.
+
+**A partner's terms are a blocker, not a footnote.** Therasage's terms say the
+code is solely for social profiles and not for websites without express written
+permission. This site is a website and holds no such permission, so nothing of
+Therasage's goes on it: not the link, not the coupon. A disclosure does not
+clear it and a verified link would not either, which is moot anyway because the
+portal logged itself out during custom-link generation and no link came back.
+`productLink()` refuses Therasage even when handed a verified route, because
+the blocker is permission and not mechanics.
 
 **Three approved partners have no catalogue to read**, recorded as such rather
 than left out. Lifepro answers automated requests with 403
@@ -400,8 +430,10 @@ the last good snapshot exactly where it was.
   header is refused rather than saved. The Awin feed is downloaded from an
   address carrying an API key; that address is recorded nowhere in this
   repository.
-- Compose a tracking link. A row whose link does not start with the prefix the
-  source states is refused.
+- Compose anything but a verified parameter onto a merchant's own address. A
+  row whose link does not start with the prefix the source states is refused,
+  and an address whose origin is not the merchant's is never tagged, so no
+  composed link can point off the merchant's site.
 - Claim a right to an image. Images are recorded with no licence and a note
   saying a feed carrying one is not permission to publish it.
 - Convert a currency, a unit, or a partner's vocabulary. A translation is a

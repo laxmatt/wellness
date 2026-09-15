@@ -350,7 +350,7 @@ function readGroup(
 
   if (fields.link !== undefined && source.affiliate.linkPrefix && !String(fields.link).startsWith(source.affiliate.linkPrefix)) {
     failures.push(
-      `The link on this row does not start with ${source.affiliate.linkPrefix}, which is what this source's issued links start with. No link is composed here, so the row is refused rather than linked to something nobody issued.`,
+      `The link on this row does not start with ${source.affiliate.linkPrefix}, which is what this source's issued links start with. The row is refused rather than linked to something nobody issued.`,
     );
   }
 

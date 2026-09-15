@@ -19,6 +19,7 @@
  * record a reading of the feed would be the easy lie: half of it would not be.
  */
 
+import { tagUrl } from "@/domain/affiliate/tag";
 import type { AttributeDefinition, AttributeMap, AttributePrimitive } from "@/domain/attributes";
 import type { Derivation } from "@/domain/provenance";
 import { Brand, Product, type ImageAsset, type MerchantOffer } from "@/domain/product";
@@ -110,7 +111,7 @@ export function productFromFields(
   const brandId = asString(fields.brand);
   if (!name) reasons.push("A record needs a name.");
   if (!description) reasons.push("A record needs a description. The partner's own words are kept whole; nothing is written in for them.");
-  if (!link) reasons.push("A record needs the merchant's link, and no link is ever composed here.");
+  if (!link) reasons.push("A record needs the merchant's own link. Nothing invents one, and a missing one is not made up from a product name.");
   if (!brandId) reasons.push("A record needs a brand.");
 
   const price = fields.price as { minor: number; currency: string } | { quoteOnly: true } | undefined;
@@ -131,13 +132,25 @@ export function productFromFields(
   };
   const recordNote = [ctx.groupNote, outcomeNote(outcomes)].filter((s) => s !== "").join(" ");
 
+  // The address a shopper clicks, and the only composition this flow performs.
+  // A source with no verified tag gets the merchant's own address unchanged; a
+  // source with one gets that address plus the parameter a person read in the
+  // partner's dashboard, and `tagUrl` refuses anything whose origin is not the
+  // merchant's. Provenance below keeps the plain address, because that is where
+  // these facts were read, not where a shopper is sent.
+  const tag = ctx.source.affiliate.tag;
+  const tagged = tag ? tagUrl(link!, tag) : undefined;
+  if (tagged && !tagged.ok) {
+    return { ok: false, reasons: [`This row's link could not carry ${ctx.source.name}'s affiliate parameter. ${tagged.reason}`] };
+  }
+
   const offer: MerchantOffer = {
     id: `${id}-offer`,
     merchantId: ctx.source.merchantId,
     market: "US",
     currency: "USD",
     ...(price && "minor" in price ? { priceMinor: price.minor } : { quoteOnly: true as const }),
-    url: link!,
+    url: tagged?.ok ? tagged.url : link!,
     affiliate: {
       status: ctx.source.affiliate.status,
       ...(ctx.source.affiliate.network ? { network: ctx.source.affiliate.network } : {}),

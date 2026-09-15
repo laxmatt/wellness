@@ -24,6 +24,7 @@
  */
 
 import type { AffiliateNetwork, AffiliateStatus } from "@/domain/product";
+import { tagUrl, type AffiliateTag } from "./tag";
 
 /**
  * How a link to one product gets made, if it can be made at all.
@@ -40,10 +41,15 @@ export type ProductLinkRoute =
    */
   | { kind: "portal_tool"; tools: string[]; why: string }
   /**
-   * Somebody generated a real link, compared it against the product address it
-   * came from, and recorded the transformation. Nothing sets this yet.
+   * Somebody generated a real link in the portal, compared it against the plain
+   * product address it came from, and recorded the difference.
+   *
+   * The difference, in all three cases, is one query parameter. Recorded as a
+   * parameter and an origin rather than a template with a slot in it: a
+   * template that takes an address is the shape of a redirector, and this is
+   * not one. `tag.ts` decides what may be tagged.
    */
-  | { kind: "verified"; template: string; verifiedOn: string; verifiedBy: string };
+  | { kind: "verified"; tag: AffiliateTag };
 
 /**
  * A condition a partner's terms place on using their links, and whether
@@ -136,9 +142,6 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
   return found;
 }
 
-const NO_VERIFIED_TRANSFORMATION =
-  "The dashboard makes one. What that tool does to a product address is unverified, and composing a parameter that looks like the right one produces a link that earns nothing while claiming it earns something.";
-
 export const PROGRAMMES: PartnerProgramme[] = [
   {
     partnerId: "topture-shopify",
@@ -148,7 +151,9 @@ export const PROGRAMMES: PartnerProgramme[] = [
     programRef: "MATTORR",
     referralLink: "https://topture.com/?ref=MATTORR",
     commissionPercent: 2,
-    productLinks: { kind: "portal_tool", tools: ["Product link generator"], why: NO_VERIFIED_TRANSFORMATION },
+    // Verified: https://topture.com/products/thermasol-vue-sauna-cabin became
+    // the same address with ?ref=MATTORR on it. Nothing else changed.
+    productLinks: { kind: "verified", tag: { param: "ref", value: "MATTORR", origin: "https://topture.com", verifiedOn: "2026-09-15", verifiedBy: "Matt, in the programme's own dashboard" } },
     inventory: { kind: "shopify_json", url: "https://topture.com/products.json" },
     compliance: [],
     verifiedOn: "2026-09-14",
@@ -163,13 +168,12 @@ export const PROGRAMMES: PartnerProgramme[] = [
     // link's `sca_ref`. Public: it is in the address bar of every referred visit.
     programRef: "12323351.NbtdIcjAoO",
     referralLink: "https://selectsaunas.com?sca_ref=12323351.NbtdIcjAoO",
-    productLinks: {
-      kind: "portal_tool",
-      // Both buttons exist in the dashboard. Neither has been run, so what
-      // either does to an address is not written down here.
-      tools: ["Get product link", "Get link with source"],
-      why: NO_VERIFIED_TRANSFORMATION,
-    },
+    // Verified through "Get product link":
+    // https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna
+    // became the same address with ?sca_ref=12323351.NbtdIcjAoO on it. The same
+    // identifier the store-front referral link carries, on the product's own
+    // address, which is why this is a parameter and not a redirect.
+    productLinks: { kind: "verified", tag: { param: "sca_ref", value: "12323351.NbtdIcjAoO", origin: "https://selectsaunas.com", verifiedOn: "2026-09-15", verifiedBy: "Matt, in the programme's own dashboard" } },
     inventory: { kind: "shopify_json", url: "https://selectsaunas.com/products.json" },
     compliance: [],
     verifiedOn: "2026-09-15",
@@ -184,7 +188,9 @@ export const PROGRAMMES: PartnerProgramme[] = [
     programRef: "MATTORR",
     referralLink: "https://hoogahealth.com/?ref=MATTORR",
     commissionPercent: 8,
-    productLinks: { kind: "portal_tool", tools: ["Product link generator"], why: NO_VERIFIED_TRANSFORMATION },
+    // Verified: https://hoogahealth.com/products/sauna-series-floor-stand became
+    // the same address with ?ref=MATTORR on it.
+    productLinks: { kind: "verified", tag: { param: "ref", value: "MATTORR", origin: "https://hoogahealth.com", verifiedOn: "2026-09-15", verifiedBy: "Matt, in the programme's own dashboard" } },
     inventory: { kind: "shopify_json", url: "https://hoogahealth.com/products.json" },
     compliance: [],
     verifiedOn: "2026-09-14",
@@ -204,7 +210,10 @@ export const PROGRAMMES: PartnerProgramme[] = [
     productLinks: {
       kind: "portal_tool",
       tools: ["Create link to a specific page"],
-      why: NO_VERIFIED_TRANSFORMATION,
+      // The one attempt to use it ended with the portal logging itself out
+      // part-way through, so no link came back and nothing is recorded. The
+      // terms make finishing it pointless anyway: see the requirements below.
+      why: "The portal logged out during custom-link generation, so no link was produced and no transformation was read. Even a verified one would stay unusable while the requirements below stand.",
     },
     inventory: {
       kind: "none",
@@ -219,14 +228,16 @@ export const PROGRAMMES: PartnerProgramme[] = [
       },
       {
         id: "therasage-placement",
-        requirement: "The terms restrict where the coupon and the link may appear. Which surfaces are permitted has not been read line by line, so no placement is approved yet.",
+        // Read in full now, and the answer is no. This site is a website.
+        requirement:
+          "The terms say the code is solely for social profiles and not for websites without express written permission. This site is a website and holds no such permission, so the link and the coupon go nowhere on it. Only written permission from Therasage clears this, not a verified link and not a disclosure.",
         statedIn: "Therasage affiliate terms, read in the Refersion portal on 2026-09-15.",
         state: "outstanding",
       },
     ],
     verifiedOn: "2026-09-15",
     notes:
-      "Refersion, dashboard active, 10% with a 30-day referral window. The referral link carries a coupon, which makes it a marketing placement as well as a link, and the terms restrict where both may go. Nothing publishes either until somebody clears the compliance requirements above.",
+      "Refersion, dashboard active, 10% with a 30-day referral window. The referral link carries a coupon, which makes it a marketing placement as well as a link, and the terms confine both to social profiles. Nothing of Therasage's is published on this site, and a verified product link would not change that: the blocker is permission, not mechanics.",
   },
   {
     partnerId: "saunabox",
@@ -301,11 +312,22 @@ export function productLink(programme: PartnerProgramme | undefined, productUrl:
   if (route.kind === "portal_tool") {
     return { ok: false, reason: `${programme.merchantName}: ${route.tools.join(" / ")} in the dashboard. ${route.why}` };
   }
+  // A verified transformation is still not permission. A partner whose terms
+  // restrict where its link may go is refused here, which is the only place
+  // that matters, rather than depended on to be refused by whoever calls this.
   const outstanding = outstandingCompliance(programme);
   if (outstanding.length > 0) {
     return { ok: false, reason: `${programme.merchantName}: ${outstanding.length} compliance requirement(s) outstanding. ${outstanding.map((c) => c.requirement).join(" ")}` };
   }
-  return { ok: true, url: route.template.replace("{url}", encodeURIComponent(productUrl)) };
+  const tagged = tagUrl(productUrl, route.tag);
+  if (!tagged.ok) return { ok: false, reason: `${programme.merchantName}: ${tagged.reason}` };
+  return tagged;
+}
+
+/** The tag a partner's links carry, for a source record to store beside its status. */
+export function verifiedTag(programme: PartnerProgramme | undefined): AffiliateTag | undefined {
+  if (!programme || programme.productLinks.kind !== "verified" || needsComplianceReview(programme)) return undefined;
+  return programme.productLinks.tag;
 }
 
 /** A partner's programme facts as one line, for a source record's notes. */
@@ -315,7 +337,11 @@ export function programmeNote(programme: PartnerProgramme): string {
   if (programme.referralWindowDays !== undefined) bits.push(`${programme.referralWindowDays}-day referral window`);
   if (programme.coupon) bits.push(`coupon ${programme.coupon}`);
   if (programme.trackingCode) bits.push(`tracking code ${programme.trackingCode}`);
-  bits.push(programme.productLinks.kind === "verified" ? "product links verified" : "no verified product link");
+  bits.push(
+    programme.productLinks.kind === "verified"
+      ? `product links verified on ${programme.productLinks.tag.verifiedOn}, ${programme.productLinks.tag.param}`
+      : "no verified product link",
+  );
   const outstanding = outstandingCompliance(programme);
   if (outstanding.length > 0) bits.push(`${outstanding.length} compliance requirement(s) outstanding`);
   return `${bits.join(". ")}. Read on ${programme.verifiedOn}.`;

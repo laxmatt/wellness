@@ -24,7 +24,7 @@
  * is not a classification and a keyword hit in one is not inventory.
  */
 
-import { affiliateStatusFor, needsComplianceReview, productLink, programmeFor, programmeNote, PROGRAMMES, type PartnerProgramme } from "@/domain/affiliate/programmes";
+import { affiliateStatusFor, needsComplianceReview, productLink, programmeFor, programmeNote, verifiedTag, PROGRAMMES, type PartnerProgramme } from "@/domain/affiliate/programmes";
 import { MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
 
 export type ShopifyPartner = { id: string; name: string; storeUrl: string };
@@ -89,13 +89,12 @@ function shopifySource(opts: {
     priceCurrency: "USD",
     idPrefix: opts.idPrefix,
     defaultBrand: opts.defaultBrand,
-    // Joined programmes, each with a dashboard somebody has now opened, and not
-    // one with a verified way to link to an individual product. That is exactly
-    // `affiliate_link_unresolved`: the arrangement is real and recorded, and
-    // this link does not pay. It used to say `unknown`, which means nobody had
-    // recorded the relationship at all, and that stopped being true the day the
-    // logins were completed.
-    affiliate: { status: affiliateStatusFor(p), network: p.network, programRef: p.programRef },
+    // Joined programmes, each with a dashboard somebody has opened and a
+    // transformation somebody has run and compared. The status and the tag both
+    // come from the programme record: a source says its offers pay only when it
+    // carries the parameter that makes them pay, and the schema refuses the
+    // claim without it.
+    affiliate: { status: affiliateStatusFor(p), network: p.network, programRef: p.programRef, ...(verifiedTag(p) ? { tag: verifiedTag(p) } : {}) },
     allowQuoteOnly: false,
     // No `linkPrefix`. The rows carry the store's own product addresses, which
     // is what this links to; a prefix here would refuse every row for not being

@@ -220,7 +220,10 @@ describe("importing three partners to drafts", () => {
     expect(offer.merchantId).toBe("topture-store");
     expect(offer.priceMinor).toBe(899500);
     expect(offer.availability).toBe("in_stock");
-    expect(offer.url).toBe("https://topture.com/products/dundalk-luna-4-person?variant=1011");
+    // The store's own variant address, with the parameter Topture's own
+    // dashboard adds. The variant is still on it: losing that would send a
+    // shopper to the wrong configuration of the right sauna.
+    expect(offer.url).toBe("https://topture.com/products/dundalk-luna-4-person?variant=1011&ref=MATTORR");
     expect(offer.merchantSku).toBe("DUN-LUNA-4");
     expect(luna.sourceTitle).toBe("Dundalk Luna (4 Person) - Outdoor Sauna");
     expect(luna.name).toBe("Dundalk Luna (4 Person)");
@@ -228,17 +231,31 @@ describe("importing three partners to drafts", () => {
     expect(offer.lastChecked).toBe(TODAY);
   });
 
-  it("says the affiliate link is unresolved rather than inventing a tracked one", () => {
+  it("puts the verified parameter on every offer and nothing else", () => {
     const store = workspace();
     importInto(store, "topture-shopify");
     importInto(store, "select-saunas-shopify");
     for (const product of store.drafts().products) {
-      // Joined programmes with an open dashboard, and no verified way to link
-      // to one product so that the programme credits it. Not `unknown`: that
-      // word means nobody recorded the relationship, and somebody has.
-      expect(product.offers[0].affiliate.status, product.id).toBe("affiliate_link_unresolved");
-      expect(product.offers[0].url, product.id).not.toMatch(/ref=|sca_ref=|rfsn=|aff=|utm_/);
+      const offer = product.offers[0];
+      // A transformation somebody ran in the partner's dashboard and compared
+      // against the plain address. Nothing here was guessed at.
+      expect(offer.affiliate.status, product.id).toBe("affiliate");
+      const url = new URL(offer.url);
+      const expected = product.id.startsWith("topture-") ? ["ref", "MATTORR"] : ["sca_ref", "12323351.NbtdIcjAoO"];
+      expect(url.searchParams.get(expected[0]), product.id).toBe(expected[1]);
+      // The merchant's own origin, always. Nothing composes a link elsewhere.
+      expect(url.origin, product.id).toBe(product.id.startsWith("topture-") ? "https://topture.com" : "https://selectsaunas.com");
+      // One parameter added, and no campaign tags invented alongside it.
+      expect(offer.url, product.id).not.toMatch(/utm_|aff=|rfsn=/);
     }
+  });
+
+  it("keeps the plain address as the provenance, because that is where the facts were read", () => {
+    const store = workspace();
+    importInto(store, "topture-shopify");
+    const luna = store.draft("topture-dundalk-luna-4-person")!;
+    expect(luna.offers[0].source.url).toBe("https://topture.com/products/dundalk-luna-4-person?variant=1011");
+    expect(luna.offers[0].url).toContain("ref=MATTORR");
   });
 
   it("claims no right to any picture", () => {

@@ -344,13 +344,48 @@ export const PartnerSource = z.object({
     programRef: z.string().min(1).optional(),
     /** A link that does not start with this is not the issued link, and the row is refused. */
     linkPrefix: z.string().min(1).optional(),
+    /**
+     * The one transformation this flow will perform on a merchant's own address.
+     *
+     * Somebody generated a real link in the partner's dashboard, compared it
+     * against the plain product address, and recorded the difference: one query
+     * parameter, on one origin. Recorded as a parameter rather than a template,
+     * so there is nothing here that could point a link at another site, and
+     * `tagUrl` refuses any address whose origin is not this one.
+     */
+    tag: z
+      .object({
+        param: z.string().min(1),
+        value: z.string().min(1),
+        /** Scheme and host, as `URL.origin` spells it. Only this origin is tagged. */
+        origin: z.url(),
+        verifiedOn: z.iso.date(),
+        verifiedBy: z.string().min(1),
+      })
+      .optional(),
   }),
   /** A merchant who quotes rather than prices still sells the thing. */
   allowQuoteOnly: z.boolean().default(false),
   notes: z.string().default(""),
-}).refine((s) => !NAMES_A_PROGRAMME.has(s.affiliate.status) || (s.affiliate.network !== undefined && s.affiliate.programRef !== undefined), {
-  message: "An affiliate link belongs to a named network and a programme reference. Without both there is nothing to check the claim against.",
-});
+})
+  .refine((s) => !NAMES_A_PROGRAMME.has(s.affiliate.status) || (s.affiliate.network !== undefined && s.affiliate.programRef !== undefined), {
+    message: "An affiliate link belongs to a named network and a programme reference. Without both there is nothing to check the claim against.",
+  })
+  // "This link pays" is a claim about a link, so there has to be something that
+  // makes the link pay. Two shapes exist and no third: a network that issues
+  // tracked links in the feed itself, named by the prefix they all start with,
+  // or a parameter somebody verified in the partner's dashboard. Neither one
+  // recorded means the honest status is `affiliate_link_unresolved`, which says
+  // the arrangement is real and this particular link is not tracked.
+  .refine((s) => s.affiliate.status !== "affiliate" || s.affiliate.tag !== undefined || s.affiliate.linkPrefix !== undefined, {
+    message: "A source whose offers say they pay has to say what makes them pay: the prefix the network's issued links start with, or the parameter somebody verified in the dashboard. Without either, the status is affiliate_link_unresolved.",
+  })
+  // Both would be a contradiction. An issued deep link already carries the
+  // tracking and belongs to the network's origin, which is exactly the address
+  // a tag refuses to touch.
+  .refine((s) => s.affiliate.tag === undefined || s.affiliate.linkPrefix === undefined, {
+    message: "A source's links are either issued by the network already tracked, or the merchant's own with a verified parameter added. Recording both says two different things about the same link.",
+  });
 export type PartnerSource = z.infer<typeof PartnerSource>;
 
 export const MappingProfile = z.object({

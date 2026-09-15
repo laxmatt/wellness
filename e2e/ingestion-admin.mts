@@ -61,7 +61,8 @@ const draftFiles = (): string[] => {
   const dir = join(WORKSPACE_DIR, "drafts", "products");
   return existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".json")).sort() : [];
 };
-const draft = (id: string): { name: string; description: string } => JSON.parse(readFileSync(join(WORKSPACE_DIR, "drafts", "products", `${id}.json`), "utf8"));
+type DraftFile = { name: string; description: string; offers: { url: string; affiliate: { status: string }; source: { url: string } }[] };
+const draft = (id: string): DraftFile => JSON.parse(readFileSync(join(WORKSPACE_DIR, "drafts", "products", `${id}.json`), "utf8"));
 const catalogCount = (): number => readdirSync(join(ROOT, "catalog", "products")).length;
 const planFiles = (): string[] => {
   const dir = join(WORKSPACE_DIR, "plans");
@@ -501,6 +502,18 @@ async function run() {
     await act(page, () => page.locator('[data-testid="approve-profile"]').click());
     await act(page, () => page.locator('[data-testid="import"]').click());
     ok("two Topture drafts", (await page.locator('[data-testid="draft-topture-dundalk-luna-4-person"]').count()) === 1);
+
+    scenario = "affiliate links";
+    // The transformation a person verified in Topture's own dashboard: the
+    // store's product address with ref=MATTORR added, and the variant it
+    // already carried still on it.
+    const luna = draft("topture-dundalk-luna-4-person");
+    check("the offer link carries the verified parameter", luna.offers[0].url, "https://topture.com/products/dundalk-luna-4-person?variant=1011&ref=MATTORR");
+    check("and the offer says it pays", luna.offers[0].affiliate.status, "affiliate");
+    // Provenance keeps the plain address: that is where the facts were read,
+    // not where a shopper is sent.
+    check("provenance keeps the plain address", luna.offers[0].source.url, "https://topture.com/products/dundalk-luna-4-person?variant=1011");
+    ok("and nothing points anywhere but the merchant", luna.offers.every((o) => new URL(o.url).origin === "https://topture.com"));
 
     scenario = "cross-partner";
     await page.locator('[data-testid="source-select"]').selectOption("select-saunas-shopify");
