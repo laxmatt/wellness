@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,72 @@
         "field": "classified_as",
         "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna | Indoor Infrared Sauna Kits | 3 Person, Cabin Saunas, Infrared Saunas",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 69,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-grandby-hl300d?variant=43818020176086&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 69\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Grandby HL300D The Grandby 300D outdoor infrared sauna is constructed of durable Canadian hemlock and comfortably seats 3 people. Eight ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Grandby outdoor sauna is a perfect size for the back yard. Includes wide bench seating for maximum comfort, oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth, cup holders, and more. The Grandby is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 69\" x 47\" x 83\". Rapid-Heat ceramic heaters - 7 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Solid Canadian Hemlock wood - Smooth and naturally appealing yet durable. Bluetooth speaker system. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. Easy to install tongue and groove construction. 7-Year Warranty. 20 Amps 120V AC. Measurements: Exterior width: 69\" Exterior depth: 47\" Exterior height: 83\" Interior Height: 68\" Interior Width 55\" Interior Depth 43\" Product Weight: 425 lbs. Useful Link Owner's Manual & Assembly Instructions Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 69\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 47,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-grandby-hl300d?variant=43818020176086&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 69\\\" x 47\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Grandby HL300D The Grandby 300D outdoor infrared sauna is constructed of durable Canadian hemlock and comfortably seats 3 people. Eight ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Grandby outdoor sauna is a perfect size for the back yard. Includes wide bench seating for maximum comfort, oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth, cup holders, and more. The Grandby is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 69\" x 47\" x 83\". Rapid-Heat ceramic heaters - 7 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Solid Canadian Hemlock wood - Smooth and naturally appealing yet durable. Bluetooth speaker system. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. Easy to install tongue and groove construction. 7-Year Warranty. 20 Amps 120V AC. Measurements: Exterior width: 69\" Exterior depth: 47\" Exterior height: 83\" Interior Height: 68\" Interior Width 55\" Interior Depth 43\" Product Weight: 425 lbs. Useful Link Owner's Manual & Assembly Instructions Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 69\" x 47\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 83,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-grandby-hl300d?variant=43818020176086&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 69\\\" x 47\\\" x 83\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Grandby HL300D The Grandby 300D outdoor infrared sauna is constructed of durable Canadian hemlock and comfortably seats 3 people. Eight ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Grandby outdoor sauna is a perfect size for the back yard. Includes wide bench seating for maximum comfort, oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth, cup holders, and more. The Grandby is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 69\" x 47\" x 83\". Rapid-Heat ceramic heaters - 7 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Solid Canadian Hemlock wood - Smooth and naturally appealing yet durable. Bluetooth speaker system. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. Easy to install tongue and groove construction. 7-Year Warranty. 20 Amps 120V AC. Measurements: Exterior width: 69\" Exterior depth: 47\" Exterior height: 83\" Interior Height: 68\" Interior Width 55\" Interior Depth 43\" Product Weight: 425 lbs. Useful Link Owner's Manual & Assembly Instructions Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 69\" x 47\" x 83\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

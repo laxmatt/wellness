@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 46,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-elite-2-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51599796011351&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to bring the benefits of a spa into your own home? Dynamic Saunas are crafted from environmentally friendly Canadian Hemlock wood, offering both durability and a clean, modern look. Each unit features advanced Low EMF FAR infrared heating panels that provide safe, energy-efficient warmth to relax muscles, reduce stress, and promote overall wellness. Designed with versatility in mind, these saunas can be installed in almost any indoor space-whether it’s your master bath, walk-in closet, basement, or fitness room. Compact yet stylish, they blend seamlessly into your home while delivering daily comfort and long-term health benefits. With Dynamic Saunas, relaxation and rejuvenation are always within reach. Features: Ultra-low EMF - EMF between 3 to 5 mg 2 to 3 inches from the heating panels 2-person capacity 7 Dynamic Ultra Low EMF (EMF between 3-5 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Indoor use only Ships in 2 boxes Specifications: Sauna weight: 300 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″ Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-elite-2-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51599796011351&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to bring the benefits of a spa into your own home? Dynamic Saunas are crafted from environmentally friendly Canadian Hemlock wood, offering both durability and a clean, modern look. Each unit features advanced Low EMF FAR infrared heating panels that provide safe, energy-efficient warmth to relax muscles, reduce stress, and promote overall wellness. Designed with versatility in mind, these saunas can be installed in almost any indoor space-whether it’s your master bath, walk-in closet, basement, or fitness room. Compact yet stylish, they blend seamlessly into your home while delivering daily comfort and long-term health benefits. With Dynamic Saunas, relaxation and rejuvenation are always within reach. Features: Ultra-low EMF - EMF between 3 to 5 mg 2 to 3 inches from the heating panels 2-person capacity 7 Dynamic Ultra Low EMF (EMF between 3-5 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Indoor use only Ships in 2 boxes Specifications: Sauna weight: 300 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″ Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-elite-2-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51599796011351&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to bring the benefits of a spa into your own home? Dynamic Saunas are crafted from environmentally friendly Canadian Hemlock wood, offering both durability and a clean, modern look. Each unit features advanced Low EMF FAR infrared heating panels that provide safe, energy-efficient warmth to relax muscles, reduce stress, and promote overall wellness. Designed with versatility in mind, these saunas can be installed in almost any indoor space-whether it’s your master bath, walk-in closet, basement, or fitness room. Compact yet stylish, they blend seamlessly into your home while delivering daily comfort and long-term health benefits. With Dynamic Saunas, relaxation and rejuvenation are always within reach. Features: Ultra-low EMF - EMF between 3 to 5 mg 2 to 3 inches from the heating panels 2-person capacity 7 Dynamic Ultra Low EMF (EMF between 3-5 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Indoor use only Ships in 2 boxes Specifications: Sauna weight: 300 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″ Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-elite-2-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51599796011351&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to bring the benefits of a spa into your own home? Dynamic Saunas are crafted from environmentally friendly Canadian Hemlock wood, offering both durability and a clean, modern look. Each unit features advanced Low EMF FAR infrared heating panels that provide safe, energy-efficient warmth to relax muscles, reduce stress, and promote overall wellness. Designed with versatility in mind, these saunas can be installed in almost any indoor space-whether it’s your master bath, walk-in closet, basement, or fitness room. Compact yet stylish, they blend seamlessly into your home while delivering daily comfort and long-term health benefits. With Dynamic Saunas, relaxation and rejuvenation are always within reach. Features: Ultra-low EMF - EMF between 3 to 5 mg 2 to 3 inches from the heating panels 2-person capacity 7 Dynamic Ultra Low EMF (EMF between 3-5 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Indoor use only Ships in 2 boxes Specifications: Sauna weight: 300 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″ Document: View Owner's Manual",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-elite-2-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51599796011351&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena Elite 2-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to bring the benefits of a spa into your own home? Dynamic Saunas are crafted from environmentally friendly Canadian Hemlock wood, offering both durability and a clean, modern look. Each unit features advanced Low EMF FAR infrared heating panels that provide safe, energy-efficient warmth to relax muscles, reduce stress, and promote overall wellness. Designed with versatility in mind, these saunas can be installed in almost any indoor space-whether it’s your master bath, walk-in closet, basement, or fitness room. Compact yet stylish, they blend seamlessly into your home while delivering daily comfort and long-term health benefits. With Dynamic Saunas, relaxation and rejuvenation are always within reach. Features: Ultra-low EMF - EMF between 3 to 5 mg 2 to 3 inches from the heating panels 2-person capacity 7 Dynamic Ultra Low EMF (EMF between 3-5 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Indoor use only Ships in 2 boxes Specifications: Sauna weight: 300 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″ Document: View Owner's Manual",
+        "matched": "Electrical service: 120V/15amp",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

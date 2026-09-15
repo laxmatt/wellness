@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,160 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar | Outdoor Traditional Sauna Kits",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 70.5,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 79.2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 87.8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Exterior dimensions (LWH): 79.2” x 70.5” x 87.8”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical requirements: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Electrical requirements: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical requirements: 240V/30AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Electrical requirements: 240V/30AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_kw": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Heating system: Powerful 6.0 kW\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Heater size|Heating system):\\s*(?:Powerful\\s*)?|Harvia Stove\\s*)(\\d+(?:\\.\\d+)?)\\s*kW",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "Heating system: Powerful 6.0 kW",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "stove with built-in controls",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"stove with built-in controls\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+        "matched": "stove with built-in controls",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

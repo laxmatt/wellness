@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Golden Designs 6-Person Full Spectrum PureTech™ Near-Zero EMF FAR Infrared Sauna w/ Himalayan Salt Bar | Indoor Infrared Sauna Kits | 6-Person, Infrared Saunas, Saunas",
         "matched": "FAR Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 73,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-6-person-full-spectrum-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna-with-himalayan-salt-bar-canadian-hemlock?variant=46966984442199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8260-01 Full Spectrum Infrared Sauna (Canadian Hemlock) Introducing the epitome of luxury and holistic indulgence - the Reserve Edition GDI-8260-01 Full Spectrum with Himalayan Salt Bar. Step into a realm of pure serenity and elevate your well-being with this exquisite masterpiece. Crafted with precision and care, the GDI-8260-01 embraces the power of full-spectrum light, beautifully replicating the natural radiance of the sun. Bask in its warm glow as it enhances your mood, improves productivity, and creates a harmonious ambiance in any space. But that's not all! The integrated Himalayan salt bar complements the experience, releasing revitalizing negative ions into the air. Witness the transformation of your environment into a tranquil sanctuary, where stress melts away and a sense of rejuvenation fills the air. Ideal for both personal wellness journeys and hospitality settings, the New 2023 Collection Reserve Edition is the perfect fusion of elegance and therapeutic benefits. Elevate your surroundings and embrace a life of elevated bliss with the GDI-8260-01 Full Spectrum Light with Himalayan Salt Bar. Features 6-person capacity Bluetooth, MP3 auxiliary connection with built-in speakers Interior LED control panel Oversize interior reading/chromotherapy lighting system Natural Reforested Canadian Hemlock wood construction Full Spectrum IR: Total 9 IR Emitters. 6 Carbon PureTech™ Near Zero EMF Heating Panels and 3 Near Infrared Heating Elements Electrical service: 2 separate dedicated 15 amp 120-volt outlets, and two separate 15 amp breakers are required. ( Please consult a certified electrician.) Exterior Ambient Lighting Clasp together assembly 2 Himalayan Salt Bar (Under the bench) 3 Himalayan Salt Bar (Above the rear and side wall heaters) Bronze privacy tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 55″ x 74″ (roof overhang: add 4.5″) Interior dimensions (WDH): 68″ x 50″ x 69″ Sauna weight: 640 lbs. Shipping weight: 760 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 55,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-6-person-full-spectrum-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna-with-himalayan-salt-bar-canadian-hemlock?variant=46966984442199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″ x 55″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8260-01 Full Spectrum Infrared Sauna (Canadian Hemlock) Introducing the epitome of luxury and holistic indulgence - the Reserve Edition GDI-8260-01 Full Spectrum with Himalayan Salt Bar. Step into a realm of pure serenity and elevate your well-being with this exquisite masterpiece. Crafted with precision and care, the GDI-8260-01 embraces the power of full-spectrum light, beautifully replicating the natural radiance of the sun. Bask in its warm glow as it enhances your mood, improves productivity, and creates a harmonious ambiance in any space. But that's not all! The integrated Himalayan salt bar complements the experience, releasing revitalizing negative ions into the air. Witness the transformation of your environment into a tranquil sanctuary, where stress melts away and a sense of rejuvenation fills the air. Ideal for both personal wellness journeys and hospitality settings, the New 2023 Collection Reserve Edition is the perfect fusion of elegance and therapeutic benefits. Elevate your surroundings and embrace a life of elevated bliss with the GDI-8260-01 Full Spectrum Light with Himalayan Salt Bar. Features 6-person capacity Bluetooth, MP3 auxiliary connection with built-in speakers Interior LED control panel Oversize interior reading/chromotherapy lighting system Natural Reforested Canadian Hemlock wood construction Full Spectrum IR: Total 9 IR Emitters. 6 Carbon PureTech™ Near Zero EMF Heating Panels and 3 Near Infrared Heating Elements Electrical service: 2 separate dedicated 15 amp 120-volt outlets, and two separate 15 amp breakers are required. ( Please consult a certified electrician.) Exterior Ambient Lighting Clasp together assembly 2 Himalayan Salt Bar (Under the bench) 3 Himalayan Salt Bar (Above the rear and side wall heaters) Bronze privacy tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 55″ x 74″ (roof overhang: add 4.5″) Interior dimensions (WDH): 68″ x 50″ x 69″ Sauna weight: 640 lbs. Shipping weight: 760 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″ x 55″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 74,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-6-person-full-spectrum-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna-with-himalayan-salt-bar-canadian-hemlock?variant=46966984442199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″ x 55″ x 74″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8260-01 Full Spectrum Infrared Sauna (Canadian Hemlock) Introducing the epitome of luxury and holistic indulgence - the Reserve Edition GDI-8260-01 Full Spectrum with Himalayan Salt Bar. Step into a realm of pure serenity and elevate your well-being with this exquisite masterpiece. Crafted with precision and care, the GDI-8260-01 embraces the power of full-spectrum light, beautifully replicating the natural radiance of the sun. Bask in its warm glow as it enhances your mood, improves productivity, and creates a harmonious ambiance in any space. But that's not all! The integrated Himalayan salt bar complements the experience, releasing revitalizing negative ions into the air. Witness the transformation of your environment into a tranquil sanctuary, where stress melts away and a sense of rejuvenation fills the air. Ideal for both personal wellness journeys and hospitality settings, the New 2023 Collection Reserve Edition is the perfect fusion of elegance and therapeutic benefits. Elevate your surroundings and embrace a life of elevated bliss with the GDI-8260-01 Full Spectrum Light with Himalayan Salt Bar. Features 6-person capacity Bluetooth, MP3 auxiliary connection with built-in speakers Interior LED control panel Oversize interior reading/chromotherapy lighting system Natural Reforested Canadian Hemlock wood construction Full Spectrum IR: Total 9 IR Emitters. 6 Carbon PureTech™ Near Zero EMF Heating Panels and 3 Near Infrared Heating Elements Electrical service: 2 separate dedicated 15 amp 120-volt outlets, and two separate 15 amp breakers are required. ( Please consult a certified electrician.) Exterior Ambient Lighting Clasp together assembly 2 Himalayan Salt Bar (Under the bench) 3 Himalayan Salt Bar (Above the rear and side wall heaters) Bronze privacy tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 55″ x 74″ (roof overhang: add 4.5″) Interior dimensions (WDH): 68″ x 50″ x 69″ Sauna weight: 640 lbs. Shipping weight: 760 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″ x 55″ x 74″",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

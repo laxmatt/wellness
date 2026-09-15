@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Dynamic Lucca 2-Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 48,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-lucca-2-person-low-emf-far-infrared-sauna-canadian-hemlock?variant=51595502420311&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lucca 2-Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Searching for a healthier way to unwind right at home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, giving you a sauna that’s as durable as it is stylish. With advanced Low EMF FAR infrared heating panels, each session surrounds you in gentle, energy-efficient warmth that helps restore balance, ease fatigue, and promote overall well-being. Whether placed in a master bath, walk-in closet, basement, or fitness room, Dynamic Saunas are designed to fit seamlessly into your lifestyle. Their compact build makes installation simple, while their long-lasting health benefits make every use an investment in daily comfort and vitality. With a Dynamic Sauna, your home becomes a private retreat for relaxation and renewal. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 7 Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 330 lbs. Shipping weight: 385 lbs. Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Electrical service: 120V/15amp plug & play Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-lucca-2-person-low-emf-far-infrared-sauna-canadian-hemlock?variant=51595502420311&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lucca 2-Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Searching for a healthier way to unwind right at home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, giving you a sauna that’s as durable as it is stylish. With advanced Low EMF FAR infrared heating panels, each session surrounds you in gentle, energy-efficient warmth that helps restore balance, ease fatigue, and promote overall well-being. Whether placed in a master bath, walk-in closet, basement, or fitness room, Dynamic Saunas are designed to fit seamlessly into your lifestyle. Their compact build makes installation simple, while their long-lasting health benefits make every use an investment in daily comfort and vitality. With a Dynamic Sauna, your home becomes a private retreat for relaxation and renewal. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 7 Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 330 lbs. Shipping weight: 385 lbs. Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Electrical service: 120V/15amp plug & play Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-lucca-2-person-low-emf-far-infrared-sauna-canadian-hemlock?variant=51595502420311&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lucca 2-Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Searching for a healthier way to unwind right at home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, giving you a sauna that’s as durable as it is stylish. With advanced Low EMF FAR infrared heating panels, each session surrounds you in gentle, energy-efficient warmth that helps restore balance, ease fatigue, and promote overall well-being. Whether placed in a master bath, walk-in closet, basement, or fitness room, Dynamic Saunas are designed to fit seamlessly into your lifestyle. Their compact build makes installation simple, while their long-lasting health benefits make every use an investment in daily comfort and vitality. With a Dynamic Sauna, your home becomes a private retreat for relaxation and renewal. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 7 Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 330 lbs. Shipping weight: 385 lbs. Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Electrical service: 120V/15amp plug & play Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-lucca-2-person-low-emf-far-infrared-sauna-canadian-hemlock?variant=51595502420311&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lucca 2-Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Searching for a healthier way to unwind right at home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, giving you a sauna that’s as durable as it is stylish. With advanced Low EMF FAR infrared heating panels, each session surrounds you in gentle, energy-efficient warmth that helps restore balance, ease fatigue, and promote overall well-being. Whether placed in a master bath, walk-in closet, basement, or fitness room, Dynamic Saunas are designed to fit seamlessly into your lifestyle. Their compact build makes installation simple, while their long-lasting health benefits make every use an investment in daily comfort and vitality. With a Dynamic Sauna, your home becomes a private retreat for relaxation and renewal. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 7 Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 330 lbs. Shipping weight: 385 lbs. Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Electrical service: 120V/15amp plug & play Document: View Owner's Manual",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-lucca-2-person-low-emf-far-infrared-sauna-canadian-hemlock?variant=51595502420311&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lucca 2-Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Searching for a healthier way to unwind right at home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, giving you a sauna that’s as durable as it is stylish. With advanced Low EMF FAR infrared heating panels, each session surrounds you in gentle, energy-efficient warmth that helps restore balance, ease fatigue, and promote overall well-being. Whether placed in a master bath, walk-in closet, basement, or fitness room, Dynamic Saunas are designed to fit seamlessly into your lifestyle. Their compact build makes installation simple, while their long-lasting health benefits make every use an investment in daily comfort and vitality. With a Dynamic Sauna, your home becomes a private retreat for relaxation and renewal. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 7 Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 330 lbs. Shipping weight: 385 lbs. Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Electrical service: 120V/15amp plug & play Document: View Owner's Manual",
+        "matched": "Electrical service: 120V/15amp",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

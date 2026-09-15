@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) | Outdoor Pre-Assembled Cabin Saunas | 3 Person, Saunas, Traditional Saunas",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 79.2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 71,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\" x 71\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 88.3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\" x 71\\\" x 88.3\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-visby?variant=46974347673943&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Visby 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Immerse yourself in the perfect blend of serenity and wellness with the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. This exceptional outdoor sauna offers the ultimate flexibility, combining the time-honored benefits of traditional steam therapy with the rejuvenating power of full-spectrum infrared technology. Hybrid Design for Versatility: The Visby sauna features a hybrid design that lets you choose between the classic steam sauna experience or indulging in the gentle warmth of full-spectrum infrared. Personalize your sauna sessions to suit your preferences and experience the best of both worlds in one luxurious retreat. Luxurious Craftsmanship: Step into an oasis of luxury with the all-Canadian Red Cedar interior of the Visby sauna. The exquisite wood craftsmanship exudes elegance and enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, a simple clearing of the roof ensures your sauna is ready for your relaxation. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Visby sauna provides ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Visby sauna is a testament to meticulous craftsmanship and attention to detail. The tempered glass door not only adds a touch of sophistication but also allows natural light to illuminate the interior, creating a tranquil and inviting ambiance. Elevate Your Well-Being: Elevate your well-being and immerse yourself in the luxury of the Golden Designs Visby 3-Person Hybrid Outdoor Sauna. Whether you seek the classic steam therapy or the modern benefits of infrared, this sauna is your key to unlocking pure relaxation and rejuvenation. Rediscover the art of wellness, embrace the warmth of relaxation, and elevate your outdoor living with the Visby sauna - your pathway to harmony and well-being. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Full Spectrum IR: Total 9 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 7 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 1105 lbs Shipping Weight: 1420 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

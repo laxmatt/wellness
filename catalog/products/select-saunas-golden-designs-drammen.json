@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 3-Person, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 79.2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 71,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\" x 71\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 88.3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 79.2\\\" x 71\\\" x 88.3\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-drammen?variant=46974034149719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Drammen 3-Person Outdoor Traditional Sauna Embark on a journey of relaxation and well-being with the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna invites you to unwind amidst the beauty of nature while immersing yourself in the timeless art of steam therapy. Outdoor Sanctuary: The Drammen sauna offers an idyllic outdoor sanctuary where you can leave behind the stresses of daily life and embrace tranquility. Step into the sauna, and feel the gentle steam envelop your senses, promoting deep relaxation and rejuvenation. Timeless Elegance: The interior of the Drammen sauna is adorned with all-Canadian Red Cedar, renowned for its rich color and aromatic fragrance that enhances the sauna experience. The exterior features all-weather protective measures, ensuring your sauna remains resilient and stunning in any weather condition. In winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Retreat: Designed to comfortably accommodate up to three individuals, the Drammen sauna is a welcoming space for sharing moments of relaxation with loved ones or indulging in a solo retreat of rejuvenation. Craftsmanship at its Finest: Expertly crafted to the highest standards, the Drammen sauna boasts an elegant design that effortlessly complements your outdoor living space. The tempered glass door allows ample natural light, enhancing the inviting and serene ambiance within. Elevate Your Well-Being: Elevate your well-being and embrace the peace and serenity of the Golden Designs Drammen 3-Person Traditional Outdoor Sauna. Immerse yourself in the age-old practice of steam therapy, and let the warm embrace of the sauna envelop your body, mind, and soul. Rediscover the art of relaxation and elevate your outdoor living with the Drammen sauna - your gateway to a world of tranquility and wellness. Features 3 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 53.4 \" x 75\" Assembled Weight: 975 lbs Shipping Weight: 1310 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

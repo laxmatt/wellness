@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,160 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior | Outdoor Traditional Sauna Kits",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 69,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 69\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 69\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 84,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 69\\\" x 84\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 69\" x 84\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 95,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 69\\\" x 84\\\" x 95\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_kw": {
+      "value": 8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia Stove 8KW\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Heater size|Heating system):\\s*(?:Powerful\\s*)?|Harvia Stove\\s*)(\\d+(?:\\.\\d+)?)\\s*kW",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Harvia Stove 8KW",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia Stove 8KW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kaskinen-6-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-gdi-8526-01-canadian-red-cedar-interior?variant=48835933176151&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia Stove 8KW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kaskinen 6 Person Hybrid (PureTech™ Full Spectrum IR or Traditional Stove) Outdoor Sauna (GDI-8526-01) - Canadian Red Cedar Interior Experience ultimate luxury and well-being with the Golden Design Saunas Kaskinen 6-Person Hybrid. Enjoy complete relaxation with state-of-the-art technology in a meticulously designed, elegant sauna. Transform any space into a serene sanctuary with this refined addition. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Interior Ceiling Galaxy Star Color Therapy Lighting System Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR: Total 15 IR Emitters. 7 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia Stove 8KW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum) (Please consult a certified electrician.) Assembled Dimensions Exterior (W x D x H): 69\" x 84\" x 95\" (Add 4” around for roof overhang) Assembled Dimensions Interior (W x D x H): 63\" x 78\" x 88\" Assembled Weight 1575 LBS Shipping Weight 1795 LBS",
+        "matched": "Harvia Stove 8KW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

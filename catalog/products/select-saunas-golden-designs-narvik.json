@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 2-Person, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 59.5,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 59.5\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 59.5\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 71,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 59.5\\\" x 71\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 88.3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions Exterior (W x D x H): 59.5\\\" x 71\\\" x 88.3\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 30AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 30AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS60 The Wall 6 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-narvik?variant=46973918642519&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS60 The Wall 6 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Narvik 2-Person Outdoor Traditional Sauna Experience the ultimate retreat in relaxation and wellness with the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Crafted to perfection, this outdoor sauna beckons you to indulge in the tranquil beauty of nature while immersing yourself in the traditional art of steam therapy. Outdoor Sanctuary: Embrace the outdoor sanctuary of the Narvik sauna, where you can escape the hustle and bustle of everyday life and connect with nature. Bask in the warmth of the sauna and feel the cares of the day melt away, leaving you feeling refreshed and rejuvenated. Timeless Elegance: The Narvik sauna boasts an all-Canadian Red Cedar interior, exuding a delightful and aromatic scent that enhances the sauna experience. The exterior is designed with all-weather protection, ensuring that your sauna stands strong and beautiful in any season. In winter, simply clear the roof of snow to keep the sauna ready for your relaxation. Spacious Retreat: Although designed for two, the Narvik sauna provides ample space for a private oasis of tranquility. Share moments of relaxation with a loved one or savor some alone time in this cozy and inviting space. Craftsmanship at its Finest: Expertly crafted to perfection, the Narvik sauna reflects the highest standards of quality and elegance. The tempered glass door allows natural light to flood the interior, creating a serene and inviting ambiance. Elevate Your Wellness: Elevate your wellness and embrace the serenity of the Golden Designs Narvik 2-Person Traditional Outdoor Sauna. Immerse yourself in the traditional art of steam therapy and let the soothing warmth envelop your body, mind, and soul. Discover the essence of timeless serenity and elevate your outdoor living with the Narvik sauna - your pathway to relaxation and well-being. Features 2 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 59.5\" x 71\" x 88.3\" Assembled Dimensions Interior (W x D x H): 55.4\" x 53.4 \" x 75\" Assembled Weight 845 LBS Shipping Weight 1065 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS60 The Wall 6 kW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

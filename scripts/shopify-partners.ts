@@ -19,13 +19,14 @@
  * a snapshot arrives, and a person approves them or fixes them before anything
  * imports. Nothing here asserts a count.
  *
- * What is asserted: no rule reads prose. `body_text` is on every row and no
- * profile maps a derivation onto it, because a merchant's marketing paragraph
- * is not a classification and a keyword hit in one is not inventory.
+ * What is asserted: inclusion and exclusion never read prose. Select Saunas
+ * additionally has reviewed, label-anchored specification rules for comparison
+ * facts; those rules cannot make an item eligible for the catalogue.
  */
 
 import { affiliateStatusFor, needsComplianceReview, productLink, programmeFor, programmeNote, verifiedTag, PROGRAMMES, type PartnerProgramme } from "@/domain/affiliate/programmes";
 import { MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
+import { SAUNA_DESCRIPTION_RULES } from "@/domain/ingestion/sauna-description";
 
 export type ShopifyPartner = { id: string; name: string; storeUrl: string };
 
@@ -382,8 +383,7 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         // longer title, with the whole title kept on the record.
         extract: { pattern: "^(.*?)(?: [-–] |$)", flags: "", approved: false },
       },
-      // The store's own description, as text with the markup thrown away. No
-      // rule reads it; it is the paragraph a shopper reads on the record.
+      // The store's own description, as text with the markup thrown away.
       { target: "description", column: "body_text", ownership: "feed" },
       { target: "brand", column: "vendor", ownership: "review_on_change" },
       { target: "price", column: "price", ownership: "feed" },
@@ -401,15 +401,9 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
     ],
     // The filters a shopper narrows with, and nothing else.
     //
-    // Every rule reads `classified_as` or the title: the store's own title,
-    // product type and tags. None reads `body_text`. A specification buried in
-    // a marketing paragraph is a claim in prose, and reading one out with a
-    // regular expression is how a cabin ends up filed as 240V because the page
-    // mentioned a 240V heater as an upgrade.
-    //
-    // Nothing here fills the dimensions, the amperage or the heater output.
-    // Those are real specifications and they are not in a Shopify catalogue, so
-    // they stay empty and the coverage table says so.
+    // Eligibility and classification read `classified_as` or the title. The
+    // Select Saunas adapter additionally reads explicitly labelled specification
+    // blocks from preserved descriptions; optional prose is intentionally ignored.
     attributes: [
       {
         // "Far Infrared Sauna", "Traditional Barrel Sauna". The two words the
@@ -480,7 +474,7 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         ownership: "review_on_change",
         approved: false,
       },
-      {
+      ...(source.id === "select-saunas-shopify" ? [] : [{
         // 120 and 240 only. A store writing 110 or 220 is describing the same
         // supply loosely, and mapping one onto the other is a conversion this
         // has no business making.
@@ -492,7 +486,8 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         valueMap: { "120": "120v", "240": "240v" },
         ownership: "review_on_change",
         approved: false,
-      },
+      }]),
+      ...(source.id === "select-saunas-shopify" ? SAUNA_DESCRIPTION_RULES : []),
     ],
     exclusions: saunaExclusions(store),
     families: [],

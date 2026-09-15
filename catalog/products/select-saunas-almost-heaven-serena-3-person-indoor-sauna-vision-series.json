@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,28 @@
         "field": "classified_as",
         "sourceText": "Almost Heaven Serena 3-Person Indoor Sauna | Indoor Traditional Sauna Kits | 3 Person, almost-heaven, Saunas, Traditional Saunas, Vision Series",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia 6 kW Wall or KIP Series heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-serena-3-person-indoor-sauna-vision-series?variant=48011852808535&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia 6 kW Wall or KIP Series heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Serena 3-Person Indoor Sauna Introducing the Serena 3-Person Sauna by Almost Heaven Saunas, where spaciousness meets tranquility for the ultimate wellness experience. Designed with dimensions of 57-3/4\"W x 63-3/4\"D x 79-3/8\"H, this sauna offers ample room for you and two companions to relax and rejuvenate in style. Equipped with multi-level seating, including an upper bench measuring 53\"L x 22-1/2\"W x 37-3/8\"H and a lower bench measuring 53\"L x 15-3/8\"W x 22-7/8\"H, the Spectacle ensures comfort for all users. Crafted from premium Hemfir or Rustic Cedar lumber, its quality construction exudes luxury and durability. Experience the soothing heat of the included Harvia 6 kW Wall or KIP Series heater, providing warmth with efficiency. With its ability to reach temperatures of up to 180ºF and beyond in just 30-45 minutes, this sauna offers a sanctuary for relaxation and rejuvenation. Plus, with the option to upgrade the heater for an even more indulgent experience, the Spectacle sauna caters to your every need. Invest in your well-being with the Spectacle 3-Person Sauna from Almost Heaven Saunas, where luxury and wellness converge for an unparalleled sauna experience.",
+        "matched": "Harvia 6 kW Wall or KIP Series heater",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

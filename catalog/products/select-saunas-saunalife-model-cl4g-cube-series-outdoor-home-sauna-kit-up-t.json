@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "SaunaLife CL4G 3-Person Outdoor Cube Cabin Sauna with Full Glass Front & LED Lighting | Outdoor Cabin Sauna Kits | 2-3 Person, 3 Person",
         "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 49.2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl4g-cube-series-outdoor-home-sauna-kit-up-to-3-persons?variant=48654814511447&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 49.2\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife Cube-Series Outdoor Home Sauna Kit, Model CL4G, Up to 3 Persons Convert your backyard into a serene wellness oasis with the SaunaLife CL4G 3-Person Outdoor Cube Cabin Sauna. Featuring Scandinavian-inspired design, this sauna combines luxurious craftsmanship with cutting-edge functionality. The full-glass front offers breathtaking outdoor views while flooding the interior with natural light, creating an airy and tranquil atmosphere. With ergonomic seating, advanced LED lighting, and premium Thermo-Spruce materials, this sauna is the perfect blend of style, comfort, and durability for your health and relaxation journey. Experience ultimate relaxation and wellness with SaunaLife CL4G. Elevate your outdoor spa with this seamless addition to your space. Key Features: Spacious 3-Person Capacity: Ideal for enjoying quality relaxation time with family or friends. Premium Thermo-Spruce Construction: Beautiful, durable, and designed to endure outdoor elements. Full Glass Front Design: Expansive tempered glass for natural light and stunning outdoor views. Ergonomic Seating & Backrests: Contoured surfaces provide superior comfort for long sauna sessions. LED Light Bar System with Wi-Fi App Control: Seamless, dotless lighting with wireless operation for customizable ambiance. Shingled Roof Design: Adds extra protection and long-lasting durability. Exterior Dimensions: 49.2\" deep x 80.7\" wide x 82.7\" high Interior Dimensions: 41.3\" deep x 77.2\" wide x 74.8\" high Lighting System: Dotless LED light bar, Wi-Fi app-capable, 30’ heat-rated light cable (IP67) Design & Craftsmanship: Handcrafted in Northern Europe with meticulous attention to detail Package Contents Model CL4G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Ventilation Fascia boards Foundation beams Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote & mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, f-lush (3) Installation instructions Specifications Model Model CL4G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 41.3\"D x 74.8\"H Exterior Dimensions 80.7\"W x 49.2\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 49.2\"D x 82.7\"H Shipping Weight 1415 lbs Back Wall and Lower Bench Dimensions Back Wall 76\" - Lower 49.8\" Bench Depth Top 17.7\" - Lower 8.3\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View Sauna Life CL4G Installation and Operation Manual Model CL4G Dimensions",
+        "matched": "Exterior Dimensions: 49.2\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 49.2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl4g-cube-series-outdoor-home-sauna-kit-up-to-3-persons?variant=48654814511447&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 80.7\\\"W x 49.2\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife Cube-Series Outdoor Home Sauna Kit, Model CL4G, Up to 3 Persons Convert your backyard into a serene wellness oasis with the SaunaLife CL4G 3-Person Outdoor Cube Cabin Sauna. Featuring Scandinavian-inspired design, this sauna combines luxurious craftsmanship with cutting-edge functionality. The full-glass front offers breathtaking outdoor views while flooding the interior with natural light, creating an airy and tranquil atmosphere. With ergonomic seating, advanced LED lighting, and premium Thermo-Spruce materials, this sauna is the perfect blend of style, comfort, and durability for your health and relaxation journey. Experience ultimate relaxation and wellness with SaunaLife CL4G. Elevate your outdoor spa with this seamless addition to your space. Key Features: Spacious 3-Person Capacity: Ideal for enjoying quality relaxation time with family or friends. Premium Thermo-Spruce Construction: Beautiful, durable, and designed to endure outdoor elements. Full Glass Front Design: Expansive tempered glass for natural light and stunning outdoor views. Ergonomic Seating & Backrests: Contoured surfaces provide superior comfort for long sauna sessions. LED Light Bar System with Wi-Fi App Control: Seamless, dotless lighting with wireless operation for customizable ambiance. Shingled Roof Design: Adds extra protection and long-lasting durability. Exterior Dimensions: 49.2\" deep x 80.7\" wide x 82.7\" high Interior Dimensions: 41.3\" deep x 77.2\" wide x 74.8\" high Lighting System: Dotless LED light bar, Wi-Fi app-capable, 30’ heat-rated light cable (IP67) Design & Craftsmanship: Handcrafted in Northern Europe with meticulous attention to detail Package Contents Model CL4G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Ventilation Fascia boards Foundation beams Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote & mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, f-lush (3) Installation instructions Specifications Model Model CL4G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 41.3\"D x 74.8\"H Exterior Dimensions 80.7\"W x 49.2\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 49.2\"D x 82.7\"H Shipping Weight 1415 lbs Back Wall and Lower Bench Dimensions Back Wall 76\" - Lower 49.8\" Bench Depth Top 17.7\" - Lower 8.3\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View Sauna Life CL4G Installation and Operation Manual Model CL4G Dimensions",
+        "matched": "Exterior Dimensions 80.7\"W x 49.2\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 82.7,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl4g-cube-series-outdoor-home-sauna-kit-up-to-3-persons?variant=48654814511447&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 80.7\\\"W x 49.2\\\"D x 82.7\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife Cube-Series Outdoor Home Sauna Kit, Model CL4G, Up to 3 Persons Convert your backyard into a serene wellness oasis with the SaunaLife CL4G 3-Person Outdoor Cube Cabin Sauna. Featuring Scandinavian-inspired design, this sauna combines luxurious craftsmanship with cutting-edge functionality. The full-glass front offers breathtaking outdoor views while flooding the interior with natural light, creating an airy and tranquil atmosphere. With ergonomic seating, advanced LED lighting, and premium Thermo-Spruce materials, this sauna is the perfect blend of style, comfort, and durability for your health and relaxation journey. Experience ultimate relaxation and wellness with SaunaLife CL4G. Elevate your outdoor spa with this seamless addition to your space. Key Features: Spacious 3-Person Capacity: Ideal for enjoying quality relaxation time with family or friends. Premium Thermo-Spruce Construction: Beautiful, durable, and designed to endure outdoor elements. Full Glass Front Design: Expansive tempered glass for natural light and stunning outdoor views. Ergonomic Seating & Backrests: Contoured surfaces provide superior comfort for long sauna sessions. LED Light Bar System with Wi-Fi App Control: Seamless, dotless lighting with wireless operation for customizable ambiance. Shingled Roof Design: Adds extra protection and long-lasting durability. Exterior Dimensions: 49.2\" deep x 80.7\" wide x 82.7\" high Interior Dimensions: 41.3\" deep x 77.2\" wide x 74.8\" high Lighting System: Dotless LED light bar, Wi-Fi app-capable, 30’ heat-rated light cable (IP67) Design & Craftsmanship: Handcrafted in Northern Europe with meticulous attention to detail Package Contents Model CL4G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Ventilation Fascia boards Foundation beams Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote & mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, f-lush (3) Installation instructions Specifications Model Model CL4G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 41.3\"D x 74.8\"H Exterior Dimensions 80.7\"W x 49.2\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 49.2\"D x 82.7\"H Shipping Weight 1415 lbs Back Wall and Lower Bench Dimensions Back Wall 76\" - Lower 49.8\" Bench Depth Top 17.7\" - Lower 8.3\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View Sauna Life CL4G Installation and Operation Manual Model CL4G Dimensions",
+        "matched": "Exterior Dimensions 80.7\"W x 49.2\"D x 82.7\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

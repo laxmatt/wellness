@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Soria 3-Person Indoor Hybrid Sauna | Indoor Traditional Sauna Kits",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 65,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 65″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 65″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 57,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 65″ x 57″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 65″ x 57″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 65″ x 57″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 65″ x 57″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 30AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Electrical service: 240V / 30AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia Traditional Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-soria?variant=48817992499543&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia Traditional Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Soria 3-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Discover the Golden Designs Soria Indoor Hybrid Sauna, featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove. Transform it into a yoga/stretching studio by removing the benches. Crafted from reforested Canadian Hemlock, this eco-friendly sauna heats up quickly, retains heat efficiently, and uses less energy. Features 3-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design 1 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 8 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 3 Near Infrared Heat Emitters (Heating Elements) Harvia 6KW Traditional Sauna Stove with Built in Controls Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 30AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Bronze Privacy Tempered Glass Door Roof and Side Vent (Fresh Air Circulation) Exterior Dimensions (WDH): 65″ x 57″ x 75″ Interior Dimensions (WDH): 60″ x 50″ x 70″ Sauna Weight: 450 lbs. Shipping Weight: 675 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Harvia Traditional Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

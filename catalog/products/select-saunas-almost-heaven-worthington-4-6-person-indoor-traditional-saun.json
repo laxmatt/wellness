@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,138 @@
         "field": "classified_as",
         "sourceText": "Almost Heaven Worthington 4-6 Person Indoor Sauna | Indoor Traditional Sauna Kits | 4-6 Person, 750, Almost Heaven Traditional Saunas, Indoor saunas, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 80,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions: 80”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Exterior dimensions: 80”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 61,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions: 80”W x 61”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Exterior dimensions: 80”W x 61”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 80,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions: 80”W x 61”D x 80”\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Exterior dimensions: 80”W x 61”D x 80”",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Heater size: 8kW, 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Heater size: 8kW, 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_kw": {
+      "value": 8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Heater size: 8kW\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Heater size|Heating system):\\s*(?:Powerful\\s*)?|Harvia Stove\\s*)(\\d+(?:\\.\\d+)?)\\s*kW",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Heater size: 8kW",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia KIP heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-worthington-4-6-person-indoor-traditional-sauna?variant=44042158670038&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia KIP heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Worthington Sauna - Traditional Prebuilt Indoor Sauna Kit The Worthington was designed with elegance and relaxation in mind. The front wall is entirely glass, which adds both natural light and an open feel to the sauna room. The full-length top bench and L extension are long enough for you to stretch out and relax, or invite a few friends over. With the variety of heaters to choose from, you can create your own custom-like sauna. The Worthington will complement any home looking to benefit from the traditional sauna experience. Features High-grade spruce Tongue-and-groove construction: 1-1/2” finished thickness Horizontal and vertical wood elements Stainless steel hinges, heater, and fasteners Pre-assembled wall sections, roof sections, benches, and backrests Utilizes the existing floor. Suitable options include concrete, ceramic, vinyl, laminate, or tile flooring (carpet not recommended) Tempered and tinted glass door Built-in vent with sliding cover, located near the bottom of the sauna room Interior LED light Three benches with multi-level seating Indoor usage Corner placement design Hand-crafted construction Best-in-class heater & sauna stones Limited lifetime warranty on the sauna room; five years on the heater Hand-crafted workmanship Specifications Holds between four and six people Indoor usage Heater size: 8kW, 240V , 40-amp requirement, hard-wire connect Lighting electrical: 110V, 15-amp service, plug-in connect Exterior dimensions: 80”W x 61”D x 80”H Interior dimensions: 77”W x 57”D x 78”H Lower bench size: 35”L x 17”W x 18”H Upper bench size: 77”L x 24”W x 36”H Upper bench L extension size: 34”L x 24”W x 36”H 1-1/2” thick element wall and roof sections 5/16” thick tempered and tinted door and window glass Door can be assembled to swing right or left Upper bench can be assembled with L on left or right Options & Customizations Lumber: The Worthington is constructed using thick Nordic spruce pieces of lumber. This sturdy lumber is perfect for a free-standing sauna, and offers plenty of natural insulation. Heater: You can upgrade the Worthington from the standard 8kW Harvia KIP heater to a KIP80W with WiFi controls. Care & Maintenance Traditional saunas require very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Worthington will ship via an LTL truck and will arrive curbside on a single pallet. See shipping tab for more details. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Worthington Installation & Owner's Manual Videos",
+        "matched": "Harvia KIP heater",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

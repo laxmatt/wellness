@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Almost Heaven Audra 2-4 Person Canopy Barrel Sauna, 6x5+1 ft. – 1 ft. Porch | Barrel Sauna Kits | 2-4 Person, 2-Person, 6x5 ft., 6x6 ft., 750, Almost Heaven Barrel Saunas, Almost Heaven Traditional Saunas, Barrel Sauna, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-audra-2-4-person-canopy-barrel-sauna-6x5-1-ft-1-ft-porch?variant=44037640519894&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"heater size: 4.5kW, 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Audra Sauna 6'x5' DIY Kit with 1' Porch Check your worries at the door on the exterior benches before entering the Audra 2–4-person canopy barrel sauna! Measuring 6'x6', with one foot of that space delegated to the exterior benches, the Audra canopy barrel sauna can fit up to four people. When the 185ºF temperatures become too hot, cool off on the exterior benches before hopping back in. Properly installed, a 4.5 kW heater should consistently achieve temperatures of 175-185F in 45–60 minutes. Upgrade to 6 kW for higher temperatures and faster heat-up times. Enjoy a traditional and refreshing sauna session with up to four people in your Almost Heaven Audra canopy-style barrel sauna! Features Below are some features and specifications the Audra 2–4-person canopy barrel sauna has: Ball-and-socket lumber: 1-3/8\" thick Any glass features are tempered Stainless steel bands, hinges, heater, and fasteners Interior LED light Sauna stones included Weather-resistant plastic support cradles Two opposite-facing benches for sitting or reclining Two exterior-facing benches Indoor or outdoor usage Hand-crafted lumber profiles and end sections Best-in-class electric heater & sauna stones Limited lifetime warranty on the sauna room; 5-year limited lifetime warranty on the heater and its components, with a 1-year warranty on the heating elements (coils) Made in the USA Specifications The Almost Heaven Audra canopy sauna holds between two and four people Standard heater size: 4.5kW, 240V, 30-amp electrical requirement, hardwire connect Lighting electrical: 110V, 15-amp service, plug-in connect Assembled size: 72\"W x 72\"D x 77\"H Interior room size: 71\"W x 51\"D x 71\"H Interior bench dimensions: 18\"W x 51\"L x 17\"H Canopy porch size: 71\"W x 12\"D x 71\"H Exterior bench dimensions: 18\"W x 12\"L x 25\"H Cradle dimensions 54\" x 6 Shipping weight: 845 lbs Shipping size: 74\"L x 41\"W x 48\"H Note: All dimensions are approximate Options & Customizations Lumber type: The lumber of your Audra 2–4-person canopy barrel sauna is made of solid Western red cedar.Rustic cedar has a slightly red hue amongst the knots and boasts a pleasant cedar aroma. You can choose between red rustic cedar or onyx rustic cedar (stained). All lumber pieces are 1 ⅜” thick to insulate the sauna room. Vista Rear Window: Open your Audra barrel sauna interior to breathtaking views with the addition of the vista rear window. This 20” x 36” piece of 3/8” glass sits on the back end barrel, above the electric heater. Door style: Outfit your sauna with one of the following three door options: deluxe glass, wood with a window, all-wood. Heater: You can upgrade the Audra barrel sauna from the standard 4.5kW heater to a 6kW. Care & Maintenance The Audra 2–4-person canopy barrel sauna is a traditional sauna, which requires very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Audra barrel sauna kit will ship via an LTL truck and will arrive curbside on a single pallet. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Almost Heaven Barrel Sauna Installation & Owner’s Manual Videos",
+        "matched": "heater size: 4.5kW, 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-audra-2-4-person-canopy-barrel-sauna-6x5-1-ft-1-ft-porch?variant=44037640519894&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"heater size: 4.5kW, 240V, 30-amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Audra Sauna 6'x5' DIY Kit with 1' Porch Check your worries at the door on the exterior benches before entering the Audra 2–4-person canopy barrel sauna! Measuring 6'x6', with one foot of that space delegated to the exterior benches, the Audra canopy barrel sauna can fit up to four people. When the 185ºF temperatures become too hot, cool off on the exterior benches before hopping back in. Properly installed, a 4.5 kW heater should consistently achieve temperatures of 175-185F in 45–60 minutes. Upgrade to 6 kW for higher temperatures and faster heat-up times. Enjoy a traditional and refreshing sauna session with up to four people in your Almost Heaven Audra canopy-style barrel sauna! Features Below are some features and specifications the Audra 2–4-person canopy barrel sauna has: Ball-and-socket lumber: 1-3/8\" thick Any glass features are tempered Stainless steel bands, hinges, heater, and fasteners Interior LED light Sauna stones included Weather-resistant plastic support cradles Two opposite-facing benches for sitting or reclining Two exterior-facing benches Indoor or outdoor usage Hand-crafted lumber profiles and end sections Best-in-class electric heater & sauna stones Limited lifetime warranty on the sauna room; 5-year limited lifetime warranty on the heater and its components, with a 1-year warranty on the heating elements (coils) Made in the USA Specifications The Almost Heaven Audra canopy sauna holds between two and four people Standard heater size: 4.5kW, 240V, 30-amp electrical requirement, hardwire connect Lighting electrical: 110V, 15-amp service, plug-in connect Assembled size: 72\"W x 72\"D x 77\"H Interior room size: 71\"W x 51\"D x 71\"H Interior bench dimensions: 18\"W x 51\"L x 17\"H Canopy porch size: 71\"W x 12\"D x 71\"H Exterior bench dimensions: 18\"W x 12\"L x 25\"H Cradle dimensions 54\" x 6 Shipping weight: 845 lbs Shipping size: 74\"L x 41\"W x 48\"H Note: All dimensions are approximate Options & Customizations Lumber type: The lumber of your Audra 2–4-person canopy barrel sauna is made of solid Western red cedar.Rustic cedar has a slightly red hue amongst the knots and boasts a pleasant cedar aroma. You can choose between red rustic cedar or onyx rustic cedar (stained). All lumber pieces are 1 ⅜” thick to insulate the sauna room. Vista Rear Window: Open your Audra barrel sauna interior to breathtaking views with the addition of the vista rear window. This 20” x 36” piece of 3/8” glass sits on the back end barrel, above the electric heater. Door style: Outfit your sauna with one of the following three door options: deluxe glass, wood with a window, all-wood. Heater: You can upgrade the Audra barrel sauna from the standard 4.5kW heater to a 6kW. Care & Maintenance The Audra 2–4-person canopy barrel sauna is a traditional sauna, which requires very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Audra barrel sauna kit will ship via an LTL truck and will arrive curbside on a single pallet. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Almost Heaven Barrel Sauna Installation & Owner’s Manual Videos",
+        "matched": "heater size: 4.5kW, 240V, 30-amp",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_kw": {
+      "value": 4.5,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-audra-2-4-person-canopy-barrel-sauna-6x5-1-ft-1-ft-porch?variant=44037640519894&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"heater size: 4.5kW\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Heater size|Heating system):\\s*(?:Powerful\\s*)?|Harvia Stove\\s*)(\\d+(?:\\.\\d+)?)\\s*kW",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Audra Sauna 6'x5' DIY Kit with 1' Porch Check your worries at the door on the exterior benches before entering the Audra 2–4-person canopy barrel sauna! Measuring 6'x6', with one foot of that space delegated to the exterior benches, the Audra canopy barrel sauna can fit up to four people. When the 185ºF temperatures become too hot, cool off on the exterior benches before hopping back in. Properly installed, a 4.5 kW heater should consistently achieve temperatures of 175-185F in 45–60 minutes. Upgrade to 6 kW for higher temperatures and faster heat-up times. Enjoy a traditional and refreshing sauna session with up to four people in your Almost Heaven Audra canopy-style barrel sauna! Features Below are some features and specifications the Audra 2–4-person canopy barrel sauna has: Ball-and-socket lumber: 1-3/8\" thick Any glass features are tempered Stainless steel bands, hinges, heater, and fasteners Interior LED light Sauna stones included Weather-resistant plastic support cradles Two opposite-facing benches for sitting or reclining Two exterior-facing benches Indoor or outdoor usage Hand-crafted lumber profiles and end sections Best-in-class electric heater & sauna stones Limited lifetime warranty on the sauna room; 5-year limited lifetime warranty on the heater and its components, with a 1-year warranty on the heating elements (coils) Made in the USA Specifications The Almost Heaven Audra canopy sauna holds between two and four people Standard heater size: 4.5kW, 240V, 30-amp electrical requirement, hardwire connect Lighting electrical: 110V, 15-amp service, plug-in connect Assembled size: 72\"W x 72\"D x 77\"H Interior room size: 71\"W x 51\"D x 71\"H Interior bench dimensions: 18\"W x 51\"L x 17\"H Canopy porch size: 71\"W x 12\"D x 71\"H Exterior bench dimensions: 18\"W x 12\"L x 25\"H Cradle dimensions 54\" x 6 Shipping weight: 845 lbs Shipping size: 74\"L x 41\"W x 48\"H Note: All dimensions are approximate Options & Customizations Lumber type: The lumber of your Audra 2–4-person canopy barrel sauna is made of solid Western red cedar.Rustic cedar has a slightly red hue amongst the knots and boasts a pleasant cedar aroma. You can choose between red rustic cedar or onyx rustic cedar (stained). All lumber pieces are 1 ⅜” thick to insulate the sauna room. Vista Rear Window: Open your Audra barrel sauna interior to breathtaking views with the addition of the vista rear window. This 20” x 36” piece of 3/8” glass sits on the back end barrel, above the electric heater. Door style: Outfit your sauna with one of the following three door options: deluxe glass, wood with a window, all-wood. Heater: You can upgrade the Audra barrel sauna from the standard 4.5kW heater to a 6kW. Care & Maintenance The Audra 2–4-person canopy barrel sauna is a traditional sauna, which requires very little upkeep. Simply wipe down the interior after each use and check for any dust or debris that you may have tracked in. Shipping & Assembly The Audra barrel sauna kit will ship via an LTL truck and will arrive curbside on a single pallet. Some basic handyman skills are helpful when assembling the sauna. The only additional equipment needed is a cordless drill. Two people can generally do the assembly in 6 hours or less. It is recommended that you review the assembly manual in advance to familiarize yourself with the process. Two Ways to Enjoy Your Sauna Heater and stones are essential to a traditional sauna experience. With the room at least heated to 160ºF, the traditional sauna can be enjoyed in two ways. The first is called a dry sauna, which lacks any added moisture. The second is called a wet sauna, where you sprinkle water onto the heated stones to create a refreshing burst of steam and added humidity. Resources Almost Heaven Barrel Sauna Installation & Owner’s Manual Videos",
+        "matched": "heater size: 4.5kW",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

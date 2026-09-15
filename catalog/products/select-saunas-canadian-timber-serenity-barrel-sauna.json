@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,28 @@
         "field": "classified_as",
         "sourceText": "Dundalk Leisurecraft Serenity 2-4 Person Barrel Sauna | Barrel Sauna Kits | Barrel Sauna, customer-responsible-for-offloading, no-discounts, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/canadian-timber-serenity-barrel-sauna?variant=43779061022934&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Please note: Due to the size of the CTC2245W, it will ship LTL and will not fit on a liftgate. This means that you will be responsible for offloading the sauna. We recommend gathering 3-4 people to offload the sauna piece by piece or renting a forklift. Alternatively, you can add a Driver Offload service at checkout if you would like a hands-off offloading experience. Dundalk Leisurecraft Canadian Timber CTC2245W Sauna Transform your outdoor space into a luxurious retreat with the Serenity 2-4 Person Barrel Sauna by Dundalk Leisurecraft. This handcrafted sauna, part of the Canadian Timber Collection, is constructed from premium Eastern White Cedar, known for its resilience, insulation properties, and charming natural aroma. Perfect for unwinding alone or with loved ones, the Serenity Sauna offers comfort and quality in every detail. The Eastern White Cedar used for this sauna is known for its resistance to decay, great insulation, elegant aging, and lovely aroma, making it a great species of wood for saunas. Choose from 6kW or 8 kW electric heaters from Saaku or Harvia, or a wood-burning Harvia heater . Key Features Front Porch with Built-in Benches Includes a spacious 45cm front porch equipped with comfortable benches, perfect for relaxing before or after your sauna session. Marine-Grade Aluminum Bands Crafted with marine-grade aluminum bands and secured with stainless steel bolts for a long-lasting, secure fit. Flat Floor Design The Canadian Timber models come with a flat floor, ensuring stability and comfort. Versatile Bench Design Features a sturdy bench design that allows you to sit up comfortably or recline fully for ultimate relaxation. Features: 2-4 person capacity Made in Canada Eastern White Cedar – light color and knots 5mm bronze tempered glass on door window 8 kW heater recommended or wood burning CTC2245W = 2x2m + 45cm Porch, White Cedar. Lead Times Dundalk Leisurecraft saunas are luxurious saunas handcrafted in Canada with sustainably sourced Canadian lumber. Due to this, these saunas are made to order, which means there isn't any inventory. Current lead time is 6-8 weeks to ship. 3-Year Warranty The Canadian Timber Collection by Dundalk LeisureCraft Inc. is warranted against defects in materials and workmanship under normal/residential use for a period of three (3) years, as applicable, from the date of receipt of the product. This warranty does not apply to normal wear and tear and/or natural weather conditions. This warranty does not cover regular required maintenance. Refer to your assembly manual for maintenance guidelines. This warranty does not cover misuse or negligence and the manufacturer and associated retailers are not liable for any injury or damage caused by the product. This warranty is a parts-only warranty and any service or labor costs would not be considered as part of the 3-year warranty. Videos Useful Links Click the links below to see more detailed info about the CTC2245W sauna. Product Drawing Assembly Instructions Dundalk Leisurecraft Residential Shipping Information Dundalk Leisurecraft Residential Shipping Additional Shipping Charges",
+        "matched": "Harvia heater",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

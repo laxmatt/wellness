@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Forssa 3-4 Person Indoor Traditional Sauna | Indoor Traditional Sauna Kits | 3 Person, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 48,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\" x 48\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\" x 48\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 78,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\" x 48\\\" x 78\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\" x 48\" x 78\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW traditional sauna heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-forssa-edition-3-person-indoor-traditional-sauna-gdi-7203-01-canadian-red-cedar-interior?variant=46972781494615&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW traditional sauna heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-7203-01 Traditional Indoor Sauna Forssa Edition with Canadian Red Cedar Interior Embrace a world of wellness with the Golden Designs Forssa Edition 3-4 Person Indoor Traditional Steam Sauna. Carefully crafted to perfection, this sauna is a sanctuary of tranquility and rejuvenation for you and your loved ones. Luxurious Design: The all-glass front and right side wall create a modern and inviting aesthetic, while the Canadian Red Cedar interior exudes a warm and delightful fragrance. Complemented by the all-Canadian Hemlock exterior in an elegant clear stain finish, this sauna is a true masterpiece that adds sophistication to any space. Therapeutic Steam Experience: Immerse yourself in the therapeutic benefits of steam therapy. The Golden Designs Forssa Edition sauna envelopes your body in a soothing mist, promoting deep relaxation and stress relief. Feel the tension in your muscles melt away and embrace a renewed sense of well-being. Craftsmanship at its Finest: Expertly designed to accommodate 3-4 persons, this indoor sauna offers ample space to share moments of relaxation with family and friends. The tempered glass door and large viewing window allow natural light to flood the interior, creating a serene ambiance. Interior LED lighting sets the mood for a blissful sauna experience. Your Personal Oasis: Create your personal oasis of wellness in the comfort of your home with the Golden Designs Forssa Edition Indoor Traditional Steam Sauna. Whether you seek to escape the demands of daily life or indulge in the benefits of steam therapy, this sauna is your gateway to a life of luxury and rejuvenation. Elevate Your Lifestyle: Elevate your lifestyle and embrace the art of relaxation with the Golden Designs Forssa Edition sauna. Immerse yourself in the warmth of steam therapy and create cherished moments of tranquility with your loved ones. Embrace the power of wellness and redefine luxury with this beautifully designed and expertly crafted indoor sauna. Features 3-4 person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW traditional sauna heater with built-in controls Specifications Electrical service: 240V / 40AMP (heater) and 120V / 15AMP (control for lights and music). Please consult a certified electrician to install your heater. Assembled Dimensions (W x D x H): 75\" x 48\" x 78\" Assembled Weight 625 lbs Shipping Weight 775 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW traditional sauna heater",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

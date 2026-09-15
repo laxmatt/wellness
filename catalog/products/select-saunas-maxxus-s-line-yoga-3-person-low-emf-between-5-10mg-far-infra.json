@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

@@ -132,12 +132,12 @@ describe("what the first preflight wrongly kept", () => {
     expect(last.column).toBe("classified_as");
   });
 
-  it("reads the store's own fields and never its marketing prose", () => {
+  it("keeps eligibility out of marketing prose while permitting reviewed specification labels", () => {
     for (const rule of saunaExclusions("Select Saunas")) {
       expect(["classified_as", "available"], rule.reason).toContain(rule.column);
     }
     for (const rule of shopifyProfile(SELECT_SAUNAS, TODAY, "Select Saunas").attributes) {
-      expect(["classified_as", "product_title"], rule.key).toContain(rule.column);
+      expect(["classified_as", "product_title", "body_text"], rule.key).toContain(rule.column);
     }
     // The joined field is the store's own three classification fields, and the
     // marketing paragraph is not one of them.
@@ -156,17 +156,17 @@ describe("what the first preflight wrongly kept", () => {
 });
 
 describe("filters a shopper can narrow with", () => {
-  it("fills them only from the store's own title, type and tags", () => {
+  it("fills them from classified fields plus reviewed specification labels", () => {
     const keys = shopifyProfile(SELECT_SAUNAS, TODAY, "Select Saunas").attributes.map((a) => a.key).sort();
-    expect(keys).toEqual(["capacity_label", "capacity_max_people", "connection", "placement", "sauna_style", "sauna_type", "voltage"]);
+    expect(keys).toEqual(["amperage_a", "capacity_label", "capacity_max_people", "connection", "depth_in", "heater_kw", "heater_model", "height_in", "placement", "sauna_style", "sauna_type", "voltage", "width_in"]);
   });
 
-  it("leaves the specifications a Shopify catalogue does not carry empty", () => {
+  it("maps specifications only from label-anchored structured description text", () => {
     const keys = shopifyProfile(SELECT_SAUNAS, TODAY, "Select Saunas").attributes.map((a) => a.key);
-    // Real measurements, and a snapshot states none of them. An empty cell is
-    // the honest answer; a number read out of a marketing paragraph is not.
-    for (const absent of ["width_in", "depth_in", "height_in", "amperage_a", "heater_kw", "heater_model"]) {
-      expect(keys, absent).not.toContain(absent);
+    // Real measurements stay limited to the reviewed labels in the preserved
+    // description rather than free-form marketing mentions.
+    for (const mapped of ["width_in", "depth_in", "height_in", "amperage_a", "heater_kw", "heater_model"]) {
+      expect(keys, mapped).toContain(mapped);
     }
   });
 
@@ -201,7 +201,8 @@ describe("filters a shopper can narrow with", () => {
 
   it("arrives unapproved, because a person has to read what it extracted", () => {
     for (const rule of shopifyProfile(SELECT_SAUNAS, TODAY, "Select Saunas").attributes) {
-      if (rule.from === "extract") expect(rule.approved, rule.key).toBe(false);
+      if (rule.from === "extract" && rule.column !== "body_text") expect(rule.approved, rule.key).toBe(false);
+      if (rule.from === "extract" && rule.column === "body_text") expect(rule.approved, rule.key).toBe(true);
     }
   });
 });

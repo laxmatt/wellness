@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 61,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-madrid-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-limited-model?variant=51596869763415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 61\\\" x 74\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Looking for a stylish way to bring spa-level relaxation into your home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural durability with a modern design. Equipped with Low EMF FAR infrared heating panels, they deliver safe, energy-efficient warmth that eases stress, relaxes muscles, and supports overall wellness. Perfect for any lifestyle, these saunas can be placed in basements, master baths, walk-in closets, or even home gyms. To enhance the experience, they include a built-in sound system with Bluetooth and MP3 auxiliary connections, so you can enjoy your favorite music or podcasts while you unwind. With Dynamic Saunas, you’re not just investing in a product you’re creating a personal retreat that blends comfort, health, and entertainment. Features: Ultra-low EMF - (EMF between 3 to 5 mg 2 to 3 inches from the heating panels) 3-person capacity Music System with Bluetooth capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED Control Panel Natural hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Clasp together assembly Easy Removable Bench - Stretching, Exercise, or Yoga Interior chromotherapy lighting system with red light therapy 7 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Oversize Floor Ultra Low EMF Heating Panel Tempered glass door Exterior accent lighting Roof vent Ships in 3 boxes Specifications: Sauna weight: 400 lbs. Shipping weight: 465 lbs. Electrical service: 120V/20amp (consult a certified electrician) Exterior dimensions (LWH): 42\" x 61\" x 74\" (roof overhang: adds 4.1\" to length) Interior dimensions (LWH): 37\" x 57\" x 66\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 61\" x 74\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-madrid-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-limited-model?variant=51596869763415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 61\\\" x 74\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Looking for a stylish way to bring spa-level relaxation into your home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural durability with a modern design. Equipped with Low EMF FAR infrared heating panels, they deliver safe, energy-efficient warmth that eases stress, relaxes muscles, and supports overall wellness. Perfect for any lifestyle, these saunas can be placed in basements, master baths, walk-in closets, or even home gyms. To enhance the experience, they include a built-in sound system with Bluetooth and MP3 auxiliary connections, so you can enjoy your favorite music or podcasts while you unwind. With Dynamic Saunas, you’re not just investing in a product you’re creating a personal retreat that blends comfort, health, and entertainment. Features: Ultra-low EMF - (EMF between 3 to 5 mg 2 to 3 inches from the heating panels) 3-person capacity Music System with Bluetooth capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED Control Panel Natural hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Clasp together assembly Easy Removable Bench - Stretching, Exercise, or Yoga Interior chromotherapy lighting system with red light therapy 7 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Oversize Floor Ultra Low EMF Heating Panel Tempered glass door Exterior accent lighting Roof vent Ships in 3 boxes Specifications: Sauna weight: 400 lbs. Shipping weight: 465 lbs. Electrical service: 120V/20amp (consult a certified electrician) Exterior dimensions (LWH): 42\" x 61\" x 74\" (roof overhang: adds 4.1\" to length) Interior dimensions (LWH): 37\" x 57\" x 66\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 61\" x 74\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 74,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-madrid-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-limited-model?variant=51596869763415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 61\\\" x 74\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Looking for a stylish way to bring spa-level relaxation into your home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural durability with a modern design. Equipped with Low EMF FAR infrared heating panels, they deliver safe, energy-efficient warmth that eases stress, relaxes muscles, and supports overall wellness. Perfect for any lifestyle, these saunas can be placed in basements, master baths, walk-in closets, or even home gyms. To enhance the experience, they include a built-in sound system with Bluetooth and MP3 auxiliary connections, so you can enjoy your favorite music or podcasts while you unwind. With Dynamic Saunas, you’re not just investing in a product you’re creating a personal retreat that blends comfort, health, and entertainment. Features: Ultra-low EMF - (EMF between 3 to 5 mg 2 to 3 inches from the heating panels) 3-person capacity Music System with Bluetooth capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED Control Panel Natural hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Clasp together assembly Easy Removable Bench - Stretching, Exercise, or Yoga Interior chromotherapy lighting system with red light therapy 7 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Oversize Floor Ultra Low EMF Heating Panel Tempered glass door Exterior accent lighting Roof vent Ships in 3 boxes Specifications: Sauna weight: 400 lbs. Shipping weight: 465 lbs. Electrical service: 120V/20amp (consult a certified electrician) Exterior dimensions (LWH): 42\" x 61\" x 74\" (roof overhang: adds 4.1\" to length) Interior dimensions (LWH): 37\" x 57\" x 66\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 61\" x 74\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-madrid-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-limited-model?variant=51596869763415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Looking for a stylish way to bring spa-level relaxation into your home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural durability with a modern design. Equipped with Low EMF FAR infrared heating panels, they deliver safe, energy-efficient warmth that eases stress, relaxes muscles, and supports overall wellness. Perfect for any lifestyle, these saunas can be placed in basements, master baths, walk-in closets, or even home gyms. To enhance the experience, they include a built-in sound system with Bluetooth and MP3 auxiliary connections, so you can enjoy your favorite music or podcasts while you unwind. With Dynamic Saunas, you’re not just investing in a product you’re creating a personal retreat that blends comfort, health, and entertainment. Features: Ultra-low EMF - (EMF between 3 to 5 mg 2 to 3 inches from the heating panels) 3-person capacity Music System with Bluetooth capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED Control Panel Natural hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Clasp together assembly Easy Removable Bench - Stretching, Exercise, or Yoga Interior chromotherapy lighting system with red light therapy 7 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Oversize Floor Ultra Low EMF Heating Panel Tempered glass door Exterior accent lighting Roof vent Ships in 3 boxes Specifications: Sauna weight: 400 lbs. Shipping weight: 465 lbs. Electrical service: 120V/20amp (consult a certified electrician) Exterior dimensions (LWH): 42\" x 61\" x 74\" (roof overhang: adds 4.1\" to length) Interior dimensions (LWH): 37\" x 57\" x 66\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 20,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-madrid-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-limited-model?variant=51596869763415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/20amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Madrid Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Looking for a stylish way to bring spa-level relaxation into your home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural durability with a modern design. Equipped with Low EMF FAR infrared heating panels, they deliver safe, energy-efficient warmth that eases stress, relaxes muscles, and supports overall wellness. Perfect for any lifestyle, these saunas can be placed in basements, master baths, walk-in closets, or even home gyms. To enhance the experience, they include a built-in sound system with Bluetooth and MP3 auxiliary connections, so you can enjoy your favorite music or podcasts while you unwind. With Dynamic Saunas, you’re not just investing in a product you’re creating a personal retreat that blends comfort, health, and entertainment. Features: Ultra-low EMF - (EMF between 3 to 5 mg 2 to 3 inches from the heating panels) 3-person capacity Music System with Bluetooth capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED Control Panel Natural hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Clasp together assembly Easy Removable Bench - Stretching, Exercise, or Yoga Interior chromotherapy lighting system with red light therapy 7 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Oversize Floor Ultra Low EMF Heating Panel Tempered glass door Exterior accent lighting Roof vent Ships in 3 boxes Specifications: Sauna weight: 400 lbs. Shipping weight: 465 lbs. Electrical service: 120V/20amp (consult a certified electrician) Exterior dimensions (LWH): 42\" x 61\" x 74\" (roof overhang: adds 4.1\" to length) Interior dimensions (LWH): 37\" x 57\" x 66\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V/20amp",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Maxxus Seattle 2-Person Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 48,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-seattle-2-person-near-zero-emf-under-2mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655452229975&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus Seattle 2-Person Near Zero EMF (Under 3MG) FAR Infrared Sauna (Canadian Hemlock) Want to enjoy a spa-like escape without leaving home? The Maxxus Seattle 2-Person Near Zero EMF FAR Infrared Sauna offers the perfect blend of comfort, style, and wellness in one sleek design. It’s an ideal choice for couples or anyone looking to create a calming daily retreat. Built from durable Canadian Hemlock, this sauna combines natural beauty with modern infrared technology to promote detoxification, stress relief, and overall wellness. With its inviting design and health-boosting benefits, the Maxxus Seattle transforms any space into a personal sanctuary. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panel Full 2-person capacity Clear Tempered glass door Natural Reforested Canadian Hemlock Wood Construction Interior Chromotherapy Color Lighting System with Red Light Feature 6 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Standard with Floor - Feet Reflexology Heater Roof vent Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers Clasp together assembly 118F-132F is the deal temperature range, sauna can heat up to 140F Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 275 lbs. Shipping weight: 415 lbs. Electrical service: 120 V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-seattle-2-person-near-zero-emf-under-2mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655452229975&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus Seattle 2-Person Near Zero EMF (Under 3MG) FAR Infrared Sauna (Canadian Hemlock) Want to enjoy a spa-like escape without leaving home? The Maxxus Seattle 2-Person Near Zero EMF FAR Infrared Sauna offers the perfect blend of comfort, style, and wellness in one sleek design. It’s an ideal choice for couples or anyone looking to create a calming daily retreat. Built from durable Canadian Hemlock, this sauna combines natural beauty with modern infrared technology to promote detoxification, stress relief, and overall wellness. With its inviting design and health-boosting benefits, the Maxxus Seattle transforms any space into a personal sanctuary. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panel Full 2-person capacity Clear Tempered glass door Natural Reforested Canadian Hemlock Wood Construction Interior Chromotherapy Color Lighting System with Red Light Feature 6 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Standard with Floor - Feet Reflexology Heater Roof vent Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers Clasp together assembly 118F-132F is the deal temperature range, sauna can heat up to 140F Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 275 lbs. Shipping weight: 415 lbs. Electrical service: 120 V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-seattle-2-person-near-zero-emf-under-2mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655452229975&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus Seattle 2-Person Near Zero EMF (Under 3MG) FAR Infrared Sauna (Canadian Hemlock) Want to enjoy a spa-like escape without leaving home? The Maxxus Seattle 2-Person Near Zero EMF FAR Infrared Sauna offers the perfect blend of comfort, style, and wellness in one sleek design. It’s an ideal choice for couples or anyone looking to create a calming daily retreat. Built from durable Canadian Hemlock, this sauna combines natural beauty with modern infrared technology to promote detoxification, stress relief, and overall wellness. With its inviting design and health-boosting benefits, the Maxxus Seattle transforms any space into a personal sanctuary. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panel Full 2-person capacity Clear Tempered glass door Natural Reforested Canadian Hemlock Wood Construction Interior Chromotherapy Color Lighting System with Red Light Feature 6 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Standard with Floor - Feet Reflexology Heater Roof vent Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers Clasp together assembly 118F-132F is the deal temperature range, sauna can heat up to 140F Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 275 lbs. Shipping weight: 415 lbs. Electrical service: 120 V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-seattle-2-person-near-zero-emf-under-2mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655452229975&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120 V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus Seattle 2-Person Near Zero EMF (Under 3MG) FAR Infrared Sauna (Canadian Hemlock) Want to enjoy a spa-like escape without leaving home? The Maxxus Seattle 2-Person Near Zero EMF FAR Infrared Sauna offers the perfect blend of comfort, style, and wellness in one sleek design. It’s an ideal choice for couples or anyone looking to create a calming daily retreat. Built from durable Canadian Hemlock, this sauna combines natural beauty with modern infrared technology to promote detoxification, stress relief, and overall wellness. With its inviting design and health-boosting benefits, the Maxxus Seattle transforms any space into a personal sanctuary. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panel Full 2-person capacity Clear Tempered glass door Natural Reforested Canadian Hemlock Wood Construction Interior Chromotherapy Color Lighting System with Red Light Feature 6 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Standard with Floor - Feet Reflexology Heater Roof vent Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers Clasp together assembly 118F-132F is the deal temperature range, sauna can heat up to 140F Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 275 lbs. Shipping weight: 415 lbs. Electrical service: 120 V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120 V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-seattle-2-person-near-zero-emf-under-2mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655452229975&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120 V/15 AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus Seattle 2-Person Near Zero EMF (Under 3MG) FAR Infrared Sauna (Canadian Hemlock) Want to enjoy a spa-like escape without leaving home? The Maxxus Seattle 2-Person Near Zero EMF FAR Infrared Sauna offers the perfect blend of comfort, style, and wellness in one sleek design. It’s an ideal choice for couples or anyone looking to create a calming daily retreat. Built from durable Canadian Hemlock, this sauna combines natural beauty with modern infrared technology to promote detoxification, stress relief, and overall wellness. With its inviting design and health-boosting benefits, the Maxxus Seattle transforms any space into a personal sanctuary. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panel Full 2-person capacity Clear Tempered glass door Natural Reforested Canadian Hemlock Wood Construction Interior Chromotherapy Color Lighting System with Red Light Feature 6 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Standard with Floor - Feet Reflexology Heater Roof vent Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers Clasp together assembly 118F-132F is the deal temperature range, sauna can heat up to 140F Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 275 lbs. Shipping weight: 415 lbs. Electrical service: 120 V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120 V/15 AMP",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

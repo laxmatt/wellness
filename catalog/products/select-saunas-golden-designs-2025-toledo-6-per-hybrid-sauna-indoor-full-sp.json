@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Toledo 6-Person Indoor Hybrid Sauna | Indoor Traditional Sauna Kits",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 80,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 80″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 80″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 83,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 80″ x 83″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 80″ x 83″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 80,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions (WDH): 80″ x 83″ x 80″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Exterior Dimensions (WDH): 80″ x 83″ x 80″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia Traditional Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-2025-toledo-6-per-hybrid-sauna-indoor-full-spectrum-and-harvia-traditional-stove?variant=48818019172695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia Traditional Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Toledo 6-Person Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) Introducing the Golden Designs Toledo Indoor Hybrid Sauna. Featuring PureTech Full Spectrum Infrared Technology and a Harvia Traditional Stove, this wheelchair-accessible sauna offers versatile heating options (not simultaneous). Remove the benches to transform it into a yoga/stretching studio. Made with eco-friendly reforested Canadian Hemlock, it heats quickly, retains heat efficiently, and conserves energy. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Natural Reforested Canadian Hemlock Wood Construction New Floating Bench Design Retractable Lower Bench - Room for Yoga or Stretching 2 Himalayan Salt Bar Interior LED Control Panel with built in FM Radio and Bluetooth Connection Bluetooth and MP3 Auxiliary Connection with Built in Speakers Oversize interior chromotherapy lighting system Full Spectrum IR: Total 13 IR Emitters, 5 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 8 Near Infrared Heat Emitters (Heating Elements) Harvia SWS80 8 kW Traditional Sauna Stove with Built in Controls Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp (Optional) Roof and Side Vent (Fresh Air Circulation) Specifications Electrical service: 240V / 40AMP (Stove & Full Spectrum). Please consult a certified electrician to install. Dual Bronze Privacy Tempered Glass Door Entry (Wheel Chair Accessible) Wheel Chair Ramp Roof and Side Vent for Fresh Air Circulation Exterior Dimensions (WDH): 80″ x 83″ x 80″ Interior Dimensions (WDH): 74″ x 75″ x 75″ Sauna Weight: 825 lbs. Shipping Weight: 1085 lbs. Ships in 4 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference.",
+        "matched": "Harvia Traditional Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

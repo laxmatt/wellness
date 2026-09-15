@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 3 Person, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 84.1,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 73.6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\" x 73.6\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 97.4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\" x 73.6\\\" x 97.4\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 30AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 30AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-arlberg?variant=46972860334423&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Arlberg 3-Person Outdoor Traditional Sauna Step into a world of natural bliss and wellness with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. Crafted with care and precision, this traditional sauna is a perfect addition to your outdoor oasis, allowing you to bask in the beauty of nature while indulging in the warmth of steam therapy. Nature-Inspired Design: Embrace the beauty of the great outdoors with the all-Canadian Hemlock exterior. This stunning wood not only complements your outdoor space but also provides natural resistance to decay, ensuring durability and longevity. The traditional design exudes timeless elegance, creating a harmonious blend of nature and relaxation. Outdoor Escape: Immerse yourself in the therapeutic benefits of this outdoor sauna, where you can unwind and rejuvenate amidst the serenity of your backyard. As the steam envelops your body, feel the tensions melt away, promoting deep relaxation and overall well-being. Clear Water Protection: The Golden Designs Arlberg sauna is designed with your sauna's longevity in mind. The exterior clear water protection stain adds a layer of defense against the elements, safeguarding the wood and maintaining its beauty. With an annual re-application, you can ensure your sauna stays in pristine condition for years to come. Quality Craftsmanship: The Arlberg sauna reflects the highest standards of craftsmanship and durability. The spacious interior comfortably accommodates up to 3 persons, making it the ideal retreat to share with friends and family. The tempered glass door provides a clear view of the picturesque surroundings, enhancing your sauna experience. Elevate Your Outdoor Living: Elevate your outdoor living and embrace the wonders of nature with the Golden Designs Arlberg 3-Person Traditional Outdoor Sauna. This beautifully designed and expertly crafted sauna is your gateway to a life of wellness, relaxation, and connection with nature. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built-in Controls Specifications Electrical service: 240V / 30AMP (6KW Stove) or 240V / 40AMP (8KW Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight: 650 lbs Shipping Weight: 925 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

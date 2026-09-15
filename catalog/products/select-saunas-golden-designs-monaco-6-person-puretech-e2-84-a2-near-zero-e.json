@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Monaco 6-Person Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits | 6 Person, Infrared Saunas, Saunas",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 73,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-monaco-6-person-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna?variant=43874767110358&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Monaco 6-Person PureTech™ Near-Zero EMF (Under 3 mg) FAR Infrared Sauna in Canadian Hemlock Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! The Carbon Tech heating panels are engineered to produce a wider, softer heat that is evenly distributed throughout the sauna. Golden Designs PureTech™ Carbon Tech heating panels cover a significantly larger surface within the sauna. Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels FM/CD radio with MP3 auxiliary connection with 4 built-in speakers, 15” LCD Monitor with DVD Player Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Exterior accent lighting Interior Touch Screen Control Panel Natural hemlock wood construction (Natural Finish) Electrical service: 2 separate dedicated 20 amp 120 volt outlets, and two separate 20 amp breakers required. (consult a certified electrician to install a 20 amp outlet and 20 amp breaker) Clasp together assembly 15 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 61″ x 79″ (roof overhang: add 6\") Interior dimensions (WDH): 68″ x 57″ x 72″ Sauna weight: 750 lbs. Shipping weight: 950 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 61,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-monaco-6-person-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna?variant=43874767110358&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″ x 61″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Monaco 6-Person PureTech™ Near-Zero EMF (Under 3 mg) FAR Infrared Sauna in Canadian Hemlock Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! The Carbon Tech heating panels are engineered to produce a wider, softer heat that is evenly distributed throughout the sauna. Golden Designs PureTech™ Carbon Tech heating panels cover a significantly larger surface within the sauna. Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels FM/CD radio with MP3 auxiliary connection with 4 built-in speakers, 15” LCD Monitor with DVD Player Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Exterior accent lighting Interior Touch Screen Control Panel Natural hemlock wood construction (Natural Finish) Electrical service: 2 separate dedicated 20 amp 120 volt outlets, and two separate 20 amp breakers required. (consult a certified electrician to install a 20 amp outlet and 20 amp breaker) Clasp together assembly 15 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 61″ x 79″ (roof overhang: add 6\") Interior dimensions (WDH): 68″ x 57″ x 72″ Sauna weight: 750 lbs. Shipping weight: 950 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″ x 61″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 79,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-monaco-6-person-puretech%E2%84%A2-near-zero-emf-far-infrared-sauna?variant=43874767110358&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 73″ x 61″ x 79″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Monaco 6-Person PureTech™ Near-Zero EMF (Under 3 mg) FAR Infrared Sauna in Canadian Hemlock Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! The Carbon Tech heating panels are engineered to produce a wider, softer heat that is evenly distributed throughout the sauna. Golden Designs PureTech™ Carbon Tech heating panels cover a significantly larger surface within the sauna. Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Features 6-person capacity Near Zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels FM/CD radio with MP3 auxiliary connection with 4 built-in speakers, 15” LCD Monitor with DVD Player Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Exterior accent lighting Interior Touch Screen Control Panel Natural hemlock wood construction (Natural Finish) Electrical service: 2 separate dedicated 20 amp 120 volt outlets, and two separate 20 amp breakers required. (consult a certified electrician to install a 20 amp outlet and 20 amp breaker) Clasp together assembly 15 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Tempered glass door Roof vent Specifications Exterior dimensions (WDH): 73″ x 61″ x 79″ (roof overhang: add 6\") Interior dimensions (WDH): 68″ x 57″ x 72″ Sauna weight: 750 lbs. Shipping weight: 950 lbs. Ships in 5 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 73″ x 61″ x 79″",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

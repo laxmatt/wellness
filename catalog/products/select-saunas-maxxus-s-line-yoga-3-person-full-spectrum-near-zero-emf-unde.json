@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Maxxus S-Line Yoga 3-Person Full Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656085438807&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Full Spectrum Near Zero EMF (Under 3 mg) Far Infrared Sauna Have you ever imagined enjoying the health benefits of a private sauna with family or friends, right in the comfort of your own home? The Maxxus 3-Person Sauna creates a spacious retreat designed to support relaxation, detoxification, and rejuvenation together. Its blend of infrared technology and natural Pacific Cedar craftsmanship delivers both performance and elegance, making it an ideal wellness upgrade. With its thoughtfully designed interior and modern features, this sauna provides a spa-like atmosphere without leaving your home. From soothing light therapy to immersive sound, every session promotes balance for body and mind while maintaining a sleek, contemporary look that enhances any indoor space. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Full 3 person capacity Total 9 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note : Indoor Use Only Specifications: Sauna weight: 365 lbs. Shipping weight: 465 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656085438807&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Full Spectrum Near Zero EMF (Under 3 mg) Far Infrared Sauna Have you ever imagined enjoying the health benefits of a private sauna with family or friends, right in the comfort of your own home? The Maxxus 3-Person Sauna creates a spacious retreat designed to support relaxation, detoxification, and rejuvenation together. Its blend of infrared technology and natural Pacific Cedar craftsmanship delivers both performance and elegance, making it an ideal wellness upgrade. With its thoughtfully designed interior and modern features, this sauna provides a spa-like atmosphere without leaving your home. From soothing light therapy to immersive sound, every session promotes balance for body and mind while maintaining a sleek, contemporary look that enhances any indoor space. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Full 3 person capacity Total 9 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note : Indoor Use Only Specifications: Sauna weight: 365 lbs. Shipping weight: 465 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656085438807&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Full Spectrum Near Zero EMF (Under 3 mg) Far Infrared Sauna Have you ever imagined enjoying the health benefits of a private sauna with family or friends, right in the comfort of your own home? The Maxxus 3-Person Sauna creates a spacious retreat designed to support relaxation, detoxification, and rejuvenation together. Its blend of infrared technology and natural Pacific Cedar craftsmanship delivers both performance and elegance, making it an ideal wellness upgrade. With its thoughtfully designed interior and modern features, this sauna provides a spa-like atmosphere without leaving your home. From soothing light therapy to immersive sound, every session promotes balance for body and mind while maintaining a sleek, contemporary look that enhances any indoor space. Features: Near-zero EMF - EMF Under 3 mg when sitting 2 to 3 inches from the heating panels Full 3 person capacity Total 9 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note : Indoor Use Only Specifications: Sauna weight: 365 lbs. Shipping weight: 465 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

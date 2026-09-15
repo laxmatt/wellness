@@ -36,9 +36,24 @@ export function deriveInsights(view: ProductView, cat: CategoryDefinition): Insi
 }
 
 export function primaryStrength(view: ProductView, cat: CategoryDefinition): string | undefined {
-  return view.editorial.strengths[0] ?? deriveInsights(view, cat).find((i) => i.tone === "strength")?.text;
+  const authored = view.editorial.strengths[0] ?? deriveInsights(view, cat).find((i) => i.tone === "strength")?.text;
+  if (authored || cat.id !== "saunas") return authored;
+  const capacity = typeof view.attributes.capacity_label === "string" ? view.attributes.capacity_label : undefined;
+  const type = view.attributes.sauna_type === "far_infrared" ? "far-infrared" : view.attributes.sauna_type === "traditional" ? "traditional" : undefined;
+  const placement = view.attributes.placement === "outdoor" ? "outdoor use" : view.attributes.placement === "indoor" ? "indoor use" : view.attributes.placement === "indoor_outdoor" ? "indoor or outdoor use" : undefined;
+  const facts = [capacity, type, placement].filter(Boolean);
+  return facts.length >= 2 ? `Stated as ${facts.join(", ")}.` : undefined;
 }
 
 export function primaryTradeoff(view: ProductView, cat: CategoryDefinition): string | undefined {
-  return view.editorial.tradeoffs[0] ?? deriveInsights(view, cat).find((i) => i.tone === "tradeoff")?.text;
+  const authored = view.editorial.tradeoffs[0] ?? deriveInsights(view, cat).find((i) => i.tone === "tradeoff")?.text;
+  if (authored || cat.id !== "saunas") return authored;
+  const width = view.attributes.width_in;
+  const depth = view.attributes.depth_in;
+  const voltage = view.attributes.voltage === "120v" ? "120V" : view.attributes.voltage === "240v" ? "240V" : undefined;
+  const amps = typeof view.attributes.amperage_a === "number" ? `${view.attributes.amperage_a}A` : undefined;
+  const needs: string[] = [];
+  if (typeof width === "number" && typeof depth === "number") needs.push(`${width} × ${depth} in exterior footprint`);
+  if (voltage) needs.push(`${voltage}${amps ? ` / ${amps}` : ""} electrical service`);
+  return needs.length > 0 ? `Plan for ${needs.join(" and ")}; confirm installation requirements with the retailer.` : undefined;
 }

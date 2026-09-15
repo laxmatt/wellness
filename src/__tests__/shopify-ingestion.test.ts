@@ -159,10 +159,18 @@ describe("separating saunas from the rest of a store", () => {
     ]);
   });
 
-  it("reads no rule over the description, whatever a description says", () => {
+  it("uses prose only for Select Saunas' approved, label-anchored specifications", () => {
     for (const source of [TOPTURE, SELECT_SAUNAS, HOOGA]) {
       const profile = shopifyProfile(source, TODAY, source.merchantName);
-      for (const rule of profile.attributes) expect(rule.column, source.id).not.toBe("body_text");
+      const proseRules = profile.attributes.filter((rule) => rule.column === "body_text");
+      if (source.id === "select-saunas-shopify") {
+        expect(proseRules.map((rule) => rule.key)).toEqual([
+          "width_in", "depth_in", "height_in", "voltage", "amperage_a", "heater_kw", "heater_model",
+        ]);
+        expect(proseRules.every((rule) => rule.from === "extract" && rule.approved)).toBe(true);
+      } else {
+        expect(proseRules).toEqual([]);
+      }
       for (const rule of profile.exclusions) expect(rule.column, source.id).not.toBe("body_text");
       for (const column of profile.columns) {
         if (column.extract) expect(column.column, source.id).not.toBe("body_text");

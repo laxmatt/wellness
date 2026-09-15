@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -120,6 +121,72 @@
         "field": "classified_as",
         "sourceText": "Finnmark Combination Outdoor Barrel Sauna—FD-6, Cedar | Barrel Sauna Kits | Infrared Saunas, Traditional Saunas",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/finnmark-combination-outdoor-barrel-sauna-fd-6-infrared-and-traditional-6x6-cedar?variant=51751018758487&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 75\\\" x 79\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Finnmark Hybrid (Infrared & Traditional Outdoor Barrel Sauna) 6x6, Cedar Looking to experience the best of both worlds in sauna therapy? The Finnmark Cedar Combination Barrel Sauna seamlessly combines the benefits Finnmark’s UL-listed Spectrum Plus™ infrared sauna panels with a traditional Finnish rock sauna, creating a wellness sanctuary unlike any other. Crafted from thick Canadian Cedar, this sauna radiates natural beauty, durability, and a rich, aromatic atmosphere. Premium design elements, such as tempered glass panels, dual-level cedar benches, and a full shingle kit, ensure both elegance and longevity. Paired with cutting-edge features like Finnmark Spectrum Plus™ infrared heaters, a traditional 4.5kW heater, Wi-Fi-enabled controls, and customizable RGB lighting, this sauna delivers luxury, performance, and relaxation in perfect harmony. Features: Spectrum Plus™ UL Listed short wave infrared heaters for deep penetrating heat, up to 25x more than standard carbon panel heaters. Clear Grade Western Canadian Cedar 1 1/2\" Thick Staves Dual Bench System Built-in LCD touchscreen controller with Wi-Fi Under-bench LED RGB light 8mm tempered door and windows Low EMF Spectrum Plus infrared heaters High emissivity infrared heaters Shingle Roof with Barrier Stained and sealed Sou Sugi Ban supports Patent Pending Design Package Content: LED under-bench light Slats Front Trim Front Panel Back Panel Metal Bands Metal Bands Clamps Shingles Insulating Layer Male Light Cable Handle Outdoor Power Cover Screw Cover Power Cord Basic Level Pencil Necessary fasteners Drain Specifications: Model FD-6 External Materials Western Canadian Cedar - Clear Grade Interior Materials Western Canadian Cedar - Clear Grade Interior Dimensions 66\" x 72\" x 71\" Exterior Dimensions 75\" x 79\" x 75\" Room Volume 135 (ft³) Door Dimensions 26.3\" x 62.3\" Glass Thickness 8mm W/Rubber Gasket Stave Thickness 1.5\" Upper Bench Dimensions 71\" x 24\" x 33.1\" Lower Bench Dimensions 60.5\" x 16\" x 16.7\" Rain Jacket Shingles Ventilation Gravity Straps 3 Stainless Steel Assembled Weight 830 lbs Shipping Weight 1,005 lbs Supports 3 Shou Sugi Ban Treated Infrared Heaters 5 Spectrum Plus Wattage Per Infrared Heater 350w Infrared Electrical Requirements 120v 15a Infrared Electrical Connection NEMA 5-15P Infrared Wattage 1750w EMF Rating Very Low - Tested by NTS Frame Material Western Canadian Cedar - Clear Grade Infrared Power Cord Length 9ft Max Temperature 185 F (When rock sauna is used) Heater Warranty Unlimited Lifetime Spectrum Plus Sauna Warranty 5-Year Limited Bench Material Western Canadian Cedar - Clear Grade Infrared Max Temperature 170 F Useful Links: Installation & Operation Manual Specifications Floor Plan EMF Test Log ETL Certification",
+        "matched": "Exterior Dimensions 75\" x 79\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/finnmark-combination-outdoor-barrel-sauna-fd-6-infrared-and-traditional-6x6-cedar?variant=51751018758487&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 75\\\" x 79\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Finnmark Hybrid (Infrared & Traditional Outdoor Barrel Sauna) 6x6, Cedar Looking to experience the best of both worlds in sauna therapy? The Finnmark Cedar Combination Barrel Sauna seamlessly combines the benefits Finnmark’s UL-listed Spectrum Plus™ infrared sauna panels with a traditional Finnish rock sauna, creating a wellness sanctuary unlike any other. Crafted from thick Canadian Cedar, this sauna radiates natural beauty, durability, and a rich, aromatic atmosphere. Premium design elements, such as tempered glass panels, dual-level cedar benches, and a full shingle kit, ensure both elegance and longevity. Paired with cutting-edge features like Finnmark Spectrum Plus™ infrared heaters, a traditional 4.5kW heater, Wi-Fi-enabled controls, and customizable RGB lighting, this sauna delivers luxury, performance, and relaxation in perfect harmony. Features: Spectrum Plus™ UL Listed short wave infrared heaters for deep penetrating heat, up to 25x more than standard carbon panel heaters. Clear Grade Western Canadian Cedar 1 1/2\" Thick Staves Dual Bench System Built-in LCD touchscreen controller with Wi-Fi Under-bench LED RGB light 8mm tempered door and windows Low EMF Spectrum Plus infrared heaters High emissivity infrared heaters Shingle Roof with Barrier Stained and sealed Sou Sugi Ban supports Patent Pending Design Package Content: LED under-bench light Slats Front Trim Front Panel Back Panel Metal Bands Metal Bands Clamps Shingles Insulating Layer Male Light Cable Handle Outdoor Power Cover Screw Cover Power Cord Basic Level Pencil Necessary fasteners Drain Specifications: Model FD-6 External Materials Western Canadian Cedar - Clear Grade Interior Materials Western Canadian Cedar - Clear Grade Interior Dimensions 66\" x 72\" x 71\" Exterior Dimensions 75\" x 79\" x 75\" Room Volume 135 (ft³) Door Dimensions 26.3\" x 62.3\" Glass Thickness 8mm W/Rubber Gasket Stave Thickness 1.5\" Upper Bench Dimensions 71\" x 24\" x 33.1\" Lower Bench Dimensions 60.5\" x 16\" x 16.7\" Rain Jacket Shingles Ventilation Gravity Straps 3 Stainless Steel Assembled Weight 830 lbs Shipping Weight 1,005 lbs Supports 3 Shou Sugi Ban Treated Infrared Heaters 5 Spectrum Plus Wattage Per Infrared Heater 350w Infrared Electrical Requirements 120v 15a Infrared Electrical Connection NEMA 5-15P Infrared Wattage 1750w EMF Rating Very Low - Tested by NTS Frame Material Western Canadian Cedar - Clear Grade Infrared Power Cord Length 9ft Max Temperature 185 F (When rock sauna is used) Heater Warranty Unlimited Lifetime Spectrum Plus Sauna Warranty 5-Year Limited Bench Material Western Canadian Cedar - Clear Grade Infrared Max Temperature 170 F Useful Links: Installation & Operation Manual Specifications Floor Plan EMF Test Log ETL Certification",
+        "matched": "Exterior Dimensions 75\" x 79\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/finnmark-combination-outdoor-barrel-sauna-fd-6-infrared-and-traditional-6x6-cedar?variant=51751018758487&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 75\\\" x 79\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Finnmark Hybrid (Infrared & Traditional Outdoor Barrel Sauna) 6x6, Cedar Looking to experience the best of both worlds in sauna therapy? The Finnmark Cedar Combination Barrel Sauna seamlessly combines the benefits Finnmark’s UL-listed Spectrum Plus™ infrared sauna panels with a traditional Finnish rock sauna, creating a wellness sanctuary unlike any other. Crafted from thick Canadian Cedar, this sauna radiates natural beauty, durability, and a rich, aromatic atmosphere. Premium design elements, such as tempered glass panels, dual-level cedar benches, and a full shingle kit, ensure both elegance and longevity. Paired with cutting-edge features like Finnmark Spectrum Plus™ infrared heaters, a traditional 4.5kW heater, Wi-Fi-enabled controls, and customizable RGB lighting, this sauna delivers luxury, performance, and relaxation in perfect harmony. Features: Spectrum Plus™ UL Listed short wave infrared heaters for deep penetrating heat, up to 25x more than standard carbon panel heaters. Clear Grade Western Canadian Cedar 1 1/2\" Thick Staves Dual Bench System Built-in LCD touchscreen controller with Wi-Fi Under-bench LED RGB light 8mm tempered door and windows Low EMF Spectrum Plus infrared heaters High emissivity infrared heaters Shingle Roof with Barrier Stained and sealed Sou Sugi Ban supports Patent Pending Design Package Content: LED under-bench light Slats Front Trim Front Panel Back Panel Metal Bands Metal Bands Clamps Shingles Insulating Layer Male Light Cable Handle Outdoor Power Cover Screw Cover Power Cord Basic Level Pencil Necessary fasteners Drain Specifications: Model FD-6 External Materials Western Canadian Cedar - Clear Grade Interior Materials Western Canadian Cedar - Clear Grade Interior Dimensions 66\" x 72\" x 71\" Exterior Dimensions 75\" x 79\" x 75\" Room Volume 135 (ft³) Door Dimensions 26.3\" x 62.3\" Glass Thickness 8mm W/Rubber Gasket Stave Thickness 1.5\" Upper Bench Dimensions 71\" x 24\" x 33.1\" Lower Bench Dimensions 60.5\" x 16\" x 16.7\" Rain Jacket Shingles Ventilation Gravity Straps 3 Stainless Steel Assembled Weight 830 lbs Shipping Weight 1,005 lbs Supports 3 Shou Sugi Ban Treated Infrared Heaters 5 Spectrum Plus Wattage Per Infrared Heater 350w Infrared Electrical Requirements 120v 15a Infrared Electrical Connection NEMA 5-15P Infrared Wattage 1750w EMF Rating Very Low - Tested by NTS Frame Material Western Canadian Cedar - Clear Grade Infrared Power Cord Length 9ft Max Temperature 185 F (When rock sauna is used) Heater Warranty Unlimited Lifetime Spectrum Plus Sauna Warranty 5-Year Limited Bench Material Western Canadian Cedar - Clear Grade Infrared Max Temperature 170 F Useful Links: Installation & Operation Manual Specifications Floor Plan EMF Test Log ETL Certification",
+        "matched": "Exterior Dimensions 75\" x 79\" x 75\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

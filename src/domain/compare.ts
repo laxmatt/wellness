@@ -172,6 +172,8 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
   const scores = items.map((it) => it.score);
   const topScore = Math.max(...scores);
 
+  const strengths = items.map((it) => primaryStrength(it.view, cat));
+  const tradeoffs = items.map((it) => primaryTradeoff(it.view, cat));
   const overview: CompareGroup = {
     label: "Overview",
     rows: [
@@ -190,19 +192,19 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         cells: items.map((it) => ({ text: `${it.score} / 100`, best: it.score === topScore && new Set(scores).size > 1 })),
         same: new Set(scores).size === 1,
       },
-      {
+      ...(strengths.some(Boolean) ? [{
         key: "why",
-        label: "Why",
-        cells: items.map((it) => ({ text: primaryStrength(it.view, cat) ?? "Nothing flagged", best: false })),
+        label: cat.id === "saunas" ? "Key facts" : "Why",
+        cells: strengths.map((text) => ({ text: text ?? (cat.id === "saunas" ? "Not enough sourced facts yet" : "Nothing flagged"), best: false })),
         same: false,
-      },
-      {
+      }] : []),
+      ...(tradeoffs.some(Boolean) ? [{
         key: "tradeoff",
-        label: "Tradeoff",
+        label: cat.id === "saunas" ? "Plan for" : "Tradeoff",
         // No rule fired is not evidence of no tradeoff. Say what we did.
-        cells: items.map((it) => ({ text: primaryTradeoff(it.view, cat) ?? "Tradeoffs not assessed", best: false })),
+        cells: tradeoffs.map((text) => ({ text: text ?? (cat.id === "saunas" ? "Installation facts not stated" : "Tradeoffs not assessed"), best: false })),
         same: false,
-      },
+      }] : []),
     ],
   };
 

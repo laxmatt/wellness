@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Dynamic Toscana Elite 3-Person Ultra-Low EMF Far Infared Sauna | Indoor Infrared Sauna Kits",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-toscana-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596756517207&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Toscana Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to create a wellness retreat without leaving home? Dynamic Saunas are crafted from eco-friendly Canadian Hemlock wood and feature Low EMF FAR infrared heating panels that deliver safe, energy-efficient warmth. Each session helps reduce stress, soothe muscles, and restore your natural vitality. Designed for flexibility, these saunas can be installed in master baths, walk-in closets, basements, or even home gyms. Compact yet durable, they fit seamlessly into your lifestyle while offering lasting health and relaxation benefits. With a Dynamic Sauna, your home becomes a personal sanctuary for daily renewal. Features: Ultra Low EMF - EMF Between 3 to 5 mg 2 to 3 inches from the heating panels Full 3-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 8 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 3 boxes Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-toscana-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596756517207&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Toscana Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to create a wellness retreat without leaving home? Dynamic Saunas are crafted from eco-friendly Canadian Hemlock wood and feature Low EMF FAR infrared heating panels that deliver safe, energy-efficient warmth. Each session helps reduce stress, soothe muscles, and restore your natural vitality. Designed for flexibility, these saunas can be installed in master baths, walk-in closets, basements, or even home gyms. Compact yet durable, they fit seamlessly into your lifestyle while offering lasting health and relaxation benefits. With a Dynamic Sauna, your home becomes a personal sanctuary for daily renewal. Features: Ultra Low EMF - EMF Between 3 to 5 mg 2 to 3 inches from the heating panels Full 3-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 8 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 3 boxes Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-toscana-elite-3-person-ultra-low-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596756517207&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Toscana Elite 3-Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Want to create a wellness retreat without leaving home? Dynamic Saunas are crafted from eco-friendly Canadian Hemlock wood and feature Low EMF FAR infrared heating panels that deliver safe, energy-efficient warmth. Each session helps reduce stress, soothe muscles, and restore your natural vitality. Designed for flexibility, these saunas can be installed in master baths, walk-in closets, basements, or even home gyms. Compact yet durable, they fit seamlessly into your lifestyle while offering lasting health and relaxation benefits. With a Dynamic Sauna, your home becomes a personal sanctuary for daily renewal. Features: Ultra Low EMF - EMF Between 3 to 5 mg 2 to 3 inches from the heating panels Full 3-person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature 8 PureTech™ Ultra Low EMF 360 Carbon Heat Emitters (Heating Panels) - (Heating Panels on all 4 interior walls.) Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 3 boxes Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

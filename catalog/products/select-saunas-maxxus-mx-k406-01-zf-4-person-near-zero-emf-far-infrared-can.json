@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Maxxus 4-Person Near-Zero EMF FAR Infrared Sauna MX-K406-01-ZF | Indoor Infrared Sauna Kits | 4 Person, Infrared Saunas, Saunas",
         "matched": "FAR Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 74,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-mx-k406-01-zf-4-person-near-zero-emf-far-infrared-canadian-hemlock-sauna?variant=43874462662870&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 74″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus MX-K406-01-ZF 4-Person Infrared Sauna Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Maxxus Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Maxxus Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromatherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Maxxus Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Full 4-person capacity Natural hemlock wood construction Tempered glass door and 2 full-length side windows Interior color therapy lighting 9 Carbon heating panels Roof vent Interior/exterior LED control panel FM Radio with BT, MP3 auxiliary, SD and USB connection Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Clasp together assembly Extra Details Maximum Temp: 66°C (151°F) Exterior dimensions (WDH): 74″ x 42″ x 75″ (roof overhang: add 5.9″) Interior dimensions (WDH): 68″ x 37″ x 68″ Sauna weight: 400 lbs. Shipping weight: 450 lbs. Ships in 3 boxes All Maxxus Saunas Include a 5-Year Limited Warranty. View more details here. Useful Link Download Assembly & Operation Manual Videos",
+        "matched": "Exterior dimensions (WDH): 74″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-mx-k406-01-zf-4-person-near-zero-emf-far-infrared-canadian-hemlock-sauna?variant=43874462662870&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 74″ x 42″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus MX-K406-01-ZF 4-Person Infrared Sauna Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Maxxus Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Maxxus Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromatherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Maxxus Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Full 4-person capacity Natural hemlock wood construction Tempered glass door and 2 full-length side windows Interior color therapy lighting 9 Carbon heating panels Roof vent Interior/exterior LED control panel FM Radio with BT, MP3 auxiliary, SD and USB connection Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Clasp together assembly Extra Details Maximum Temp: 66°C (151°F) Exterior dimensions (WDH): 74″ x 42″ x 75″ (roof overhang: add 5.9″) Interior dimensions (WDH): 68″ x 37″ x 68″ Sauna weight: 400 lbs. Shipping weight: 450 lbs. Ships in 3 boxes All Maxxus Saunas Include a 5-Year Limited Warranty. View more details here. Useful Link Download Assembly & Operation Manual Videos",
+        "matched": "Exterior dimensions (WDH): 74″ x 42″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-mx-k406-01-zf-4-person-near-zero-emf-far-infrared-canadian-hemlock-sauna?variant=43874462662870&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 74″ x 42″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Maxxus MX-K406-01-ZF 4-Person Infrared Sauna Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Maxxus Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Maxxus Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromatherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Maxxus Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Full 4-person capacity Natural hemlock wood construction Tempered glass door and 2 full-length side windows Interior color therapy lighting 9 Carbon heating panels Roof vent Interior/exterior LED control panel FM Radio with BT, MP3 auxiliary, SD and USB connection Electrical service: 110V/20amp dedicated receptacle (consult a certified electrician) Clasp together assembly Extra Details Maximum Temp: 66°C (151°F) Exterior dimensions (WDH): 74″ x 42″ x 75″ (roof overhang: add 5.9″) Interior dimensions (WDH): 68″ x 37″ x 68″ Sauna weight: 400 lbs. Shipping weight: 450 lbs. Ships in 3 boxes All Maxxus Saunas Include a 5-Year Limited Warranty. View more details here. Useful Link Download Assembly & Operation Manual Videos",
+        "matched": "Exterior dimensions (WDH): 74″ x 42″ x 75″",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

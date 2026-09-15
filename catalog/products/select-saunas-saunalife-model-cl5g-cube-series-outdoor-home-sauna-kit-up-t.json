@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "SaunaLife CL5G 4-Person Outdoor Cube Cabin Sauna with Full Glass Front & Led Lighting | Outdoor Cabin Sauna Kits | 2-4 Person, 4 Person",
         "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 7,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl5g-cube-series-outdoor-home-sauna-kit-up-to-4-persons?variant=48654982906199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 80.7\\\"W x 63\\\"D x 82.7\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL5G Outdoor Cube Cabin Sauna – Spacious Luxury for Four Designed for ultimate relaxation, the Cube-Series CL5G Sauna features contoured seating and supportive arched backrests, ensuring comfort even during extended sessions. The satin-smooth thermo-aspen seating remains cool to the touch, enhancing your overall experience. An expansive glass front wall creates a bright, airy atmosphere with stunning outdoor views. Revive your well-being and rejuvenate your body and soul with the SaunaLife CL5G. Combining modern style and unparalleled relaxation, this sauna will exceed your expectations for ultimate comfort and indulgence. Key Features: Spacious 4-Person Capacity: Roomy enough for group relaxation or solo indulgence. Premium Thermo-Spruce Exterior: Stunning, durable wood designed to withstand outdoor conditions. Full Glass Front Wall: Expansive tempered glass for a modern aesthetic and panoramic outdoor views. Ergonomic Seating & Backrests: Contoured design ensures comfort during extended sessions. Shingled Roof for Durability: Protects against the elements while maintaining style. Interior Height: Over 6’2”, accommodating comfortable movement. Craftsmanship: Designed by SaunaLife and handcrafted in Northern Europe for unmatched quality. Package Contents Model CL5G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Shingles on the roof F ascia board Heater guard Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote and mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, flush (3) Installation instructions Specifications Model Model CL5G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 55.1\"D x 74.8\"H Exterior Dimensions 80.7\"W x 63\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 63\"D x 82.7\"H Shipping Weight 1680 lbs Back Wall, Lower, Side Bench Dimensions Back Wall 76\" - Lower 73.2\" - Side 17.3\" Bench Depth Top 17.7\" - Lower 31.1\" - Side 23.6\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View CL5G Installation and Operation Manual Model CL5G Dimensions",
+        "matched": "Exterior Dimensions 80.7\"W x 63\"D x 82.7\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 63,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl5g-cube-series-outdoor-home-sauna-kit-up-to-4-persons?variant=48654982906199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 80.7\\\"W x 63\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL5G Outdoor Cube Cabin Sauna – Spacious Luxury for Four Designed for ultimate relaxation, the Cube-Series CL5G Sauna features contoured seating and supportive arched backrests, ensuring comfort even during extended sessions. The satin-smooth thermo-aspen seating remains cool to the touch, enhancing your overall experience. An expansive glass front wall creates a bright, airy atmosphere with stunning outdoor views. Revive your well-being and rejuvenate your body and soul with the SaunaLife CL5G. Combining modern style and unparalleled relaxation, this sauna will exceed your expectations for ultimate comfort and indulgence. Key Features: Spacious 4-Person Capacity: Roomy enough for group relaxation or solo indulgence. Premium Thermo-Spruce Exterior: Stunning, durable wood designed to withstand outdoor conditions. Full Glass Front Wall: Expansive tempered glass for a modern aesthetic and panoramic outdoor views. Ergonomic Seating & Backrests: Contoured design ensures comfort during extended sessions. Shingled Roof for Durability: Protects against the elements while maintaining style. Interior Height: Over 6’2”, accommodating comfortable movement. Craftsmanship: Designed by SaunaLife and handcrafted in Northern Europe for unmatched quality. Package Contents Model CL5G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Shingles on the roof F ascia board Heater guard Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote and mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, flush (3) Installation instructions Specifications Model Model CL5G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 55.1\"D x 74.8\"H Exterior Dimensions 80.7\"W x 63\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 63\"D x 82.7\"H Shipping Weight 1680 lbs Back Wall, Lower, Side Bench Dimensions Back Wall 76\" - Lower 73.2\" - Side 17.3\" Bench Depth Top 17.7\" - Lower 31.1\" - Side 23.6\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View CL5G Installation and Operation Manual Model CL5G Dimensions",
+        "matched": "Exterior Dimensions 80.7\"W x 63\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 82.7,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-model-cl5g-cube-series-outdoor-home-sauna-kit-up-to-4-persons?variant=48654982906199&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions 80.7\\\"W x 63\\\"D x 82.7\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL5G Outdoor Cube Cabin Sauna – Spacious Luxury for Four Designed for ultimate relaxation, the Cube-Series CL5G Sauna features contoured seating and supportive arched backrests, ensuring comfort even during extended sessions. The satin-smooth thermo-aspen seating remains cool to the touch, enhancing your overall experience. An expansive glass front wall creates a bright, airy atmosphere with stunning outdoor views. Revive your well-being and rejuvenate your body and soul with the SaunaLife CL5G. Combining modern style and unparalleled relaxation, this sauna will exceed your expectations for ultimate comfort and indulgence. Key Features: Spacious 4-Person Capacity: Roomy enough for group relaxation or solo indulgence. Premium Thermo-Spruce Exterior: Stunning, durable wood designed to withstand outdoor conditions. Full Glass Front Wall: Expansive tempered glass for a modern aesthetic and panoramic outdoor views. Ergonomic Seating & Backrests: Contoured design ensures comfort during extended sessions. Shingled Roof for Durability: Protects against the elements while maintaining style. Interior Height: Over 6’2”, accommodating comfortable movement. Craftsmanship: Designed by SaunaLife and handcrafted in Northern Europe for unmatched quality. Package Contents Model CL5G Outdoor Home Sauna Kit Walls of Thermo-Spruce (42mm) Front and back wall of Thermo-Spruce (28mm) Tempered bronze front glass wall (8mm) Ergonomic sauna bench of Thermo-Aspen Ergonomic backrest of Thermo-Aspen Shingles on the roof F ascia board Heater guard Montage kit Front details painted black Installation instructions White LED Light Bar System with Wi-Fi App White LED light bar (1) Wi-Fi, app-based operation Wireless handheld remote and mounting cradle 90W power supply Driver 30’ light cable Mounting clips, articulating (3) Mounting clips, flush (3) Installation instructions Specifications Model Model CL5G Wall and Ceiling Material Thermo-Spruce Bench and Backrest Material Knotless Thermo-Aspen Interior Dimensions 77.2\"W x 55.1\"D x 74.8\"H Exterior Dimensions 80.7\"W x 63\"D x 82.7\"H Door 23.2\" x 66.5\" Door Handle Square Door Handle Material Wood Shipping Dimensions 80.7\"W x 63\"D x 82.7\"H Shipping Weight 1680 lbs Back Wall, Lower, Side Bench Dimensions Back Wall 76\" - Lower 73.2\" - Side 17.3\" Bench Depth Top 17.7\" - Lower 31.1\" - Side 23.6\" Staves Thickness 1.7\" Glass Style Tempered Bronze Useful Links View CL5G Installation and Operation Manual Model CL5G Dimensions",
+        "matched": "Exterior Dimensions 80.7\"W x 63\"D x 82.7\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

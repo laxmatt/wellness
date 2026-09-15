@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "SaunaLife CL12GCP Outdoor Cube-Series Home Sauna Suite Kit, 8 Persons | Outdoor Traditional Sauna Kits",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 93,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-cl12gcp-outdoor-cube-series-home-sauna-suite-kit-8-persons?variant=51817078915415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions - 91\\\"W x 151.6\\\"D x 93\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL12GCP Outdoor Cube-Series Home Sauna Suite Kit, 8 Persons - Thermo-Spruce Looking for the ultimate outdoor sauna that blends elegance, comfort, and durability? The SaunaLife CL12GCP from the Cube Luxury Series offers a complete wellness retreat with its charming front porch, integrated dressing room, and expansive tempered-glass picture window that fills the sauna with natural light. Designed for large properties and cabins, it’s the perfect choice when you want both convenience and luxury in one seamless experience. Built with premium Thermo-Spruce and Thermo-Aspen materials, the CL12GCP combines robust construction with exceptional comfort, featuring contoured seating, supportive backrests, and satin-smooth surfaces that stay cool to the touch. Enhanced with Wi-Fi controlled “dotless” LED lighting, this sauna not only elevates relaxation but also highlights the natural beauty of the wood, creating an inviting sanctuary you’ll enjoy for years to come. Features: Robust Thermo-Spruce exterior with thick 12.5-foot full-length staves Separate dressing room for a comfortable transition between the sauna and outdoors Charming front porch with seating Engineered for superior airflow and circulation Contoured, 2-Tier Thermo-Aspen bench & backrest configuration Solid, extra-thick front door with tempered glass and secure lock Shingled roof with drip rails for durability against outdoor elements Beautiful tempered bronze front glass door & rear picture window White LED Light Bar System with Wi-Fi App Designed by SaunaLife and handcrafted in Northern Europe Accommodates up to 8 bathers Floor Plan Exterior dimensions - 91\"W x 151.6\"D x 93\"H Interior dimensions - 87.5\"W x 122.5\"D x 85.5\"H Specifications: Sauna Room Dimensions: 87.5\"W x 78.6\"D x 85.5\"H Dressing Room Dimensions: 87.5\"W x 43.9\"D x 85.5\"H Porch Dimensions: 87.5\"W x 22.75\"D x 85.5\"H Glass Style: Tempered Bronze (0.31” thick) Shipping Dimensions: 155\"W x 44\"D x 47\"H Weight: 3450 lbs",
+        "matched": "Exterior dimensions - 91\"W x 151.6\"D x 93\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 151.6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-cl12gcp-outdoor-cube-series-home-sauna-suite-kit-8-persons?variant=51817078915415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions - 91\\\"W x 151.6\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL12GCP Outdoor Cube-Series Home Sauna Suite Kit, 8 Persons - Thermo-Spruce Looking for the ultimate outdoor sauna that blends elegance, comfort, and durability? The SaunaLife CL12GCP from the Cube Luxury Series offers a complete wellness retreat with its charming front porch, integrated dressing room, and expansive tempered-glass picture window that fills the sauna with natural light. Designed for large properties and cabins, it’s the perfect choice when you want both convenience and luxury in one seamless experience. Built with premium Thermo-Spruce and Thermo-Aspen materials, the CL12GCP combines robust construction with exceptional comfort, featuring contoured seating, supportive backrests, and satin-smooth surfaces that stay cool to the touch. Enhanced with Wi-Fi controlled “dotless” LED lighting, this sauna not only elevates relaxation but also highlights the natural beauty of the wood, creating an inviting sanctuary you’ll enjoy for years to come. Features: Robust Thermo-Spruce exterior with thick 12.5-foot full-length staves Separate dressing room for a comfortable transition between the sauna and outdoors Charming front porch with seating Engineered for superior airflow and circulation Contoured, 2-Tier Thermo-Aspen bench & backrest configuration Solid, extra-thick front door with tempered glass and secure lock Shingled roof with drip rails for durability against outdoor elements Beautiful tempered bronze front glass door & rear picture window White LED Light Bar System with Wi-Fi App Designed by SaunaLife and handcrafted in Northern Europe Accommodates up to 8 bathers Floor Plan Exterior dimensions - 91\"W x 151.6\"D x 93\"H Interior dimensions - 87.5\"W x 122.5\"D x 85.5\"H Specifications: Sauna Room Dimensions: 87.5\"W x 78.6\"D x 85.5\"H Dressing Room Dimensions: 87.5\"W x 43.9\"D x 85.5\"H Porch Dimensions: 87.5\"W x 22.75\"D x 85.5\"H Glass Style: Tempered Bronze (0.31” thick) Shipping Dimensions: 155\"W x 44\"D x 47\"H Weight: 3450 lbs",
+        "matched": "Exterior dimensions - 91\"W x 151.6\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 93,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/saunalife-cl12gcp-outdoor-cube-series-home-sauna-suite-kit-8-persons?variant=51817078915415&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions - 91\\\"W x 151.6\\\"D x 93\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "SaunaLife CL12GCP Outdoor Cube-Series Home Sauna Suite Kit, 8 Persons - Thermo-Spruce Looking for the ultimate outdoor sauna that blends elegance, comfort, and durability? The SaunaLife CL12GCP from the Cube Luxury Series offers a complete wellness retreat with its charming front porch, integrated dressing room, and expansive tempered-glass picture window that fills the sauna with natural light. Designed for large properties and cabins, it’s the perfect choice when you want both convenience and luxury in one seamless experience. Built with premium Thermo-Spruce and Thermo-Aspen materials, the CL12GCP combines robust construction with exceptional comfort, featuring contoured seating, supportive backrests, and satin-smooth surfaces that stay cool to the touch. Enhanced with Wi-Fi controlled “dotless” LED lighting, this sauna not only elevates relaxation but also highlights the natural beauty of the wood, creating an inviting sanctuary you’ll enjoy for years to come. Features: Robust Thermo-Spruce exterior with thick 12.5-foot full-length staves Separate dressing room for a comfortable transition between the sauna and outdoors Charming front porch with seating Engineered for superior airflow and circulation Contoured, 2-Tier Thermo-Aspen bench & backrest configuration Solid, extra-thick front door with tempered glass and secure lock Shingled roof with drip rails for durability against outdoor elements Beautiful tempered bronze front glass door & rear picture window White LED Light Bar System with Wi-Fi App Designed by SaunaLife and handcrafted in Northern Europe Accommodates up to 8 bathers Floor Plan Exterior dimensions - 91\"W x 151.6\"D x 93\"H Interior dimensions - 87.5\"W x 122.5\"D x 85.5\"H Specifications: Sauna Room Dimensions: 87.5\"W x 78.6\"D x 85.5\"H Dressing Room Dimensions: 87.5\"W x 43.9\"D x 85.5\"H Porch Dimensions: 87.5\"W x 22.75\"D x 85.5\"H Glass Style: Tempered Bronze (0.31” thick) Shipping Dimensions: 155\"W x 44\"D x 47\"H Weight: 3450 lbs",
+        "matched": "Exterior dimensions - 91\"W x 151.6\"D x 93\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,28 @@
         "field": "classified_as",
         "sourceText": "Almost Heaven Titan 6-Person Indoor Sauna | Indoor Traditional Sauna Kits | 6-Person, Almost Heaven Traditional Saunas, almost-heaven, Saunas, Vision Series",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia 8 kW Wall or KIP Series heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-titan-6-person-indoor-sauna-vision-series?variant=55024088809815&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia 8 kW Wall or KIP Series heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Titan 6-Person Indoor Sauna Introducing the Titan 6-Person Sauna from Almost Heaven Saunas, where spaciousness meets luxury for the ultimate wellness retreat. With exterior dimensions of 83-1/4\"W x 72-1/4\"D x 79-3/8\"H and interior dimensions of 79-3/4\"W x 68-3/4\"D x 77-3/8\"H, the Titan offers ample room for you and five companions to indulge in relaxation. Featuring multi-level seating with three benches, including an upper bench measuring 78\"L x 24\"W x 37-3/8\"H, a lower bench measuring 78\"L x 24\"W x 22-7/8\"H, and an \"L\" bench measuring 42-7/8\"L x 24\"W x 37-3/8\"H, this sauna ensures comfort for all users. Crafted from premium Hemfir or Rustic Cedar lumber, the Titan exudes both elegance and durability. Experience the soothing warmth of the Harvia 8 kW Wall or KIP Series heater, providing efficient heat for a truly indulgent sauna experience. Plus, with the option to upgrade the heater to models such as KIPW, Spirit, Virta, or Cilindro Series, you can customize your sauna to your exact preferences. Elevate your wellness journey with the Titan 6-Person Sauna, where luxury meets tranquility for an unparalleled sauna experience.",
+        "matched": "Harvia 8 kW Wall or KIP Series heater",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

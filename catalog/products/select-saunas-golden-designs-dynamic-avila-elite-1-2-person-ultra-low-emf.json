@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Dynamic Saunas Avila Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits | 1-2 Person, Infrared Saunas, Saunas",
         "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 39,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-dynamic-avila-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=46967325327703&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 39\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Avila Elite 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna - Canadian Hemlock Experience the ultimate in relaxation and wellness with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna. Step into your own personal oasis of tranquility and indulge in the therapeutic benefits of far-infrared heat. Crafted with care and precision, the Avila sauna offers an intimate space for you to unwind and rejuvenate. The cutting-edge Ultra-Low EMF technology ensures a safe and peaceful experience, allowing you to focus on the profound healing properties of the far-infrared rays. As the gentle heat penetrates your muscles, you'll feel tension melt away and your body invigorated. From improved circulation to detoxification, this sauna is your ticket to a healthier and more relaxed you. Elevate your well-being and transform your home into a haven of serenity with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna - your escape to a blissful sanctuary. Features 1-2 Person capacity Music System w/Bluetooth Capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15amp Clasp together assembly 7 Carbon PureTech™ Ultra Low EMF Heat Emitters Tempered glass door Interior reading/chromotherapy lighting system Roof vent Specifications Exterior dimensions (WDH): 39\" x 36\" x 73\" (roof overhang: add 2\") Interior dimensions (WDH): 36\" x 32\" x 67\" Sauna weight: 250 lbs. Shipping weight: 295 lbs. Ships in 1 box All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 39\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 36,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-dynamic-avila-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=46967325327703&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 39\\\" x 36\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Avila Elite 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna - Canadian Hemlock Experience the ultimate in relaxation and wellness with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna. Step into your own personal oasis of tranquility and indulge in the therapeutic benefits of far-infrared heat. Crafted with care and precision, the Avila sauna offers an intimate space for you to unwind and rejuvenate. The cutting-edge Ultra-Low EMF technology ensures a safe and peaceful experience, allowing you to focus on the profound healing properties of the far-infrared rays. As the gentle heat penetrates your muscles, you'll feel tension melt away and your body invigorated. From improved circulation to detoxification, this sauna is your ticket to a healthier and more relaxed you. Elevate your well-being and transform your home into a haven of serenity with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna - your escape to a blissful sanctuary. Features 1-2 Person capacity Music System w/Bluetooth Capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15amp Clasp together assembly 7 Carbon PureTech™ Ultra Low EMF Heat Emitters Tempered glass door Interior reading/chromotherapy lighting system Roof vent Specifications Exterior dimensions (WDH): 39\" x 36\" x 73\" (roof overhang: add 2\") Interior dimensions (WDH): 36\" x 32\" x 67\" Sauna weight: 250 lbs. Shipping weight: 295 lbs. Ships in 1 box All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 39\" x 36\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 73,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-dynamic-avila-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=46967325327703&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 39\\\" x 36\\\" x 73\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Avila Elite 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna - Canadian Hemlock Experience the ultimate in relaxation and wellness with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna. Step into your own personal oasis of tranquility and indulge in the therapeutic benefits of far-infrared heat. Crafted with care and precision, the Avila sauna offers an intimate space for you to unwind and rejuvenate. The cutting-edge Ultra-Low EMF technology ensures a safe and peaceful experience, allowing you to focus on the profound healing properties of the far-infrared rays. As the gentle heat penetrates your muscles, you'll feel tension melt away and your body invigorated. From improved circulation to detoxification, this sauna is your ticket to a healthier and more relaxed you. Elevate your well-being and transform your home into a haven of serenity with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna - your escape to a blissful sanctuary. Features 1-2 Person capacity Music System w/Bluetooth Capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15amp Clasp together assembly 7 Carbon PureTech™ Ultra Low EMF Heat Emitters Tempered glass door Interior reading/chromotherapy lighting system Roof vent Specifications Exterior dimensions (WDH): 39\" x 36\" x 73\" (roof overhang: add 2\") Interior dimensions (WDH): 36\" x 32\" x 67\" Sauna weight: 250 lbs. Shipping weight: 295 lbs. Ships in 1 box All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 39\" x 36\" x 73\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-dynamic-avila-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=46967325327703&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Avila Elite 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna - Canadian Hemlock Experience the ultimate in relaxation and wellness with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna. Step into your own personal oasis of tranquility and indulge in the therapeutic benefits of far-infrared heat. Crafted with care and precision, the Avila sauna offers an intimate space for you to unwind and rejuvenate. The cutting-edge Ultra-Low EMF technology ensures a safe and peaceful experience, allowing you to focus on the profound healing properties of the far-infrared rays. As the gentle heat penetrates your muscles, you'll feel tension melt away and your body invigorated. From improved circulation to detoxification, this sauna is your ticket to a healthier and more relaxed you. Elevate your well-being and transform your home into a haven of serenity with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna - your escape to a blissful sanctuary. Features 1-2 Person capacity Music System w/Bluetooth Capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15amp Clasp together assembly 7 Carbon PureTech™ Ultra Low EMF Heat Emitters Tempered glass door Interior reading/chromotherapy lighting system Roof vent Specifications Exterior dimensions (WDH): 39\" x 36\" x 73\" (roof overhang: add 2\") Interior dimensions (WDH): 36\" x 32\" x 67\" Sauna weight: 250 lbs. Shipping weight: 295 lbs. Ships in 1 box All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-dynamic-avila-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=46967325327703&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Avila Elite 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna - Canadian Hemlock Experience the ultimate in relaxation and wellness with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna. Step into your own personal oasis of tranquility and indulge in the therapeutic benefits of far-infrared heat. Crafted with care and precision, the Avila sauna offers an intimate space for you to unwind and rejuvenate. The cutting-edge Ultra-Low EMF technology ensures a safe and peaceful experience, allowing you to focus on the profound healing properties of the far-infrared rays. As the gentle heat penetrates your muscles, you'll feel tension melt away and your body invigorated. From improved circulation to detoxification, this sauna is your ticket to a healthier and more relaxed you. Elevate your well-being and transform your home into a haven of serenity with the New 2023 Model Avila 1-2 Person Ultra-Low EMF Far Infrared Sauna - your escape to a blissful sanctuary. Features 1-2 Person capacity Music System w/Bluetooth Capability and 2 dynamic speakers with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15amp Clasp together assembly 7 Carbon PureTech™ Ultra Low EMF Heat Emitters Tempered glass door Interior reading/chromotherapy lighting system Roof vent Specifications Exterior dimensions (WDH): 39\" x 36\" x 73\" (roof overhang: add 2\") Interior dimensions (WDH): 36\" x 32\" x 67\" Sauna weight: 250 lbs. Shipping weight: 295 lbs. Ships in 1 box All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 120V/15amp",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

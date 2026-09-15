@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,116 @@
         "field": "classified_as",
         "sourceText": "Golden Designs 1-Person Full-Spectrum Infrared Sauna w/ Himalayan Salt Bar | Indoor Infrared Sauna Kits",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 41,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/2025-reserve-edition-gdi-8010-03-full-spectrum-with-himalayan-salt-bar?variant=48726578659671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 41″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8010-03 Full Spectrum Infrared Sauna with Himalayan Salt Bar The Golden Designs Reserve 1-Person Full Spectrum Infrared Sauna is perfect for condos or apartments with limited space. This full-spectrum infrared sauna features a Himalayan salt panel, Bluetooth stereo and speakers, and chromotherapy lighting. Step into your own at-home sanctuary and experience pure relaxation. Features 1-Person Capacity (Compact Unit - Ideal for 1 Person) Exterior dimensions (WDH): 41″ x 37″ x 75″ (roof overhang: add 5″) Interior dimensions (WDH): 36″ x 32″ x 68″ Bluetooth and MP3 auxiliary connection Interior Touch Screen Control Panel Interior chromotherapy lighting system with red light therapy feature Natural Reforested Canadian Hemlock wood construction Electrical service: 120V/15amp Exterior Ambient Lighting Clasp together assembly 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Specifications 2 Near Infrared Red Heat Emitters (Heating Elements) 1 Himalayan Salt Bar (Under the bench) Bronze privacy tempered glass door Roof vent Sauna weight: 305 lbs. Shipping weight: 385 lbs. Ships in 3 boxes",
+        "matched": "Exterior dimensions (WDH): 41″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 37,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/2025-reserve-edition-gdi-8010-03-full-spectrum-with-himalayan-salt-bar?variant=48726578659671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 41″ x 37″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8010-03 Full Spectrum Infrared Sauna with Himalayan Salt Bar The Golden Designs Reserve 1-Person Full Spectrum Infrared Sauna is perfect for condos or apartments with limited space. This full-spectrum infrared sauna features a Himalayan salt panel, Bluetooth stereo and speakers, and chromotherapy lighting. Step into your own at-home sanctuary and experience pure relaxation. Features 1-Person Capacity (Compact Unit - Ideal for 1 Person) Exterior dimensions (WDH): 41″ x 37″ x 75″ (roof overhang: add 5″) Interior dimensions (WDH): 36″ x 32″ x 68″ Bluetooth and MP3 auxiliary connection Interior Touch Screen Control Panel Interior chromotherapy lighting system with red light therapy feature Natural Reforested Canadian Hemlock wood construction Electrical service: 120V/15amp Exterior Ambient Lighting Clasp together assembly 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Specifications 2 Near Infrared Red Heat Emitters (Heating Elements) 1 Himalayan Salt Bar (Under the bench) Bronze privacy tempered glass door Roof vent Sauna weight: 305 lbs. Shipping weight: 385 lbs. Ships in 3 boxes",
+        "matched": "Exterior dimensions (WDH): 41″ x 37″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/2025-reserve-edition-gdi-8010-03-full-spectrum-with-himalayan-salt-bar?variant=48726578659671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 41″ x 37″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8010-03 Full Spectrum Infrared Sauna with Himalayan Salt Bar The Golden Designs Reserve 1-Person Full Spectrum Infrared Sauna is perfect for condos or apartments with limited space. This full-spectrum infrared sauna features a Himalayan salt panel, Bluetooth stereo and speakers, and chromotherapy lighting. Step into your own at-home sanctuary and experience pure relaxation. Features 1-Person Capacity (Compact Unit - Ideal for 1 Person) Exterior dimensions (WDH): 41″ x 37″ x 75″ (roof overhang: add 5″) Interior dimensions (WDH): 36″ x 32″ x 68″ Bluetooth and MP3 auxiliary connection Interior Touch Screen Control Panel Interior chromotherapy lighting system with red light therapy feature Natural Reforested Canadian Hemlock wood construction Electrical service: 120V/15amp Exterior Ambient Lighting Clasp together assembly 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Specifications 2 Near Infrared Red Heat Emitters (Heating Elements) 1 Himalayan Salt Bar (Under the bench) Bronze privacy tempered glass door Roof vent Sauna weight: 305 lbs. Shipping weight: 385 lbs. Ships in 3 boxes",
+        "matched": "Exterior dimensions (WDH): 41″ x 37″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/2025-reserve-edition-gdi-8010-03-full-spectrum-with-himalayan-salt-bar?variant=48726578659671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8010-03 Full Spectrum Infrared Sauna with Himalayan Salt Bar The Golden Designs Reserve 1-Person Full Spectrum Infrared Sauna is perfect for condos or apartments with limited space. This full-spectrum infrared sauna features a Himalayan salt panel, Bluetooth stereo and speakers, and chromotherapy lighting. Step into your own at-home sanctuary and experience pure relaxation. Features 1-Person Capacity (Compact Unit - Ideal for 1 Person) Exterior dimensions (WDH): 41″ x 37″ x 75″ (roof overhang: add 5″) Interior dimensions (WDH): 36″ x 32″ x 68″ Bluetooth and MP3 auxiliary connection Interior Touch Screen Control Panel Interior chromotherapy lighting system with red light therapy feature Natural Reforested Canadian Hemlock wood construction Electrical service: 120V/15amp Exterior Ambient Lighting Clasp together assembly 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Specifications 2 Near Infrared Red Heat Emitters (Heating Elements) 1 Himalayan Salt Bar (Under the bench) Bronze privacy tempered glass door Roof vent Sauna weight: 305 lbs. Shipping weight: 385 lbs. Ships in 3 boxes",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/2025-reserve-edition-gdi-8010-03-full-spectrum-with-himalayan-salt-bar?variant=48726578659671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs GDI-8010-03 Full Spectrum Infrared Sauna with Himalayan Salt Bar The Golden Designs Reserve 1-Person Full Spectrum Infrared Sauna is perfect for condos or apartments with limited space. This full-spectrum infrared sauna features a Himalayan salt panel, Bluetooth stereo and speakers, and chromotherapy lighting. Step into your own at-home sanctuary and experience pure relaxation. Features 1-Person Capacity (Compact Unit - Ideal for 1 Person) Exterior dimensions (WDH): 41″ x 37″ x 75″ (roof overhang: add 5″) Interior dimensions (WDH): 36″ x 32″ x 68″ Bluetooth and MP3 auxiliary connection Interior Touch Screen Control Panel Interior chromotherapy lighting system with red light therapy feature Natural Reforested Canadian Hemlock wood construction Electrical service: 120V/15amp Exterior Ambient Lighting Clasp together assembly 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) Specifications 2 Near Infrared Red Heat Emitters (Heating Elements) 1 Himalayan Salt Bar (Under the bench) Bronze privacy tempered glass door Roof vent Sauna weight: 305 lbs. Shipping weight: 385 lbs. Ships in 3 boxes",
+        "matched": "Electrical service: 120V/15amp",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

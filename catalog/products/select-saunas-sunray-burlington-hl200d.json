@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,72 @@
         "field": "classified_as",
         "sourceText": "Sunray Burlington 2-Person Outdoor Infrared Sauna | Indoor Infrared Sauna Kits | 1-2 Person, Cabin Saunas, Infrared Saunas",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 57,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-burlington-hl200d?variant=43818026369238&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 57\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Burlington HL200D The Burlington outdoor infrared sauna has deep bench seating in the rear and comfortably seats 2 people. Seven ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Burlington is the perfect size for a back yard patio. This sauna includes an oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth speakers, cup holders, and more. The Burlington is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 57\" x 45.3\" x 83\" - Cabin Dimensions 48\" x 39\" x 83\". Rapid-Heat ceramic heaters - 6 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Bluetooth speaker system. Severe weather cover. Easy to install tongue and groove construction. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. 7-Year Structural Warranty - Guaranteed against defects in materials and workmanship for a full 7 years. 20 Amps, 120V AC. Measurements: Exterior width: 57\" Exterior depth: 45\" Exterior height: 83\" Interior height: 68\" Interior width 43\" Interior depth 41\" Product weight: 301 lbs. Useful Link Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 57\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 45.3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-burlington-hl200d?variant=43818026369238&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 57\\\" x 45.3\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Burlington HL200D The Burlington outdoor infrared sauna has deep bench seating in the rear and comfortably seats 2 people. Seven ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Burlington is the perfect size for a back yard patio. This sauna includes an oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth speakers, cup holders, and more. The Burlington is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 57\" x 45.3\" x 83\" - Cabin Dimensions 48\" x 39\" x 83\". Rapid-Heat ceramic heaters - 6 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Bluetooth speaker system. Severe weather cover. Easy to install tongue and groove construction. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. 7-Year Structural Warranty - Guaranteed against defects in materials and workmanship for a full 7 years. 20 Amps, 120V AC. Measurements: Exterior width: 57\" Exterior depth: 45\" Exterior height: 83\" Interior height: 68\" Interior width 43\" Interior depth 41\" Product weight: 301 lbs. Useful Link Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 57\" x 45.3\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 83,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/sunray-burlington-hl200d?variant=43818026369238&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior Dimensions: 57\\\" x 45.3\\\" x 83\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Sunray Burlington HL200D The Burlington outdoor infrared sauna has deep bench seating in the rear and comfortably seats 2 people. Seven ceramic heaters will quickly get the sauna to your desired temperature up to 140 degrees. The Burlington is the perfect size for a back yard patio. This sauna includes an oxygen ionization system for purifying the air, recessed interior lighting, Bluetooth speakers, cup holders, and more. The Burlington is easy to assemble and the natural Canadian hemlock wood will enhance any outdoor patio setting. Features & Specifications: Exterior Dimensions: 57\" x 45.3\" x 83\" - Cabin Dimensions 48\" x 39\" x 83\". Rapid-Heat ceramic heaters - 6 Rapid Heat ceramic heaters gets the sauna to your desired temperature in just minutes! Bluetooth speaker system. Severe weather cover. Easy to install tongue and groove construction. ETL/CSA Certified - Meets all US and Canadian electrical safety standards - 120V, 20 amp plug. 7-Year Structural Warranty - Guaranteed against defects in materials and workmanship for a full 7 years. 20 Amps, 120V AC. Measurements: Exterior width: 57\" Exterior depth: 45\" Exterior height: 83\" Interior height: 68\" Interior width 43\" Interior depth 41\" Product weight: 301 lbs. Useful Link Sunray Saunas Warranty Certificate",
+        "matched": "Exterior Dimensions: 57\" x 45.3\" x 83\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

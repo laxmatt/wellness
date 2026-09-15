@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -164,6 +165,116 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Carinthia 3-Person Outdoor Hybrid Sauna (PureTech™ Full Spectrum Infrared & Harvia SWS80) | Outdoor Pre-Assembled Cabin Saunas | 3 Person, Saunas, Traditional Saunas",
         "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 84.1,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-carinthia-3-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-canadian-hemlock?variant=46973754212695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Designs GDI-8123-01 Hybrid Outdoor Sauna - Carinthia (Canadian Hemlock) Discover the perfect harmony of tradition and modernity with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This innovative outdoor sauna offers the best of both worlds, allowing you to indulge in the classic benefits of a traditional sauna or bask in the rejuvenating power of full-spectrum infrared therapy. Versatile Design: The Carinthia sauna is truly a one-of-a-kind wellness retreat. Choose between the traditional sauna experience, where steam envelops your body, promoting deep relaxation, or immerse yourself in the gentle, radiant warmth of full-spectrum infrared therapy, known for its deep tissue penetration and detoxification benefits. Embrace a sauna experience tailored to your unique preferences and wellness needs. Nature-Inspired Elegance: Embrace the beauty of nature with the all-Canadian Hemlock exterior of the Carinthia sauna. The exquisite wood not only complements your outdoor space but also provides natural resistance to decay, ensuring the sauna's longevity and durability. The traditional design exudes timeless elegance, creating a seamless connection between your outdoor environment and your wellness sanctuary. Outdoor Escape: Step into a rejuvenating oasis amidst the tranquility of your backyard. The Carinthia sauna invites you to unwind and rejuvenate with friends and family, basking in the warmth of the sauna and reconnecting with nature. Clear Water Protection: Crafted with durability in mind, the Golden Designs Carinthia sauna features an exterior clear water protection stain. This protective layer shields the wood from the elements, ensuring it remains in pristine condition year after year. With an annual re-application, your sauna will continue to stand the test of time. Elevate Your Outdoor Living: Elevate your outdoor living and elevate your wellness with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This beautifully designed and expertly crafted sauna offers unparalleled versatility, allowing you to tailor your sauna experience to suit your needs and preferences. Experience the best of both worlds and immerse yourself in a sauna experience that transcends tradition and embraces modern wellness. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior (Exterior Clear Water Protection Stain - Requires Annual Re-Apply) Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR heaters: Total 8 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared Heat Emitters (Heating Elements) Traditional Heater: Harvia SWS80 The Wall 8 kW Specifications Electrical service: 240V / 40AMP (Heater & IR panels). Please consult a certified electrician to install. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight 680 LBS Shipping Weight 930 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 73.6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-carinthia-3-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-canadian-hemlock?variant=46973754212695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\" x 73.6\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Designs GDI-8123-01 Hybrid Outdoor Sauna - Carinthia (Canadian Hemlock) Discover the perfect harmony of tradition and modernity with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This innovative outdoor sauna offers the best of both worlds, allowing you to indulge in the classic benefits of a traditional sauna or bask in the rejuvenating power of full-spectrum infrared therapy. Versatile Design: The Carinthia sauna is truly a one-of-a-kind wellness retreat. Choose between the traditional sauna experience, where steam envelops your body, promoting deep relaxation, or immerse yourself in the gentle, radiant warmth of full-spectrum infrared therapy, known for its deep tissue penetration and detoxification benefits. Embrace a sauna experience tailored to your unique preferences and wellness needs. Nature-Inspired Elegance: Embrace the beauty of nature with the all-Canadian Hemlock exterior of the Carinthia sauna. The exquisite wood not only complements your outdoor space but also provides natural resistance to decay, ensuring the sauna's longevity and durability. The traditional design exudes timeless elegance, creating a seamless connection between your outdoor environment and your wellness sanctuary. Outdoor Escape: Step into a rejuvenating oasis amidst the tranquility of your backyard. The Carinthia sauna invites you to unwind and rejuvenate with friends and family, basking in the warmth of the sauna and reconnecting with nature. Clear Water Protection: Crafted with durability in mind, the Golden Designs Carinthia sauna features an exterior clear water protection stain. This protective layer shields the wood from the elements, ensuring it remains in pristine condition year after year. With an annual re-application, your sauna will continue to stand the test of time. Elevate Your Outdoor Living: Elevate your outdoor living and elevate your wellness with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This beautifully designed and expertly crafted sauna offers unparalleled versatility, allowing you to tailor your sauna experience to suit your needs and preferences. Experience the best of both worlds and immerse yourself in a sauna experience that transcends tradition and embraces modern wellness. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior (Exterior Clear Water Protection Stain - Requires Annual Re-Apply) Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR heaters: Total 8 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared Heat Emitters (Heating Elements) Traditional Heater: Harvia SWS80 The Wall 8 kW Specifications Electrical service: 240V / 40AMP (Heater & IR panels). Please consult a certified electrician to install. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight 680 LBS Shipping Weight 930 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 97.4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-carinthia-3-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-canadian-hemlock?variant=46973754212695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions with Overhang (W x D x H): 84.1\\\" x 73.6\\\" x 97.4\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Designs GDI-8123-01 Hybrid Outdoor Sauna - Carinthia (Canadian Hemlock) Discover the perfect harmony of tradition and modernity with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This innovative outdoor sauna offers the best of both worlds, allowing you to indulge in the classic benefits of a traditional sauna or bask in the rejuvenating power of full-spectrum infrared therapy. Versatile Design: The Carinthia sauna is truly a one-of-a-kind wellness retreat. Choose between the traditional sauna experience, where steam envelops your body, promoting deep relaxation, or immerse yourself in the gentle, radiant warmth of full-spectrum infrared therapy, known for its deep tissue penetration and detoxification benefits. Embrace a sauna experience tailored to your unique preferences and wellness needs. Nature-Inspired Elegance: Embrace the beauty of nature with the all-Canadian Hemlock exterior of the Carinthia sauna. The exquisite wood not only complements your outdoor space but also provides natural resistance to decay, ensuring the sauna's longevity and durability. The traditional design exudes timeless elegance, creating a seamless connection between your outdoor environment and your wellness sanctuary. Outdoor Escape: Step into a rejuvenating oasis amidst the tranquility of your backyard. The Carinthia sauna invites you to unwind and rejuvenate with friends and family, basking in the warmth of the sauna and reconnecting with nature. Clear Water Protection: Crafted with durability in mind, the Golden Designs Carinthia sauna features an exterior clear water protection stain. This protective layer shields the wood from the elements, ensuring it remains in pristine condition year after year. With an annual re-application, your sauna will continue to stand the test of time. Elevate Your Outdoor Living: Elevate your outdoor living and elevate your wellness with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This beautifully designed and expertly crafted sauna offers unparalleled versatility, allowing you to tailor your sauna experience to suit your needs and preferences. Experience the best of both worlds and immerse yourself in a sauna experience that transcends tradition and embraces modern wellness. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior (Exterior Clear Water Protection Stain - Requires Annual Re-Apply) Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR heaters: Total 8 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared Heat Emitters (Heating Elements) Traditional Heater: Harvia SWS80 The Wall 8 kW Specifications Electrical service: 240V / 40AMP (Heater & IR panels). Please consult a certified electrician to install. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight 680 LBS Shipping Weight 930 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-carinthia-3-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-canadian-hemlock?variant=46973754212695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Designs GDI-8123-01 Hybrid Outdoor Sauna - Carinthia (Canadian Hemlock) Discover the perfect harmony of tradition and modernity with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This innovative outdoor sauna offers the best of both worlds, allowing you to indulge in the classic benefits of a traditional sauna or bask in the rejuvenating power of full-spectrum infrared therapy. Versatile Design: The Carinthia sauna is truly a one-of-a-kind wellness retreat. Choose between the traditional sauna experience, where steam envelops your body, promoting deep relaxation, or immerse yourself in the gentle, radiant warmth of full-spectrum infrared therapy, known for its deep tissue penetration and detoxification benefits. Embrace a sauna experience tailored to your unique preferences and wellness needs. Nature-Inspired Elegance: Embrace the beauty of nature with the all-Canadian Hemlock exterior of the Carinthia sauna. The exquisite wood not only complements your outdoor space but also provides natural resistance to decay, ensuring the sauna's longevity and durability. The traditional design exudes timeless elegance, creating a seamless connection between your outdoor environment and your wellness sanctuary. Outdoor Escape: Step into a rejuvenating oasis amidst the tranquility of your backyard. The Carinthia sauna invites you to unwind and rejuvenate with friends and family, basking in the warmth of the sauna and reconnecting with nature. Clear Water Protection: Crafted with durability in mind, the Golden Designs Carinthia sauna features an exterior clear water protection stain. This protective layer shields the wood from the elements, ensuring it remains in pristine condition year after year. With an annual re-application, your sauna will continue to stand the test of time. Elevate Your Outdoor Living: Elevate your outdoor living and elevate your wellness with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This beautifully designed and expertly crafted sauna offers unparalleled versatility, allowing you to tailor your sauna experience to suit your needs and preferences. Experience the best of both worlds and immerse yourself in a sauna experience that transcends tradition and embraces modern wellness. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior (Exterior Clear Water Protection Stain - Requires Annual Re-Apply) Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR heaters: Total 8 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared Heat Emitters (Heating Elements) Traditional Heater: Harvia SWS80 The Wall 8 kW Specifications Electrical service: 240V / 40AMP (Heater & IR panels). Please consult a certified electrician to install. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight 680 LBS Shipping Weight 930 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-carinthia-3-person-hybrid-puretech%E2%84%A2-full-spectrum-ir-or-traditional-stove-outdoor-sauna-canadian-hemlock?variant=46973754212695&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Designs GDI-8123-01 Hybrid Outdoor Sauna - Carinthia (Canadian Hemlock) Discover the perfect harmony of tradition and modernity with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This innovative outdoor sauna offers the best of both worlds, allowing you to indulge in the classic benefits of a traditional sauna or bask in the rejuvenating power of full-spectrum infrared therapy. Versatile Design: The Carinthia sauna is truly a one-of-a-kind wellness retreat. Choose between the traditional sauna experience, where steam envelops your body, promoting deep relaxation, or immerse yourself in the gentle, radiant warmth of full-spectrum infrared therapy, known for its deep tissue penetration and detoxification benefits. Embrace a sauna experience tailored to your unique preferences and wellness needs. Nature-Inspired Elegance: Embrace the beauty of nature with the all-Canadian Hemlock exterior of the Carinthia sauna. The exquisite wood not only complements your outdoor space but also provides natural resistance to decay, ensuring the sauna's longevity and durability. The traditional design exudes timeless elegance, creating a seamless connection between your outdoor environment and your wellness sanctuary. Outdoor Escape: Step into a rejuvenating oasis amidst the tranquility of your backyard. The Carinthia sauna invites you to unwind and rejuvenate with friends and family, basking in the warmth of the sauna and reconnecting with nature. Clear Water Protection: Crafted with durability in mind, the Golden Designs Carinthia sauna features an exterior clear water protection stain. This protective layer shields the wood from the elements, ensuring it remains in pristine condition year after year. With an annual re-application, your sauna will continue to stand the test of time. Elevate Your Outdoor Living: Elevate your outdoor living and elevate your wellness with the Golden Designs Carinthia 3-Person Hybrid Outdoor Sauna. This beautifully designed and expertly crafted sauna offers unparalleled versatility, allowing you to tailor your sauna experience to suit your needs and preferences. Experience the best of both worlds and immerse yourself in a sauna experience that transcends tradition and embraces modern wellness. Features 3 person capacity 100% Natural Reforested Canadian Hemlock with WaterProof Stain on the Exterior (Exterior Clear Water Protection Stain - Requires Annual Re-Apply) Interior chromotherapy lighting system Interior backrest with accent lighting Exterior front overhang accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Full Spectrum IR heaters: Total 8 IR Emitters. 2 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 6 Near Infrared Heat Emitters (Heating Elements) Traditional Heater: Harvia SWS80 The Wall 8 kW Specifications Electrical service: 240V / 40AMP (Heater & IR panels). Please consult a certified electrician to install. Assembled Dimensions with Overhang (W x D x H): 84.1\" x 73.6\" x 97.4\" Assembled Dimensions without Overhang (W x D x H): 63\" x 56.7\" x 97.4\" Assembled Dimensions Interior (W x D x H): 59.2\" x 53.2 \" x 78\" Assembled Weight 680 LBS Shipping Weight 930 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

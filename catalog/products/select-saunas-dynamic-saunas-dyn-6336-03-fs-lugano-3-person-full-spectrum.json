@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,72 @@
         "field": "classified_as",
         "sourceText": "Dynamic Saunas Lugano 3-Person Full Spectrum FAR Infrared Sauna | Indoor Infrared Sauna Kits | 3 Person, Infrared Saunas, Saunas",
         "matched": "FAR Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6336-03-fs-lugano-3-person-full-spectrum-far-infrared-sauna?variant=43881275621590&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 60\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lugano Infrared Sauna | DYN-6336-03 (Hemlock Wood) Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Dynamic Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Dynamic Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromotherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Dynamic Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Sauna Type: Infrared Capacity: Full 3-person capacity Heating Elements: 9 Total Heaters, 6 PureTech™ Near Zero EMF (EMF Under 2MG when sitting 2 to 3 inches from the heating panels ) FAR IR Carbon Panels, 3 Near IR Elements. Temperature Range: 118F-132F is the ideal temperature range, sauna can heat up to 140F EMF Levels: Ultra Low EMF - (EMF Under 3MG - 6 to 8 inches from the heating panels ) Wood Type: Natural Reforested Canadian Hemlock wood construction Sound System: Bluetooth and MP3 auxiliary connection with built in speakers Control Panels: Interior / Exterior LED control panels Interior Lighting: Interior Chromotherapy Color Lighting System Exterior Accent Lighting: Exterior Accent Lighting Feature Glass: Bronze Tinted Tempered glass door and with side windows Electrical Service: Special Electical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V ) (Please consult a certified electrician. ) Use Location: Indoor Use Only Extra Details Exterior dimensions (WDH): 60\" x 45\" x 75\" (roof overhang: add 4.3\") Interior dimensions (WDH): 57\" x 41\" x 69\" Shipping Details: Ships in 3 boxes • Box A: 70\"\" H x 61\"\" W x 7\"\" L | Weight: 176 lbs. • Box B: 70\"\" H x 44\"\" W x 8\"\" L | Weight: 141 lbs. • Box C: 62\"\" H x 51\"\" W x 11\"\" L | Weight: 148 lbs. All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 60\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 45,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6336-03-fs-lugano-3-person-full-spectrum-far-infrared-sauna?variant=43881275621590&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 60\\\" x 45\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lugano Infrared Sauna | DYN-6336-03 (Hemlock Wood) Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Dynamic Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Dynamic Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromotherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Dynamic Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Sauna Type: Infrared Capacity: Full 3-person capacity Heating Elements: 9 Total Heaters, 6 PureTech™ Near Zero EMF (EMF Under 2MG when sitting 2 to 3 inches from the heating panels ) FAR IR Carbon Panels, 3 Near IR Elements. Temperature Range: 118F-132F is the ideal temperature range, sauna can heat up to 140F EMF Levels: Ultra Low EMF - (EMF Under 3MG - 6 to 8 inches from the heating panels ) Wood Type: Natural Reforested Canadian Hemlock wood construction Sound System: Bluetooth and MP3 auxiliary connection with built in speakers Control Panels: Interior / Exterior LED control panels Interior Lighting: Interior Chromotherapy Color Lighting System Exterior Accent Lighting: Exterior Accent Lighting Feature Glass: Bronze Tinted Tempered glass door and with side windows Electrical Service: Special Electical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V ) (Please consult a certified electrician. ) Use Location: Indoor Use Only Extra Details Exterior dimensions (WDH): 60\" x 45\" x 75\" (roof overhang: add 4.3\") Interior dimensions (WDH): 57\" x 41\" x 69\" Shipping Details: Ships in 3 boxes • Box A: 70\"\" H x 61\"\" W x 7\"\" L | Weight: 176 lbs. • Box B: 70\"\" H x 44\"\" W x 8\"\" L | Weight: 141 lbs. • Box C: 62\"\" H x 51\"\" W x 11\"\" L | Weight: 148 lbs. All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 60\" x 45\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6336-03-fs-lugano-3-person-full-spectrum-far-infrared-sauna?variant=43881275621590&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (WDH): 60\\\" x 45\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Lugano Infrared Sauna | DYN-6336-03 (Hemlock Wood) Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Dynamic Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Dynamic Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Near Zero EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromotherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Dynamic Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Sauna Type: Infrared Capacity: Full 3-person capacity Heating Elements: 9 Total Heaters, 6 PureTech™ Near Zero EMF (EMF Under 2MG when sitting 2 to 3 inches from the heating panels ) FAR IR Carbon Panels, 3 Near IR Elements. Temperature Range: 118F-132F is the ideal temperature range, sauna can heat up to 140F EMF Levels: Ultra Low EMF - (EMF Under 3MG - 6 to 8 inches from the heating panels ) Wood Type: Natural Reforested Canadian Hemlock wood construction Sound System: Bluetooth and MP3 auxiliary connection with built in speakers Control Panels: Interior / Exterior LED control panels Interior Lighting: Interior Chromotherapy Color Lighting System Exterior Accent Lighting: Exterior Accent Lighting Feature Glass: Bronze Tinted Tempered glass door and with side windows Electrical Service: Special Electical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V ) (Please consult a certified electrician. ) Use Location: Indoor Use Only Extra Details Exterior dimensions (WDH): 60\" x 45\" x 75\" (roof overhang: add 4.3\") Interior dimensions (WDH): 57\" x 41\" x 69\" Shipping Details: Ships in 3 boxes • Box A: 70\"\" H x 61\"\" W x 7\"\" L | Weight: 176 lbs. • Box B: 70\"\" H x 44\"\" W x 8\"\" L | Weight: 141 lbs. • Box C: 62\"\" H x 51\"\" W x 11\"\" L | Weight: 148 lbs. All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Exterior dimensions (WDH): 60\" x 45\" x 75\"",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"

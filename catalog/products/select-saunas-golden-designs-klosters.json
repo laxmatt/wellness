@@ -52,6 +52,7 @@
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
@@ -142,6 +143,138 @@
         "field": "classified_as",
         "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna | Barrel Sauna Kits | 6-Person, Saunas, Traditional Saunas",
         "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 91,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\" x 91\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\" x 91\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 80,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 75\\\" x 91\\\" x 80\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 75\" x 91\" x 80\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-klosters?variant=46976800457047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Klosters 6-Person Barrel Sauna Experience the ultimate fusion of luxury and relaxation with the Golden Designs Klosters 6-Person Barrel Sauna. Inspired by the enchanting charm of a barrel design, this exceptional traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Timeless Barrel Design: The Klosters sauna boasts a unique barrel design, reminiscent of idyllic countryside retreats. Its classic and alluring appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Premium Pacific Cedar: Indulge in the opulence of Pacific Cedar as you step into the inviting interior of the Klosters sauna. The smooth texture and natural fragrance of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Spacious Six-Person Capacity: Designed for gatherings of family and friends, the Klosters sauna offers ample space for up to six individuals to share cherished moments of tranquility. Create lasting memories and bonds over the rejuvenating benefits of sauna therapy. Craftsmanship Perfected: The Klosters sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to grace the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Klosters 6-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to soothe your senses and promote relaxation. Experience the therapeutic benefits of traditional sauna therapy and embrace the tranquility of the Klosters sauna. Rediscover the art of relaxation, indulge in the allure of barrel saunas, and elevate your outdoor living with the Klosters sauna - your pathway to serenity and rejuvenation. Features 6 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music) (Please consult a certified electrician.) Assembled Dimensions (W x D x H): 75\" x 91\" x 80\" Shipping Dimensions with Stove (W x D x H): 93\" x 45\" x 38\" Shipping Dimensions without Stove (W x D x H): 93\" x 45\" x 25\" Assembled Weight: 548 lbs Shipping Weight: 785 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
         "confidence": "within_text",
         "reviewState": "approved",
         "approvedBy": "Matt (site owner)"
