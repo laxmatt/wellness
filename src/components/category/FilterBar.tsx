@@ -45,7 +45,7 @@ export function FilterChips() {
           {g.options.map((o) => {
             const on = f.selected.includes(o.id);
             const count = f.countFor(g, o.id);
-            const dead = count === 0 && !on;
+            const dead = count.total === 0 && !on;
             return (
               <button
                 key={o.id}
@@ -66,7 +66,7 @@ export function FilterChips() {
                 )}
               >
                 {o.label}
-                <span className={cn("tabular text-xs", on ? "text-fg-inverse/70" : "text-fg-muted")}>{count}</span>
+                <span className={cn("tabular text-xs", on ? "text-fg-inverse/70" : "text-fg-muted")}>{count.confirmed}{count.unknown ? ` + ${count.unknown} may match` : ""}</span>
               </button>
             );
           })}
@@ -153,11 +153,21 @@ export function FilterableGrid({ children, emptyHref, emptyLabel, sortLabel }: {
         </div>
       ) : (
         <div>
+          {f.mayMatch.size > 0 ? <p className="mb-3 text-sm font-semibold text-fg">Confirmed matches · {f.confirmed.size}</p> : null}
           <div data-product-grid className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {/* The assistant's order when it has one, the page's otherwise. A
                 preference that reorders nothing is not a preference. */}
-            {(f.assistantOrder ?? f.ids).map((id) => (f.visible.has(id) ? children[indexOf.get(id)!] : null))}
+            {(f.assistantOrder ?? f.ids).map((id) => (f.confirmed.has(id) ? children[indexOf.get(id)!] : null))}
           </div>
+          {f.mayMatch.size > 0 ? (
+            <section className="mt-10 border-t border-edge pt-6" aria-label="May match — confirm with seller">
+              <h3 className="font-display text-2xl">May match — confirm</h3>
+              <p className="mb-4 mt-1 max-w-2xl text-sm text-fg-soft">These products are not ruled out, but their source does not state enough to confirm this filter. Check the product page or seller before buying.</p>
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                {(f.assistantOrder ?? f.ids).map((id) => (f.mayMatch.has(id) ? children[indexOf.get(id)!] : null))}
+              </div>
+            </section>
+          ) : null}
           {f.categoryId ? <NeedsHeldBack categoryId={f.categoryId} ids={f.ids} visible={f.visible} /> : null}
         </div>
       )}

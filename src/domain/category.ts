@@ -22,6 +22,9 @@ export const FilterSpec = z.object({
   key: FilterKey,
   label: z.string(),
   kind: z.enum(["range", "enum", "boolean", "list"]),
+  // Sparse-safe filters keep products whose source does not state the value in
+  // a separate confirmation tier instead of turning missing evidence into a no.
+  behavior: z.enum(["hard", "sparse_safe"]).default("hard"),
   // Range presets shown as chips, in minor units for price.
   //
   // `condition` is the common case, one bound. `and` carries the second one, so

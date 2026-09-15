@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { extractSaunaEnvironment } from "@/domain/ingestion/sauna-environment";
 import { readCatalogRecords } from "@/providers/catalog/LocalCatalogProvider";
-import { buildFilterGroups } from "@/domain/filters";
+import { applyFilterTiers, buildFilterGroups } from "@/domain/filters";
 import { toProductView } from "@/domain/view";
 import { saunas } from "@/domain/categories/saunas";
 
@@ -23,5 +23,18 @@ describe("sauna temperature and enclosure evidence", () => {
       expect(unknown.matchIds.length).toBe(views.filter((view) => view.attributes[key] === undefined).length);
       expect(unknown.matchIds.length).toBeGreaterThan(0);
     }
+  });
+
+  it("keeps unknown products in a separate may-match tier for sparse filters", () => {
+    const catalog = readCatalogRecords(`${process.cwd()}/catalog`);
+    const products = catalog.products.filter((product) => product.categoryId === "saunas");
+    const views = products.map((product) => toProductView(product, { category: saunas, brands: catalog.brands, merchants: catalog.merchants }));
+    const groups = buildFilterGroups(views, saunas);
+    const option = groups.find((group) => group.key === "max_temperature_f")!.options.find((item) => item.label === "Above 170°F")!;
+    const result = applyFilterTiers(views.map((view) => view.id), groups, [option.id]);
+    expect(result.confirmed).toHaveLength(11);
+    expect(result.unknown).toHaveLength(261);
+    expect(result.visible).toHaveLength(272);
+    expect(result.confirmed.every((id) => !result.unknown.includes(id))).toBe(true);
   });
 });

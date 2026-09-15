@@ -2,13 +2,14 @@ import { formatAttribute, humanize } from "./attributes";
 import type { CategoryDefinition, Condition } from "./category";
 import { attributeDef } from "./category";
 import { matchesAll } from "./conditions";
+import { classifyConditions } from "./needs";
 import type { ProductView } from "./view";
 
 // Filter options are resolved on the server: each option carries the product
 // ids it matches. The client only intersects id sets, so no domain code and
 // no product data beyond ids reaches the bundle.
 
-export type FilterOption = { id: string; label: string; matchIds: string[] };
+export type FilterOption = { id: string; label: string; matchIds: string[]; unknownIds: string[]; sparseSafe: boolean };
 export type FilterGroup = { key: string; label: string; options: FilterOption[] };
 
 /**
@@ -155,11 +156,14 @@ export function buildFilterGroups(views: ProductView[], cat: CategoryDefinition,
 
   for (const spec of filterOptionSpecs(views, cat)) {
     const matchIds = views.filter((v) => matchesAll(v, cat, spec.conditions)).map((v) => v.id);
+    const filter = cat.filters.find((item) => item.key === spec.groupKey);
+    const sparseSafe = filter?.behavior === "sparse_safe";
+    const unknownIds = sparseSafe ? views.filter((v) => classifyConditions(v, cat, spec.conditions) === "unknown").map((v) => v.id) : [];
     // A chip that admits nothing is a dead end, and one that admits everything
     // changes nothing. Neither is true of a chip that is already on.
     if ((matchIds.length === 0 || matchIds.length === views.length) && !keep.includes(spec.id)) continue;
     const group = groups.get(spec.groupKey) ?? { key: spec.groupKey, label: spec.groupLabel, options: [] };
-    group.options.push({ id: spec.id, label: spec.label, matchIds });
+    group.options.push({ id: spec.id, label: spec.label, matchIds, unknownIds, sparseSafe });
     groups.set(spec.groupKey, group);
   }
 
@@ -172,13 +176,22 @@ export function buildFilterGroups(views: ProductView[], cat: CategoryDefinition,
 
 // Options within a group are OR. Groups are AND.
 export function applyFilters(allIds: string[], groups: FilterGroup[], selected: string[]): string[] {
-  if (selected.length === 0) return allIds;
+  return applyFilterTiers(allIds, groups, selected).visible;
+}
+
+export function applyFilterTiers(allIds: string[], groups: FilterGroup[], selected: string[]): { visible: string[]; confirmed: string[]; unknown: string[] } {
+  if (selected.length === 0) return { visible: allIds, confirmed: allIds, unknown: [] };
   let ids = new Set(allIds);
+  const uncertain = new Set<string>();
   for (const g of groups) {
     const chosen = g.options.filter((o) => selected.includes(o.id));
     if (chosen.length === 0) continue;
     const union = new Set(chosen.flatMap((o) => o.matchIds));
-    ids = new Set([...ids].filter((id) => union.has(id)));
+    const unknown = new Set(chosen.flatMap((o) => o.unknownIds));
+    ids = new Set([...ids].filter((id) => union.has(id) || unknown.has(id)));
+    for (const id of ids) if (!union.has(id) && unknown.has(id)) uncertain.add(id);
   }
-  return allIds.filter((id) => ids.has(id));
+  const visible = allIds.filter((id) => ids.has(id));
+  const unknown = visible.filter((id) => uncertain.has(id));
+  return { visible, confirmed: visible.filter((id) => !uncertain.has(id)), unknown };
 }

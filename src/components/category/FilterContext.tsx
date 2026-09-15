@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useAssistant } from "@/components/assistant/AssistantProvider";
 import { setNeeds } from "@/components/needs/NeedsStore";
-import { applyFilters, type FilterGroup } from "@/domain/filters";
+import { applyFilterTiers, type FilterGroup } from "@/domain/filters";
 import { mergeAlternatives, type NeedDefinition } from "@/domain/needs";
 
 type FilterState = {
@@ -11,6 +11,8 @@ type FilterState = {
   ids: string[];
   selected: string[];
   visible: Set<string>;
+  confirmed: Set<string>;
+  mayMatch: Set<string>;
   active: boolean;
   toggle: (optionId: string) => void;
   clear: () => void;
@@ -23,7 +25,7 @@ type FilterState = {
   assistantOrder: string[] | null;
   clearAssistant: () => void;
   dropLast: () => void;
-  countFor: (group: FilterGroup, optionId: string) => number;
+  countFor: (group: FilterGroup, optionId: string) => { total: number; confirmed: number; unknown: number };
   // The category this page is showing, when it was given one. Screens read it
   // to look up what the shopper has asked for.
   categoryId?: string;
@@ -90,10 +92,12 @@ export function CategoryFilterProvider({
     setAssistantLabels(applied.labels);
   }, [applied]);
 
+  const tiers = useMemo(() => applyFilterTiers(ids, groups, selected), [ids, groups, selected]);
   const visible = useMemo(() => {
-    const byChips = applyFilters(ids, groups, selected);
-    return new Set(assistantIds ? byChips.filter((id) => assistantIds.includes(id)) : byChips);
-  }, [ids, groups, selected, assistantIds]);
+    return new Set(assistantIds ? tiers.visible.filter((id) => assistantIds.includes(id)) : tiers.visible);
+  }, [tiers, assistantIds]);
+  const confirmed = useMemo(() => new Set(tiers.confirmed.filter((id) => visible.has(id))), [tiers, visible]);
+  const mayMatch = useMemo(() => new Set(tiers.unknown.filter((id) => visible.has(id))), [tiers, visible]);
 
   // What the shopper has asked for, written where a screen that is not this one
   // can read it. The comparison is a different page with no chips of its own,
@@ -145,6 +149,8 @@ export function CategoryFilterProvider({
       categoryId,
       selected,
       visible,
+      confirmed,
+      mayMatch,
       active: selected.length > 0 || assistantIds !== null,
       fromAssistant: assistantIds ? { labels: assistantLabels, count: assistantIds.length } : null,
       assistantOrder: assistantIds,
@@ -161,10 +167,11 @@ export function CategoryFilterProvider({
       dropLast: () => setSelected((prev) => prev.slice(0, -1)),
       countFor: (group, optionId) => {
         const others = selected.filter((s) => !group.options.some((o) => o.id === s));
-        return applyFilters(ids, groups, [...others, optionId]).length;
+        const result = applyFilterTiers(ids, groups, [...others, optionId]);
+        return { total: result.visible.length, confirmed: result.confirmed.length, unknown: result.unknown.length };
       },
     }),
-    [groups, ids, categoryId, selected, visible, assistantIds, assistantLabels],
+    [groups, ids, categoryId, selected, visible, confirmed, mayMatch, assistantIds, assistantLabels],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

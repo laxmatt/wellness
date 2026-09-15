@@ -205,7 +205,7 @@ export const saunas = CategoryDefinition.parse({
       ],
     },
     {
-      key: "enclosure_protection", label: "Protection", kind: "enum",
+      key: "enclosure_protection", label: "Protection", kind: "enum", behavior: "sparse_safe",
       presets: [
         { label: "Insulated", condition: { key: "enclosure_protection", op: "in", value: ["insulated", "insulated_weather_ready"] } },
         { label: "Weather-ready", condition: { key: "enclosure_protection", op: "in", value: ["weather_ready", "insulated_weather_ready"] } },
@@ -213,7 +213,7 @@ export const saunas = CategoryDefinition.parse({
       ],
     },
     {
-      key: "max_temperature_f", label: "Maximum temperature", kind: "range",
+      key: "max_temperature_f", label: "Maximum temperature", kind: "range", behavior: "sparse_safe",
       presets: [
         { label: "Up to 140°F", condition: { key: "max_temperature_f", op: "lte", value: 140 } },
         { label: "141°F to 170°F", condition: { key: "max_temperature_f", op: "gt", value: 140 }, and: { key: "max_temperature_f", op: "lte", value: 170 } },
