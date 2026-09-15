@@ -18,7 +18,7 @@ import { validateAttributeAgainstDefinition, type AttributeDefinition, type Attr
 import { fieldByKey } from "@/domain/import/fields";
 import { readCell } from "@/domain/import/values";
 import { Availability } from "@/domain/product";
-import type { ValueMap } from "./profile";
+import { mappedValue, type ValueMap } from "./profile";
 
 export type Normalised =
   | { ok: true; value: AttributePrimitive; note?: string }
@@ -59,7 +59,7 @@ export function normaliseAttribute(raw: string, def: AttributeDefinition, valueM
   const trimmed = raw.trim();
   if (trimmed === "") return { ok: "empty" };
 
-  const mapped = valueMap?.[trimmed];
+  const mapped = mappedValue(trimmed, valueMap);
   const text = mapped ?? trimmed;
   const note = mapped !== undefined ? `Translated from "${trimmed}" by this profile's value map.` : undefined;
 
@@ -131,7 +131,7 @@ export type ReadAvailability = { ok: true; value: Availability; note?: string } 
 export function readAvailability(raw: string, valueMap?: ValueMap): ReadAvailability {
   const trimmed = raw.trim();
   if (trimmed === "") return { ok: "empty" };
-  const mapped = valueMap?.[trimmed];
+  const mapped = mappedValue(trimmed, valueMap);
   const text = mapped ?? trimmed;
   const parsed = Availability.safeParse(text);
   if (!parsed.success) {

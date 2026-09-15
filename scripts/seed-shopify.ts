@@ -18,6 +18,7 @@ import { join } from "node:path";
 import { IngestionStore } from "@/providers/ingestion/IngestionStore";
 import { ingestionRoot } from "@/providers/ingestion/root";
 import { PROGRAMMES, RECORDING_RULES, secretsIn } from "@/domain/affiliate/programmes";
+import type { MappingProfile } from "@/domain/ingestion/profile";
 import { BLOCKED_PARTNERS, SHOPIFY_PARTNERS, shopifyProfile } from "./shopify-partners";
 
 /**
@@ -39,6 +40,17 @@ function refuseSecrets(): void {
   }
 }
 
+/**
+ * Whether two mappings say the same thing about a file.
+ *
+ * Everything that decides what a row becomes, and nothing about who wrote it or
+ * when. A seed run on a new day must not look like a changed mapping.
+ */
+function sameRules(a: MappingProfile, b: MappingProfile): boolean {
+  const rules = (p: MappingProfile) => JSON.stringify({ grouping: p.grouping, columns: p.columns, attributes: p.attributes, exclusions: p.exclusions, families: p.families });
+  return rules(a) === rules(b);
+}
+
 const store = new IngestionStore(ingestionRoot());
 const ON = new Date().toISOString().slice(0, 10);
 
@@ -47,11 +59,23 @@ function main(): void {
   for (const source of SHOPIFY_PARTNERS) {
     store.saveSource(source);
     const existing = store.profiles(source.id);
+    const latest = existing[existing.length - 1];
+    const wanted = shopifyProfile(source, ON, source.merchantName);
     if (existing.length === 0) {
-      store.saveProfile(shopifyProfile(source, ON, source.merchantName));
+      store.saveProfile(wanted);
       console.log(`${source.name}: source and mapping v1 written, unapproved.`);
+    } else if (sameRules(latest, wanted)) {
+      console.log(`${source.name}: source written; mapping v${latest.version} already matches this seed, nothing added.`);
     } else {
-      console.log(`${source.name}: source written; ${existing.length} mapping version(s) already here, none overwritten.`);
+      // A new version, never an edit. The first real preflight showed the
+      // seeded rules excluding nothing at all, and a workspace seeded before
+      // that still holds them: without this, re-running the seed reports
+      // "already here" and leaves a person with the mapping that failed.
+      // Anything approved stays approved and stays on disk; this is offered
+      // beside it and a person loads and approves it.
+      const version = existing.length + 1;
+      store.saveProfile({ ...wanted, version });
+      console.log(`${source.name}: source written; mapping v${version} added, unapproved, because the seeded rules have changed since v${latest.version}. Load it in the tool, read the counts, then approve.`);
     }
     const snapshot = join(process.cwd(), "intake", "shopify", `${source.id}.json`);
     console.log(`  snapshot: ${existsSync(snapshot) ? snapshot.replace(`${process.cwd()}/`, "") : "not fetched yet — run `npm run fetch:shopify -- " + source.id + "` on a machine that can reach the store"}`);

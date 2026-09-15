@@ -17,20 +17,29 @@ import type { CanonicalTarget, ColumnMapping, FieldOwnership, Grouping } from ".
 /**
  * Headings that name each field, most specific first.
  *
- * The order matters in one place. A feed carrying both `aw_deep_link` and
+ * The order matters in two places. A feed carrying both `aw_deep_link` and
  * `link` carries the tracking link the network issued and the merchant's plain
  * page address, and the offer's link is the first of those: it is the one that
- * was issued, and this flow never composes a tracking link out of the other.
+ * was issued. A Shopify snapshot carries both `variant_url` and `product_url`,
+ * and the offer's link is the variant's, because that is the configuration a
+ * shopper is being sent to.
+ *
+ * The Shopify names below were missing, and their absence is not a small thing.
+ * A person uploading a real snapshot got a suggested mapping with no
+ * description, no image and no stock, and every one of 737 records failed to
+ * build on `columns.description` with nothing on screen to say which column it
+ * should have been. A suggestion that quietly omits a required field is worse
+ * than one that omits the file.
  */
 const SYNONYMS: Record<CanonicalTarget, string[]> = {
   name: ["title", "name", "product name", "product title", "item name"],
-  description: ["description", "product description", "long description", "details"],
+  description: ["description", "product description", "long description", "details", "body text", "body html"],
   brand: ["brand", "manufacturer", "maker", "vendor", "brand name"],
   price: ["price", "sale price", "unit price", "current price", "cost"],
-  availability: ["availability", "stock status", "stock", "in stock", "availability status"],
-  image: ["image link", "image", "image url", "main image", "primary image"],
-  link: ["aw deep link", "deep link", "tracking link", "affiliate link", "link", "url", "product url"],
-  merchant_sku: ["id", "sku", "merchant sku", "item id", "product id", "item code"],
+  availability: ["availability", "stock status", "stock", "in stock", "availability status", "available"],
+  image: ["image link", "image", "image url", "main image", "primary image", "image src", "featured image"],
+  link: ["aw deep link", "deep link", "tracking link", "affiliate link", "link", "url", "variant url", "product url"],
+  merchant_sku: ["variant sku", "sku", "id", "merchant sku", "item id", "product id", "item code"],
   mpn: ["mpn", "manufacturer part number", "part number"],
 };
 
@@ -75,7 +84,11 @@ export function suggestColumns(columns: string[]): Suggestion {
   // Group on the merchant's own product address where there is one: 225 rows
   // sharing 38 pages are 38 products, and the pages are the merchant's grouping
   // rather than one this invented. Failing that, on whatever identifies a line.
-  const pageColumn = ["link", "product url", "url"].map((s) => byNormalised.get(normaliseHeader(s))).find((c) => c !== undefined);
+  // The product's page, not the variant's: a variant address is one
+  // configuration of the same page and grouping on it would make every
+  // configuration its own product. `url_path` drops the query either way, but
+  // naming the product column says what the grouping means.
+  const pageColumn = ["product url", "link", "url"].map((s) => byNormalised.get(normaliseHeader(s))).find((c) => c !== undefined);
   const skuColumn = mappings.find((m) => m.target === "merchant_sku")?.column;
   const grouping: Grouping = pageColumn
     ? { mode: "url_path", column: pageColumn, representative: "cheapest" }

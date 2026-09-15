@@ -5,8 +5,8 @@
     "https://selectsaunas.com/products.json?limit=250&page=1"
   ],
   "pages": 1,
-  "productCount": 5,
-  "variantCount": 4,
+  "productCount": 14,
+  "variantCount": 13,
   "fetchedAt": "2026-09-15T08:00:00Z",
   "products": [
     {
@@ -181,6 +181,346 @@
       "options": [
         {
           "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "handle": "almost-heaven-barrel-sauna-floor-kit",
+      "title": "Almost Heaven Barrel Sauna Floor Kit",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna",
+        "barrel"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2061,
+          "title": "Default Title",
+          "sku": "SS-206",
+          "price": "349.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/almost-heaven-barrel-sauna-floor-kit.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 207,
+      "handle": "barrel-sauna-rain-jacket",
+      "title": "Barrel Sauna Rain Jacket",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna",
+        "barrel"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2071,
+          "title": "Default Title",
+          "sku": "SS-207",
+          "price": "429.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/barrel-sauna-rain-jacket.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "handle": "cedar-sauna-accessory-set",
+      "title": "Cedar Sauna Accessory Set",
+      "vendor": "Almost Heaven",
+      "product_type": "Sauna Accessories",
+      "tags": [
+        "sauna"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2081,
+          "title": "Default Title",
+          "sku": "SS-208",
+          "price": "189.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/cedar-sauna-accessory-set.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 209,
+      "handle": "air-tunnel-for-huum-heater",
+      "title": "Air Tunnel for HUUM Heater",
+      "vendor": "HUUM",
+      "product_type": "Sauna Heaters",
+      "tags": [
+        "sauna",
+        "heater"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2091,
+          "title": "Default Title",
+          "sku": "SS-209",
+          "price": "119.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/air-tunnel-for-huum-heater.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 210,
+      "handle": "almost-heaven-outdoor-shower",
+      "title": "Almost Heaven Outdoor Shower",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna",
+        "outdoor"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2101,
+          "title": "Default Title",
+          "sku": "SS-210",
+          "price": "1295.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/almost-heaven-outdoor-shower.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 211,
+      "handle": "select-cold-plunge-tub",
+      "title": "Select Cold Plunge Tub",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna",
+        "recovery"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2111,
+          "title": "Default Title",
+          "sku": "SS-211",
+          "price": "4995.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/select-cold-plunge-tub.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 212,
+      "handle": "almost-heaven-hot-tub",
+      "title": "Almost Heaven Hot Tub",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2121,
+          "title": "Default Title",
+          "sku": "SS-212",
+          "price": "8995.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/almost-heaven-hot-tub.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 213,
+      "handle": "almost-heaven-tiki-bar",
+      "title": "Almost Heaven Tiki Bar",
+      "vendor": "Almost Heaven",
+      "product_type": "Saunas",
+      "tags": [
+        "sauna",
+        "outdoor"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2131,
+          "title": "Default Title",
+          "sku": "SS-213",
+          "price": "3995.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/almost-heaven-tiki-bar.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
+        }
+      ]
+    },
+    {
+      "id": 214,
+      "handle": "dundalk-savannah-barrel-sauna",
+      "title": "Dundalk Savannah Barrel Sauna with Glass Door (6 Person)",
+      "vendor": "Dundalk LeisureCraft",
+      "product_type": "Outdoor Sauna",
+      "tags": [
+        "sauna",
+        "barrel"
+      ],
+      "body_html": "<p>Sold by Select Saunas.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 2141,
+          "title": "Default Title",
+          "sku": "SS-214",
+          "price": "11495.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/dundalk-savannah-barrel-sauna.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Title"
         }
       ]
     }

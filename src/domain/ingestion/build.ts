@@ -92,10 +92,27 @@ function excludedBy(row: Record<string, string>, rules: ExclusionRule[]): Exclus
       : rule.op === "starts_with" ? value.startsWith(rule.value ?? "")
       : rule.op === "not_starts_with" ? !value.startsWith(rule.value ?? "")
       : rule.op === "contains" ? value.toLowerCase().includes(needle)
+      : rule.op === "contains_word" ? containsWord(value, needle)
+      : rule.op === "not_contains_word" ? !containsWord(value, needle)
       : !value.toLowerCase().includes(needle);
     if (hit) return rule;
   }
   return undefined;
+}
+
+/**
+ * Whether some text contains a word, or a run of words, as words.
+ *
+ * Everything that is not a letter or a digit is a gap between words, so
+ * "Cold-Plunge", "cold plunge" and "COLD_PLUNGE" are one thing and "Barrel" is
+ * not the word "bar". Nothing is stemmed: a rule for "tubs" is written for
+ * "tubs", and a rule list that wants both writes both. Guessing a plural here
+ * would turn "gas" into "ga" and nobody would find out until it mattered.
+ */
+function containsWord(haystack: string, needle: string): boolean {
+  if (needle === "") return false;
+  const words = (text: string): string => ` ${text.toLowerCase().replace(/[^a-z0-9]+/gi, " ").trim()} `;
+  return words(haystack).includes(words(needle));
 }
 
 /** The merchant's own product path, which is a grouping they published rather than one we invented. */

@@ -143,7 +143,11 @@ describe("separating saunas from the rest of a store", () => {
     const reasons = out.excluded.map((e) => e.reason);
     expect(reasons).toContain("Stones are a consumable, not a sauna.");
     expect(reasons).toContain("A red-light product belongs to another category of this site.");
-    expect(out.candidates.map((c) => c.id).sort()).toEqual(["select-saunas-dundalk-luna-4-person", "select-saunas-harvia-solide-compact"]);
+    expect(out.candidates.map((c) => c.id).sort()).toEqual([
+      "select-saunas-dundalk-luna-4-person",
+      "select-saunas-dundalk-savannah-barrel-sauna",
+      "select-saunas-harvia-solide-compact",
+    ]);
   });
 
   it("finds no complete sauna in a red-light catalogue, and says why rather than finding one anyway", () => {
@@ -195,6 +199,7 @@ describe("importing three partners to drafts", () => {
     expect(drafts.every((p) => p.status === "draft")).toBe(true);
     expect(drafts.map((p) => p.id).sort()).toEqual([
       "select-saunas-dundalk-luna-4-person",
+      "select-saunas-dundalk-savannah-barrel-sauna",
       "select-saunas-harvia-solide-compact",
       "topture-dundalk-luna-4-person",
       "topture-topture-barrel-6",
@@ -356,7 +361,7 @@ describe("one sauna, two retailers", () => {
     expect(group.evidence).toEqual(["brand_and_model"]);
     expect(review.confirmed).toEqual([]);
     expect(review.queued).toHaveLength(1);
-    expect(review.unmatched).toBe(2);
+    expect(review.unmatched).toBe(3);
   });
 
   it("never groups two records from the same store", () => {

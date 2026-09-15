@@ -51,7 +51,24 @@ export const SHOPIFY_COLUMNS = [
   "variant_count",
   "option_names",
   "body_text",
+  "classified_as",
 ] as const;
+
+/**
+ * The store's own classification of a row, as one string to match rules against.
+ *
+ * Title, product type and tags joined, and nothing else. Every one of those is
+ * a structured field a merchant fills in deliberately, and joining them lets
+ * one rule ask a question that would otherwise need three: Select Saunas puts
+ * "Cold Plunge" in a product type, Topture puts it in a tag, and a rule written
+ * against either alone catches one store and misses the other.
+ *
+ * `body_text` is deliberately absent. A merchant's marketing paragraph mentions
+ * saunas on the page for a sauna cover and mentions heaters on the page for a
+ * cabin, and a keyword hit in one is not a classification. Nothing in this
+ * project reads a rule over prose.
+ */
+export const classifiedAs = (title: string, productType: string, tags: string): string => [title, productType, tags].filter((s) => s !== "").join(" | ");
 
 /**
  * What a fetched snapshot holds.
@@ -240,6 +257,7 @@ export function tableFromSnapshot(snapshot: ShopifySnapshot): SourceTable {
       variant_count: String(variants.length),
       option_names: (product.options ?? []).map((o) => text(o.name)).filter(Boolean).join(", "),
       body_text: bodyText(text(product.body_html)),
+      classified_as: classifiedAs(text(product.title), text(product.product_type), tags),
     };
     if (variants.length === 0) {
       skippedProducts += 1;

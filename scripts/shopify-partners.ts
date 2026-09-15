@@ -231,32 +231,135 @@ export const BLOCKED_PARTNERS: BlockedPartner[] = [
 ];
 
 /**
- * The rules that separate a sauna from the rest of a store's aisles.
+ * The rules that separate a complete sauna from the rest of a store's aisles.
  *
- * Structured fields only: the store's own `product_type` and its own `tags`.
- * Nothing reads the title and nothing reads the description. The words below
- * are the ones these stores are expected to use and have not been confirmed
- * against a snapshot, which is why every profile is unapproved: the tool counts
- * what each rule actually catches, shows the reasons beside the counts, and a
- * person approves or rewrites them.
+ * Structured fields only, joined into `classified_as`: the store's own title,
+ * its own product type and its own tags. Nothing reads `body_text`, here or
+ * anywhere, because a merchant's marketing paragraph mentions saunas on the
+ * page for a sauna cover.
+ *
+ * **Why the earlier version excluded nothing.** It leaned on `product_type
+ * not_contains "sauna"`, which assumes a store files its non-saunas somewhere
+ * else. Select Saunas does not: it is a sauna shop, so a rain jacket for a
+ * barrel sauna, a floor kit and a bucket all sit under a sauna product type,
+ * and every one of 737 records came through as a candidate. A store's own
+ * classification is evidence of what aisle a thing is in and not evidence that
+ * it is a sauna.
+ *
+ * So the shape is two-sided and both sides are literal.
+ *
+ * 1. **A blocklist of what a thing is.** Whole words, in the store's own
+ *    classification: an accessory, a part, a heater, something from another
+ *    category entirely. Word matching rather than substring, because a rule for
+ *    the tiki bar written as a substring excludes every barrel sauna.
+ * 2. **A requirement that something says sauna.** Last, so anything the
+ *    blocklist did not name still has to be classified as a sauna by the store
+ *    to survive. This is what catches the air tunnel, the tiki bar and the
+ *    outdoor shower without anybody having listed them.
+ *
+ * Both sides are conservative in the same direction: they drop a real sauna
+ * before they keep a bucket. A sauna wrongly excluded appears in the excluded
+ * table with the rule that dropped it, where a reviewer sees it; a bucket
+ * wrongly kept becomes a product page.
  */
+
+/** One class of thing that is not a sauna, and every word a store calls it. */
+type NotASauna = { reason: string; words: string[] };
+
+const NOT_SAUNAS: NotASauna[] = [
+  {
+    reason: "A cold plunge belongs to another category of this site.",
+    words: ["cold plunge", "cold plunges", "plunge", "plunges", "ice bath", "ice baths", "chiller", "chillers"],
+  },
+  {
+    reason: "A hot tub or a spa belongs to another category of this site.",
+    words: ["hot tub", "hot tubs", "tub", "tubs", "jacuzzi", "swim spa", "swim spas"],
+  },
+  {
+    reason: "A shower is not a sauna.",
+    words: ["shower", "showers", "showerhead"],
+  },
+  {
+    reason: "A red-light product belongs to another category of this site.",
+    words: ["red light", "light therapy", "led panel", "led panels"],
+  },
+  {
+    reason: "This is a building or a piece of outdoor furniture, not a sauna.",
+    words: ["tiki", "bar", "bars", "pergola", "pergolas", "gazebo", "gazebos", "bunkie", "bunkies", "cabana", "cabanas", "pavilion", "shed", "sheds", "bunk house", "playhouse", "greenhouse", "grill", "grills", "pizza oven", "fire pit", "fire pits", "furniture", "chair", "chairs", "lounger", "loungers"],
+  },
+  {
+    reason: "Stones are a consumable, not a sauna.",
+    words: ["stone", "stones", "rock", "rocks"],
+  },
+  {
+    reason: "A heater is a part fitted inside a sauna, not a sauna.",
+    words: ["heater", "heaters", "stove", "stoves", "steam generator", "steam generators", "generator", "boiler"],
+  },
+  {
+    reason: "This is a part of a sauna, not a complete one.",
+    // Deliberately missing: door, window, bench, roof, wall, band, handle. Each
+    // is a part a store sells on its own and also a feature a complete sauna's
+    // title brags about, and "Barrel Sauna with Glass Door" is a sauna. A word
+    // that appears in both is not evidence, so it is not a rule.
+    words: [
+      "part", "parts", "spare", "spares", "replacement", "component", "components",
+      "floor kit", "roof kit", "door kit", "vent kit", "trim kit", "lighting kit", "repair kit", "upgrade kit", "conversion kit",
+      "backrest", "backrests", "headrest", "headrests", "flooring", "duckboard", "duckboards",
+      "chimney", "chimneys", "flue", "flues", "vent", "vents", "air tunnel", "air tunnels", "duct", "ducts",
+      "heat shield", "guard", "guards", "railing", "railings",
+      "control", "controls", "controller", "controllers", "thermostat", "thermostats", "timer", "timers", "sensor", "sensors",
+      "lighting", "light kit", "speaker", "speakers", "sound system", "harness", "cable", "cables", "hose", "hoses",
+      "strap", "straps", "bracket", "brackets", "hinge", "hinges", "latch", "latches",
+    ],
+  },
+  {
+    reason: "An accessory is not a complete sauna.",
+    words: [
+      "accessory", "accessories", "kit and accessories",
+      "bucket", "buckets", "ladle", "ladles", "thermometer", "thermometers", "hygrometer", "hygrometers", "sand timer",
+      "pillow", "pillows", "mat", "mats", "towel", "towels", "robe", "robes",
+      "jacket", "jackets", "cover", "covers", "blanket", "blankets", "cushion", "cushions", "brush", "brushes", "whisk", "whisks",
+      "oil", "oils", "essential oil", "fragrance", "fragrances", "scent", "scents", "salt", "salts", "soap", "soaps",
+      "cleaner", "cleaners", "sealant", "sealer", "stain", "wood treatment", "care kit", "starter kit",
+      "gift card", "gift cards", "warranty", "shipping", "sample", "samples", "swatch", "swatches", "manual", "manuals",
+    ],
+  },
+];
+
 export function saunaExclusions(store: string) {
   // Most specific first. Exclusions stop at the first rule that matches, so the
   // order decides which reason a reviewer reads: a cold plunge caught by "this
-  // store does not call it a sauna" is excluded correctly and explained badly.
+  // store does not classify it as a sauna" is excluded correctly and explained
+  // badly, and a badly explained exclusion is one nobody can check.
+  const rules = NOT_SAUNAS.flatMap((klass) =>
+    klass.words.map((value) => ({ column: "classified_as", op: "contains_word" as const, value, reason: klass.reason })),
+  );
   return [
-    { column: "tags", op: "contains" as const, value: "cold plunge", reason: "A cold plunge belongs to another category of this site." },
-    { column: "tags", op: "contains" as const, value: "red light", reason: "A red-light product belongs to another category of this site." },
-    { column: "tags", op: "contains" as const, value: "sauna stones", reason: "Stones are a consumable, not a sauna." },
-    { column: "product_type", op: "contains" as const, value: "heater", reason: "A heater is a part fitted inside a sauna, not a sauna." },
-    { column: "product_type", op: "contains" as const, value: "accessor", reason: "An accessory is not a complete sauna." },
-    { column: "product_type", op: "contains" as const, value: "part", reason: "A part is not a complete sauna." },
-    { column: "product_type", op: "not_contains" as const, value: "sauna", reason: `${store} does not classify this as a sauna in its own product type.` },
+    ...rules,
+    // Last, and the reason the list above does not have to be exhaustive. A row
+    // the store itself does not file under saunas is not one of ours, whatever
+    // it turns out to be.
+    {
+      column: "classified_as",
+      op: "not_contains_word" as const,
+      value: "sauna",
+      reason: `${store} does not call this a sauna in its own title, product type or tags.`,
+    },
     { column: "available", op: "empty" as const, reason: "The store states nothing about whether this variant can be bought." },
   ];
 }
 
-/** A first mapping for a Shopify store, in the shape every one of them publishes. */
+/**
+ * A first mapping for a Shopify store, in the shape every one of them
+ * publishes.
+ *
+ * Every column below exists on every Shopify snapshot, so this mapping is the
+ * same for all three partners and nothing about it is guessed at per store.
+ * The attribute rules are the part a person has to read: each one names a
+ * column, a pattern, and the values it may produce, and every one arrives
+ * unapproved so the tool shows what it actually extracted before anybody
+ * agrees to it.
+ */
 export function shopifyProfile(source: PartnerSource, on: string, store: string): MappingProfile {
   return MappingProfile.parse({
     sourceId: source.id,
@@ -264,10 +367,12 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
     format: "json",
     createdOn: on,
     createdBy: "seed script",
-    note: `First mapping of ${store}'s own Shopify catalogue. The inclusion rules name the words this store is expected to use in its structured fields and have not been checked against a snapshot; approve them only after reading the counts and reasons the tool shows.`,
+    note: `First mapping of ${store}'s own Shopify catalogue. The inclusion rules read the store's own title, product type and tags and never its marketing prose; approve them only after reading the counts and the reasons the tool shows.`,
     // A Shopify product is a model and its variants are the configurations it
-    // is sold in, which is the grouping this pipeline already understands.
-    grouping: { mode: "column", column: "product_handle", representative: "cheapest" },
+    // is sold in. Grouped on the store's own product address, which is the
+    // store's own grouping rather than one this invented, and the variant query
+    // is not part of a path so every configuration of one model lands together.
+    grouping: { mode: "url_path", column: "product_url", representative: "cheapest" },
     columns: [
       {
         target: "name",
@@ -277,13 +382,15 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         // longer title, with the whole title kept on the record.
         extract: { pattern: "^(.*?)(?: [-–] |$)", flags: "", approved: false },
       },
+      // The store's own description, as text with the markup thrown away. No
+      // rule reads it; it is the paragraph a shopper reads on the record.
       { target: "description", column: "body_text", ownership: "feed" },
       { target: "brand", column: "vendor", ownership: "review_on_change" },
       { target: "price", column: "price", ownership: "feed" },
       { target: "availability", column: "available", ownership: "feed", valueMap: { true: "in_stock", false: "out_of_stock" } },
       { target: "image", column: "image_src", ownership: "review_on_change" },
-      // The store's own product address. No tracking parameter is composed onto
-      // it, here or anywhere.
+      // The store's own product address. The affiliate parameter is added when
+      // the offer is built, from the tag on the source, and never here.
       { target: "link", column: "variant_url", ownership: "feed" },
       // The store's own code for its own variant. Not a manufacturer part
       // number: a Shopify catalogue publishes none, and putting a retailer's
@@ -292,12 +399,46 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
       // must not be told.
       { target: "merchant_sku", column: "variant_sku", ownership: "feed" },
     ],
+    // The filters a shopper narrows with, and nothing else.
+    //
+    // Every rule reads `classified_as` or the title: the store's own title,
+    // product type and tags. None reads `body_text`. A specification buried in
+    // a marketing paragraph is a claim in prose, and reading one out with a
+    // regular expression is how a cabin ends up filed as 240V because the page
+    // mentioned a 240V heater as an upgrade.
+    //
+    // Nothing here fills the dimensions, the amperage or the heater output.
+    // Those are real specifications and they are not in a Shopify catalogue, so
+    // they stay empty and the coverage table says so.
     attributes: [
       {
+        // "Far Infrared Sauna", "Traditional Barrel Sauna". The two words the
+        // category already knows, and no third thing inferred from a heater.
+        from: "extract",
+        key: "sauna_type",
+        column: "classified_as",
+        pattern: "(far infrared|infrared|traditional)",
+        flags: "i",
+        valueMap: { "far infrared": "far_infrared", infrared: "far_infrared", traditional: "traditional" },
+        ownership: "review_on_change",
+        approved: false,
+      },
+      {
+        // The maker's own words for how many it seats, kept as written.
+        from: "extract",
+        key: "capacity_label",
+        column: "product_title",
+        pattern: "(\\d+\\s*[-–]\\s*\\d+\\s*(?:person|people)|\\d+\\s*(?:person|people))",
+        flags: "i",
+        ownership: "review_on_change",
+        approved: false,
+      },
+      {
+        // The upper number of a range, which is what "seats up to" means.
         from: "extract",
         key: "capacity_max_people",
         column: "product_title",
-        pattern: "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*(?:Person|person)",
+        pattern: "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*(?:Person|person|People|people)",
         flags: "",
         ownership: "review_on_change",
         approved: false,
@@ -305,10 +446,50 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
       {
         from: "extract",
         key: "sauna_style",
-        column: "product_type",
-        pattern: "(Barrel|Cabin|Pod|Box|Mobile)",
+        column: "classified_as",
+        pattern: "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
         flags: "i",
-        valueMap: { Barrel: "barrel", barrel: "barrel", Cabin: "cabin", cabin: "cabin", Pod: "pod", pod: "pod", Box: "box", box: "box", Mobile: "mobile", mobile: "mobile" },
+        valueMap: { barrel: "barrel", cabin: "cabin", pod: "pod", box: "box", mobile: "mobile", trailer: "mobile" },
+        ownership: "review_on_change",
+        approved: false,
+      },
+      {
+        // Combined forms first: a store writing "Indoor/Outdoor" means both,
+        // and an alternation that tried "outdoor" first would record one.
+        from: "extract",
+        key: "placement",
+        column: "classified_as",
+        pattern: "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        flags: "i",
+        // Every spelling of the combined form the pattern can capture, because
+        // "both" is a different answer from "outdoor" and guessing between them
+        // is not this flow's to make.
+        valueMap: { outdoor: "outdoor", indoor: "indoor", "indoor/outdoor": "indoor_outdoor", "indoor / outdoor": "indoor_outdoor", "indoor&outdoor": "indoor_outdoor", "indoor & outdoor": "indoor_outdoor", "indoor or outdoor": "indoor_outdoor" },
+        ownership: "review_on_change",
+        approved: false,
+      },
+      {
+        // Only where the store says it. Most will not, and an empty cell is the
+        // right answer when nobody stated one.
+        from: "extract",
+        key: "connection",
+        column: "classified_as",
+        pattern: "(plug\\s*-?\\s*in|hard\\s*-?\\s*wired|hardwired)",
+        flags: "i",
+        valueMap: { "plug in": "plug_in", "plug-in": "plug_in", plugin: "plug_in", hardwired: "hardwired", "hard wired": "hardwired", "hard-wired": "hardwired" },
+        ownership: "review_on_change",
+        approved: false,
+      },
+      {
+        // 120 and 240 only. A store writing 110 or 220 is describing the same
+        // supply loosely, and mapping one onto the other is a conversion this
+        // has no business making.
+        from: "extract",
+        key: "voltage",
+        column: "classified_as",
+        pattern: "\\b(120|240)\\s*v\\b",
+        flags: "i",
+        valueMap: { "120": "120v", "240": "240v" },
         ownership: "review_on_change",
         approved: false,
       },

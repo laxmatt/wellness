@@ -99,8 +99,30 @@ export const targetInfo = (target: CanonicalTarget): TargetInfo => CANONICAL_TAR
  * means `backorder` is a judgement, and it is the same judgement whether a
  * person types it into this table or a regular expression guesses at it.
  */
-export const ValueMap = z.record(z.string(), z.string());
+/**
+ * An administrator's own translation table, read without regard to case.
+ *
+ * A store writes "Outdoor" in a product type and "outdoor" in a tag, and a map
+ * that caught one of those is a map that silently drops half a filter. The pair
+ * is still a person's: nothing is stemmed, nothing is guessed, and only the
+ * shift key is forgiven. Two keys differing only in case would make the answer
+ * depend on which one was written first, so a map carrying both is refused.
+ */
+export const ValueMap = z.record(z.string(), z.string()).refine(
+  (map) => new Set(Object.keys(map).map((k) => k.trim().toLowerCase())).size === Object.keys(map).length,
+  { message: "Two entries in this value map differ only in capitalisation, and the map is read without regard to case. Keep one." },
+);
 export type ValueMap = z.infer<typeof ValueMap>;
+
+/** What a map says about one raw value, or nothing if it says nothing. */
+export function mappedValue(raw: string, map?: ValueMap): string | undefined {
+  if (!map) return undefined;
+  const wanted = raw.trim().toLowerCase();
+  for (const [key, value] of Object.entries(map)) {
+    if (key.trim().toLowerCase() === wanted) return value;
+  }
+  return undefined;
+}
 
 /** A pattern is small, and a large one is a mistake rather than a mapping. */
 export const MAX_PATTERN_CHARS = 200;
@@ -172,7 +194,28 @@ export type AttributeRule = z.infer<typeof AttributeRule>;
 /** A row that is not a product of ours, named by a condition on a column. */
 export const ExclusionRule = z.object({
   column: z.string().min(1),
-  op: z.enum(["equals", "not_equals", "empty", "not_empty", "starts_with", "not_starts_with", "contains", "not_contains"]),
+  /**
+   * `contains_word` and `not_contains_word` match whole words, which is the
+   * only safe way to ask a product title a question.
+   *
+   * A substring rule for the tiki bar excludes every barrel sauna, and a
+   * substring rule for a floor kit is fine until somebody shortens it to "kit"
+   * and loses every sauna sold as one. Word matching makes the rule say what a
+   * reviewer reads it as saying. A value of several words matches those words
+   * in that order, so "hot tub" catches a hot tub and not a tub of wood stain.
+   */
+  op: z.enum([
+    "equals",
+    "not_equals",
+    "empty",
+    "not_empty",
+    "starts_with",
+    "not_starts_with",
+    "contains",
+    "not_contains",
+    "contains_word",
+    "not_contains_word",
+  ]),
   value: z.string().optional(),
   /** Why, in a person's words. It appears beside every row this drops. */
   reason: z.string().min(1),

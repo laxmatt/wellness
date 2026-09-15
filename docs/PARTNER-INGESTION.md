@@ -274,12 +274,52 @@ arbitrary address is a proxy into whatever else that machine can see. A failed
 run leaves the last good snapshot untouched, because pages land in a temporary
 file and move into place only when every page has arrived.
 
-**Inclusion is the store's own classification, never a keyword count.** Each
-partner's profile excludes by that store's `product_type` and `tags`: heaters,
-stones, accessories, parts, red-light products and cold plunges each get their
-own reason, ordered most specific first so the reason a reviewer reads is the
-useful one. No rule reads `body_text`, and no profile may: a merchant's
-marketing paragraph is not a classification.
+**Inclusion is two-sided, and the first version was not.** The first real
+Select Saunas preflight returned 786 rows, 737 product records and zero
+exclusions. The rules leaned on `product_type not_contains "sauna"`, which
+assumes a store files its non-saunas somewhere else. Select Saunas is a sauna
+shop: a rain jacket, a floor kit and a tiki bar all sit under a sauna product
+type, so nothing was excluded and the candidate set was the whole catalogue. A
+store's own classification is evidence of which aisle a thing is in. It is not
+evidence that the thing is a sauna.
+
+So every rule now reads `classified_as`, the store's own title, product type
+and tags joined into one field, and there are two sides:
+
+1. **A blocklist of what a thing is**, in whole words: cold plunges, hot tubs,
+   showers, red-light panels, buildings and outdoor furniture, heaters, parts,
+   stones, accessories. Each class carries one reason and the classes are
+   ordered most specific first, so the sentence a reviewer reads is the useful
+   one.
+2. **A requirement that something says sauna**, applied last. It is why the
+   blocklist does not have to be exhaustive: the air tunnel, the tiki bar and
+   the outdoor shower are all caught by it even with no rule naming them.
+
+Words, not substrings. `contains_word` matches whole words, because a
+substring rule for the tiki bar excludes every barrel sauna and a substring
+rule for a floor kit loses every sauna sold as a kit. Nothing is stemmed: a
+rule for "tubs" is written for "tubs", and the list writes both forms.
+
+Some words are deliberately absent. "door", "window", "bench", "roof", "wall"
+and "band" are each a part a store sells alone and a feature a complete sauna's
+title brags about, and "Barrel Sauna with Glass Door" is a sauna. A word that
+appears in both is not evidence, so it is not a rule.
+
+Both sides fail in the same direction: they drop a real sauna before they keep
+a bucket. A sauna wrongly excluded appears in the excluded table with the rule
+that dropped it, where a person sees it. A bucket wrongly kept becomes a
+product page.
+
+No rule reads `body_text`, and no profile may: a merchant's marketing paragraph
+mentions saunas on the page for a sauna cover.
+
+**Filters come from the same evidence.** Heating, capacity, style, placement,
+connection and voltage are read from the title and the classification, each by
+one named pattern with a value map a person wrote, and each arrives unapproved
+so the tool shows what it actually extracted first. Dimensions, amperage and
+heater output are not mapped at all: a Shopify catalogue does not state them,
+and a number read out of a marketing paragraph is how a cabin ends up filed as
+240V because the page mentioned a 240V heater as an upgrade.
 
 **Cross-partner matching reports and never merges.** A shared GTIN, or one
 maker's part number under one brand, settles a match. A brand and a model that
@@ -377,6 +417,24 @@ SAUNABOX sent one and the repository records its existence and not its value.
 seed refuses to write when it finds anything, and it deliberately leaves prose
 alone so a note can say a portal needs a login without being refused for
 saying so.
+
+## A suggested mapping has to name the required fields
+
+The same preflight failed all 737 records on `columns.description`. That was
+not the seeded profile, which maps it. It was the suggester: the list of
+headings this project matches against had never been shown a Shopify
+catalogue, so `body_text`, `image_src` and `available` matched nothing and a
+person got a mapping with no description, no image and no stock, and one error
+naming a field with no hint of which column it should have been.
+
+Those names are in the list now. The suggester still matches exactly and never
+by resemblance: `body_text` is in the list, `body_txt` is not, and a tool that
+guessed the second would be right often enough that nobody would check it.
+
+Re-running the seed also no longer says "already here" and leaves a stale
+mapping in place. When the seeded rules differ from the latest version, it
+writes the next version, unapproved, beside the old one. Nothing is edited and
+nothing approved is touched.
 
 ## How big a file may be
 
