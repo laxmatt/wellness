@@ -1,0 +1,168 @@
+{
+  "id": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+  "slug": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+  "name": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description he Hampton indoor traditional sauna with a Harvia heater is the perfect getaway for friends and family. The Hampton includes an elevated rear bench and side bench seat for optimal comfort and relaxation for 2-3 people. The Hampton traditional sauna comes with a 4.5kW Harvia electric heater. Harvia heaters are world-renowned for providing high-quality electric sauna heaters that are both durable and dependable. The dual bench seating layout of the Hampton offers ample space up to 3 people to enjoy the intense heat while relaxing in comfort against the integrated ergonomic backrest. A water cask and spoon are included to add water to the heater stones to provide humidity and steam for more intense heat. Standard features include a thermo-hygrometer for displaying the humidity level, interior dome lighting, a ventilation system, and a cabin constructed of natural Canadian Cedar wood for durable yet naturally appealing decor. Specifications Exterior Product Dimensions H 80\" x W 70\" x D 47\" Interior Product Dimensions H 72\" x W 64\" x D 43\" Weight 425 lb. Power 220V, 50/60HZ 30 AMP Dedicated Outlet Required 4500 Watts Features Canadian Cedar Construction 4.5kW Harvia Heater 2 Tiered Bench Seating for Comfort and Relaxation Tempered Glass Ergonomic Backrest Included Ventilation System Cask and Spoon Hygrometer/Sand Timer Upgraded Door Handle 7 Year Warranty Documents Product Data Sheet TN Series Assembly Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-hampton-300tn-3-person-indoor-traditional-sauna-300tn-280877.jpg?v=1740621301",
+      "alt": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 409800,
+      "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "300TN",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "300TN"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "3-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"3-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna",
+        "matched": "3-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"3\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna",
+        "matched": "3",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna | Indoor Saunas | Features:2-tier Seating",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna | Indoor Saunas | Features:2-tier Seating",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "id": "select-saunas-almost-heaven-oasis-4-person-indoor-sauna-vision-series",
+  "slug": "select-saunas-almost-heaven-oasis-4-person-indoor-sauna-vision-series",
+  "name": "Almost Heaven Oasis 4-Person Indoor Sauna",
+  "brandId": "almost-heaven-saunas",
+  "categoryId": "saunas",
+  "description": "Almost Heaven Oasis 4-Person Indoor Sauna Introducing the Oasis 4-Person Sauna from Almost Heaven Saunas, where luxury and relaxation converge in a spacious sanctuary designed for your well-being. With exterior dimensions of 83-1/4\"W x 63-3/4\"D x 79-3/8\"H and interior dimensions of 78-3/4\"W x 60-1/4\"D x 77-3/8\"H, the Oasis offers ample space for you and three companions to unwind and rejuvenate. Featuring multi-level seating with an upper bench measuring 78\"L x 24\"W x 37-3/8\"H and a lower bench measuring 78\"L x 15-3/8\"W x 22-7/8\"H, this sauna ensures comfort for all users. Crafted from premium Hemfir or Rustic Cedar lumber, the Oasis exudes both elegance and durability. Experience the soothing warmth of the Harvia 8kW Wall Series heater, providing efficient heat for a truly indulgent sauna experience. Plus, with the option to upgrade the heater to models such as KIPW, Spirit, Virta, or Cilindro Series, you can tailor your sauna to your exact preferences. Invest in your well-being with the Oasis 4-Person Sauna, where luxury meets tranquility for an unparalleled sauna experience.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-almost-heaven-oasis-4-person-indoor-sauna-vision-series-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/AHS_Oasis_Vision4PNaturalA.jpg?v=1712835723",
+      "alt": "Almost Heaven Oasis 4-Person Indoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-almost-heaven-oasis-4-person-indoor-sauna-vision-series-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 546500,
+      "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "AHOASIS4P",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "AHOASIS4P"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Almost Heaven Oasis 4-Person Indoor Sauna",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Almost Heaven Oasis 4-Person Indoor Sauna",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Almost Heaven Oasis 4-Person Indoor Sauna | Indoor Traditional Sauna Kits | 4 Person, Almost Heaven Traditional Saunas, almost-heaven, Saunas",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Almost Heaven Oasis 4-Person Indoor Sauna | Indoor Traditional Sauna Kits | 4 Person, Almost Heaven Traditional Saunas, almost-heaven, Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia 8kW Wall Series heater",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia 8kW Wall Series heater\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Almost Heaven Oasis 4-Person Indoor Sauna Introducing the Oasis 4-Person Sauna from Almost Heaven Saunas, where luxury and relaxation converge in a spacious sanctuary designed for your well-being. With exterior dimensions of 83-1/4\"W x 63-3/4\"D x 79-3/8\"H and interior dimensions of 78-3/4\"W x 60-1/4\"D x 77-3/8\"H, the Oasis offers ample space for you and three companions to unwind and rejuvenate. Featuring multi-level seating with an upper bench measuring 78\"L x 24\"W x 37-3/8\"H and a lower bench measuring 78\"L x 15-3/8\"W x 22-7/8\"H, this sauna ensures comfort for all users. Crafted from premium Hemfir or Rustic Cedar lumber, the Oasis exudes both elegance and durability. Experience the soothing warmth of the Harvia 8kW Wall Series heater, providing efficient heat for a truly indulgent sauna experience. Plus, with the option to upgrade the heater to models such as KIPW, Spirit, Virta, or Cilindro Series, you can tailor your sauna to your exact preferences. Invest in your well-being with the Oasis 4-Person Sauna, where luxury meets tranquility for an unparalleled sauna experience.",
+        "matched": "Harvia 8kW Wall Series heater",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/almost-heaven-oasis-4-person-indoor-sauna-vision-series?variant=48011859362135&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

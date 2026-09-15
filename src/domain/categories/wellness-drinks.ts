@@ -149,7 +149,7 @@ export const wellnessDrinks = CategoryDefinition.parse({
       type: "list",
       group: "Ingredients",
       compareOrder: 100,
-      tooltip: "Values: stevia, monk_fruit, cane_sugar, dextrose, allulose, fruit_juice, none.",
+      tooltip: "Values: stevia, monk_fruit, cane_sugar, cassava_root_syrup, dextrose, allulose, fruit_juice, none.",
     },
     {
       key: "dietary",
@@ -255,6 +255,21 @@ export const wellnessDrinks = CategoryDefinition.parse({
     { slug: "greens", label: "Greens", title: "Greens Powders", description: "Daily greens compared by serving cost and label.", conditions: [{ key: "function", op: "includes", value: "greens" }] },
     { slug: "energy", label: "Energy", title: "Energy Drinks", description: "Caffeinated functional drinks compared by caffeine, sugar and cost.", conditions: [{ key: "function", op: "includes", value: "energy" }] },
     { slug: "sugar-free", label: "Sugar-free", title: "Sugar-Free Wellness Drinks", description: "Zero-sugar options across every function.", conditions: [{ key: "sugar_g", op: "eq", value: 0 }] },
+  ],
+  aliases: [
+    "wellness drink",
+    "wellness drinks",
+    "drink mix",
+    "drink mixes",
+    "electrolyte drink",
+    "electrolyte drinks",
+    "electrolyte powder",
+    "greens powder",
+    "greens powders",
+    "hydration drink",
+    "hydration powder",
+    "energy drink",
+    "energy drinks",
   ],
   matcherVocabulary: {
     function: {

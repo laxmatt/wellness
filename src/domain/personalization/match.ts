@@ -1,9 +1,11 @@
 import type { CategoryDefinition, Condition } from "../category";
 import { attributeDef } from "../category";
-import { comparable, evaluateCondition, matchesAll } from "../conditions";
+import { comparable, evaluateCondition, isUnconfirmedPriceClaim, matchesAll } from "../conditions";
 import type { MatchResult, PreferenceSet, ProductExplanation, Relaxation, SoftPreference } from "../personalization";
 import { toScoringInput, scoreProducts } from "../recommend/score";
+import type { Bound } from "../provenance";
 import type { ProductView } from "../view";
+import { priceMinorOf } from "../view";
 import { describeConstraint, describeFit, describeGap, labelFor } from "./describe";
 
 export const MEDICAL_REDIRECT =
@@ -12,34 +14,132 @@ export const MEDICAL_REDIRECT =
 // Deterministic. The AI never reaches this function; it only produces the
 // PreferenceSet that comes in as an argument.
 
-function softScore(view: ProductView, cat: CategoryDefinition, soft: SoftPreference[]): { score: number; met: SoftPreference[]; unmet: SoftPreference[] } {
+// The comparable range of each preferred key across the candidate set. Without
+// it "prefer cheaper" cannot mean anything: a single product has no cheaper.
+export type SoftRanges = Map<string, { min: number; max: number }>;
+
+// A preference reads a value the same way a constraint does, so it inherits
+// the same doubt: an amount nobody recorded cannot make a product cheap, and
+// it cannot set the range other products are measured against either. Hooga's
+// PRO1500 was ranked cheapest of eight panels on a prototype $649.
+function usableFor(view: ProductView, cat: CategoryDefinition, key: string): number | undefined {
+  if (isUnconfirmedPriceClaim(view, cat, { key, op: "lte", value: 0 })) return undefined;
+  return comparable(view, cat, key);
+}
+
+export function softRanges(views: ProductView[], cat: CategoryDefinition, soft: SoftPreference[]): SoftRanges {
+  const ranges: SoftRanges = new Map();
+  for (const p of soft) {
+    if (p.value !== undefined) continue;
+    const values = views.map((v) => usableFor(v, cat, p.key)).filter((n): n is number => n !== undefined);
+    if (values.length === 0) continue;
+    ranges.set(p.key, { min: Math.min(...values), max: Math.max(...values) });
+  }
+  return ranges;
+}
+
+// Which way a bound leaves the value open. `less_than 1` says the value is
+// somewhere below 1, so it is open towards low.
+function openTowards(bound: Bound): SoftPreference["direction"] {
+  return bound === "less_than" ? "prefer_low" : "prefer_high";
+}
+
+// A preference naming an amount, against a value stated only as a bound. The
+// bound answers it only when it settles it, which is the side the source
+// closed: `less_than 1` meets a target of 1 or more for a shopper who wants
+// less, and settles nothing for a shopper who wants more or who named an
+// amount without saying which way they want it.
+function boundedSoftHit(bound: Bound, stated: number, direction: SoftPreference["direction"], target: number): boolean {
+  if (direction !== openTowards(bound)) return false;
+  return bound === "less_than" ? target >= stated : target <= stated;
+}
+
+function softScore(
+  view: ProductView,
+  cat: CategoryDefinition,
+  soft: SoftPreference[],
+  ranges: SoftRanges = new Map(),
+): { score: number; met: SoftPreference[]; unmet: SoftPreference[] } {
   let score = 0;
   let total = 0;
   const met: SoftPreference[] = [];
   const unmet: SoftPreference[] = [];
   for (const p of soft) {
     total += p.weight;
-    const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
+    const raw = p.key === "price" ? priceMinorOf(view) : view.attributes[p.key];
+    // A value the source states only as a bound is not an amount, so a
+    // preference naming an amount cannot be met by it, and a preference with
+    // no amount can only use the endpoint when the endpoint is the worse end
+    // for what the shopper wants. See `boundedSoftHit`.
+    const bound = p.key === "price" ? undefined : view.bounds[p.key];
     let hit = false;
+    // Credit for a directional preference with no target is proportional, not
+    // binary. Scoring it as "has the attribute" gave the most expensive product
+    // the same credit as the cheapest for "prefer cheaper", so the shopper who
+    // asked for cheap got whatever the quality score liked best.
+    let partial: number | undefined;
     if (p.value !== undefined) {
       if (Array.isArray(p.value)) {
         hit = Array.isArray(raw) ? p.value.some((v) => (raw as string[]).includes(v)) : p.value.includes(raw as string);
       } else {
         const def = attributeDef(cat, p.key);
-        if (def?.type === "enum") {
+        if (def?.type === "list") {
+          // A list attribute holds several values and a preference names one of
+          // them. Comparing the array to the string made every product a miss,
+          // so a preference for electrolyte drinks scored the electrolyte drink
+          // exactly as it scored the energy drink: `["electrolytes"]` is not
+          // `"electrolytes"`. The array form of the same preference already
+          // worked, which is how this survived.
+          hit = Array.isArray(raw) && (raw as unknown[]).includes(p.value);
+        } else if (def?.type === "enum") {
           // Ordinal enums count as met at or above the asked rank.
           const want = def.enumOptions?.find((o) => o.value === p.value)?.rank;
           const have = comparable(view, cat, p.key);
           hit = want !== undefined && have !== undefined ? (p.direction === "prefer_low" ? have <= want : have >= want) : raw === p.value;
+        } else if (isUnconfirmedPriceClaim(view, cat, { key: p.key, op: "eq", value: p.value })) {
+          // A named amount against a price nobody recorded: the same refusal
+          // the hard constraint makes.
+          hit = false;
+        } else if (bound !== undefined && typeof raw === "number" && typeof p.value === "number") {
+          // "Less than 1 g" is not 1 g. It meets "prefer under 2 g" and it
+          // cannot meet "prefer exactly 1 g", which is the same rule the hard
+          // constraints follow.
+          hit = boundedSoftHit(bound, raw, p.direction, p.value);
         } else {
           hit = raw === p.value;
         }
       }
     } else {
-      const n = comparable(view, cat, p.key);
-      hit = n !== undefined;
+      const n = usableFor(view, cat, p.key);
+      const range = ranges.get(p.key);
+      if (n === undefined) {
+        // Unknown is not a fit. It cannot be the cheapest if nobody recorded
+        // what it costs.
+        hit = false;
+      } else if (bound !== undefined && openTowards(bound) !== p.direction) {
+        // The endpoint is the flattering end for what this shopper wants:
+        // "over 189" ranked as 189 for someone who wants the lowest figure
+        // would score the best case of a range whose worst case nobody stated.
+        // Nothing is known, so nothing is credited.
+        hit = false;
+      } else if (!range || range.max === range.min) {
+        // Nothing to rank against: every candidate is equal on this key.
+        hit = true;
+        partial = p.weight;
+      } else {
+        const position = (n - range.min) / (range.max - range.min);
+        const fraction = p.direction === "prefer_low" ? 1 - position : position;
+        partial = p.weight * fraction;
+        // "Met" is reserved for the better half, so the explanation does not
+        // claim the most expensive product suits someone who wanted cheap.
+        hit = fraction >= 0.5;
+      }
     }
-    if (hit) {
+    if (partial !== undefined) {
+      score += partial;
+      if (hit) met.push(p);
+      else unmet.push(p);
+    } else if (hit) {
       score += p.weight;
       met.push(p);
     } else {
@@ -51,8 +151,11 @@ function softScore(view: ProductView, cat: CategoryDefinition, soft: SoftPrefere
 
 function describeSoft(view: ProductView, cat: CategoryDefinition, p: SoftPreference, met: boolean): string {
   const label = labelFor(cat, p.key);
-  const raw = p.key === "price" ? view.price.money.amountMinor : view.attributes[p.key];
+  const raw = p.key === "price" ? priceMinorOf(view) : view.attributes[p.key];
   if (met) return describeFit(view, cat, { key: p.key, op: "eq", value: p.value });
+  // Saying "price is $1,249" about an amount nobody recorded quotes the
+  // placeholder the rest of this refuses to use.
+  if (isUnconfirmedPriceClaim(view, cat, { key: p.key, op: "eq", value: p.value })) return `${label} not confirmed`;
   if (raw === undefined) return `${label} not stated`;
   return describeGap(view, cat, { key: p.key, op: "eq", value: p.value }).text;
 }
@@ -99,7 +202,8 @@ export function relaxationSearch(views: ProductView[], cat: CategoryDefinition, 
       const oa = others.reduce((n, c) => n + norm(a, c), 0);
       const ob = others.reduce((n, c) => n + norm(b, c), 0);
       if (oa !== ob) return oa - ob;
-      return a.price.money.amountMinor - b.price.money.amountMinor;
+      // A product with no amount sorts last on price rather than as free.
+      return (a.price.money?.amountMinor ?? Infinity) - (b.price.money?.amountMinor ?? Infinity);
     });
 
     // Prefer a product this route has not already recommended.
@@ -115,6 +219,7 @@ export function relaxationSearch(views: ProductView[], cat: CategoryDefinition, 
 
     out.push({
       keptKey: kept.key,
+      droppedKeys: failing.map((c) => c.key),
       keptLabel: describeConstraint(cat, kept),
       productId: pick.id,
       keptSatisfied: satisfying.length > 0,
@@ -127,6 +232,9 @@ export function relaxationSearch(views: ProductView[], cat: CategoryDefinition, 
 export function applyPreferences(views: ProductView[], cat: CategoryDefinition, prefs: PreferenceSet): MatchResult {
   const published = views.filter((v) => v.status === "published");
   const base = new Map(scoreProducts(published.map(toScoringInput), cat).map((s) => [s.id, s.score]));
+  // Computed once over the candidates, so "cheaper" is measured against the
+  // products actually on offer rather than against nothing.
+  const ranges = softRanges(published, cat, prefs.soft);
 
   const explanations: Record<string, ProductExplanation> = {};
   for (const v of published) {
@@ -136,7 +244,7 @@ export function applyPreferences(views: ProductView[], cat: CategoryDefinition, 
       if (evaluateCondition(v, cat, c)) fits.push(describeFit(v, cat, c));
       else misses.push(describeGap(v, cat, c).text);
     }
-    const soft = softScore(v, cat, prefs.soft);
+    const soft = softScore(v, cat, prefs.soft, ranges);
     for (const p of soft.met) fits.push(describeSoft(v, cat, p, true));
     for (const p of soft.unmet) misses.push(describeSoft(v, cat, p, false));
     explanations[v.id] = { productId: v.id, fits, misses, softScore: Math.round(soft.score * 10) / 10 };
@@ -155,6 +263,7 @@ export function applyPreferences(views: ProductView[], cat: CategoryDefinition, 
   return {
     bestMatchId: ranked[0]?.id ?? null,
     alternativeIds: ranked.slice(1, 4).map((v) => v.id),
+    rankedIds: ranked.map((v) => v.id),
     explanations,
     relaxations: qualifying.length === 0 ? relaxationSearch(published, cat, prefs.hard) : [],
     medicalRedirect: prefs.medicalIntent,

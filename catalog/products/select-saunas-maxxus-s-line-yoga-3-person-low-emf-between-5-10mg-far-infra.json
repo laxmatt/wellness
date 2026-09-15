@@ -1,0 +1,247 @@
+{
+  "id": "select-saunas-maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infra",
+  "slug": "select-saunas-maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infra",
+  "name": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna",
+  "brandId": "maxxus-saunas",
+  "categoryId": "saunas",
+  "description": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infra-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/MX-S306-01_2_3x302-24-2024.jpg?v=1757344870",
+      "alt": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infra-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 329900,
+      "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "MX-S306-01",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "MX-S306-01"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "3-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"3-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna",
+        "matched": "3-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"3\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna",
+        "matched": "3",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Maxxus S-Line Yoga 3-Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 60\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Ever wish you could enjoy a private wellness retreat without leaving home? The Maxxus 1-Person Far Infrared Sauna is designed to give you just that-an intimate, rejuvenating space where relaxation meets modern wellness. Perfect for solo use, it delivers deep, soothing heat that promotes detoxification, stress relief, and improved circulation. Built with sustainably sourced Canadian Hemlock and enhanced with advanced infrared technology, this sauna combines natural elegance with innovative design. Its thoughtful features create an environment tailored for comfort, allowing you to enjoy the benefits of infrared therapy while elevating your daily self-care routine. Features: Full 3 person capacity 8 Maxxus Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 3 boxes Note: Indoor Use Only Specifications: Sauna weight: 385 lbs. Shipping weight: 485 lbs. Electrical service: Special Electrical 120 V/20 AMP Non GFCI dedicated receptacle and breaker (Not 220/240 V) (Please consult a certified electrician.) Exterior dimensions (LWH): 42\" x 60\" x 75\" Interior dimensions (LWH): 38\" x 56\" x 68 \" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 60\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 140,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “sauna can heat up to 140F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-3-person-low-emf-between-5-10mg-far-infrared-sauna-canadian-hemlock-natural?variant=51655698121047&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

@@ -6,11 +6,16 @@ import { Condition } from "./category";
 export const HardConstraint = Condition;
 export type HardConstraint = z.infer<typeof HardConstraint>;
 
+// Exported for the same reason as CONDITION_OPS: the instructions the model is
+// given are built from this list, not written alongside it.
+export const SOFT_DIRECTIONS = ["prefer_high", "prefer_low", "prefer_value"] as const;
+export const SOFT_WEIGHT_RANGE = { min: 0, max: 1, default: 0.5 } as const;
+
 export const SoftPreference = z.object({
   key: z.string(),
-  direction: z.enum(["prefer_high", "prefer_low", "prefer_value"]),
+  direction: z.enum(SOFT_DIRECTIONS),
   value: z.union([z.number(), z.string(), z.boolean(), z.array(z.string())]).optional(),
-  weight: z.number().min(0).max(1).default(0.5),
+  weight: z.number().min(SOFT_WEIGHT_RANGE.min).max(SOFT_WEIGHT_RANGE.max).default(SOFT_WEIGHT_RANGE.default),
 });
 export type SoftPreference = z.infer<typeof SoftPreference>;
 
@@ -28,6 +33,12 @@ export type PreferenceSet = z.infer<typeof PreferenceSet>;
 export type Relaxation = {
   // The constraint this route honours, e.g. "price".
   keptKey: string;
+  // The constraints the chosen product fails, which is what a shopper would
+  // have to set aside to be offered it. Named separately from `keptKey`
+  // because the route offers to KEEP that one: the assistant panel read
+  // `keptKey` as the thing to drop and offered to remove the only constraint
+  // the product satisfied.
+  droppedKeys: string[];
   // That constraint in words, e.g. "price of $100 or less".
   keptLabel: string;
   productId: string;
@@ -47,6 +58,11 @@ export type ProductExplanation = {
 export type MatchResult = {
   bestMatchId: string | null;
   alternativeIds: string[];
+  // Every qualifying product, in the personalized order. `alternativeIds` is
+  // the first three of these; a caller that orders by those alone leaves
+  // everything from the fifth onwards in whatever order it started in, which
+  // is what the category grid did to a search for the cheapest panel.
+  rankedIds: string[];
   explanations: Record<string, ProductExplanation>;
   relaxations: Relaxation[];
   medicalRedirect: boolean;

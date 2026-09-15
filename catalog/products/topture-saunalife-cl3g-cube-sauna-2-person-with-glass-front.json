@@ -1,0 +1,170 @@
+{
+  "id": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+  "slug": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+  "name": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna",
+  "brandId": "saunalife-saunas",
+  "categoryId": "saunas",
+  "description": "Description Experience luxurious wellness at home with the SaunaLife Cube-Series Model CL3G 2-Person Sauna. This stunning outdoor sauna combines sleek Scandinavian design with ultimate comfort and durability. Its full glass front not only offers a bright and airy ambiance but also provides a tranquil view of your surroundings. Crafted with Thermo-Spruce wood and featuring ergonomic Thermo-Aspen seating, this sauna is designed for lasting relaxation and premium performance in all seasons. Features Full-glass bronze-tinted front wall and door for open views and a spacious feel Ergonomic contoured seating and arched backrests for superior comfort Organically thermally enhanced Thermo-Spruce exterior for strength and longevity Thermo-Aspen sauna benches and backrests that stay cool to the touch Shingled roof with drip rails for optimal weather protection Wi-Fi app-controlled white “dotless” LED lighting for elegant ambiance Designed in Scandinavia and handcrafted in Northern Europe Accommodates up to 2 users comfortably What's Included? Cube-Series Model CL3G sauna unit Tempered bronze glass front and door Thermo-Spruce walls and roof with fascia boards Ergonomic Thermo-Aspen bench and backrest LED Light Bar System with Wi-Fi App Control Wireless remote with cradle 90W power supply, driver, and 30’ light cable Mounting clips (articulating and flush) Foundation beams Montage kit and installation instructions Optional Add-Ons Sauna heater (various models available separately) Sauna accessories kit (bucket, ladle, thermometer) Specifications Exterior Dimensions: 53.2” W x 51.2” D x 81.9” H Interior Dimensions: 49.6” W x 43.2” D x 75.4” H Bench Depth: Top 20.5\" / Lower 8\" / Side 11.8\" Door Size: 23.2” W x 66.5” H Glass: 8mm Tempered Bronze Wall Thickness: 42mm (walls), 28mm (front/back walls) Stave Thickness: 1.7” Shipping Dimensions: 70.9” W x 43.3” D x 32.3” H Shipping Weight: 990 lbs Documents Installation Manual SaunaLife CL3G",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-cl3g-cube-sauna-2-person-with-glass-front-sl-cl3g-949219.jpg?v=1746330832",
+      "alt": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 399000,
+      "listPriceMinor": 459900,
+      "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SL-CL3G",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as in_stock."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "SL-CL3G"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna",
+        "matched": "2-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna | Outdoor Saunas | Cabin Saunas, Cube Sauna, Features:2-tier Seating, glass front, glass sauna",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna | Outdoor Saunas | Cabin Saunas, Cube Sauna, Features:2-tier Seating, glass front, glass sauna",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

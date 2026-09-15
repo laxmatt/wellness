@@ -1,0 +1,170 @@
+{
+  "id": "topture-saunalife-cl5g-cube-sauna",
+  "slug": "topture-saunalife-cl5g-cube-sauna",
+  "name": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna",
+  "brandId": "saunalife-saunas",
+  "categoryId": "saunas",
+  "description": "Description Transform your backyard into a private Scandinavian wellness retreat. The SaunaLife CL5G Cube Sauna is a masterpiece of design and craftsmanship, offering a luxurious, authentic sauna experience in the open air. With a stunning panoramic glass front and a spacious interior for up to four people, this is your personal escape for relaxation and rejuvenation. Handcrafted in Northern Europe from premium, thermally modified woods, the CL5G is built to withstand the elements and become a beautiful focal point of your outdoor living space. It’s not just a sauna; it’s an investment in a lifestyle of wellness, designed to be enjoyed for decades to come. A Masterpiece of Design & Materials This sauna isn't just built; it's engineered for comfort, beauty, and extreme durability. Panoramic Glass Front: An 8mm tempered and tinted bronze glass wall creates a bright, open feel, offering picturesque views of your surroundings while you relax. Weatherproof Thermo-Spruce Exterior: The thick, solid wood exterior has been thermally treated, making it naturally resistant to decay, pests, and harsh weather without the use of chemicals. It's built for a lifetime outdoors. Cool-Touch Thermo-Aspen Interior: The satin-smooth benches and backrests are crafted from Thermo-Aspen. This premium, knotless wood remains comfortable to the touch and its ergonomic contours provide ultimate support during long, relaxing sessions. Advanced Lighting System: Set the perfect mood with a premium \"dotless\" white LED lighting system, fully controllable via Wi-Fi app or the included wireless remote. Please Note: Customize with Your Perfect Heater (Sold Separately) To give you the freedom to create your perfect sauna experience, the heater and controls are sold separately. This allows you to choose the ideal power and style for your needs. This sauna is engineered for a 6kW to 8kW wall-mounted electric sauna heater. We recommend pairing it with a premium heater like the HUUM DROP or the Harvia KIP series. Our experts are happy to help you select the perfect package! Assembly & Delivery Information This sauna kit is a rewarding DIY project that results in a professional-grade outdoor spa. We recommend 2-3 handy adults for assembly, which can typically be completed over a weekend. A solid, level foundation (like a concrete pad or deck) is required before you begin. This sauna ships via LTL freight and weighs approximately 1680 lbs. The delivery is curbside (dropped off at the end of your driveway), so please have a plan to move the components to your assembly site. What's Included? Core Structure Walls of Thermo-Spruce (42mm) Front & Back Walls of Thermo-Spruce (28mm) Tempered Bronze Front Glass Wall (8mm) Roof Shingles & Fascia Board Front Details Painted Black (2) Floor Drains (Front & Back) Interior Comfort Ergonomic Thermo-Aspen Sauna Bench Ergonomic Thermo-Aspen Backrest Heater Guard (for safety) Lighting System Premium White LED Light System with Wi-Fi App Control (2) White LED Lights Wireless Handheld Remote with Mounting Cradle 90W Power Supply & Driver 30’ Light Cable (3) Articulating Mounting Clips (3) Flush Mounting Clips Assembly & Guidance Complete Montage Kit Detailed Installation Instructions Specifications Model: CL5G Wall/Ceiling Material: Thermo-Spruce (42mm/28mm) Bench/Backrest Material: Knotless Thermo-Aspen Interior Dimensions: 77.2\"W x 55.1\"D x 74.8\"H Exterior Dimensions: 80.7\"W x 63\"D x 82.7\"H Door Size: 23.2\" x 66.5\" Door Handle: Square wood handle Glass: Tempered bronze, 8mm thick Shipping Dimensions: 81\"W x 44\"D x 42\"H Shipping Weight: 1680 lbs Bench Dimensions: Top: 17.7\", Lower: 31.1\", Side: 23.6\" Back Wall, Lower, Side Bench: 76\", 73.2\", 17.3\" Stave Thickness: 1.7\" Manual SaunaLife CL5G Installation Manual SaunaLife CL5G Dimensions",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-saunalife-cl5g-cube-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-model-cl5g-sl-cl5g-449862.jpg?v=1740621068",
+      "alt": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-saunalife-cl5g-cube-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 599000,
+      "listPriceMinor": 689900,
+      "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SL-CL5G",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as in_stock."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "SL-CL5G"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna | Outdoor Saunas | Cabin Saunas, Cube Sauna, Features:2-tier Seating, glass front, glass sauna",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna | Outdoor Saunas | Cabin Saunas, Cube Sauna, Features:2-tier Seating, glass front, glass sauna",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

@@ -2,21 +2,33 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useAssistant } from "@/components/assistant/AssistantProvider";
-import { applyFilters, type FilterGroup } from "@/domain/filters";
+import { setNeeds } from "@/components/needs/NeedsStore";
+import { applyFilterTiers, type FilterGroup } from "@/domain/filters";
+import { mergeAlternatives, type NeedDefinition } from "@/domain/needs";
 
 type FilterState = {
   groups: FilterGroup[];
   ids: string[];
   selected: string[];
   visible: Set<string>;
+  confirmed: Set<string>;
+  mayMatch: Set<string>;
   active: boolean;
   toggle: (optionId: string) => void;
   clear: () => void;
   // Narrowing accepted from the assistant, applied on top of the chips.
   fromAssistant: { labels: string[]; count: number } | null;
+  // The order the engine ranked those products in. The grid rendered `ids` in
+  // the page's own order and used the assistant's answer only for membership,
+  // so a reply saying "Ranking for lower price" changed which products were
+  // shown and never the order they were shown in.
+  assistantOrder: string[] | null;
   clearAssistant: () => void;
   dropLast: () => void;
-  countFor: (group: FilterGroup, optionId: string) => number;
+  countFor: (group: FilterGroup, optionId: string) => { total: number; confirmed: number; unknown: number };
+  // The category this page is showing, when it was given one. Screens read it
+  // to look up what the shopper has asked for.
+  categoryId?: string;
 };
 
 const Ctx = createContext<FilterState | null>(null);
@@ -24,8 +36,44 @@ const Ctx = createContext<FilterState | null>(null);
 // One source of truth for the category page's filter state. The grid, the chip
 // bar and the picks band all read it, so nothing on the page can disagree
 // about what the shopper has narrowed to.
-export function CategoryFilterProvider({ groups, ids, children }: { groups: FilterGroup[]; ids: string[]; children: ReactNode }) {
-  const [selected, setSelected] = useState<string[]>([]);
+export function CategoryFilterProvider({
+  groups,
+  ids,
+  children,
+  // Every requirement this category can express, classified by the server over
+  // the whole category. The chips select from it; nothing in the browser
+  // evaluates a product.
+  needs = [],
+  categoryId,
+  // Chips the URL arrives with already pressed. A shopper on
+  // /red-light/under-1000 has stated a budget as surely as one who pressed the
+  // chip, so it starts in the same state, in the same list, and comes off the
+  // same way. It used to be held apart as the page's own fact, which is why it
+  // could not be removed.
+  initialSelected = [],
+}: {
+  groups: FilterGroup[];
+  ids: string[];
+  children: ReactNode;
+  needs?: NeedDefinition[];
+  categoryId?: string;
+  initialSelected?: string[];
+}) {
+  const [selected, setSelected] = useState<string[]>(initialSelected);
+
+  // What that state was seeded from. Moving between two facet URLs is a
+  // client-side navigation on one route: this component stays mounted and only
+  // the prop changes, so state seeded once would filter the page a shopper has
+  // arrived at by the chip of the page they left. Compared by content, because
+  // a fresh array with the same ids in it is the same starting point and must
+  // not throw away a choice the shopper made after arriving.
+  const seed = initialSelected.join("\u0000");
+  const [seededFrom, setSeededFrom] = useState(seed);
+  if (seededFrom !== seed) {
+    setSeededFrom(seed);
+    setSelected(initialSelected);
+  }
+
   const assistant = useAssistant();
   const applied = assistant?.applied ?? null;
   const lastNonce = useRef<number | null>(null);
@@ -44,19 +92,68 @@ export function CategoryFilterProvider({ groups, ids, children }: { groups: Filt
     setAssistantLabels(applied.labels);
   }, [applied]);
 
+  const tiers = useMemo(() => applyFilterTiers(ids, groups, selected), [ids, groups, selected]);
   const visible = useMemo(() => {
-    const byChips = applyFilters(ids, groups, selected);
-    return new Set(assistantIds ? byChips.filter((id) => assistantIds.includes(id)) : byChips);
-  }, [ids, groups, selected, assistantIds]);
+    return new Set(assistantIds ? tiers.visible.filter((id) => assistantIds.includes(id)) : tiers.visible);
+  }, [tiers, assistantIds]);
+  const confirmed = useMemo(() => new Set(tiers.confirmed.filter((id) => visible.has(id))), [tiers, visible]);
+  const mayMatch = useMemo(() => new Set(tiers.unknown.filter((id) => visible.has(id))), [tiers, visible]);
+
+  // What the shopper has asked for, written where a screen that is not this one
+  // can read it. The comparison is a different page with no chips of its own,
+  // and its job is products weighed against each other, some of which these
+  // filters exclude.
+  //
+  // Accepted assistant constraints join the list and are marked as theirs. Soft
+  // preferences do not: a preference orders the list and decides nothing, so it
+  // is reported separately or not at all. A proposal the shopper has not
+  // accepted is not here at all.
+  const selectedNeeds = useMemo(() => {
+    const byId = new Map(needs.map((n) => [n.id, n]));
+    const chosen: NeedDefinition[] = [];
+
+    // One requirement per filter row, not per chip. Options within a row are
+    // alternatives, which is exactly what `applyFilters` does with them: it
+    // unions them and the grid widens. Reported one per chip, picking Targeted
+    // and Full body read as two requirements and marked a full-body panel as
+    // failing the targeted one, turning "either is fine" into a conflict the
+    // shopper never asked for.
+    //
+    // Rows stay separate, because rows are ANDed. Each accepted assistant
+    // constraint stays separate for the same reason: it is a requirement in its
+    // own right, not an alternative to a chip.
+    const byRow = new Map<string, NeedDefinition[]>();
+    for (const id of selected) {
+      const need = byId.get(id);
+      if (!need) continue;
+      const row = need.groupKey ?? need.id;
+      byRow.set(row, [...(byRow.get(row) ?? []), need]);
+    }
+    // Category order, which is the order the rows are shown in.
+    for (const row of byRow.values()) chosen.push(mergeAlternatives(row));
+
+    for (const b of applied?.breakdown ?? []) {
+      chosen.push({ id: `assistant:${b.key}`, label: b.label, groupLabel: "From your answers", source: "assistant", matchIds: b.matchIds, unknownIds: b.unknownIds });
+    }
+    return chosen;
+  }, [needs, selected, applied]);
+
+  useEffect(() => {
+    if (categoryId) setNeeds(categoryId, selectedNeeds);
+  }, [categoryId, selectedNeeds]);
 
   const value = useMemo<FilterState>(
     () => ({
       groups,
       ids,
+      categoryId,
       selected,
       visible,
+      confirmed,
+      mayMatch,
       active: selected.length > 0 || assistantIds !== null,
       fromAssistant: assistantIds ? { labels: assistantLabels, count: assistantIds.length } : null,
+      assistantOrder: assistantIds,
       clearAssistant: () => {
         setAssistantIds(null);
         setAssistantLabels([]);
@@ -70,10 +167,11 @@ export function CategoryFilterProvider({ groups, ids, children }: { groups: Filt
       dropLast: () => setSelected((prev) => prev.slice(0, -1)),
       countFor: (group, optionId) => {
         const others = selected.filter((s) => !group.options.some((o) => o.id === s));
-        return applyFilters(ids, groups, [...others, optionId]).length;
+        const result = applyFilterTiers(ids, groups, [...others, optionId]);
+        return { total: result.visible.length, confirmed: result.confirmed.length, unknown: result.unknown.length };
       },
     }),
-    [groups, ids, selected, visible, assistantIds, assistantLabels],
+    [groups, ids, categoryId, selected, visible, confirmed, mayMatch, assistantIds, assistantLabels],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

@@ -21,14 +21,14 @@ const config: MeterConfig = {
 const input = (messages: { role: "user" | "assistant"; text: string }[]): ConverseInput => ({
   categoryName: "Red light therapy",
   filterVocabulary: "price (integer cents, use op lte)",
+  catalogueSize: 8,
+  moneyContract: "MONEY: price is money.",
   products: [
     {
       id: "p1",
       name: "Panel",
       brand: "Brand",
-      price: "$699",
-      priceIsPlaceholder: false,
-      facts: [{ label: "Irradiance", value: "100 mW/cm2", evidence: "manufacturer_claim" }],
+      facts: [{ label: "Irradiance", value: "100 mW/cm2" }],
       notStated: ["Weight"],
     },
   ],

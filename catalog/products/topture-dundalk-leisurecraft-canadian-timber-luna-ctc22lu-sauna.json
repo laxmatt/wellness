@@ -1,0 +1,182 @@
+{
+  "id": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+  "slug": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+  "name": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU",
+  "brandId": "dundalk-leisurecraft",
+  "categoryId": "saunas",
+  "description": "Description This Canadian Timber Luna Sauna is handcrafted from Eastern White Cedar, this sauna is strong for all-weather outdoor use, resistant to rot and decay, and features a beautiful light-colored finish. The door is 0.2 in (5mm) bronze tempered glass with a wooden frame and pre-hung on the front wall for easy installation. This Luna Sauna kit comes with 2 tier prefab benches for 2-4 person seating , solid cedar floor joists, floor and walls , white cedar bevel siding for the sides, and is packaged in a ready-to-assemble kit . The large bronze tinted window allows you to enjoy the view outside without others peeking in and the rounded corners of the sauna offer a modern, unique design that perfectly fits into a modern or rustic setting. Features: Seats: 2-4 people Size: 7' cube / 280 cu ft Wood: Eastern White Cedar Walls: 1.5\" Thick Solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Window: D ouble pane 5mm bronze tempered glass Weight : 1525 lbs Made in: Canada Dimensions Included Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure Prefab 2-tier solid benches Bronze tempered glass window Waterproof roof membrane Cedar roof boards Door w/ bronze tempered glass window Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly Installation Manual Dundalk Shipping Policy",
+  "status": "published",
+  "availability": "backorder",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-luna-sauna-canadian-timber-2-4-person-ctc22lu-ctc22lu-350530.jpg?v=1740619426",
+      "alt": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 739200,
+      "listPriceMinor": 869900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "backorder",
+      "merchantSku": "CTC22LU",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-11."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "CTC22LU"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-4 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-4 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU",
+        "matched": "2-4 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “all-weather”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

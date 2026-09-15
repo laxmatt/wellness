@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-ct-georgian-cabin-sauna-with-porch",
+  "slug": "select-saunas-ct-georgian-cabin-sauna-with-porch",
+  "name": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch",
+  "brandId": "dundalk-leisurecraft",
+  "categoryId": "saunas",
+  "description": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch Sauna like a pro with the beautifully handcrafted CT Georgian Cabin Sauna with Porch. Made from Eastern White Cedar, this sauna radiates a natural beauty with its light color and tight knots. Whether for a cottage or home, its cabin shape blends seamlessly and can be easily assembled from a kit. The stylish addition of an overhang roof and front porch brings character to this model, while a black metal shingle roof ensures a dry and enjoyable sauna experience. Finally, the large front windows and built-in porch make this sauna a lasting investment for generations to come. Key Features Black Steel Roof 28 Gauge textured black metal roof Made in Canada. Front Windows Comes standard with 2 large front windows for natural light into your sauna. 2-Tier Benches 2 Tier Benches on the back wall with return L Bench that can be installed on the left or right side. Dovetail Corners Dovetail corner joinery makes for easy assembly and long lasting structure. Features 2-6 person capacity Made in Canada Premium metal shingle roof included Eastern White Cedar – light colour and knots 5mm bronze tempered glass Solid wide benches 8 kw heater recommended or wood burning Specifications Cubic Size: 343 Seating Capacity: 3 - 4 Gross Weight: 1775.85 Shipping Dimensions: 120 x 45 x 44 Useful Links Product Dimension Parts List",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-ct-georgian-cabin-sauna-with-porch-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/CTC88PW_e7b1d95f-dd38-4306-bdeb-2ca39fedb257.jpg?v=1722657660",
+      "alt": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-ct-georgian-cabin-sauna-with-porch-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 859400,
+      "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "CTC88PW",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "CTC88PW"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-6 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-6 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch",
+        "matched": "2-6 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch | Outdoor Cabin Sauna Kits | Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Georgian Cabin 2-6 Person Outdoor Sauna w/ Porch | Outdoor Cabin Sauna Kits | Saunas",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/ct-georgian-cabin-sauna-with-porch?variant=48132738711895&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

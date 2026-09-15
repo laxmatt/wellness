@@ -7,10 +7,19 @@ import { buildCompareModel } from "@/domain/compare";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { categories, categoryById } from "@/domain/categories";
 import { getCategoryPage, getProductViewsByIds } from "@/lib/queries";
+import { social } from "@/lib/metadata";
+
+const COMPARE_DESCRIPTION = "Products side by side on the same specifications, with every source shown.";
 
 export const metadata: Metadata = {
   title: "Compare",
+  description: COMPARE_DESCRIPTION,
+  // Still noindex: a comparison URL is one shopper's selection. The card copy
+  // exists so a link somebody pastes into a message names what it is, which
+  // is a different thing from asking a search engine to keep it. No `url`,
+  // because the page a link points at depends on its query string.
   robots: { index: false, follow: true },
+  ...social({ title: "Compare", description: COMPARE_DESCRIPTION }),
 };
 
 type Props = { searchParams: Promise<{ ids?: string }> };
@@ -28,11 +37,13 @@ export default async function ComparePage({ searchParams }: Props) {
     <Shell
       current="/compare"
       tray={false}
+      compareAuthority={cat && page ? { categoryId: cat.id, publishedIds: page.products.map((p) => p.view.id) } : undefined}
       assistantCategoryId={cat?.id}
       compareSeeds={(page?.products ?? []).map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: p.view.categoryId }))}
     >
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Compare" }]} />
+        {list.some((id) => !views.some((view) => view.id === id)) ? <p className="mt-2 text-sm text-fg-muted">Some selected products are no longer listed and were left out.</p> : null}
         {items.length === 0 || !cat || !page ? (
           <div className="mt-10 max-w-2xl">
             <p className="eyebrow">Compare</p>
@@ -64,11 +75,11 @@ export default async function ComparePage({ searchParams }: Props) {
             {views.length !== sameCat.length ? <p className="mt-2 text-sm text-fg-muted">Products from other categories were left out. Compare one category at a time.</p> : null}
             <>
               <div className="mt-4 flex flex-wrap items-center gap-3">
-                <AssistantLauncher />
+                <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
                 <p className="text-sm text-fg-muted">Optional. Ask what the differences mean for you.</p>
               </div>
               <div className="mt-6">
-                <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} />
+                <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} categoryId={cat.id} />
               </div>
             </>
           </>

@@ -1,0 +1,235 @@
+{
+  "id": "saunabox-saunabox-smartsteam-kit",
+  "slug": "saunabox-saunabox-smartsteam-kit",
+  "name": "SAUNABOX SmartSteam Pro",
+  "brandId": "saunabox",
+  "categoryId": "saunas",
+  "description": "Your personal wellness oasis, available anytime, anywhere. Designed with your convenience and comfort in mind, this portable sauna delivers the full rejuvenating experience of a traditional sauna, revolutionized into a compact and easy-to-use package. It's relaxation, redefined. The SAUNABOX heats up internally to over 13 0-140 ° F with a near 100% humidity . Because of how water conducts heat, the high humidity evokes similar physiological effects at a lower internal temperature as a dry sauna would at over 160°+. The condensed area and continuous flow of heat into the sauna without pause also helps to increase the level of heat. You can adjust heat level and duration settings directly on the SmartSteam unit and by remote control. Every inch of this steam sauna has been thoughtfully crafted. The premium, insulating materials help to create a soothing, enveloping heat, while the durable fiberglass frame ensures that this sauna is your companion for the long haul. Easy to set up and take down, this portable sauna is your wellness journey's most versatile companion and i ncludes everything you need to set up your sauna. Can be used both indoors and outdoors. If you leave it outdoors, we recommend having an appropriate cover such as a canopy, balcony, tarp, etc. Included in Your SAUNABOX SmartSteam: SmartSteam ™ Pro Heating Unit V2 Heat-Insulating ThermoShield Frame Cover Portable Chair Fiberglass Sauna Frame SweatLock Floor Mat Carrying Case Micro-Fiber Hand Towel 1-Year Warranty Product Details: Heat Levels: 1-7 Time Settings: 0-60 minutes Control: SmartSteam Unit & Bluetooth SmartSteam Capacity: 3.6L Voltage: 110V Wattage: 1600 Watts 50/60Hz Warranty : 2-Year Warranty Size: Height 6'2 x Depth 35 x Width 35 in DISCLAIMER: Remember, always consult with a healthcare professional before incorporating saunas into your routine, especially if you have any underlying health conditions. This is not a medical device and is not intended to be used as one.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "saunabox-saunabox-smartsteam-kit-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/SaunaBox_Tent_2-A_R07_01.png?v=1769034648",
+      "alt": "SaunaBox® SmartSteam Pro",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-smartsteam-kit-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/4.01-1x1-IdeahLabsLLC-JN-287285.png?v=1775496701",
+      "alt": "SaunaBox® SmartSteam Pro",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-smartsteam-kit-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/SaunaBox_Tent_2_R07_01.png?v=1769034648",
+      "alt": "SaunaBox® SmartSteam Pro",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-smartsteam-kit-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/1.03-1x1-IdeahLabsLLC-CR-287285.png?v=1769034648",
+      "alt": "SaunaBox® SmartSteam Pro",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "saunabox-saunabox-smartsteam-kit-offer",
+      "merchantId": "saunabox",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 29900,
+      "url": "https://www.saunabox.com/MATT41058",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "80182564"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "STEAMKIT-V1",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Price, variant and availability come from SAUNABOX's official Shopify listing. Outbound uses the exact Social Snowball referral URL issued to Matt; no unverified deep-link transformation is applied. The referral advertises 5% customer savings and 5% commission."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "saunabox": "STEAMKIT-V1"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "steam",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "tent",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor_outdoor",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 35,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 35,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 74,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "plug_in",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_model": {
+      "value": "SmartSteam Pro heating unit",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "SaunaBox® SmartSteam Pro",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "manufacturer",
+    "ref": "SAUNABOX official public Shopify storefront snapshot",
+    "url": "https://www.saunabox.com/products/saunabox-smartsteam-kit",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

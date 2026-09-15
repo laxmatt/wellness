@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Wellness Compare: guided preview</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f7f3ec; --fg:#1a1714; --soft:#5c554c; --edge:#e2d9cc; --card:#fffdf9; --accent:#9b3f1c; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#17150f; --fg:#f2ede4; --soft:#a79f92; --edge:#332d24; --card:#1f1c15; --accent:#e2895f; } }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0 16px 64px; background:var(--bg); color:var(--fg);
+         font:15px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { padding: 40px 0 8px; }
+  h1 { font-size: clamp(28px,5vw,40px); margin: 0 0 6px; letter-spacing:-0.02em; }
+  h2 { font-size: 22px; margin: 0 0 4px; letter-spacing:-0.01em; }
+  h3 { font-size: 16px; margin: 24px 0 4px; }
+  p { color: var(--soft); margin: 0 0 12px; max-width: 68ch; }
+  .lede { color: var(--fg); }
+  .meta { font-size: 13px; color: var(--soft); }
+  code { background: var(--card); border:1px solid var(--edge); border-radius:5px; padding:1px 5px; font-size:13px; }
+  a { color: var(--accent); }
+  .tabs { display:flex; gap:8px; margin: 24px 0 0; flex-wrap: wrap; position: sticky; top: 0;
+          background: var(--bg); padding: 12px 0; z-index: 2; border-bottom: 1px solid var(--edge); }
+  .tabs button { font: inherit; cursor: pointer; padding: 7px 14px; border-radius: 999px;
+                 border:1px solid var(--edge); background:var(--card); color:var(--fg); }
+  .tabs button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .step { border-top: 1px solid var(--edge); padding-top: 28px; margin-top: 36px; }
+  .step:first-of-type { border-top: 0; }
+  .num { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:999px;
+         background: var(--fg); color: var(--bg); font-size:13px; font-weight:700; margin-right:8px; vertical-align:2px; }
+  .route { font-size:13px; color:var(--soft); margin: 0 0 16px; }
+  figure { margin: 0 0 28px; }
+  figcaption { font-size: 14px; color: var(--soft); margin: 0 0 8px; }
+  figcaption b { color: var(--fg); font-weight: 600; }
+  a.shot { display:block; border:1px solid var(--edge); border-radius:12px; overflow:hidden; background:var(--card); }
+  img { display:block; width:100%; height:auto; }
+  .phone a.shot { max-width: 390px; }
+  .note { background:var(--card); border:1px solid var(--edge); border-radius:12px; padding:14px 16px; margin: 8px 0 24px; }
+  .note ul { margin: 8px 0 0; padding-left: 18px; }
+  .note li { color: var(--soft); margin-bottom: 6px; }
+  .note li b { color: var(--fg); }
+  .cols { display:grid; gap:16px; }
+  @media (min-width: 760px) { .cols { grid-template-columns: 1fr 1fr; } }
+  footer { border-top:1px solid var(--edge); margin-top:48px; padding-top:16px; font-size:13px; color:var(--soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Wellness Compare</h1>
+  <p class="lede">A walkthrough of one shopper's journey: arrive, pick a category, narrow it down, compare what is left, and leave for a retailer. Every image below is a real page from a production build served locally. None is a mockup.</p>
+  <p class="meta">Every image is a page as it first loads, except step three, which was captured after actually pressing a filter. Build <code id="build">mKZp1pP_FDQAz5dZU_9P0</code>, captured <span id="captured">2026-09-11</span>. All twenty-two screenshots were taken in that one run, so every page here shows the same build. Run it yourself with <code>npm run preview</code>, then follow the routes named at each step.</p>
+</header>
+
+<div class="tabs" role="group" aria-label="Viewport">
+  <button type="button" data-view="desktop" aria-pressed="true">Desktop</button>
+  <button type="button" data-view="mobile" aria-pressed="false">Mobile</button>
+</div>
+
+<main id="journey"></main>
+
+<section class="step">
+  <h2>What a screenshot leaves out</h2>
+  <p>A still shows a state, not the act of reaching it. Step three is a real selected state, captured after a real click, but the tap itself and the grid re-ordering under it are things to do live rather than look at. Two more are worth a minute in front of someone.</p>
+
+  <div class="note">
+    <b>The third fit state, which this selection happens not to produce.</b>
+    <ul>
+      <li>A requirement can also read <b>Needs confirmation</b>, when the catalogue holds nothing it can match on: a figure nobody published, one a source states two ways, or an amount resting on prototype data.</li>
+      <li>It matters because a filter has to refuse anything it cannot settle, so a missing figure and a genuine mismatch both come out as "no". One rules a product out; the other is something to check with the maker before buying.</li>
+      <li>In step three those two products are the ones counted under the grid. To see the state as a row on a card, open the comparison with one of them: <code>/compare?ids=plunge-original</code> with a budget selected on the cold plunge page first.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <b>The assistant, which is a scripted stand-in.</b>
+    <ul>
+      <li>No language model is connected. Replies come from a small deterministic script, and the panel says so in a banner every time it opens.</li>
+      <li>It reads a budget and a few phrases and nothing more. Every sentence a shopper reads is written by the site from its own catalogue, never by a model.</li>
+      <li>What it does well is refuse: a medical question gets a fixed redirect, an off-topic one gets an honest "this site has no vitamins catalogue" with links, and asking about cold plunges on the red-light page offers a link to that section rather than three red-light panels.</li>
+      <li>To see it: open <code>/red-light</code>, press <b>Help me choose</b>, and type <em>a full body panel under $700</em>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="step">
+  <h2>Deliberately unfinished, and visible in the shots above</h2>
+  <div class="note">
+    <ul>
+      <li><b>Every product image is a procedural placeholder</b>, marked <b>DEMO IMAGE</b> on the picture itself. Nothing is presented as a photograph, and no brand's photography is used. Permission has not been asked for, from anyone.</li>
+      <li><b>Specs say how they were sourced.</b> A figure read from the maker's page, one relayed by a search summary, and one relayed by a retailer's listing all read differently. Prototype values are tagged <b>Demo data</b> and are withheld from filtering and scoring.</li>
+      <li><b>One product has no price at all</b>, on purpose, and its page says why. Another shows no way to buy because its maker states it has gone out of business.</li>
+      <li><b>Four records cannot yet name their own configuration.</b> Where that is true the affected figure is marked disputed and withheld rather than guessed.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="step">
+  <h2>Before this goes anywhere</h2>
+  <p>Two groups, in the order they block things. Nothing here has been sent, published or deployed.</p>
+
+  <div class="cols">
+    <div class="note">
+      <b>Before asking brands for images</b>
+      <ul>
+        <li>Sender name, role and reply address.</li>
+        <li>How a private demo is shown: attached screenshots, a screen share, or a link if one exists. A domain is not required.</li>
+        <li>Three emails are drafted and unsent, with verified recipients, in <a href="../drafts/IMAGE-PERMISSION-EMAILS.md"><code>docs/drafts/IMAGE-PERMISSION-EMAILS.md</code></a>. They ask for exact-model assets and say where the images would appear.</li>
+        <li>Terms already read are in <a href="../drafts/IMAGE-RIGHTS-MATRIX.md"><code>docs/drafts/IMAGE-RIGHTS-MATRIX.md</code></a>.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <b>Before publishing</b>
+      <ul>
+        <li>A domain, and the variable that turns indexing on. Unset, the site refuses indexing by design.</li>
+        <li>A host.</li>
+        <li>Identity and contact: the four blanks in <a href="../drafts/PRIVACY-DATA-INVENTORY.md"><code>PRIVACY-DATA-INVENTORY.md</code></a>, and an address for a contact page.</li>
+        <li>A retention window, after which the deletion is ours to build.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>The short version of where everything stands is <a href="../PARTNER-PREVIEW-READINESS.md"><code>docs/PARTNER-PREVIEW-READINESS.md</code></a>. The four unresolved product identities, with the page to read for each, are in <a href="../LAUNCH-BLOCKING-CONFLICTS.md"><code>docs/LAUNCH-BLOCKING-CONFLICTS.md</code></a>.</p>
+</section>
+
+<footer>
+  <p>Generated by <code>scripts/preview-shots.mts</code>, which refuses to run unless the server is serving the build in <code>.next</code>, so a set of screenshots cannot quietly describe an older one. Images live in <code>shots/</code> and are committed, so this page works offline from a clone.</p>
+</footer>
+</div>
+
+<script>
+const STEPS = [
+  {
+    n: 1,
+    title: "Arrive, and find the right shelf",
+    route: "/",
+    blurb: "Three categories, equal weight, above the fold. The primary button belongs to none of them, and the category links carry their product counts.",
+    shots: [["home", "Home"]],
+  },
+  {
+    n: 2,
+    title: "Pick a category",
+    route: "/red-light &middot; /cold-plunge &middot; /wellness-drinks",
+    blurb: "Each category ranks its products by a published capability score, awards badges by rules you can read, and offers filter chips. A badge is withheld rather than forced when nothing qualifies, and the page says why.",
+    shots: [
+      ["category-red-light", "Red Light Therapy", "Eight panels. Filter rows for price, coverage, footprint and mounting."],
+      ["category-cold-plunge", "Cold Plunges", "Six tubs. Two badges are withheld here and the reasons are printed under the grid."],
+      ["category-wellness-drinks", "Wellness Drinks", "Six drinks, scored on sugar, added sugar, calories and cost per serving."],
+    ],
+  },
+  {
+    n: 3,
+    title: "Narrow it down, and see where each product stands",
+    route: "/cold-plunge, then press Under $2,000",
+    blurb: "One chip is selected in this capture, which is why this page looks different from the three above. Every card grows a short section reporting the shopper's own selections back, requirement by requirement. It is not a score and it never reads the capability score.",
+    shots: [
+      ["category-cold-plunge-filtered", "Cold plunges under $2,000", "Visible here: the Best Overall pick, at $8,499, reads <b>0 of 1 requirement met, 1 not met</b> with a red cross against <b>Under $2,000 &middot; Price</b>, so a badge winner that fails your budget says so instead of sitting quietly at the top. The pick beside it reads <b>1 of 1 requirement met</b> with a tick. Under the grid, a line says two products are not shown because no confirmed figure could be checked against the selection, and that they are neither a match nor a miss. The chip row shows the selected chip, its count, and the chips dimmed to zero because nothing left matches them."],
+    ],
+  },
+  {
+    n: 4,
+    title: "Open one product",
+    route: "/products/renu-therapy-cold-stoic-2-0",
+    blurb: "The score broken down criterion by criterion, specifications grouped, retailers listed, and every source named with the date it was read and whether anybody read it.",
+    shots: [
+      ["product-renu", "A well-sourced product", "Most of this record was read from the maker's own pages."],
+      ["product-plunge-no-price", "A product with no price", "No amount on the record can be shown to belong to this product, so none is shown. It still ranks, still compares, and the page explains itself."],
+    ],
+  },
+  {
+    n: 5,
+    title: "Compare what is left",
+    route: "/compare?ids=renu-cold-stoic-2,plunge-original,ice-barrel-500",
+    blurb: "Up to four from one category, attribute by attribute. The product header stays put while the table scrolls, and a row whose values cannot be ranked against each other says so instead of marking a winner.",
+    shots: [
+      ["compare", "Compare", "Each column carries its own retailer actions, so leaving for a shop does not require a detour through the product page."],
+      ["compare-scrolled", "Compare, scrolled", "Rows that cannot be ranked print the reason under the label."],
+    ],
+  },
+  {
+    n: 6,
+    title: "Leave for a retailer",
+    route: "not one page &mdash; the cards, the picks row, the comparison columns and the product page all offer it",
+    blurb: "Every current listing on a record is offered by name, and the site never picks between them. A listing it cannot stand behind is not a destination: one whose amount cannot be shown to belong to the product, or whose seller has stopped selling it, is withheld, and a product left with nothing to link to says so rather than inventing somewhere to send you. Affiliate status is not an input to any ranking, and there is no affiliate programme in place today.",
+    shots: [
+      ["disclosure", "How this site is paid", "The whole arrangement, stated plainly."],
+      ["how-we-choose", "How We Choose", "The published rules behind every badge and every score."],
+    ],
+  },
+];
+
+const journey = document.getElementById("journey");
+function render(view) {
+  journey.className = view === "mobile" ? "phone" : "";
+  journey.innerHTML = STEPS.map((s) => `
+    <section class="step">
+      <h2><span class="num" aria-hidden="true">${s.n}</span>Step ${s.n}: ${s.title}</h2>
+      <p class="route">Route: ${s.route}</p>
+      <p>${s.blurb}</p>
+      ${s.shots.map(([name, title, caption]) => `
+        <figure>
+          <h3>${title}</h3>
+          ${caption ? `<figcaption>${caption}</figcaption>` : ""}
+          <a class="shot" href="shots/${name}-${view}.png"><img loading="lazy" alt="${title}, ${view}" src="shots/${name}-${view}.png"></a>
+        </figure>`).join("")}
+    </section>`).join("");
+}
+for (const b of document.querySelectorAll(".tabs button")) {
+  b.addEventListener("click", () => {
+    for (const other of document.querySelectorAll(".tabs button")) other.setAttribute("aria-pressed", String(other === b));
+    render(b.dataset.view);
+  });
+}
+render("desktop");
+</script>
+</body>
+</html>

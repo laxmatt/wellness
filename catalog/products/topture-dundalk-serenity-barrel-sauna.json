@@ -1,0 +1,170 @@
+{
+  "id": "topture-dundalk-serenity-barrel-sauna",
+  "slug": "topture-dundalk-serenity-barrel-sauna",
+  "name": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W",
+  "brandId": "dundalk-leisurecraft",
+  "categoryId": "saunas",
+  "description": "Description This Canadian Timber Serenity Barrel Sauna with 18 in (45cm) Porch is handcrafted from Eastern White Cedar . The door is 0.2 in (5mm) bronze tempered glass with wooden frame and pre-hung on the front wall for easy installation. This Sauna kit comes with solid cedar cradles, aluminum bands with stainless steel hardware and is packaged in a ready to assemble kit . This model features a built in front porch with benches so you have a covered cool down area on the outside of the sauna. The round concept of the barrel sauna makes it unique and very efficient to heat as well as encourages proper air flow during sauna use. Features Seats: 2-4 people Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Weight: 1124 lbs Made in: Canada Exterior Dimensions: 86.25\"W x 94.5\"D x 86.25\"H Shipping Dimensions: 96 x 45 x 34 Front Porch This model includes a 1.5' (45cm) front porch. Removable Floor This model includes a removable flat floor. Aluminum Bands Features Aluminum Bands with Stainless Steel bolts for tightening. Solid Wood Benches Includes Solid cedar benches that are wide enough to lay down or comfortable to sit up. What's Included? Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure 2x Solid benches Aluminum Bands Door w/ bronze tempered glass window Flat removable floor Porch with 2 seats Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly Installation Manual Shipping Information",
+  "status": "published",
+  "availability": "backorder",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-dundalk-serenity-barrel-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-serenity-barrel-sauna-canadian-timber-4-person-ctc2245w-ctc2245w-226223.jpg?v=1740619663",
+      "alt": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-dundalk-serenity-barrel-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 621300,
+      "listPriceMinor": 739900,
+      "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "backorder",
+      "merchantSku": "CTC2245W",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-11."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "CTC2245W"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W",
+        "matched": "4 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W | Outdoor Saunas | Barrel Saunas, Features:Porch",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W | Outdoor Saunas | Barrel Saunas, Features:Porch",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

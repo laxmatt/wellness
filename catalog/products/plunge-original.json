@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": false
@@ -21,7 +21,7 @@
   "brandId": "plunge",
   "categoryId": "cold-plunge",
   "subcategoryId": "tub-with-chiller",
-  "description": "Acrylic tub with an integrated half-horsepower chiller, ozone sanitation, and app temperature control.",
+  "description": "Acrylic tub with an integrated chiller, insulation and app temperature control. Cools to 37°F and fits users up to 6 ft 8 in.",
   "images": [
     {
       "id": "plunge-original-primary",
@@ -57,8 +57,9 @@
         "url": "https://plunge.com/products/plunge",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
-      }
+        "note": "Relayed via search summary; manufacturer page not fetched directly. The amount is $6,990 and it cannot be shown to price this product. The page read on 2026-09-09 displays $6,790, $200 below this, alongside $8,490 offered as a comparable value rather than as a former price, which is why no list price is recorded either. The page prices a configuration, and whether this record's tub is the cold-only or the heater configuration has not been checked, so $6,790 cannot be attached to it and $6,990 cannot be defended. The raw figure stays here with its history; it prices nothing. The page's shipping statements also disagree, free in-home shipping in the header against free curbside with in-home charged as a premium further down, so no shipping term is recorded."
+      },
+      "disputed": true
     }
   ],
   "dimensions": {
@@ -70,10 +71,11 @@
     "unit": "in",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://plunge.com/products/plunge",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "66-5/8 in long by 31-1/2 in wide by 26 in high. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
     },
     "verification": "manufacturer_reported"
   },
@@ -82,21 +84,23 @@
     "unit": "lb",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://plunge.com/products/plunge",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Without water. Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "144 lb empty, and 1,019.7 lb filled with 105 gallons. The recorded figure is the empty weight; the filled figure is here because a floor has to carry it. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
     },
     "verification": "manufacturer_reported"
   },
   "warranty": {
-    "value": "1-year limited manufacturer warranty from date of delivery",
+    "value": "1-year warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://plunge.com/products/plunge",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The page states a 1-year warranty and no more than that. The record carried \"1-year limited manufacturer warranty from date of delivery\", relayed from a search summary; the term length is confirmed and the qualifiers are not, so they are recorded here as the earlier wording rather than presented as read. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included."
     },
     "verification": "manufacturer_reported"
   },
@@ -105,10 +109,11 @@
       "value": true,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://plunge.com/products/plunge",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "1/2 HP cooling. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A Pro Chiller Gen2 is included. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
       },
       "verification": "manufacturer_reported"
     },
@@ -117,10 +122,11 @@
       "unit": "°F",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://plunge.com/products/plunge",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "As low as 37°F with Pro Chiller. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Cools to 37°F with the Pro Chiller Gen2. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
       },
       "verification": "manufacturer_reported"
     },
@@ -140,10 +146,11 @@
       "unit": "gal",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://plunge.com/products/plunge",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "105 gallons. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
       },
       "verification": "manufacturer_reported"
     },
@@ -152,10 +159,11 @@
       "unit": "in",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://plunge.com/products/plunge",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Accommodates individuals up to 6 ft 8 in. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Fits users up to 80 in, 6 ft 8 in. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
       },
       "verification": "manufacturer_reported"
     },
@@ -165,12 +173,14 @@
         "outdoor"
       ],
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Placement rating not confirmed from the source. Demo value."
+        "note": "The page states indoor and outdoor use. This replaces a placeholder that guessed the same pair without a source."
       },
-      "verification": "demo"
+      "verification": "manufacturer_reported"
     },
     "plumbing": {
       "value": "dedicated_circuit",
@@ -179,9 +189,10 @@
         "url": "https://plunge.com/products/plunge",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Chiller needs a dedicated 120V 15A circuit. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Chiller needs a dedicated 120V 15A circuit. Relayed via search summary on 2026-09-08 from material that named no generation. The page read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 and does not cover this, so the claim cannot be shown to describe the configuration this record now cites. It is kept as history, marked, and withheld from matching and scoring rather than quietly counted as a current fact."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "sanitation_system": {
       "value": true,
@@ -190,35 +201,60 @@
         "url": "https://plunge.com/products/plunge",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Ozone sanitation stated by the brand. Relayed via search summary on 2026-09-08 from material that named no generation. The page read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 and does not cover this, so the claim cannot be shown to describe the configuration this record now cites. It is kept as history, marked, and withheld from matching and scoring rather than quietly counted as a current fact."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "sanitation_methods": {
       "value": [
-        "ozone",
-        "filter"
+        "ozone"
       ],
       "source": {
         "kind": "manufacturer",
         "url": "https://plunge.com/products/plunge",
         "retrievedAt": "2026-09-08",
         "method": "secondhand",
-        "note": "Ozone sanitation stated; filtration assumed in the chiller loop. Relayed via search summary; manufacturer page not fetched directly."
+        "note": "Ozone stated by the brand. Filtration in the chiller loop was previously assumed and has been removed: it was not stated. Relayed via search summary on 2026-09-08 from material that named no generation. The page read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 and does not cover this, so the claim cannot be shown to describe the configuration this record now cites. It is kept as history, marked, and withheld from matching and scoring rather than quietly counted as a current fact."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "warranty_years": {
       "value": 1,
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://plunge.com/products/plunge",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A 1-year warranty. The page as read on 2026-09-09 describes a reimagined Original with a Pro Chiller Gen2 included. This figure is identical to the one this record already carried from a search summary, so it stands whichever model the older summary described."
       },
       "verification": "manufacturer_reported"
+    },
+    "insulated": {
+      "value": true,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states the tub is insulated. It gives no R-value or material, and none is recorded."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heating": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://plunge.com/products/plunge",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Not recorded. The page sells the tub in more than one configuration and the difference between the cold-only and the heater configuration was not resolved in this reading, so this record does not say whether its tub heats. That is the same open question as the price."
+      },
+      "verification": "not_stated"
     }
   },
   "source": {
@@ -226,6 +262,6 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the product page was read by Codex on 2026-09-09 at 15:40 Pacific. The page describes a reimagined Original with a Pro Chiller Gen2 included, and this record is now scoped to that page wherever the page supports the figure. Seven figures agree exactly between the older relayed material and the reading, so each stands whichever model the summary meant: 66-5/8 by 31-1/2 by 26 in, 144 lb empty, 105 gallons, an 80 in maximum user height and 37°F, with a chiller included and a one-year term. Insulation, indoor and outdoor placement and app temperature control are read from this page. What the reading does not cover is not promoted: the sanitation and power claims stay as history, marked, and score nothing, and the older warranty wording is recorded as wording rather than as a read term. The price and whether this tub heats both turn on a configuration nobody has matched, and both are left unresolved. Stock, images and any health claim remain unverified."
   }
 }

@@ -1,0 +1,3505 @@
+{
+  "planId": "plan-be4fdf3aa6473498",
+  "signedBy": "Matt (site owner), relayed through Codex",
+  "signedOn": "2026-09-15",
+  "builtOn": "2026-09-15",
+  "sourceId": "topture-shopify",
+  "sourceName": "Topture (GoAffPro, 2%)",
+  "profileVersion": 3,
+  "uploadFile": "topture-shopify.json",
+  "uploadHash": "8061a41f4995e52a0c834d19894a68b300d1b791077e424856b9efc3a1461309",
+  "lastSuccessfulRefresh": "2026-09-15",
+  "sourceRecords": 94,
+  "comparisonFamilies": 94,
+  "selectedFamilyIds": [
+    "topture-aston-1-2-person-traditional-indoor-sauna-200tn",
+    "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w",
+    "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w",
+    "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin",
+    "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr",
+    "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp",
+    "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+    "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun",
+    "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber",
+    "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n",
+    "topture-dundalk-loft-traditional-indoor-sauna-3-person",
+    "topture-dundalk-nook-traditional-indoor-sauna-2-person",
+    "topture-dundalk-serenity-barrel-sauna",
+    "topture-dundalk-studio-traditional-indoor-sauna-4-person",
+    "topture-finnmark-fd-1-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-2-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-3-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo",
+    "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person",
+    "topture-kohler-c1-indoor-sauna-kit-graphite-grey",
+    "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+    "topture-kohler-c2-outdoor-sauna-kit-douglas-fir",
+    "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce",
+    "topture-logan-2-person-outdoor-infrared-sauna-200d6",
+    "topture-pacific-4-person-outdoor-infrared-sauna-400d6",
+    "topture-saunalife-cl12gcp-cube-sauna-8-person",
+    "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+    "topture-saunalife-cl4g-cube-sauna",
+    "topture-saunalife-cl5g-cube-sauna",
+    "topture-saunalife-cl7g-cube-sauna",
+    "topture-saunalife-ee6g-4-person-barrel-sauna",
+    "topture-saunalife-ee8g-barrel-sauna-6-person",
+    "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna",
+    "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model",
+    "topture-saunalife-g3-outdoor-pod-sauna-kit",
+    "topture-saunalife-g4-traditional-outdoor-sauna-6-person",
+    "topture-saunalife-g6-outdoor-cabin-sauna",
+    "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+    "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+    "topture-saunalife-model-e6-sauna-barrel-ergo-series",
+    "topture-saunalife-model-e7-sauna-barrel-ergo-series",
+    "topture-saunalife-model-e8-sauna-barrel-ergo-series",
+    "topture-saunalife-x2-2-person-traditional-indoor-sauna",
+    "topture-sunray-aspen-hl300k2",
+    "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+    "topture-sunray-baldwin-hl200sn",
+    "topture-sunray-bristol-bay-hl400kc",
+    "topture-sunray-bristow-hl200d2",
+    "topture-sunray-burlington-200d3",
+    "topture-sunray-cayenne-400d3",
+    "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna",
+    "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5",
+    "topture-sunray-eagle-hl200d1",
+    "topture-sunray-evansport-hl200k2",
+    "topture-sunray-freeport-hl300d1",
+    "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+    "topture-sunray-grandby-300d3",
+    "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+    "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun",
+    "topture-sunray-rockledge-200lx",
+    "topture-sunray-roslyn-hl400ks",
+    "topture-sunray-savannah-hl300k",
+    "topture-sunray-sedona-hl100k",
+    "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5",
+    "topture-sunray-sequoia-hl400k",
+    "topture-sunray-sierra-hl200k",
+    "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna",
+    "topture-sunray-southport-300sn",
+    "topture-sunray-tiburon-hl400sn",
+    "topture-sunray-waverly-hl300d2",
+    "topture-sunray-westlake-hl300lx",
+    "topture-thermasol-aalto-indoor-sauna",
+    "topture-thermasol-astra-indoor-sauna",
+    "topture-thermasol-fortis-sauna-cabin",
+    "topture-thermasol-lumaria-indoor-sauna",
+    "topture-thermasol-nordic-dawn-sauna-cabin",
+    "topture-thermasol-nordic-misty-sauna-cabin",
+    "topture-thermasol-ombra-sauna-cabin",
+    "topture-thermasol-solaris-solar-sauna-cabin",
+    "topture-thermasol-spectra-sauna-cabin",
+    "topture-thermasol-vera-sauna-cabin",
+    "topture-thermasol-vue-sauna-cabin",
+    "topture-true-north-2-4-person-6-long-barrel-sauna",
+    "topture-true-north-4-6-person-8-long-barrel-sauna",
+    "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+    "topture-true-north-6-8-person-9-long-barrel-sauna",
+    "topture-true-north-barrel-10-300-cm-pine-sauna",
+    "topture-true-north-large-pod-outdoor-barrel-sauna",
+    "topture-true-north-outdoor-cabin-sauna",
+    "topture-true-north-pod-outdoor-sauna",
+    "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person"
+  ],
+  "selectedRecordIds": [
+    "topture-aston-1-2-person-traditional-indoor-sauna-200tn",
+    "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w",
+    "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w",
+    "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin",
+    "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr",
+    "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb",
+    "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp",
+    "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+    "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun",
+    "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber",
+    "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n",
+    "topture-dundalk-loft-traditional-indoor-sauna-3-person",
+    "topture-dundalk-nook-traditional-indoor-sauna-2-person",
+    "topture-dundalk-serenity-barrel-sauna",
+    "topture-dundalk-studio-traditional-indoor-sauna-4-person",
+    "topture-finnmark-fd-1-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-2-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-3-full-spectrum-infrared-sauna",
+    "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo",
+    "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person",
+    "topture-kohler-c1-indoor-sauna-kit-graphite-grey",
+    "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+    "topture-kohler-c2-outdoor-sauna-kit-douglas-fir",
+    "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce",
+    "topture-logan-2-person-outdoor-infrared-sauna-200d6",
+    "topture-pacific-4-person-outdoor-infrared-sauna-400d6",
+    "topture-saunalife-cl12gcp-cube-sauna-8-person",
+    "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+    "topture-saunalife-cl4g-cube-sauna",
+    "topture-saunalife-cl5g-cube-sauna",
+    "topture-saunalife-cl7g-cube-sauna",
+    "topture-saunalife-ee6g-4-person-barrel-sauna",
+    "topture-saunalife-ee8g-barrel-sauna-6-person",
+    "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna",
+    "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model",
+    "topture-saunalife-g3-outdoor-pod-sauna-kit",
+    "topture-saunalife-g4-traditional-outdoor-sauna-6-person",
+    "topture-saunalife-g6-outdoor-cabin-sauna",
+    "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+    "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+    "topture-saunalife-model-e6-sauna-barrel-ergo-series",
+    "topture-saunalife-model-e7-sauna-barrel-ergo-series",
+    "topture-saunalife-model-e8-sauna-barrel-ergo-series",
+    "topture-saunalife-x2-2-person-traditional-indoor-sauna",
+    "topture-sunray-aspen-hl300k2",
+    "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+    "topture-sunray-baldwin-hl200sn",
+    "topture-sunray-bristol-bay-hl400kc",
+    "topture-sunray-bristow-hl200d2",
+    "topture-sunray-burlington-200d3",
+    "topture-sunray-cayenne-400d3",
+    "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna",
+    "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5",
+    "topture-sunray-eagle-hl200d1",
+    "topture-sunray-evansport-hl200k2",
+    "topture-sunray-freeport-hl300d1",
+    "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+    "topture-sunray-grandby-300d3",
+    "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+    "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun",
+    "topture-sunray-rockledge-200lx",
+    "topture-sunray-roslyn-hl400ks",
+    "topture-sunray-savannah-hl300k",
+    "topture-sunray-sedona-hl100k",
+    "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5",
+    "topture-sunray-sequoia-hl400k",
+    "topture-sunray-sierra-hl200k",
+    "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna",
+    "topture-sunray-southport-300sn",
+    "topture-sunray-tiburon-hl400sn",
+    "topture-sunray-waverly-hl300d2",
+    "topture-sunray-westlake-hl300lx",
+    "topture-thermasol-aalto-indoor-sauna",
+    "topture-thermasol-astra-indoor-sauna",
+    "topture-thermasol-fortis-sauna-cabin",
+    "topture-thermasol-lumaria-indoor-sauna",
+    "topture-thermasol-nordic-dawn-sauna-cabin",
+    "topture-thermasol-nordic-misty-sauna-cabin",
+    "topture-thermasol-ombra-sauna-cabin",
+    "topture-thermasol-solaris-solar-sauna-cabin",
+    "topture-thermasol-spectra-sauna-cabin",
+    "topture-thermasol-vera-sauna-cabin",
+    "topture-thermasol-vue-sauna-cabin",
+    "topture-true-north-2-4-person-6-long-barrel-sauna",
+    "topture-true-north-4-6-person-8-long-barrel-sauna",
+    "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+    "topture-true-north-6-8-person-9-long-barrel-sauna",
+    "topture-true-north-barrel-10-300-cm-pine-sauna",
+    "topture-true-north-large-pod-outdoor-barrel-sauna",
+    "topture-true-north-outdoor-cabin-sauna",
+    "topture-true-north-pod-outdoor-sauna",
+    "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person"
+  ],
+  "records": [
+    {
+      "id": "topture-aston-1-2-person-traditional-indoor-sauna-200tn",
+      "name": "SunRay Aston 200TN | 1-2 Person Traditional Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-aston-1-2-person-traditional-indoor-sauna-200tn",
+      "price": "$3,796",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/aston-1-2-person-traditional-indoor-sauna-200tn?variant=44864128549128&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-aston-200tn-sauna-front.jpg?v=1781865283",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w",
+      "name": "Dundalk Leisurecraft Tranquility Barrel Sauna Canadian Timber 5 Person | CTC2345W",
+      "role": "representative",
+      "familyId": "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w",
+      "price": "$6,569",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w?variant=45691177730312&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-tranquility-barrel-sauna-canadian-timber-6-person-ctc2345w-ctc2345w-196858.jpg?v=1740619578",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w",
+      "name": "Dundalk Leisurecraft Georgian Cabin Sauna 6 Person | CTC88W",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w",
+      "price": "$7,702",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisureceraft-georgian-cabin-sauna-ctc88w?variant=45691163672840&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-georgian-cabin-sauna-canadian-timber-6-person-ctc88w-ctc88w-180415.jpg?v=1740619267",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin",
+      "name": "Dundalk Leisurecraft Granby Cabin Sauna Canadian Timber 2-3 Person | CTC66W",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin",
+      "price": "$5,668",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin-sauna-ctc66w?variant=45691170914568&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-granby-cabin-sauna-canadian-timber-2-3-person-ctc66w-ctc66w-280189.jpg?v=1740619462",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr",
+      "name": "Dundalk Leisurecraft Harmony 4 Person Barrel Sauna | CTC22W",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr",
+      "price": "$6,032",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barrel-sauna-ctc22w?variant=45691179925768&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-harmony-barrel-sauna-canadian-timber-4-person-ctc22w-ctc22w-503781.jpg?v=1740619622",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp",
+      "name": "Dundalk Leisurecraft Serenity MP Barrel Sauna Canadian Timber 4 Person | CTC2245MP",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp",
+      "price": "$8,061",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp-barrel-sauna-ctc2245mp?variant=45691176780040&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-serenity-mp-barrel-sauna-canadian-timber-4-person-ctc2245mp-ctc2245mp-243412.jpg?v=1740619553",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b",
+      "name": "Dundalk Leisurecraft Georgian Cabin Sauna w/ Changeroom 6 Person | CTC88CW",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b",
+      "price": "$10,185",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-changeroom-ctc88cw?variant=45691167703304&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-georgian-cabin-sauna-with-changeroom-canadian-timber-6-person-ctc88cw-ctc88cw-553355.jpg?v=1740619330",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb",
+      "name": "Dundalk Leisurecraft Georgian Cabin Sauna w/ Porch 6 Person  | CTC88PW",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb",
+      "price": "$8,649",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-porch-ctc88pw?variant=45691168915720&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-georgian-cabin-sauna-with-porch-canadian-timber-6-person-ctc88pw-ctc88pw-463853.jpg?v=1740619371",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp",
+      "name": "Dundalk Leisurecraft Tranquility MP Barrel Sauna Canadian Timber 6 Person | CTC2345MP",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp",
+      "price": "$8,275",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp-barrel-sauna-ctc2345mp?variant=45691176255752&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-tranquility-mp-barrel-sauna-canadian-timber-6-person-ctc2345mp-ctc2345mp-357916.jpg?v=1740619526",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+      "name": "Dundalk Leisurecraft Luna Sauna Canadian Timber 2-4 Person | CTC22LU",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+      "price": "$7,392",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-luna-sauna-canadian-timber-2-4-person-ctc22lu-ctc22lu-350530.jpg?v=1740619426",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun",
+      "name": "Dundalk Leisurecraft MiniPOD Sauna Canadian Timber 2-4 Person | CTC77MW",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun",
+      "price": "$6,936",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-minipod-2-4-person-sauna-ctc77mw?variant=45691175567624&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-minipod-sauna-canadian-timber-2-4-person-ctc77mw-ctc77mw-892049.jpg?v=1740619498",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber",
+      "name": "Dundalk Leisurecraft CT Elation Barrel Sauna Canadian Timber 4 Person | CTC2424W",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber",
+      "price": "$7,031",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w?variant=51437783384328&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w-ctc2424w-287735.jpg?v=1747249390",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n",
+      "name": "Dundalk Leisurecraft Palmer Cabin Sauna 4 Person | CTC68N",
+      "role": "representative",
+      "familyId": "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n",
+      "price": "$7,146",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-leisurecraft-palmer-cabin-sauna-ctc68n?variant=58061443367176&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/CTC68N_10.jpg?v=1781900430",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-loft-traditional-indoor-sauna-3-person",
+      "name": "Dundalk Loft 3 Person Traditional Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-dundalk-loft-traditional-indoor-sauna-3-person",
+      "price": "$9,648",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-loft-traditional-indoor-sauna-3-person?variant=58053788696840&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-loft-traditional-indoor-sauna-1.jpg?v=1781815096",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-nook-traditional-indoor-sauna-2-person",
+      "name": "Dundalk Nook 2 Person Traditional Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-dundalk-nook-traditional-indoor-sauna-2-person",
+      "price": "$8,465",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-nook-traditional-indoor-sauna-2-person?variant=58053788139784&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-nook-traditional-indoor-sauna-1.jpg?v=1781809942",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-serenity-barrel-sauna",
+      "name": "Dundalk Leisurecraft Serenity Barrel Sauna Canadian Timber 4 Person | CTC2245W",
+      "role": "representative",
+      "familyId": "topture-dundalk-serenity-barrel-sauna",
+      "price": "$6,213",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-leisurecraft-serenity-barrel-sauna-canadian-timber-4-person-ctc2245w-ctc2245w-226223.jpg?v=1740619663",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-dundalk-studio-traditional-indoor-sauna-4-person",
+      "name": "Dundalk Studio 4 Person Traditional Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-dundalk-studio-traditional-indoor-sauna-4-person",
+      "price": "$10,650",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/dundalk-studio-traditional-indoor-sauna-4-person?variant=58053788762376&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/dundalk-studio-traditional-indoor-sauna-1.jpg?v=1781809975",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-finnmark-fd-1-full-spectrum-infrared-sauna",
+      "name": "Finnmark FD-1 | 1-Person Full-Spectrum Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-finnmark-fd-1-full-spectrum-infrared-sauna",
+      "price": "$4,695",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/finnmark-fd-1-full-spectrum-infrared-sauna?variant=44943283388680&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/finnmark-fd-1-full-spectrum-infrared-sauna-1-person-home-infrared-sauna-fd-kn001-finnmark-designs-810127972070-topture-970540.jpg?v=1740618712",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-finnmark-fd-2-full-spectrum-infrared-sauna",
+      "name": "Finnmark FD-2 | 2-Person Full-Spectrum Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-finnmark-fd-2-full-spectrum-infrared-sauna",
+      "price": "$5,995",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/finnmark-fd-2-full-spectrum-infrared-sauna?variant=44943300002056&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/finnmark-designs-hybrid-infrared-saunas-yellow.jpg?v=1740618751",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-finnmark-fd-3-full-spectrum-infrared-sauna",
+      "name": "Finnmark FD-3 Full Spectrum Infrared Sauna | 4-Person Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-finnmark-fd-3-full-spectrum-infrared-sauna",
+      "price": "$6,495",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/finnmark-fd-3-full-spectrum-infrared-sauna?variant=44943326445832&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/finnmark-fd-3-full-spectrum-infrared-sauna-4-person-home-infrared-sauna-fd-kn003-finnmark-designs-810127972094-topture-570844.jpg?v=1740618811",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo",
+      "name": "Finnmark FD-4 Trinity 2-Person Hybrid Infrared & Steam Sauna & Red Light",
+      "role": "representative",
+      "familyId": "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo",
+      "price": "$7,795",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/finnmark-fd-4-trinity-infrared-steam-sauna-combo?variant=44943581446408&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/finnmark-fd-4-trinity-2-person-hybrid-infrared-steam-sauna-red-light-therapy-fd-kn004-668619.jpg?v=1740618839",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person",
+      "name": "Finnmark FD-5 Trinity XL 4-Person Hybrid Infrared & Steam Sauna & Red Light",
+      "role": "representative",
+      "familyId": "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person",
+      "price": "$8,995",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person?variant=44943633350920&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/finnmark-fd-5-trinity-xl-infrared-steam-sauna-combo-4-person-home-sauna-with-infrared-and-traditional-sauna-heater-fd-kn005-finnmark-designs-816044.jpg?v=1740618881",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-kohler-c1-indoor-sauna-kit-graphite-grey",
+      "name": "Kohler C1 Indoor Sauna Kit - Graphite Grey | 2, 3 or 5 Person",
+      "role": "representative",
+      "familyId": "topture-kohler-c1-indoor-sauna-kit-graphite-grey",
+      "price": "$17,680",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/kohler-c1-indoor-sauna-kit-graphite-grey?variant=52948991443208&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/kohler-c1-indoor-sauna-graphite-grey-2-person-exterior.jpg?v=1785168715",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+      "name": "Kohler C1 Indoor Sauna Kit - Scandinavian Spruce | 2, 3 or 5 Person",
+      "role": "representative",
+      "familyId": "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+      "price": "$15,186",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/kohler-c1-indoor-sauna-kit-scandinavian-spruce?variant=52949377351944&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/kohler-c1-indoor-sauna-scandinavian-spruce-2-person-exterior.jpg?v=1785168735",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-kohler-c2-outdoor-sauna-kit-douglas-fir",
+      "name": "Kohler C2 Outdoor Sauna Kit - Douglas Fir | 3, 5 or 6 Person",
+      "role": "representative",
+      "familyId": "topture-kohler-c2-outdoor-sauna-kit-douglas-fir",
+      "price": "$34,680",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/kohler-c2-outdoor-sauna-kit-douglas-fir?variant=52937594765576&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/kohler-c2-outdoor-sauna-douglas-fir-3-person-exterior.jpg?v=1785168770",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce",
+      "name": "Kohler C2 Outdoor Sauna Kit - Weathered Grey Spruce | 3, 5 or 6 Person",
+      "role": "representative",
+      "familyId": "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce",
+      "price": "$35,813",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/kohler-c2-outdoor-sauna-kit-weathered-grey-spruce?variant=52937690808584&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/kohler-c2-outdoor-sauna-weathered-grey-spruce-3-person-exterior.jpg?v=1785168787",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-logan-2-person-outdoor-infrared-sauna-200d6",
+      "name": "Logan 2-Person Outdoor Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-logan-2-person-outdoor-infrared-sauna-200d6",
+      "price": "$4,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/logan-2-person-outdoor-infrared-sauna-200d6?variant=52956803727624&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/logan-200d6-outdoor-sauna-patio.jpg?v=1781881275",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-pacific-4-person-outdoor-infrared-sauna-400d6",
+      "name": "Pacific 4-Person Outdoor Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-pacific-4-person-outdoor-infrared-sauna-400d6",
+      "price": "$6,985",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/pacific-4-person-outdoor-infrared-sauna-400d6?variant=52956938076424&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/pacific-400d6-patio-lifestyle.jpg?v=1781865296",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-cl12gcp-cube-sauna-8-person",
+      "name": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom",
+      "role": "representative",
+      "familyId": "topture-saunalife-cl12gcp-cube-sauna-8-person",
+      "price": "$10,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-cl12gcp-cube-sauna-8-person-luxury-sauna-suite-with-changeroom-sl-cl12gcpcp-8808368.jpg?v=1753755199",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+      "name": "SaunaLife CL3G | 2-Person Outdoor Cube Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+      "price": "$3,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-cl3g-cube-sauna-2-person-with-glass-front?variant=51360795328776&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-cl3g-cube-sauna-2-person-with-glass-front-sl-cl3g-949219.jpg?v=1746330832",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-cl4g-cube-sauna",
+      "name": "SaunaLife CL4G | 3-Person Outdoor Cube Sauna Kit",
+      "role": "representative",
+      "familyId": "topture-saunalife-cl4g-cube-sauna",
+      "price": "$4,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-cl4g-cube-sauna?variant=50273761231112&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-model-cl4g-sl-cl4g-597509.jpg?v=1759095061",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-cl5g-cube-sauna",
+      "name": "SaunaLife CL5G | 4-Person Outdoor Cube Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-cl5g-cube-sauna",
+      "price": "$5,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-cl5g-cube-sauna?variant=50273857110280&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-model-cl5g-sl-cl5g-449862.jpg?v=1740621068",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-cl7g-cube-sauna",
+      "name": "SaunaLife CL7G | 6-Person Outdoor Cube Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-cl7g-cube-sauna",
+      "price": "$7,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-cl7g-cube-sauna?variant=50273862156552&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-model-cl7g-sl-cl7g-370906.jpg?v=1740621139",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-ee6g-4-person-barrel-sauna",
+      "name": "SaunaLife EE6G | 4-Person Glass Front Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-ee6g-4-person-barrel-sauna",
+      "price": "$5,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-ee6g-4-person-barrel-sauna?variant=50221192315144&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-ergo-model-ee6g-sl-modelee6g-642340.jpg?v=1740621015",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-ee8g-barrel-sauna-6-person",
+      "name": "SaunaLife EE8G | 6-Person Glass Front Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-ee8g-barrel-sauna-6-person",
+      "price": "$7,190",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-ee8g-barrel-sauna-6-person?variant=44689845256456&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-ergo-model-ee8g-4-person-6-long-barrel-sauna-sl-modelee8g-sauna-life-977183.jpg?v=1740610770",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna",
+      "name": "SaunaLife G11 | 8-Person Outdoor Sauna with Changing Room",
+      "role": "representative",
+      "familyId": "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna",
+      "price": "$14,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-g11-6-8-person-2-room-outdoor-sauna?variant=44689845715208&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-g11-8-person-outdoor-hobhouse-barrel-sauna-w-changing-room-sl-modelg11-642233.jpg?v=1741187004",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Style",
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model",
+      "name": "SaunaLife G2 | 4-Person Traditional Outdoor Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model",
+      "price": "$4,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-g2-4-person-traditional-outdoor-sauna-model?variant=44689845780744&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-g2-4-person-traditional-outdoor-sauna-667-sl-modelg2-7850998.png?v=1759079598",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-g3-outdoor-pod-sauna-kit",
+      "name": "SaunaLife G3 | 4-Person Outdoor Pod Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-g3-outdoor-pod-sauna-kit",
+      "price": "$6,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-g3-outdoor-pod-sauna-kit?variant=44904232550664&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/saunalife-model-g3-outdoor-home-sauna-kit-garden-series-outdoor-home-sauna-kit-sl-modelg3-sauna-life-680478.jpg?v=1740618656",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-g4-traditional-outdoor-sauna-6-person",
+      "name": "SaunaLife G4 | 6-Person Traditional Outdoor Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-g4-traditional-outdoor-sauna-6-person",
+      "price": "$6,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "out_of_stock",
+      "link": "https://topture.com/products/saunalife-g4-traditional-outdoor-sauna-6-person?variant=44689845747976&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/saunalife-6-person-traditional-outdoor-sauna-model-g4-sl-modelg4-sauna-life-810127970847-topture-432100.jpg?v=1762008097",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-g6-outdoor-cabin-sauna",
+      "name": "SaunaLife G6 | 5-Person Outdoor Cabin Sauna | Pre-Assembled",
+      "role": "representative",
+      "familyId": "topture-saunalife-g6-outdoor-cabin-sauna",
+      "price": "$24,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-g6-outdoor-cabin-sauna?variant=52810006429960&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/saunalife-5-person-pre-assembled-outdoor-sauna-model-g6-sl-modelg6-r-sauna-life-810127970380-topture-830709.jpg?v=1740610937",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+      "name": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front",
+      "role": "representative",
+      "familyId": "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+      "price": "$9,490",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-gl4-4-person-outdoor-sauna-kit-sl-modelgl4-2424598.jpg?v=1757638833",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+      "name": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front",
+      "role": "representative",
+      "familyId": "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+      "price": "$12,790",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-gl6-6-person-outdoor-sauna-kit-sl-modelgl6-7510276.jpg?v=1772585488",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-model-e6-sauna-barrel-ergo-series",
+      "name": "SaunaLife E6 | 3-Person Outdoor Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-model-e6-sauna-barrel-ergo-series",
+      "price": "$4,390",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-model-e6-sauna-barrel-ergo-series?variant=44689845584136&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-e6-barrel-sauna-exterior-front.jpg?v=1781948407",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-model-e7-sauna-barrel-ergo-series",
+      "name": "SaunaLife E7 | 4-Person Outdoor Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-model-e7-sauna-barrel-ergo-series",
+      "price": "$5,190",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-model-e7-sauna-barrel-ergo-series?variant=44689845453064&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-e7-barrel-sauna-front-angle.jpg?v=1781948388",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-model-e8-sauna-barrel-ergo-series",
+      "name": "SaunaLife E8 | 6-Person Outdoor Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-model-e8-sauna-barrel-ergo-series",
+      "price": "$5,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-model-e8-sauna-barrel-ergo-series?variant=44689845289224&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/e8-barrel-sauna-front-angle.jpg?v=1781948318",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-saunalife-x2-2-person-traditional-indoor-sauna",
+      "name": "SaunaLife X2 | 2-Person Traditional Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-saunalife-x2-2-person-traditional-indoor-sauna",
+      "price": "$4,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/saunalife-x2-2-person-traditional-indoor-sauna?variant=44689845813512&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/products/saunalife-2-person-traditional-indoor-sauna-model-x2-656-sl-modelx2-sauna-life-810127971950-topture-478796.jpg?v=1740610900",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-aspen-hl300k2",
+      "name": "Sunray Aspen 3-Person Indoor Infrared Sauna 300K2",
+      "role": "representative",
+      "familyId": "topture-sunray-aspen-hl300k2",
+      "price": "$3,296",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-aspen-hl300k2?variant=43534182777096&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-aspen-3-person-indoor-infrared-sauna-hl300k2-hl300k2-412679.jpg?v=1740604562",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+      "name": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+      "price": "$5,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna-300sh-563082.jpg?v=1740621332",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-baldwin-hl200sn",
+      "name": "Sunray Baldwin 2-Person Indoor Traditional Sauna 200SN",
+      "role": "representative",
+      "familyId": "topture-sunray-baldwin-hl200sn",
+      "price": "$3,496",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-baldwin-hl200sn?variant=43534273118472&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-baldwin-2-person-indoor-traditional-sauna-hl200sn-hl200sn-1115489.jpg?v=1761776188",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-bristol-bay-hl400kc",
+      "name": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC",
+      "role": "representative",
+      "familyId": "topture-sunray-bristol-bay-hl400kc",
+      "price": "$4,298",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-bristol-bay-4-person-indoor-infrared-corner-sauna-hl400kc-hl400kc-890921.jpg?v=1740604489",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-bristow-hl200d2",
+      "name": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2",
+      "role": "representative",
+      "familyId": "topture-sunray-bristow-hl200d2",
+      "price": "$4,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-bristow-2-person-outdoor-traditional-sauna-hl200d2-hl200d2-1393438.jpg?v=1761776194",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-burlington-200d3",
+      "name": "Sunray Burlington 2-Person Outdoor Infrared Sauna 200D3",
+      "role": "representative",
+      "familyId": "topture-sunray-burlington-200d3",
+      "price": "$3,790",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-burlington-200d3?variant=43534986477832&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-burlington-200d3-exterior-front.jpg?v=1781865212",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-cayenne-400d3",
+      "name": "Sunray Cayenne 4-Person Infrared Outdoor Sauna 400D3",
+      "role": "representative",
+      "familyId": "topture-sunray-cayenne-400d3",
+      "price": "$4,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-cayenne-400d3?variant=43528893956360&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-cayenne-400d3-exterior-front.jpg?v=1781881295",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna",
+      "name": "SunRay Charleston 400TN | 4-Person Indoor Traditional Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna",
+      "price": "$4,598",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-charleston-hl400tn-4-person-indoor-traditional-sauna?variant=44876931170568&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-charleston-hl400tn-4-person-indoor-traditional-sauna-hl400tn-3110667.jpg?v=1761775508",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5",
+      "name": "SunRay Denali 4-Person Traditional Outdoor Sauna 400D5",
+      "role": "representative",
+      "familyId": "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5",
+      "price": "$5,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-denali-4-person-traditional-outdoor-sauna-400d5?variant=52098034204936&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-denali-4-person-traditional-outdoor-sauna-400d5-400d5-9036649.jpg?v=1754086750",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-eagle-hl200d1",
+      "name": "Sunray Eagle 2-Person Outdoor Traditional Sauna 200D1",
+      "role": "representative",
+      "familyId": "topture-sunray-eagle-hl200d1",
+      "price": "$4,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-eagle-hl200d1?variant=43534962032904&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-eagle-2-person-outdoor-traditional-sauna-hl200d1-hl200d1-9642738.jpg?v=1761776195",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-evansport-hl200k2",
+      "name": "Sunray Evansport 2-Person Indoor Infrared Sauna 200K2",
+      "role": "representative",
+      "familyId": "topture-sunray-evansport-hl200k2",
+      "price": "$2,698",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-evansport-hl200k2?variant=43534794293512&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-evansport-2-person-indoor-infrared-sauna-hl200k2-hl200k2-2208023.jpg?v=1761776189",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-freeport-hl300d1",
+      "name": "Sunray Freeport 3-Person Traditional Outdoor Sauna 300D1",
+      "role": "representative",
+      "familyId": "topture-sunray-freeport-hl300d1",
+      "price": "$5,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-freeport-hl300d1?variant=43534254866696&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-freeport-3-person-traditional-outdoor-sauna-hl300d1-hl300d1-4029541.jpg?v=1761776198",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+      "name": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+      "price": "$5,890",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-galley-400sh-4-person-traditional-barrel-sauna-400sh-967142.jpg?v=1740621362",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-grandby-300d3",
+      "name": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3",
+      "role": "representative",
+      "familyId": "topture-sunray-grandby-300d3",
+      "price": "$3,990",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-grandby-300d3-front.jpg?v=1781881307",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+      "name": "Sunray Hampton 300TN | 3-Person Indoor Traditional Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+      "price": "$4,098",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-hampton-300tn-3-person-indoor-traditional-sauna?variant=50429025419528&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-hampton-300tn-3-person-indoor-traditional-sauna-300tn-280877.jpg?v=1740621301",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Style",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun",
+      "name": "Sunray Oasis 300SC | 2-4-Person Traditional Canopy Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun",
+      "price": "$5,790",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-sauna?variant=50429109240072&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-sauna-300sc-373362.jpg?v=1740621344",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-rockledge-200lx",
+      "name": "SunRay Rockledge 2-Person Indoor Traditional Sauna HL200LX",
+      "role": "representative",
+      "familyId": "topture-sunray-rockledge-200lx",
+      "price": "$4,996",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-rockledge-200lx?variant=43533028983048&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-rockledge-2-person-indoor-traditional-sauna-hl200lx-200lx-7973016.jpg?v=1761776201",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-roslyn-hl400ks",
+      "name": "Sunray Roslyn 4-Person Infrared Indoor Sauna 400KS",
+      "role": "representative",
+      "familyId": "topture-sunray-roslyn-hl400ks",
+      "price": "$4,298",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-roslyn-hl400ks?variant=43530786865416&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-roslyn-4-person-infrared-indoor-sauna-hl400ks-hl400ks-side-bench-3935039.jpg?v=1761776189",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-savannah-hl300k",
+      "name": "Sunray Savannah 300K 3 Person  Infrared Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-savannah-hl300k",
+      "price": "$3,496",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-savannah-hl300k?variant=43533994623240&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-savannah-hl300k-3-person-infrared-sauna-hl300k-111806.jpg?v=1740604540",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-sedona-hl100k",
+      "name": "Sunray Sedona 1-2 Person Indoor Infrared Sauna 100K",
+      "role": "representative",
+      "familyId": "topture-sunray-sedona-hl100k",
+      "price": "$2,798",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-sedona-hl100k?variant=43535018426632&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-sedona-1-2-person-indoor-infrared-sauna-hl100k-hl100k-6030338.jpg?v=1761776199",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5",
+      "name": "SunRay Seneca 3-Person Traditional Outdoor Sauna 300D5",
+      "role": "representative",
+      "familyId": "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5",
+      "price": "$4,890",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-seneca-3-person-traditional-outdoor-sauna-300d5?variant=52098176155912&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-seneca-3-person-traditional-outdoor-sauna-300d5-3000d5-1242862.jpg?v=1754086747",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-sequoia-hl400k",
+      "name": "Sunray Sequoia 4-Person Infrared Indoor Sauna 400K",
+      "role": "representative",
+      "familyId": "topture-sunray-sequoia-hl400k",
+      "price": "$4,298",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-sequoia-hl400k?variant=43530406920456&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-sequoia-4-person-infrared-indoor-sauna-hl400k-hl400k-108163.jpg?v=1740604451",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-sierra-hl200k",
+      "name": "Sunray Sierra 2-Person Indoor Infrared Sauna 200K",
+      "role": "representative",
+      "familyId": "topture-sunray-sierra-hl200k",
+      "price": "$2,998",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-sierra-hl200k?variant=43534925234440&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-sierra-2-person-indoor-infrared-sauna-hl200k-hl200k-9388376.jpg?v=1761776196",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna",
+      "name": "Sunray Solace 200SH | 2-Person Traditional Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna",
+      "price": "$4,790",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-solace-200sh-2-person-traditional-barrel-sauna?variant=50429068542216&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-solace-200sh-2-person-traditional-barrel-sauna-200sh-417036.jpg?v=1740621317",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-southport-300sn",
+      "name": "SunRay 3-Person Indoor Traditional Sauna 300SN Southport",
+      "role": "representative",
+      "familyId": "topture-sunray-southport-300sn",
+      "price": "$3,698",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-southport-300sn?variant=43534147977480&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-3-person-indoor-traditional-sauna-300sn-southport-hl300sn-2977195.jpg?v=1761776188",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-tiburon-hl400sn",
+      "name": "Sunray Tiburon 4-Person Traditional Steam Sauna 400SN",
+      "role": "representative",
+      "familyId": "topture-sunray-tiburon-hl400sn",
+      "price": "$4,298",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-tiburon-hl400sn?variant=43473343971592&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-tiburon-4-person-traditional-steam-sauna-hl400sn-hl400sn-781694.jpg?v=1744910605",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-waverly-hl300d2",
+      "name": "Sunray Waverly 3-Person Traditional Outdoor Sauna 300D2",
+      "role": "representative",
+      "familyId": "topture-sunray-waverly-hl300d2",
+      "price": "$5,290",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-waverly-hl300d2?variant=43534209155336&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-waverly-3-person-traditional-outdoor-sauna-hl300d2-hl300d2-521610.jpg?v=1740604575",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-sunray-westlake-hl300lx",
+      "name": "SunRay Westlake 3-Person Indoor Traditional Sauna HL300LX",
+      "role": "representative",
+      "familyId": "topture-sunray-westlake-hl300lx",
+      "price": "$5,296",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/sunray-westlake-hl300lx?variant=43533066502408&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-westlake-3-person-indoor-traditional-sauna-hl300lx-300lx-2246832.jpg?v=1761776199",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-aalto-indoor-sauna",
+      "name": "ThermaSol Aalto 3-4 Person Indoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-aalto-indoor-sauna",
+      "price": "$23,455",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-aalto-indoor-sauna?variant=58296740282632&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-aalto-indoor-sauna-slatted-wall.jpg?v=1785174622",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-astra-indoor-sauna",
+      "name": "ThermaSol Astra 3-4 Person Indoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-astra-indoor-sauna",
+      "price": "$23,604",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-astra-indoor-sauna?variant=58296740184328&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-astra-indoor-sauna-door-left.jpg?v=1785192813",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-fortis-sauna-cabin",
+      "name": "ThermaSol Fortis 3-4 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-fortis-sauna-cabin",
+      "price": "$36,619",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-fortis-sauna-cabin?variant=58296739758344&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/Thermasol_Fortis_Sauna_-_Front_View.png?v=1784918768",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-lumaria-indoor-sauna",
+      "name": "ThermaSol Lumaria 2-5 Person Indoor Sauna",
+      "role": "representative",
+      "familyId": "topture-thermasol-lumaria-indoor-sauna",
+      "price": "$21,276",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-lumaria-indoor-sauna-interior-view.jpg?v=1785174589",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-nordic-dawn-sauna-cabin",
+      "name": "ThermaSol Nordic Dawn 4-5 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-nordic-dawn-sauna-cabin",
+      "price": "$33,467",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-nordic-dawn-sauna-cabin?variant=58296739496200&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/Thermasol-NordicDawn1.jpg?v=1784918737",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-nordic-misty-sauna-cabin",
+      "name": "ThermaSol Nordic Misty 2-5 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-nordic-misty-sauna-cabin",
+      "price": "$31,883",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-nordic-misty-sauna-cabin?variant=58296739201288&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/NM-SMALL-VIRTA-L-scaled_525d1b37-afe9-43ef-84f0-c8ed43b28bc2.jpg?v=1784918729",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-ombra-sauna-cabin",
+      "name": "ThermaSol Ombra 4-5 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-ombra-sauna-cabin",
+      "price": "$75,028",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-ombra-sauna-cabin?variant=58296740118792&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-ombra-sauna-cabin-garden-exterior.jpg?v=1785174603",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-solaris-solar-sauna-cabin",
+      "name": "ThermaSol Solaris Solar-Powered 2-5 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-solaris-solar-sauna-cabin",
+      "price": "$66,645",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-solaris-solar-sauna-cabin?variant=58296739594504&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/ThermasolSolairs-SM.jpg?v=1784918741",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-spectra-sauna-cabin",
+      "name": "ThermaSol Spectra 3-4 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-spectra-sauna-cabin",
+      "price": "$36,092",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-spectra-sauna-cabin?variant=58296739692808&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/Thermasol_Spectra_Sauna_-_Front_View.png?v=1784918761",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-vera-sauna-cabin",
+      "name": "ThermaSol Vera 2-3 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-vera-sauna-cabin",
+      "price": "$49,101",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-vera-sauna-cabin?variant=58296739987720&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-vera-sauna-cabin-door-left.jpg?v=1785192807",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-thermasol-vue-sauna-cabin",
+      "name": "ThermaSol Vue 3-4 Person Outdoor Sauna Cabin",
+      "role": "representative",
+      "familyId": "topture-thermasol-vue-sauna-cabin",
+      "price": "$51,071",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/thermasol-vue-sauna-cabin?variant=58296742183176&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-vue-sauna-cabin-mirrored-exterior.jpg?v=1785174630",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-2-4-person-6-long-barrel-sauna",
+      "name": "True North Sauna 2-4 Person 6' Long Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-2-4-person-6-long-barrel-sauna",
+      "price": "$8,483",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-2-4-person-6-long-barrel-sauna?variant=44697475186952&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-sauna-2-4-person-6-long-barrel-sauna-b183-p-barrel-6-3142943.jpg?v=1761775719",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-4-6-person-8-long-barrel-sauna",
+      "name": "True North Sauna 4-6 Person 8' Long Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-4-6-person-8-long-barrel-sauna",
+      "price": "$9,145",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-4-6-person-8-long-barrel-sauna?variant=44697474269448&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-4-6-person-8-long-barrel-sauna-b24030-p-barrel-8-390849.jpg?v=1740611428",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+      "name": "True North 5 Person Outdoor Quattro Cedar Cabin Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+      "price": "$8,574",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-5-person-outdoor-quattro-cedar-cabin-sauna?variant=45673077440776&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-5-person-outdoor-quattro-cedar-cabin-sauna-truequattro-6-w-585222.jpg?v=1740660304",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-6-8-person-9-long-barrel-sauna",
+      "name": "True North Sauna 6-8 Person 9' Long Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-6-8-person-9-long-barrel-sauna",
+      "price": "$9,960",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-6-8-person-9-long-barrel-sauna?variant=44697497665800&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-6-8-person-9-long-barrel-sauna-b27060-p-barrel-9-421194.jpg?v=1740611488",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-barrel-10-300-cm-pine-sauna",
+      "name": "True North Sauna 8 Person 10' Long Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-barrel-10-300-cm-pine-sauna",
+      "price": "$10,469",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-barrel-10-300-cm-pine-sauna?variant=44697479053576&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-8-person-10-long-barrel-sauna-b30060-p-barrel-10-809628.jpg?v=1740611466",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-large-pod-outdoor-barrel-sauna",
+      "name": "True North Large Pod 4-8 Person Outdoor Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-large-pod-outdoor-barrel-sauna",
+      "price": "$10,623",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-large-pod-4-8-person-outdoor-sauna-lp24030-p-with-porch-591451.jpg?v=1740611413",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-outdoor-cabin-sauna",
+      "name": "True North Sauna 5 Person Outdoor Traditional Cabin Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-outdoor-cabin-sauna",
+      "price": "$7,160",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-outdoor-cabin-sauna?variant=44697467027720&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-5-person-outdoor-traditional-cabin-sauna-c18330-p-cabin-6-416334.jpg?v=1740611357",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Heating",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-pod-outdoor-sauna",
+      "name": "True North Pod 4-8 Person Outdoor Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-pod-outdoor-sauna",
+      "price": "$9,604",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-pod-outdoor-sauna?variant=44697472794888&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-pod-4-8-person-outdoor-sauna-p24030-p-pod-8-with-porch-6669040.jpg?v=1761775720",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    },
+    {
+      "id": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person",
+      "name": "True North Schooner 2-8 Person Outdoor Barrel Sauna",
+      "role": "representative",
+      "familyId": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person",
+      "price": "$8,153",
+      "priceLastChecked": "2026-09-15",
+      "availability": "in_stock",
+      "link": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+      "affiliateStatus": "affiliate",
+      "imageSrc": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-schooner-2-8-person-outdoor-barrel-sauna-s183-p-schooner-6-with-porch-1602837.jpg?v=1761775726",
+      "imageRights": "unresolved",
+      "provenance": "merchant_feed · direct · Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+      "editorialChanges": [
+        "link"
+      ],
+      "openConflicts": [],
+      "comparisonMapped": [
+        "Price",
+        "Style",
+        "Seats up to",
+        "Placement"
+      ],
+      "comparisonMissing": [
+        "Heating",
+        "Connection"
+      ]
+    }
+  ],
+  "shadows": [],
+  "hypotheticalProducts": 133,
+  "hypotheticalFamilies": 111,
+  "unresolvedBlockers": [],
+  "acceptedRisks": [
+    {
+      "code": "image_rights",
+      "about": "topture-aston-1-2-person-traditional-indoor-sauna-200tn",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-aston-1-2-person-traditional-indoor-sauna-200tn: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-ct-tranquility-6-person-barrel-sauna-ctc2345w: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisureceraft-georgian-cabin-sauna-ctc88w: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barr: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-2-4-person-serenity-mp: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-0levn1b: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-6-person-georgi-1aq47tb: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-6-person-tranquility-mp: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-canadian-timber-minipod-2-4-person-saun: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-leisurecraft-palmer-cabin-sauna-ctc68n: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-loft-traditional-indoor-sauna-3-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-loft-traditional-indoor-sauna-3-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-nook-traditional-indoor-sauna-2-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-nook-traditional-indoor-sauna-2-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-serenity-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-serenity-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-dundalk-studio-traditional-indoor-sauna-4-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-dundalk-studio-traditional-indoor-sauna-4-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-finnmark-fd-1-full-spectrum-infrared-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-finnmark-fd-1-full-spectrum-infrared-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-finnmark-fd-2-full-spectrum-infrared-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-finnmark-fd-2-full-spectrum-infrared-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-finnmark-fd-3-full-spectrum-infrared-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-finnmark-fd-3-full-spectrum-infrared-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-finnmark-fd-4-trinity-infrared-steam-sauna-combo: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-finnmark-fd-5-trfinnmark-trinity-xl-infrared-sauna-4-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-kohler-c1-indoor-sauna-kit-graphite-grey",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-kohler-c1-indoor-sauna-kit-graphite-grey: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-kohler-c2-outdoor-sauna-kit-douglas-fir",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-kohler-c2-outdoor-sauna-kit-douglas-fir: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-kohler-c2-outdoor-sauna-kit-weathered-grey-spruce: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-logan-2-person-outdoor-infrared-sauna-200d6",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-logan-2-person-outdoor-infrared-sauna-200d6: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-pacific-4-person-outdoor-infrared-sauna-400d6",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-pacific-4-person-outdoor-infrared-sauna-400d6: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-cl12gcp-cube-sauna-8-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-cl12gcp-cube-sauna-8-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-cl3g-cube-sauna-2-person-with-glass-front: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-cl4g-cube-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-cl4g-cube-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-cl5g-cube-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-cl5g-cube-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-cl7g-cube-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-cl7g-cube-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-ee6g-4-person-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-ee6g-4-person-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-ee8g-barrel-sauna-6-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-ee8g-barrel-sauna-6-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-g11-6-8-person-2-room-outdoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-g2-4-person-traditional-outdoor-sauna-model: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-g3-outdoor-pod-sauna-kit",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-g3-outdoor-pod-sauna-kit: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-g4-traditional-outdoor-sauna-6-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-g4-traditional-outdoor-sauna-6-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-g6-outdoor-cabin-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-g6-outdoor-cabin-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-gl4-4-person-outdoor-sauna-kit: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-gl6-6-person-outdoor-sauna-kit: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-model-e6-sauna-barrel-ergo-series",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-model-e6-sauna-barrel-ergo-series: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-model-e7-sauna-barrel-ergo-series",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-model-e7-sauna-barrel-ergo-series: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-model-e8-sauna-barrel-ergo-series",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-model-e8-sauna-barrel-ergo-series: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-saunalife-x2-2-person-traditional-indoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-saunalife-x2-2-person-traditional-indoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-aspen-hl300k2",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-aspen-hl300k2: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-baldwin-hl200sn",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-baldwin-hl200sn: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-bristol-bay-hl400kc",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-bristol-bay-hl400kc: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-bristow-hl200d2",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-bristow-hl200d2: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-burlington-200d3",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-burlington-200d3: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-cayenne-400d3",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-cayenne-400d3: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-charleston-hl400tn-4-person-indoor-traditional-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-denali-4-person-traditional-outdoor-sauna-400d5: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-eagle-hl200d1",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-eagle-hl200d1: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-evansport-hl200k2",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-evansport-hl200k2: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-freeport-hl300d1",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-freeport-hl300d1: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-grandby-300d3",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-grandby-300d3: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-hampton-300tn-3-person-indoor-traditional-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-oasis-300sc-2-4-person-traditional-canopy-barrel-saun: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-rockledge-200lx",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-rockledge-200lx: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-roslyn-hl400ks",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-roslyn-hl400ks: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-savannah-hl300k",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-savannah-hl300k: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-sedona-hl100k",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-sedona-hl100k: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-seneca-3-person-traditional-outdoor-sauna-300d5: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-sequoia-hl400k",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-sequoia-hl400k: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-sierra-hl200k",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-sierra-hl200k: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-solace-200sh-2-person-traditional-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-southport-300sn",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-southport-300sn: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-tiburon-hl400sn",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-tiburon-hl400sn: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-waverly-hl300d2",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-waverly-hl300d2: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-sunray-westlake-hl300lx",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-sunray-westlake-hl300lx: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-aalto-indoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-aalto-indoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-astra-indoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-astra-indoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-fortis-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-fortis-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-lumaria-indoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-lumaria-indoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-nordic-dawn-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-nordic-dawn-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-nordic-misty-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-nordic-misty-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-ombra-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-ombra-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-solaris-solar-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-solaris-solar-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-spectra-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-spectra-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-vera-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-vera-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-thermasol-vue-sauna-cabin",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-thermasol-vue-sauna-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-2-4-person-6-long-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-2-4-person-6-long-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-4-6-person-8-long-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-4-6-person-8-long-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-6-8-person-9-long-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-6-8-person-9-long-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-barrel-10-300-cm-pine-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-barrel-10-300-cm-pine-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-large-pod-outdoor-barrel-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-large-pod-outdoor-barrel-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-outdoor-cabin-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-outdoor-cabin-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-pod-outdoor-sauna",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-pod-outdoor-sauna: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    },
+    {
+      "code": "image_rights",
+      "about": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person",
+      "acceptedBy": "Matt (site owner), relayed through Codex",
+      "because": "The owner decided that an approved partner directing Wellness Fit Check to its official inventory feed is sufficient permission to use the product images supplied in that feed; no separate written image permission is required.",
+      "blocker": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture."
+    }
+  ],
+  "executed": false
+}

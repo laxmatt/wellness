@@ -1,0 +1,214 @@
+{
+  "id": "topture-sunray-bristow-hl200d2",
+  "slug": "topture-sunray-bristow-hl200d2",
+  "name": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description The SunRay Bristow 2-Person Outdoor Traditional Sauna is constructed from aged Canadian hemlock wood with a shingled roof for outdoor durability. Double-paneled walls provide superior heat retention, while a front window allows natural lighting. A 4.5 kW electric heater with lava rocks produces steam heat up to 170°F. The Bristow also features chromatherapy lighting, Bluetooth speakers, a hygrometer, a sand timer, and a 44-inch wide bench seat designed for two-person comfort. Features Seats up to 2 people Constructed from aged Canadian hemlock wood Shingled roof for outdoor weather protection Double-paneled walls for superior heat retention Front window for added natural light 4.5 kW electric heater with lava rocks Produces traditional steam heat up to 170°F Chromatherapy mood lighting Bluetooth speaker system Hygrometer for humidity monitoring Sand timer for session tracking 44-inch wide bench seat Oxygen ionization air purification system Tempered glass door Recessed interior lighting Dual LED control panels Cup holder for convenience Ventilation system Easy tongue-and-groove assembly ETL/CSA Safety Certified What's Included? SunRay Bristow 2-Person Outdoor Traditional Sauna Cabin 4.5 kW electric heater with lava rocks 44-inch wide bench seat Chromatherapy lighting system Bluetooth speaker system Hygrometer Sand timer Oxygen ionization system Tempered glass door Recessed lighting Dual LED control panels Cup holder Ventilation system Product Manual Specifications Brand: SunRay Model: Bristow Application: Outdoor Maximum Capacity: 2 persons Shape: Rectangle Primary Material: Canadian Hemlock wood Heat Source: Traditional steam Heater Type: Electric heater with lava rocks Number of Heaters: 1 Adjustable Temperature: Yes Temperature Range: 32°F – 170°F (0℃ – 338℃) Electrical Requirements: 240V, 30 amp dedicated outlet (plug not included; sauna may be hard-wired or fitted with plug) Wattage: 4500W Certification: ETL/CSA Safety Certified Exterior Dimensions: 96\" H x 50\" W x 50\" D Interior Dimensions: 73\" H x 46\" W x 46\" D Weight: 721 lbs Documents Product Data Sheet Traditional Outdoor Series Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-bristow-hl200d2-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-bristow-2-person-outdoor-traditional-sauna-hl200d2-hl200d2-1393438.jpg?v=1761776194",
+      "alt": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-bristow-hl200d2-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 499000,
+      "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "200D2",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "200D2"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2",
+        "matched": "2-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristow 2-Person Outdoor Traditional Sauna 200D2 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 170,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “heat up to 170°F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "enclosure_protection": {
+      "value": "insulated_weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Double-paneled walls; outdoor weather protection”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-bristow-hl200d2?variant=43534932312328&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

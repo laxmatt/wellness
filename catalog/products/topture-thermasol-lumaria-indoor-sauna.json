@@ -1,0 +1,204 @@
+{
+  "id": "topture-thermasol-lumaria-indoor-sauna",
+  "slug": "topture-thermasol-lumaria-indoor-sauna",
+  "name": "ThermaSol Lumaria 2-5 Person Indoor Sauna",
+  "brandId": "thermasol",
+  "categoryId": "saunas",
+  "description": "Description Light-filled and design forward, the Lumaria Sauna Cabin offers a modern corner friendly layout for interior wellness spaces. The solarium design is highlighted by the floor-to-ceiling panoramic glass facade that extends the length of the two outer walls. The frameless, flush-mount glass door allows access to the spacious interior with brushed Tyrol wood cladding offering tactile comfort and natural elegance. Thermo-aspen benches and backrests create a unique aesthetic contrast to the walls and ceiling while delivering superior comfort during sauna sessions. Multi-layer wood fiber insulation ensures superior heat retention and efficiency while the Harvia Virta swiftly generates plentiful heat and steam. Full-spectrum LED color therapy lighting illuminates from recessed locations throughout the interior, with the included control creating a fully customizable ambiance. Supported by a 1-year warranty, the ThermaSol Lumaria indoor sauna combines natural materials with lasting performance and energy efficiency for a sauna solarium exemplary for indoor wellness spaces. Features Brushed Tyrol wood cladding interior with transparent panoramic glass to effortlessly blend in with several interior styles Thermo-Aspen benches and backrests for superior comfort and stability while resisting moisture and warping Multi-layer wall insulation using sustainable wood fibers to improve heat retention and energy efficiency Harvia Virta electric sauna heater for powerful, evenly distributed heating performance Harvia Xenio sauna control touchpad to adjust time and temperature with repeat scheduling and WiFi connectivity through the MyHarvia App Full-spectrum recessed LED lighting with independent controls for a personalized ambiance Ideal for home wellness spaces, fitness rooms, spas, or boutique wellness centers Arrives flat-packed with installation instructions for straightforward assembly Medium dimensions: 86.6\"W (220 cm) x 66.9\"D (169.9) x 83\"H (210.8 cm) Large dimensions: 86.6\"W (220 cm) x 86.6\"D (220 cm) x 83\"H (210.8 cm) Designed and crafted in the U.S.A. What's Included Flat-Packed Indoor Sauna Harvia Virta 9kW Sauna Heater with Wi-Fi Harvia Xenio CX45 Digital Control with Wi-Fi Harvia AC3020 Sauna Stones (3) Temperature Sensor Headrest (2) Wood Platform MyHarvia App Installation Instructions Specifications Specification Medium Large Recommended capacity 2-3 people 4-5 people Exterior (W × D × H) 86.6″ × 66.9″ × 83″ 86.6″ × 86.6″ × 83″ Sauna type: Traditional (Finnish) Installation: Indoor Lead time: Made to order, 8 weeks (plus 5–10 business days delivery) Shipping & Lead Time Freight is quoted separately for every order based on your delivery location and configuration. After you place your order, our team will contact you with your shipping quote before your build begins. Saunas are delivered fully assembled via flatbed trailer, and you'll be notified roughly two weeks before the scheduled delivery. A forklift or crane is required for placement, and a licensed electrician must connect the heater — manual offloading is not recommended. Documents Installation Manual (Large) Installation Manual (Medium) Specification Sheet (Large) Specification Sheet (Medium)",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-thermasol-lumaria-indoor-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/thermasol-lumaria-indoor-sauna-interior-view.jpg?v=1785174589",
+      "alt": "ThermaSol Lumaria 2-5 Person Indoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-thermasol-lumaria-indoor-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2127600,
+      "listPriceMinor": 2399900,
+      "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "14-LUMARIAMDL",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as in_stock."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "14-LUMARIAMDL"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-5 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-5 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "ThermaSol Lumaria 2-5 Person Indoor Sauna",
+        "matched": "2-5 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 5,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"5\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "ThermaSol Lumaria 2-5 Person Indoor Sauna",
+        "matched": "5",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "ThermaSol Lumaria 2-5 Person Indoor Sauna | Indoor Saunas | Cabin Saunas, Traditional Sauna",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "ThermaSol Lumaria 2-5 Person Indoor Sauna | Indoor Saunas | Cabin Saunas, Traditional Sauna",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "ThermaSol Lumaria 2-5 Person Indoor Sauna | Indoor Saunas | Cabin Saunas, Traditional Sauna",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "enclosure_protection": {
+      "value": "insulated",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Multi-layer wood fiber insulation”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/thermasol-lumaria-indoor-sauna?variant=58296739823880&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Chosen from 4 rows sharing /products/thermasol-lumaria-indoor-sauna, ranging $21,276 to $23,648. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}
