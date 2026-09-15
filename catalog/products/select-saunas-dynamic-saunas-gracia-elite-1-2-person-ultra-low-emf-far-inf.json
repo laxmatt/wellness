@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-inf",
+  "slug": "select-saunas-dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-inf",
+  "name": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "Dynamic Gracia 1-2 Person Ultra-Low EMF (Between 3-5 mg) Far Infrared Sauna (Canadian Hemlock) Do you want to live a long and healthy life? Honor your body and mind by giving yourself a healthier lifestyle. Take a break from the busy home and work life to reap the benefits of an infrared sauna! Dynamic Saunas use infrared waves to penetrate into your body tissue and can help dissolve harmful substances and toxins. The FAR infrared waves can penetrate the deepest into the tissue to help break down toxins as you perspire and wipe them away. Dynamic Saunas are constructed of Canadian Reforested Hemlock wood. This sauna also features Low EMF PureTech™ heating panels , a floor heater, a radio with Bluetooth capability, privacy glass, and Chromotherapy Lighting. Add in environmentally friendly reforested wood and energy-efficient carbon heating panels and you can’t find a better product for a healthier lifestyle. Every Dynamic Sauna is equipped with a floor and lower bench heater that gets the benefits and treatment to your legs and feet too. Help not only yourself but others with your infrared sauna purchase. Features Carbon infrared heating panels are energy-efficient and can heat up your sauna faster than ceramic panels. Still have that podcast to finish up? Plug your phone into the MP3/Aux input and listen to it on the two speakers while you rid your body of toxins and relax inside the sauna. Find your best temperature and time by adjusting the LED control panel. As you get accustomed to the sauna, you can gradually increase either one. Specifications Ultra-Low EMF - EMF between 3-5 mg 2 to 3 inches from the heating panels 1-2 person capacity Music System w/Bluetooth Capability and dynamic speaker with pre-amp (no radio included) Interior LED control panel Natural hemlock wood construction Electrical service: 120V/15 amp Clasp together assembly 7 Carbon heating elements Tempered glass door Interior reading/chromotherapy lighting system Roof vent Extra Details Maximum Temp: 66°C (151°F) Exterior Dimensions (WDH): 39″ x 36″ x 75″ Interior dimensions (WDH): 35″ x 32″ x 68″ Sauna weight: 255 lbs. Shipping weight: 305 lbs. Ships in 2 boxes All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your infrared sauna today and experience the Golden Designs difference. Videos",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-inf-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/products/select-saunas-Dynamic-Saunas-Gracia-1-2-Person-Low-8.jpg?v=1708083610",
+      "alt": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-inf-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 229900,
+      "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6119-01 Elite",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "DYN-6119-01 Elite"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "1-2 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"1-2 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna",
+        "matched": "1-2 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits | 1-2 Person, Infrared Saunas, Saunas",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Saunas Gracia Elite 1-2 Person Ultra-Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits | 1-2 Person, Infrared Saunas, Saunas",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/dynamic-saunas-gracia-elite-1-2-person-ultra-low-emf-far-infrared-sauna?variant=52506487685463&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

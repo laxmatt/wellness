@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far",
+  "slug": "select-saunas-dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far",
+  "name": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna (Canadian Hemlock) Want to turn your home into a personal wellness retreat? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining strength and style. With advanced Low EMF FAR infrared heating panels, they deliver gentle, energy-efficient warmth that relieves stress, improves circulation, and restores natural balance. Easy to install, these saunas fit perfectly in basements, master baths, walk-in closets, or even home gyms. Compact yet elegant, they blend seamlessly into your space while offering daily relaxation and long-lasting health benefits. A Dynamic Sauna isn’t just home luxury, it’s an investment in your well-being. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 1-2 person capacity 6 Total Heaters, 4 PureTech™ Near-Zero EMF (Under 3 mg) inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speaker 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 1 box Note: Indoor use only Specifications: Sauna weight: 250 lbs. Shipping weight: 265 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 36″+ 2\" x 39″ x 77″ Document: View Owner's Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/imgi_2_gdi-6009-03_left3x3.jpg?v=1763727531",
+      "alt": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 269900,
+      "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6009-03 FS",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "DYN-6009-03 FS"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "1-2 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"1-2 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "1-2 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Santorini 1-2 Person Full Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/dynamic-santorini-1-2-person-full-spectrum-near-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51595961663831&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

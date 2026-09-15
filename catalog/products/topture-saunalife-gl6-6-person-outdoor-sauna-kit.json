@@ -1,0 +1,168 @@
+{
+  "id": "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+  "slug": "topture-saunalife-gl6-6-person-outdoor-sauna-kit",
+  "name": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front",
+  "brandId": "saunalife-saunas",
+  "categoryId": "saunas",
+  "description": "Description Create the ultimate backyard wellness retreat with the SaunaLife Garden Luxury-Series Model GL6 Outdoor Home Sauna Kit. Designed for up to 6 people, this authentic Scandinavian sauna blends modern aesthetics with traditional craftsmanship for a spa-like experience at home. With its expansive bronze-glass front, elegant LED lighting, and superior thermal wood construction, the GL6 offers a relaxing, light-filled environment that’s built to withstand all seasons. Experience the luxury, spaciousness, and rejuvenation of a premium sauna—crafted for comfort, designed for life. Features Spacious design seats up to 6 bathers with 2-tiered, ergonomic benching Crafted from 1.57” thick Nordic Thermo-Spruce for exceptional durability and weather resistance Contemporary design with wrap-around eaves and integrated porch for architectural appeal Tempered bronze glass front windows and side door provide abundant natural light and unobstructed views Recessed LED exterior lighting guides you safely to your sauna entry Interior LED lighting system with Wi-Fi app and handheld remote for personalized ambiance Interlocking-beam construction allows natural expansion and contraction for a long-lasting fit Crafted in Northern Europe by sauna enthusiasts for professional-quality results What's Included? Model GL6 Outdoor Home Sauna Kit Thermo-spruce wall boards (1.57\" thick) Tempered bronze glass door with full-length black-painted handle Tempered bronze glass windows with black-painted frames 2-tiered thermo-hardwood benches & backrests Thermo-spruce exterior and interior roof boards Thermo-spruce porch boards (1.1\" thick) Thermo-spruce floorboards (1.1\" thick) Black fascia boards Black metal flashing Ground frame Self-adhesive roofing felt EPS insulation Ventilation system Drainage system Screws and other fasteners Installation instructions White LED light system with Wi-Fi app Recessed exterior LED lighting Indirect interior LED lighting Wireless handheld remote Specifications Model: GL6 Construction Material: Thermo-Spruce Product Weight: 2200 lbs (997.9 kg) Exterior Dimensions: 90.2\"W (229.1 cm) x 90.2\"D (229.1 cm) x 92.5\"H (235 cm) Interior Dimensions: 69.7\"W (177 cm) x 69.7\"D (177 cm) x 79.1\"H (200.9 cm) Upper Bench Dimensions: 69.7\"W (177 cm) x 23.6\"D (59.9 cm) Lower Bench Dimensions: 69.9\"W (177 cm) x 12.5\"D (31.8 cm) Glass Style: Tempered Bronze Glass Glass Thickness: .24\" (Windows), .31\" (Door) Door Dimensions: 27.6\"W (70.1 cm) x 74.8\"H (189 cm) Window Dimensions: 32.5\"W (82.6 cm) x 72\"H (182.9 cm) Porch Dimensions: 90.2\"L (229.1 cm) x 90.2\"W (229.1 cm) x 14.6\"D (37.1 cm) Shipping Weight: 2425 lbs (1100 kg) Shipping Dimensions: 83\"W (210.8 cm) x 43\"D (109.2 cm) x 43\"H (109.2 cm) Documents SaunaLife GL6 Installation Manual SaunaLife GL6 Dimensions",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-saunalife-gl6-6-person-outdoor-sauna-kit-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-gl6-6-person-outdoor-sauna-kit-sl-modelgl6-7510276.jpg?v=1772585488",
+      "alt": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-saunalife-gl6-6-person-outdoor-sauna-kit-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1279000,
+      "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SL-MODELGL6",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "SL-MODELGL6"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "6-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"6-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front",
+        "matched": "6-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating, Features:Porch, glass sauna, Luxury Saunas, window",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife GL6 | 6-Person Outdoor Sauna Kit | Glass Front | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating, Features:Porch, glass sauna, Luxury Saunas, window",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/saunalife-gl6-6-person-outdoor-sauna-kit?variant=52416865075464&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

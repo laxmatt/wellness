@@ -29,7 +29,8 @@
     "inventory:server": "tsx scripts/inventory-server.ts",
     "inventory:review": "tsx scripts/inventory-review.ts",
     "e2e:inventory": "tsx e2e/inventory-admin.mts",
-    "inventory:sweat-kingdom": "tsx scripts/stage-sweat-kingdom.ts"
+    "inventory:sweat-kingdom": "tsx scripts/stage-sweat-kingdom.ts",
+    "promote:shopify-saunas": "tsx scripts/promote-shopify-saunas.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

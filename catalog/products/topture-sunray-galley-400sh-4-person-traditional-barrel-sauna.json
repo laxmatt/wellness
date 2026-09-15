@@ -1,0 +1,190 @@
+{
+  "id": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+  "slug": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna",
+  "name": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description The SunRay Galley 4-Person Traditional Barrel Sauna is perfectly designed for group relaxation or for stretching out on its long side benches. Measuring 6' deep by 6' wide, it’s the ideal size for your backyard retreat. Equipped with a powerful 6.0 kW Harvia electric heater, the Galley sauna reaches 170–180°F and features a built-in delay timer that lets you schedule your session up to 8 hours in advance. This complete sauna kit includes a flat floor kit and a shingled roof for added protection in wetter climates. An accessory package provides a thermo-hygrometer, water bucket with ladle, sand timer, and sauna stones for authentic steam sessions. Dome interior lighting creates the perfect ambience, while the solid red cedar ball-and-socket construction and stainless steel hardware ensure durability and timeless appeal. Features Seats up to 4 people comfortably 6.0 kW Harvia electric heater with sauna stones Heats up to 170–180°F Built-in 8-hour delay start timer Long side benches allow stretching out or multiple guests Sturdy 1 3/8\" red cedar ball-and-socket construction Stainless steel hardware Flat floor kit included Shingled roof for outdoor protection Interior dome lighting Ergonomic backrests Tempered glass door Accessory kit with bucket, ladle, thermo-hygrometer, and sand timer Solid weather-resistant support cradles Easy assembly Indoor or outdoor use 7-Year Limited Warranty What's Included? SunRay Galley 4-Person Barrel Sauna Cabin 6.0 kW Harvia Electric Heater Heater stones Flat floor kit Shingled roof Interior dome lighting Ergonomic backrests Bucket and ladle Thermo-hygrometer Sand timer Tempered glass door Weather-resistant support cradles Product Manual Specifications Brand SunRay Model Galley Application Indoor / Outdoor Maximum Capacity 4 persons Shape Barrel Primary Material Red Cedar Wood Construction Ball-and-socket with stainless steel hardware Heat Source Traditional Steam Heater Type 6.0 kW Harvia Electric Heater with Stones Adjustable Temperature Yes Temperature Range 170–180°F Electrical Requirements 220V, 30 amp dedicated outlet Wattage 6000W Exterior Dimensions 76\" H x 72\" W x 74\" D Interior Dimensions 69\" H x 69\" W x 64\" D Weight 721 lbs Warranty 7-Year Limited Warranty Documents Barrel Sauna Assembly Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-galley-400sh-4-person-traditional-barrel-sauna-400sh-967142.jpg?v=1740621362",
+      "alt": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-galley-400sh-4-person-traditional-barrel-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 589000,
+      "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "400SH",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "400SH"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Galley 400SH | 4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-galley-400sh-4-person-traditional-barrel-sauna?variant=50429123461384&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

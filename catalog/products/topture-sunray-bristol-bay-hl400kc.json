@@ -1,0 +1,190 @@
+{
+  "id": "topture-sunray-bristol-bay-hl400kc",
+  "slug": "topture-sunray-bristol-bay-hl400kc",
+  "name": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description The SunRay Bristol Bay 4-Person Corner Infrared Sauna is designed with bench seating on each side to comfortably fit four people. It uses 10 advanced carbon-nano heaters to quickly reach temperatures up to 140°F while maintaining low EMF levels. The sauna is made from Canadian red cedar and includes movable ergonomic backrests, chromatherapy lighting, a Bluetooth speaker system, an oxygen ionization system for air purification, and dual digital keypads for easy operation. ETL/CSA certified and simple to assemble, the Bristol Bay provides a reliable indoor sauna experience. Features Seats up to 4 people with corner bench seating Constructed from Canadian red cedar wood 10 advanced carbon-nano infrared heaters Reaches up to 140°F Low EMF output Movable ergonomic backrests for comfort Chromatherapy mood lighting Bluetooth speaker system Oxygen ionization system for purified air Dual digital keypads for convenience Recessed exterior lighting LED reading lamp Tempered glass door Ventilation system ETL/CSA safety certified What's Included? SunRay Bristol Bay 4-Person Corner Infrared Sauna Cabin 10 Carbon-Nano Infrared Heaters Movable ergonomic backrests Chromatherapy mood lighting Dual digital keypads Bluetooth speaker system Oxygen ionization system Recessed exterior lighting LED reading lamp Tempered glass door Ventilation system Product Manual Specifications Brand: SunRay Model: Bristol Bay Application: Indoor Maximum Capacity: 4 persons Shape: Corner Primary Material: Canadian Red Cedar wood Heat Source: Infrared Heater Type: Carbon-Nano heaters Number of Heaters: 10 EMF Rating: Low EMF Adjustable Temperature: Yes Temperature Range: 32°F – 140°F (0℃ – 60℃) Electrical Requirements: 20 amp, 120V dedicated outlet Wattage: 2100W Certification: ETL/CSA Safety Certified Exterior Dimensions: 75\" H x 65\" W x 65\" D Interior Dimensions: 68\" H x 61\" W x 61\" D Weight: 408 lbs Number of Units Included: 1 Documents Product Data Sheet Bristol Bay Owner Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-bristol-bay-hl400kc-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-bristol-bay-4-person-indoor-infrared-corner-sauna-hl400kc-hl400kc-890921.jpg?v=1740604489",
+      "alt": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-bristol-bay-hl400kc-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 429800,
+      "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "400KC",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "400KC"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC | Indoor Saunas | Cabin Saunas, Far Infrared Sauna, Features:Bluetooth Audio, Features:Corner",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC | Indoor Saunas | Cabin Saunas, Far Infrared Sauna, Features:Bluetooth Audio, Features:Corner",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Bristol Bay 4-Person Indoor Infrared Corner Sauna 400KC | Indoor Saunas | Cabin Saunas, Far Infrared Sauna, Features:Bluetooth Audio, Features:Corner",
+        "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-bristol-bay-hl400kc?variant=43530803970312&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

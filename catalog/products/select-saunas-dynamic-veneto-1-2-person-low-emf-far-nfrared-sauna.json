@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna",
+  "slug": "select-saunas-dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna",
+  "name": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "Dynamic Veneto 1-2 Person Low EMF (Between 5-10 mg) Far Infrared Sauna (Canadian Hemlock) Looking for an easy way to relax and recharge at home? Dynamic Saunas are made from eco-friendly Canadian Hemlock wood and feature Low EMF FAR infrared heating panels that deliver safe, energy-efficient warmth. Each session helps ease stress, improve circulation, and restore balance to your body. Compact and versatile, these saunas can be installed in basements, master baths, walk-in closets, or even home gyms. With their sleek design and powerful health benefits, Dynamic Saunas turn any space into a personal retreat for daily comfort and wellness. Features: Low EMF - EMF between 5-10 mg 2 to 3 inches from the heating panels 1-2 person capacity Natural Canadian Reforested Hemlock wood construction Easy Removable Bench - Stretching, Exercise, or Yoga Tempered glass door Interior chromotherapy lighting system with red light feature Heating Elements: 7 Dynamic Low EMF (EMF between 5-10MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels 2 on the rear wall 2 on each side wall and 1 under the bench Roof vent Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 250 lbs. Shipping weight: 300 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 36\" x 39\" x 75\" Interior dimensions (LWH): 32\" x 35\" x 68\" Document: View Owner's Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/DYN-6115-01_1.png?v=1763804735",
+      "alt": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 229900,
+      "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6115-05",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "DYN-6115-05"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "1-2 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"1-2 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna",
+        "matched": "1-2 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Veneto 1-2 Person Low EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/dynamic-veneto-1-2-person-low-emf-far-nfrared-sauna?variant=52200199848279&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "id": "topture-saunalife-cl12gcp-cube-sauna-8-person",
+  "slug": "topture-saunalife-cl12gcp-cube-sauna-8-person",
+  "name": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom",
+  "brandId": "saunalife-saunas",
+  "categoryId": "saunas",
+  "description": "Description Experience ultimate outdoor relaxation with the SaunaLife Model CL12GCP Cube-Series Sauna Suite. Designed for up to 8 people, this all-in-one luxury sauna retreat features a spacious sauna room with a panoramic tempered-glass window, a separate dressing area, and a cozy front porch for unwinding before and after your session. Built with ultra-durable Thermo-Spruce and crafted in Northern Europe, the CL12GCP offers superior airflow, comfort, and weather resistance — perfect for cabins, large properties, or wellness enthusiasts seeking a top-tier sauna experience. Features Spacious design for up to 8 bathers with separate sauna and dressing rooms Large bronze tempered-glass picture window enhances light and atmosphere Weather-resistant Thermo-Spruce exterior with 12.5’ full-length staves Contoured 2-tier Thermo-Aspen benches and arched backrests for ergonomic comfort Integrated front porch with seating adds Nordic charm Shingled roof with drip rails for long-term durability Wi-Fi controlled dotless LED lighting system with app and remote operation Lockable front door with bronze glass for added security and elegance Precision ventilation system ensures optimal airflow and heat distribution What's Included? Thermo-Spruce sauna suite structure with dressing room and porch 2-tier Thermo-Aspen sauna benches & backrests Thermo-Aspen dressing room benches Tempered bronze glass front door & rear picture window Shingle kit with drip rails Ventilation system and heater guard White LED light system with app, remote, power supply, and mounting hardware Water diverter, fascia boards, and foundation beams Montage kit and black-painted front trim All installation materials and instructions Specifications Model: CL12GCP Capacity: Up to 8 persons Exterior Dimensions: 91\"W x 151.6\"D x 93\"H (231 x 385 x 236 cm) Sauna Room Dimensions: 87.5\"W x 78.6\"D x 85.5\"H (222 x 200 x 217 cm) Dressing Room Dimensions: 87.5\"W x 43.9\"D x 85.5\"H (222 x 112 x 217 cm) Porch Dimensions: 87.5\"W x 22.75\"D x 85.5\"H (222 x 57.8 x 217 cm) Wall/Ceiling Material: Thermo-Spruce (1.7\" thick staves) Bench Material: Clear Thermo-Aspen (1.75\" thick) Glass: 0.31\" thick tempered bronze glass for doors and window Door Dimensions: 27.2\"W x 75.6\"H (69 x 192 cm) Product Weight: 3100 lbs (1406 kg) Shipping Weight: 3450 lbs (1565 kg) Shipping Dimensions: 155\"W x 44\"D x 47\"H (394 x 112 x 119 cm) Made in Northern Europe Shipping & Delivery Delivered by specialized or flatbed truck Scheduled delivery appointment required Ships encased in protective wooden crate on a pallet Requires forklift or crane for unloading and on-site transport Driver provides delivery only; placement/setup not included Customers will be contacted prior to shipping to coordinate delivery and address any special site requirements Shipping Dimensions: 155\"W x 44\"D x 47\"H (394 x 112 x 119 cm) Shipping Weight: 3450 lbs (1565 kg) Documents Sauna Dimensions Installation Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-saunalife-cl12gcp-cube-sauna-8-person-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-cl12gcp-cube-sauna-8-person-luxury-sauna-suite-with-changeroom-sl-cl12gcpcp-8808368.jpg?v=1753755199",
+      "alt": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-saunalife-cl12gcp-cube-sauna-8-person-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1099000,
+      "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SL-CL12GCPCP",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "SL-CL12GCPCP"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "8-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"8-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom",
+        "matched": "8-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"8\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom",
+        "matched": "8",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom | Outdoor Saunas | Cabin Saunas, Changing Room, Cube Sauna, Features:2-tier Seating, Features:Changing Room, Features:Porch",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife CL12GCP | 8-Person Outdoor Cube Sauna with Changeroom | Outdoor Saunas | Cabin Saunas, Changing Room, Cube Sauna, Features:2-tier Seating, Features:Changing Room, Features:Porch",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

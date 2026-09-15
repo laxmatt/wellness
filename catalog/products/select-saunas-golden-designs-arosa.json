@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-golden-designs-arosa",
+  "slug": "select-saunas-golden-designs-arosa",
+  "name": "Golden Designs Arosa 4-Person Barrel Sauna",
+  "brandId": "golden-designs",
+  "categoryId": "saunas",
+  "description": "Golden Designs Arosa 4-Person Barrel Sauna in Pacific Cedar Step into a world of rustic charm and relaxation with the Golden Designs Arosa 4-Person Barrel Sauna. Inspired by the allure of a barrel design, this exquisite traditional sauna offers a captivating escape for you and your loved ones to unwind and rejuvenate. Barrel Sauna Elegance: The Arosa sauna showcases the classic barrel design, reminiscent of traditional Scandinavian saunas. Its unique and enchanting appearance adds a touch of elegance to any outdoor space, creating a warm and inviting oasis for relaxation. Luxurious Pacific Cedar: Indulge in the rich beauty of Pacific Cedar as you enter the inviting interior of the Arosa sauna. The natural aroma and smooth texture of the cedar enhance the sauna experience, enveloping you in pure luxury and comfort. Generous Four-Person Capacity: Designed to accommodate up to four individuals, the Arosa sauna provides ample space for you and your loved ones to share cherished moments of tranquility. Gather your friends or family and experience the joy of rejuvenation together. Craftsmanship at its Finest: The Arosa sauna exemplifies exceptional craftsmanship and attention to detail. The sturdy construction ensures durability, while the tempered glass door and round windows allow natural light to fill the interior, creating a serene and inviting ambiance. Elevate Your Well-Being: Elevate your well-being with the Golden Designs Arosa 4-Person Barrel Sauna. Immerse yourself in the gentle warmth, allowing the sauna to promote relaxation and detoxification. Experience the therapeutic benefits of traditional sauna therapy and indulge in the cozy retreat of the Arosa sauna. Rediscover the art of relaxation, embrace the allure of barrel saunas, and elevate your outdoor living with the Arosa sauna - your pathway to timeless beauty and rejuvenation. Features 4 person capacity Pacific Premium Cedar wood construction Interior backrest with accent lighting Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS60 The Wall 6 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 30AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician to install. Assembled Dimensions (W x D x H): 75\" x 73\" x 80\" Shipping Dimensions with Stove (W x D x H): 76\" x 44\" x 38\" Shipping Dimensions without Stove (W x D x H): 76\" x 44\" x 25\" Assembled Weight 477 LBS Shipping Weight 695 LBS with Stove / 615 LBS without Stove All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-golden-designs-arosa-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/GoldenDesignsArosa4PersonBarrelTraditionalSauna-PacificCedar..webp?v=1721727946",
+      "alt": "Golden Designs Arosa 4-Person Barrel Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-golden-designs-arosa-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 599900,
+      "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GDI-B004-01",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "GDI-B004-01"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Arosa 4-Person Barrel Sauna",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Arosa 4-Person Barrel Sauna",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Arosa 4-Person Barrel Sauna | Barrel Sauna Kits | 4 Person, Saunas, Traditional Saunas",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Arosa 4-Person Barrel Sauna | Barrel Sauna Kits | 4 Person, Saunas, Traditional Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/golden-designs-arosa?variant=46976788463959&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

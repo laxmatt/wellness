@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-golden-designs-savonlinna-3-person-outdoor-tradition-1b1u5kg",
+  "slug": "select-saunas-golden-designs-savonlinna-3-person-outdoor-tradition-1b1u5kg",
+  "name": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar",
+  "brandId": "golden-designs",
+  "categoryId": "saunas",
+  "description": "Looking for a way to bring spa-like relaxation into your own home? The Golden Designs Savonlinna 3-Person Outdoor Traditional Sauna offers the perfect blend of luxury, functionality, and comfort. Designed with versatility in mind, it fits beautifully in a variety of spaces while delivering a true wellness experience right where you live. Crafted with a rich Canadian Red Cedar interior, the Savonlinna not only provides lasting durability but also releases a natural, calming aroma every time you step inside. Its traditional steam system surrounds you with soothing heat that promotes deep relaxation, supports detoxification, and rejuvenates both body and mind. With the Savonlinna, your home transforms into a personal retreat for health, balance, and everyday renewal. Features & Specifications: Capacity: Up to 3 persons Exterior dimensions (LWH): 79.2” x 70.5” x 87.8” Interior dimensions (LWH): 75” x 53.4” x 75” Temperature range: 170–185°F, with the option to heat up to 190°F. Heating system: Powerful 6.0 kW stove with built-in controls. Elegant door: Bronze privacy tempered glass. Lighting: Ambient star lights and a chromotherapy color lighting system. Interior comfort: Backrest with accent white lighting for ultimate unwinding. Touchscreen controls: Easy-to-use panel with built-in FM radio and Bluetooth. Sound system: High-quality integrated performance speakers. Electrical requirements: 240V/30AMP stove connection and 120V/15AMP for lights and music (professional installation recommended). Premium construction: Exterior paired with natural Canadian Red Cedar for durability and timeless beauty. Accessories included: Sandglass, thermometer, bucket, and scoop for a complete sauna experience. Location: Outdoor Use",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-golden-designs-savonlinna-3-person-outdoor-tradition-1b1u5kg-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/gdi-8503-01-sauna-golden-designs-saunas.jpg?v=1756724355",
+      "alt": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-golden-designs-savonlinna-3-person-outdoor-tradition-1b1u5kg-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1299900,
+      "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GDI-8503-02",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "GDI-8503-02"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "3 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"3 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar",
+        "matched": "3 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"3\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar",
+        "matched": "3",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar | Outdoor Traditional Sauna Kits",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Savonlinna - 3 Person Outdoor Traditional Sauna - Pacific Cedar | Outdoor Traditional Sauna Kits",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/golden-designs-savonlinna-3-person-outdoor-traditional-sauna-pacific-cedar?variant=51600693002583&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "id": "select-saunas-golden-designs-bergen",
+  "slug": "select-saunas-golden-designs-bergen",
+  "name": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna",
+  "brandId": "golden-designs",
+  "categoryId": "saunas",
+  "description": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna Step into a realm of pure indulgence and well-being with the Golden Designs Bergen 6-Person Outdoor Sauna. Immerse yourself in the time-honored tradition of steam therapy, as this exceptional outdoor sauna envelops you in soothing warmth and serenity. Outdoor Oasis: The Bergen sauna is more than just a sauna; it's an outdoor oasis where you can escape the demands of daily life and embrace tranquility amidst the beauty of nature. Feel the gentle steam work its magic, promoting relaxation and detoxification, as you embark on a journey of ultimate relaxation. Luxurious Craftsmanship: The all-Canadian Red Cedar interior of the Bergen sauna exudes luxury and sophistication. The rich fragrance of the wood enhances the overall sauna experience, while the all-weather protective exterior ensures your sauna remains resilient and visually stunning in any weather condition. During winter, simply clear the roof of snow to keep the sauna ready for your comfort. Spacious Serenity: Designed to accommodate up to six individuals, the Bergen sauna offers ample space for you and your loved ones to unwind and rejuvenate together. Share cherished moments of relaxation and well-being with family and friends, making the sauna experience even more memorable. Craftsmanship at its Finest: The Bergen sauna exemplifies meticulous craftsmanship and attention to detail. The tempered glass door allows natural light to grace the interior, creating a tranquil ambiance that complements the overall sauna experience. Elevate Your Wellness: Elevate your wellness journey and surrender to the allure of the Golden Designs Bergen 6-Person Outdoor Sauna. Let the soothing steam envelop your senses, revitalizing your body and mind. Rediscover the art of relaxation and well-being, as this outdoor sauna becomes your gateway to pure luxury and rejuvenation. Unlock the door to a world of tranquility, embrace the warmth of the sauna, and elevate your outdoor living with the Bergen sauna - your pathway to ultimate relaxation and indulgence. Features 6 person capacity All Weather Exterior / Canadian Red Cedar Interior Oversize interior chromotherapy lighting system Interior backrest with accent lighting Exterior accent lighting Interior LED Control Panel with built in FM Radio and Bluetooth Connection Built in Performance Speakers Sandglass, thermometer, bucket and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with Built in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions Exterior (W x D x H): 79.2\" x 84.7\" x 88.3\" Assembled Dimensions Interior (W x D x H): 75\" x 67.2\" x 75\" Assembled Weight 1195 LBS Shipping Weight 1520 LBS All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-golden-designs-bergen-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/GoldenDesignsBergen6PersonOutdoor-IndoorTraditionalSauna_GDI-8206-01_-CanadianRedCedarInterior.jpg?v=1721633446",
+      "alt": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-golden-designs-bergen-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1599900,
+      "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GDI-8206-01",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "GDI-8206-01"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "6-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"6-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna",
+        "matched": "6-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 6-Person, Saunas, Traditional Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 6-Person, Saunas, Traditional Saunas",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Bergen 6-Person Outdoor Traditional Sauna | Outdoor Pre-Assembled Cabin Saunas | 6-Person, Saunas, Traditional Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/golden-designs-bergen?variant=46974115742039&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}
