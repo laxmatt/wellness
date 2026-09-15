@@ -88,6 +88,8 @@ type ServerState = {
   sources: SourceRow[];
   drafts: DraftRow[];
   blocked: BlockedRow[];
+  /** Snapshots `npm run fetch:shopify` has written on this machine. */
+  snapshots?: { sourceId: string; fileName: string; bytes: number; modified: string }[];
   canonical: { unmatched: number; confirmed: number; queued: number; groups: CanonicalGroupRow[] };
   plans: PlanRow[];
 };
@@ -147,7 +149,15 @@ type DraftProfile = {
 type State = {
   server: ServerState | null;
   sourceId: string;
-  file: { name: string; text: string } | null;
+  /**
+   * The bytes this page is working on, or the fact that they never came here.
+   *
+   * An uploaded file is held in memory and sent with every command. A snapshot
+   * on disk is not: the page holds its name and its size for the person to
+   * read, the server reads the file, and nothing megabyte-sized crosses the
+   * loopback four times to say the same thing.
+   */
+  file: { name: string; text: string; useSnapshot?: false } | { name: string; bytes: number; useSnapshot: true } | null;
   inspect: Inspect | null;
   profile: DraftProfile | null;
   preflight: Preflight | null;
@@ -478,6 +488,16 @@ function newSourceForm(): HTMLElement {
   return wrap;
 }
 
+/**
+ * How a command says where the bytes are.
+ *
+ * One place, so the three commands that read a file cannot disagree about it.
+ */
+function fileArgs(): Record<string, unknown> {
+  const file = state.file!;
+  return file.useSnapshot === true ? { useSnapshot: true } : { fileName: file.name, text: file.text };
+}
+
 function fileSection(): HTMLElement {
   const panel = el("section", { class: "panel", "data-testid": "file" }, [text_("h2", "", "2. The file")]);
   const input = el("input", { type: "file", accept: ".csv,.tsv,.json,text/csv,text/plain,application/json", "data-testid": "file-input" });
@@ -509,7 +529,56 @@ function fileSection(): HTMLElement {
     }
   });
   panel.append(field("Upload a file", input, "Read in memory. The file is kept only when an import succeeds, and it is refused outright if it looks like it carries a key."));
-  if (state.file) panel.append(text_("p", "note", `${state.file.name}, ${Math.round(state.file.text.length / 1000)} kB.`));
+
+  // The second route, and the better one for a whole storefront. `npm run
+  // fetch:shopify` has already written the snapshot to intake/shopify/; sending
+  // those same megabytes back through the browser buys nothing and is what the
+  // upload ceiling is there to stop. A partner is named here, never a path.
+  const onDisk = (state.server?.snapshots ?? []).filter((snap) => snap.sourceId === state.sourceId);
+  const section = el("div", { "data-testid": "snapshot-picker" });
+  if (onDisk.length === 0) {
+    section.append(text_("p", "note", "No snapshot for this partner on this machine. `npm run fetch:shopify -- <partner>` writes one to intake/shopify/, and it appears here."));
+  }
+  for (const snap of onDisk) {
+    section.append(
+      el("div", { class: "row", "data-testid": `snapshot-${snap.sourceId}`, "data-bytes": String(snap.bytes) }, [
+        text_("strong", "", `intake/shopify/${snap.fileName}`),
+        text_("p", "note", `${Math.round(snap.bytes / 1000)} kB, fetched ${snap.modified.slice(0, 10)}. Read by the server on this machine: nothing travels through the browser, so no upload ceiling applies.`),
+        el("button", {
+          type: "button",
+          "data-testid": `use-snapshot-${snap.sourceId}`,
+          onclick: async () => {
+            state.file = { name: snap.fileName, bytes: snap.bytes, useSnapshot: true };
+            state.inspect = null;
+            state.profile = null;
+            state.preflight = null;
+            state.version = null;
+            const reply = await send("inspect", { sourceId: state.sourceId, useSnapshot: true });
+            if (reply.ok !== false) {
+              state.inspect = reply as unknown as Inspect;
+              state.profile = {
+                note: "",
+                grouping: state.inspect.suggestion.grouping,
+                columns: state.inspect.suggestion.columns,
+                attributes: [],
+                exclusions: [],
+                families: [],
+                proposedFilters: [],
+              };
+              render();
+            }
+          },
+        }, ["Read the snapshot on disk"]),
+      ]),
+    );
+  }
+  panel.append(field("Or read a snapshot this machine already has", section, "For a whole storefront. The fetch command writes it; the server reads it by naming the partner, never a path; nothing is fetched here."));
+  if (state.file) {
+    const size = state.file.useSnapshot === true ? state.file.bytes : new TextEncoder().encode(state.file.text).length;
+    panel.append(el("p", { class: "note", "data-testid": "file-chosen", "data-route": state.file.useSnapshot === true ? "snapshot" : "upload" }, [
+      `${state.file.name}, ${Math.round(size / 1000)} kB, ${state.file.useSnapshot === true ? "read on this machine by the server" : "sent from this browser"}.`,
+    ]));
+  }
   if (state.inspect) {
     panel.append(text_("p", "", `${state.inspect.rows} rows, ${state.inspect.columns.length} columns${state.inspect.truncated > 0 ? `, ${state.inspect.truncated} rows past the limit not read` : ""}.`));
     for (const note of state.inspect.readerNotes) panel.append(text_("p", "note", note));
@@ -679,7 +748,7 @@ function actionsSection(): HTMLElement {
     el("button", {
       "data-testid": "check",
       ...(state.busy ? { disabled: true } : {}),
-      onclick: () => send("preflight", { sourceId: state.sourceId, fileName: state.file!.name, text: state.file!.text, profile: state.profile }),
+      onclick: () => send("preflight", { sourceId: state.sourceId, ...fileArgs(), profile: state.profile }),
     }, ["Check this mapping"]),
   );
   buttons.append(
@@ -714,7 +783,7 @@ function actionsSection(): HTMLElement {
         class: "primary",
         "data-testid": "import",
         ...(state.busy ? { disabled: true } : {}),
-        onclick: () => send("import", { sourceId: state.sourceId, version: latest, fileName: state.file!.name, text: state.file!.text }),
+        onclick: () => send("import", { sourceId: state.sourceId, version: latest, ...fileArgs() }),
       }, [`Import drafts with v${latest}`]),
     );
   }

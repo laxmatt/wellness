@@ -348,15 +348,53 @@ seed refuses to write when it finds anything, and it deliberately leaves prose
 alone so a note can say a portal needs a login without being refused for
 saying so.
 
+## How big a file may be
+
+Two questions, and treating them as one is what refused the first real
+catalogue.
+
+**How big a file of this format may be.** Each adapter states its own ceiling,
+because the formats are not the same size of thing. A partner's CSV is a table
+of prices: 1,000 kB, unchanged. A Shopify snapshot is every marketing page in a
+store, and `body_html` is most of its bytes. Select Saunas' real catalogue is
+737 products in 6,333 kB, which is 8.6 kB a product; `BYTES_PER_PRODUCT` is
+12 kB, and every bound is derived from it. The adapter reads up to 5,000
+products, so 60 MB.
+
+**How big a file may be to travel through a browser.** A different question. An
+uploaded file goes as a string inside a JSON command, and the server holds the
+chunks, the joined body, the parsed text and the built table at once. That
+ceiling is 12 MB: a thousand products at the measured rate, which is almost
+twice the largest real partner catalogue. The transport sizes itself from the
+largest format's ceiling plus 1.5x for JSON escaping, measured at 1.2x on a
+quote-dense catalogue.
+
+**Past that, the file does not travel.** `npm run fetch:shopify` has already
+written it to `intake/shopify/`, atomically. The tool offers it beside the
+partner it belongs to and reads it on this machine. The page sends a partner id
+and the server composes the path inside one fixed directory, after checking the
+id is a name rather than a route to one: `nested/secret` resolves to a real
+file inside that directory and would pass a containment check alone, which is
+why the id is validated before it is joined to anything. `SNAPSHOT_DIR` can
+move the directory for a test and is refused if it points outside the project.
+
+Both routes meet the same rules afterwards. The credential scan runs before a
+byte is written, the upload is written beside itself and renamed into place so
+a file named after its own hash is never half of one, and a failed read leaves
+the last good snapshot exactly where it was.
+
 ## What it will not do
 
 - Write to `catalog/` from the tool. The one thing that does is
   `scripts/promote-saunas.ts`, run by hand, from a signed plan, and it refuses
   a plan that does not hash to its own name or that was signed against a
   different file.
-- Read a format with no adapter. CSV and TSV are read; XLSX, XML, JSON and an
-  API are named so an upload is refused by name, with the reason, instead of
-  being mis-parsed.
+- Read a format with no adapter. CSV, TSV and a Shopify snapshot are read;
+  XLSX, XML and an API are named so an upload is refused by name, with the
+  reason, instead of being mis-parsed.
+- Accept a path. The snapshot route takes a partner id, checks it is a name
+  and not a route to one, and composes the file itself inside one fixed
+  directory. There is no command anywhere that reads a path from a request.
 - Store a credential. There is no field for a retrieval URL, and an upload
   whose bytes look like they carry a key, a signature or an authorization
   header is refused rather than saved. The Awin feed is downloaded from an

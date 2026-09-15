@@ -20,7 +20,7 @@
 
 import { spawn, type ChildProcess } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { chromium, type Page } from "playwright";
@@ -28,6 +28,12 @@ import { chromium, type Page } from "playwright";
 const ROOT = process.cwd();
 const WORKSPACE = "ingestion-e2e";
 const WORKSPACE_DIR = join(ROOT, WORKSPACE);
+/**
+ * Where this check puts the snapshot it generates, instead of somebody's real
+ * intake. The server resolves it inside the project and refuses anything else.
+ */
+const SNAPSHOTS = "ingestion-e2e-snapshots";
+const SNAPSHOTS_DIR = join(ROOT, SNAPSHOTS);
 const FEED = join(ROOT, "intake", "sweat-kingdom", "awin-125462-f3219-2026-09-13.csv");
 const TOPTURE_SNAPSHOT = join(ROOT, "src", "__tests__", "fixtures", "shopify", "topture-shopify.json");
 const SELECT_SNAPSHOT = join(ROOT, "src", "__tests__", "fixtures", "shopify", "select-saunas-shopify.json");
@@ -201,9 +207,60 @@ async function textBecomes(page: Page, selector: string, substring: string): Pro
   );
 }
 
+/**
+ * A snapshot in the shape `npm run fetch:shopify` writes, big enough to have
+ * met the bound that refused the real Select Saunas catalogue.
+ *
+ * Most of a real product's bytes are `body_html`, and that markup is dense with
+ * the quotes that make JSON escaping cost something, so the generated one is
+ * too. Anything smaller would pass a ceiling it was never tested against.
+ */
+function generateSnapshot(count: number): string {
+  const copy = "Eastern White Cedar staves, stainless steel bands, and a tempered glass door. ".repeat(12);
+  const products = Array.from({ length: count }, (_, n) => {
+    const i = n + 1;
+    return {
+      id: 100_000 + i,
+      title: `Hooga Outdoor Barrel Sauna - Model ${i}`,
+      handle: `hooga-barrel-model-${i}`,
+      vendor: "Hooga",
+      product_type: "Outdoor Sauna",
+      tags: ["sauna", "barrel", "cedar"],
+      body_html: `<div class="product-description" id="d-${i}" data-model="${i}"><p>The <strong>Model ${i}</strong> is a "flat roof" barrel sauna.</p><img src="https://cdn.shopify.com/s/files/1/0/m-${i}.jpg" alt="Model ${i}" /><p>${copy}</p></div>`,
+      created_at: "2025-01-02T10:00:00-05:00",
+      updated_at: "2026-09-15T08:00:00-04:00",
+      options: [{ name: "Heater" }],
+      images: [{ src: `https://cdn.shopify.com/s/files/1/0/m-${i}.jpg`, position: 1 }],
+      variants: [
+        { id: 200_000 + i, title: "Electric", sku: `HOO-${i}-E`, price: `${8000 + i}.00`, available: true, position: 1, updated_at: "2026-09-15T08:00:00-04:00" },
+        { id: 300_000 + i, title: "Wood", sku: `HOO-${i}-W`, price: `${9000 + i}.00`, available: false, position: 2, updated_at: "2026-09-15T08:00:00-04:00" },
+      ],
+    };
+  });
+  return JSON.stringify({
+    sourceId: "hooga-shopify",
+    storeUrl: "https://hoogahealth.com",
+    requested: ["https://hoogahealth.com/products.json?limit=250&page=1"],
+    pages: Math.ceil(count / 250),
+    productCount: count,
+    variantCount: count * 2,
+    fetchedAt: "2026-09-15T08:00:00.000Z",
+    products,
+  });
+}
+
 async function run() {
   if (existsSync(WORKSPACE_DIR)) rmSync(WORKSPACE_DIR, { recursive: true, force: true });
-  const env = { WELLNESS_INGESTION_ADMIN: "1", INGESTION_PORT: String(PORT), INGESTION_DIR: WORKSPACE };
+  const env = { WELLNESS_INGESTION_ADMIN: "1", INGESTION_PORT: String(PORT), INGESTION_DIR: WORKSPACE, SNAPSHOT_DIR: SNAPSHOTS };
+
+  // A catalogue the size of a real storefront. Generated rather than committed:
+  // a megabyte of invented marketing copy in the repository would be read one
+  // day as a real partner's, and it is noise in every diff until then.
+  if (existsSync(SNAPSHOTS_DIR)) rmSync(SNAPSHOTS_DIR, { recursive: true, force: true });
+  mkdirSync(SNAPSHOTS_DIR, { recursive: true });
+  const bigSnapshot = join(SNAPSHOTS_DIR, "hooga-shopify.json");
+  writeFileSync(bigSnapshot, generateSnapshot(737), "utf8");
+  const bigBytes = statSync(bigSnapshot).size;
 
   // The source and a first mapping, as an administrator would have typed them.
   // Unapproved: approving it is one of the steps below.
@@ -498,10 +555,41 @@ async function run() {
       ok(`the tool shows no ${forbidden}`, !screen.toLowerCase().includes(forbidden.toLowerCase()));
     }
 
+    scenario = "a whole storefront";
+    // The blocker a real fetch found: Select Saunas is 737 products and 6,333
+    // kB, valid inside every bound the adapter states, and the tool refused it
+    // with "that is more than 1200 kB" because the transport had been sized
+    // from the ceiling written for partner price files.
+    ok(`the generated catalogue is past that bound (${Math.round(bigBytes / 1000)} kB)`, bigBytes > 1_200_000);
+    await page.locator('[data-testid="source-select"]').selectOption("hooga-shopify");
+    await page.waitForSelector('[data-testid="profile-v1"]');
+    await act(page, () => page.setInputFiles('[data-testid="file-input"]', bigSnapshot));
+    await page.waitForSelector('[data-testid="target-table"]', { timeout: 60_000 });
+    check("it uploads through the browser and reads", await attribute(page, '[data-testid="file-chosen"]', "data-route"), "upload");
+    ok("every variant became a row", ((await page.locator('[data-testid="file"]').textContent()) ?? "").includes("1474 rows"));
+
+    scenario = "read from disk";
+    // The same catalogue, by the route that does not make it travel. The page
+    // sends a partner id; the server works out the file. No command takes a
+    // path, so there is nothing to point elsewhere.
+    ok("the snapshot on this machine is offered beside the partner", (await page.locator('[data-testid="use-snapshot-hooga-shopify"]').count()) === 1);
+    check("with its real size", await attribute(page, '[data-testid="snapshot-hooga-shopify"]', "data-bytes"), String(bigBytes));
+    await act(page, () => page.locator('[data-testid="use-snapshot-hooga-shopify"]').click());
+    await page.waitForSelector('[data-testid="target-table"]', { timeout: 60_000 });
+    check("the server read it, not the browser", await attribute(page, '[data-testid="file-chosen"]', "data-route"), "snapshot");
+    ok("and got the same rows", ((await page.locator('[data-testid="file"]').textContent()) ?? "").includes("1474 rows"));
+
+    await page.locator('[data-testid="load-v1"]').click();
+    await act(page, () => page.locator('[data-testid="check"]').click());
+    ok("a preflight over the whole catalogue", (await page.locator('[data-testid="preflight"] [data-testid^="plan-"]').count()) > 100);
+    ok("still refusing to import on rules nobody approved", (await page.locator('[data-testid="preflight"] .err').first().textContent())?.includes("has not been approved") === true);
+    check("and the catalogue is still untouched", catalogCount(), catalogBefore);
+
   } finally {
     await browser.close();
     tool.kill("SIGTERM");
     rmSync(WORKSPACE_DIR, { recursive: true, force: true });
+    rmSync(SNAPSHOTS_DIR, { recursive: true, force: true });
   }
 
   console.log(failures.length === 0 ? "\nall checks passed" : `\n${failures.length} failed:\n  ${failures.join("\n  ")}`);

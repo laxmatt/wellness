@@ -26,7 +26,7 @@
  */
 
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
 import type { RecordFields } from "@/domain/ingestion/record";
@@ -253,7 +253,12 @@ export class IngestionStore {
     const name = uploadFileName(originalName, hash, on);
     const path = this.inside("uploads", this.id(sourceId), name);
     mkdirSync(resolve(path, ".."), { recursive: true });
-    writeFileSync(path, text, "utf8");
+    // Written beside itself and moved into place. A snapshot is megabytes now,
+    // and the name of this file is a hash of what is supposed to be inside it:
+    // a write cut off halfway would leave a truncated file under a name that
+    // claims it is whole, which is a worse record than no record.
+    writeFileSync(`${path}.partial`, text, "utf8");
+    renameSync(`${path}.partial`, path);
     return { ok: true, path, hash, bytes: Buffer.byteLength(text, "utf8") };
   }
 

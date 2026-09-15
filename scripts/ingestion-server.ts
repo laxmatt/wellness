@@ -30,8 +30,7 @@ import { build } from "esbuild";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { categoryById } from "@/domain/categories";
-import { LIMITS } from "@/domain/import/csv";
-import { adapterFor, formatOptions, type SourceTable } from "@/domain/ingestion/adapter";
+import { adapterFor, formatOptions, maxUploadBytes, withinUploadLimit, type SourceTable } from "@/domain/ingestion/adapter";
 import { applyEditorialEdit } from "@/domain/ingestion/editorial";
 import type { Preflight } from "@/domain/ingestion/preflight";
 import { CANONICAL_TARGETS, MappingProfile, PartnerSource, isApproved, nextVersion } from "@/domain/ingestion/profile";
@@ -41,6 +40,8 @@ import { INGESTION_ADMIN_FLAG, ingestionAdminDecision } from "@/lib/ingestion-ad
 import type { Product } from "@/domain/product";
 import { IngestionStore } from "@/providers/ingestion/IngestionStore";
 import { ingestionRoot } from "@/providers/ingestion/root";
+import { snapshotDir, snapshotsOnDisk } from "@/providers/ingestion/snapshots";
+import { snapshotFor } from "@/providers/ingestion/snapshots";
 import { buildReport, draftIssues, runIngestionImport } from "@/providers/ingestion/import";
 import { planPromotion, signPromotion } from "@/providers/ingestion/promote";
 import { canonicalRecordOf, reviewCanonical } from "@/domain/canonical/match";
@@ -52,8 +53,25 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 const ROOT = process.cwd();
 const CATALOG_DIR = join(ROOT, "catalog");
 const store = new IngestionStore(ingestionRoot(ROOT));
+/** One directory, composed here, never taken from a request. */
+const SNAPSHOT_DIR = snapshotDir(ROOT);
 const TOOL = join(ROOT, "src", "tools", "ingestion-admin");
-const MAX_BODY = LIMITS.bytes + 200_000;
+
+/**
+ * How much of a request this will hold in memory.
+ *
+ * Sized from the largest file any supported format may send, plus what JSON
+ * costs to carry one: a file travels as a string inside a command, and escaping
+ * quotes and newlines inflates it. Measured on a quote-dense Shopify catalogue
+ * that inflation is 1.2x, so 1.5x is the allowance and 200 kB covers the rest
+ * of the envelope.
+ *
+ * It used to be the CSV ceiling plus 200 kB, which is how a valid 6,333 kB
+ * catalogue met "that is more than 1200 kB" from a bound written for
+ * spreadsheets. The formats are different sizes of thing and now say so.
+ */
+const JSON_ESCAPE_ALLOWANCE = 1.5;
+const MAX_BODY = Math.ceil(maxUploadBytes() * JSON_ESCAPE_ALLOWANCE) + 200_000;
 
 const today = (): string => new Date().toISOString().slice(0, 10);
 
@@ -89,14 +107,40 @@ const text = (v: unknown): string => (typeof v === "string" ? v : "");
 
 // ------------------------------------------------------------------ reading
 
-type FileInput = { sourceId?: unknown; fileName?: unknown; text?: unknown };
+type FileInput = { sourceId?: unknown; fileName?: unknown; text?: unknown; useSnapshot?: unknown };
 
+/**
+ * The bytes a command wants read, from wherever it says they are.
+ *
+ * Two routes and one set of rules after them. An upload carries the file in the
+ * command and is bounded by what that format may send through a browser; a
+ * snapshot is read from `intake/shopify/` by naming the partner and is bounded
+ * only by what the adapter itself reads, because nothing had to travel. Past
+ * this point neither route knows which one it was.
+ */
 function readTable(input: FileInput, format: PartnerSource["format"]) {
-  const fileName = text(input.fileName).replace(/[^\w.@ -]/g, "");
-  const body = text(input.text);
-  if (fileName === "" || body === "") return { ok: false as const, reply: fail("No file was sent.") };
+  let fileName: string;
+  let body: string;
+
+  if (input.useSnapshot === true) {
+    const sourceId = text(input.sourceId);
+    const found = snapshotFor(sourceId, SNAPSHOT_DIR);
+    if (!found.ok) return { ok: false as const, reply: fail(found.reason) };
+    try {
+      body = readFileSync(found.path, "utf8");
+    } catch (e) {
+      return { ok: false as const, reply: fail(`The snapshot ${found.name} could not be read: ${e instanceof Error ? e.message : String(e)}`) };
+    }
+    fileName = found.name;
+  } else {
+    fileName = text(input.fileName).replace(/[^\w.@ -]/g, "");
+    body = text(input.text);
+    if (fileName === "" || body === "") return { ok: false as const, reply: fail("No file was sent.") };
+    const within = withinUploadLimit(format, Buffer.byteLength(body, "utf8"));
+    if (!within.ok) return { ok: false as const, reply: fail(within.reason) };
+  }
+
   const bytes = Buffer.byteLength(body, "utf8");
-  if (bytes > LIMITS.bytes) return { ok: false as const, reply: fail(`That file is ${Math.round(bytes / 1000)} kB. This reads files up to ${LIMITS.bytes / 1000} kB.`) };
   const adapter = adapterFor(format);
   if (!adapter.ok) return { ok: false as const, reply: fail(adapter.reason) };
   const read = adapter.adapter.read(body, bytes);
@@ -141,6 +185,7 @@ function state(): Reply {
         };
       }),
       blocked: store.blocked(),
+      snapshots: snapshotsOnDisk(SNAPSHOT_DIR),
       canonical: canonicalReview(),
       plans: store.plans().map((p) => ({
         planId: p.planId,
@@ -186,6 +231,16 @@ function saveSource(input: { source?: unknown }): Reply {
   if (!categoryById(parsed.data.categoryId)) return fail(`"${parsed.data.categoryId}" is not a category this site defines.`);
   store.saveSource(parsed.data);
   return { status: 200, body: { ok: true, message: `Saved ${parsed.data.name}.`, ...(state().body as object) } };
+}
+
+/**
+ * What `npm run fetch:shopify` has left on this machine.
+ *
+ * A listing, so the tool can offer the snapshot beside the partner it belongs
+ * to. A caller picks a partner from it; a caller never picks a path.
+ */
+function snapshots(): Reply {
+  return { status: 200, body: { ok: true, snapshots: snapshotsOnDisk(SNAPSHOT_DIR) } };
 }
 
 function inspect(input: FileInput): Reply {
@@ -292,17 +347,20 @@ function runImport(input: FileInput & { version?: unknown }): Reply {
   const found = sourceOr(input.sourceId);
   if (!found.ok) return found.reply;
   if (typeof input.version !== "number") return fail("Name the approved mapping version to import with.");
-  const fileName = text(input.fileName).replace(/[^\w.@ -]/g, "");
-  const body = text(input.text);
-  if (fileName === "" || body === "") return fail("No file was sent.");
+  // The same reader inspecting and preflighting use, so an import reads the
+  // same bytes those did, by whichever route the person chose, under the same
+  // bounds. It used to take the file straight off the command with no size
+  // check at all.
+  const read = readTable(input, found.source.format);
+  if (!read.ok) return read.reply;
 
   const outcome = runIngestionImport({
     store,
     catalogDir: CATALOG_DIR,
     sourceId: found.source.id,
     version: input.version,
-    fileName,
-    text: body,
+    fileName: read.fileName,
+    text: read.body,
     today: today(),
   });
   if (!outcome.ok) {
@@ -410,6 +468,8 @@ function run(body: Record<string, unknown>): Reply {
       return state();
     case "saveSource":
       return saveSource(body);
+    case "snapshots":
+      return snapshots();
     case "inspect":
       return inspect(body);
     case "preflight":

@@ -35,8 +35,39 @@ export type SourceAdapter = {
   label: string;
   /** What this adapter will and will not do, shown beside the format in the tool. */
   note: string;
+  /**
+   * The largest file of this format that may arrive through the browser.
+   *
+   * Per format, because the formats are not the same size of thing. A partner's
+   * CSV is a table of prices; a Shopify snapshot is every marketing page in a
+   * store. One ceiling for both meant the smaller one governed, and a valid
+   * 6,333 kB catalogue was refused by a bound written for spreadsheets.
+   */
+  maxUploadBytes: number;
+  /** What to do instead when a file is over that ceiling. */
+  overLimitAdvice: string;
   read(text: string, byteLength: number): AdapterResult;
 };
+
+/**
+ * Whether a file of this format, this big, may be sent through the tool.
+ *
+ * Returns the reason rather than a boolean, because "too big" on its own sends
+ * somebody looking for a number to raise when there is a better route sitting
+ * next to them.
+ */
+export function withinUploadLimit(format: SourceFormat, bytes: number): { ok: true } | { ok: false; reason: string } {
+  const adapter = ADAPTERS.find((a) => a.format === format);
+  if (!adapter) return { ok: true };
+  if (bytes <= adapter.maxUploadBytes) return { ok: true };
+  return {
+    ok: false,
+    reason: `That file is ${Math.round(bytes / 1000)} kB. This flow accepts ${adapter.label} up to ${Math.round(adapter.maxUploadBytes / 1000)} kB through the browser. ${adapter.overLimitAdvice}`,
+  };
+}
+
+/** The largest body any supported format may send, for the transport to size itself against. */
+export const maxUploadBytes = (): number => Math.max(...ADAPTERS.map((a) => a.maxUploadBytes));
 
 /**
  * CSV, and TSV, because the reader decides the delimiter from the file rather
@@ -50,6 +81,8 @@ export const csvAdapter: SourceAdapter = {
   format: "csv",
   label: "CSV or TSV",
   note: `Up to ${LIMITS.bytes / 1000} kB, ${LIMITS.rows} rows and ${LIMITS.columns} columns. The delimiter is read from the file and a file two delimiters both fit is refused.`,
+  maxUploadBytes: LIMITS.bytes,
+  overLimitAdvice: "A partner feed larger than that is usually a whole-catalogue export rather than one category. Ask for the category, or split the file.",
   read(text, byteLength) {
     const table = readCsv(text, byteLength);
     if (!table.ok) return { ok: false, reason: table.reason };

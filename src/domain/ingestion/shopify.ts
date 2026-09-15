@@ -102,8 +102,39 @@ export type ShopifyProduct = {
   options?: { name?: string }[];
 };
 
+/**
+ * How many bytes one product costs, measured rather than guessed.
+ *
+ * Select Saunas' real catalogue is 737 products in 6,333 kB: 8.6 kB each, and
+ * almost all of that is `body_html`, a merchant's marketing page stored as
+ * markup. 12 kB gives the worst store measured half again in headroom, and it
+ * is the number every bound below is derived from, so raising one raises all
+ * of them for one stated reason.
+ */
+export const BYTES_PER_PRODUCT = 12_000;
+
 /** Bounds. A storefront catalogue is thousands of variants, not millions. */
-export const SHOPIFY_LIMITS = { bytes: 40_000_000, products: 5_000, variants: 25_000 } as const;
+export const SHOPIFY_LIMITS = {
+  products: 5_000,
+  variants: 25_000,
+  /** 5,000 products at 12 kB each. Not a round number chosen to look safe. */
+  bytes: 5_000 * BYTES_PER_PRODUCT,
+} as const;
+
+/**
+ * The largest snapshot that may arrive through the browser, which is a
+ * different question from how large a snapshot may be.
+ *
+ * A file picked in the tool travels as a string inside a JSON command, and the
+ * server holds the chunks, the joined body, the parsed text and the built table
+ * at once. A catalogue that big does not need to make that trip: `npm run
+ * fetch:shopify` has already written it to `intake/shopify/`, atomically, and
+ * the tool reads it from there by naming the source rather than a path.
+ *
+ * A thousand products at the measured rate. Every real partner catalogue today
+ * fits with room to spare: the largest is 737 products and 6,333 kB.
+ */
+export const SNAPSHOT_UPLOAD_LIMIT = 1_000 * BYTES_PER_PRODUCT;
 
 const text = (v: unknown): string => (v === undefined || v === null ? "" : String(v));
 
@@ -249,7 +280,10 @@ export function tableFromSnapshot(snapshot: ShopifySnapshot): SourceTable {
 export const shopifyAdapter: SourceAdapter = {
   format: "json",
   label: "Shopify catalogue snapshot",
-  note: "A snapshot of a store's own /products.json, one row per variant. Fetched by `npm run fetch:shopify`, which is run by a person and writes the snapshot this reads. Nothing in the tool makes a request.",
+  note: `A snapshot of a store's own /products.json, one row per variant, up to ${SHOPIFY_LIMITS.products} products and ${SHOPIFY_LIMITS.variants} variants. Fetched by \`npm run fetch:shopify\`, which is run by a person and writes the snapshot this reads. Nothing in the tool makes a request.`,
+  maxUploadBytes: SNAPSHOT_UPLOAD_LIMIT,
+  overLimitAdvice:
+    "A snapshot that size is already on this machine: `npm run fetch:shopify` wrote it to intake/shopify/. Choose \"read the snapshot on disk\" beside the source instead of sending the same bytes back through the browser. That route reads the file the fetch command wrote, by naming the partner rather than a path.",
   read(input, byteLength) {
     const snapshot = readSnapshot(input, byteLength);
     if (!snapshot.ok) return { ok: false, reason: snapshot.reason };

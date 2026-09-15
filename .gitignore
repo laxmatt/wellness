@@ -57,3 +57,6 @@ next-env.d.ts
 # last import wrote. Local working data, and the uploads are large.
 /ingestion/
 /ingestion-e2e/
+# The snapshot the walkthrough generates, so it is never mistaken for a real
+# partner's catalogue.
+/ingestion-e2e-snapshots/
