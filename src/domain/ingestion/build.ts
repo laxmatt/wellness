@@ -139,6 +139,16 @@ const idFrom = (prefix: string, groupKey: string): string | undefined => {
   return tail ? `${prefix}-${tail}` : undefined;
 };
 
+/** Stable, short distinction for two merchant paths whose first 60 slug characters coincide. */
+const collisionSuffix = (text: string): string => {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0).toString(36).padStart(7, "0").slice(-7);
+};
+
 const money = (minor: number): string => `$${(minor / 100).toLocaleString("en-US")}`;
 
 export function buildCandidates(
@@ -171,8 +181,15 @@ export function buildCandidates(
 
   const defs = new Map(category.attributeDefinitions.map((d) => [d.key, d]));
   const candidates: Candidate[] = [];
+  const baseIds = new Map<string, number>();
+  for (const groupKey of groups.keys()) {
+    const base = idFrom(source.idPrefix, groupKey);
+    if (base) baseIds.set(base, (baseIds.get(base) ?? 0) + 1);
+  }
   for (const [groupKey, bucket] of groups) {
-    candidates.push(readGroup(groupKey, bucket, profile, source, defs));
+    const base = idFrom(source.idPrefix, groupKey);
+    const id = base && (baseIds.get(base) ?? 0) > 1 ? `${base.slice(0, -8)}-${collisionSuffix(groupKey)}` : base;
+    candidates.push(readGroup(groupKey, bucket, profile, source, defs, id));
   }
   candidates.sort((a, b) => a.id.localeCompare(b.id));
   return { candidates, excluded, ungrouped, familyProblems: applyFamilies(candidates, profile) };
@@ -219,6 +236,7 @@ function readGroup(
   profile: MappingProfile,
   source: PartnerSource,
   defs: Map<string, AttributeDefinition>,
+  resolvedId?: string,
 ): Candidate {
   const failures: string[] = [];
   const valueErrors: ValueError[] = [];
@@ -228,7 +246,7 @@ function readGroup(
   const meta: Record<string, FieldMeta> = {};
   const extractions: Extraction[] = [];
 
-  const id = idFrom(source.idPrefix, groupKey) ?? `${source.idPrefix}-unnamed`;
+  const id = resolvedId ?? idFrom(source.idPrefix, groupKey) ?? `${source.idPrefix}-unnamed`;
   if (!idFrom(source.idPrefix, groupKey)) {
     failures.push(`"${groupKey}" carries no letters or digits, so no record id can be derived from it.`);
   }
