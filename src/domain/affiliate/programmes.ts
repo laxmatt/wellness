@@ -244,20 +244,22 @@ export const PROGRAMMES: PartnerProgramme[] = [
     merchantName: "SAUNABOX",
     network: "direct",
     dashboard: "active",
+    programRef: "80182564",
+    referralLink: "https://www.saunabox.com/MATT41058",
     trackingCode: "MATT41058",
     commissionPercent: 5,
     productLinks: {
       kind: "none",
-      why: "The approval gave a tracking code and no link builder. How the code attaches to a product address is unknown.",
+      why: "Social Snowball issued one storefront referral URL and no verified product-level transformation. Offers use the exact issued storefront URL.",
     },
     inventory: {
-      kind: "none",
-      why: "The approval carried no inventory feed and no export. Nothing has been found to fetch.",
+      kind: "shopify_json",
+      url: "https://www.saunabox.com/products.json",
     },
     compliance: [],
     verifiedOn: "2026-09-15",
     notes:
-      "Approved directly at 5% with tracking code MATT41058. The approval mail also carried a link to finish setting up the account; that link is a single-use key to this account and is deliberately not recorded here or anywhere in this repository.",
+      "Social Snowball partnership 80182564: 5% customer discount and 5% commission. The dashboard has no feed/export or product-link builder; inventory comes from SAUNABOX's official public Shopify storefront. The prior single-use setup link remains deliberately unrecorded.",
   },
   {
     partnerId: "lifepro",

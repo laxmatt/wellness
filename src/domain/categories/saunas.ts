@@ -36,6 +36,7 @@ export const saunas = CategoryDefinition.parse({
       enumOptions: [
         { value: "far_infrared", label: "Far infrared" },
         { value: "traditional", label: "Traditional (heated air)" },
+        { value: "steam", label: "Steam" },
       ],
       group: "Basics",
       compareOrder: 10,
@@ -64,6 +65,7 @@ export const saunas = CategoryDefinition.parse({
         { value: "pod", label: "Pod" },
         { value: "box", label: "Box" },
         { value: "mobile", label: "Mobile (towable)" },
+        { value: "tent", label: "Portable tent" },
       ],
       group: "Basics",
       compareOrder: 15,
@@ -185,7 +187,7 @@ export const saunas = CategoryDefinition.parse({
   ],
   facets: [],
   matcherVocabulary: {
-    sauna_type: { far_infrared: ["infrared", "far infrared", "ir"], traditional: ["traditional", "finnish", "steam", "rocks"] },
+    sauna_type: { far_infrared: ["infrared", "far infrared", "ir"], traditional: ["traditional", "finnish", "rocks"], steam: ["steam"] },
     connection: { plug_in: ["plug in", "plugs in", "standard outlet", "no electrician"], hardwired: ["hardwired", "hard wired", "dedicated circuit"] },
   },
   aliases: ["sauna", "saunas", "home sauna", "infrared sauna", "sweat room"],

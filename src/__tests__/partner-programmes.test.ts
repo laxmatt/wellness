@@ -87,12 +87,13 @@ describe("what each programme issued", () => {
     expect(p.inventory.kind).toBe("none");
   });
 
-  it("records SAUNABOX's rate and code and nothing about its setup link", () => {
+  it("records SAUNABOX's verified referral and public Shopify inventory source without its setup link", () => {
     const p = programmeFor("saunabox")!;
     expect(p.commissionPercent).toBe(5);
     expect(p.trackingCode).toBe("MATT41058");
-    expect(p.referralLink).toBeUndefined();
-    expect(p.inventory.kind).toBe("none");
+    expect(p.programRef).toBe("80182564");
+    expect(p.referralLink).toBe("https://www.saunabox.com/MATT41058");
+    expect(p.inventory).toEqual({ kind: "shopify_json", url: "https://www.saunabox.com/products.json" });
     // The approval mail's complete-signup link is a single-use key to the
     // account. Its absence is the assertion.
     expect(JSON.stringify(p)).not.toMatch(/https:\/\/[^"]*sign[_-]?up|complete[_-]?signup|activate/i);
@@ -162,7 +163,7 @@ describe("a link to one product", () => {
   it("refuses a partner with nothing to link through, naming what is missing", () => {
     const saunabox = productLink(programmeFor("saunabox"), "https://saunabox.com/products/x");
     expect(saunabox.ok).toBe(false);
-    if (!saunabox.ok) expect(saunabox.reason).toContain("tracking code and no link builder");
+    if (!saunabox.ok) expect(saunabox.reason).toContain("no verified product-level transformation");
     expect(productLink(undefined, "https://topture.com/products/x").ok).toBe(false);
   });
 
