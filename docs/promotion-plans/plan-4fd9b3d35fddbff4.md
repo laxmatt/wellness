@@ -1,0 +1,295 @@
+# Promotion plan plan-4fd9b3d35fddbff4
+
+**Nothing has been promoted or published.** This is a record of a decision. No file in `catalog/` was written when this was signed, and there is no command in this tool that carries it out.
+
+- Signed by Matt (site owner), relayed through Codex on 2026-09-14
+- Source: Sweat Kingdom (Awin advertiser 125462, feed F3219) (sweat-kingdom-awin), mapping profile v1
+- File: awin-125462-f3219-2026-09-13.csv (sha256 9db0be0014d64048…)
+- Last successful refresh: 2026-09-14
+- Workspace: 17 source records, 15 comparison families
+- Selected: 15 families, 17 records
+- Catalogue afterwards, if this were ever carried out: 39 products, 17 comparable models in this category
+
+## Published despite
+
+These were unresolved when this plan was signed. They were accepted, not settled, and nothing here is evidence that they were resolved.
+
+- **image_rights** on sweat-kingdom-regen-the-sweat-cabin-4-person, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-regen-the-sweat-cabin-4-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-regen-the-sweat-pod-2-4-person, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-regen-the-sweat-pod-2-4-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-sk-210, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-sk-210: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-sk-310, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-sk-310: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-sk-mobile, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-sk-mobile: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-ascent, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-ascent: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-deluxe-sweat-cabin, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-deluxe-sweat-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-large-barrel-sauna-6-person, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-large-barrel-sauna-6-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-ridge, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-ridge: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sk-110, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sk-110: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-summit, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-summit: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-box-1-person, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-box-1-person: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-cabin, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-cabin: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-cabin-blackout-edition, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-cabin-blackout-edition: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-pod, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-pod: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+- **image_rights** on sweat-kingdom-the-sweat-pod-blackout-edition, accepted by Matt (site owner), relayed through Codex: The owner has confirmed the launch in the knowledge that the feed images carry no recorded permission, that no sauna comparison specification is stated anywhere in this feed, and that five records already in the catalogue are being merged. The images stay marked unverified on every record.
+  - What was unresolved: sweat-kingdom-the-sweat-pod-blackout-edition: This picture came from the partner's feed. A feed carrying an image is not permission to publish it: nothing in the file says who owns the photograph or what an affiliate may do with it. Record what the partner's terms actually say, or replace the picture.
+
+## Records the catalogue already holds
+
+### sweat-kingdom-regen-the-sweat-cabin-4-person
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-regen-the-sweat-pod-2-4-person
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-sk-210
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-sk-310
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-sk-mobile
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-ascent
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-deluxe-sweat-cabin
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-large-barrel-sauna-6-person
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-ridge
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sk-110
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-summit
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-box-1-person
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-cabin
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-cabin-blackout-edition
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-pod
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+### sweat-kingdom-the-sweat-pod-blackout-edition
+- Decision: merge_fields (merged)
+- Note: Every mapped field agrees to the byte; the merge preserves the catalogue record and refreshes the feed-owned fields to the same values.
+
+## Records
+
+### Family: sweat-kingdom-regen-the-sweat-cabin-4-person
+
+**REGEN The Sweat Cabin (4 Person) - Included / HUUM 9kw Drop Heater With WiFi Control / 6 Feet - For Shorter Spaces** `sweat-kingdom-regen-the-sweat-cabin-4-person` — representative
+- Price $9,995, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-cabin-4-person%3Fvariant%3D51322433536164 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/2_8abb4fb4-ad8d-436b-8e0c-e09cef103f9a.png?v=1775057994 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-regen-the-sweat-pod-2-4-person
+
+**REGEN The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / HUUM Drop Heater With WiFi Controls (2 person 6kw - 4 person - 9kw)** `sweat-kingdom-regen-the-sweat-pod-2-4-person` — representative
+- Price $8,695, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/111.png?v=1775058014 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-sk-210
+
+**SK 210 - 6X8 Footprint - 4 Person / Board & Batten LP Smartsiding / Tight Knot Western Red Cedar** `sweat-kingdom-sk-210` — representative
+- Price $20,500, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-210%3Fvariant%3D51161336348836 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/060E57A3-BA91-4A7B-A2F5-5FD32BDC2EE2.png?v=1761255545 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-sk-310
+
+**SK 310 - 7X10 Footprint - 4-5 Person / Board & Batten LP Smartsiding / Tight Knot Western Red Cedar** `sweat-kingdom-sk-310` — representative
+- Price $25,500, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-310%3Fvariant%3D51161387860132 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/11_bda157f6-abc2-4efe-9938-5150a7082e5a.png?v=1760979772 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-sk-mobile
+
+**SK Mobile - 6.5’ X 8’ (4-5 Person) / HUUM Drop 9** `sweat-kingdom-sk-mobile` — representative
+- Price $28,500, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/8_0fdb4d3c-07a1-47e6-a490-371148b31892.png?v=1765330635 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-ascent
+
+**The Ascent (6 Person) - Homecraft Revive 9kw (WiFi Controlled)** `sweat-kingdom-the-ascent` — representative
+- Price $11,745, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ascent%3Fvariant%3D51425696940196 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPTImageAug28_2026at10_33_34AM.png?v=1787934893 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-deluxe-sweat-cabin
+
+**The Sweat Cabin Deluxe (6 Person) - Included / Homecraft Revive 9kw With WiFi Controls** `sweat-kingdom-the-deluxe-sweat-cabin` — representative
+- Price $11,245, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_07_48_PM.png?v=1785265726 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-large-barrel-sauna-6-person
+
+**The Sweat Barrel (2-6 Person) - Regular (2 Person) / Harvia 6kw KIP Built In Controls / No Roof Kit** `sweat-kingdom-the-large-barrel-sauna-6-person` — representative
+- Price $5,145, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-large-barrel-sauna-6-person%3Fvariant%3D44990877958308 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_41_21_PM.png?v=1785267774 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-ridge
+
+**The Ridge (2 Person) - Harvia KIP 6kw With Built In Controls** `sweat-kingdom-the-ridge` — representative
+- Price $7,145, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ridge%3Fvariant%3D51420815687844 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_12_57_41_PM.png?v=1785265091 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-sk-110
+
+**SK 110 - 5X6 Footprint - 2-3 Person / Board & Batten LP Smartsiding / Tight Knot Western Red Cedar** `sweat-kingdom-the-sk-110` — representative
+- Price $17,995, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sk-110%3Fvariant%3D51161320947876 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/2_b5f3d347-19b6-40be-b14d-0dbc9f13450b.png?v=1769541170 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-summit
+
+**The Summit (2-6 Person) - Small (2 Person) / Harvia KIP 8kw With Built In Controls / Default (Door on Left Window on Left)** `sweat-kingdom-the-summit` — representative
+- Price $6,945, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/Regular_Summit_2_person_03a2f42d-19ec-4e9d-bba5-b816a27e14a8.png?v=1781124479 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-sweat-box-1-person
+
+**The Sweat Box (1 Person) - Homecraft Revive Slim 4kw WiFi Controlled Sauna Heater** `sweat-kingdom-the-sweat-box-1-person` — representative
+- Price $5,545, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-box-1-person%3Fvariant%3D51172149821604 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_41_14_PM.png?v=1785267730 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-sweat-cabin
+
+**The Sweat Cabin (4 Person) - Included / Harvia 8kw KIP With Built In Controls / 6 Feet - For Shorter Spaces** `sweat-kingdom-the-sweat-cabin` — representative
+- Price $7,445, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin%3Fvariant%3D50503445905572 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/2_8abb4fb4-ad8d-436b-8e0c-e09cef103f9a.png?v=1775057994 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+**The Sweat Cabin (4 Person) - Blackout Edition - Harvia 8kw KIP With Built In Controls / 6 Feet - For Shorter Spaces** `sweat-kingdom-the-sweat-cabin-blackout-edition` — configuration
+- Price $9,245, checked 2026-09-14; availability in_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_19_12_PM.png?v=1785266408 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy
+
+**REGEN The Sweat Cabin Deluxe (6 Person) - HUUM 9kw Drop Heater With WiFi Controls / Included** `sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy` — representative
+- Price $11,995, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/42.png?v=1775057952 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+### Family: sweat-kingdom-the-sweat-pod
+
+**The Sweat Pod (2-4 Person) - Regular (2 Person) / Included / Harvia KIP With Built In Controls (Regular 6kw - Large 8kw)** `sweat-kingdom-the-sweat-pod` — representative
+- Price $6,045, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod%3Fvariant%3D46129391501476 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_32_59_PM.png?v=1785267227 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+**The Sweat Pod (2-4 Person) - Blackout Edition - Regular (2 Person) / Harvia KIP With Built In Controls (Regular 6kw - Large 8kw)** `sweat-kingdom-the-sweat-pod-blackout-edition` — configuration
+- Price $7,545, checked 2026-09-14; availability out_of_stock
+- Link https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052 (affiliate)
+- Image https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_25_56_PM.png?v=1785266795 — rights unresolved
+- Provenance merchant_feed · direct · Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.
+- Comparison fields present: Price
+- Comparison fields missing: Heating, Connection, Placement, Seats up to, Capacity
+
+## Not done
+
+- No product was promoted into `catalog/`.
+- No product or category was published.
+- Sauna families are not wired into shopper-facing queries or pages.
+- Nothing was deployed.

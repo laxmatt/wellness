@@ -44,14 +44,16 @@ export type SubjectScope =
  * Hand-written, and deliberately tiny. Each entry exists so the assistant can
  * say "this site has no X catalogue" instead of a generic non-answer. Adding an
  * entry is a claim about the catalogue, so only add one for something the site
- * genuinely does not carry.
+ * genuinely does not carry, and remove one the day it starts carrying it.
+ * Saunas were here until 2026-09-14 and left this list when the category
+ * launched: a stale entry is the site telling a shopper it has nothing while
+ * the thing they asked for is on the menu.
  *
  * `label` is the noun the reply uses. It is rendered by the site, never echoed
  * from what the shopper typed.
  */
 export const ABSENT_SUBJECTS: { label: string; terms: string[] }[] = [
   { label: "vitamins", terms: ["vitamin", "vitamins", "multivitamin", "multivitamins"] },
-  { label: "saunas", terms: ["sauna", "saunas", "steam room", "steam rooms"] },
   { label: "massage guns", terms: ["massage gun", "massage guns", "percussion massager", "theragun"] },
   { label: "fitness trackers", terms: ["fitness tracker", "fitness trackers", "smartwatch", "smartwatches", "whoop", "oura ring"] },
 ];

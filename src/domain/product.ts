@@ -12,9 +12,27 @@ export type ProductStatus = z.infer<typeof ProductStatus>;
 export const Availability = z.enum(["in_stock", "backorder", "preorder", "out_of_stock", "unknown", "discontinued"]);
 export type Availability = z.infer<typeof Availability>;
 
+/**
+ * What an outbound link to a merchant is.
+ *
+ * `affiliate_link_unresolved` is the newest and the most specific: a programme
+ * this site has joined, a store whose catalogue it reads, and no demonstrated
+ * way to link to an individual product so that the programme credits it. Three
+ * partners are in exactly that position. It is not `affiliate`, because nothing
+ * shows the link pays; it is not `non_affiliate`, because that is a denial; and
+ * it is not `unknown`, because plenty is known. Saying so is the difference
+ * between an honest gap and an invented tracking parameter.
+ */
 export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "affiliate_link_unresolved", "unknown"]);
 export type AffiliateStatus = z.infer<typeof AffiliateStatus>;
 
+/**
+ * The networks a merchant's programme actually runs on.
+ *
+ * Three Shopify-side programmes joined the list when three retailers approved
+ * on them. `other` is still here for a network nobody has named, and `direct`
+ * for an arrangement with no network in the middle at all.
+ */
 export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "goaffpro", "uppromote", "refersion", "direct", "other"]);
 export type AffiliateNetwork = z.infer<typeof AffiliateNetwork>;
 
@@ -71,7 +89,13 @@ export const MerchantOffer = z.object({
   merchantId: Id,
   market: Market,
   currency: Currency,
+  // Absent when the merchant quotes no amount. A quote-only listing is a real
+  // way to buy a real product, and the commonest thing sold that way is a
+  // made-to-order cabinet: refusing to list one, or writing a zero so the
+  // record parses, are both worse than saying what the page says. Exactly one
+  // of `priceMinor` and `quoteOnly` is set, and the refine below enforces it.
   priceMinor: z.number().int().nonnegative().optional(),
+  /** The merchant asks for a quote instead of listing a price. */
   quoteOnly: z.boolean().optional(),
   listPriceMinor: z.number().int().nonnegative().optional(),
   url: z.url(),
@@ -98,8 +122,6 @@ export const MerchantOffer = z.object({
 });
 export type MerchantOffer = z.infer<typeof MerchantOffer>;
 
-// Supplier rows retained beneath a reviewed family. These are inventory
-// evidence, not additional storefront products and not a replacement checkout.
 export const ProductVariant = z.object({
   id: Id,
   supplierVariantId: z.string().min(1),
@@ -139,8 +161,28 @@ export const EditorialNote = z.object({
 });
 export type EditorialNote = z.infer<typeof EditorialNote>;
 
+/**
+ * A record that is a configuration of another record, not a model of its own.
+ *
+ * A merchant sometimes sells one product on two pages: the cabin, and the same
+ * cabin in a blackout finish. Both pages are real, both carry their own price,
+ * stock, pictures and link, and both have to be kept. Neither is a second thing
+ * to compare against the first, and putting both in a comparison table asks a
+ * shopper to choose between a product and its own paint.
+ *
+ * So the second record says which record it is a configuration of, and a
+ * comparison groups on that. The membership is editorial: it is a person's
+ * judgement about what a shopper is choosing between, it is written down with
+ * the reason, and nothing infers it from a title. See `src/domain/family.ts`.
+ *
+ * One level only. The record named by `of` may not itself carry a `family`,
+ * which is what makes a chain, and therefore a cycle, impossible rather than
+ * merely unlikely. `validateCatalog` refuses both.
+ */
 export const FamilyMembership = z.object({
+  /** The record this one is a configuration of. Never a group key invented for the purpose. */
   of: Id,
+  /** Why, in a person's words. It is the whole of the evidence for this grouping. */
   because: z.string().min(1),
 });
 export type FamilyMembership = z.infer<typeof FamilyMembership>;
@@ -167,7 +209,18 @@ export const Product = z.object({
   dimensions: sourced(Dimensions).optional(),
   weight: sourced(z.number().positive()).optional(),
   attributes: AttributeMap.default({}),
+  /**
+   * The partner's own title for the configuration this record was built from.
+   *
+   * Set when `name` is a shortened form of it. A retailer's title carries the
+   * model and the configuration in one string, and a card showing the whole
+   * thing reads as a warehouse label; a record that throws the rest away
+   * cannot say which configuration it priced. So the short form is the name
+   * and the whole of it is kept here, shown on the product page and quoted in
+   * provenance.
+   */
   sourceTitle: z.string().min(1).optional(),
+  /** Set when this record is a configuration of another and is compared as part of it. */
   family: FamilyMembership.optional(),
   editorial: z.object({
     strengths: z.array(EditorialNote).default([]),
@@ -179,8 +232,8 @@ export const Product = z.object({
     demo: z.boolean().default(false),
     newArrival: z.boolean().default(false),
   }).default({ demo: false, newArrival: false }),
-}).refine((p) => p.status === "draft" || p.offers.length > 0 || p.referencePrice !== undefined, {
-  message: "Published products need at least one offer or a referencePrice",
+}).refine((p) => p.offers.length > 0 || p.referencePrice !== undefined, {
+  message: "Product needs at least one offer or a referencePrice",
 });
 export type Product = z.infer<typeof Product>;
 

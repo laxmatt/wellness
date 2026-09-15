@@ -4,8 +4,9 @@ import { CategoryDefinition } from "@/domain/category";
 import { miniCategory } from "./fixtures";
 
 describe("category definitions", () => {
-  it("all four launch categories parse", () => {
-    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "saunas", "wellness-drinks"]);
+  it("every published category parses", () => {
+    // Saunas joined on 2026-09-14. The order is the order they are offered in.
+    expect(categories.map((c) => c.id)).toEqual(["red-light", "cold-plunge", "wellness-drinks", "saunas"]);
   });
 
   it("rejects references to unknown attribute keys", () => {

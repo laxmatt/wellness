@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { CompareToggle } from "@/components/compare/CompareToggle";
 import { InsightsPanel, OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
@@ -15,7 +15,7 @@ import { primaryStrength } from "@/domain/recommend";
 import { outboundLinkProps } from "@/domain/outbound";
 import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
-import { getProductPage } from "@/lib/queries";
+import { getProductPage, getProductRedirect } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
 import { social } from "@/lib/metadata";
 import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
@@ -51,9 +51,14 @@ const schemaAvailability: Record<string, string> = {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
+  // A configuration is not a second product. Its record stays published,
+  // priced and linked, and its address leads to the model it belongs to, where
+  // its own price and its own link are listed.
+  const to = await getProductRedirect(slug);
+  if (to) redirect(to);
   const data = await getProductPage(slug);
   if (!data) notFound();
-  const { item, page, similar } = data;
+  const { item, page, similar, configurations } = data;
   const { view } = item;
   const cat = page.cat;
   const primaryBadge = item.badges[0];
@@ -71,7 +76,10 @@ export default async function ProductPage({ params }: Props) {
   // nothing disputed, and nothing whose amount is prototype data. The page
   // itself has said "Check current price" for a placeholder since 2026-09-09;
   // this markup was still publishing the invented number underneath it.
-  const publishedOffers = buyable.filter((o) => !o.priceIsDemo);
+  // An Offer in structured data carries a price. A merchant that quotes on
+  // request has not given one, so the listing appears on the page and not in
+  // the markup a search engine would quote back.
+  const publishedOffers = buyable.filter((o) => o.price !== undefined && !o.priceIsDemo);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -188,6 +196,49 @@ export default async function ProductPage({ params }: Props) {
               <OfferList view={view} />
             </div>
           </section>
+
+          {view.sourceTitle && view.sourceTitle !== view.name ? (
+            <p className="text-sm text-fg-muted">
+              <span className="font-semibold">Listed by {lowest?.merchant.name.replace(/\s*\(direct\)$/, "") ?? "the retailer"} as:</span> {view.sourceTitle}
+            </p>
+          ) : null}
+
+          {configurations.length > 0 ? (
+            <section id="configurations">
+              <h2 className="font-display text-3xl">Configurations</h2>
+              <p className="mt-1 text-sm text-fg-muted">
+                The retailer sells this on more than one page: a finish, or a size. They are the same model, so they are here rather than as separate listings to choose between. Each
+                carries its own price and its own link.
+              </p>
+              <ul className="mt-5 divide-y divide-edge border-y border-edge">
+                {configurations.map((c) => {
+                  const offers = buyableOffers(c.view);
+                  return (
+                    <li key={c.view.id} className="flex flex-wrap items-baseline justify-between gap-3 py-3">
+                      <div className="min-w-0">
+                        <p className="font-semibold">{c.view.name}</p>
+                        {/* The retailer's own title, whole. The name above is
+                            the short form of it, and a shopper clicking Shop
+                            arrives at exactly this configuration. */}
+                        {c.view.sourceTitle ? <p className="break-words text-sm text-fg-soft">{c.view.sourceTitle}</p> : null}
+                        <p className="text-sm text-fg-muted">
+                          {c.view.availability === "unknown" ? "Availability not stated" : c.view.availability.replace(/_/g, " ")}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <PriceDisplay price={c.view.price} compact />
+                        {offers[0] ? (
+                          <a href={offers[0].url} {...outboundLinkProps(offers[0].affiliateStatus)} className="tap text-sm font-semibold text-accent-strong hover:underline">
+                            Shop
+                          </a>
+                        ) : null}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : null}
 
           {similar.length > 0 ? (
             <section>

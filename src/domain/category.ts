@@ -23,6 +23,11 @@ export const FilterSpec = z.object({
   label: z.string(),
   kind: z.enum(["range", "enum", "boolean", "list"]),
   // Range presets shown as chips, in minor units for price.
+  //
+  // `condition` is the common case, one bound. `and` carries the second one, so
+  // a band can be stated as the band it is rather than as another "Under". Two
+  // overlapping "Under" chips in one group are ORed, which makes the narrower
+  // of them do nothing.
   presets: z.array(z.object({ label: z.string(), condition: Condition, and: Condition.optional() })).optional(),
 });
 export type FilterSpec = z.infer<typeof FilterSpec>;
@@ -33,6 +38,12 @@ export const ScoringCriterion = z.object({
 });
 
 export const ScoringConfig = z.object({
+  // May be empty. A category with no criteria is one nobody has established a
+  // ranking for, and the honest way to say so is to write none rather than to
+  // pick an attribute and call it quality. Every product then scores 0, no
+  // badge is assigned, and `scoreProducts` divides by nothing because it maps
+  // over an empty list. Saunas are the live case: type, footprint, power and
+  // price separate them, and not one of those says a sauna is better.
   criteria: z.array(ScoringCriterion),
   // What the number measures, in the UI's words. Never "quality" unless the
   // criteria genuinely measure build quality: a weighted sum over capability

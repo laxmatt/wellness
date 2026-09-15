@@ -14,7 +14,7 @@
       "handle": "dundalk-luna-4-person",
       "title": "Dundalk Luna (4 Person) - Outdoor Sauna",
       "vendor": "Dundalk LeisureCraft",
-      "product_type": "Outdoor Traditional Sauna Kits",
+      "product_type": "Outdoor Sauna",
       "tags": [
         "sauna"
       ],
@@ -164,7 +164,7 @@
       "handle": "select-cabin-nohandle",
       "title": "Select Cabin (6 Person)",
       "vendor": "Select Saunas",
-      "product_type": "Outdoor Traditional Sauna Kits",
+      "product_type": "Outdoor Sauna",
       "tags": [
         "sauna"
       ],
@@ -491,7 +491,7 @@
       "handle": "dundalk-savannah-barrel-sauna",
       "title": "Dundalk Savannah Barrel Sauna with Glass Door (6 Person)",
       "vendor": "Dundalk LeisureCraft",
-      "product_type": "Outdoor Traditional Sauna Kits",
+      "product_type": "Outdoor Sauna",
       "tags": [
         "sauna",
         "barrel"

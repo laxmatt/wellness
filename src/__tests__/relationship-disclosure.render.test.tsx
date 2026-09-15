@@ -22,7 +22,7 @@ import { OfferList } from "@/components/product/detail";
 import { WinnersRow } from "@/components/category/WinnersRow";
 import { categoryById } from "@/domain/categories";
 import type { AffiliateStatus } from "@/domain/product";
-import { relationshipNote, RELATIONSHIP_COPY } from "@/domain/outbound";
+import { outboundRel, relationshipNote, RELATIONSHIP_COPY } from "@/domain/outbound";
 import { BADGES, recommendCategory } from "@/domain/recommend";
 import { buyableOffers, type ProductView } from "@/domain/view";
 import { viewsFor } from "./fixtures";
@@ -170,8 +170,22 @@ describe("one line for a set of links", () => {
 
   it("does not turn an unrecorded link into a denial", () => {
     const mixed = relationshipNote(["non_affiliate", "unknown"])!;
-    expect(mixed).toBe("Some of these have no affiliate status recorded.");
+    expect(mixed).toBe("None of these is a tracked affiliate link. Some have no affiliate status recorded at all.");
     expect(mixed).not.toMatch(/no commission/i);
+  });
+
+  it("says a joined programme with no tracked link earns nothing, and does not call it unknown", () => {
+    // Three partners are in this position: the programme is approved, the store
+    // publishes its catalogue, and nobody has shown that a link to one of its
+    // products is credited. That is not "unknown" and it is certainly not
+    // "affiliate".
+    const one = relationshipNote(["affiliate_link_unresolved"])!;
+    expect(one).toContain("affiliate arrangement");
+    expect(one).toContain("earns nothing");
+    expect(one).not.toMatch(/may earn a commission/i);
+    expect(outboundRel("affiliate_link_unresolved")).toBe("nofollow noopener");
+    // Mixed with a real affiliate link, the paid part is what a shopper is told.
+    expect(relationshipNote(["affiliate", "affiliate_link_unresolved"])).toContain("Some of these are affiliate links");
   });
 });
 

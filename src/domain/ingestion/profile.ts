@@ -215,7 +215,6 @@ export const ExclusionRule = z.object({
     "not_contains",
     "contains_word",
     "not_contains_word",
-    "not_one_of",
   ]),
   value: z.string().optional(),
   /** Why, in a person's words. It appears beside every row this drops. */

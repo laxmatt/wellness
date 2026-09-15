@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { NAV, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
+import { NAV } from "@/lib/nav";
 
 // Compact phone header: logo, Compare, menu button. The panel is portaled to
 // document.body because the header's backdrop-blur creates a containing block

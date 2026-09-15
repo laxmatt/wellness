@@ -327,31 +327,6 @@ const NOT_SAUNAS: NotASauna[] = [
 ];
 
 export function saunaExclusions(store: string) {
-  const completeProductTypes: Record<string, string[]> = {
-    "Select Saunas": [
-      "Indoor Infrared Sauna Kits",
-      "Barrel Sauna Kits",
-      "Indoor Traditional Sauna Kits",
-      "Outdoor Cabin Sauna Kits",
-      "Outdoor Traditional Sauna Kits",
-      "Outdoor Pre-Assembled Cabin Saunas",
-      "Indoor Sauna",
-      "Outdoor Sauna",
-    ],
-    Topture: ["Indoor Saunas", "Outdoor Saunas", "Saunas", "Barrel Saunas"],
-  };
-  const allowlist = completeProductTypes[store];
-  if (allowlist) {
-    return [
-      {
-        column: "product_type",
-        op: "not_one_of" as const,
-        value: allowlist.join("||"),
-        reason: `${store} does not file this product under one of its complete-sauna product types.`,
-      },
-      { column: "available", op: "empty" as const, reason: "The store states nothing about whether this variant can be bought." },
-    ];
-  }
   // Most specific first. Exclusions stop at the first rule that matches, so the
   // order decides which reason a reviewer reads: a cold plunge caught by "this
   // store does not classify it as a sauna" is excluded correctly and explained
@@ -453,7 +428,7 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         from: "extract",
         key: "capacity_label",
         column: "product_title",
-        pattern: "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        pattern: "(\\d+\\s*[-–]\\s*\\d+\\s*(?:person|people)|\\d+\\s*(?:person|people))",
         flags: "i",
         ownership: "review_on_change",
         approved: false,
@@ -463,7 +438,7 @@ export function shopifyProfile(source: PartnerSource, on: string, store: string)
         from: "extract",
         key: "capacity_max_people",
         column: "product_title",
-        pattern: "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        pattern: "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*(?:Person|person|People|people)",
         flags: "",
         ownership: "review_on_change",
         approved: false,

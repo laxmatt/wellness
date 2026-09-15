@@ -12,7 +12,7 @@ record says a page was read, somebody else read it and supplied the reading:
 the page said. Everything else is what the repository was told earlier,
 mostly relayed from search summaries.
 
-Records whose source was read: **172 of 276**, across 13 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-11.
+Records whose source was read: **202 of 347**, across 31 products whose price was read from the merchant rather than relayed. Most recent reading: 2026-09-14.
 
 A recorded URL is a claim about where a figure came from. It is not
 verification that the figure is right or current, and a search summary is
@@ -617,7 +617,628 @@ Specifications that are missing, unsupported or relayed:
 - `magnesium_mg`: **absent from the record**
 - `dietary`: relayed, maker's page not fetched
 
+## Saunas
+
+### Dynamic Saunas Barcelona DYN-6106-01
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | yes | 7 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $1,999 on record from Select Saunas, relayed from a search summary rather than read from the merchant on 2026-09-13, not re-checked since |
+| Image readiness | no | 0 procedural placeholders, no rights evidence |
+
+| | |
+| --- | --- |
+| Record | `dynamic-barcelona-dyn-6106-01`, `/products/dynamic-barcelona-dyn-6106-01` |
+| Offers | Select Saunas ($1,999, unknown, non_affiliate) |
+| Links | https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna |
+| Sources on file | https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna |
+| Retrieval | 13 of 13 recorded fields were relayed rather than read from the source |
+| Ranking | not ranked: this record is draft, and ranking reads published records only. Completeness 100%. |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): relayed, maker's page not fetched
+- `capacity_label` (required): relayed, maker's page not fetched
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): relayed, maker's page not fetched
+- `depth_in` (required): relayed, maker's page not fetched
+- `height_in` (required): relayed, maker's page not fetched
+- `placement`: no value, recorded as `not_stated`; relayed, maker's page not fetched
+- `connection` (required): relayed, maker's page not fetched
+- `voltage`: relayed, maker's page not fetched
+- `amperage_a`: relayed, maker's page not fetched
+- `heater_kw`: no value, recorded as `not_stated`; relayed, maker's page not fetched
+- `heater_model`: no value, recorded as `not_stated`; relayed, maker's page not fetched
+
+### SaunaCloud Atlas One
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | yes | 7 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | no | no listed amount; every merchant on record quotes on request. One merchant quotes on request rather than listing an amount, and the page says so and links to them. |
+| Image readiness | no | 0 procedural placeholders, no rights evidence |
+
+| | |
+| --- | --- |
+| Record | `saunacloud-atlas-one`, `/products/saunacloud-atlas-one` |
+| Offers | SaunaCloud (quoted on request, unknown, affiliate) |
+| Links | https://saunacloud.com/?ref=2be9769d46ff7c74 |
+| Sources on file | https://saunacloud.com/atlas-one-red-light-infrared-sauna/ |
+| Retrieval | 0 of 13 recorded fields were relayed rather than read from the source |
+| Ranking | not ranked: this record is draft, and ranking reads published records only. Completeness 100%. |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_style`: **absent from the record**
+- `heater_kw`: no value, recorded as `not_stated`
+- `heater_model`: no value, recorded as `not_stated`
+
+### Sweat Kingdom REGEN The Sweat Cabin (4 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $9,995 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-regen-the-sweat-cabin-4-person`, `/products/sweat-kingdom-regen-the-sweat-cabin-4-person` |
+| Offers | Sweat Kingdom ($9,995, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-cabin-4-person%3Fvariant%3D51322433536164 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-cabin-4-person%3Fvariant%3D51322433536164 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom REGEN The Sweat Pod (2-4 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $8,695 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-regen-the-sweat-pod-2-4-person`, `/products/sweat-kingdom-regen-the-sweat-pod-2-4-person` |
+| Offers | Sweat Kingdom ($8,695, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fregen-the-sweat-pod-2-4-person%3Fvariant%3D51322434781348 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom SK 210
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $20,500 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-sk-210`, `/products/sweat-kingdom-sk-210` |
+| Offers | Sweat Kingdom ($20,500, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-210%3Fvariant%3D51161336348836 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-210%3Fvariant%3D51161336348836 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom SK 310
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $25,500 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-sk-310`, `/products/sweat-kingdom-sk-310` |
+| Offers | Sweat Kingdom ($25,500, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-310%3Fvariant%3D51161387860132 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-310%3Fvariant%3D51161387860132 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom SK Mobile
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $28,500 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-sk-mobile`, `/products/sweat-kingdom-sk-mobile` |
+| Offers | Sweat Kingdom ($28,500, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fsk-mobile%3Fvariant%3D51197569532068 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Ascent (6 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $11,745 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-ascent`, `/products/sweat-kingdom-the-ascent` |
+| Offers | Sweat Kingdom ($11,745, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ascent%3Fvariant%3D51425696940196 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ascent%3Fvariant%3D51425696940196 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Cabin Deluxe (6 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $11,245 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-deluxe-sweat-cabin`, `/products/sweat-kingdom-the-deluxe-sweat-cabin` |
+| Offers | Sweat Kingdom ($11,245, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-deluxe-sweat-cabin%3Fvariant%3D51156729921700 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Barrel (2-6 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $5,145 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-large-barrel-sauna-6-person`, `/products/sweat-kingdom-the-large-barrel-sauna-6-person` |
+| Offers | Sweat Kingdom ($5,145, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-large-barrel-sauna-6-person%3Fvariant%3D44990877958308 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-large-barrel-sauna-6-person%3Fvariant%3D44990877958308 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Ridge (2 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $7,145 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-ridge`, `/products/sweat-kingdom-the-ridge` |
+| Offers | Sweat Kingdom ($7,145, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ridge%3Fvariant%3D51420815687844 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-ridge%3Fvariant%3D51420815687844 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom SK 110
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $17,995 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sk-110`, `/products/sweat-kingdom-the-sk-110` |
+| Offers | Sweat Kingdom ($17,995, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sk-110%3Fvariant%3D51161320947876 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sk-110%3Fvariant%3D51161320947876 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Summit (2-6 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $6,945 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-summit`, `/products/sweat-kingdom-the-summit` |
+| Offers | Sweat Kingdom ($6,945, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-summit%3Fvariant%3D51305356198052 |
+| Retrieval | 1 of 2 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: **absent from the record**
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Box (1 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $5,545 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-box-1-person`, `/products/sweat-kingdom-the-sweat-box-1-person` |
+| Offers | Sweat Kingdom ($5,545, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-box-1-person%3Fvariant%3D51172149821604 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-box-1-person%3Fvariant%3D51172149821604 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Cabin (4 Person) - Blackout Edition
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $9,245 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-cabin-blackout-edition`, `/products/sweat-kingdom-the-sweat-cabin-blackout-edition` |
+| Offers | Sweat Kingdom ($9,245, in_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-blackout-edition%3Fvariant%3D50678466117796 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom REGEN The Sweat Cabin Deluxe (6 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $11,995 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy`, `/products/sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy` |
+| Offers | Sweat Kingdom ($11,995, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin-deluxe-6-person-copy%3Fvariant%3D51322435567780 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Cabin (4 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $7,445 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-cabin`, `/products/sweat-kingdom-the-sweat-cabin` |
+| Offers | Sweat Kingdom ($7,445, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin%3Fvariant%3D50503445905572 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-cabin%3Fvariant%3D50503445905572 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Pod (2-4 Person) - Blackout Edition
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $7,545 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-pod-blackout-edition`, `/products/sweat-kingdom-the-sweat-pod-blackout-edition` |
+| Offers | Sweat Kingdom ($7,545, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
+### Sweat Kingdom The Sweat Pod (2-4 Person)
+
+| Evidence | | |
+| --- | --- | --- |
+| Comparison facts | partly | 1 of 7 required specifications carry a usable value; below the completeness floor, so it holds no badge |
+| Price evidence | partly | $6,045 on record from Sweat Kingdom, read from the page (Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1) on 2026-09-14, not re-checked since |
+| Image readiness | partly | 1 real image, 0 with a recorded licence |
+
+| | |
+| --- | --- |
+| Record | `sweat-kingdom-the-sweat-pod`, `/products/sweat-kingdom-the-sweat-pod` |
+| Offers | Sweat Kingdom ($6,045, out_of_stock, affiliate) |
+| Links | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod%3Fvariant%3D46129391501476 |
+| Sources on file | https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod%3Fvariant%3D46129391501476 |
+| Retrieval | 2 of 3 recorded fields were relayed rather than read from the source |
+| Ranking | score 0, completeness 14%, badges: none, **ineligible** |
+
+Specifications that are missing, unsupported or relayed:
+
+- `sauna_type` (required): **absent from the record**
+- `capacity_label` (required): **absent from the record**
+- `sauna_style`: relayed, maker's page not fetched
+- `capacity_max_people` (required): relayed, maker's page not fetched
+- `width_in` (required): **absent from the record**
+- `depth_in` (required): **absent from the record**
+- `height_in` (required): **absent from the record**
+- `placement`: **absent from the record**
+- `connection` (required): **absent from the record**
+- `voltage`: **absent from the record**
+- `amperage_a`: **absent from the record**
+- `heater_kw`: **absent from the record**
+- `heater_model`: **absent from the record**
+
 ## By category
+
+Unpublished categories are marked. Their records are drafts and no shopper can reach one.
 
 | Category | Products | Amount on record | Amount read from the merchant | Required specs all usable and sourced | Real images |
 | --- | --- | --- | --- | --- | --- |
@@ -625,16 +1246,17 @@ Specifications that are missing, unsupported or relayed:
 | Cold Plunges | 6 | 6 | 2 | 0 | 0 |
 | Saunas | 0 | 0 | 0 | 0 | 0 |
 | Wellness Drinks | 6 | 6 | 5 | 0 | 0 |
+| Saunas | 19 | 19 | 18 | 2 | 17 |
 
 ## Totals
 
-**Comparison facts.** All required specifications usable and sourced: 0. Some: 20. None: 0.
+**Comparison facts.** All required specifications usable and sourced: 2. Some: 37. None: 0.
 
-**Price evidence.** An amount on record: 16. No amount on record: 4. Amount read from the merchant rather than relayed: 13 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2). Independently measured: 0, on all 20; every figure is its maker's own.
+**Price evidence.** An amount on record: 34. No amount on record: 5. Amount read from the merchant rather than relayed: 31 (ag1-pouch-30, bon-charge-max, cure-hydration-lemonade-14, hooga-hg300, hooga-pro1500, ice-barrel-500, liquid-iv-hydration-multiplier-16, lmnt-citrus-salt-30, mito-mitomin-2, mito-mitopro-1500-plus, olipop-root-beer-12, platinumled-biomax-900, renu-cold-stoic-2, saunacloud-atlas-one, sweat-kingdom-regen-the-sweat-cabin-4-person, sweat-kingdom-regen-the-sweat-pod-2-4-person, sweat-kingdom-sk-210, sweat-kingdom-sk-310, sweat-kingdom-sk-mobile, sweat-kingdom-the-ascent, sweat-kingdom-the-deluxe-sweat-cabin, sweat-kingdom-the-large-barrel-sauna-6-person, sweat-kingdom-the-ridge, sweat-kingdom-the-sk-110, sweat-kingdom-the-summit, sweat-kingdom-the-sweat-box-1-person, sweat-kingdom-the-sweat-cabin-blackout-edition, sweat-kingdom-the-sweat-cabin-deluxe-6-person-copy, sweat-kingdom-the-sweat-cabin, sweat-kingdom-the-sweat-pod-blackout-edition, sweat-kingdom-the-sweat-pod). Independently measured: 0, on all 20; every figure is its maker's own.
 
 Shown prices that are prototype data: 2, every one of them a product with no real amount anywhere on its record. No product with a real amount on record is showing a prototype one; the shown price is the lowest offer whose amount is real.
 
-**Image readiness.** A real image with a recorded licence: 0. A real image without one: 0. Placeholders only: 20.
+**Image readiness.** A real image with a recorded licence: 0. A real image without one: 17. Placeholders only: 22.
 
 ## What would move these numbers
 
@@ -642,7 +1264,7 @@ Ordinary work, in the order that changes the most evidence per hour. None
 of it requires an agreement with anybody, and none of it is a launch
 decision.
 
-1. **Read the pages already on file.** 57 of 276 records and 6 of 26 offer prices are
+1. **Read the pages already on file.** 98 of 347 records and 7 of 45 offer prices are
    marked `secondhand`, meaning the URL was recorded from a search summary
    and the page was never opened. Opening one turns a claim into a reading,
    and the URLs are already there.

@@ -46,12 +46,7 @@ export function planPromotion(ctx: PlanContext): PlanOutcome {
   if (!category) return { ok: false, errors: [`${source.name} names category "${source.categoryId}", which this site does not define.`] };
 
   const workspace = store.drafts();
-  // A workspace may hold several partners in the same category. A promotion
-  // for one partner must never silently sweep the other partners' drafts into
-  // its plan; the offer is the durable source boundary on every draft.
-  const drafts = workspace.products.filter(
-    (p) => p.categoryId === source.categoryId && p.offers.some((offer) => offer.merchantId === source.merchantId),
-  );
+  const drafts = workspace.products.filter((p) => p.categoryId === source.categoryId);
   return {
     ok: true,
     plan: buildPromotionPlan({

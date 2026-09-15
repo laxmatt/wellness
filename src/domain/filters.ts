@@ -71,14 +71,14 @@ export function conditionsEqual(a: Condition[], b: Condition[]): boolean {
  */
 export function filterOptionSpecs(views: ProductView[], cat: CategoryDefinition): FilterOptionSpec[] {
   const out: FilterOptionSpec[] = [];
-  const push = (spec: { key: string; label: string }, id: string, label: string, condition: Condition) =>
-    out.push({ id: `${spec.key}:${id}`, label, groupKey: spec.key, groupLabel: spec.label, conditions: [condition], source: "filter" });
+  const push = (spec: { key: string; label: string }, id: string, label: string, ...conditions: Condition[]) =>
+    out.push({ id: `${spec.key}:${id}`, label, groupKey: spec.key, groupLabel: spec.label, conditions, source: "filter" });
 
   for (const spec of cat.filters) {
     const def = attributeDef(cat, spec.key);
 
     if (spec.presets && spec.presets.length > 0) {
-      for (const p of spec.presets) push(spec, p.label, p.label, p.condition);
+      for (const p of spec.presets) push(spec, p.label, p.label, ...(p.and ? [p.condition, p.and] : [p.condition]));
     } else if (spec.kind === "enum" && def?.enumOptions) {
       for (const o of def.enumOptions) push(spec, o.value, o.label, { key: spec.key, op: "eq", value: o.value });
     } else if (spec.kind === "boolean") {
@@ -96,6 +96,11 @@ export function filterOptionSpecs(views: ProductView[], cat: CategoryDefinition)
       // chip nor matched by one: `=== value` would assert the amount the
       // source declined to state, and `eq` refuses a bound for the same reason.
       const values = [...new Set(views.filter((v) => v.bounds[spec.key] === undefined).map((v) => v.attributes[spec.key]).filter((x) => x !== undefined))];
+      // In order. These came out in whichever order the ranking happened to put
+      // the products in, so a row of numbers read "4 people, 5 people, 6
+      // people, 2 people" and the cap below then dropped whichever values the
+      // ranking had left until last.
+      values.sort((a, b) => (typeof a === "number" && typeof b === "number" ? a - b : String(a).localeCompare(String(b))));
       for (const value of values.slice(0, 4)) {
         push(spec, String(value), formatAttribute(def, value as never), { key: spec.key, op: "eq", value: value as string | number | boolean });
       }

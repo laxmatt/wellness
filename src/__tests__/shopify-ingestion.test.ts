@@ -132,14 +132,17 @@ describe("separating saunas from the rest of a store", () => {
     const out = built("topture-shopify");
     expect(out.candidates.map((c) => c.id).sort()).toEqual(["topture-dundalk-luna-4-person", "topture-topture-barrel-6"]);
     const reasons = out.excluded.map((e) => e.reason);
-    expect(reasons.every((reason) => reason.includes("complete-sauna product types"))).toBe(true);
+    expect(reasons).toContain("A heater is a part fitted inside a sauna, not a sauna.");
+    expect(reasons).toContain("An accessory is not a complete sauna.");
+    expect(reasons).toContain("A cold plunge belongs to another category of this site.");
     expect(out.excluded).toHaveLength(3);
   });
 
   it("excludes a store's stones and its red-light panels", () => {
     const out = built("select-saunas-shopify");
     const reasons = out.excluded.map((e) => e.reason);
-    expect(reasons.every((reason) => reason.includes("complete-sauna product types"))).toBe(true);
+    expect(reasons).toContain("Stones are a consumable, not a sauna.");
+    expect(reasons).toContain("A red-light product belongs to another category of this site.");
     expect(out.candidates.map((c) => c.id).sort()).toEqual([
       "select-saunas-dundalk-luna-4-person",
       "select-saunas-dundalk-savannah-barrel-sauna",

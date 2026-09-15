@@ -87,14 +87,25 @@ describe("the mapping a person is offered for a Shopify snapshot", () => {
 });
 
 describe("what the first preflight wrongly kept", () => {
+  const reasonFor = (title: string): string => {
+    const out = built();
+    const row = out.excluded.find((e) => e.value.startsWith(title));
+    expect(row, `${title} was not excluded`).toBeDefined();
+    return row?.reason ?? "";
+  };
+
   it("drops every row the real preflight let through as a sauna", () => {
     // Each of these is filed under a sauna product type by the store itself,
     // which is why the store's own classification is evidence of the aisle and
     // never evidence that a thing is a sauna.
-    const out = built();
-    expect(out.candidates).toHaveLength(3);
-    expect(out.excluded).toHaveLength(10);
-    expect(out.excluded.every((row) => row.reason.includes("complete-sauna product types"))).toBe(true);
+    expect(reasonFor("Almost Heaven Barrel Sauna Floor Kit")).toBe("This is a part of a sauna, not a complete one.");
+    expect(reasonFor("Barrel Sauna Rain Jacket")).toBe("An accessory is not a complete sauna.");
+    expect(reasonFor("Cedar Sauna Accessory Set")).toBe("An accessory is not a complete sauna.");
+    expect(reasonFor("Air Tunnel for HUUM Heater")).toBe("A heater is a part fitted inside a sauna, not a sauna.");
+    expect(reasonFor("Almost Heaven Outdoor Shower")).toBe("A shower is not a sauna.");
+    expect(reasonFor("Select Cold Plunge Tub")).toBe("A cold plunge belongs to another category of this site.");
+    expect(reasonFor("Almost Heaven Hot Tub")).toBe("A hot tub or a spa belongs to another category of this site.");
+    expect(reasonFor("Almost Heaven Tiki Bar")).toBe("This is a building or a piece of outdoor furniture, not a sauna.");
   });
 
   it("keeps a complete sauna whose title brags about a door", () => {
@@ -115,15 +126,15 @@ describe("what the first preflight wrongly kept", () => {
 
   it("would still catch an unlisted thing, because something has to say sauna", () => {
     const rules = saunaExclusions("Select Saunas");
-    const first = rules[0];
-    expect(first.op).toBe("not_one_of");
-    expect(first.value).toContain("Indoor Infrared Sauna Kits");
-    expect(first.column).toBe("product_type");
+    const last = rules[rules.length - 2];
+    expect(last.op).toBe("not_contains_word");
+    expect(last.value).toBe("sauna");
+    expect(last.column).toBe("classified_as");
   });
 
   it("reads the store's own fields and never its marketing prose", () => {
     for (const rule of saunaExclusions("Select Saunas")) {
-      expect(["classified_as", "product_type", "available"], rule.reason).toContain(rule.column);
+      expect(["classified_as", "available"], rule.reason).toContain(rule.column);
     }
     for (const rule of shopifyProfile(SELECT_SAUNAS, TODAY, "Select Saunas").attributes) {
       expect(["classified_as", "product_title"], rule.key).toContain(rule.column);
@@ -140,7 +151,7 @@ describe("what the first preflight wrongly kept", () => {
     const kept = out.candidates.map((c) => c.id);
     // "bar" excludes the tiki bar. "Barrel" is a different word.
     expect(kept).toContain("select-saunas-dundalk-savannah-barrel-sauna");
-    expect(out.candidates.map((c) => c.id)).not.toContain("select-saunas-almost-heaven-tiki-bar");
+    expect(out.excluded.some((e) => e.value.startsWith("Almost Heaven Tiki Bar"))).toBe(true);
   });
 });
 

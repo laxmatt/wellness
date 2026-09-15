@@ -162,7 +162,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         offerId: o.id,
         merchant: o.merchant.name,
         url: o.url,
-        price: o.priceIsDemo || !o.price ? undefined : formatMoney(o.price),
+        price: o.price === undefined || o.priceIsDemo ? undefined : formatMoney(o.price),
         affiliateStatus: o.affiliateStatus,
       })),
   }));
@@ -243,7 +243,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         // separately rather than folded into a "from $X" that they had no part
         // in setting.
         cells: items.map((it) => {
-          const priced = it.view.offers.filter((o) => !o.priceIsDemo).length;
+          const priced = it.view.offers.filter((o) => o.price !== undefined && !o.priceIsDemo).length;
           const unpriced = it.view.offers.length - priced;
           const tail = unpriced > 0 ? `, ${unpriced} with no amount on record` : "";
           if (it.view.offers.length === 0) return { text: "None listed", best: false };

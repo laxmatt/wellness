@@ -111,7 +111,6 @@ function makerClaim(source: Attributed["source"]): "direct" | "relayed" | "retai
 /** Short enough for a pill beside a value. */
 export function attributionTag(p: Attributed): string {
   if (p.verification !== "manufacturer_reported") return TAGS[p.verification];
-  if (p.source.kind === "merchant_feed") return "Supplier feed";
   const shape = makerClaim(p.source);
   if (shape === "retailer") return "Via retailer";
   return shape === "relayed" ? "Maker, relayed" : "Maker reported";
@@ -121,7 +120,6 @@ export function attributionTag(p: Attributed): string {
 export function attributionSentence(p: Attributed): string {
   if (p.verification === "independently_verified") return "verified by this site";
   if (p.verification !== "manufacturer_reported") return "source not recorded";
-  if (p.source.kind === "merchant_feed") return "reported in the supplier's inventory feed, not independently verified here";
   const shape = makerClaim(p.source);
   if (shape === "retailer") return "the maker's figure, relayed by a retailer listing";
   // The direct case keeps its short wording. It is the common one, 111 records,
@@ -138,12 +136,32 @@ const TAGS: Record<Verification, string> = {
   unknown: "Unverified",
 };
 
+/**
+ * How a value was read out of a field that was not stating it.
+ *
+ * A partner's product title is a structured string, not a specification: "The
+ * Sweat Cabin (4 Person) - Blackout Edition - Harvia 8kw" carries a capacity
+ * and a form, in tokens, beside configuration detail. Reading them is a rule
+ * somebody wrote, approved and can be shown, which is a different kind of fact
+ * from a figure the partner published in a field of its own.
+ *
+ * So a derived value carries the rule, the version of the profile it was
+ * approved in, the field it read, the whole of that field's text, exactly what
+ * matched, and who approved it. `check-catalog` refuses a published record
+ * carrying a derivation nobody approved.
+ */
 export const Derivation = z.object({
+  /** What ran, as a pattern. Readable, and the thing that was approved. */
   rule: z.string().min(1),
+  /** The mapping profile version that approved it. */
   version: z.number().int().positive(),
+  /** The field it read. */
   field: z.string().min(1),
+  /** The whole of what that field said, so the reading can be checked against it. */
   sourceText: z.string().min(1),
+  /** Exactly what the rule matched, before any translation. */
   matched: z.string().min(1),
+  /** Whether the rule ran over a field stating only this, or found it inside a longer string. */
   confidence: z.enum(["whole_field", "within_text"]),
   reviewState: z.enum(["approved", "needs_review"]),
   approvedBy: z.string().min(1).optional(),
@@ -168,6 +186,8 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     // Set when this value was computed from the product's price, so it is
     // worth exactly what that price is worth.
     derivedFrom: DerivedFrom.optional(),
+    // Set when this value was read out of a field that states other things
+    // too, by a rule somebody approved. See `Derivation`.
     derivation: Derivation.optional(),
     // Set when the recorded figure cannot be relied on to describe this
     // product. The value and the note stay, so a reader sees what the record

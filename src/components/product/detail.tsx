@@ -116,7 +116,6 @@ export function OfferList({ view }: { view: ProductView }) {
             <p className="mt-0.5 text-xs text-fg-muted">
               {availabilityCopy[o.availability]} · checked {shortDate(o.lastChecked)} · {affiliateCopy[o.affiliateStatus]}
             </p>
-            {o.shippingNote ? <p className="mt-1 text-xs text-fg-soft">{o.shippingNote}</p> : null}
             {o.discountCodes.length > 0 ? (
               <ul className="mt-2 flex flex-wrap gap-2">
                 {o.discountCodes.map((d) => (
@@ -130,7 +129,7 @@ export function OfferList({ view }: { view: ProductView }) {
           </div>
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <div className="text-right">
-              <p className={o.priceIsDemo ? "text-sm font-semibold" : "tabular text-xl font-semibold"}>{view.price.configurationCount ? "From " : ""}{displayOfferPrice(o)}</p>
+              <p className={o.priceIsDemo ? "text-sm font-semibold" : "tabular text-xl font-semibold"}>{displayOfferPrice(o)}</p>
               {!o.priceIsDemo && o.price && o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? (
                 <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
               ) : null}

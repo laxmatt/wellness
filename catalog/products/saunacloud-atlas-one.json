@@ -1,0 +1,203 @@
+{
+  "id": "saunacloud-atlas-one",
+  "slug": "saunacloud-atlas-one",
+  "name": "Atlas One",
+  "brandId": "saunacloud",
+  "categoryId": "saunas",
+  "description": "One-person far infrared cabin sold by quote rather than at a listed price.",
+  "status": "draft",
+  "availability": "unknown",
+  "market": "US",
+  "images": [],
+  "offers": [
+    {
+      "id": "saunacloud-atlas-one-offer",
+      "merchantId": "saunacloud-store",
+      "market": "US",
+      "currency": "USD",
+      "quoteOnly": true,
+      "url": "https://saunacloud.com/?ref=2be9769d46ff7c74",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "2be9769d46ff7c74"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-13",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The maker's page quotes no amount. It asks for a quote. No price is recorded, and none is inferred: a quote-only product with a zero in it would read as free. The one link issued for this programme, and it addresses the site root. No deep link to any product page has been issued, so the link below earns nothing. Terms as stated to Matt: 7% of the pre-tax total after full payment, first visit attributed for 180 days. Issued link, recorded and linked to from nowhere: https://saunacloud.com/?ref=2be9769d46ff7c74 The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "1 person",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 1,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 49.5,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 52.25,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 84,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor_outdoor",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "hardwired",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "amperage_a": {
+      "value": 30,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_kw": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page was read for this and states none. The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "not_stated"
+    },
+    "heater_model": {
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+        "retrievedAt": "2026-09-13",
+        "method": "direct",
+        "note": "The page was read for this and states none. The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      },
+      "verification": "not_stated"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "manufacturer",
+    "ref": "Read by Codex on 2026-09-13",
+    "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+    "retrievedAt": "2026-09-13",
+    "method": "direct",
+    "note": "Approved for intake: Approved by Matt by email on 2026-09-13: SaunaCloud direct, Select Saunas via UpPromote, Sweat Kingdom via Awin advertiser 125462, publisher 3090899. The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it. The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one. The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+  },
+  "lastUpdated": "2026-09-13",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

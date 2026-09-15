@@ -15,7 +15,16 @@ import { getCatalog } from "@/providers";
 
 export type CategoryPage = {
   cat: CategoryDefinition;
+  /** The models a shopper chooses between. Configurations of one of them are not here. */
   products: RecommendedProduct[];
+  /**
+   * Records that are a configuration of one of the above: a finish, a size.
+   *
+   * Published, priced, linked and reachable, and not a card of their own. A
+   * merchant selling one cabin on two pages is selling one cabin, and a grid
+   * offering both asks a shopper to choose between a product and its own paint.
+   */
+  members?: RecommendedProduct[];
   set: RecommendationSet;
 };
 
@@ -24,8 +33,26 @@ export const getCategoryPage = cache(async (slug: string): Promise<CategoryPage 
   if (!cat) return null;
   const views = await getCatalog().listProductViews({ categoryId: cat.id, status: ["published"] });
   const { products, set } = recommendCategory(views, cat);
-  return { cat, products, set };
+  const ids = new Set(products.map((p) => p.view.id));
+  // A configuration whose model is not published here stands on its own rather
+  // than disappearing: a record vanishing from a category is worse than one
+  // appearing without the family it belongs to.
+  const isMember = (p: RecommendedProduct): boolean => p.view.family !== undefined && ids.has(p.view.family.of);
+  return { cat, products: products.filter((p) => !isMember(p)), members: products.filter(isMember), set };
 });
+
+/** The configurations of one model, cheapest first. */
+export function configurationsOf(page: CategoryPage, id: string): RecommendedProduct[] {
+  return (page.members ?? [])
+    .filter((m) => m.view.family?.of === id)
+    .sort((a, b) => (a.view.price.money?.amountMinor ?? Infinity) - (b.view.price.money?.amountMinor ?? Infinity));
+}
+
+/** The lowest amount anyone can pay for this model or one of its configurations. */
+export function fromPrice(page: CategoryPage, item: RecommendedProduct): number | undefined {
+  const amounts = [item, ...configurationsOf(page, item.view.id)].map((p) => p.view.price.money?.amountMinor).filter((n): n is number => n !== undefined);
+  return amounts.length > 0 ? Math.min(...amounts) : undefined;
+}
 
 export const getAllCategoryPages = cache(async (): Promise<CategoryPage[]> => {
   const pages = await Promise.all(categories.map((c) => getCategoryPage(c.slug)));
@@ -81,7 +108,27 @@ export type ProductPage = {
   item: RecommendedProduct;
   page: CategoryPage;
   similar: RecommendedProduct[];
+  /** The configurations this model is sold in, each its own record. */
+  configurations: RecommendedProduct[];
 };
+
+/**
+ * Where a configuration's own address sends a shopper.
+ *
+ * A finish is not a second product, so it does not get a second page competing
+ * with the one it belongs to. Its record stays published, priced and linked,
+ * and its address leads to the model it is a configuration of, where its price
+ * and its own link are listed.
+ */
+export const getProductRedirect = cache(async (slug: string): Promise<string | null> => {
+  const view = await getCatalog().getProductView(slug);
+  if (!view || view.status !== "published" || !view.family) return null;
+  const cat = categories.find((c) => c.id === view.categoryId);
+  if (!cat) return null;
+  const page = await getCategoryPage(cat.slug);
+  const of = page?.products.find((p) => p.view.id === view.family!.of);
+  return of ? `/products/${of.view.slug}` : null;
+});
 
 export const getProductPage = cache(async (slug: string): Promise<ProductPage | null> => {
   const view = await getCatalog().getProductView(slug);
@@ -96,16 +143,37 @@ export const getProductPage = cache(async (slug: string): Promise<ProductPage | 
   const similar = similarProducts(view, page.products.map((p) => p.view), cat, 3)
     .map((v) => byId.get(v.id))
     .filter((p): p is RecommendedProduct => p !== undefined);
-  return { item, page, similar };
+  return { item, page, similar, configurations: configurationsOf(page, view.id) };
 });
 
-export const getBrands = cache(async (): Promise<Brand[]> => getCatalog().listBrands());
+/**
+ * Brands a shopper can actually get to a product from.
+ *
+ * The catalogue holds a brand record for every product it holds, drafts
+ * included, and a draft is nobody's to see. Listing every brand published three
+ * sauna partners on `/brands`, on the home page and in the sitemap while their
+ * products were still drafts and their category was not published: three names
+ * announced, each linking to a page with nothing on it.
+ *
+ * It is the same rule the rest of the site follows and the brand list was the
+ * one place it was missing. A brand with no published product is not a dead end
+ * to hide, it is a page with nothing to say.
+ */
+export const getBrands = cache(async (): Promise<Brand[]> => {
+  const pages = await getAllCategoryPages();
+  const withProducts = new Set(pages.flatMap((p) => p.products.map((x) => x.view.brand.id)));
+  return (await getCatalog().listBrands()).filter((b) => withProducts.has(b.id));
+});
 
 export const getBrandPage = cache(async (slug: string) => {
   const brand = await getCatalog().getBrand(slug);
   if (!brand) return null;
   const pages = await getAllCategoryPages();
   const products = pages.flatMap((p) => p.products.filter((x) => x.view.brand.id === brand.id).map((item) => ({ item, cat: p.cat })));
+  // No published product, no page. The route already 404s on an unknown slug
+  // and this is the same answer for a slug that resolves to nothing a shopper
+  // can reach.
+  if (products.length === 0) return null;
   return { brand, products };
 });
 
