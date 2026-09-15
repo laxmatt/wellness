@@ -17,8 +17,16 @@ describe("local catalog", () => {
     expect(count("wellness-drinks")).toBe(6);
   });
 
-  it("marks every prototype product as demo", () => {
-    for (const p of catalog().products) expect(p.flags.demo).toBe(true);
+  it("marks every prototype product as demo, and no real one", () => {
+    // The three prototype categories are invented data and say so. Saunas are
+    // not: those three records were read from real pages on a stated date, and
+    // flagging them as prototype would withhold their figures for a reason
+    // that is not true. The flag has to follow the evidence, not the age of the
+    // catalogue.
+    const prototype = ["red-light", "cold-plunge", "wellness-drinks"];
+    for (const p of catalog().products) {
+      expect(p.flags.demo, `${p.id}`).toBe(prototype.includes(p.categoryId));
+    }
   });
 
   it("never claims independent verification in the prototype", () => {
@@ -82,7 +90,15 @@ describe("local catalog", () => {
     //
     // Infraredi Flex Max is the last one here, and it is the last unread
     // product in Red Light Therapy.
-    expect(short.sort()).toEqual(["infraredi-flex-max"]);
+    //
+    // And every sauna, since 2026-09-14. That category launched from a
+    // retailer feed that states no specification at all, so not one of its
+    // required attributes is filled and every record sits under the floor.
+    // Recorded here rather than papered over: the figures come from the makers
+    // or they do not come, and until they do this is what the catalogue knows.
+    const saunas = short.filter((id) => id.startsWith("sweat-kingdom-"));
+    expect(saunas).toHaveLength(17);
+    expect(short.filter((id) => !id.startsWith("sweat-kingdom-")).sort()).toEqual(["infraredi-flex-max"]);
   });
 
   it("produces a normalized view with plain values and a provenance map", () => {
@@ -105,6 +121,6 @@ describe("local catalog", () => {
     const v = viewsFor("wellness-drinks").find((x) => x.id === "lmnt-citrus-salt-30")!;
     expect(v.offers.length).toBe(2);
     expect(v.offers.some((o) => o.discountCodes.length > 0)).toBe(true);
-    expect(v.offers[0].price.amountMinor).toBeLessThanOrEqual(v.offers[1].price.amountMinor);
+    expect(v.offers[0].price!.amountMinor).toBeLessThanOrEqual(v.offers[1].price!.amountMinor);
   });
 });

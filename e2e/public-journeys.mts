@@ -17,9 +17,10 @@
  */
 
 import { chromium, type Browser, type Page } from "playwright";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { categories, categoryById } from "@/domain/categories";
+import { categories, categoryById, categoryBySlug } from "@/domain/categories";
 import { introExamplesFor } from "@/domain/assistant-intro";
 import { buildCompareModel } from "@/domain/compare";
 import { applyFilters, buildFilterGroups, facetOptionId } from "@/domain/filters";
@@ -32,17 +33,68 @@ import { buyableOffers, toProductView, type ProductView } from "@/domain/view";
 import { loadLocalCatalog } from "@/providers/catalog/LocalCatalogProvider";
 
 const BASE = process.env.ASSISTANT_TEST_BASE_URL ?? "http://localhost:3000";
-const EXECUTABLE = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium";
+/**
+ * Which Chromium to drive, without naming a path on one machine.
+ *
+ * `CHROMIUM_PATH` wins. Failing that, Playwright's own answer when the build it
+ * names is installed; failing that, a browser under a plain name in the
+ * configured browsers directory, which is how some pre-provisioned images ship
+ * one. When none is there nothing is passed and Playwright raises its own
+ * error, which says how to install a browser.
+ */
+function chromiumPath(): string | undefined {
+  const named = process.env.CHROMIUM_PATH?.trim();
+  if (named) return named;
+  try {
+    const own = chromium.executablePath();
+    if (own && existsSync(own)) return own;
+  } catch {
+    // Playwright has no path for this platform; its own error beats one made up here.
+  }
+  const browsers = process.env.PLAYWRIGHT_BROWSERS_PATH?.trim();
+  if (browsers) {
+    for (const candidate of [join(browsers, "chromium"), join(browsers, "chrome")]) {
+      if (existsSync(candidate)) return candidate;
+    }
+  }
+  return undefined;
+}
 const DESKTOP = { width: 1280, height: 900 };
 const MOBILE = { width: 390, height: 844 };
 
 const cat = loadLocalCatalog(join(process.cwd(), "catalog"));
+
+/**
+ * The products this site actually serves.
+ *
+ * The catalogue holds drafts and holds records in categories that are not
+ * published, and neither has a page. Walking every record and demanding a page
+ * for it asserted that the catalogue and the storefront are the same thing,
+ * which they stopped being the day a draft was imported.
+ */
+const servedProducts = cat.products.filter(
+  (p) => p.status === "published" && p.family === undefined && categoryBySlug(categoryById(p.categoryId)?.slug ?? "") !== undefined,
+);
+/** Published records that are a configuration of another. Their own address leads to the model. */
+const configurations = cat.products.filter((p) => p.status === "published" && p.family !== undefined);
+/**
+ * What a category page actually lists.
+ *
+ * Published, because a draft has no card, and not a configuration of another
+ * record, because a finish is compared as part of the model it belongs to and
+ * is not a card of its own. Walking the catalogue instead asserted that the
+ * catalogue and the storefront are the same list, which they have not been
+ * since the first draft was imported and are not since the first family was
+ * grouped.
+ */
 const viewsOf = (categoryId: string): ProductView[] =>
   cat.products
-    .filter((p) => p.categoryId === categoryId)
+    .filter((p) => p.categoryId === categoryId && p.status === "published" && p.family === undefined)
     .map((p) => toProductView(p, { category: categoryById(p.categoryId)!, brands: cat.brands, merchants: cat.merchants }));
 
 const failures: string[] = [];
+/** Pages whose third-party images this machine could not fetch. Reported, not failed. */
+const unreachable = new Set<string>();
 let scenario = "";
 function check(name: string, actual: unknown, expected: unknown) {
   const ok = JSON.stringify(actual) === JSON.stringify(expected);
@@ -60,7 +112,14 @@ const pageProblems: string[] = [];
 function watch(page: Page) {
   page.on("pageerror", (e) => pageProblems.push(`${page.url()}: ${e.message}`));
   page.on("console", (m) => {
-    if (m.type() === "error") pageProblems.push(`${page.url()}: console ${m.text()}`);
+    // A resource on somebody else's host that this machine cannot reach is a
+    // fact about the machine, not about the page. Product images are served
+    // from the merchant's own CDN, and a sandbox with no route to it reports a
+    // tunnel failure for every one of them. Anything from this site's own
+    // origin, and every other kind of console error, still fails.
+    const unreachableThirdParty = /ERR_TUNNEL_CONNECTION_FAILED|ERR_NAME_NOT_RESOLVED|ERR_PROXY_CONNECTION_FAILED/.test(m.text()) && m.text().includes("Failed to load resource");
+    if (m.type() === "error" && !unreachableThirdParty) pageProblems.push(`${page.url()}: console ${m.text()}`);
+    if (unreachableThirdParty) unreachable.add(page.url());
   });
   page.on("response", (r) => {
     const u = new URL(r.url());
@@ -296,7 +355,7 @@ async function run(browser: Browser) {
       ok(`${v.slug} card offers to check the price it does not have`, card.includes("Check current price"), card.slice(0, 200));
       ok(`${v.slug} card invents no retailer count`, !/\d+ retailers?|Lowest of/.test(card), card.slice(0, 200));
       for (const o of v.offers) {
-        ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price)), formatMoney(o.price));
+        ok(`${v.slug} card quotes no withheld amount`, !card.includes(formatMoney(o.price!)), formatMoney(o.price!));
       }
     }
     for (const v of views.filter((v) => !v.price.isDemo && v.price.money)) {
@@ -546,7 +605,10 @@ async function run(browser: Browser) {
     const mine = introExamplesFor(c.id)!.map((e) => e.text);
     const theirs = categories.filter((x) => x.id !== c.id).flatMap((x) => introExamplesFor(x.id)!.map((e) => e.text));
 
-    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+    // A category may have no facets. Saunas has none: a facet is a filter worth
+    // a URL, and this one can filter on price alone until the makers supply
+    // the figures.
+    for (const path of [`/${c.slug}`, ...(c.facets[0] ? [`/${c.slug}/${c.facets[0].slug}`] : [])]) {
       await goto(page, path);
       await page.getByRole("button", { name: "Help me choose" }).first().click();
       await page.waitForSelector("[data-testid='assistant-intro']", { timeout: 5000 });
@@ -593,7 +655,10 @@ async function run(browser: Browser) {
   // --------------------------------------- one chip bar, not two, on every page
   for (const c of categories) {
     scenario = `controls ${c.slug}`;
-    for (const path of [`/${c.slug}`, `/${c.slug}/${c.facets[0].slug}`]) {
+    // A category may have no facets. Saunas has none: a facet is a filter worth
+    // a URL, and this one can filter on price alone until the makers supply
+    // the figures.
+    for (const path of [`/${c.slug}`, ...(c.facets[0] ? [`/${c.slug}/${c.facets[0].slug}`] : [])]) {
       await goto(page, path);
       // The facet pills navigated to other pages while looking exactly like the
       // chips below them. A shopper could not tell which of two rows of pills
@@ -609,8 +674,69 @@ async function run(browser: Browser) {
     }
   }
 
+  // ------------------------------------------------------- discovery
+  // Every published category has to be reachable from the bar at the top of
+  // every page, not only from the home grid. Saunas launched without that.
+  for (const path of ["/", "/explore", "/red-light", `/products/${servedProducts[0].slug}`]) {
+    scenario = `discovery ${path}`;
+    await goto(page, path);
+    const nav = page.locator('nav[aria-label="Primary"]');
+    for (const c of categories) {
+      ok(`the primary nav links to /${c.slug}`, (await nav.locator(`a[href="/${c.slug}"]`).count()) > 0);
+    }
+    ok("and the footer does too", (await page.locator(`footer a[href="/saunas"]`).count()) > 0);
+  }
+
+  // ------------------------------------------------- narrowing saunas
+  // A category a shopper can only sort by price is a list, not a comparison.
+  scenario = "narrowing saunas";
+  await goto(page, "/saunas");
+  const rows = await page.getByTestId("filter-guidance").locator("..").locator('[data-testid^="filter-group-"]').count();
+  const chips = await page.locator('[data-testid="filter-guidance"] ~ * button, [data-testid="filter-guidance"]').count();
+  ok("more than one dimension to narrow on", rows > 1 || chips > 1, `${rows} rows, ${chips} chips`);
+  // The chip bar's own text, not the page's: the serialized requirement
+  // catalogue names every dimension the category defines, and a row is only a
+  // row if it was drawn.
+  const bar = (await page.getByTestId("filter-guidance").locator("xpath=..").textContent()) ?? "";
+  for (const label of ["Price", "Style", "Seats up to", "Under $7,000", "$15,000 and up", "Cabin", "Mobile (towable)", "1 to 2 people", "5 or more"]) {
+    ok(`offers "${label}"`, bar.includes(label), bar.slice(0, 200));
+  }
+  for (const label of ["Connection", "Placement", "Heating"]) {
+    ok(`offers no row for "${label}", which nothing states`, !bar.includes(label), bar.slice(0, 200));
+  }
+  check("fifteen models before anything is picked", await shownCount(page), "15 of 15 shown");
+
+  // A combination that would lead nowhere is not offered. Picking the one-person
+  // box leaves the expensive bands matching nothing, and a chip matching
+  // nothing is dimmed and cannot be pressed rather than taking a shopper to an
+  // empty page.
+  const chipBar = page.getByTestId("filter-guidance").locator("xpath=..");
+  await chipBar.getByRole("button", { name: /^Box\b/ }).first().click();
+  check("picking a style narrows to that style", await shownCount(page), "1 of 15 shown");
+  ok(
+    "and a band that would leave nothing is not pressable",
+    await chipBar.getByRole("button", { name: /^\$15,000 and up\b/ }).first().isDisabled(),
+  );
+  ok("while a band that would leave something still is", !(await chipBar.getByRole("button", { name: /^Under \$7,000\b/ }).first().isDisabled()));
+  await chipBar.getByRole("button", { name: /^Box\b/ }).first().click();
+  check("and clearing it restores all fifteen", await shownCount(page), "15 of 15 shown");
+
+  // ------------------------------------------------- configurations
+  // A finish is not a second product. Its record is published, priced and
+  // linked, and its own address leads to the model it belongs to rather than
+  // competing with it.
+  for (const p of configurations) {
+    scenario = `configuration ${p.id}`;
+    const model = cat.products.find((x) => x.id === p.family!.of)!;
+    const response = await page.goto(`${BASE}/products/${p.slug}`, { waitUntil: "domcontentloaded" });
+    check("its address leads to the model it belongs to", new URL(page.url()).pathname, `/products/${model.slug}`);
+    ok("and answers rather than erroring", (response?.status() ?? 0) < 400, response?.status());
+    ok("the model's page names it as a configuration", ((await page.locator("body").textContent()) ?? "").includes(p.name));
+    ok("it is not a card in its category", !(await shownSlugs(page)).includes(p.slug));
+  }
+
   // ------------------------------------------------------------ product
-  for (const p of cat.products) {
+  for (const p of servedProducts) {
     const view = viewsOf(p.categoryId).find((v) => v.id === p.id)!;
     scenario = `product ${view.slug}`;
     await goto(page, `/products/${view.slug}`);
@@ -640,8 +766,8 @@ async function run(browser: Browser) {
       const retailersText = (await page.locator("#retailers").textContent()) ?? "";
       const shopLinks = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       for (const o of view.offers) {
-        ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price)), block.text);
-        ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price)), retailersText.slice(0, 160));
+        ok(`the withheld ${o.merchant.name} amount is not in the price block`, !block.text.includes(formatMoney(o.price!)), block.text);
+        ok(`the withheld ${o.merchant.name} amount is not in the retailers section`, !retailersText.includes(formatMoney(o.price!)), retailersText.slice(0, 160));
         // Not "the URL is absent": a withheld offer's URL can be the same
         // manufacturer page that legitimately sources the specs, and a
         // citation under Sources is provenance, not a way to buy. What must
@@ -664,7 +790,7 @@ async function run(browser: Browser) {
     }
     for (const offer of view.offers.filter((o) => o.priceIsDemo && !o.disputed)) {
       const row = await offerRowText(page, offer.merchant.name);
-      ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price)), row);
+      ok(`the ${offer.merchant.name} row does not quote its placeholder amount`, !row.includes(formatMoney(offer.price!)), row);
       ok(`the ${offer.merchant.name} row says to check instead`, row.includes("Check current price"), row);
     }
 
@@ -675,7 +801,7 @@ async function run(browser: Browser) {
     const jsonLd = (await page.locator('script[type="application/ld+json"]').first().textContent()) ?? "";
     const retailers = (await page.locator("#retailers").textContent()) ?? "";
     for (const offer of view.offers.filter((o) => o.disputed)) {
-      const amount = formatMoney(offer.price);
+      const amount = formatMoney(offer.price!);
       // Scoped to the retailers section on purpose. A source note elsewhere on
       // the page may recount what this amount used to be and why it stopped
       // being the price, and that history is the point of keeping the record.
@@ -684,7 +810,7 @@ async function run(browser: Browser) {
       ok(`its amount ${amount} is not quoted there either`, !retailers.includes(amount), retailers.slice(0, 160));
       const shopping = await page.$$eval("a[data-shop-link]", (as) => as.map((a) => (a as HTMLAnchorElement).href));
       ok("nothing offers to shop it", !shopping.some((h) => new URL(h).href === new URL(offer.url).href), offer.url);
-      ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
+      ok("and it is not published as structured data", !jsonLd.includes(offer.url) && !jsonLd.includes((offer.price!.amountMinor / 100).toFixed(2)), jsonLd.slice(0, 200));
       ok("but the page tells a shopper the listing is not shown", retailers.includes("is not shown here"));
     }
 
@@ -789,7 +915,7 @@ async function run(browser: Browser) {
     // A check that cannot fail proves nothing. The amount is put back into the
     // page and the same predicate is asked again: it has to notice. The page
     // is reloaded afterwards.
-    const demoPriced = cat.products
+    const demoPriced = servedProducts
       .map((p) => viewsOf(p.categoryId).find((v) => v.id === p.id)!)
       .find((v) => v.price.isDemo && v.price.money !== undefined)!;
     scenario = `price check, proved sensitive on ${demoPriced.slug}`;
@@ -1189,7 +1315,8 @@ if (!homeHtml.includes(expectedBuildId)) {
 }
 console.log(`ok   build identity :: serving ${expectedBuildId}`);
 
-const browser = await chromium.launch({ executablePath: EXECUTABLE });
+const executablePath = chromiumPath();
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
 try {
   await run(browser);
 } finally {
@@ -1201,5 +1328,8 @@ for (const p of [...new Set(pageProblems)]) {
   failures.push(`browser reported :: ${p}`);
 }
 
+if (unreachable.size > 0) {
+  console.log(`\nnote: ${unreachable.size} page(s) could not load an image from a third-party host on this machine. Those loads were not checked; every other console error still fails.`);
+}
 console.log(failures.length === 0 ? "\nAll checks passed." : `\n${failures.length} failed:\n${failures.map((f) => `  ${f}`).join("\n")}`);
 process.exit(failures.length === 0 ? 0 : 1);

@@ -157,7 +157,7 @@ describe("an offer whose amount belongs to another product is not a way to buy t
   it("keeps the evidence on the record, which is where it belongs", () => {
     const view = withMismatchCheapest();
     const row = view.offers.find((o) => o.id === "mismatched")!;
-    expect(row.price.amountMinor).toBe(1999);
+    expect(row.price!.amountMinor).toBe(1999);
     expect(row.url).toBe("https://example.com/variety-pack");
     expect(row.disputeNote).toBe("Reported for a different pack.");
   });

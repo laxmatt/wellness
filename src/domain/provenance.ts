@@ -138,6 +138,18 @@ const TAGS: Record<Verification, string> = {
   unknown: "Unverified",
 };
 
+export const Derivation = z.object({
+  rule: z.string().min(1),
+  version: z.number().int().positive(),
+  field: z.string().min(1),
+  sourceText: z.string().min(1),
+  matched: z.string().min(1),
+  confidence: z.enum(["whole_field", "within_text"]),
+  reviewState: z.enum(["approved", "needs_review"]),
+  approvedBy: z.string().min(1).optional(),
+});
+export type Derivation = z.infer<typeof Derivation>;
+
 export function sourced<T extends z.ZodTypeAny>(value: T) {
   return z.object({
     // Absent when the source states nothing. The entry stays so the note
@@ -156,6 +168,7 @@ export function sourced<T extends z.ZodTypeAny>(value: T) {
     // Set when this value was computed from the product's price, so it is
     // worth exactly what that price is worth.
     derivedFrom: DerivedFrom.optional(),
+    derivation: Derivation.optional(),
     // Set when the recorded figure cannot be relied on to describe this
     // product. The value and the note stay, so a reader sees what the record
     // holds and why; nothing matches or scores on it.
@@ -178,6 +191,7 @@ export type Sourced<T> = {
   verification: Verification;
   bound?: Bound;
   derivedFrom?: DerivedFrom;
+  derivation?: Derivation;
   disputed?: boolean;
 };
 

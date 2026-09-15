@@ -80,12 +80,12 @@ export default async function ProductPage({ params }: Props) {
     brand: { "@type": "Brand", name: view.brand.name },
     description: view.description,
     url: `${SITE_URL}/products/${view.slug}`,
-    ...(publishedOffers.length > 0
+    ...(publishedOffers.some((o) => o.price !== undefined)
       ? {
-          offers: publishedOffers.map((o) => ({
+          offers: publishedOffers.filter((o) => o.price !== undefined).map((o) => ({
             "@type": "Offer",
-            price: (o.price.amountMinor / 100).toFixed(2),
-            priceCurrency: o.price.currency,
+            price: (o.price!.amountMinor / 100).toFixed(2),
+            priceCurrency: o.price!.currency,
             url: o.url,
             seller: { "@type": "Organization", name: o.merchant.name },
             ...(schemaAvailability[o.availability] ? { availability: schemaAvailability[o.availability] } : {}),

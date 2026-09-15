@@ -96,7 +96,7 @@ const families: ProductRecord[] = [...core.entries()].map(([name, raws]) => {
   const familyUrl = value(first.row, "link").split("?")[0];
   const allVariantOffers = raws.map((raw, index) => offerFor(raw, `${id}-variant-${index + 1}`));
   const active = allVariantOffers.filter((offer) => offer.availability !== "discontinued" && !offer.disputed);
-  const minimum = [...active].sort((a, b) => a.priceMinor - b.priceMinor)[0];
+  const minimum = [...active].sort((a, b) => a.priceMinor! - b.priceMinor!)[0];
   if (!minimum) throw new Error(`${name} has no active configuration offer.`);
   const familySource = sourceFor(first.rowNumber, familyUrl);
   const capacity = statedCapacity(name);

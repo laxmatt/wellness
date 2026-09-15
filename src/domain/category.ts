@@ -23,7 +23,7 @@ export const FilterSpec = z.object({
   label: z.string(),
   kind: z.enum(["range", "enum", "boolean", "list"]),
   // Range presets shown as chips, in minor units for price.
-  presets: z.array(z.object({ label: z.string(), condition: Condition })).optional(),
+  presets: z.array(z.object({ label: z.string(), condition: Condition, and: Condition.optional() })).optional(),
 });
 export type FilterSpec = z.infer<typeof FilterSpec>;
 
@@ -33,7 +33,7 @@ export const ScoringCriterion = z.object({
 });
 
 export const ScoringConfig = z.object({
-  criteria: z.array(ScoringCriterion).min(1),
+  criteria: z.array(ScoringCriterion),
   // What the number measures, in the UI's words. Never "quality" unless the
   // criteria genuinely measure build quality: a weighted sum over capability
   // attributes ranks suitability for the category's dominant use, and a

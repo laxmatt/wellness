@@ -131,7 +131,7 @@ export function OfferList({ view }: { view: ProductView }) {
           <div className="flex items-center justify-between gap-4 sm:justify-end">
             <div className="text-right">
               <p className={o.priceIsDemo ? "text-sm font-semibold" : "tabular text-xl font-semibold"}>{view.price.configurationCount ? "From " : ""}{displayOfferPrice(o)}</p>
-              {!o.priceIsDemo && o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? (
+              {!o.priceIsDemo && o.price && o.listPrice && o.listPrice.amountMinor > o.price.amountMinor ? (
                 <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
               ) : null}
             </div>

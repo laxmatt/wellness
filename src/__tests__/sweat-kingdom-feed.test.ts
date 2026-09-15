@@ -44,7 +44,7 @@ describe("the Sweat Kingdom private feed preview", () => {
   it("derives each From price from an underlying active variant and links to the family page", () => {
     for (const family of families) {
       const active = family.variants.map((v) => v.offer).filter((o) => o.availability !== "discontinued" && !o.disputed);
-      expect(family.offers[0].priceMinor).toBe(Math.min(...active.map((o) => o.priceMinor)));
+      expect(family.offers[0].priceMinor).toBe(Math.min(...active.map((o) => o.priceMinor!)));
       expect(family.offers[0].url).not.toContain("variant=");
       expect(family.offers[0].shippingNote).toContain("final price depends on configuration");
     }

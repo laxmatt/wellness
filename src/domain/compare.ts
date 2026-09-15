@@ -162,7 +162,7 @@ export function buildCompareModel(items: RecommendedProduct[], cat: CategoryDefi
         offerId: o.id,
         merchant: o.merchant.name,
         url: o.url,
-        price: o.priceIsDemo ? undefined : formatMoney(o.price),
+        price: o.priceIsDemo || !o.price ? undefined : formatMoney(o.price),
         affiliateStatus: o.affiliateStatus,
       })),
   }));

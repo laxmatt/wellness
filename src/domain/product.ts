@@ -12,10 +12,10 @@ export type ProductStatus = z.infer<typeof ProductStatus>;
 export const Availability = z.enum(["in_stock", "backorder", "preorder", "out_of_stock", "unknown", "discontinued"]);
 export type Availability = z.infer<typeof Availability>;
 
-export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "unknown"]);
+export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "affiliate_link_unresolved", "unknown"]);
 export type AffiliateStatus = z.infer<typeof AffiliateStatus>;
 
-export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "direct", "other"]);
+export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "goaffpro", "uppromote", "refersion", "direct", "other"]);
 export type AffiliateNetwork = z.infer<typeof AffiliateNetwork>;
 
 export const ImageKind = z.enum(["affiliate_feed", "approved_creative", "licensed_upload", "demo_placeholder"]);
@@ -71,7 +71,8 @@ export const MerchantOffer = z.object({
   merchantId: Id,
   market: Market,
   currency: Currency,
-  priceMinor: z.number().int().nonnegative(),
+  priceMinor: z.number().int().nonnegative().optional(),
+  quoteOnly: z.boolean().optional(),
   listPriceMinor: z.number().int().nonnegative().optional(),
   url: z.url(),
   affiliate: z.object({
@@ -92,6 +93,8 @@ export const MerchantOffer = z.object({
   // variety pack, and that amount was the shown price of a 16-stick Lemon
   // Lime box. `check-catalog` refuses a disputed offer with no note.
   disputed: z.boolean().optional(),
+}).refine((o) => (o.priceMinor !== undefined) !== (o.quoteOnly === true), {
+  message: "An offer states an amount or says the merchant quotes one. Not both, and not neither.",
 });
 export type MerchantOffer = z.infer<typeof MerchantOffer>;
 
@@ -136,6 +139,12 @@ export const EditorialNote = z.object({
 });
 export type EditorialNote = z.infer<typeof EditorialNote>;
 
+export const FamilyMembership = z.object({
+  of: Id,
+  because: z.string().min(1),
+});
+export type FamilyMembership = z.infer<typeof FamilyMembership>;
+
 export const Product = z.object({
   id: Id,
   slug: Slug,
@@ -158,6 +167,8 @@ export const Product = z.object({
   dimensions: sourced(Dimensions).optional(),
   weight: sourced(z.number().positive()).optional(),
   attributes: AttributeMap.default({}),
+  sourceTitle: z.string().min(1).optional(),
+  family: FamilyMembership.optional(),
   editorial: z.object({
     strengths: z.array(EditorialNote).default([]),
     tradeoffs: z.array(EditorialNote).default([]),
@@ -177,5 +188,6 @@ export function deriveAffiliateStatus(offers: MerchantOffer[]): AffiliateStatus 
   if (offers.length === 0) return "unknown";
   if (offers.some((o) => o.affiliate.status === "affiliate")) return "affiliate";
   if (offers.every((o) => o.affiliate.status === "non_affiliate")) return "non_affiliate";
+  if (offers.every((o) => o.affiliate.status === "affiliate_link_unresolved")) return "affiliate_link_unresolved";
   return "unknown";
 }
