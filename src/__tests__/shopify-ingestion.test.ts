@@ -233,10 +233,11 @@ describe("importing three partners to drafts", () => {
     importInto(store, "topture-shopify");
     importInto(store, "select-saunas-shopify");
     for (const product of store.drafts().products) {
-      // Approved programmes, and no demonstrated way to link to one product so
-      // that the programme credits it.
-      expect(product.offers[0].affiliate.status, product.id).toBe("unknown");
-      expect(product.offers[0].url, product.id).not.toMatch(/ref=|aff=|utm_/);
+      // Joined programmes with an open dashboard, and no verified way to link
+      // to one product so that the programme credits it. Not `unknown`: that
+      // word means nobody recorded the relationship, and somebody has.
+      expect(product.offers[0].affiliate.status, product.id).toBe("affiliate_link_unresolved");
+      expect(product.offers[0].url, product.id).not.toMatch(/ref=|sca_ref=|rfsn=|aff=|utm_/);
     }
   });
 
@@ -417,12 +418,43 @@ describe("one sauna, two retailers", () => {
 // ------------------------------------------------------------ what cannot be read
 
 describe("partners that cannot be read", () => {
-  it("records both, with the reason and without having gone around either", () => {
-    expect(BLOCKED_PARTNERS.map((p) => p.state).sort()).toEqual(["blocked_pending_authorized_export", "blocked_pending_portal_review"]);
+  it("records all three, each with its own reason and none of them worked around", () => {
+    expect(BLOCKED_PARTNERS.map((p) => p.state).sort()).toEqual([
+      "approved_no_inventory_feed",
+      "blocked_pending_authorized_export",
+      "portal_review_complete_no_bulk_feed",
+    ]);
     const lifepro = BLOCKED_PARTNERS.find((p) => p.id === "lifepro")!;
     expect(lifepro.why).toContain("403");
+    // The portal review is finished, and finishing it answered the question
+    // rather than opening another: there is no feed behind the login.
     const therasage = BLOCKED_PARTNERS.find((p) => p.id === "therasage")!;
-    expect(therasage.why).toContain("CAPTCHA");
+    expect(therasage.state).toBe("portal_review_complete_no_bulk_feed");
+    expect(therasage.why).toContain("no inventory feed");
+    expect(therasage.programme?.commissionPercent).toBe(10);
+    expect(therasage.programme?.referralWindowDays).toBe(30);
+    expect(therasage.programme?.coupon).toBe("WELLNESSFITCHECK");
+    const saunabox = BLOCKED_PARTNERS.find((p) => p.id === "saunabox")!;
+    expect(saunabox.programme?.commissionPercent).toBe(5);
+    expect(saunabox.programme?.trackingCode).toBe("MATT41058");
+  });
+
+  it("keeps a compliance review on the partner whose terms restrict placement", () => {
+    const therasage = BLOCKED_PARTNERS.find((p) => p.id === "therasage")!;
+    expect(therasage.complianceReview).toBe("required");
+    expect((therasage.compliance ?? []).filter((c) => c.state === "outstanding")).toHaveLength(2);
+    // Both requirements say where they come from, so somebody can go and read
+    // the terms rather than take this record's word for it.
+    for (const requirement of therasage.compliance ?? []) expect(requirement.statedIn).toContain("Therasage affiliate terms");
+    for (const id of ["lifepro", "saunabox"]) {
+      expect(BLOCKED_PARTNERS.find((p) => p.id === id)!.complianceReview, id).toBe("clear");
+    }
+  });
+
+  it("records no way to make a product link for any of them", () => {
+    for (const partner of BLOCKED_PARTNERS) {
+      expect(partner.programme?.productLinks, partner.id).toBe("no verified per-product link");
+    }
   });
 
   it("gives them no source and no profile, so nothing can import from them", () => {

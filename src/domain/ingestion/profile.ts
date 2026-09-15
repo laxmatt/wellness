@@ -26,7 +26,7 @@
  */
 
 import { z } from "zod";
-import { Id } from "@/domain/product";
+import { AffiliateNetwork, Id } from "@/domain/product";
 
 /**
  * Formats this flow will accept, and the one it reads today.
@@ -288,6 +288,15 @@ export type ProposedFilter = z.infer<typeof ProposedFilter>;
  * from a URL carrying an API key; that URL is not recorded, here or anywhere,
  * and `IngestionStore` refuses an upload that looks like it carries one.
  */
+/**
+ * Statuses that assert a relationship with a programme, and so have to name it.
+ *
+ * "This link pays" and "we are in their programme and this link does not pay"
+ * are both claims about an arrangement. Neither is checkable without the
+ * network and the reference, so neither is allowed without them.
+ */
+const NAMES_A_PROGRAMME = new Set(["affiliate", "affiliate_link_unresolved"]);
+
 export const PartnerSource = z.object({
   id: Id,
   name: z.string().min(1),
@@ -326,8 +335,12 @@ export const PartnerSource = z.object({
    * name. Nothing here turns a plain link into a tracking one.
    */
   affiliate: z.object({
-    status: z.enum(["affiliate", "non_affiliate", "unknown"]),
-    network: z.enum(["awin", "impact", "cj", "amazon", "direct", "other"]).optional(),
+    // The same four words the catalogue itself uses. `affiliate_link_unresolved`
+    // is the one a joined programme with no verified per-product link needs:
+    // saying `unknown` there would mean nobody had recorded the relationship,
+    // and somebody has.
+    status: z.enum(["affiliate", "non_affiliate", "affiliate_link_unresolved", "unknown"]),
+    network: AffiliateNetwork.optional(),
     programRef: z.string().min(1).optional(),
     /** A link that does not start with this is not the issued link, and the row is refused. */
     linkPrefix: z.string().min(1).optional(),
@@ -335,7 +348,7 @@ export const PartnerSource = z.object({
   /** A merchant who quotes rather than prices still sells the thing. */
   allowQuoteOnly: z.boolean().default(false),
   notes: z.string().default(""),
-}).refine((s) => s.affiliate.status !== "affiliate" || (s.affiliate.network !== undefined && s.affiliate.programRef !== undefined), {
+}).refine((s) => !NAMES_A_PROGRAMME.has(s.affiliate.status) || (s.affiliate.network !== undefined && s.affiliate.programRef !== undefined), {
   message: "An affiliate link belongs to a named network and a programme reference. Without both there is nothing to check the claim against.",
 });
 export type PartnerSource = z.infer<typeof PartnerSource>;

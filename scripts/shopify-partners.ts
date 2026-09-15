@@ -1,9 +1,12 @@
 /**
  * The three approved partners that publish their own Shopify catalogue, and
- * the two that cannot be read yet.
+ * the three with no catalogue to read.
  *
- * Each source names the store, the referral base the programme issued, and what
- * is and is not known about linking to an individual product. Each profile says
+ * Every programme fact lives in `src/domain/affiliate/programmes.ts` and is
+ * read from there: the rate, the referral link, the coupon, the referral
+ * window, whatever the dashboard can generate, and any condition the partner's
+ * terms place on using it. This file decides which of a store's products are
+ * saunas. It does not restate an arrangement. Each profile says
  * which of that store's products are complete saunas and which are heaters,
  * stones, accessories, or something from another aisle entirely.
  *
@@ -21,6 +24,7 @@
  * is not a classification and a keyword hit in one is not inventory.
  */
 
+import { affiliateStatusFor, needsComplianceReview, productLink, programmeFor, programmeNote, PROGRAMMES, type PartnerProgramme } from "@/domain/affiliate/programmes";
 import { MappingProfile, PartnerSource } from "@/domain/ingestion/profile";
 
 export type ShopifyPartner = { id: string; name: string; storeUrl: string };
@@ -33,19 +37,32 @@ export const SHOPIFY_SOURCES: ShopifyPartner[] = [
 ];
 
 /**
- * A referral link a programme issued, and what it is.
+ * The referral link each programme issued, kept in one place for a person to
+ * copy out of.
  *
  * Every one of these is a link to a store's front door with an affiliate tag on
- * it. None is a link to a product. Whether a product address carrying the same
- * tag is tracked is a thing each programme decides and none has been shown to
- * do it, so a record built from these sources links to the product and says its
- * affiliate state is unresolved. Nothing composes a tracking parameter onto a
- * product address.
+ * it, and not one is a link to a product. Whether a product address carrying
+ * the same tag is tracked is a thing each programme decides, and three of these
+ * programmes have a button in their dashboard that answers the question
+ * properly. Until somebody presses it and records what comes back, a record
+ * built from these sources links to the plain product address and says its
+ * affiliate state is unresolved. Nothing composes a tracking parameter.
+ *
+ * The values are public by construction: a referral link exists to be put in
+ * front of shoppers and its identifier is in the address bar of every referred
+ * visit. `src/domain/affiliate/programmes.ts` holds the rest of each
+ * programme's facts and the rule about what never gets written down.
  */
-export const REFERRAL_BASES: Record<string, string> = {
-  "topture-shopify": "https://topture.com/?ref=MATTORR",
-  "hooga-shopify": "https://hoogahealth.com/?ref=MATTORR",
-};
+export const REFERRAL_BASES: Record<string, string> = Object.fromEntries(
+  PROGRAMMES.filter((p) => p.referralLink !== undefined).map((p) => [p.partnerId, p.referralLink as string]),
+);
+
+/** The programme behind a source, or a loud failure: a source with no programme is a gap, not a default. */
+function programme(id: string): PartnerProgramme {
+  const found = programmeFor(id);
+  if (!found) throw new Error(`No affiliate programme is recorded for ${id}. Add one to src/domain/affiliate/programmes.ts rather than leaving a source with no arrangement behind it.`);
+  return found;
+}
 
 function shopifySource(opts: {
   id: string;
@@ -57,6 +74,7 @@ function shopifySource(opts: {
   defaultBrand: string;
   notes: string;
 }): PartnerSource {
+  const p = programme(opts.id);
   return PartnerSource.parse({
     id: opts.id,
     name: opts.name,
@@ -71,13 +89,18 @@ function shopifySource(opts: {
     priceCurrency: "USD",
     idPrefix: opts.idPrefix,
     defaultBrand: opts.defaultBrand,
-    // Approved programmes, and no product-level tracking has been shown to work
-    // for any of them. `unknown` is what this catalogue already means by
-    // "nobody has established what this link is", and the record says so rather
-    // than claiming a commission it cannot demonstrate.
-    affiliate: { status: "unknown" },
+    // Joined programmes, each with a dashboard somebody has now opened, and not
+    // one with a verified way to link to an individual product. That is exactly
+    // `affiliate_link_unresolved`: the arrangement is real and recorded, and
+    // this link does not pay. It used to say `unknown`, which means nobody had
+    // recorded the relationship at all, and that stopped being true the day the
+    // logins were completed.
+    affiliate: { status: affiliateStatusFor(p), network: p.network, programRef: p.programRef },
     allowQuoteOnly: false,
-    notes: opts.notes,
+    // No `linkPrefix`. The rows carry the store's own product addresses, which
+    // is what this links to; a prefix here would refuse every row for not being
+    // an issued link that nobody has issued.
+    notes: `${opts.notes} ${programmeNote(p)}`,
   });
 }
 
@@ -90,7 +113,7 @@ export const TOPTURE = shopifySource({
   idPrefix: "topture",
   defaultBrand: "Topture",
   notes:
-    "GoAffPro, approved at 2%. The dashboard offers a product-link generator and no file export, and the store publishes its own catalogue at /products.json. Referral base issued by the programme: https://topture.com/?ref=MATTORR. No product-level tracking parameter has been shown to work, so offers are recorded with their affiliate state unresolved.",
+    "The dashboard offers a product-link generator and no file export, and the store publishes its own catalogue at /products.json. No product-level tracking parameter has been verified, so offers link to the store's own product address and say their affiliate state is unresolved.",
 });
 
 export const SELECT_SAUNAS = shopifySource({
@@ -102,7 +125,7 @@ export const SELECT_SAUNAS = shopifySource({
   idPrefix: "select-saunas",
   defaultBrand: "Select Saunas",
   notes:
-    "UpPromote, approved. Marketing Tools holds no files, and the store publishes its own catalogue at /products.json. The programme's deep-link rule is not recorded here and no tracking parameter is composed: whatever UpPromote issues goes in this record when somebody reads it from the dashboard.",
+    "Marketing Tools holds no files, and the store publishes its own catalogue at /products.json. The dashboard has \"Get product link\" and \"Get link with source\", so a per-product link is something a person can generate; what either button does to an address has not been read, and guessing at it is the one thing that would turn an honest gap into a false claim. Whatever the portal returns goes in this record when somebody runs it.",
 });
 
 export const HOOGA = shopifySource({
@@ -114,34 +137,98 @@ export const HOOGA = shopifySource({
   idPrefix: "hooga",
   defaultBrand: "Hooga",
   notes:
-    "GoAffPro, approved at 8%. Product-link generator in the dashboard, no file export, catalogue published at /products.json. Referral base issued by the programme: https://hoogahealth.com/?ref=MATTORR. Hooga is primarily a red-light brand; how much of its catalogue is a complete sauna is a question the first snapshot answers and this does not guess at.",
+    "Product-link generator in the dashboard, no file export, catalogue published at /products.json. Hooga is primarily a red-light brand; how much of its catalogue is a complete sauna is a question the first snapshot answers and this does not guess at.",
 });
 
 export const SHOPIFY_PARTNERS: PartnerSource[] = [TOPTURE, SELECT_SAUNAS, HOOGA];
 
 /**
- * Partners that cannot be read, recorded as what they are.
+ * Approved partners with no catalogue to read, recorded as what each one is.
  *
- * Neither is a failure to try. One answers automated requests with a refusal,
- * and going around that is the thing this must not do; the other is behind a
- * login and a CAPTCHA, and solving one of those is not something anybody should
- * automate. They sit here so the inventory says why they are absent.
+ * "Blocked" here means blocked from ingestion, not blocked from the programme.
+ * All three are approved and two have an active dashboard. What none of them
+ * has is a machine-readable list of what they sell, and the reasons differ
+ * enough to matter:
+ *
+ * - Lifepro refuses the requests that would show one, and going around a
+ *   refusal is the thing this must not do.
+ * - Therasage's portal has now been read end to end. There is no feed behind
+ *   the login, which settles the question the earlier record left open, and its
+ *   terms restrict where the link and the coupon may be placed.
+ * - SAUNABOX approved with a rate and a code and sent no inventory at all.
+ *
+ * Each carries its programme's facts from `programmes.ts`, so the tool shows a
+ * person the rate, the window, the coupon and any outstanding compliance
+ * requirement beside the reason the catalogue is absent.
  */
-export type BlockedPartner = { id: string; name: string; state: "blocked_pending_authorized_export" | "blocked_pending_portal_review"; why: string };
+export type BlockedState =
+  /** The store refuses automated reading and has supplied no export. */
+  | "blocked_pending_authorized_export"
+  /** The portal has been reviewed by a person. It holds no bulk feed. */
+  | "portal_review_complete_no_bulk_feed"
+  /** Approved, with nothing resembling an inventory feed on offer. */
+  | "approved_no_inventory_feed";
+
+export type BlockedPartner = {
+  id: string;
+  name: string;
+  state: BlockedState;
+  why: string;
+  /** Programme facts, copied at seed time so the record stands on its own. */
+  programme?: {
+    network: string;
+    dashboard: string;
+    commissionPercent?: number;
+    referralWindowDays?: number;
+    coupon?: string;
+    trackingCode?: string;
+    referralLink?: string;
+    productLinks: string;
+  };
+  /** Requirements a person must clear before any link or code is placed. */
+  compliance?: { id: string; requirement: string; statedIn: string; state: string }[];
+  /** Set while anything in `compliance` is outstanding. Nothing publishes past it. */
+  complianceReview?: "required" | "clear";
+};
+
+function blocked(id: string, state: BlockedState, why: string): BlockedPartner {
+  const p = programme(id);
+  return {
+    id,
+    name: p.merchantName,
+    state,
+    why,
+    programme: {
+      network: p.network,
+      dashboard: p.dashboard,
+      ...(p.commissionPercent !== undefined ? { commissionPercent: p.commissionPercent } : {}),
+      ...(p.referralWindowDays !== undefined ? { referralWindowDays: p.referralWindowDays } : {}),
+      ...(p.coupon ? { coupon: p.coupon } : {}),
+      ...(p.trackingCode ? { trackingCode: p.trackingCode } : {}),
+      ...(p.referralLink ? { referralLink: p.referralLink } : {}),
+      productLinks: productLink(p, "https://example.invalid/product").ok ? "verified" : "no verified per-product link",
+    },
+    ...(p.compliance.length > 0 ? { compliance: p.compliance } : {}),
+    complianceReview: needsComplianceReview(p) ? "required" : "clear",
+  };
+}
 
 export const BLOCKED_PARTNERS: BlockedPartner[] = [
-  {
-    id: "lifepro",
-    name: "Lifepro",
-    state: "blocked_pending_authorized_export",
-    why: "Approved. The structured catalogue and the sitemap both answer an automated request with 403. That is the store saying no to this kind of reading, and reading around it is not something this project does. It needs an export the partner supplies, or an address they authorise.",
-  },
-  {
-    id: "therasage",
-    name: "Therasage",
-    state: "blocked_pending_portal_review",
-    why: "Approved. The Refersion portal needs a login and a CAPTCHA, and whether any feed exists behind it is unverified. A CAPTCHA is a person's job and this stops at it.",
-  },
+  blocked(
+    "lifepro",
+    "blocked_pending_authorized_export",
+    "Approved. The structured catalogue and the sitemap both answer an automated request with 403. That is the store saying no to this kind of reading, and reading around it is not something this project does. It needs an export the partner supplies, or an address they authorise.",
+  ),
+  blocked(
+    "therasage",
+    "portal_review_complete_no_bulk_feed",
+    "Approved, Refersion dashboard active, 10% with a 30-day referral window. A person has now been through the portal: it offers \"Create link to a specific page\" and no inventory feed and no export of any kind, so the question the earlier record left open is settled and the answer is that there is nothing to fetch. Therasage products reach this site only by somebody entering them. Its terms also restrict where the link and the coupon may be placed and require a disclosure, so the compliance review below has to be cleared before either is published anywhere.",
+  ),
+  blocked(
+    "saunabox",
+    "approved_no_inventory_feed",
+    "Approved directly at 5% with tracking code MATT41058. The approval carried a link to finish setting up the account and no inventory feed, no export and no catalogue address. The setup link is a single-use key to this account, so it is not recorded here or anywhere in this repository. Nothing can be ingested until SAUNABOX supplies a feed or a person enters products by hand.",
+  ),
 ];
 
 /**

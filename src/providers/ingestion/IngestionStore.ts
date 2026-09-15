@@ -106,6 +106,33 @@ export function uploadFileName(original: string, hash: string, on: string): stri
 export type UploadRefusal = { ok: false; reason: string; findings: CredentialFinding[] };
 export type UploadSaved = { ok: true; path: string; hash: string; bytes: number };
 
+/**
+ * A partner whose catalogue cannot be read, as written to the workspace.
+ *
+ * `complianceReview: "required"` is the one field here with teeth: it means the
+ * partner's own terms place a condition on using their link or their code that
+ * nobody has met, and it is set from the programme record rather than typed.
+ */
+export type BlockedRecord = {
+  id: string;
+  name: string;
+  state: string;
+  why: string;
+  recordedOn?: string;
+  programme?: {
+    network: string;
+    dashboard: string;
+    commissionPercent?: number;
+    referralWindowDays?: number;
+    coupon?: string;
+    trackingCode?: string;
+    referralLink?: string;
+    productLinks: string;
+  };
+  compliance?: { id: string; requirement: string; statedIn: string; state: string }[];
+  complianceReview?: "required" | "clear";
+};
+
 export class IngestionStore {
   constructor(readonly root: string) {}
 
@@ -271,13 +298,20 @@ export class IngestionStore {
     return this.draftsById().get(id);
   }
 
-  /** Partners recorded as unreadable, and why. Written by the seed, read by the tool. */
-  blocked(): { id: string; name: string; state: string; why: string; recordedOn?: string }[] {
+  /**
+   * Approved partners with no catalogue to read, and why each one has none.
+   *
+   * Written by the seed, read by the tool. The shape is deliberately loose
+   * about the programme block: a partner record is a snapshot of what somebody
+   * read in a dashboard, and an older one written before a field existed still
+   * has to load.
+   */
+  blocked(): BlockedRecord[] {
     const dir = this.inside("blocked");
     if (!existsSync(dir)) return [];
     return readdirSync(dir)
       .filter((f) => f.endsWith(".json"))
-      .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as { id: string; name: string; state: string; why: string; recordedOn?: string })
+      .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as BlockedRecord)
       .sort((a, b) => a.name.localeCompare(b.name));
   }
 

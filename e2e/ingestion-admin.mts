@@ -468,10 +468,35 @@ async function run() {
     }
 
     scenario = "blocked";
-    for (const id of ["lifepro", "therasage"]) {
-      ok(`${id} is recorded as unreadable`, (await page.locator(`[data-testid="blocked-${id}"]`).count()) === 1);
+    for (const id of ["lifepro", "therasage", "saunabox"]) {
+      ok(`${id} is recorded as having no catalogue to read`, (await page.locator(`[data-testid="blocked-${id}"]`).count()) === 1);
     }
-    ok("with the reason", ((await page.locator('[data-testid="blocked-therasage"]').textContent()) ?? "").includes("CAPTCHA"));
+    ok("Lifepro still says the store refused the request", ((await page.locator('[data-testid="blocked-lifepro"]').textContent()) ?? "").includes("403"));
+    // The portal review is done, and the record says what it found rather than
+    // what it was waiting for.
+    check("Therasage's portal review is recorded as complete", await page.locator('[data-testid="blocked-therasage"]').getAttribute("data-state"), "portal_review_complete_no_bulk_feed");
+    ok("with the finding, not the old blocker", ((await page.locator('[data-testid="blocked-therasage"]').textContent()) ?? "").includes("no inventory feed"));
+    ok("its rate, window and coupon are on screen", ((await page.locator('[data-testid="blocked-programme-therasage"]').textContent()) ?? "").includes("10% · 30-day referral window · coupon WELLNESSFITCHECK"));
+    ok("and the link a person has to copy", ((await page.locator('[data-testid="blocked-link-therasage"]').textContent()) ?? "").startsWith("https://therasage.com/discount/WELLNESSFITCHECK?rfsn="));
+
+    scenario = "compliance";
+    check("the compliance review is raised once, for one partner", await page.locator('[data-testid="compliance-review"]').count(), 1);
+    check("naming both outstanding requirements", await page.locator('[data-testid="compliance-review"]').getAttribute("data-outstanding"), "2");
+    check("Therasage carries the flag", await page.locator('[data-testid="blocked-therasage"]').getAttribute("data-compliance"), "required");
+    for (const id of ["lifepro", "saunabox"]) {
+      check(`${id} does not`, await page.locator(`[data-testid="blocked-${id}"]`).getAttribute("data-compliance"), "clear");
+    }
+    for (const requirement of ["therasage-disclosure", "therasage-placement"]) {
+      check(`${requirement} is outstanding`, await page.locator(`[data-testid="compliance-${requirement}"]`).getAttribute("data-state"), "outstanding");
+    }
+    ok("SAUNABOX shows its rate and code and no setup link", ((await page.locator('[data-testid="blocked-programme-saunabox"]').textContent()) ?? "").includes("5% · tracking code MATT41058"));
+    check("and no link to copy, because none was issued", await page.locator('[data-testid="blocked-link-saunabox"]').count(), 0);
+
+    scenario = "no secrets on screen";
+    const screen = (await page.locator("body").textContent()) ?? "";
+    for (const forbidden of ["password", "Set-Cookie", "sessionid", "complete-signup", "Authorization"]) {
+      ok(`the tool shows no ${forbidden}`, !screen.toLowerCase().includes(forbidden.toLowerCase()));
+    }
 
   } finally {
     await browser.close();

@@ -26,7 +26,14 @@ export type Availability = z.infer<typeof Availability>;
 export const AffiliateStatus = z.enum(["affiliate", "non_affiliate", "affiliate_link_unresolved", "unknown"]);
 export type AffiliateStatus = z.infer<typeof AffiliateStatus>;
 
-export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "direct", "other"]);
+/**
+ * The networks a merchant's programme actually runs on.
+ *
+ * Three Shopify-side programmes joined the list when three retailers approved
+ * on them. `other` is still here for a network nobody has named, and `direct`
+ * for an arrangement with no network in the middle at all.
+ */
+export const AffiliateNetwork = z.enum(["awin", "impact", "cj", "amazon", "goaffpro", "uppromote", "refersion", "direct", "other"]);
 export type AffiliateNetwork = z.infer<typeof AffiliateNetwork>;
 
 export const ImageKind = z.enum(["affiliate_feed", "approved_creative", "licensed_upload", "demo_placeholder"]);

@@ -87,10 +87,37 @@ type ServerState = {
   targets: { target: string; label: string; catalogPath: string; required: boolean; note: string }[];
   sources: SourceRow[];
   drafts: DraftRow[];
-  blocked: { id: string; name: string; state: string; why: string; recordedOn?: string }[];
+  blocked: BlockedRow[];
   canonical: { unmatched: number; confirmed: number; queued: number; groups: CanonicalGroupRow[] };
   plans: PlanRow[];
 };
+/**
+ * An approved partner with no catalogue to read.
+ *
+ * Carries the programme facts a person needs to decide what to do next, and
+ * the compliance requirements they have to clear before anything of this
+ * partner's is placed anywhere.
+ */
+type BlockedRow = {
+  id: string;
+  name: string;
+  state: string;
+  why: string;
+  recordedOn?: string;
+  programme?: {
+    network: string;
+    dashboard: string;
+    commissionPercent?: number;
+    referralWindowDays?: number;
+    coupon?: string;
+    trackingCode?: string;
+    referralLink?: string;
+    productLinks: string;
+  };
+  compliance?: { id: string; requirement: string; statedIn: string; state: string }[];
+  complianceReview?: "required" | "clear";
+};
+
 type CategoryInfo = {
   id: string;
   name: string;
@@ -946,12 +973,52 @@ function crossPartnerSection(): HTMLElement {
 
 function blockedSection(): HTMLElement {
   const blocked = state.server?.blocked ?? [];
-  const panel = el("section", { class: "panel", "data-testid": "blocked" }, [text_("h2", "", `Partners that cannot be read (${blocked.length})`)]);
-  panel.append(text_("p", "note", "Approved programmes whose catalogue this cannot reach. Recorded so the inventory says why they are absent rather than leaving somebody to wonder. Neither was worked around."));
+  const needingReview = blocked.filter((p) => p.complianceReview === "required");
+  const panel = el("section", { class: "panel", "data-testid": "blocked" }, [text_("h2", "", `Partners with no catalogue to read (${blocked.length})`)]);
+  panel.append(
+    text_(
+      "p",
+      "note",
+      "Approved programmes whose inventory this cannot fetch. Recorded so the list says why they are absent rather than leaving somebody to wonder. None was worked around, and none of these is blocked from the programme: what each lacks is a machine-readable list of what they sell.",
+    ),
+  );
+  if (needingReview.length > 0) {
+    panel.append(
+      el("div", { class: "row conflict", "data-testid": "compliance-review", "data-outstanding": String(needingReview.reduce((n, p) => n + (p.compliance ?? []).filter((c) => c.state === "outstanding").length, 0)) }, [
+        el("header", {}, [text_("strong", "", "Compliance review required"), el("span", { class: "pill bad" }, [`${needingReview.length} partner(s)`])]),
+        text_("p", "note", "These partners' own terms place conditions on where their link or their coupon may appear. Until a person clears every requirement below, nothing of theirs is placed anywhere on the site."),
+      ]),
+    );
+  }
   for (const partner of blocked) {
-    const box = el("div", { class: "row conflict", "data-testid": `blocked-${partner.id}` });
-    box.append(el("header", {}, [text_("strong", "", partner.name), el("span", { class: "pill bad" }, [partner.state])]));
+    const box = el("div", { class: "row conflict", "data-testid": `blocked-${partner.id}`, "data-state": partner.state, "data-compliance": partner.complianceReview ?? "clear" });
+    const head = el("header", {}, [text_("strong", "", partner.name), el("span", { class: "pill bad" }, [partner.state])]);
+    if (partner.complianceReview === "required") head.append(el("span", { class: "pill bad" }, ["compliance review required"]));
+    box.append(head);
     box.append(text_("p", "note", partner.why));
+    const programme = partner.programme;
+    if (programme) {
+      const facts: string[] = [programme.network, `dashboard ${programme.dashboard}`];
+      if (programme.commissionPercent !== undefined) facts.push(`${programme.commissionPercent}%`);
+      if (programme.referralWindowDays !== undefined) facts.push(`${programme.referralWindowDays}-day referral window`);
+      if (programme.coupon) facts.push(`coupon ${programme.coupon}`);
+      if (programme.trackingCode) facts.push(`tracking code ${programme.trackingCode}`);
+      facts.push(programme.productLinks);
+      box.append(el("p", { class: "note", "data-testid": `blocked-programme-${partner.id}` }, [facts.join(" · ")]));
+      // The referral link is shown because a person has to be able to copy it.
+      // It is a share link and nothing else: no login, no session, no key.
+      if (programme.referralLink) {
+        box.append(el("p", { class: "note" }, [el("code", { "data-testid": `blocked-link-${partner.id}` }, [programme.referralLink])]));
+      }
+    }
+    for (const requirement of partner.compliance ?? []) {
+      box.append(
+        el("p", { class: "note", "data-testid": `compliance-${requirement.id}`, "data-state": requirement.state }, [
+          el("span", { class: requirement.state === "outstanding" ? "pill bad" : "pill" }, [requirement.state]),
+          ` ${requirement.requirement} (${requirement.statedIn})`,
+        ]),
+      );
+    }
     panel.append(box);
   }
   return panel;

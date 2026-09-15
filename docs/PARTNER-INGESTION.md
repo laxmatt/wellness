@@ -289,14 +289,64 @@ a question. Nothing is matched on a title alone, nothing is scored for
 similarity, and a merge keeps the incumbent record's name, description and
 specifications while each partner contributes only its own offer.
 
-**A link that is not tracked says so.** Three programmes are approved and none
-has a demonstrated way to credit a link to an individual product, so offers
-carry no composed tracking parameter and the site says the arrangement exists
-and this link earns nothing.
+**A link that is not tracked says so.** Five programmes are joined and not one
+has a verified way to credit a link to an individual product, so offers carry
+no composed tracking parameter and the site says the arrangement exists and
+this link earns nothing.
 
-Two approved partners cannot be read and are recorded as such rather than left
-out: Lifepro answers automated requests with 403, and Therasage sits behind a
-login and a CAPTCHA.
+## Six programmes, and what each one issued
+
+`src/domain/affiliate/programmes.ts` holds every fact a person read in a
+dashboard: the network, the rate, the referral link, the coupon, the referral
+window, and any condition the partner's terms place on using them. Nothing
+else in the repository restates an arrangement, and a source with no programme
+behind it throws rather than defaults.
+
+| Partner | Network | Rate | Issued | Catalogue |
+| --- | --- | --- | --- | --- |
+| Topture | GoAffPro | 2% | store link, `ref=MATTORR` | `/products.json` |
+| Select Saunas | UpPromote | not read | store link, `sca_ref` | `/products.json` |
+| Hooga | GoAffPro | 8% | store link, `ref=MATTORR` | `/products.json` |
+| Therasage | Refersion | 10%, 30-day window | link with coupon `WELLNESSFITCHECK` | none |
+| SAUNABOX | direct | 5% | tracking code `MATT41058` | none |
+| Lifepro | unread | unread | nothing | refuses automated requests |
+
+**Generatable is not generated.** Four dashboards have a button that makes a
+link to one product: Topture's and Hooga's generators, Select Saunas' "Get
+product link" and "Get link with source", and Therasage's "Create link to a
+specific page". A person can press any of them. What each does to a product
+address is unverified, so `ProductLinkRoute` records the *name of the tool*
+and carries no template, no base and no parameter. `productLink()` is the only
+function that would build one and it returns a reason instead, naming the
+button. A template appears only on a `verified` route, set by a person who ran
+a real link and watched the click register, and today no route is verified.
+Guessing at the transformation would publish links that earn nothing while
+looking like they earn something, and the difference shows up months later in
+a payout that does not arrive.
+
+**A partner's terms are a blocker, not a footnote.** Therasage's terms
+restrict where its link and its coupon may be placed and require a disclosure
+before the click. Both are recorded as outstanding compliance requirements,
+the tool raises them above the partner list, and `productLink()` refuses a
+Therasage link even on a verified route while either stands.
+
+**Three approved partners have no catalogue to read**, recorded as such rather
+than left out. Lifepro answers automated requests with 403
+(`blocked_pending_authorized_export`). Therasage's Refersion portal has now
+been read end to end and holds no feed and no export
+(`portal_review_complete_no_bulk_feed`). SAUNABOX approved with a rate and a
+code and sent no inventory (`approved_no_inventory_feed`).
+
+**What is written down and what never is.** Referral links, programme
+identifiers, tracking codes, coupons, rates and windows are public by
+construction: every one of them travels in a link a shopper clicks. Usernames,
+passwords, session cookies, bearer tokens, API keys and one-time account links
+are not recorded anywhere. A programme's complete-signup link is one of those;
+SAUNABOX sent one and the repository records its existence and not its value.
+`secretsIn()` checks the identifier and address fields of every programme, the
+seed refuses to write when it finds anything, and it deliberately leaves prose
+alone so a note can say a portal needs a login without being refused for
+saying so.
 
 ## What it will not do
 
