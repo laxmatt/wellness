@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This Canadian Timber Serenity Barrel Sauna with 18 in (45cm) Porch is handcrafted from Eastern White Cedar . The door is 0.2 in (5mm) bronze tempered glass with wooden frame and pre-hung on the front wall for easy installation. This Sauna kit comes with solid cedar cradles, aluminum bands with stainless steel hardware and is packaged in a ready to assemble kit . This model features a built in front porch with benches so you have a covered cool down area on the outside of the sauna. The round concept of the barrel sauna makes it unique and very efficient to heat as well as encourages proper air flow during sauna use. Features Seats: 2-4 people Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Weight: 1124 lbs Made in: Canada Exterior Dimensions: 86.25\"W x 94.5\"D x 86.25\"H Shipping Dimensions: 96 x 45 x 34 Front Porch This model includes a 1.5' (45cm) front porch. Removable Floor This model includes a removable flat floor. Aluminum Bands Features Aluminum Bands with Stainless Steel bolts for tightening. Solid Wood Benches Includes Solid cedar benches that are wide enough to lay down or comfortable to sit up. What's Included? Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure 2x Solid benches Aluminum Bands Door w/ bronze tempered glass window Flat removable floor Porch with 2 seats Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly Installation Manual Shipping Information",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 621300,
-      "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+      "listPriceMinor": 739900,
+      "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC2245W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?variant=45691183464712&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-serenity-barrel-sauna?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-11."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

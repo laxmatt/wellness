@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The SaunaLife ERGO-Series Outdoor sauna barrels were designed and engineered by sauna enthusiasts to be the most comfortable, durable, and attractive barrel saunas you can buy. Ergonomics – Barrel Sauna Comfort Bathing comfort cannot be overlooked when investing in an outdoor sauna barrel. The diameter of the barrel and the bench/backrest configuration must be considered. Barrels with a small diameter may be priced lower (less materials), but the tradeoffs are door height, bench comfort, and headroom. Smaller diameter barrels have a tighter arc which can create seating posture challenges, impact standing upright, and require one to duck upon entry and exit. ERGO Series Sauna Barrels benefit from a 6’5” interior height. Due to its large diameter, benches can be ergonomically contoured and formfitting. The generous barrel arc can support an expansive and arched backrest for true lumbar support. Touch and feel were not ignored when selecting the knot-free, silky-smooth grade-A Thermo-Aspen seating material designed to hug most any body size. Durability – A lifetime of outdoor bathing pleasure Did you know that Thermo-Spruce lasts up to 2X longer than Cedar wood? Every SaunaLife barrel begins with industry-leading 1.65” thick full-length staves that encapsulate the sauna and provide exceptional thermal resistance (R-value). This chemical-free, eco-friendly wood is dimensionally stable and ideally suited for outdoor saunas. We even build showers out of it! Wood thickness is the theme in the SaunaLife ERGO Series and provides bathers with ergonomically crafted benches and backrests from Thermo-Aspen (1.1” thick and 3-1/2” wide) nearly 50% thicker than most. Ingenuity - Engineered to exceed expectations Don’t let the simple design and installation process fool you, the ERGO-Series is jam-packed with barrel sauna innovation. Go ahead and splash the water, these beautiful outdoor spaces are built to thrive with water! It begins with industry-leading 1-7/8” wide and 1/8” thick stainless steel barrel bands that compress the massive staves and create your wellness retreat. Then, a watertight DIY shingle kit (a necessity for every barrel sauna) with side-mounted drip edges provides exceptional rainwater management. Inside the barrels are dual floor drains. One is purposefully placed under the sauna heater for your water-tossing pleasure. A second drain is near the door, where cold plunge or pool water may collect. Should this barrel shift out of level, these dual floor drains have you covered. Illumination – Inside and out Illuminating your barrel showcases the beauty of the wood and enhances your sauna experience. Only low-voltage and waterproof LED lighting will do. SaunaLife provides a superior white LED lighting system that is Wi-Fi app-based and allows one to set the ideal scene prior to entering the sauna. A hand-held remote control is also provided for on/off/dim operation. SaunaLife’s white LED fixture is heat and water certified (IP67) and is dotless so it provides an enchanting, even glow. Expandable up to four white fixtures, explore the available E Sconce+ Package which provides two striking out-door LED wall sconces and a secondary interior LED lightbar for ideal outdoor sauna ambiance. For the ultimate backyard sauna party attraction, consider adding E MOOD Lighting Package for both the inspirational and relaxing visual effects that an infinite range of color affords. Beauty – A compliment to most any outdoor oasis SaunaLife sources the highest quality Nordic Spruce and dries it to a rich golden color that accentuates its distinctive grain and rustic tight-knot charm. The barrel interior benefits from ergonomically designed benches and backrests of ultra-smooth Thermo-Aspen, a grade-A wood species that is rich in color, and free from knots. A complimentary bottle of paraffin oil, a natural wax, is provided to enrich and preserve the interior luster. The MODEL E7 home sauna is designed by SaunaLife and precision-crafted in Northern Europe where sauna bathing is a healthy part of everyday life. Enjoy a lifetime of wellness in your own backyard and Live the SaunaLife! SaunaLife barrel sauna kits are designed to be the most comfortable, durable, and attractive barrel saunas you can buy. They are constructed of the highest quality Nordic Spruce and have ergonomically designed, ultra-smooth Thermo-Aspen benches and backrests. They feature a white LED lighting system that is Wi-Fi app-based and allows one to set the ideal scene prior to entering the sauna. A shingled roof is included to protect it from the elements. Features: Capacity of 4 persons (171 cu ft) Thermo-Spruce barrel & cradles (lasts up to 2X longer than Cedar) Contoured Thermo-Aspen benches for comfortable seating Industry-leading wall, bench, and backrest material thicknesses Superior thermal resistance (R-value) Spacious 6’5” interior height Black shingle roof kit for weather-tight installation White LED Light Bar System with Wi-Fi App & remote control Dual floor drains for effective water elimination Tempered bronze glass (5/16” thick) Heavy-duty stainless steel barrel bands (1-7/8” wide x 1/8” thick) Sauna heater guard Intake and exhaust air vents DIY kit for simple installation (1-day, 2-persons) Handcrafted in Northern Europe Lifetime Limited Warranty Specifications Specifications: Exterior Dimensions: 5'11\" Length x 6'9\" Diameter Interior Dimensions: 5'3\" Length x 6'5\" Diameter (171 cu ft) Bench Depth: 17.8\" Barrel Stave Thickness: 1.65\" Bench Thickness: 1.1\" Glass Thickness: 5/16\" Weight: 1,212 lbs Includes Included: Staves, Benches & Cradles Tempered bronze glass door Stainless steel barrel bands Black roof shingle kit Spruce fascia boards Air intake and exhaust vents White LED light bar w/ wifi & remote control (expandable to 4 LED lights) Extra staves (2) Fastener kit Paraffin oil, 16.9 oz bottle (500ml) Installation instructions Add-Ons: Flat Floor Heater Lighting Upgrades Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Manual Installation Manual",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 519000,
+      "listPriceMinor": 599900,
       "url": "https://topture.com/products/saunalife-model-e7-sauna-barrel-ergo-series?variant=44689845453064&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -39,19 +40,20 @@
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "SL-MODELE7",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/saunalife-model-e7-sauna-barrel-ergo-series?variant=44689845453064&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 3 rows sharing /products/saunalife-model-e7-sauna-barrel-ergo-series, ranging $5,190 to $6,190. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-09."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

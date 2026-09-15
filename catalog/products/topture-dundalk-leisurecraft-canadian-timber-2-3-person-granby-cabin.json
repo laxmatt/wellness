@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The Granby Cabin Sauna features a 2-tier seating arrangement, providing optimal comfort and functionality for both sitting and laying down. The design incorporates a full-sized door with a bronze-tempered window. The Eastern White Cedar boasts remarkable resistance to decay and insects, providing exceptional durability with a lifespan of 30+ years. Exhibiting characteristic knots and a naturally light hue, the wood acquires a warm, rich amber tone when thermally treated, which gracefully weathers to a distinguished silver-grey when exposed to the elements. It comes with pre-cut and pre-milled Eastern White Cedar wood, as well as a 28-gauge steel roof, making assembly simple and efficient. A team of two individuals can set up the sauna in just 5-8 hours, with no cutting necessary. Features: Seating capacity: 2-3 people Flat floor 5mm bronze tempered glass door Premium metal shingle roof Vents for heat control Solid wood benches: Sturdy bench design for sitting up or laying down 2-tier benches on the back wall with return L Bench that can be installed on the left or right side 28-gauge steel roof panels in a black matte textured color Weight: 1230 lbs Delivery: Free Delivery Curbside: customer responsibility to offload crate from truck via forklift with fork extensions or hand offloading if allowed by trucking company. Made in Canada Includes Included with your purchase: Full sauna kit, including wood, windows, door & hardware Premium metal shingle roof and roof membrane Solid Wood Benches Installation guide Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna accessories: Pair your sauna with a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Specifications Dimensions: Sauna interior size: 158 cu ft Interior Dimensions: 5' x 5' x 7' tall at ceiling peak Overall Exterior Dimensions including roof: 6'2\" x 6'2\" x 8.1' tall Walls: 1.5\" thick solid Cedar Assembly Installation Manual Dundalk Shipping Policy",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 566800,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin-sauna-ctc66w?variant=45691170914568&ref=MATTORR",
+      "listPriceMinor": 669900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin-sauna-ctc66w?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC66W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin-sauna-ctc66w?variant=45691170914568&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-3-person-granby-cabin-sauna-ctc66w?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-30."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

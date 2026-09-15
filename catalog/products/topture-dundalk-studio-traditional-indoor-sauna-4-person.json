@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The CT Element Studio is the most expansive model in Leisurecraft’s modern Element collection — an open-concept, full-glass indoor sauna built for luxury residences, wellness studios, spas, boutique hotels, and fitness spaces. Thermally-modified Thermo Grandis hardwood, extra-wide two-tier benches, and a 10mm glass front combine design and relaxation in a premium indoor retreat. Features Thermo Grandis Wood: thermally modified in Ontario, Canada for extra stability, moisture resistance, and a refined, consistent grain Modern Full-Glass Front: 10mm glass door and front window for a bright, contemporary, spa-inspired look Extra-Wide Two-Tier Benches: generous 20\" upper benches with 15\" lower benches for flexible seating Fully Framed Floor: solid 2x4 wood framing finished with a Thermo Grandis floor surface Triple-Layer Walls: interior wood, vapour barrier, and an air gap for clean wiring, plus an exterior wall finish Electric-Heater Ready: designed for indoor electric sauna heaters (heater sold separately) Easy Panel Assembly: panelized construction ships ready to assemble for a faster, cleaner setup 100% Canadian Production: handcrafted in Canada from premium Thermo Grandis What's Included? Pre-cut Thermo Grandis wall, roof, and bench panels Fully framed floor with Thermo Grandis surface 10mm glass door and front window Two-tier benches (20\" upper / 15\" lower) Warm interior lighting Hardware and assembly instructions Electric sauna heater sold separately Specifications Sauna Type: Traditional (electric heater — sold separately) Seating Capacity: 2-4 people Material: Thermo Grandis (thermally modified hardwood) Exterior Dimensions (W × D × H): 84.75\" × 64.75\" × 88.06\" Interior Dimensions (W × D × H): 74.75\" × 54.75\" × 80.5\" Interior Volume: 191 ft³ Recommended Heater: 6 kW electric Glass: 10mm Gross Weight: 844.46 lbs Assembly: Panelized kit Made in Canada Care & Maintenance Keep your Element sauna looking and performing its best with simple care: wipe benches and surfaces with a damp cloth after use, ventilate the room to dry the interior between sessions, and avoid harsh chemical cleaners on the Thermo Grandis wood. Refer to the assembly documentation below for full setup and maintenance guidance. Assembly & Documentation CT Element Studio — Assembly Instructions (PDF) CT Element Studio — Product Drawing / Spec Sheet (PDF)",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 1065000,
-      "url": "https://topture.com/products/dundalk-studio-traditional-indoor-sauna-4-person?variant=58053788762376&ref=MATTORR",
+      "listPriceMinor": 1339900,
+      "url": "https://topture.com/products/dundalk-studio-traditional-indoor-sauna-4-person?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "604003",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-studio-traditional-indoor-sauna-4-person?variant=58053788762376&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-studio-traditional-indoor-sauna-4-person?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-25."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description Experience ultimate outdoor relaxation with the SaunaLife Model CL12GCP Cube-Series Sauna Suite. Designed for up to 8 people, this all-in-one luxury sauna retreat features a spacious sauna room with a panoramic tempered-glass window, a separate dressing area, and a cozy front porch for unwinding before and after your session. Built with ultra-durable Thermo-Spruce and crafted in Northern Europe, the CL12GCP offers superior airflow, comfort, and weather resistance — perfect for cabins, large properties, or wellness enthusiasts seeking a top-tier sauna experience. Features Spacious design for up to 8 bathers with separate sauna and dressing rooms Large bronze tempered-glass picture window enhances light and atmosphere Weather-resistant Thermo-Spruce exterior with 12.5’ full-length staves Contoured 2-tier Thermo-Aspen benches and arched backrests for ergonomic comfort Integrated front porch with seating adds Nordic charm Shingled roof with drip rails for long-term durability Wi-Fi controlled dotless LED lighting system with app and remote operation Lockable front door with bronze glass for added security and elegance Precision ventilation system ensures optimal airflow and heat distribution What's Included? Thermo-Spruce sauna suite structure with dressing room and porch 2-tier Thermo-Aspen sauna benches & backrests Thermo-Aspen dressing room benches Tempered bronze glass front door & rear picture window Shingle kit with drip rails Ventilation system and heater guard White LED light system with app, remote, power supply, and mounting hardware Water diverter, fascia boards, and foundation beams Montage kit and black-painted front trim All installation materials and instructions Specifications Model: CL12GCP Capacity: Up to 8 persons Exterior Dimensions: 91\"W x 151.6\"D x 93\"H (231 x 385 x 236 cm) Sauna Room Dimensions: 87.5\"W x 78.6\"D x 85.5\"H (222 x 200 x 217 cm) Dressing Room Dimensions: 87.5\"W x 43.9\"D x 85.5\"H (222 x 112 x 217 cm) Porch Dimensions: 87.5\"W x 22.75\"D x 85.5\"H (222 x 57.8 x 217 cm) Wall/Ceiling Material: Thermo-Spruce (1.7\" thick staves) Bench Material: Clear Thermo-Aspen (1.75\" thick) Glass: 0.31\" thick tempered bronze glass for doors and window Door Dimensions: 27.2\"W x 75.6\"H (69 x 192 cm) Product Weight: 3100 lbs (1406 kg) Shipping Weight: 3450 lbs (1565 kg) Shipping Dimensions: 155\"W x 44\"D x 47\"H (394 x 112 x 119 cm) Made in Northern Europe Shipping & Delivery Delivered by specialized or flatbed truck Scheduled delivery appointment required Ships encased in protective wooden crate on a pallet Requires forklift or crane for unloading and on-site transport Driver provides delivery only; placement/setup not included Customers will be contacted prior to shipping to coordinate delivery and address any special site requirements Shipping Dimensions: 155\"W x 44\"D x 47\"H (394 x 112 x 119 cm) Shipping Weight: 3450 lbs (1565 kg) Documents Sauna Dimensions Installation Manual",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 1099000,
-      "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+      "listPriceMinor": 1269900,
+      "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "SL-CL12GCPCP",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?variant=52060275081480&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/saunalife-cl12gcp-cube-sauna-8-person?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-11-06."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

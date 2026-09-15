@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 3468000,
+      "listPriceMinor": 4089900,
       "url": "https://topture.com/products/kohler-c2-outdoor-sauna-kit-douglas-fir?variant=52937594765576&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -44,14 +45,15 @@
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/kohler-c2-outdoor-sauna-kit-douglas-fir?variant=52937594765576&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 3 rows sharing /products/kohler-c2-outdoor-sauna-kit-douglas-fir, ranging $34,680 to $43,860. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as in_stock."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

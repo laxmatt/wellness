@@ -32,7 +32,8 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 599500,
-      "url": "https://topture.com/products/finnmark-fd-2-full-spectrum-infrared-sauna?variant=44943300002056&ref=MATTORR",
+      "listPriceMinor": 699999,
+      "url": "https://topture.com/products/finnmark-fd-2-full-spectrum-infrared-sauna?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
@@ -44,14 +45,15 @@
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/finnmark-fd-2-full-spectrum-infrared-sauna?variant=44943300002056&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/finnmark-fd-2-full-spectrum-infrared-sauna?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as in_stock."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

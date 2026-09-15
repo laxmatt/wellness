@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The CT MiniPOD Sauna is a 7'x7' Sauna with side wall benches to seat up to 4 people sitting up or 2 people laying down. It is handcrafted in Canada with Eastern White Cedar lumber that is 1.5\" thick and select tight knot grade. The door features a large tempered glass window and the outside walls are protected against the weather with black asphalt shingles. This easy-to-assemble kit is available with a wood burning or an electric sauna heater. Features Seats: 2-4 people Size: 7'x7'x7' (~210 cu ft) Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Made in: Canada Weight : 1403 lbs Dimensions Includes Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure 2x Solid benches Ice & water shield Shingles Door w/ bronze tempered glass window Flat floor Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 693600,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-minipod-2-4-person-sauna-ctc77mw?variant=45691175567624&ref=MATTORR",
+      "listPriceMinor": 819900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-minipod-2-4-person-sauna-ctc77mw?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC77MW",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-minipod-2-4-person-sauna-ctc77mw?variant=45691175567624&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-minipod-2-4-person-sauna-ctc77mw?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-27."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

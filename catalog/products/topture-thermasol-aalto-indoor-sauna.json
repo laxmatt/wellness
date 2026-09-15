@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 2345500,
+      "listPriceMinor": 2699900,
       "url": "https://topture.com/products/thermasol-aalto-indoor-sauna?variant=58296740282632&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -44,14 +45,15 @@
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/thermasol-aalto-indoor-sauna?variant=58296740282632&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 2 rows sharing /products/thermasol-aalto-indoor-sauna, ranging $23,455 to $23,455. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as in_stock."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

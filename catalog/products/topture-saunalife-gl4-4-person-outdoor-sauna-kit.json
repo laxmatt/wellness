@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description Bring Scandinavian luxury to your backyard with the SaunaLife Garden Luxury-Series Model GL4 Outdoor Home Sauna Kit. Expertly crafted with professional-grade materials and designed for effortless at-home assembly, the GL4 combines striking architectural beauty with superior performance. Its modern, full-glass front and integrated porch create an inviting retreat, while ultra-premium Nordic Thermo-Spruce and Thermo-Aspen components ensure unmatched comfort, durability, and weather resistance. With easy two-day DIY installation, ambient LED lighting, and Wi-Fi smart controls, the GL4 makes luxury outdoor sauna living both accessible and achievable. Features Premium 1.57\" thick Nordic Thermo-Spruce walls for enhanced durability and longevity Modern architectural design with horizontal eaves, black trim, and integrated porch for a sleek, contemporary look Full bronze tempered-glass front (5/16” thick) with reversible door and full-height handle for open views and privacy Contoured 2-tier benching and backrest made of extra-thick, silky-smooth Thermo-Aspen for luxurious comfort Full-width recessed LED lighting integrated in porch eaves for elegant exterior illumination Indirect interior LED lighting with dimmable settings controlled via Wi-Fi app or wireless remote Engineered for pro-quality DIY installation in just 2 days with 2 people Interlocking-beam construction supports natural wood movement and ensures long-term stability What's Included? Model GL4 Outdoor Home Sauna Kit Thermo-spruce wall boards (1.57\" thick) Tempered bronze glass door with long black painted handle Tempered bronze glass windows with black painted frames 2-tiered Thermo-Aspen benches and backrests Extra-thick Thermo-Spruce roof (1.57\" thick) Thermo-Spruce porch boards (1.1\" thick) Thermo-Spruce floor boards (1.1\" thick) Black fascia boards Black metal flashing Ground frame Self-adhesive roofing felt Ventilation system Drainage system All screws and fasteners Comprehensive assembly instructions White LED light system with Wi-Fi app control Recessed exterior LED lighting Indirect interior LED lighting Wireless handheld remote control Specifications Model: GL4 Construction Material: Thermo-Spruce Exterior Dimensions: 58.9\"W (149.61 cm) x 79.5\"D (201.93 cm) x 85.1\"H (216.15 cm) Interior Dimensions: 55.5\"W (140.97 cm) x 59.1\"D (150.11 cm) x 76\"H (193.04 cm) Upper Bench: 54\"W (137.16 cm) x 23.6\"D (59.94 cm) Lower Bench: 54\"W (137.16 cm) x 12.5\"D (31.75 cm) Glass Style: Tempered Bronze Glass Glass Thickness: 0.24\" (Windows), 0.31\" (Door) Door Dimensions: 27.6\"W (70.10 cm) x 74.8\"H (189.99 cm) Window Dimensions: 24.6\"W (62.48 cm) x 72.4\"H (183.90 cm) Product Weight: 1650 lbs (748.5 kg) Shipping Dimensions: 83\"W (210.82 cm) x 43\"D (109.22 cm) x 32\"H (81.28 cm) Shipping Weight: 1830 lbs (830 kg) Porch Dimensions: 58.9\"W (149.6 cm) x 14.6\"D (37.1 cm) Documents SaunaLife GL4 Installation Manual SaunaLife GL4 Dimensions",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 949000,
-      "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+      "listPriceMinor": 1099900,
+      "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "SL-MODELGL4",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-11."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

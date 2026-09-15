@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This Canadian Timber Georgian Cabin Sauna is handcrafted from Eastern White Cedar, this sauna is strong for all-weather outdoor use, resistant to rot and decay, and features a beautiful light-colored finish. The door is 0.2 in ( 5mm) bronze tempered glass with a wooden frame and pre-hung on the front wall for easy installation. This sauna comes packaged in a ready-to-assemble kit . It features a 2-level L-shaped bench for up to 6-person seating and 2 front windows & 2 door windows to enjoy the view outside. This special sauna includes a separate changing room, so you can get ready for your sauna session in privacy. Features: Seats: 2-6 people in the sauna and up to 4 more in changing room Outside Dimensions incl roof: 8.2' wide x 12.1' long x 8.4' tall at peak Interior Dimensions: 7'W x 11'L x 7'H (353 cu ft sauna section - 539 cu ft total) Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Windows: 2 double paned bronze-tempered windows Weight: 2,624 lbs Shipping Dimensions: 144\" x 45\" x 44\" Made in: Canada Recommended Heater: 8 kW electric heater or wood-burning sauna stove Delivery: Free Delivery Curbside: customer responsibility to offload crate from truck via forklift with fork extensions or hand offloading if allowed by trucking company. The Dundalk Georgian is also available in the following configurations: Dundalk Georgian without Changeroom Dundalk Georgian with Porch Dimensions CTC88CW - Product Drawing Assembly Installation Manual Dundalk Shipping Policy Included Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure Prefab 2-tier solid benches with bottom L bench in sauna and 2 benches in changeroom 2x Bronze tempered glass windows Cedar roof boards Premium metal shingle roof 2x Doors w/ bronze tempered glass windows Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven.",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 1018500,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-changeroom-ctc88cw?variant=45691167703304&ref=MATTORR",
+      "listPriceMinor": 1199900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-changeroom-ctc88cw?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC88CW",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-changeroom-ctc88cw?variant=45691167703304&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-changeroom-ctc88cw?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-30."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

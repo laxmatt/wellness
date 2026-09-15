@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description Escape into the warmth and serenity of nature with the CT Elation Sauna, a luxurious outdoor retreat crafted from premium eastern white cedar. Designed for maximum comfort and style, this spacious sauna features extra-wide 23” benches, a tall 7’4” profile, and a solid flat floor — perfect for unwinding solo or with friends. With its all-in-one design that includes a porch, windows, and benches, setup is simple: just choose your preferred heater and optional add-ons to complete your wellness oasis. Features Premium Eastern White Cedar: Naturally resistant to decay and beautiful in any outdoor setting Spacious 7'4\" Height: Accommodates tall users comfortably Extra-Wide 23” Benches: Generously sized seating for maximum relaxation 5mm Bronze Tempered Glass: Durable, stylish door and windows for natural light and visibility Triple Layer Roof: Includes ice & water shield plus beveled cedar for durability and insulation Solid Flat Bottom: Enhanced comfort and a stable foundation All-in-One Package: Includes porch, benches, and windows — just add a heater Customizable Heating: Choose from wood-burning or electric heater options Easy DIY Setup: Comes as a kit for straightforward assembly What's Included? Pre-cut eastern white cedar panels and components Solid flat wood floor Porch with front overhang 23\" wide cedar benches (interior) 5mm bronze tempered glass door and front windows Triple-layer roofing system (ice/water shield + cedar bevel roof) Hardware and assembly instructions Optional Add-Ons Wood-burning heater with chimney kit Electric sauna heater with digital controls Interior LED lighting kit Backrests and comfort accessories Specifications External Dimensions: 88\" H 98\" W 96\" D Material: Eastern White Cedar Seating Capacity: 4 people Glass: 5mm bronze tempered glass Roof: Triple-layer (ice/water shield + cedar bevel) Weight: 1,496.5 lbs (gross) Shipping Dimensions: 96” L x 45” W x 44” H Assembly Elation Barrel Sauna Assembly Instructions",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 703100,
-      "url": "https://topture.com/products/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w?variant=51437783384328&ref=MATTORR",
+      "listPriceMinor": 829900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC2424W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w?variant=51437783384328&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-ct-elation-barrel-sauna-canadian-timber-4-person-ctc2424w?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-04."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

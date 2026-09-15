@@ -37,7 +37,8 @@
     "promote:saunas": "tsx scripts/promote-saunas.ts",
     "fetch:shopify": "tsx scripts/fetch-shopify.ts",
     "ingestion:seed:shopify": "tsx scripts/seed-shopify.ts",
-    "promote:shopify-saunas": "tsx scripts/promote-shopify-saunas.ts"
+    "promote:shopify-saunas": "tsx scripts/promote-shopify-saunas.ts",
+    "refresh:topture": "tsx scripts/refresh-topture-feed.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This Canadian Timber Collection (CTC22W) 2-4 Person Harmony Barrel Sauna is handcrafted from Eastern White Cedar that is lighter in color and has tight knots in the wood. The door is 5mm (0.2in.) bronze tempered glass with wooden frame and pre-hung on the front wall for easy installation. This Sauna kit comes with solid cedar cradles, aluminum bands with stainless steel hardware and is packaged in a ready to assemble kit. The round concept of the barrel sauna makes it unique and very efficient to heat as well as encourages proper air flow during sauna use. Features: Unrivaled rot and moisture resistance with exceptional stability and durability Superior insulating properties keep the heat in and stress and worries out Intuitively engineered for simple DIY installation Install in one day with no cutting required Removable flooring, and Marine Grade Aluminum Bands with stainless steel tightening bolts included Flat Floor This model includes a flat floor. Aluminum Bands Marine Grade Aluminum Bands with stainless steel tightening bolts. Solid Cedar Benches Sturdy Bench Design for sitting up or laying down. Specifications Seats: 2-4 people Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Made in: Canada Weight: Approx. 1054 lbs Exterior Dimensions: 86.25\"W x 79\"D x 86.25\"H Shipping Dimensions: 84 x 45 x 34 What's Included? Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure 2x Solid benches Aluminum Bands Door w/ bronze tempered glass window Flat removable floor Porch with 2 seats Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly Installation Manual Shipping Information",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 603200,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barrel-sauna-ctc22w?variant=45691179925768&ref=MATTORR",
+      "listPriceMinor": 709900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barrel-sauna-ctc22w?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC22W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barrel-sauna-ctc22w?variant=45691179925768&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-2-4-person-harmony-barrel-sauna-ctc22w?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-11."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

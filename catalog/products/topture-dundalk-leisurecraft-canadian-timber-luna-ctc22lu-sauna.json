@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This Canadian Timber Luna Sauna is handcrafted from Eastern White Cedar, this sauna is strong for all-weather outdoor use, resistant to rot and decay, and features a beautiful light-colored finish. The door is 0.2 in (5mm) bronze tempered glass with a wooden frame and pre-hung on the front wall for easy installation. This Luna Sauna kit comes with 2 tier prefab benches for 2-4 person seating , solid cedar floor joists, floor and walls , white cedar bevel siding for the sides, and is packaged in a ready-to-assemble kit . The large bronze tinted window allows you to enjoy the view outside without others peeking in and the rounded corners of the sauna offer a modern, unique design that perfectly fits into a modern or rustic setting. Features: Seats: 2-4 people Size: 7' cube / 280 cu ft Wood: Eastern White Cedar Walls: 1.5\" Thick Solid Cedar Door: Full-Sized Door with Bronze-Tempered Window for Easy Access Window: D ouble pane 5mm bronze tempered glass Weight : 1525 lbs Made in: Canada Dimensions Included Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure Prefab 2-tier solid benches Bronze tempered glass window Waterproof roof membrane Cedar roof boards Door w/ bronze tempered glass window Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. Assembly Installation Manual Dundalk Shipping Policy",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 739200,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+      "listPriceMinor": 869900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC22LU",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?variant=45691169865992&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-luna-ctc22lu-sauna?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-11."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

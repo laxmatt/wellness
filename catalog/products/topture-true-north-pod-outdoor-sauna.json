@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description Transform your backyard into a luxurious retreat with this handmade sauna from Ontario, Canada. It has been developed for outdoor use in nature and can withstand any weather. You can select an optional porch (which decreases inside length). Different window options are available and you can choose if you want a wood stove or an electric heater inside. Sauna comes as a kit that requires assembly . Features: 2 wood options: White Cedar- slightly stronger and almost as resistant to rot and decay as red cedar, and has a beautiful light colored finish. Red Cedar- naturally weather and insect resistant, gives off a pleasant and recognizable scent, and is aesthetically attractive. Comes standard with roof membrane & 2nd layer of roof boards Fascia boards to protect the end grain of the barrel wood 2 premium benches for sitting and reclining Partially pre-assembled construction with built-in venting holes Also Includes: 3 peg towel hanger, Vent kit and cover, Screws for assembly, Door handles, Glass door, Benches Optional front and rear windows Optional porch which decreases inside space accordingly. Total length remains the same. Specifications Seats: 4-8 people Height: 7.4 ' Tall Length: 8', 9', or 10' Width: 84.5\" Max; 80.25\" at base Bench Length: 8' Sauna: 89 ½ no porch or 77 ½” with 1’ porch 9' Sauna: 101 ½” no porch or 89 ½” with 1’ porch 10' Sauna: 113 ½” no porch or 101 ½” with 1’ porch Wood: White Cedar or Red Cedar Walls: 1.55\" thick solid wood Door: Wood-framed glass Made in: Canada Assembly Assembly Guide",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "preorder",
   "market": "US",
   "images": [
     {
@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 960400,
+      "listPriceMinor": 1280500,
       "url": "https://topture.com/products/true-north-pod-outdoor-sauna?variant=44697472794888&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -39,19 +40,20 @@
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "preorder",
       "merchantSku": "P24030 WC - Pod 8' - With Porch",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/true-north-pod-outdoor-sauna?variant=44697472794888&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 12 rows sharing /products/true-north-pod-outdoor-sauna, ranging $9,604 to $13,624. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as made_to_order. Lead time 8 weeks."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

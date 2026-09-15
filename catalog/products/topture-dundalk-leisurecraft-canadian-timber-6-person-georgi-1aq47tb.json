@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This Canadian Timber Georgian Cabin Sauna is handcrafted from Eastern White Cedar , this sauna is strong for all-weather outdoor use, resistant to rot and decay, and features a beautiful light-colored finish. The door is 0.2 in ( 5mm) bronze tempered glass with a cedar frame and pre-hung on the front wall for easy installation. This sauna comes packaged in a ready-to-assemble kit . It features a 2-level L-shaped bench for up to 6-person seating and 2 front windows & 1 door window to enjoy the view outside. The inclusion of an integrated porch area offers a versatile space for cooling down after a sauna or for enjoying moments of relaxation in the open air. Features: Seats: 2-6 people Outside Dimensions incl roof: 8.2' wide x 10.1' long x 8.4' tall at peak Interior Dimensions: 7'W x 7.2'L x 7'H (353 cu ft) Wood: Eastern White Cedar Walls: 1.5\" thick solid Cedar Door: Full-Sized Door with Bronze-Tempered Window Windows: 2 Double-Paned Bronze-Tempered Windows Weight: 1776 lbs Made in: Canada The Dundalk Georgian is also available in the following configurations: Dundalk Georgian without Porch Dundalk Georgian with Changeroom Dimensions Assembly Installation Manual Dundalk Shipping Policy Included Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure w/ porch Prefab 2-tier solid benches Bronze tempered glass windows Cedar roof boards Premium metal shingle roof Door w/ bronze tempered glass window Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven.",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 864900,
-      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-porch-ctc88pw?variant=45691168915720&ref=MATTORR",
+      "listPriceMinor": 1019900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-porch-ctc88pw?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC88PW",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-porch-ctc88pw?variant=45691168915720&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-canadian-timber-6-person-georgian-cabin-sauna-with-porch-ctc88pw?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-30."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The Georgian is Dundalk Leisurecraft's flagship cabin sauna — part of their Canadian Timber Collection, handcrafted in Ontario from Eastern White Cedar. Unlike barrel or pod saunas, the cabin design gives you a flat floor, vertical walls, and a peaked roof that sheds rain and snow the way a building should. It arrives as a ready-to-assemble kit with pre-cut tongue-and-groove cedar, a 5mm bronze tempered glass door and cedar frame pre-mounted on the front wall, and a premium metal shingle roof — everything you need to build a permanent outdoor sauna. The wood matters here more than most people realize. Eastern White Cedar is naturally resistant to rot, decay, and insect damage without any chemical treatment. It has a beautiful light-colored finish that weathers gracefully over time. The walls are 1.5 inches of solid cedar tongue-and-groove construction. That thickness holds heat, handles freeze-thaw cycles, and won't warp or bow the way thinner-walled saunas do after a few seasons of outdoor use. Inside, the Georgian is genuinely spacious: 353 cubic feet of interior volume with a 7-foot ceiling you can actually stand in. The L-shaped lower bench wraps two walls, with a second-tier upper bench across the back wall — so 2 to 6 people can sit comfortably without knocking knees. Two double-paned bronze tempered glass windows and a full glass door flood the interior with natural light while you're in session. Pair it with a 6–9kW electric heater or a wood-burning stove (sold separately). Features Seats: 2–6 people Exterior Dimensions (incl. roof): 8.2' wide × 8.1' deep × 8.4' tall at peak Interior Dimensions: 7'W × 7.2'L × 7'H (353 cu ft) Wood: Eastern White Cedar — naturally rot-resistant Walls: 1.5\" thick solid cedar Door: Full-size 5mm bronze tempered glass door with cedar frame, pre-mounted on front wall Windows: 2 double-paned bronze tempered glass Roof: Premium metal shingle roof (included) Recommended Heater: 6–9kW electric (like the HUUM Drop 9kW or Harvia KIP 8kW ) or wood-burning (like the HUUM HIVE wood-burning stove ) Weight: 1,776 lbs Shipping Dimensions: 96\" × 45\" × 44\" Delivery: Free curbside — customer offloads crate via forklift with fork extensions or by hand if allowed by trucking company Made in: Canada The Dundalk Georgian is also available as the Georgian with Porch (covered entry area for changing and cooling down) and the Georgian with Changeroom (fully enclosed front room with bench seating). Dimensions Assembly Assembly Instructions Shipping Information What's Included? Includes: Full sauna kit: Pre-cut tongue & groove white cedar for full sauna structure Prefab 2-tier solid benches Bronze tempered glass windows Cedar roof boards Premium metal shingle roof Door w/ bronze tempered glass window Hardware Installation guide & video Heater sold separately Choose a matched heater package in the heater options on this page, or contact us if you'd like a different heater. Sauna Accessories Add a Cold Plunge Tub , Outdoor Shower , Backrests , Bucket & Ladle , Lights , Thermometer , and Sand Timer to create the ultimate relaxation haven. How the Georgian Cabin Compares to a Barrel Sauna If you're cross-shopping between the Georgian and a Dundalk barrel sauna, the short answer is: the Georgian gives you more usable space, and the barrel heats faster. Which one matters more depends on how you plan to use it. The Georgian's flat floor and vertical walls mean every square foot of the interior is usable. You can stand up straight anywhere inside, lean back against a flat wall, and stretch out on wide, flat benches. In a barrel sauna, the curved walls cut into your usable space — the benches are narrower, you can only stand fully upright in the center, and the curved walls behind you don't give the same support. For 4–6 people, or anyone over 6 feet tall, the cabin layout is noticeably more comfortable. Barrel saunas do have a real advantage in heat efficiency. The curved interior has less air volume per square foot of floor space, so a smaller heater can bring it to temperature faster and hold heat with less energy. If you're heating with wood and want the fastest session start, a barrel has an edge. Once the Georgian's 353 cubic feet is up to temperature, the thick cedar walls hold heat well. The other practical difference is weather performance. The Georgian's peaked metal shingle roof sheds snow and rain like a standard building. Barrel saunas handle weather well too, but the flat ends can collect snow, and the barrel shape puts more stress on the staves over time as wood expands and contracts. The cabin design is inherently more structurally rigid — there's a reason buildings have been shaped this way for thousands of years. If you're leaning toward a barrel, the Dundalk Tranquility barrel sauna is the closest comparison — same 6-person capacity, same Eastern White Cedar, same Canadian Timber Collection build quality. It comes down to whether you want the traditional cabin feel or the barrel's signature look.",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 770200,
-      "url": "https://topture.com/products/dundalk-leisureceraft-georgian-cabin-sauna-ctc88w?variant=45691163672840&ref=MATTORR",
+      "listPriceMinor": 909900,
+      "url": "https://topture.com/products/dundalk-leisureceraft-georgian-cabin-sauna-ctc88w?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC88W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisureceraft-georgian-cabin-sauna-ctc88w?variant=45691163672840&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisureceraft-georgian-cabin-sauna-ctc88w?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-30."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

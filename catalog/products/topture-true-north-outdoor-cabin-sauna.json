@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description Handcrafted Outdoor Sauna for All Seasons This beautiful cabin sauna is handmade in Ontario, Canada. It has been developed for outdoor use in nature and can withstand any weather. Different window options are available and you can choose if you want a wood stove or an electric heater inside. The sauna comes as a kit that requires assembly . Features: Seats 5 people or 2 laying down 2 wood options: White Cedar - slightly stronger and almost as resistant to rot and decay as red cedar, and has a beautiful light-colored finish. Red Cedar - naturally weather and insect-resistant, gives off a pleasant and recognizable scent and is aesthetically attractive. Comes standard with roof membrane & 2nd layer of roof boards Fascia boards to protect the end grain of the barrel wood 2-tier benches for sitting or reclining Partially pre-assembled construction with built-in venting holes Also Includes: 3 peg towel hanger, Vent kit, and cover, Screws for assembly, Flat floor , Door handles, Glassdoor, Benches Optional front and rear windows Porch with seating for 2 to cool off Specifications: Seats: 2-5 people External Dimensions: 7'wide x 7'1\"deep x 7'tall Internal Dimensions: 6'11\" x 6' 9\" Wood: White Cedar or Red Cedar Walls: 1.55\" thick solid wood Door: Wood-framed glass Made in: Canada Assembly: Assembly Guide True North Cabin Sauna True North Saunas - Working in 3rd Generation",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "preorder",
   "market": "US",
   "images": [
     {
@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 716000,
+      "listPriceMinor": 1026667,
       "url": "https://topture.com/products/true-north-outdoor-cabin-sauna?variant=44697467027720&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -39,19 +40,20 @@
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "preorder",
       "merchantSku": "C18330 WC - Cabin 6'",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/true-north-outdoor-cabin-sauna?variant=44697467027720&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 2 rows sharing /products/true-north-outdoor-cabin-sauna, ranging $7,160 to $8,352. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as made_to_order. Lead time 5 weeks."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

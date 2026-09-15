@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description The Palmer is Dundalk Leisurecraft's mid-size cabin sauna — part of their Canadian Timber Collection, handcrafted in Ontario from locally-sourced Eastern White Cedar. Its classic shed-style design gives you a flat floor, upright walls, and a peaked metal-shingle roof that sheds rain and snow like a real building should. It arrives as a ready-to-assemble kit with pre-cut, solid single-stave tongue-and-groove cedar and a premium Ontario-made steel shingle roof — a permanent outdoor sauna that comfortably seats four. Eastern White Cedar is naturally resistant to rot, decay, and insects without any chemical treatment, and its light colour and tight, refined knots weather gracefully over years of outdoor use. Inside, the Palmer offers 263 cubic feet of interior volume with a two-tier bench layout. Pair it with a recommended 6 kW electric heater or a 6–10 kW wood-burning stove (sold separately) for a deep, even, traditional sauna heat. Features Comfortably Seats: 4 people Exterior Dimensions (W × D × H): 98.25\" × 97.25\" × 100.75\" (250 × 247 × 256 cm) Interior Dimensions (W × D × H): 84\" × 60\" × 86.25\" (213 × 152 × 219 cm) Interior Volume: 263 cu ft (7.5 m³) Wood: Eastern White Cedar — naturally rot-resistant, made in Canada Construction: Solid single-stave Eastern White Cedar tongue-and-groove walls and ceiling Door & Windows: 5 mm tempered-glass door with a solid-wood magnetic handle, plus two 5 mm bronze tempered-glass windows Benches: Two-tier Eastern White Cedar benches (upper and lower) Roof: Premium metal shingle roof — 28-gauge Hamilton steel with an SMP painted finish (included) Heating: Electric or wood-burning — recommended 6 kW electric (or a 6–10 kW wood stove), sold separately Crate Weight: approx. 1,776 lbs (805 kg) — varies with selected options and heater Warranty: 5-year residential limited warranty under LeisureCraft's current policy (replacement parts; labour and installation excluded) Assembly: Ready-to-assemble kit Made in: Canada What's Included? Pre-cut Eastern White Cedar wall, roof, and bench boards Two-tier bench seating 5 mm tempered-glass door + two bronze tempered-glass windows Premium metal shingle roof kit Hardware and assembly instructions Sauna heater sold separately Documentation CT Palmer Cabin Sauna — Product Drawing / Spec Sheet (PDF)",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "backorder",
   "market": "US",
   "images": [
     {
@@ -32,26 +32,28 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 714600,
-      "url": "https://topture.com/products/dundalk-leisurecraft-palmer-cabin-sauna-ctc68n?variant=58061443367176&ref=MATTORR",
+      "listPriceMinor": 849900,
+      "url": "https://topture.com/products/dundalk-leisurecraft-palmer-cabin-sauna-ctc68n?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "backorder",
       "merchantSku": "CTC68N",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
-        "url": "https://topture.com/products/dundalk-leisurecraft-palmer-cabin-sauna-ctc68n?variant=58061443367176&ref=MATTORR",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/dundalk-leisurecraft-palmer-cabin-sauna-ctc68n?ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-10-30."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {

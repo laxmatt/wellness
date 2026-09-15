@@ -6,7 +6,7 @@
   "categoryId": "saunas",
   "description": "Description This beautiful cabin sauna is handmade in Ontario, Canada. It has been developed for outdoor use in nature and can withstand any weather. Includes 2 front windows & glass door and you can choose if you want a wood stove or an electric heater inside. Sauna comes as a kit that requires assembly . Features: Seats 5 people Made From White Cedar- Strong and resistant to rot and decay, has a beautiful light-colored finish. Comes standard with roof membrane & 2nd layer of roof boards Fascia boards to protect the end grain of the wood 2 tier benches for sitting or reclining Partially pre-assembled construction with built-in venting holes Also Includes: 3 peg towel hanger, Vent kit and cover, Screws for assembly, Door handles, Glass door, Benches Two front windows are standard Optional rear window Optional porch: Depth of sauna is extended to add either a 1' or 2' covered porch with seating to cool off Specifications Specifications: Seats: 5 people Dimensions: 8'wide x 6/7/8'deep depending on porch selection x 7'tall Wood: White Cedar Walls: 1.55\" thick solid wood Door: Wood-framed glass Made in: Canada Included Includes: Pre-cut wood for full sauna structure Roof membrane Vents w/ covers Prefab premium 2 tier benches Flat floor 2x Front windows, Door w/ glass window Optional porch w/ seats Clothes hanger 3-peg Hardware Screws Head Rests Installation guide Assembly Assembly Guide True North Quattro Sauna",
   "status": "published",
-  "availability": "in_stock",
+  "availability": "preorder",
   "market": "US",
   "images": [
     {
@@ -32,6 +32,7 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 857400,
+      "listPriceMinor": 1143167,
       "url": "https://topture.com/products/true-north-5-person-outdoor-quattro-cedar-cabin-sauna?variant=45673077440776&ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
@@ -39,19 +40,20 @@
         "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "in_stock",
+      "availability": "preorder",
       "merchantSku": "TrueQuattro-6-W",
       "lastChecked": "2026-09-15",
       "source": {
         "kind": "merchant_feed",
-        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
         "url": "https://topture.com/products/true-north-5-person-outdoor-quattro-cedar-cabin-sauna?variant=45673077440776&ref=MATTORR",
         "retrievedAt": "2026-09-15",
         "method": "direct",
-        "note": "Chosen from 3 rows sharing /products/true-north-5-person-outdoor-quattro-cedar-cabin-sauna, ranging $8,574 to $9,574. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+        "note": "Official daily partner feed. Availability reported as made_to_order. Lead time 8 weeks."
       }
     }
   ],
+  "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
