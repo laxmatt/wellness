@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { CompareProvider } from "@/components/compare/CompareProvider";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/site";
 import { SITE_URL, indexingAllowed } from "@/lib/site-url";
 import { social } from "@/lib/metadata";
 import "./globals.css";
+import { TrafficAnalytics } from "@/components/analytics/TrafficAnalytics";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <CompareProvider>{children}</CompareProvider>
+        <Suspense fallback={null}><TrafficAnalytics /></Suspense>
       </body>
     </html>
   );

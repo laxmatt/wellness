@@ -21,6 +21,7 @@ export function SiteFooter() {
           <Link href="/disclosure" className="tap flex items-center text-fg-soft hover:text-fg">
             How this site is paid
           </Link>
+          <Link href="/privacy" className="tap flex items-center text-fg-soft hover:text-fg">Analytics and privacy</Link>
         </nav>
         <div className="text-xs text-fg-muted">
           <p>

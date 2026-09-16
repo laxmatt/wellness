@@ -1,5 +1,7 @@
 "use client";
 
+import { trackTraffic } from "@/lib/traffic-analytics";
+
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useAssistant } from "@/components/assistant/AssistantProvider";
 import { setNeeds } from "@/components/needs/NeedsStore";
@@ -158,7 +160,10 @@ export function CategoryFilterProvider({
         setAssistantIds(null);
         setAssistantLabels([]);
       },
-      toggle: (optionId) => setSelected((prev) => (prev.includes(optionId) ? prev.filter((x) => x !== optionId) : [...prev, optionId])),
+      toggle: (optionId) => {
+        if (!selected.includes(optionId)) trackTraffic("filter_used", categoryId);
+        setSelected((prev) => (prev.includes(optionId) ? prev.filter((x) => x !== optionId) : [...prev, optionId]));
+      },
       clear: () => {
         setSelected([]);
         setAssistantIds(null);
