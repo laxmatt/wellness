@@ -58,7 +58,7 @@ export function Breadcrumbs({ items }: { items: { href?: string; label: string }
         {items.map((it, i) => (
           <li key={i} className="flex items-center gap-1.5">
             {it.href ? (
-              <a href={it.href} className="hover:text-fg">
+              <a href={it.href === "/" ? "/saunas" : it.href} className="hover:text-fg">
                 {it.label}
               </a>
             ) : (

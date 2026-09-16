@@ -1,11 +1,12 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { DemoArt } from "@/components/ui/DemoArt";
 import type { CategoryDefinition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
 
-export function CategoryHero({ cat, title, description, count }: { cat: CategoryDefinition; title: string; description: string; count: number }) {
+export function CategoryHero({ cat, title, description, count, visual }: { cat: CategoryDefinition; title: string; description: string; count: number; visual?: ReactNode }) {
   return (
     <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 pt-6 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-10 lg:px-8 lg:pt-10">
       <div className="lg:col-span-6">
@@ -19,11 +20,11 @@ export function CategoryHero({ cat, title, description, count }: { cat: Category
         <p className="mt-4 max-w-xl text-base text-fg-soft sm:text-lg">{description}</p>
       </div>
       <div className="lg:col-span-6">
-        <div className="relative overflow-hidden rounded-card shadow-card">
+        {visual ?? <div className="relative overflow-hidden rounded-card shadow-card">
           <div className="aspect-[16/9] lg:aspect-[16/10]">
             <DemoArt seed={`${cat.id}-hero-scene`} variant="scene" label={cat.images[0]?.alt ?? cat.name} className="absolute inset-0 h-full w-full" />
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   );

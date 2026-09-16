@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { buttonStyles } from "@/components/ui/Button";
 import { CompareToggle } from "@/components/compare/CompareToggle";
 import { NeedsFit } from "@/components/needs/NeedsFit";
@@ -31,11 +30,14 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   // advertised "2 retailers" over a link to the single one a shopper can
   // actually be sent to. With none buyable it said "Shop" over an anchor that
   // goes nowhere a shopper can buy.
-  const external = buyable.length === 1;
+  const directSaunaOffer = cat.id === "saunas" ? buyable[0] : undefined;
+  const cardHref = directSaunaOffer?.url ?? href;
+  const cardLinkProps = directSaunaOffer ? outboundLinkProps(directSaunaOffer.affiliateStatus) : {};
+  const external = Boolean(directSaunaOffer) || buyable.length === 1;
   const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
   // Nothing to shop is not a shop button. The product page still says what is
   // known and why no retailer is listed, so the way in stays.
-  const shopLabel = buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
+  const shopLabel = directSaunaOffer ? "Shop" : buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
   // Only where the card itself sends somebody out. The other two labels lead to
   // this site's own product page, which states the relationship per retailer,
   // and a disclosure over an internal link would be about links that are not
@@ -44,22 +46,22 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
-      <Link href={href} className="relative block" aria-label={`${view.brand.name} ${view.name}`}>
+      <a href={cardHref} {...cardLinkProps} className="relative block" aria-label={`${view.brand.name} ${view.name}${directSaunaOffer ? " — visit retailer (opens in a new tab)" : ""}`}>
         <ImageFrame image={primaryImage(view.images)} ratio="4/5" priority={priority} />
         {primaryBadge ? (
           <div className="absolute left-3 top-3">
             <Badge kind={primaryBadge} />
           </div>
         ) : null}
-      </Link>
+      </a>
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="eyebrow">{view.brand.name}</p>
             <h3 className="font-display text-xl leading-tight">
-              <Link href={href} className="hover:underline">
+              <a href={cardHref} {...cardLinkProps} className="hover:underline" aria-label={directSaunaOffer ? `${view.name} — visit retailer (opens in a new tab)` : undefined}>
                 {view.name}
-              </Link>
+              </a>
             </h3>
           </div>
           <PriceDisplay price={view.price} compact />

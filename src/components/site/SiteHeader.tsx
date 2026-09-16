@@ -7,7 +7,7 @@ export function SiteHeader({ current }: { current?: string }) {
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-edge bg-surface/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="font-display text-xl tracking-tight">
+        <Link href="/saunas" className="font-display text-xl tracking-tight">
           {SITE_NAME}
         </Link>
         <nav aria-label="Primary" className="hidden lg:block">

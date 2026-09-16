@@ -24,9 +24,9 @@ export const saunas = CategoryDefinition.parse({
   slug: "saunas",
   name: "Saunas",
   navLabel: "Saunas",
-  tagline: "Type, footprint and what it takes to power one.",
-  intro:
-    "Home saunas differ on whether they heat the air or the body, how much floor they take, what circuit they need, and what they cost. Only price is stated by the retailer these listings come from; the rest read as not stated until the makers supply them. Nothing here rates a sauna, and nothing here is a figure read out of a product name.",  images: [],
+  tagline: "Find the right sauna for your home.",
+  intro: "Compare home saunas from multiple brands. Narrow your options by size, heating type, and price.",
+  images: [],
   subcategories: [],
   attributeDefinitions: [
     {

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { buyableOffers } from "@/domain/view";
+import { SaunaShowcase } from "./SaunaShowcase";
+import { primaryImage } from "@/components/ui/ImageFrame";
 import { CategoryHero, MatcherInput, RankingTransparency } from "@/components/category/sections";
 import { WinnersRow } from "@/components/category/WinnersRow";
 import { FilterChips, FilterableGrid } from "@/components/category/FilterBar";
@@ -50,9 +53,27 @@ export function CategoryBrowse({
     .map((o) => o.label)
     .join(" and ");
 
+  const heroSlugs = [
+    "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+    "select-saunas-saunalife-model-g3-garden-series-outdoor-home-sauna-kit",
+    "select-saunas-almost-heaven-cascade-4-person-indoor-sauna",
+    "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+    "select-saunas-saunalife-model-ergo-series-ee8g-sauna-barrel-6-person",
+    "select-saunas-maxxus-mx-m206-01-fs-ced-2-person-full-spectrum-near-zero-em",
+  ];
+  const showcase = cat.id === "saunas" ? heroSlugs.flatMap((slug) => {
+    const product = products.find((item) => item.view.slug === slug);
+    if (!product) return [];
+    const { view } = product;
+    const image = primaryImage(view.images);
+    const offer = buyableOffers(view)[0];
+    if (!image || image.src.startsWith("demo:") || !offer) return [];
+    return [{ image, name: view.name, brand: view.brand.name, url: offer.url, affiliateStatus: offer.affiliateStatus }];
+  }).slice(0, 6) : [];
+
   return (
     <>
-      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} />
+      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} visual={showcase.length ? <SaunaShowcase items={showcase} /> : undefined} />
       <CategoryFilterProvider groups={filterGroups} ids={ids} needs={buildNeeds(page)} categoryId={cat.id} initialSelected={initialSelected}>
         <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
