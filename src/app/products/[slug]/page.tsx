@@ -1,3 +1,4 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -164,10 +165,10 @@ export default async function ProductPage({ params }: Props) {
                 {primaryStrength(view, cat)}
               </p>
             ) : null}
-            <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
+            {CHATBOT_ENABLED ? <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
               <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
               <p className="text-xs text-fg-muted">Optional. Ask how this compares to the alternatives.</p>
-            </div>
+            </div> : null}
           </div>
         </div>
 

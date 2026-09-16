@@ -1,3 +1,4 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import type { Metadata } from "next";
 import { buttonStyles } from "@/components/ui/Button";
 import Link from "next/link";
@@ -74,10 +75,10 @@ export default async function ComparePage({ searchParams }: Props) {
             </div>
             {views.length !== sameCat.length ? <p className="mt-2 text-sm text-fg-muted">Products from other categories were left out. Compare one category at a time.</p> : null}
             <>
-              <div className="mt-4 flex flex-wrap items-center gap-3">
+              {CHATBOT_ENABLED ? <div className="mt-4 flex flex-wrap items-center gap-3">
                 <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
                 <p className="text-sm text-fg-muted">Optional. Ask what the differences mean for you.</p>
-              </div>
+              </div> : null}
               <div className="mt-6">
                 <CompareView model={buildCompareModel(items, cat)} ids={items.map((i) => i.view.id)} categoryId={cat.id} />
               </div>

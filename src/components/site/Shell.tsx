@@ -1,3 +1,4 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import type { ReactNode } from "react";
 import { AssistantDock } from "@/components/assistant/AssistantDock";
 import { AssistantProvider, type CompareSeed } from "@/components/assistant/AssistantProvider";
@@ -35,7 +36,7 @@ export function Shell({
     <>
       <SiteHeader current={current} />
       <CompareReconciler authority={compareAuthority} />
-      {assistantCategoryId ? (
+      {CHATBOT_ENABLED && assistantCategoryId ? (
         <AssistantProvider categoryId={assistantCategoryId} compareSeeds={compareSeeds}>
           <AssistantDock>{body}</AssistantDock>
         </AssistantProvider>

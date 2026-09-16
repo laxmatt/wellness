@@ -1,3 +1,4 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import Link from "next/link";
 import { buyableOffers } from "@/domain/view";
 import { SaunaShowcase } from "./SaunaShowcase";
@@ -75,9 +76,9 @@ export function CategoryBrowse({
     <>
       <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} visual={showcase.length ? <SaunaShowcase items={showcase} /> : undefined} />
       <CategoryFilterProvider groups={filterGroups} ids={ids} needs={buildNeeds(page)} categoryId={cat.id} initialSelected={initialSelected}>
-        <div className="mt-8 flex flex-col gap-10">
+        {CHATBOT_ENABLED ? <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
-        </div>
+        </div> : null}
         <div className="mt-10">
           <WinnersRow products={products} cat={cat} set={set} />
         </div>
