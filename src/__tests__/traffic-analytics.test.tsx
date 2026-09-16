@@ -26,9 +26,12 @@ describe('optional traffic measurement', () => {
     initializeAnalytics('G-TEST123');
     expect(document.querySelectorAll('script[data-wfc-analytics]')).toHaveLength(1);
     expect(commands().filter(x => x[1] === 'page_view')).toHaveLength(1);
+    expect(commands().filter(x => x[1] === 'conversion')).toHaveLength(0);
     fireEvent.click(screen.getByText('Visit retailer'));
     expect(commands().filter(x => x[1] === 'retailer_handoff')).toHaveLength(1);
-    expect(commands().filter(x => x[1] === 'conversion')).toHaveLength(0);
+    expect(commands().filter(x => x[1] === 'conversion')).toHaveLength(1);
+    expect(commands().find(x => x[1] === 'conversion')?.[2]).toMatchObject({ send_to: 'AW-18455839726/L5m_CMSpifocEO6Ht-BE' });
+    expect(commands().find(x => x[1] === 'conversion')?.[2]).not.toHaveProperty('value');
     expect(JSON.stringify(commands())).not.toContain('private=secret');
     expect(commands().find(x => x[0] === 'config')?.[2]).toMatchObject({ send_page_view: false, allow_google_signals: false });
   });
