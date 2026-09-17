@@ -69,6 +69,12 @@ describe('optional traffic measurement', () => {
   it('retains ad attribution identifiers without arbitrary query fields', () => {
     expect(safePage('https://wellnessfitcheck.com/saunas?gclid=Abc-123&email=private').page_location).toBe('https://wellnessfitcheck.com/saunas?gclid=Abc-123');
   });
+  it('preserves the ChatGPT campaign and creative while excluding unrelated query data', () => {
+    const page = safePage('https://wellnessfitcheck.com/saunas?utm_source=chatgpt&utm_medium=paid&utm_campaign=sauna_pilot&utm_content=ad_test123&oppref=private&email=private');
+    expect(page.page_location).toBe('https://wellnessfitcheck.com/saunas?utm_source=chatgpt&utm_medium=paid&utm_campaign=sauna_pilot&utm_content=ad_test123');
+    expect(safePage('https://wellnessfitcheck.com/saunas?utm_source=chatgpt&utm_medium=paid&utm_campaign=sauna_pilot&utm_content=user%40example.com').page_location).not.toContain('utm_content');
+    expect(safePage('https://wellnessfitcheck.com/saunas?utm_source=chatgpt&utm_medium=paid&utm_campaign=unknown').page_location).toBe('https://wellnessfitcheck.com/saunas');
+  });
   it('removes arbitrary URL data while retaining the exact pilot campaign', () => {
     const page = safePage('https://wellnessfitcheck.com/saunas?utm_source=google&utm_medium=cpc&utm_campaign=sauna_search_pilot_v1&email=private&text=health#gclid');
     expect(page.page_location).toBe('https://wellnessfitcheck.com/saunas?utm_source=google&utm_medium=cpc&utm_campaign=sauna_search_pilot_v1');

@@ -50,6 +50,15 @@ export function safePage(raw: string) {
     safe.searchParams.set('utm_medium', 'cpc');
     safe.searchParams.set('utm_campaign', 'sauna_search_pilot_v1');
   }
+  if (url.searchParams.get('utm_source') === 'chatgpt'
+    && url.searchParams.get('utm_medium') === 'paid'
+    && url.searchParams.get('utm_campaign') === 'sauna_pilot') {
+    safe.searchParams.set('utm_source', 'chatgpt');
+    safe.searchParams.set('utm_medium', 'paid');
+    safe.searchParams.set('utm_campaign', 'sauna_pilot');
+    const creative = url.searchParams.get('utm_content');
+    if (creative && /^[A-Za-z0-9_-]{1,128}$/.test(creative)) safe.searchParams.set('utm_content', creative);
+  }
   // Preserve only Google's click identifiers for consented ad attribution.
   for (const key of ['gclid', 'gbraid', 'wbraid']) {
     const value = url.searchParams.get(key);
