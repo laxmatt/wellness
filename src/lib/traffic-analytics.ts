@@ -3,7 +3,8 @@ export const CONSENT_KEY = 'wfc.measurement-consent.v3';
 export const OPENAI_PIXEL_ID = 'A6Mo5Ea5k15zTH46mE3Erv';
 type OpenAIQueue = ((...args: unknown[]) => void) & { q: unknown[][] };
 export const CONSENT_EVENT = 'wfc:analytics-consent';
-export const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'AW-18455839726';
+export const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.startsWith('G-')
+  ? process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID : 'G-CQV1MZ1G0D';
 export const ADS_ID = 'AW-18455839726';
 export const ADS_CONVERSION_LABEL = process.env.NEXT_PUBLIC_ADS_RETAILER_CONVERSION_LABEL || 'L5m_CMSpifocEO6Ht-BE';
 export type TrafficEvent = 'filter_used' | 'comparison_opened' | 'retailer_handoff';
