@@ -1,5 +1,7 @@
 /** Explicit, consented shopping events only. Never pass shopper text or link URLs. */
-export const CONSENT_KEY = 'wfc.measurement-consent.v2';
+export const CONSENT_KEY = 'wfc.measurement-consent.v3';
+export const OPENAI_PIXEL_ID = 'A6Mo5Ea5k15zTH46mE3Erv';
+type OpenAIQueue = ((...args: unknown[]) => void) & { q: unknown[][] };
 export const CONSENT_EVENT = 'wfc:analytics-consent';
 export const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'AW-18455839726';
 export const ADS_ID = 'AW-18455839726';
@@ -9,7 +11,23 @@ export type Consent = 'granted' | 'denied';
 let activeMeasurementId = '';
 type Gtag = (...args: unknown[]) => void;
 declare global {
-  interface Window { dataLayer?: unknown[]; gtag?: Gtag; }
+  interface Window { dataLayer?: unknown[]; gtag?: Gtag; oaiq?: OpenAIQueue; }
+}
+export function initializeOpenAIMeasurement() {
+  if (typeof window === 'undefined' || readConsent() !== 'granted' || window.oaiq) return;
+  const queue: OpenAIQueue = Object.assign((...args: unknown[]) => { queue.q.push(args); }, { q: [] as unknown[][] });
+  window.oaiq = queue;
+  queue('consent', true);
+  queue('init', { pixelId: OPENAI_PIXEL_ID });
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://bzrcdn.openai.com/sdk/oaiq.min.js';
+  script.dataset.wfcOpenai = 'true';
+  document.head.appendChild(script);
+}
+export function trackOpenAIRetailerClick() {
+  if (typeof window === 'undefined' || readConsent() !== 'granted') return;
+  window.oaiq?.('measure', 'custom', { type: 'custom' }, { custom_event_name: 'retailer_handoff', opt_out: true });
 }
 export function validMeasurementId(id: string) { return /^(?:G-[A-Z0-9]+|AW-[0-9]+)$/.test(id); }
 export function readConsent(): Consent | null {
@@ -77,12 +95,13 @@ export function trackRetailerConversion(label = ADS_CONVERSION_LABEL) {
 export function saveConsent(consent: Consent, id: string) {
   try { localStorage.setItem(CONSENT_KEY, consent); } catch { return false; }
   if (consent === 'denied') {
+    window.oaiq?.('consent', false);
     window.gtag?.('consent', 'update', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
     // Disable before reload. Remove only our GA cookies, including parent-domain variants.
     (window as unknown as Record<string, unknown>)[`ga-disable-${id}`] = true;
     for (const pair of document.cookie.split(';')) {
       const name = pair.trim().split('=')[0];
-      if (!/^(?:_ga(?:_|$)|_gcl_)/.test(name)) continue;
+      if (!/^(?:_ga(?:_|$)|_gcl_|__oppref$)/.test(name)) continue;
       const base = `${name}=; Max-Age=0; path=/`;
       document.cookie = base;
       const parts = location.hostname.split('.');

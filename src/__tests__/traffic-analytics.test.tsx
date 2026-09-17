@@ -2,12 +2,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { TrafficAnalytics } from '@/components/analytics/TrafficAnalytics';
-import { CONSENT_KEY, initializeAnalytics, referrerOrigin, safePage, saveConsent, trackTraffic, trackRetailerConversion } from '@/lib/traffic-analytics';
+import { CONSENT_KEY, initializeAnalytics, initializeOpenAIMeasurement, trackOpenAIRetailerClick, referrerOrigin, safePage, saveConsent, trackTraffic, trackRetailerConversion } from '@/lib/traffic-analytics';
 vi.mock('next/navigation', () => ({ usePathname: () => '/saunas' }));
 vi.mock('next/link', () => ({ default: ({ children, ...props }: React.ComponentProps<'a'>) => <a {...props}>{children}</a> }));
 beforeEach(() => {
-  cleanup(); localStorage.clear(); delete window.gtag; delete window.dataLayer;
-  document.querySelectorAll('script[data-wfc-analytics]').forEach(el => el.remove());
+  cleanup(); localStorage.clear(); delete window.gtag; delete window.dataLayer; delete window.oaiq;
+  document.querySelectorAll('script[data-wfc-analytics],script[data-wfc-openai]').forEach(el => el.remove());
 });
 const commands = () => (window.dataLayer ?? []).map(value => Array.from(value as ArrayLike<unknown>));
 describe('optional traffic measurement', () => {
@@ -75,5 +75,29 @@ describe('optional traffic measurement', () => {
     expect(safePage('https://wellnessfitcheck.com/products/private-text?ids=private').page_location).toBe('https://wellnessfitcheck.com/products');
     expect(referrerOrigin('https://example.com/search?q=health')).toBe('https://example.com');
     expect(referrerOrigin('javascript:secret')).toBe('');
+  });
+});
+
+describe('OpenAI retailer measurement', () => {
+  it('loads only after consent and sends a handoff without retailer URL or purchase value', () => {
+    initializeOpenAIMeasurement();
+    expect(window.oaiq).toBeUndefined();
+    localStorage.setItem(CONSENT_KEY, 'granted');
+    initializeOpenAIMeasurement(); initializeOpenAIMeasurement();
+    expect(document.querySelectorAll('script[data-wfc-openai]')).toHaveLength(1);
+    trackOpenAIRetailerClick();
+    expect(window.oaiq?.q).toContainEqual(['measure', 'custom', {type: 'custom'}, {custom_event_name: 'retailer_handoff', opt_out: true}]);
+    document.cookie = '__oppref=test; path=/';
+    saveConsent('denied', 'AW-18455839726');
+    const count = window.oaiq?.q.length;
+    trackOpenAIRetailerClick();
+    expect(window.oaiq?.q.length).toBe(count);
+    expect(window.oaiq?.q.at(-1)).toEqual(['consent', false]);
+    expect(document.cookie).not.toContain('__oppref=');
+  });
+  it('does not treat earlier Google-only consent as approval for OpenAI', () => {
+    localStorage.setItem('wfc.measurement-consent.v2', 'granted');
+    initializeOpenAIMeasurement();
+    expect(window.oaiq).toBeUndefined();
   });
 });
