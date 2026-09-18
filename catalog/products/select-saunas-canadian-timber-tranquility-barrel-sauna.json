@@ -1,0 +1,168 @@
+{
+  "id": "select-saunas-canadian-timber-tranquility-barrel-sauna",
+  "slug": "select-saunas-canadian-timber-tranquility-barrel-sauna",
+  "name": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna",
+  "brandId": "dundalk-leisurecraft",
+  "categoryId": "saunas",
+  "description": "Please note: Due to the size of the CTC2345W, it will ship LTL and will not fit on a liftgate. This means that you will be responsible for offloading the sauna. We recommend gathering 3-4 people to offload the sauna piece by piece or renting a forklift. Alternatively, you can add a Driver Offload service at checkout if you would like a hands-off offloading experience. Relax in Style with the Canadian Timber Tranquility Sauna Crafted with sustainably sourced Eastern White Cedar, the Dundalk Leisurecraft Tranquility Sauna (CTC2345W) provides a luxurious sauna experience for 2-6 people. Its 45cm front porch, complete with two windows, creates a welcoming and serene entrance. This sauna kit comes with all parts pre-cut and ready for easy assembly, so you can enjoy a true Canadian sauna experience with family and friends in no time. CTC2345W = 2x3m + 45cm Porch, White Cedar. This model also includes front porch windows. Key Features Inviting Front Porch with Windows Features a 45cm front porch with two bronze tempered glass windows, creating a perfect space to relax before entering. Removable Flat Floor Designed for easy maintenance with a removable flat cedar floor. Durable Aluminum Bands Secured with aluminum bands and stainless steel bolts to ensure longevity. Spacious, Solid Cedar Benches Wide solid cedar benches offer enough space to lay down or sit comfortably. Lead Times Dundalk Leisurecraft saunas are luxurious saunas handcrafted in Canada with sustainably sourced Canadian lumber. Due to this, these saunas are made to order, which means there isn't any inventory. Current lead time is 6-8 weeks to ship. 3-Year Warranty The Canadian Timber Collection by Dundalk LeisureCraft Inc. is warranted against defects in materials and workmanship under normal/residential use for a period of three (3) years, as applicable, from the date of receipt of the product. This warranty does not apply to normal wear and tear and/or natural weather conditions. This warranty does not cover regular required maintenance. Refer to your assembly manual for maintenance guidelines. This warranty does not cover misuse or negligence and the manufacturer and associated retailers are not liable for any injury or damage caused by the product. This warranty is a parts-only warranty and any service or labor costs would not be considered as part of the 3-year warranty. Videos Useful Links Click the links below to see more detailed info about the CTC2345W sauna. Product Drawing Assembly Instructions Dundalk Leisurecraft Residential Shipping Information Dundalk Leisurecraft Residential Shipping Additional S hipping Charges",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-canadian-timber-tranquility-barrel-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/products/select-saunas-Canadian-Timber-Tranquility-2-6-Pers-2.jpg?v=1708081034",
+      "alt": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-canadian-timber-tranquility-barrel-sauna-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 651400,
+      "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "CTC2345W",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "CTC2345W"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-6 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-6 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna",
+        "matched": "2-6 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna | Barrel Sauna Kits | Barrel Sauna, customer-responsible-for-offloading, no-discounts, Saunas, Traditional Saunas",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Tranquility 2-6 Person Barrel Sauna | Barrel Sauna Kits | Barrel Sauna, customer-responsible-for-offloading, no-discounts, Saunas, Traditional Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/canadian-timber-tranquility-barrel-sauna?variant=43779223978198&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

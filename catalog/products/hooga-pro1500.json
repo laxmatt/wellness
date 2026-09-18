@@ -38,19 +38,21 @@
       "merchantId": "hooga-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 64900,
+      "priceMinor": 119900,
       "url": "https://hoogahealth.com/products/hgpro1500",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Price not found in sources. Demo value."
+        "note": "Page listed $1,199. Availability is not recorded from this reading: the page showed both a Sold out label and an Add to cart control, which do not agree. Previously carried $649 as prototype data."
       }
     },
     {
@@ -77,15 +79,17 @@
   "dimensions": {
     "value": {
       "length": 36,
-      "width": 8.6
+      "width": 8.6,
+      "height": 3.1
     },
     "unit": "in",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states 36 x 8.6 x 3.1 inches. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -93,21 +97,23 @@
     "value": "3-year warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
   "returnPolicy": {
-    "value": "60-day return period",
+    "value": "60-day trial",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
       "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page states a 60-day trial. Previously recorded as relayed via a search summary on 2026-09-08."
     },
     "verification": "manufacturer_reported"
   },
@@ -115,13 +121,14 @@
     "coverage": {
       "value": "full_body",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+        "note": "Page describes the panel as full body, which is what this catalogue's editorial class from panel height already said. Recorded as the maker's own description; the class rule is unchanged and is in docs/source-checks/2026-09-09-hooga-pro1500.md."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "standard",
@@ -142,10 +149,11 @@
       "unit": "nm",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 660 nm and 850 nm. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -154,35 +162,39 @@
       "unit": "mW/cm²",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Brand states over 189 mW/cm²; distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "The page states this figure two ways and they disagree: over 189 mW/cm2 at 6 inches in the highlights, exactly 189 in the technical table, where no distance is given. Recorded as disputed and withheld from matching and scoring rather than resolved by choosing a passage. No measurement distance is recorded either, since the two statements do not share one. Previously recorded as relayed via a search summary on 2026-09-08."
       },
-      "verification": "manufacturer_reported"
+      "verification": "manufacturer_reported",
+      "disputed": true
     },
     "led_count": {
       "value": 300,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "300 dual-chip LEDs. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page lists 300 dual-chip LEDs. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
     "mounting": {
       "value": [
         "door_hang",
-        "stand"
+        "floor_stand_optional"
       ],
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Door mount, pulley and hanging wires included. Attaches to mobile stands. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page includes a door mount, hanging kit and adjustable pulley, and says mobile stands are sold separately while the modular stand is compatible. Recorded as door hanging plus an optional floor stand, where it previously claimed a stand outright. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -191,10 +203,11 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
       },
       "verification": "manufacturer_reported"
     },
@@ -203,10 +216,24 @@
       "unit": "days",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states a 60-day trial. Previously recorded as relayed via a search summary on 2026-09-08."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 530,
+      "unit": "W",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "Page states 530 W consumption. The 1500 in the product name is an LED classification, not draw."
       },
       "verification": "manufacturer_reported"
     }
@@ -217,5 +244,18 @@
     "retrievedAt": "2026-09-08",
     "method": "direct",
     "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  },
+  "weight": {
+    "value": 21.125,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "url": "https://hoogahealth.com/products/hgpro1500",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "Page's technical figure is 21 lb 2 oz, recorded here as 21.125 lb. Its own table rounds that to 21 lb."
+    },
+    "verification": "manufacturer_reported"
   }
 }

@@ -1,0 +1,291 @@
+{
+  "id": "select-saunas-maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-unde",
+  "slug": "select-saunas-maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-unde",
+  "name": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna",
+  "brandId": "maxxus-saunas",
+  "categoryId": "saunas",
+  "description": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-unde-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/MX-S206-01FS_2_3x302-24-2024.jpg?v=1757346301",
+      "alt": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-unde-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 369900,
+      "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "MX-S206-01-FS-PC",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "MX-S206-01-FS-PC"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "2-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Maxxus S-Line Yoga 2-Person Full-Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 48,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15 AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Looking for a wellness upgrade you can share at home? The Maxxus 2-Person Sauna offers the perfect blend of comfort, style, and cutting-edge infrared technology. Designed for couples or individuals who want extra room to unwind, it creates a soothing space that promotes detoxification, relaxation, and overall well-being. Crafted with elegant Pacific Cedar and enhanced with near zero EMF heating technology, this sauna combines natural beauty with advanced performance. Its modern design and thoughtful features make it a stylish addition to any home, while providing the daily health benefits of infrared therapy in a private, spa-like setting. Features: Full 2 person capacity Total 7 Heating Element: 3 Carbon PureTech™ Near Zero EMF Heat Emitters (Heating Panels) and 4 Near Infrared PureTech™ Heat Emitters (Heating Elements) Natural Reforested Pacific Cedar wood construction Clear Tempered glass door Interior chromotherapy lighting system with Red Light Feature Interior LED Control Panel Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the ideal temperature range, sauna can heat up to 140F Clasp together assembly Ships in 2 boxes Note: Indoor Use Only Specifications: Sauna weight: 310 lbs. Shipping weight: 365 lbs. Electrical service: 120V/15 AMP Non GFCI plug & play (Recommend Dedicated Outlet) Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 37\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V/15 AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 140,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “sauna can heat up to 140F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/maxxus-s-line-yoga-2-person-full-spectrum-near-zero-emf-under-3mg-far-infrared-sauna-canadian-hemlock-natural?variant=51656009187671&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

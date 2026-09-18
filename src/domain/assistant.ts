@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { HardConstraint, SoftPreference } from "./personalization";
+import { CONDITION_OPS, FilterKey } from "./category";
+import { ModelMoney } from "./money-contract";
+import { HardConstraint, SOFT_DIRECTIONS, SOFT_WEIGHT_RANGE, SoftPreference } from "./personalization";
 
 // The assistant is a way to express preferences in words. It is never the only
 // way: filters, comparison and product pages do the same work without it.
@@ -36,6 +38,27 @@ export const ProposedAction = z.discriminatedUnion("kind", [
     // for THESE constraints, so applying delivers what the summary promised.
     matchingIds: z.array(z.string()).default([]),
     matchCount: z.number().int().nonnegative().default(0),
+    // What each hard constraint admits, on its own, computed by the engine for
+    // these products. Hard constraints are ANDed, so the set admitted by any
+    // subset of them is the intersection of these, which is how the page stays
+    // exact when the shopper sets one aside and then another: the second
+    // removal is answered from the constraints that actually remain, not from
+    // a set precomputed for removing one.
+    //
+    // Empty is not "nothing matches": it means the breakdown is unavailable,
+    // and the caller must treat the result as unknown rather than as none.
+    // `unknownIds` are the products this constraint can neither admit nor rule
+    // out: the catalogue holds nothing usable for the key, or holds a figure it
+    // will not match on. They are not in `matchIds`, because the engine may not
+    // admit them, and they are not failures either. The fit section reports
+    // them as something to confirm.
+    matchesByKey: z
+      .array(z.object({ key: z.string(), label: z.string(), matchIds: z.array(z.string()), unknownIds: z.array(z.string()).default([]) }))
+      .default([]),
+    // The soft preferences this proposal would rank by, in the site's own
+    // words. Carried so a screen can say what is ordering the list without
+    // presenting it as a requirement: a preference never decides fit.
+    softLabels: z.array(z.string()).default([]),
   }),
   z.object({
     kind: z.literal("add_to_compare"),
@@ -62,6 +85,9 @@ export type AssistantProductRef = {
   priceIsPlaceholder: boolean;
   fits: string[];
   misses: string[];
+  // Rendered by the site from its own records, with attribution. Never
+  // written by the model.
+  facts: { label: string; value: string; attribution: string }[];
 };
 
 export type AssistantReply = {
@@ -69,8 +95,10 @@ export type AssistantReply = {
   text: string;
   // Whether a real model produced this reply or the built-in scripted stand-in.
   mode: "live" | "prototype" | "unavailable";
-  // Question the assistant is waiting on, if any.
-  question?: { text: string; options: string[] };
+  // Question the assistant is waiting on, if any. `key` is the filter it is
+  // about, so an answer can be attributed to it rather than guessed at from
+  // the option text.
+  question?: { text: string; options: string[]; key?: string };
   products: AssistantProductRef[];
   // Every product satisfying the agreed hard constraints, in personalized
   // order. The page filters by this rather than approximating it with chips.
@@ -82,9 +110,24 @@ export type AssistantReply = {
   // Constraints currently held for this session, in words, each removable.
   activeConstraints: { key: string; label: string }[];
   medicalRedirect: boolean;
+  // Written by the site's own code from the engine's count, on every reply,
+  // beside the cards it describes. True by construction: it is not derived
+  // from anything the model said. The prose above it is screened against this,
+  // but the screen is a heuristic and this sentence is the guarantee.
+  matchSummary: string;
+  // Set when the model answered and nothing usable came back. The reply then
+  // carries the shopper's existing preferences unchanged and proposes nothing,
+  // because a reply that could not be read is not a request to change
+  // anything.
+  failure?: "unreadable_reply" | "unconvertible_constraint";
   // A short, non-financial explanation when the assistant is unavailable.
   // Spend figures are operator information and never reach the customer.
   notice?: string;
+  // Internal destinations offered beside the reply, composed by the site from
+  // its own category list. A shopper who asks about a category they are not
+  // looking at gets a link to it and presses it themselves: nothing navigates,
+  // nothing re-filters, and the page they are on is exactly as they left it.
+  links?: { href: string; label: string }[];
 };
 
 export const AssistantRequest = z.object({
@@ -93,17 +136,68 @@ export const AssistantRequest = z.object({
   messages: z.array(AssistantMessage).max(40),
   hard: z.array(HardConstraint).default([]),
   soft: z.array(SoftPreference).default([]),
+  // Set when this message answers a clarifying question the site asked, naming
+  // the filter it was about. It changes one thing: the reply's constraints are
+  // merged into the ones already held rather than replacing them.
+  //
+  // Replacement is right for an ordinary message, because that is how "forget
+  // the budget" drops a constraint. It is wrong for an answer to a question the
+  // site asked: pressing "Electrolytes" is not a request to forget anything,
+  // and a model that answers only the question it was asked would otherwise
+  // take the shopper's other requirements with it.
+  // `via` says how the answer arrived. An option the site offered cannot also
+  // mean "and drop my budget", so it merges outright. Typed text can mean both,
+  // so when the reply to it would drop something the shopper holds, the two
+  // readings disagree and the site asks instead of choosing one.
+  answering: z.object({ key: z.string(), via: z.enum(["option", "typed"]).default("option") }).optional(),
 });
 export type AssistantRequest = z.infer<typeof AssistantRequest>;
 
-// What the model is allowed to return. Anything outside this shape is dropped.
+// What the model is allowed to return. Anything outside this shape is dropped,
+// so every limit here is stated to the model in its instructions, generated
+// from this object rather than written next to it.
+export const INTENT_LIMITS = {
+  replyChars: 1200,
+  hard: 8,
+  soft: 8,
+  unmapped: 6,
+  questionChars: 300,
+  questionOptions: 5,
+  questionOptionChars: 60,
+  suggestCompare: 4,
+} as const;
+
+// The model's own constraint shapes. They differ from the engine's in exactly
+// one way: money crosses this boundary as {amount, currency} in whole dollars,
+// and code converts it to the integer minor units the engine compares. See
+// src/domain/money-contract.ts for why a bare number is refused.
+export const ModelHardConstraint = z.object({
+  key: FilterKey,
+  op: z.enum(CONDITION_OPS),
+  value: z.union([ModelMoney, z.number(), z.string(), z.boolean(), z.array(z.string()), z.array(z.number())]).optional(),
+});
+export type ModelHardConstraint = z.infer<typeof ModelHardConstraint>;
+
+export const ModelSoftPreference = z.object({
+  key: z.string(),
+  direction: z.enum(SOFT_DIRECTIONS),
+  value: z.union([ModelMoney, z.number(), z.string(), z.boolean(), z.array(z.string())]).optional(),
+  weight: z.number().min(SOFT_WEIGHT_RANGE.min).max(SOFT_WEIGHT_RANGE.max).default(SOFT_WEIGHT_RANGE.default),
+});
+export type ModelSoftPreference = z.infer<typeof ModelSoftPreference>;
+
 export const ModelIntent = z.object({
-  reply: z.string().max(1200),
-  hard: z.array(HardConstraint).max(8).default([]),
-  soft: z.array(SoftPreference).max(8).default([]),
-  unmapped: z.array(z.string()).max(6).default([]),
-  question: z.object({ text: z.string().max(300), options: z.array(z.string().max(60)).max(5).default([]) }).optional(),
+  reply: z.string().max(INTENT_LIMITS.replyChars),
+  hard: z.array(ModelHardConstraint).max(INTENT_LIMITS.hard).default([]),
+  soft: z.array(ModelSoftPreference).max(INTENT_LIMITS.soft).default([]),
+  unmapped: z.array(z.string()).max(INTENT_LIMITS.unmapped).default([]),
+  question: z
+    .object({
+      text: z.string().max(INTENT_LIMITS.questionChars),
+      options: z.array(z.string().max(INTENT_LIMITS.questionOptionChars)).max(INTENT_LIMITS.questionOptions).default([]),
+    })
+    .optional(),
   medicalIntent: z.boolean().default(false),
-  suggestCompare: z.array(z.string()).max(4).default([]),
+  suggestCompare: z.array(z.string()).max(INTENT_LIMITS.suggestCompare).default([]),
 });
 export type ModelIntent = z.infer<typeof ModelIntent>;

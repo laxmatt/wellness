@@ -1,27 +1,30 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { DemoArt } from "@/components/ui/DemoArt";
 import type { CategoryDefinition } from "@/domain/category";
 import { attributeDef } from "@/domain/category";
 import { BADGE_LABELS } from "@/domain/recommend";
-import { cn } from "@/lib/cn";
 
-export function CategoryHero({ cat, title, description, count }: { cat: CategoryDefinition; title: string; description: string; count: number }) {
+export function CategoryHero({ cat, title, description, count, visual }: { cat: CategoryDefinition; title: string; description: string; count: number; visual?: ReactNode }) {
   return (
     <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 pt-6 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-10 lg:px-8 lg:pt-10">
       <div className="lg:col-span-6">
+        {/* The count is of everything in the category, on every page that shows
+            this hero. A facet URL opens with a chip pressed and shows fewer
+            products than this; the number beside the results says how many. */}
         <p className="eyebrow">
-          {cat.name} · {count} compared
+          {cat.name} · all {count} we track
         </p>
         <h1 className="font-display mt-3 text-4xl leading-[0.98] sm:text-5xl lg:text-6xl">{title}</h1>
         <p className="mt-4 max-w-xl text-base text-fg-soft sm:text-lg">{description}</p>
       </div>
       <div className="lg:col-span-6">
-        <div className="relative overflow-hidden rounded-card shadow-card">
+        {visual ?? <div className="relative overflow-hidden rounded-card shadow-card">
           <div className="aspect-[16/9] lg:aspect-[16/10]">
             <DemoArt seed={`${cat.id}-hero-scene`} variant="scene" label={cat.images[0]?.alt ?? cat.name} className="absolute inset-0 h-full w-full" />
           </div>
-        </div>
+        </div>}
       </div>
     </section>
   );
@@ -39,38 +42,9 @@ export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
             Answer a few questions and we will narrow the list. Or skip it: the filters and comparison below do the same job.
           </p>
         </div>
-        <AssistantLauncher size="lg" className="shrink-0" />
+        <AssistantLauncher size="lg" className="shrink-0" entry={{ kind: "category", categoryId: cat.id }} />
       </div>
     </section>
-  );
-}
-
-export function FacetChips({ cat, active }: { cat: CategoryDefinition; active?: string }) {
-  return (
-    <nav aria-label="Narrow by" className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-      <ul className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-        <li className="shrink-0">
-          <Link
-            href={`/${cat.slug}`}
-            aria-current={!active ? "page" : undefined}
-            className={cn("tap inline-flex items-center rounded-pill border px-4 text-sm font-semibold", !active ? "border-fg bg-fg text-fg-inverse" : "border-edge-strong bg-surface-raised hover:border-fg")}
-          >
-            All {cat.navLabel.toLowerCase()}
-          </Link>
-        </li>
-        {cat.facets.map((f) => (
-          <li key={f.slug} className="shrink-0">
-            <Link
-              href={`/${cat.slug}/${f.slug}`}
-              aria-current={active === f.slug ? "page" : undefined}
-              className={cn("tap inline-flex items-center rounded-pill border px-4 text-sm font-semibold", active === f.slug ? "border-fg bg-fg text-fg-inverse" : "border-edge-strong bg-surface-raised hover:border-fg")}
-            >
-              {f.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }
 

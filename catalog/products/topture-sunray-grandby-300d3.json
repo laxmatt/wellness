@@ -1,0 +1,202 @@
+{
+  "id": "topture-sunray-grandby-300d3",
+  "slug": "topture-sunray-grandby-300d3",
+  "name": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description The SunRay Grandby 3-Person Outdoor Infrared Sauna is built with a sealed weatherproof cabin and metal composite roof, making it suitable for year-round outdoor use. Crafted from durable Canadian hemlock, it features 7 ceramic heaters that deliver even heat up to 140°F. The spacious interior includes wide bench seating, recessed lighting, and Bluetooth speakers. Additional features include an ozone sterilization system for purified air, LED control panel, cup holders, and more. Easy to assemble, the Grandby is designed to bring relaxation and wellness to your backyard. Features Seats up to 3 people Sealed weatherproof cabin with metal composite roof Constructed from natural Canadian hemlock wood 7 ceramic infrared heaters Heats quickly up to 140°F Low EMF output Wide bench seating for comfort Recessed interior lighting Bluetooth speaker system LED digital control panel Ozone sterilization air purification Exterior control panel LED lighting Ventilation system Cup holders for convenience Easy tongue-and-groove assembly Water-resistant design with severe weather cover ETL/CSA safety certified What's Included? SunRay Grandby 3-Person Outdoor Infrared Sauna Cabin 7 Ceramic Infrared Heaters Wide bench seating Recessed lighting Bluetooth speaker system LED control panel Ozone sterilization system Exterior control panel Cup holders Severe weather cover Product Manual Specifications Brand: SunRay Model: Grandby 300D3 Application: Outdoor Maximum Capacity: 3 persons Shape: Rectangle Primary Material: Canadian Hemlock wood Heat Source: Infrared Heater Type: Ceramic heaters Number of Heaters: 7 EMF Rating: Low EMF Adjustable Temperature: Yes Temperature Range: 32°F – 140°F (0℃ – 60℃) Electrical Requirements: 120V, 20 amp plug Wattage: 2100W Certification: ETL/CSA Safety Certified Exterior Dimensions: 87\" H x 69\" W x 47\" D Interior Dimensions: 68\" H x 55\" W x 43\" D Weight: 425 lbs Documents D3 Series Install Manual (Metal Roof)",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-grandby-300d3-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-grandby-300d3-front.jpg?v=1781881307",
+      "alt": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-grandby-300d3-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 399000,
+      "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "300D3",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "300D3"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "3-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"3-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3",
+        "matched": "3-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 3,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"3\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3",
+        "matched": "3",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Grandby 3-Person Outdoor Infrared Sauna 300D3 | Outdoor Saunas | Cabin Saunas, Features:Bluetooth Audio",
+        "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 140,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “heat up to 140°F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-grandby-300d3?variant=43534260076808&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

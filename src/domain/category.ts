@@ -6,9 +6,14 @@ import { Id, ImageAsset, Slug } from "./product";
 // A filter key is an attribute key or the reserved "price" key (minor units).
 export const FilterKey = z.string();
 
+// Named, and exported, so the model's instructions can be generated from the
+// same list that validates its answer. A prompt that describes a contract the
+// validator does not enforce, or omits one it does, silently discards replies.
+export const CONDITION_OPS = ["lt", "lte", "gt", "gte", "eq", "neq", "in", "includes", "exists", "missing"] as const;
+
 export const Condition = z.object({
   key: FilterKey,
-  op: z.enum(["lt", "lte", "gt", "gte", "eq", "neq", "in", "includes", "exists", "missing"]),
+  op: z.enum(CONDITION_OPS),
   value: z.union([z.number(), z.string(), z.boolean(), z.array(z.string()), z.array(z.number())]).optional(),
 });
 export type Condition = z.infer<typeof Condition>;
@@ -17,8 +22,16 @@ export const FilterSpec = z.object({
   key: FilterKey,
   label: z.string(),
   kind: z.enum(["range", "enum", "boolean", "list"]),
+  // Sparse-safe filters keep products whose source does not state the value in
+  // a separate confirmation tier instead of turning missing evidence into a no.
+  behavior: z.enum(["hard", "sparse_safe"]).default("hard"),
   // Range presets shown as chips, in minor units for price.
-  presets: z.array(z.object({ label: z.string(), condition: Condition })).optional(),
+  //
+  // `condition` is the common case, one bound. `and` carries the second one, so
+  // a band can be stated as the band it is rather than as another "Under". Two
+  // overlapping "Under" chips in one group are ORed, which makes the narrower
+  // of them do nothing.
+  presets: z.array(z.object({ label: z.string(), condition: Condition, and: Condition.optional() })).optional(),
 });
 export type FilterSpec = z.infer<typeof FilterSpec>;
 
@@ -28,7 +41,13 @@ export const ScoringCriterion = z.object({
 });
 
 export const ScoringConfig = z.object({
-  criteria: z.array(ScoringCriterion).min(1),
+  // May be empty. A category with no criteria is one nobody has established a
+  // ranking for, and the honest way to say so is to write none rather than to
+  // pick an attribute and call it quality. Every product then scores 0, no
+  // badge is assigned, and `scoreProducts` divides by nothing because it maps
+  // over an empty list. Saunas are the live case: type, footprint, power and
+  // price separate them, and not one of those says a sauna is better.
+  criteria: z.array(ScoringCriterion),
   // What the number measures, in the UI's words. Never "quality" unless the
   // criteria genuinely measure build quality: a weighted sum over capability
   // attributes ranks suitability for the category's dominant use, and a
@@ -119,6 +138,12 @@ export const CategoryDefinition = z.object({
   facets: z.array(FacetPage),
   // Synonyms the matcher maps to enum values. Deterministic, hand-maintained.
   matcherVocabulary: z.record(FilterKey, z.record(z.string(), z.array(z.string()))).default({}),
+  // Other names for the category itself, as a shopper would type them.
+  // Hand-maintained, like matcherVocabulary, and used for one thing: deciding
+  // that a message is about a different section of this site. It is a written
+  // list, not a model of language, and a phrase nobody wrote down here is not
+  // recognised. See src/domain/subject-scope.ts.
+  aliases: z.array(z.string()).default([]),
 }).superRefine((cat, ctx) => {
   const keys = new Set(cat.attributeDefinitions.map((a) => a.key));
   keys.add("price");

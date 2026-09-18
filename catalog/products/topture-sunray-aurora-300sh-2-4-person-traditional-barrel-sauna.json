@@ -1,0 +1,214 @@
+{
+  "id": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+  "slug": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna",
+  "name": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna",
+  "brandId": "sunray-saunas",
+  "categoryId": "saunas",
+  "description": "Description The SunRay Aurora 2–4 Person Barrel Sauna is a spacious retreat designed for comfort and relaxation. Measuring 5' deep by 6' wide, it provides seating for up to 4 people or extra bench space to stretch out. Built from sturdy 1 3/8\" thick cedar lumber with ball-and-socket construction and stainless steel hardware, it is designed for durability indoors or outdoors. Equipped with a powerful 6.0 kW Harvia electric heater, the Aurora heats quickly to 170–180°F and includes a built-in delay timer so you can schedule your sauna session up to 8 hours in advance. Features like a shingled roof, ergonomic backrests, tempered glass, dome lighting, and a complete accessory kit make this sauna a versatile and stylish addition to your backyard or home. Features Seats 2–4 people 6.0 kW Harvia electric heater with sauna stones Heats up to 170–180°F Built-in 8-hour delay start timer Sturdy 1 3/8\" thick ball-and-socket cedar construction Stainless steel hardware Flat floor kit included Ergonomic backrests Interior dome lighting Shingled roof for weather protection Tempered glass door Bucket, ladle, and thermo-hygrometer included Solid weather-resistant support cradles Easy to assemble For indoor or outdoor use 7-Year Limited Warranty What's Included? SunRay Aurora 2–4 Person Barrel Sauna Cabin 6.0 kW Harvia Electric Heater Heater stones Flat floor kit Ergonomic backrests Interior dome lighting Bucket and ladle Thermo-hygrometer Shingled roof Tempered glass door Support cradles Product Manual Specifications Brand SunRay Model Aurora Application Indoor / Outdoor Maximum Capacity 2–4 persons Shape Barrel Primary Material Cedar Wood Construction Ball-and-socket with stainless steel hardware Heat Source Traditional Steam Heater Type 6.0 kW Harvia Electric Heater with Stones Adjustable Temperature Yes Temperature Range 170–180°F Electrical Requirements 220V, 30 amp dedicated outlet Wattage 6000W Exterior Dimensions 76\" H x 72\" W x 61\" D Interior Dimensions 69\" H x 69\" W x 51\" D Weight 721 lbs Warranty 7-Year Limited Warranty Documents Barrel Sauna Assembly Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna-300sh-563082.jpg?v=1740621332",
+      "alt": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-sunray-aurora-300sh-2-4-person-traditional-barrel-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 529000,
+      "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "300SH",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "300SH"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna",
+        "matched": "2-4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "Sunray Aurora 300SH | 2-4-Person Traditional Barrel Sauna | Outdoor Saunas | Barrel Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 180,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Temperature Range 170–180°F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “weather-resistant”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/sunray-aurora-300sh-2-4-person-traditional-barrel-sauna?variant=50429088104712&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

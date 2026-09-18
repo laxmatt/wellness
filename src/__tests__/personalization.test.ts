@@ -7,7 +7,7 @@ import { applyPreferences, relaxationSearch } from "@/domain/personalization/mat
 import { similarProducts } from "@/domain/personalization/similar";
 import { recommendCategory } from "@/domain/recommend";
 import { MockAIProvider } from "@/providers/ai/AIProvider";
-import { viewsFor } from "./fixtures";
+import { miniCategory, miniProduct, miniView, viewsFor } from "./fixtures";
 
 const redLight = categoryById("red-light")!;
 const drinks = categoryById("wellness-drinks")!;
@@ -22,12 +22,14 @@ describe("matcher engine", () => {
       hard: [{ key: "price", op: "lte", value: 70000 }],
       soft: [{ key: "coverage", direction: "prefer_high", value: "full_body", weight: 0.8 }],
     }));
-    // A budget claim needs a verified price. PRO1500 lists $649 but that price
-    // is a placeholder, so it cannot be confirmed under $700 and is excluded.
-    const eligible = views.filter((v) => v.price.money.amountMinor <= 70000 && !v.price.isDemo).map((v) => v.id);
+    // A budget claim needs a real price. PRO1500 lists $649 but that price is
+    // prototype data, so it cannot be confirmed under $700 and is excluded.
+    // HG300 wins it since its maker's own $199 was read on 2026-09-09: before
+    // that its shown price was a prototype $149 and this was MitoMIN at $249.
+    const eligible = views.filter((v) => v.price.money!.amountMinor <= 70000 && !v.price.isDemo).map((v) => v.id);
     expect(eligible).toContain(r.bestMatchId!);
-    expect(r.bestMatchId).toBe("mito-mitomin-2");
-    expect(r.explanations["mito-mitomin-2"].fits.some((f) => f.includes("under your limit"))).toBe(true);
+    expect(r.bestMatchId).toBe("hooga-hg300");
+    expect(r.explanations["hooga-hg300"].fits.some((f) => f.includes("under your limit"))).toBe(true);
     expect(r.relaxations).toEqual([]);
   });
 
@@ -106,8 +108,10 @@ describe("end to end with the mock extractor", () => {
     const ai = new MockAIProvider();
     const p = await ai.extractPreferences({ text: "I need a full-body panel under $700 that won't take over my apartment.", category: redLight });
     const r = applyPreferences(viewsFor("red-light"), redLight, p);
-    // The cheapest panel with a price we can stand behind.
-    expect(r.bestMatchId).toBe("mito-mitomin-2");
+    // The panel with a real price under the limit that ranks highest on the
+    // sentence's own preferences. HG300 took this from MitoMIN when its
+    // maker's $199 was read on 2026-09-09 and replaced a prototype $149.
+    expect(r.bestMatchId).toBe("hooga-hg300");
     expect(r.explanations[r.bestMatchId!].fits.length).toBeGreaterThan(0);
   });
 
@@ -122,19 +126,24 @@ describe("end to end with the mock extractor", () => {
 
 describe("similar products", () => {
   it("prefers products of comparable size and price over ranking neighbours", () => {
+    // Built rather than found. This asserted an ordering of named catalogue
+    // products and had to be rewritten every time a real price or a disputed
+    // figure changed one of them, which tests the catalogue rather than the
+    // function.
+    const target = miniView(miniProduct("target", 20000, { power: 40, size: "s", wifi: false }));
+    const near = miniView(miniProduct("near", 22000, { power: 42, size: "s", wifi: false }));
+    const far = miniView(miniProduct("far", 90000, { power: 95, size: "l", wifi: true }));
+    const similar = similarProducts(target, [target, near, far], miniCategory, 2);
+    expect(similar[0].id).toBe("near");
+    expect(similar.map((s) => s.id)).not.toContain("target");
+  });
+
+  it("keeps the target out of its own neighbours in the live catalogue", () => {
     const views = viewsFor("red-light");
     const hg300 = views.find((v) => v.id === "hooga-hg300")!;
     const similar = similarProducts(hg300, views, redLight, 3);
-    // The other compact, cheap, targeted panel comes first.
-    expect(similar[0].id).toBe("mito-mitomin-2");
+    expect(similar.length).toBe(3);
     expect(similar.map((s) => s.id)).not.toContain("hooga-hg300");
-    // Among the full-body panels that must fill the remaining slots, the
-    // cheapest one ranks above panels costing nearly twice as much.
-    const ids = similar.map((s) => s.id);
-    const pro = ids.indexOf("hooga-pro1500");
-    const flex = ids.indexOf("infraredi-flex-max");
-    expect(pro).toBeGreaterThanOrEqual(0);
-    if (flex >= 0) expect(pro).toBeLessThan(flex);
   });
 
   it("returns at most the requested count and never the target itself", () => {
@@ -167,7 +176,16 @@ describe("compare model", () => {
   });
 
   it("does not mark a price winner while any price in the set is a placeholder", () => {
-    const price = model.groups[0].rows.find((r) => r.key === "price")!;
+    // Built: all three panels above have real prices now, and which products
+    // carry a prototype one changes as readings arrive.
+    const built = buildCompareModel(
+      recommendCategory(
+        [miniView(miniProduct("real", 30000, { power: 50, size: "m" })), miniView(miniProduct("prototype", 10000, { power: 50, size: "m" }, "unknown", [], true))],
+        miniCategory,
+      ).products,
+      miniCategory,
+    );
+    const price = built.groups[0].rows.find((r) => r.key === "price")!;
     expect(price.cells.every((c) => !c.best)).toBe(true);
     expect(price.notComparable).toMatch(/placeholder/);
   });
@@ -179,8 +197,13 @@ describe("compare model", () => {
   });
 
   it("carries verification tags into cells", () => {
+    // Irradiance always shows its tag, and the three panels now say three
+    // different things: two report a figure, and BIOMAX's ninth-generation
+    // record states none.
     const irradiance = model.groups.flatMap((g) => g.rows).find((r) => r.key === "irradiance_mw_cm2")!;
-    expect(irradiance.cells.every((c) => c.verification === "manufacturer_reported")).toBe(true);
+    expect(irradiance.cells.every((c) => c.verification !== undefined)).toBe(true);
+    expect(irradiance.cells.filter((c) => c.verification === "manufacturer_reported").length).toBe(2);
+    expect(irradiance.cells.filter((c) => c.verification === "not_stated").length).toBe(1);
   });
 });
 

@@ -1,7 +1,9 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import type { ReactNode } from "react";
 import { AssistantDock } from "@/components/assistant/AssistantDock";
 import { AssistantProvider, type CompareSeed } from "@/components/assistant/AssistantProvider";
 import { CompareTray } from "@/components/compare/CompareTray";
+import { CompareReconciler, type CompareAuthority } from "@/components/compare/CompareProvider";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -14,6 +16,7 @@ export function Shell({
   // Pages that do not simply omit it and render exactly as before.
   assistantCategoryId,
   compareSeeds,
+  compareAuthority,
 }: {
   children: ReactNode;
   current?: string;
@@ -21,6 +24,7 @@ export function Shell({
   tray?: boolean;
   assistantCategoryId?: string;
   compareSeeds?: CompareSeed[];
+  compareAuthority?: CompareAuthority;
 }) {
   const body = (
     <>
@@ -31,7 +35,8 @@ export function Shell({
   return (
     <>
       <SiteHeader current={current} />
-      {assistantCategoryId ? (
+      <CompareReconciler authority={compareAuthority} />
+      {CHATBOT_ENABLED && assistantCategoryId ? (
         <AssistantProvider categoryId={assistantCategoryId} compareSeeds={compareSeeds}>
           <AssistantDock>{body}</AssistantDock>
         </AssistantProvider>
@@ -54,7 +59,7 @@ export function Breadcrumbs({ items }: { items: { href?: string; label: string }
         {items.map((it, i) => (
           <li key={i} className="flex items-center gap-1.5">
             {it.href ? (
-              <a href={it.href} className="hover:text-fg">
+              <a href={it.href === "/" ? "/saunas" : it.href} className="hover:text-fg">
                 {it.label}
               </a>
             ) : (

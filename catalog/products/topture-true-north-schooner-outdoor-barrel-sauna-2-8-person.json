@@ -1,0 +1,182 @@
+{
+  "id": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person",
+  "slug": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person",
+  "name": "True North Schooner 2-8 Person Outdoor Barrel Sauna",
+  "brandId": "true-north-saunas",
+  "categoryId": "saunas",
+  "description": "Description This beautiful barrel sauna is handmade in Ontario, Canada. It has been developed for outdoor use in nature and can withstand any weather. It is available in various lengths. You can select an optional porch for the sauna: 9' and 10' models come with a 2' porch option, while 6' and 8' models have a 1' porch option. (Note: The porch decreases the inside length.) Different window options are available and you can choose if you want a wood stove or an electric heater inside. The sauna comes as a kit that requires assembly . Features: 2 wood options: White Cedar- slightly stronger and almost as resistant to rot and decay as red cedar, and has a beautiful light-colored finish. Red Cedar- naturally weather and insect-resistant, gives off a pleasant and recognizable scent and is aesthetically attractive. Comes standard with roof membrane & 2nd layer of roof boards Fascia boards to protect the end grain of the barrel wood 2 premium benches for sitting and reclining Partially pre-assembled construction with built-in venting holes Also Includes: 3 peg towel hanger, Vent kit, and cover, Screws for assembly, Flat floor , Door handles, Glassdoor, Benches Optional front and rear windows Optional porch which decreases inside space accordingly. The total length remains the same. Specifications Seats: 6' (2-4 people), 8' (4-6 people), 9' (6-8 people), 10' (6-8 people) Interior Volume (cu ft): 170 (6′ long) / 141 (6’ w/ 1’ Porch) 226 (8′ long) / 198 (8’ w/ 1’ Porch) 254 (9′ long) / 198 (9’ w/ 2’ Porch) 283 (10′ long) / 226 (10’ w/ 2’ Porch) Dimensions: 72” long x 90” wide x 80” tall (6’ long) 96” long x 90” wide x 80” tall (8’ long) 108” long x 90” wide x 80” tall (9’ long) 120” long x 90” wide x 80” tall (10’ long) Bench Lengths: 65.5” (6’)/ 53.5” (6’ w/ 1’ Porch) 89.5” (8’)/ 77.5” (8’ w/ 1’ Porch) 101.5” (9’)/ 77.5” (9’ w/ 2’ Porch) 113.5” (10’)/ 89.5” (10’ w/ 2’ Porch) Height: 6.6ft (outside), 6.3 ft (inside) Wood: White Cedar or Red Cedar Walls: 1.55\" thick solid wood Door: Wood-framed glass Made in: Canada Assembly Assembly Guide",
+  "status": "published",
+  "availability": "preorder",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-schooner-2-8-person-outdoor-barrel-sauna-s183-p-schooner-6-with-porch-1602837.jpg?v=1761775726",
+      "alt": "True North Schooner 2-8 Person Outdoor Barrel Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-true-north-schooner-outdoor-barrel-sauna-2-8-person-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 815300,
+      "listPriceMinor": 1087000,
+      "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "preorder",
+      "merchantSku": "S183 WC - Schooner 6' - With Porch",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as made_to_order. Lead time 8 weeks."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "S183 WC - Schooner 6' - With Porch"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-8 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-8 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "True North Schooner 2-8 Person Outdoor Barrel Sauna",
+        "matched": "2-8 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"8\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "True North Schooner 2-8 Person Outdoor Barrel Sauna",
+        "matched": "8",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "True North Schooner 2-8 Person Outdoor Barrel Sauna | Outdoor Saunas | Barrel Saunas, Features:Porch",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "barrel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Barrel\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "True North Schooner 2-8 Person Outdoor Barrel Sauna | Outdoor Saunas | Barrel Saunas, Features:Porch",
+        "matched": "Barrel",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “withstand any weather”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/true-north-schooner-outdoor-barrel-sauna-2-8-person?variant=44697469813000&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Chosen from 16 rows sharing /products/true-north-schooner-outdoor-barrel-sauna-2-8-person, ranging $8,153 to $11,845. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

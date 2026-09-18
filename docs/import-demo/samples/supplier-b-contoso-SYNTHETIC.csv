@@ -1,0 +1,6 @@
+Item Code;Description;Manufacturer;Department;Usage;Sugar;Caffeine;Price;Pack;Case Qty;Datasheet
+CB-55;"Alpine Salts Stick Pack, 20 sticks";Contoso Beverages;wellness-drinks;electrolytes;0 g;0 mg;EUR 28,00;20 sticks;6;https://example.invalid/contoso/alpine-salts
+CB-56;"Espresso Fizz Can, 12 pack";Contoso Beverages;wellness-drinks;energy;0,5 g;80 mg;EUR 21,50;12 cans;24;https://example.invalid/contoso/espresso-fizz
+CB-57;"Meadow Greens Tub, 30 scoops";Contoso Beverages;wellness-drinks;"greens;detox";2 g;;EUR 64,00;30 scoops;4;https://example.invalid/contoso/meadow-greens
+CB-58;"Recovery Blend Sticks, 14 pack";Contoso Beverages;wellness-drinks;hydration;0,08 oz;=SUM(B2:B9);24,99;14 sticks;6;https://example.invalid/contoso/recovery-blend
+CB-59;"Sleep Tea Sachets, 20 pack";Contoso Beverages;tea;sleep;1 g;0,08 g;EUR 18,00;20 sachets;12;https://example.invalid/contoso/sleep-tea

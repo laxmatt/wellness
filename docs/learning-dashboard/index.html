@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>What we have learned (local, private)</title>
+    <style>
+      :root { color-scheme: light; --edge: #ddd6cc; --bad: #8a2b1f; --warn: #7a5a12; --ok: #245b3a; --ink: #22201d; --soft: #5d574f; --demo: #4a3a7a; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0 0 5rem; background: #faf7f2; color: var(--ink); font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+      main { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+      h1 { font-size: 1.7rem; margin: 1.5rem 0 .25rem; }
+      h2 { font-size: 1.2rem; margin: 2.25rem 0 .5rem; }
+      h3 { font-size: 1rem; margin: 0; }
+      h4 { font-size: .8rem; margin: .6rem 0 .2rem; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); }
+      p { margin: .45rem 0; }
+      .lede { color: var(--soft); max-width: 62ch; }
+      .banner { border: 1px solid var(--edge); border-left: 4px solid var(--warn); background: #fff; padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0; }
+      .banner strong { display: block; margin-bottom: .2rem; }
+      .banner.bad-banner { border-left-color: var(--bad); }
+      #pending .toolbar, #rescue button { margin-top: .6rem; }
+      .pill { display: inline-block; border-radius: 999px; padding: .05rem .55rem; font-size: .72rem; font-weight: 700; letter-spacing: .02em; border: 1px solid var(--edge); background: #f3efe8; color: var(--soft); }
+      .pill.off { border-color: #d8c9c6; background: #f7ecea; color: var(--bad); }
+      .pill.on { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
+      .pill.demo { border-color: #cec6e2; background: #efebf8; color: var(--demo); }
+      .pill.measured { border-color: #c6d8cc; background: #eaf5ee; color: var(--ok); }
+      .pill.unmeasured { border-color: #e2dcc6; background: #f8f4e6; color: var(--warn); }
+      .sources { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: .8rem 1rem; margin-bottom: 1rem; }
+      .sources ul { list-style: none; margin: .5rem 0 0; padding: 0; }
+      .sources li { display: flex; flex-wrap: wrap; gap: .5rem; align-items: baseline; padding: .3rem 0; border-top: 1px solid var(--edge); }
+      .sources li:first-child { border-top: 0; }
+      .sources .src { font-weight: 600; }
+      .sources .note { color: var(--soft); font-size: .85rem; }
+      .panel { border: 1px solid var(--edge); border-left: 4px solid #d8c9c6; background: #fff; border-radius: 6px; padding: .85rem 1rem; margin: .75rem 0; }
+      .panel header { display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+      .panel .nofigure { font-weight: 600; }
+      .panel .what, .panel .contract { color: var(--soft); font-size: .9rem; }
+      .panel .contract { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; }
+      .panel ul { margin: .2rem 0 0; padding-left: 1.1rem; color: var(--soft); font-size: .9rem; }
+      .panel .never li { color: var(--bad); }
+      .entry { border: 1px solid var(--edge); border-left: 4px solid var(--edge); background: #fff; border-radius: 6px; padding: .85rem 1rem; margin: .7rem 0; }
+      .entry.is-demo { border-left-color: var(--demo); background: #fdfcff; }
+      .entry[data-status="done"] { border-left-color: var(--ok); }
+      .entry[data-status="dropped"] { opacity: .72; }
+      .entry header { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .4rem; }
+      .entry .observation { font-size: 1.02rem; font-weight: 600; }
+      .entry .meta { color: var(--soft); font-size: .82rem; }
+      .entry .actions { margin-top: .5rem; display: flex; gap: .8rem; }
+      button.link { border: 0; background: none; padding: 0; font: inherit; font-size: .85rem; font-weight: 600; color: var(--soft); text-decoration: underline; cursor: pointer; }
+      form { border: 1px solid var(--edge); background: #fff; border-radius: 6px; padding: 1rem; }
+      form .grid { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+      label { display: block; font-weight: 600; font-size: .82rem; margin-bottom: .2rem; }
+      input, select, textarea { width: 100%; padding: .4rem; font: inherit; font-size: .9rem; border: 1px solid var(--edge); border-radius: 4px; background: #fff; }
+      input:disabled { background: #f3efe8; color: var(--soft); }
+      textarea { min-height: 3.2rem; resize: vertical; }
+      .hint { color: var(--soft); font-size: .8rem; margin-top: .2rem; }
+      #problems { margin-top: .7rem; }
+      .problem { color: var(--bad); font-size: .88rem; margin: .2rem 0; }
+      .toolbar { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin: .8rem 0; }
+      .save { color: var(--soft); font-size: .85rem; }
+      .save.bad { color: var(--bad); }
+      .counts { font-size: .95rem; }
+      .empty, .demo-note { color: var(--soft); }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>What we have learned</h1>
+      <p class="lede">A private page for the owner. It runs from a file on your own disk, keeps its notes in this browser, and sends nothing anywhere.</p>
+
+      <div class="banner">
+        <strong>Nothing on this site is measured yet.</strong>
+        <p>
+          There is no analytics store, no traffic data and no connected search account. The typed events in <code>src/domain/analytics.ts</code> describe what could be recorded;
+          nothing calls the provider that would record them, so nothing ever has been. The four questions below therefore have no figures, and show what they would need instead
+          of showing a zero. <strong>No figure is not the same as a figure of zero</strong>, and this page will not print the second in place of the first.
+        </p>
+        <p>
+          This is a local operator tool. There is no login and no route: if this ever becomes a page on the site, it needs authentication first, and that work does not exist.
+        </p>
+      </div>
+
+      <h2>Four questions, and what would answer them</h2>
+      <div id="metrics"></div>
+
+      <h2>What we have learned, and what to do next</h2>
+      <p class="lede">
+        The part of this page with real content, because a person wrote it. Each entry says where it came from, and an entry resting on something somebody noticed is marked
+        differently from one resting on a measurement. There is no score: a count of notes says nothing about how the site is doing.
+      </p>
+
+      <div class="toolbar">
+        <button id="export" type="button">Save the register to a file</button>
+        <label for="import" style="display:inline">Load a saved file</label>
+        <input id="import" type="file" accept=".json,application/json" style="width:auto" />
+        <span id="save-state" class="save"></span>
+      </div>
+      <div class="toolbar">
+        <button id="load-demo" type="button">Load example entries</button>
+        <button id="clear-demo" type="button">Remove the examples</button>
+        <span class="save">Examples are invented, marked EXAMPLE, counted separately, and are not about this site.</span>
+      </div>
+
+      <div id="rescue" hidden></div>
+      <div id="pending" hidden></div>
+      <div id="summary"></div>
+      <div id="entries"></div>
+
+      <h2 id="form-title">Add what you noticed</h2>
+      <form onsubmit="return false">
+        <div class="grid">
+          <div style="grid-column: 1 / -1">
+            <label for="f-observation">What did you see?</label>
+            <textarea id="f-observation" placeholder="One sentence, in plain words."></textarea>
+          </div>
+          <div>
+            <label for="f-source">Where did it come from?</label>
+            <select id="f-source"></select>
+            <p class="hint" id="measurement-note"></p>
+          </div>
+          <div>
+            <label for="f-sample">Sample</label>
+            <input id="f-sample" placeholder="12 sessions" />
+          </div>
+          <div>
+            <label for="f-dates">Dates</label>
+            <input id="f-dates" placeholder="1 to 14 September" />
+          </div>
+          <div>
+            <label for="f-reference">Reference</label>
+            <input id="f-reference" placeholder="A file, a page, a conversation. Never somebody's words." />
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-hypothesis">What do you think it means? (optional)</label>
+            <textarea id="f-hypothesis" placeholder="Kept separate from what you saw, on purpose."></textarea>
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-change">What should change? (optional)</label>
+            <textarea id="f-change" placeholder="Leave it empty if you do not know yet. Writing down what you saw comes first."></textarea>
+          </div>
+          <div>
+            <label for="f-status">Status</label>
+            <select id="f-status"></select>
+          </div>
+          <div style="grid-column: 1 / -1">
+            <label for="f-outcome">What happened? (only once it is changed or dropped)</label>
+            <textarea id="f-outcome"></textarea>
+          </div>
+        </div>
+        <div id="problems" hidden></div>
+        <div class="toolbar">
+          <button id="save-entry" type="button">Save the entry</button>
+          <button id="cancel-edit" type="button" class="link" hidden>Cancel</button>
+        </div>
+      </form>
+
+      <h2>Where the notes live</h2>
+      <p class="lede">
+        In this browser, on this machine, under one key in local storage. That is convenient and it is not a backup: clearing site data, another browser, or another machine all
+        start empty. <strong>Save the register to a file</strong> and keep that file somewhere you keep things. Loading a file replaces what is here.
+      </p>
+      <p class="lede">
+        Nothing on this page records a visitor, and nothing here should ever hold one: no addresses, no identifiers, no referring query strings, and nothing anybody typed into
+        the assistant or a filter.
+      </p>
+    </main>
+    <script>
+      "use strict";
+(() => {
+  // src/domain/learning/metrics.ts
+  var NO_STORE = "Nothing records this. The event contract exists; nothing emits it, and there is no store to emit it to.";
+  var METRIC_PANELS = [
+    {
+      id: "discovery",
+      question: "How do people find the site?",
+      status: "not_connected",
+      why: "Nothing records arrivals, and no search account is connected.",
+      wouldComeFrom: "A count of arrivals grouped by where they came from: a search engine, a link from another site, or typed in directly.",
+      toConnect: [
+        "Search Console and Bing Webmaster Tools, once a domain exists and is verified. Neither is connected and no account exists.",
+        "A store that counts arrivals by referring host. Nothing like it exists here."
+      ],
+      neverStored: ["The full referring URL, including its query string.", "Anything identifying a visitor: address, fingerprint, or a stable id."]
+    },
+    {
+      id: "interest",
+      question: "Which categories and products do people look at?",
+      status: "not_connected",
+      why: NO_STORE,
+      wouldComeFrom: "Counts of category and product views, and of which filters get pressed.",
+      contract: "category_viewed, filter_selected, product_recommended, product_compared",
+      toConnect: ["Somewhere to put the events, and something that calls the provider. Today nothing calls it."],
+      neverStored: ["Anything tying a sequence of views to one person."]
+    },
+    {
+      id: "friction",
+      question: "Where do people get stuck?",
+      status: "not_connected",
+      why: NO_STORE,
+      wouldComeFrom: "Counts only: how often a set of filters leaves nothing, and how often somebody asks the assistant about something this site does not sell. Both as totals, never as a list of what anybody typed.",
+      contract: "preferences_extracted (unmappedCount), matcher_submitted (charCount)",
+      toConnect: ["The same missing store. The existing events were designed for this: they carry counts and keys, never the text."],
+      neverStored: ["What anybody typed, to the assistant or anywhere else. The event contract already refuses it and that must not be loosened to make a chart."]
+    },
+    {
+      id: "clickouts",
+      question: "How often does somebody leave for a merchant?",
+      status: "not_connected",
+      why: NO_STORE,
+      wouldComeFrom: "A count of outbound merchant clicks, by product and merchant.",
+      contract: "retailer_clicked",
+      toConnect: ["The same missing store."],
+      neverStored: [
+        "Purchases. This site cannot see them: there is no affiliate programme, no merchant reporting and no way to know what anybody bought. A click is a click and must never be presented as a sale."
+      ]
+    }
+  ];
+  var SOURCES = [
+    { id: "site_analytics", label: "Site analytics store", connected: false, note: "None. The event contract exists and nothing emits it." },
+    { id: "search_console", label: "Google Search Console", connected: false, note: "Not connected. No domain, no account, nothing submitted." },
+    { id: "bing", label: "Bing Webmaster Tools", connected: false, note: "Not connected. No domain, no account, nothing submitted." },
+    { id: "merchant", label: "Merchant or affiliate reporting", connected: false, note: "None. There is no affiliate programme, so there is no purchase data to read." }
+  ];
+
+  // src/domain/learning/register.ts
+  var EVIDENCE_SOURCES = [
+    { id: "owner_observation", label: "Something the owner noticed", observed: true, measured: false },
+    { id: "partner_feedback", label: "A partner or reviewer said so", observed: true, measured: false },
+    { id: "usability_session", label: "Watching somebody use the site", observed: true, measured: false },
+    { id: "code_review", label: "Reading the code or the catalogue", observed: true, measured: false },
+    { id: "reasoning", label: "Reasoning from what we know, with nothing observed", observed: false, measured: false },
+    { id: "site_analytics", label: "Site analytics", observed: true, measured: true },
+    { id: "search_console", label: "Search Console or Bing Webmaster Tools", observed: true, measured: true }
+  ];
+  var evidenceSource = (id) => EVIDENCE_SOURCES.find((s) => s.id === id);
+  var isMeasured = (id) => evidenceSource(id)?.measured === true;
+  var isObserved = (id) => evidenceSource(id)?.observed === true;
+  var STATUSES = [
+    { id: "open", label: "Noticed, nothing done" },
+    { id: "planned", label: "Change proposed" },
+    { id: "doing", label: "Being worked on" },
+    { id: "done", label: "Changed" },
+    { id: "dropped", label: "Decided against" }
+  ];
+  var MAX_FIELD = 2e3;
+  var MAX_SHORT = 200;
+  var isObject = (v) => typeof v === "object" && v !== null && !Array.isArray(v);
+  var text = (v) => typeof v === "string" ? v.trim() : "";
+  var optionalString = (v) => v === void 0 || v === null || typeof v === "string";
+  function validateEntry(candidate) {
+    if (!isObject(candidate)) return [{ field: "entry", message: `An entry is an object, not ${candidate === null ? "null" : Array.isArray(candidate) ? "a list" : typeof candidate}.` }];
+    const entry = candidate;
+    const problems = [];
+    if (typeof entry.observation !== "string" || entry.observation.trim() === "") problems.push({ field: "observation", message: "An entry starts with what was seen." });
+    if (!isObject(entry.evidence)) {
+      problems.push({ field: "evidence.source", message: "Name where this came from." });
+    } else {
+      const evidence = entry.evidence;
+      const source = text(evidence.source);
+      if (source === "") problems.push({ field: "evidence.source", message: "Name where this came from." });
+      else if (!evidenceSource(source)) problems.push({ field: "evidence.source", message: `"${source}" is not a source this register knows.` });
+      for (const key of ["sample", "dateRange", "reference"]) {
+        if (!optionalString(evidence[key])) problems.push({ field: `evidence.${key}`, message: `${key} has to be text.` });
+      }
+      if (source !== "" && evidenceSource(source) && !isObserved(source)) {
+        if (text(evidence.sample) !== "") problems.push({ field: "evidence.sample", message: "Nothing was observed here, so there is nothing a sample size could be a sample of." });
+        if (text(evidence.dateRange) !== "") problems.push({ field: "evidence.dateRange", message: "Nothing was observed here, so a date range would be describing nothing." });
+      }
+    }
+    if (!STATUSES.some((st) => st.id === entry.status)) problems.push({ field: "status", message: "Choose a status." });
+    for (const key of ["hypothesis", "proposedChange", "outcome"]) {
+      if (!optionalString(entry[key])) problems.push({ field: key, message: `${key} has to be text.` });
+    }
+    if (text(entry.outcome) !== "" && entry.status !== "done" && entry.status !== "dropped") {
+      problems.push({ field: "outcome", message: "An outcome is what happened after the change. Mark it changed or decided against first." });
+    }
+    const bounded = [
+      ["observation", entry.observation, MAX_FIELD],
+      ["hypothesis", entry.hypothesis, MAX_FIELD],
+      ["proposedChange", entry.proposedChange, MAX_FIELD],
+      ["outcome", entry.outcome, MAX_FIELD],
+      ["evidence.reference", isObject(entry.evidence) ? entry.evidence.reference : void 0, MAX_FIELD],
+      ["evidence.sample", isObject(entry.evidence) ? entry.evidence.sample : void 0, MAX_SHORT],
+      ["evidence.dateRange", isObject(entry.evidence) ? entry.evidence.dateRange : void 0, MAX_SHORT]
+    ];
+    for (const [field2, value, max] of bounded) {
+      if (typeof value === "string" && value.length > max) problems.push({ field: field2, message: `Keep this under ${max} characters.` });
+    }
+    return problems;
+  }
+  var isIsoDate = (v) => typeof v === "string" && v !== "" && !Number.isNaN(Date.parse(v));
+  function validateStoredEntry(candidate) {
+    const problems = validateEntry(candidate);
+    if (!isObject(candidate)) return problems;
+    if (typeof candidate.id === "string" && candidate.id.length > MAX_SHORT) problems.push({ field: "id", message: `An id is under ${MAX_SHORT} characters.` });
+    for (const key of ["createdAt", "updatedAt"]) {
+      if (!isIsoDate(candidate[key])) problems.push({ field: key, message: `${key} has to be a date this can read.` });
+    }
+    if (candidate.demo !== void 0 && candidate.demo !== true) problems.push({ field: "demo", message: "The example marker is true or absent." });
+    return problems;
+  }
+  function newId(now = /* @__PURE__ */ new Date(), random = Math.random) {
+    return `L-${now.toISOString().slice(0, 10)}-${Math.floor(random() * 1e6).toString(36).padStart(4, "0")}`;
+  }
+  var MAX_REGISTER_BYTES = 2e6;
+  var serialiseRegister = (entries2, now = /* @__PURE__ */ new Date()) => JSON.stringify({ version: 1, exportedAt: now.toISOString(), entries: entries2 }, null, 2);
+  function uniqueId(makeId, taken) {
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const candidate = makeId();
+      if (candidate !== "" && !taken.has(candidate)) return candidate;
+    }
+    const base = makeId() || "L";
+    let n = 2;
+    while (taken.has(`${base}-${n}`)) n += 1;
+    return `${base}-${n}`;
+  }
+  function parseRegister(raw, makeId = newId) {
+    if (raw.length > MAX_REGISTER_BYTES) return { ok: false, reason: `That file is ${Math.round(raw.length / 1e3)} kB. A register is notes, not a database.` };
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return { ok: false, reason: "That is not JSON." };
+    }
+    if (!isObject(parsed)) return { ok: false, reason: "A register file is a JSON object." };
+    if (parsed.version !== 1) return { ok: false, reason: `That file says version ${String(parsed.version)}. This tool writes and reads version 1.` };
+    if (!Array.isArray(parsed.entries)) return { ok: false, reason: "A register file needs an entries array." };
+    const entries2 = [];
+    const notes = [];
+    const seen = /* @__PURE__ */ new Set();
+    for (const [i, candidate] of parsed.entries.entries()) {
+      const problems = validateStoredEntry(candidate);
+      if (problems.length > 0) {
+        notes.push(`Entry ${i + 1} was left out: ${problems.map((p) => p.message).join(" ")}`);
+        continue;
+      }
+      const entry = candidate;
+      let id = typeof entry.id === "string" ? entry.id.trim() : "";
+      if (id === "") {
+        id = uniqueId(makeId, seen);
+        notes.push(`Entry ${i + 1} had no id and was kept under "${id}".`);
+      } else if (seen.has(id)) {
+        id = uniqueId(makeId, seen);
+        notes.push(`Entry ${i + 1} repeated the id "${entry.id}", which would make editing one edit both. It was kept under "${id}".`);
+      }
+      seen.add(id);
+      entries2.push({ ...entry, id });
+    }
+    return { ok: true, entries: entries2, notes };
+  }
+  function sortEntries(entries2) {
+    const rank = { open: 0, planned: 1, doing: 2, done: 3, dropped: 4 };
+    return [...entries2].sort((a, b) => rank[a.status] - rank[b.status] || b.updatedAt.localeCompare(a.updatedAt));
+  }
+  function registerSummary(entries2) {
+    const real = entries2.filter((e) => !e.demo);
+    return {
+      total: real.length,
+      demo: entries2.length - real.length,
+      byStatus: Object.fromEntries(STATUSES.map((s) => [s.id, real.filter((e) => e.status === s.id).length])),
+      measured: real.filter((e) => isMeasured(e.evidence.source)).length,
+      unmeasured: real.filter((e) => !isMeasured(e.evidence.source)).length
+    };
+  }
+
+  // src/domain/learning/demo.ts
+  var DEMO_ENTRIES = [
+    {
+      id: "L-example-1",
+      observation: "Two people opening a category page went straight to the chips and ignored the picks band above them.",
+      evidence: { source: "usability_session", reference: "Example entry. Not an observation about this site." },
+      hypothesis: "The picks read as advertising rather than as a shortcut.",
+      proposedChange: "Try naming what each pick is best at in the card itself, rather than above the row.",
+      status: "open",
+      createdAt: "2026-09-01T00:00:00.000Z",
+      updatedAt: "2026-09-01T00:00:00.000Z",
+      demo: true
+    },
+    {
+      id: "L-example-2",
+      observation: "A partner asked which of two products was cheaper per serving and could not tell from the cards.",
+      evidence: { source: "partner_feedback", reference: "Example entry. Not an observation about this site." },
+      hypothesis: "Pack price is what the card shows, and per-serving cost is what the question is about.",
+      proposedChange: "Show cost per serving on the card for drinks, beside the pack price rather than instead of it.",
+      status: "planned",
+      createdAt: "2026-09-03T00:00:00.000Z",
+      updatedAt: "2026-09-05T00:00:00.000Z",
+      demo: true
+    },
+    {
+      id: "L-example-3",
+      observation: "Reading the code: a filter that matched nothing was hidden, so a shopper arriving on a facet URL with no matches had no control to undo it.",
+      evidence: { source: "code_review", reference: "Example entry. Not an observation about this site." },
+      proposedChange: "Keep a selected option visible even when it matches nothing.",
+      status: "done",
+      outcome: "Changed. The chip is kept when it is the selection the page arrived with.",
+      createdAt: "2026-09-07T00:00:00.000Z",
+      updatedAt: "2026-09-10T00:00:00.000Z",
+      demo: true
+    }
+  ];
+
+  // src/tools/learning-dashboard/main.ts
+  var KEY = "wc.learning.v1";
+  var entries = [];
+  var editing = null;
+  var rescue = null;
+  var pending = null;
+  var el = (tag, className, text2) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text2 !== void 0) node.textContent = text2;
+    return node;
+  };
+  var byId = (id) => document.getElementById(id);
+  var clear = (node) => {
+    while (node.firstChild) node.removeChild(node.firstChild);
+  };
+  function load() {
+    let raw = null;
+    try {
+      raw = window.localStorage.getItem(KEY);
+    } catch {
+      rescue = { raw: "", reason: "This browser will not let the page read its storage, so nothing can be loaded or saved here. Use the file.", kind: "unreadable", notes: [] };
+      return;
+    }
+    if (!raw) return;
+    const parsed = parseRegister(raw);
+    if (!parsed.ok) {
+      rescue = { raw, reason: `The notes saved in this browser could not be read: ${parsed.reason}`, kind: "unreadable", notes: [] };
+      return;
+    }
+    entries = parsed.entries;
+    if (parsed.notes.length > 0) {
+      rescue = {
+        raw,
+        reason: `${parsed.notes.length} of the notes saved in this browser could not be read. The rest are shown below and have not been changed.`,
+        kind: "partial",
+        notes: parsed.notes
+      };
+    }
+  }
+  function save() {
+    if (rescue) {
+      setSaveState(
+        rescue.kind === "partial" ? "Nothing was saved: part of what is stored here could not be read, and writing now would replace it with less than it holds. Save the raw text first." : "Nothing was saved: there are unread notes in this browser's storage, and writing would overwrite them. Rescue them first.",
+        true
+      );
+      return false;
+    }
+    try {
+      window.localStorage.setItem(KEY, serialiseRegister(entries));
+      setSaveState("saved in this browser");
+      return true;
+    } catch {
+      setSaveState("Could not be saved in this browser. Save the register to a file to keep it.", true);
+      return false;
+    }
+  }
+  function setSaveState(message, bad = false) {
+    const node = byId("save-state");
+    node.textContent = message;
+    node.className = bad ? "save bad" : "save";
+  }
+  function download(name, text2) {
+    const url = URL.createObjectURL(new Blob([text2], { type: "application/json" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  function renderMetrics() {
+    const host = byId("metrics");
+    clear(host);
+    const sources = el("div", "sources");
+    sources.appendChild(el("h3", void 0, "Where figures could come from"));
+    const list = el("ul");
+    for (const s of SOURCES) {
+      const li = el("li");
+      li.appendChild(el("span", `pill ${s.connected ? "on" : "off"}`, s.connected ? "connected" : "not connected"));
+      li.appendChild(el("span", "src", s.label));
+      li.appendChild(el("span", "note", s.note));
+      list.appendChild(li);
+    }
+    sources.appendChild(list);
+    host.appendChild(sources);
+    for (const panel of METRIC_PANELS) {
+      const card = el("article", "panel", void 0);
+      card.setAttribute("data-panel", panel.id);
+      card.setAttribute("data-status", panel.status);
+      const head = el("header");
+      head.appendChild(el("h3", void 0, panel.question));
+      head.appendChild(el("span", "pill off", "not connected"));
+      card.appendChild(head);
+      const nofigure = el("p", "nofigure", "No figure. " + panel.why);
+      card.appendChild(nofigure);
+      card.appendChild(el("p", "what", `A figure here would be: ${panel.wouldComeFrom}`));
+      if (panel.contract) card.appendChild(el("p", "contract", `The typed events for it already exist: ${panel.contract} (src/domain/analytics.ts).`));
+      const toConnect = el("div", "block");
+      toConnect.appendChild(el("h4", void 0, "What it would take"));
+      const ul = el("ul");
+      for (const step of panel.toConnect) ul.appendChild(el("li", void 0, step));
+      toConnect.appendChild(ul);
+      card.appendChild(toConnect);
+      const never = el("div", "block never");
+      never.appendChild(el("h4", void 0, "What must never be kept"));
+      const ul2 = el("ul");
+      for (const rule of panel.neverStored) ul2.appendChild(el("li", void 0, rule));
+      never.appendChild(ul2);
+      card.appendChild(never);
+      host.appendChild(card);
+    }
+  }
+  function statusLabel(id) {
+    return STATUSES.find((s) => s.id === id)?.label ?? id;
+  }
+  function renderSummary() {
+    const host = byId("summary");
+    clear(host);
+    const s = registerSummary(entries);
+    if (s.total === 0 && s.demo === 0) {
+      host.appendChild(el("p", "empty", "The register is empty. Add what you have noticed, however small; an entry with no measurement behind it is still worth writing down, and this marks it as one."));
+      return;
+    }
+    if (s.total === 0) {
+      host.appendChild(el("p", "empty", "No entries of your own yet."));
+    } else {
+      const written = STATUSES.filter((st) => s.byStatus[st.id] > 0).map((st) => `${s.byStatus[st.id]} ${st.label.toLowerCase()}`);
+      const line = el("p", "counts");
+      line.textContent = `${s.total} ${s.total === 1 ? "entry" : "entries"}: ${written.join(", ")}.`;
+      host.appendChild(line);
+      const evidence = el("p", "counts");
+      evidence.textContent = `${s.measured} rest on a measurement. ${s.unmeasured} rest on something somebody noticed or reasoned out. There is no score here: a count of notes is not a measure of how the site is doing.`;
+      host.appendChild(evidence);
+    }
+    if (s.demo > 0) host.appendChild(el("p", "demo-note", `${s.demo} example ${s.demo === 1 ? "entry is" : "entries are"} loaded. They are marked EXAMPLE and are not about this site.`));
+  }
+  function renderEntries() {
+    const host = byId("entries");
+    clear(host);
+    for (const entry of sortEntries(entries)) {
+      const card = el("article", `entry ${entry.demo ? "is-demo" : ""}`);
+      card.setAttribute("data-entry", entry.id);
+      card.setAttribute("data-status", entry.status);
+      const head = el("header");
+      if (entry.demo) head.appendChild(el("span", "pill demo", "EXAMPLE"));
+      head.appendChild(el("span", `pill status-${entry.status}`, statusLabel(entry.status)));
+      const src = evidenceSource(entry.evidence.source);
+      head.appendChild(el("span", `pill ${isMeasured(entry.evidence.source) ? "measured" : "unmeasured"}`, isMeasured(entry.evidence.source) ? "measured" : "not measured"));
+      card.appendChild(head);
+      card.appendChild(el("p", "observation", entry.observation));
+      const meta = el("p", "meta");
+      meta.textContent = [
+        `Source: ${src?.label ?? entry.evidence.source}`,
+        entry.evidence.sample ? `Sample: ${entry.evidence.sample}` : null,
+        entry.evidence.dateRange ? `Dates: ${entry.evidence.dateRange}` : null,
+        entry.evidence.reference ? `Reference: ${entry.evidence.reference}` : null,
+        `Updated ${entry.updatedAt.slice(0, 10)}`
+      ].filter(Boolean).join(" \xB7 ");
+      card.appendChild(meta);
+      if (entry.hypothesis) {
+        const h = el("p", "hypothesis");
+        h.appendChild(el("strong", void 0, "What we think it means: "));
+        h.appendChild(document.createTextNode(entry.hypothesis));
+        card.appendChild(h);
+      }
+      if (entry.proposedChange) {
+        const change = el("p", "change");
+        change.appendChild(el("strong", void 0, "Proposed change: "));
+        change.appendChild(document.createTextNode(entry.proposedChange));
+        card.appendChild(change);
+      }
+      if (entry.outcome) {
+        const o = el("p", "outcome");
+        o.appendChild(el("strong", void 0, "What happened: "));
+        o.appendChild(document.createTextNode(entry.outcome));
+        card.appendChild(o);
+      }
+      const actions = el("div", "actions");
+      const edit = el("button", "link", "Edit");
+      edit.type = "button";
+      edit.addEventListener("click", () => startEdit(entry.id));
+      actions.appendChild(edit);
+      const remove = el("button", "link", "Delete");
+      remove.type = "button";
+      remove.addEventListener("click", () => {
+        entries = entries.filter((e) => e.id !== entry.id);
+        save();
+        render();
+      });
+      actions.appendChild(remove);
+      card.appendChild(actions);
+      host.appendChild(card);
+    }
+  }
+  var field = (id) => byId(id);
+  function fillForm(entry) {
+    field("f-observation").value = entry?.observation ?? "";
+    field("f-source").value = entry?.evidence.source ?? "owner_observation";
+    field("f-sample").value = entry?.evidence.sample ?? "";
+    field("f-dates").value = entry?.evidence.dateRange ?? "";
+    field("f-reference").value = entry?.evidence.reference ?? "";
+    field("f-hypothesis").value = entry?.hypothesis ?? "";
+    field("f-change").value = entry?.proposedChange ?? "";
+    field("f-status").value = entry?.status ?? "open";
+    field("f-outcome").value = entry?.outcome ?? "";
+    syncMeasurementFields();
+  }
+  function syncMeasurementFields() {
+    const source = field("f-source").value;
+    const observed = isObserved(source);
+    for (const id of ["f-sample", "f-dates"]) {
+      const input = field(id);
+      input.disabled = !observed;
+      if (!observed) input.value = "";
+    }
+    byId("measurement-note").textContent = observed ? isMeasured(source) ? "Counted by something. A sample and a date range belong here, and the entry is marked as measured." : "Somebody looked at something. A sample and a date range belong here; the entry is marked as observed rather than measured." : "Nothing was observed here, so there is nothing a sample size could be a sample of. Both fields are switched off.";
+  }
+  function startEdit(id) {
+    const entry = entries.find((e) => e.id === id);
+    if (!entry) return;
+    editing = id;
+    fillForm(entry);
+    byId("form-title").textContent = entry.demo ? "Editing an example entry" : "Editing an entry";
+    byId("cancel-edit").hidden = false;
+    byId("f-observation").scrollIntoView({ block: "center" });
+  }
+  function cancelEdit() {
+    editing = null;
+    fillForm();
+    byId("form-title").textContent = "Add what you noticed";
+    byId("cancel-edit").hidden = true;
+    showProblems([]);
+  }
+  function showProblems(problems) {
+    const host = byId("problems");
+    clear(host);
+    host.hidden = problems.length === 0;
+    for (const p of problems) host.appendChild(el("p", "problem", p.message));
+  }
+  function submit() {
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const source = field("f-source").value;
+    const draft = {
+      observation: field("f-observation").value.trim(),
+      evidence: {
+        source,
+        sample: field("f-sample").value.trim() || void 0,
+        dateRange: field("f-dates").value.trim() || void 0,
+        reference: field("f-reference").value.trim() || void 0
+      },
+      hypothesis: field("f-hypothesis").value.trim() || void 0,
+      proposedChange: field("f-change").value.trim(),
+      status: field("f-status").value,
+      outcome: field("f-outcome").value.trim() || void 0
+    };
+    const problems = validateEntry(draft);
+    showProblems(problems);
+    if (problems.length > 0) return;
+    if (editing) {
+      entries = entries.map((e) => e.id === editing ? { ...e, ...draft, id: e.id, createdAt: e.createdAt, updatedAt: now } : e);
+    } else {
+      entries = [...entries, { ...draft, id: newId(), createdAt: now, updatedAt: now }];
+    }
+    save();
+    cancelEdit();
+    render();
+  }
+  function renderPending() {
+    const host = byId("pending");
+    clear(host);
+    host.hidden = pending === null;
+    if (!pending) return;
+    const box = el("div", "banner");
+    box.appendChild(el("strong", void 0, `${pending.name}: read, and not applied.`));
+    box.appendChild(
+      el(
+        "p",
+        void 0,
+        `${pending.entries.length} ${pending.entries.length === 1 ? "entry" : "entries"} can be loaded. You have ${entries.length} here now. Nothing has changed yet.`
+      )
+    );
+    for (const note of pending.notes) box.appendChild(el("p", "problem", note));
+    if (pending.entries.length === 0) box.appendChild(el("p", "problem", "There is nothing in it to load. Replacing would empty the register, so that choice is not offered."));
+    const actions = el("div", "toolbar");
+    if (pending.entries.length > 0) {
+      const merge = el("button", void 0, "Add these to what is here");
+      merge.type = "button";
+      merge.addEventListener("click", () => applyPending("merge"));
+      actions.appendChild(merge);
+      const replace = el("button", void 0, `Replace all ${entries.length}`);
+      replace.type = "button";
+      replace.addEventListener("click", () => applyPending("replace"));
+      actions.appendChild(replace);
+    }
+    const cancel = el("button", "link", "Cancel");
+    cancel.type = "button";
+    cancel.addEventListener("click", () => {
+      pending = null;
+      renderPending();
+      setSaveState("Nothing was changed.");
+    });
+    actions.appendChild(cancel);
+    box.appendChild(actions);
+    host.appendChild(box);
+  }
+  function applyPending(how) {
+    if (!pending) return;
+    const incoming = pending.entries;
+    const name = pending.name;
+    if (how === "replace") {
+      entries = incoming;
+    } else {
+      const taken = new Set(entries.map((e) => e.id));
+      entries = [
+        ...entries,
+        ...incoming.map((entry) => {
+          if (!taken.has(entry.id)) {
+            taken.add(entry.id);
+            return entry;
+          }
+          const id = uniqueId(newId, taken);
+          taken.add(id);
+          return { ...entry, id };
+        })
+      ];
+    }
+    pending = null;
+    renderPending();
+    render();
+    const saved = save();
+    if (saved) setSaveState(`${how === "replace" ? "Replaced with" : "Added"} ${incoming.length} ${incoming.length === 1 ? "entry" : "entries"} from ${name}.`);
+  }
+  function renderRescue() {
+    const host = byId("rescue");
+    clear(host);
+    host.hidden = rescue === null;
+    if (!rescue) return;
+    const state = rescue;
+    const box = el("div", "banner bad-banner");
+    box.appendChild(el("strong", void 0, state.kind === "partial" ? "Part of the saved notes could not be read." : "Saved notes could not be read."));
+    box.appendChild(el("p", void 0, state.reason));
+    for (const note of state.notes) box.appendChild(el("p", "problem", note));
+    box.appendChild(el("p", void 0, "Nothing has been written over the stored text, and nothing will be while this message is here. Save the raw text first, then decide."));
+    if (state.raw !== "") {
+      const keep = el("button", void 0, "Save the raw text to a file");
+      keep.type = "button";
+      keep.addEventListener("click", () => download(`learning-register-unreadable-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.txt`, state.raw));
+      box.appendChild(keep);
+      const go = el("button", "link", state.kind === "partial" ? "I have a copy: keep the readable ones" : "I have a copy: start a new register");
+      go.type = "button";
+      go.addEventListener("click", () => {
+        rescue = null;
+        renderRescue();
+        save();
+        render();
+      });
+      box.appendChild(go);
+    }
+    host.appendChild(box);
+  }
+  function render() {
+    renderRescue();
+    renderPending();
+    renderSummary();
+    renderEntries();
+  }
+  function fillChoices() {
+    const source = byId("f-source");
+    for (const s of EVIDENCE_SOURCES) {
+      const option = el("option", void 0, s.measured ? `${s.label} (a measurement)` : s.label);
+      option.value = s.id;
+      source.appendChild(option);
+    }
+    const status = byId("f-status");
+    for (const s of STATUSES) {
+      const option = el("option", void 0, s.label);
+      option.value = s.id;
+      status.appendChild(option);
+    }
+  }
+  function start() {
+    load();
+    fillChoices();
+    renderMetrics();
+    render();
+    fillForm();
+    if (rescue) setSaveState(rescue.kind === "partial" ? "Part of the saved notes could not be read. Nothing has been written over them." : "Saved notes could not be read. Nothing has been written over them.", true);
+    else setSaveState(entries.length > 0 ? "loaded from this browser" : "nothing saved yet");
+    byId("f-source").addEventListener("change", syncMeasurementFields);
+    byId("save-entry").addEventListener("click", submit);
+    byId("cancel-edit").addEventListener("click", cancelEdit);
+    byId("export").addEventListener("click", () => {
+      download(`learning-register-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.json`, serialiseRegister(entries));
+    });
+    byId("import").addEventListener("change", async (e) => {
+      const input = e.target;
+      const file = input.files?.[0];
+      if (!file) return;
+      input.value = "";
+      if (file.size > MAX_REGISTER_BYTES) {
+        setSaveState(`That file is ${Math.round(file.size / 1e3)} kB. A register is notes, not a database.`, true);
+        return;
+      }
+      const parsed = parseRegister(await file.text());
+      if (!parsed.ok) {
+        setSaveState(`That file was not read, and nothing here was touched. ${parsed.reason}`, true);
+        return;
+      }
+      pending = { entries: parsed.entries, notes: parsed.notes, name: file.name };
+      renderPending();
+    });
+    byId("load-demo").addEventListener("click", () => {
+      entries = [...entries.filter((e) => !e.demo), ...DEMO_ENTRIES];
+      save();
+      render();
+    });
+    byId("clear-demo").addEventListener("click", () => {
+      entries = entries.filter((e) => !e.demo);
+      save();
+      render();
+    });
+  }
+
+  // src/tools/learning-dashboard/entry.ts
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
+})();
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,360 @@
+{
+  "id": "saunabox-solara-full-spectrum-infrared-sauna",
+  "slug": "saunabox-solara-full-spectrum-infrared-sauna",
+  "name": "SAUNABOX Solara: 1-Person Full Spectrum Infrared Sauna",
+  "brandId": "saunabox",
+  "categoryId": "saunas",
+  "description": "Your personal infrared sanctuary, reimagined. The Solara delivers the deep restorative power of full-spectrum heat and medical-grade red light therapy-refined into a sleek, compact, and beautifully crafted wooden sauna for your home. Every detail of The Solara has been designed for both function and elegance. From its ultra-low EMF infrared panels to its Bluetooth app control, every element works in harmony to create a seamlessly elevated wellness experience. Crafted from 100% Canadian Hemlock, The Solara assembles in under 30 minutes and fits effortlessly into small spaces-bringing the benefits of professional-grade recovery into your daily rhythm. It's innovation, with intention. Wellness, without compromise. KEY FEATURES: → Full Spectrum Low-EMF Infrared Heating → Heats up to 158° F → Certified Free of Toxic Heavy Metals & Phthalates → Bluetooth Speaker System → Medical Grade 660nm Red Light Therapy → 850nm Near Infrared Therapy → Built-in Chromotherapy: Choose from 10 colors → Reflective Glass Door for Privacy → 100% Canadian Hemlock Wood → Free Curbside Delivery SPECIFICATIONS: Heat Levels: Adjustable from 77° - 158° F Near, mid, and far-infrared (NIR, MIR, and FIR) Time Settings: 0-90 minutes Bluetooth Audio System: Connect Your Mobile Device Heater: Ultra-low EMF Infrared Panels Medical-Grade Red Light: 660nm + 850nm Wave Length Red Light Panel: 60 LEDs deliver up to 192 mW/cm² of irradiance Wood Type: 100% Canadian Hemlock Type: Indoor Sauna Voltage: 110V Wattage: 1600 Watts 50/60Hz Size: 35\" x 37\" x 63\" (W x D x H) Power cord length: 8 feet Assembled Weight: 172lbs Warranty: 2-Year",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/SB_Solara_01_R01_01-1.png?v=1779230474",
+      "alt": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/2_-_1080x1350_-_v2_-_SA_-_Ideah_Labs_LLC_-_377630_1.jpg?v=1789077589",
+      "alt": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/Solara_-_features_2.jpg?v=1783358841",
+      "alt": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/SB_Solara_02_R01_01-1.png?v=1776725070",
+      "alt": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-offer",
+      "merchantId": "saunabox",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 259900,
+      "url": "https://www.saunabox.com/MATT41058",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "80182564"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SOLARA-PRO",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Price, variant and availability come from SAUNABOX's official Shopify listing. Outbound uses the exact Social Snowball referral URL issued to Matt; no unverified deep-link transformation is applied. The referral advertises 5% customer savings and 5% commission."
+      }
+    }
+  ],
+  "variants": [
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-variant-1",
+      "supplierVariantId": "55755665375524",
+      "label": "Black",
+      "options": [
+        {
+          "category": "Finish",
+          "value": "Black"
+        }
+      ],
+      "offer": {
+        "id": "saunabox-solara-full-spectrum-infrared-sauna-variant-offer-1",
+        "merchantId": "saunabox",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 259900,
+        "url": "https://www.saunabox.com/MATT41058",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "direct",
+          "programRef": "80182564"
+        },
+        "discountCodes": [],
+        "availability": "in_stock",
+        "merchantSku": "SOLARA-PRO",
+        "lastChecked": "2026-09-15",
+        "source": {
+          "kind": "manufacturer",
+          "ref": "SAUNABOX official public Shopify storefront snapshot",
+          "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+          "retrievedAt": "2026-09-15",
+          "method": "direct",
+          "note": "Price, variant and availability come from SAUNABOX's official Shopify listing. Outbound uses the exact Social Snowball referral URL issued to Matt; no unverified deep-link transformation is applied. The referral advertises 5% customer savings and 5% commission."
+        }
+      },
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "saunabox-solara-full-spectrum-infrared-sauna-variant-2",
+      "supplierVariantId": "55755665408292",
+      "label": "Natural",
+      "options": [
+        {
+          "category": "Finish",
+          "value": "Natural"
+        }
+      ],
+      "offer": {
+        "id": "saunabox-solara-full-spectrum-infrared-sauna-variant-offer-2",
+        "merchantId": "saunabox",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 259900,
+        "url": "https://www.saunabox.com/MATT41058",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "direct",
+          "programRef": "80182564"
+        },
+        "discountCodes": [],
+        "availability": "out_of_stock",
+        "merchantSku": "SOLARA-PRO-WOOD",
+        "lastChecked": "2026-09-15",
+        "source": {
+          "kind": "manufacturer",
+          "ref": "SAUNABOX official public Shopify storefront snapshot",
+          "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+          "retrievedAt": "2026-09-15",
+          "method": "direct",
+          "note": "Price, variant and availability come from SAUNABOX's official Shopify listing. Outbound uses the exact Social Snowball referral URL issued to Matt; no unverified deep-link transformation is applied. The referral advertises 5% customer savings and 5% commission."
+        }
+      },
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "saunabox": "SOLARA-PRO"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "1 person",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 1,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 35,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 37,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 63,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "plug_in",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_model": {
+      "value": "Ultra-low EMF infrared panels",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 158,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “Heats up to 158° F”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "SaunaBox® Solara: 1-Person Full Spectrum Infrared Sauna",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "manufacturer",
+    "ref": "SAUNABOX official public Shopify storefront snapshot",
+    "url": "https://www.saunabox.com/products/solara-full-spectrum-infrared-sauna",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

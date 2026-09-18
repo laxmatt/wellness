@@ -1,0 +1,283 @@
+{
+  "id": "saunabox-saunabox-go",
+  "slug": "saunabox-saunabox-go",
+  "name": "SAUNABOX SmartSteam XL",
+  "brandId": "saunabox",
+  "categoryId": "saunas",
+  "description": "SaunaBox SmartSteam XL: Your Wellness Oasis, Wherever Life Takes You. The SaunaBox XL is your personal wellness retreat, reimagined. Designed for portability, convenience, and comfort, this 2-person steam sauna transforms any space into a rejuvenating sanctuary. With effortless setup and cutting-edge features, it's relaxation, wherever and whenever you need it. The SaunaBox XL heats up to a soothing 130°F , delivering the therapeutic benefits of a traditional sauna in a compact, user-friendly design. Its high-humidity environment enhances the sauna experience, mimicking the effects of a dry sauna at much higher temperatures. Adjust your heat and duration settings with ease using the SmartSteam™ Pro Heating Unit and remote control, customizing every session to your needs. Every detail of the SaunaBox XL is thoughtfully engineered to deliver premium quality. The fully insulated, easy pop-up tent enhances portability, while its durable fiberglass frame and SweatLock Floor Mat guarantee comfort and longevity. Designed to set up in under 1 minute, it's as easy to transport as it is to enjoy. Product Specifications: Heat Levels: 1-15 Time Settings: 0-60 minutes Control: SmartSteam Unit & Bluetooth App SmartSteam Capacity: 3.6L Voltage: 110V Wattage: 1600 Watts 50/60Hz Warranty: 1-Year Warranty Size: 56in W x 53in H x 49in L",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "saunabox-saunabox-go-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/39.png?v=1764787230",
+      "alt": "SaunaBox® SmartSteam XL",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-go-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/7.01-1080x1080-IdeahLabsLLC-AAL-268976_1.png?v=1764787230",
+      "alt": "SaunaBox® SmartSteam XL",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-go-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/6.03-1080x1080-IdeahLabsLLC-PO-268976_-_v1_-_HO_-_Ideah_Labs_LLC_-_268976.png?v=1767474204",
+      "alt": "SaunaBox® SmartSteam XL",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    },
+    {
+      "id": "saunabox-saunabox-go-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0758/8239/7988/files/1.02-1080x1080-IdeahLabsLLC-PO-268976.png?v=1767474204",
+      "alt": "SaunaBox® SmartSteam XL",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Remote image URL published in SAUNABOX's official Shopify storefront. Used in place with official-source provenance; not independently licensed or downloaded."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "saunabox-saunabox-go-offer",
+      "merchantId": "saunabox",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 42900,
+      "url": "https://www.saunabox.com/MATT41058",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "80182564"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "SAUNA-GO",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Price, variant and availability come from SAUNABOX's official Shopify listing. Outbound uses the exact Social Snowball referral URL issued to Matt; no unverified deep-link transformation is applied. The referral advertises 5% customer savings and 5% commission."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "saunabox": "SAUNA-GO"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2 person",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_type": {
+      "value": "steam",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "tent",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 56,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 49,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 53,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "plug_in",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "heater_model": {
+      "value": "SmartSteam Pro heating unit",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 130,
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “heats up to a soothing 130°F”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "enclosure_protection": {
+      "value": "insulated",
+      "source": {
+        "kind": "manufacturer",
+        "ref": "SAUNABOX official public Shopify storefront snapshot",
+        "url": "https://www.saunabox.com/products/saunabox-go",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “fully insulated”. Supplier claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "SaunaBox® SmartSteam XL",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "manufacturer",
+    "ref": "SAUNABOX official public Shopify storefront snapshot",
+    "url": "https://www.saunabox.com/products/saunabox-go",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Read from SAUNABOX's official product listing. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

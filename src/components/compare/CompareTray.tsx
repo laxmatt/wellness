@@ -1,5 +1,7 @@
 "use client";
 
+import { trackTraffic } from "@/lib/traffic-analytics";
+
 import Link from "next/link";
 import { buttonStyles } from "@/components/ui/Button";
 import { useCompare } from "./CompareProvider";
@@ -35,7 +37,7 @@ export function CompareTray({ categoryId }: { categoryId?: string }) {
         <button type="button" onClick={() => clear(catId)} className="tap hidden text-sm font-semibold text-fg-muted hover:text-fg sm:inline-flex">
           Clear
         </button>
-        <Link href={href} className={buttonStyles("primary", "md")}>
+        <Link href={href} onClick={() => { if (ids.length >= 2) trackTraffic("comparison_opened", catId); }} className={buttonStyles("primary", "md")}>
           Compare {ids.length}
         </Link>
       </div>

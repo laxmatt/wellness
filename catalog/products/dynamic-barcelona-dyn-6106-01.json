@@ -1,0 +1,202 @@
+{
+  "id": "dynamic-barcelona-dyn-6106-01",
+  "slug": "dynamic-barcelona-dyn-6106-01",
+  "name": "Barcelona DYN-6106-01",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "One to two person far infrared cabin that runs from an ordinary wall socket.",
+  "status": "draft",
+  "availability": "unknown",
+  "market": "US",
+  "images": [],
+  "offers": [
+    {
+      "id": "dynamic-barcelona-dyn-6106-01-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 199900,
+      "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+      "affiliate": {
+        "status": "non_affiliate",
+        "network": "other"
+      },
+      "discountCodes": [],
+      "availability": "unknown",
+      "lastChecked": "2026-09-13",
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Approved through UpPromote on 2026-09-13. No tracking link has been issued or supplied, so the link below earns nothing and none is invented. Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "mpn": "DYN-6106-01",
+    "merchantSkus": {}
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "1-2 people",
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "width_in": {
+      "value": 39,
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "depth_in": {
+      "value": 36,
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "height_in": {
+      "value": 73,
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "connection": {
+      "value": "plug_in",
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "The page was read for this and states none. Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "not_stated"
+    },
+    "heater_kw": {
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "The page was read for this and states none. Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "not_stated"
+    },
+    "heater_model": {
+      "source": {
+        "kind": "retailer",
+        "ref": "Read by Codex on 2026-09-13",
+        "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+        "retrievedAt": "2026-09-13",
+        "method": "secondhand",
+        "note": "The page was read for this and states none. Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+      },
+      "verification": "not_stated"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "retailer",
+    "ref": "Read by Codex on 2026-09-13",
+    "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+    "retrievedAt": "2026-09-13",
+    "method": "secondhand",
+    "note": "Approved for intake: Approved by Matt by email on 2026-09-13: SaunaCloud direct, Select Saunas via UpPromote, Sweat Kingdom via Awin advertiser 125462, publisher 3090899. Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records. The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance. Stock was not verified. Availability is recorded as unknown rather than guessed."
+  },
+  "lastUpdated": "2026-09-13",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

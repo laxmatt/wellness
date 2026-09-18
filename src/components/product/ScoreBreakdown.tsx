@@ -30,6 +30,7 @@ export function ScoreBreakdown({ cat, result, className }: { cat: CategoryDefini
             {result.criteria.map((c) => {
               const def = attributeDef(cat, c.key);
               const withheld = result.demoCriteria.includes(c.key);
+              const disputed = result.disputedCriteria.includes(c.key);
               return (
                 <tr key={c.key} className="border-b border-edge last:border-0">
                   <td className="py-2">
@@ -40,6 +41,8 @@ export function ScoreBreakdown({ cat, result, className }: { cat: CategoryDefini
                   <td className="py-2 text-right">
                     {withheld ? (
                       <span className="text-accent-strong">Withheld, placeholder data</span>
+                    ) : disputed ? (
+                      <span className="text-accent-strong">Withheld, the source states it two ways</span>
                     ) : c.raw === undefined ? (
                       <span className="text-fg-muted">Not stated, scores 0</span>
                     ) : (

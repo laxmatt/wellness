@@ -1,0 +1,88 @@
+{
+  "sourceId": "hooga-shopify",
+  "storeUrl": "https://hoogahealth.com",
+  "requested": [
+    "https://hoogahealth.com/products.json?limit=250&page=1"
+  ],
+  "pages": 1,
+  "productCount": 2,
+  "variantCount": 2,
+  "fetchedAt": "2026-09-15T08:00:00Z",
+  "products": [
+    {
+      "id": 301,
+      "handle": "hooga-hg300",
+      "title": "Hooga HG300 Red Light Panel",
+      "vendor": "Hooga",
+      "product_type": "Light Therapy",
+      "tags": [
+        "red light"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 3011,
+          "title": "Default Title",
+          "sku": "HG300",
+          "price": "269.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/hooga-hg300.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    },
+    {
+      "id": 302,
+      "handle": "hooga-sauna-blanket",
+      "title": "Hooga Infrared Sauna Blanket",
+      "vendor": "Hooga",
+      "product_type": "Sauna Accessories",
+      "tags": [
+        "sauna",
+        "accessories"
+      ],
+      "body_html": "<p>A sauna.</p>",
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2026-09-10T00:00:00Z",
+      "variants": [
+        {
+          "id": 3021,
+          "title": "Default Title",
+          "sku": "HG-BLANKET",
+          "price": "499.00",
+          "compare_at_price": null,
+          "available": true,
+          "position": 1,
+          "updated_at": "2026-09-10T00:00:00Z",
+          "featured_image": null
+        }
+      ],
+      "images": [
+        {
+          "src": "https://cdn.example.test/hooga-sauna-blanket.jpg",
+          "position": 1
+        }
+      ],
+      "options": [
+        {
+          "name": "Size"
+        }
+      ]
+    }
+  ]
+}

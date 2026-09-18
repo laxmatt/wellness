@@ -1,6 +1,7 @@
 import type { ImageAsset } from "@/domain/product";
 import { cn } from "@/lib/cn";
 import { DemoArt } from "./DemoArt";
+import { SafeImage } from "./SafeImage";
 
 // Renders any ImageAsset. Demo placeholders are procedural; real assets use a
 // plain img with lazy loading until an approved asset pipeline exists.
@@ -26,15 +27,13 @@ export function ImageFrame({
       ) : image.src.startsWith("demo:") ? (
         <DemoArt seed={image.src.slice(5)} label={image.alt} variant={v} className="absolute inset-0 h-full w-full" />
       ) : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <SafeImage
           src={image.src}
           alt={image.alt}
           width={image.width}
           height={image.height}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
+          priority={priority}
+          seed={image.id}
         />
       )}
     </div>

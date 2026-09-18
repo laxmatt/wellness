@@ -1,0 +1,128 @@
+{
+  "id": "sweaty-yeti-sauna",
+  "slug": "sweaty-yeti-sauna",
+  "name": "Sauna",
+  "brandId": "sweaty-yeti",
+  "categoryId": "saunas",
+  "description": "4-6 Person Sauna and Cold Plunge Requires 60 amp electrical connection See the features sheet for a full list of standard selections.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sweaty-yeti-sauna-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://sweatyyetisauna.com/wp-content/uploads/2025/06/540-sauna.jpg",
+      "alt": "Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+        "url": "https://sweatyyetisauna.com/product/sauna/",
+        "retrievedAt": "2026-09-18",
+        "method": "direct",
+        "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sweaty-yeti-sauna-offer",
+      "merchantId": "sweaty-yeti-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 2970000,
+      "url": "https://sweatyyetisauna.com/product/sauna/?sld=126",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "other",
+        "programRef": "126"
+      },
+      "discountCodes": [
+        {
+          "code": "wellnessfitcheck5",
+          "description": "Partner-issued checkout coupon",
+          "source": {
+            "kind": "merchant_feed",
+            "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+            "url": "https://sweatyyetisauna.com/product/sauna/",
+            "retrievedAt": "2026-09-18",
+            "method": "direct",
+            "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+          }
+        }
+      ],
+      "availability": "in_stock",
+      "lastChecked": "2026-09-18",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+        "url": "https://sweatyyetisauna.com/product/sauna/",
+        "retrievedAt": "2026-09-18",
+        "method": "direct",
+        "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-6 person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+        "url": "https://sweatyyetisauna.com/product/sauna/",
+        "retrievedAt": "2026-09-18",
+        "method": "direct",
+        "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+        "url": "https://sweatyyetisauna.com/product/sauna/",
+        "retrievedAt": "2026-09-18",
+        "method": "direct",
+        "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "amperage_a": {
+      "value": 60,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+        "url": "https://sweatyyetisauna.com/product/sauna/",
+        "retrievedAt": "2026-09-18",
+        "method": "direct",
+        "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Sauna",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Sweaty Yeti official WooCommerce Store API snapshot, product 1843",
+    "url": "https://sweatyyetisauna.com/product/sauna/",
+    "retrievedAt": "2026-09-18",
+    "method": "direct",
+    "note": "Product identity, price, stock state, description, categories and image URL come from the merchant's official public Store API. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-18",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

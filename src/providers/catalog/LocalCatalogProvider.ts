@@ -1,10 +1,12 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 import { validateAttributeAgainstDefinition } from "@/domain/attributes";
 import { categories, categoryById } from "@/domain/categories";
 import type { CategoryDefinition } from "@/domain/category";
+import { familyIssues } from "@/domain/family";
 import { Brand, Merchant, Product } from "@/domain/product";
+import { isUsable } from "@/domain/provenance";
 import { toProductView, type ProductView } from "@/domain/view";
 import type { CatalogProvider, ProductQuery } from "./CatalogProvider";
 
@@ -17,7 +19,13 @@ export type LoadedCatalog = {
 
 export type CatalogIssue = { file: string; message: string };
 
-function readJsonDir(dir: string): { file: string; data: unknown }[] {
+function readJsonDir(dir: string, optional = false): { file: string; data: unknown }[] {
+  // The base catalogue's directories are not optional: a missing `products/`
+  // there is a broken checkout, and returning nothing would render empty
+  // categories with no sign that anything was wrong. An overlay directory is
+  // different. It is an operator's scratch directory and may hold products
+  // without having grown a `merchants/` yet.
+  if (optional && !existsSync(dir)) return [];
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .sort()
@@ -54,38 +62,184 @@ export function validateCatalog(cat: LoadedCatalog): CatalogIssue[] {
         issues.push({ file, message: `attribute "${key}" is not defined for ${category.id}` });
         continue;
       }
-      const err = validateAttributeAgainstDefinition(def, sv.value);
-      if (err) issues.push({ file, message: `attribute "${key}": ${err}` });
+      // An attribute may hold no value, and only when the source states none.
+      // "Not stated" is a real answer; a value that is simply missing while
+      // the record claims the maker reported it is a hole, not an answer.
+      if (sv.value === undefined) {
+        if (sv.verification !== "not_stated" && sv.verification !== "demo") {
+          issues.push({
+            file,
+            message: `attribute "${key}" has no value but is recorded as "${sv.verification}". Use "not_stated" when the source does not state it.`,
+          });
+        }
+      } else {
+        if (sv.verification === "not_stated") {
+          issues.push({ file, message: `attribute "${key}" is recorded as "not_stated" and still carries a value. Remove the value or change the verification.` });
+        }
+        const err = validateAttributeAgainstDefinition(def, sv.value);
+        if (err) issues.push({ file, message: `attribute "${key}": ${err}` });
+      }
       if (sv.verification === "independently_verified" && sv.source.kind !== "independent_test") {
         issues.push({ file, message: `attribute "${key}" claims independent verification without an independent_test source` });
+      }
+      // A note-matching rule was tried here and removed. It flagged four
+      // irradiance figures whose notes say the measurement DISTANCE is not
+      // stated, which is a different fact from the figure itself, and the
+      // sanitation note that records a removal. A heuristic that forces true
+      // values to be deleted is worse than no heuristic: the exact checks are
+      // the ones that hold.
+      // A recorded derivation has to be recorded, not inferred: it needs a
+      // note saying how the figure was computed, and it only makes sense on a
+      // number in the category's money unit.
+      if (sv.derivedFrom === "price") {
+        if (def.unit !== "USD_minor") {
+          issues.push({ file, message: `attribute "${key}" says it is derived from the price but is not a money figure (unit "${def.unit ?? "none"}").` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" says it is derived from the price with no note saying how.` });
+        }
+      }
+      // A disputed figure keeps its value so both statements stay visible, and
+      // it needs the note that says what the two statements were.
+      if (sv.disputed) {
+        if (sv.value === undefined) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed with no value. The point of the marker is to keep the figure visible.` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed with no note saying what the source states.` });
+        }
+        if (sv.bound) {
+          issues.push({ file, message: `attribute "${key}" is marked disputed and also carries a bound. A bound is a claim the dispute has not settled.` });
+        }
+      }
+      if (sv.bound) {
+        if (typeof sv.value !== "number") {
+          issues.push({ file, message: `attribute "${key}" carries a bound but its value is not a number. A bound qualifies an amount.` });
+        }
+        if (!isUsable(sv.verification)) {
+          issues.push({ file, message: `attribute "${key}" carries a bound on a "${sv.verification}" value. A bound qualifies a fact; this is not one.` });
+        }
+        if (!sv.source.note) {
+          issues.push({ file, message: `attribute "${key}" carries a bound with no source note. The note is where the wording that justifies it lives.` });
+        }
+        // Scoring reads the number, so a bound must point at the end that
+        // cannot flatter the product. "More than 189" on a higher-is-better
+        // figure scores 189 and understates it. The reverse, a floor on a
+        // lower-is-better figure, would score the best case of a range whose
+        // top nobody stated.
+        const flattering =
+          (sv.bound === "greater_than" && def.preferenceDirection === "lower_better") ||
+          (sv.bound === "less_than" && def.preferenceDirection === "higher_better");
+        if (flattering) {
+          issues.push({
+            file,
+            message: `attribute "${key}" records a "${sv.bound}" bound on a ${def.preferenceDirection} figure, so scoring would read the flattering end of a range nobody stated.`,
+          });
+        }
       }
     }
     for (const o of p.offers) {
       if (!merchantIds.has(o.merchantId)) issues.push({ file, message: `offer ${o.id} has unknown merchantId ${o.merchantId}` });
+      // Same rule as a disputed attribute: the marker exists so a reader can
+      // see the amount and why it is not used. Without a note it is a silent
+      // deletion with extra steps.
+      if (o.disputed === true && !o.source.note) {
+        issues.push({ file, message: `offer ${o.id} is marked disputed with no note saying why the amount cannot be shown to belong to this product.` });
+      }
+      // An offer that says it pays has to say what pays it. `rel="sponsored"`
+      // and the words "we may earn a commission" both key off this status, so
+      // it is the switch that turns a disclosure on, and a record can flip it
+      // long before an account exists. A programme reference is the cheapest
+      // evidence that one does: the network's own identifier for this site.
+      // Nothing here invents or checks a tracking parameter, and nothing here
+      // is proof an application was approved.
+      if (o.affiliate.status === "affiliate") {
+        if (!o.affiliate.network) {
+          issues.push({ file, message: `offer ${o.id} says it is an affiliate link and names no network. The page will tell a shopper it may earn a commission, so the record has to say through whom.` });
+        }
+        if (!o.affiliate.programRef) {
+          issues.push({ file, message: `offer ${o.id} says it is an affiliate link with no programRef. Record the programme's own reference for this site, or set the status back to "unknown" until there is one.` });
+        }
+      }
+      // A programme reference on an offer that is not an affiliate link is
+      // allowed, and refusing it was wrong. Holding a programme's identity is
+      // not the same as a link being commissioned: an account can exist and be
+      // open while this site is not yet registered to it, which is the state
+      // this project is actually in. Recording the reference against the offer
+      // it will apply to is how a person keeps that straight, and nothing on
+      // screen reads it. The status alone decides what a shopper is told and
+      // whether a link says it was paid for.
+      if (o.disputed === true && o.source.kind === "demo") {
+        issues.push({ file, message: `offer ${o.id} is marked disputed and is also prototype data. A made-up amount is not a mismatched one; use one marker or the other.` });
+      }
     }
+    // An image is required of a record a shopper can see, and of no other.
+    //
+    // The rule exists so a published card is never a blank frame, which is a
+    // statement about the storefront rather than about the record. A draft has
+    // no shopper: it is a record somebody is still working on, and for saunas
+    // it is a record whose images cannot be settled yet, because no brand has
+    // granted any right to reuse a photograph and a publicly visible image is
+    // not a licence. Demanding one before a reviewer can even read the draft
+    // would have exactly one effect: a placeholder invented to satisfy a check.
     const hasPrimary = p.images.some((i) => i.role === "primary");
-    if (!hasPrimary) issues.push({ file, message: "no primary image" });
+    if (!hasPrimary && p.status === "published") {
+      issues.push({ file, message: "no primary image, and it is published. A record a shopper can see needs one." });
+    }
+  }
+
+  for (const p of cat.products) {
+    for (const [key, value] of Object.entries(p.attributes)) {
+      if (value.derivation && value.derivation.reviewState !== "approved" && p.status === "published") {
+        issues.push({ file: `product ${p.id}`, message: `attributes.${key} was read out of "${value.derivation.field}" by a rule nobody approved, and this record is published.` });
+      }
+      if (value.derivation && !value.derivation.sourceText.includes(value.derivation.matched)) {
+        issues.push({ file: `product ${p.id}`, message: `attributes.${key} says it matched ${JSON.stringify(value.derivation.matched)} in a text that does not contain it.` });
+      }
+    }
+  }
+
+  // Family membership is checked over the whole catalogue because every way of
+  // getting it wrong is about a pair: a representative that is not there, a
+  // record pointing at itself, a record claimed twice, and a chain. Refusing
+  // chains is what makes a cycle impossible rather than merely unlikely.
+  for (const issue of familyIssues(cat.products)) {
+    issues.push({ file: `product ${issue.id}`, message: issue.message });
   }
   return issues;
 }
 
-export function loadLocalCatalog(root: string): LoadedCatalog {
-  const products = readJsonDir(join(root, "products")).map(({ file, data }) => {
+export type CatalogRecords = { products: Product[]; brands: Brand[]; merchants: Merchant[] };
+
+/**
+ * Every record in a directory, parsed and no further.
+ *
+ * Split out from `loadLocalCatalog` because the cross-entity checks only make
+ * sense over a whole catalogue, and an overlay is not one: a preview product
+ * may belong to a brand the base directory holds. The overlay is read with
+ * this, merged, and checked once.
+ */
+export function readCatalogRecords(root: string, optionalDirs = false): CatalogRecords {
+  const products = readJsonDir(join(root, "products"), optionalDirs).map(({ file, data }) => {
     const r = Product.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const brands = readJsonDir(join(root, "brands")).map(({ file, data }) => {
+  const brands = readJsonDir(join(root, "brands"), optionalDirs).map(({ file, data }) => {
     const r = Brand.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const merchants = readJsonDir(join(root, "merchants")).map(({ file, data }) => {
+  const merchants = readJsonDir(join(root, "merchants"), optionalDirs).map(({ file, data }) => {
     const r = Merchant.safeParse(data);
     if (!r.success) throw new Error(`${file}: ${z.prettifyError(r.error)}`);
     return r.data;
   });
-  const loaded = { categories, products, brands, merchants };
+  return { products, brands, merchants };
+}
+
+export function loadLocalCatalog(root: string): LoadedCatalog {
+  const loaded = { categories, ...readCatalogRecords(root) };
   const issues = validateCatalog(loaded);
   if (issues.length > 0) {
     throw new Error(`Catalog invalid:\n${issues.map((i) => `  ${i.file}: ${i.message}`).join("\n")}`);

@@ -215,6 +215,20 @@ export const coldPlunge = CategoryDefinition.parse({
     { slug: "under-5000", label: "Under $5,000", title: "Cold Plunges Under $5,000", description: "Mid-range systems priced under $5,000.", conditions: [{ key: "price", op: "lt", value: 500000 }] },
     { slug: "indoor", label: "Indoor", title: "Indoor Cold Plunges", description: "Rated by the manufacturer for indoor placement.", conditions: [{ key: "placement", op: "includes", value: "indoor" }] },
   ],
+  aliases: [
+    "cold plunge",
+    "cold plunges",
+    "coldplunge",
+    "plunge",
+    "plunges",
+    "plunge tub",
+    "cold tub",
+    "ice bath",
+    "ice baths",
+    "ice barrel",
+    "cold water immersion",
+    "cold therapy",
+  ],
   matcherVocabulary: {
     chiller_included: {
       true: ["chiller", "hold temperature", "set the temperature", "no ice", "without ice", "keeps it cold"],

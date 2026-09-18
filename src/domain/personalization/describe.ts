@@ -3,15 +3,22 @@ import type { CategoryDefinition, Condition } from "../category";
 import { attributeDef } from "../category";
 import { comparable, conditionTarget } from "../conditions";
 import { formatMoney } from "../money";
+import { BOUND_WORDS, type Bound } from "../provenance";
+import type { SoftPreference } from "../personalization";
 import type { ProductView } from "../view";
+import { priceMinorOf } from "../view";
 
 // Human phrasing for constraints and for how far a product sits from one.
 // Templates only. No model text reaches these strings.
 
-export function formatValueFor(cat: CategoryDefinition, key: string, value: unknown): string {
+// `bound` qualifies a value a product states as a bound. It is passed when
+// formatting what a product holds, never when formatting what a shopper asked
+// for: "under 5 g" is the shopper's limit, and it is exact.
+export function formatValueFor(cat: CategoryDefinition, key: string, value: unknown, bound?: Bound): string {
   if (key === "price") return formatMoney({ amountMinor: Number(value), currency: "USD" });
   const def = attributeDef(cat, key);
   if (!def) return String(value);
+  if (bound && typeof value === "number") return `${BOUND_WORDS[bound]} ${formatValueFor(cat, key, value)}`;
   if (def.unit === "USD_minor") return formatMoney({ amountMinor: Number(value), currency: "USD" });
   if (Array.isArray(value)) return value.map((v) => humanize(String(v))).join(", ");
   return formatAttribute(def, value as never);
@@ -23,11 +30,34 @@ export function labelFor(cat: CategoryDefinition, key: string): string {
 }
 
 // "under $700", "full body coverage", "a chiller", "zero sugar"
+/**
+ * A soft preference in words, the same words the reply composer uses.
+ *
+ * A preference orders a list; it never decides whether a product qualifies. Any
+ * screen showing one has to say which of the two it is, so the wording keeps
+ * "ranking" in it rather than reading like a requirement.
+ */
+export function describeSoftPreference(cat: CategoryDefinition, p: SoftPreference): string {
+  const label = labelFor(cat, p.key).toLowerCase();
+  if (p.direction === "prefer_low") return `lower ${label}`;
+  if (p.direction === "prefer_high") return `higher ${label}`;
+  return label;
+}
+
 export function describeConstraint(cat: CategoryDefinition, c: Condition): string {
   const label = labelFor(cat, c.key).toLowerCase();
   const val = c.value === undefined ? "" : formatValueFor(cat, c.key, c.value);
   const def = attributeDef(cat, c.key);
   if (def?.type === "enum" && c.value !== undefined && ["eq", "gte", "gt", "lte", "lt"].includes(c.op)) {
+    // An option label is written for a filter chip, where it stands alone. Most
+    // are short phrases and fold into a sentence: "full body" plus "coverage"
+    // reads as "full body coverage". Some are whole sentences and do not.
+    // Cold plunge's plumbing option is "None. Fill with a hose.", and folding
+    // it produced "none. fill with a hose. power and plumbing", which is not a
+    // sentence in any language. A label carrying its own sentence punctuation
+    // is quoted and left as its author wrote it, capitals included.
+    const option = val.replace(/\s*\.\s*$/, "");
+    if (/[.!?]/.test(option)) return `${labelFor(cat, c.key)} set to "${option}"`;
     return `${val.toLowerCase()} ${label}`;
   }
   switch (c.op) {
@@ -48,7 +78,9 @@ export function describeConstraint(cat: CategoryDefinition, c: Condition): strin
     case "in":
       return `${label}: ${val}`;
     case "includes":
-      return `${label} includes ${val}`;
+      // Several values are alternatives, so the sentence has to say so. "sugar
+      // includes A, B" reads as both; the engine matches either.
+      return Array.isArray(c.value) && c.value.length > 1 ? `${label} includes any of ${val}` : `${label} includes ${val}`;
     case "exists":
       return `${label} stated`;
     case "missing":
@@ -63,10 +95,21 @@ export type Gap = { text: string; magnitude: number };
 export function describeGap(view: ProductView, cat: CategoryDefinition, c: Condition): Gap {
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
-  const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
+  const actualRaw = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
+  const bound = c.key === "price" ? undefined : view.bounds[c.key];
 
   if (actualRaw === undefined) {
     return { text: `${label} not stated`, magnitude: Number.MAX_SAFE_INTEGER / 2 };
+  }
+
+  // How far a bound sits from a limit is not a number anybody stated. The
+  // distance still orders alternatives, but the sentence says only what the
+  // source says. Magnitude uses the stated end, which is the near end.
+  if (bound && typeof actualRaw === "number") {
+    const left = comparable(view, cat, c.key);
+    const right = conditionTarget(cat, c.key, c.value);
+    const gap = left !== undefined && right !== undefined ? Math.abs(left - right) || 1 : 1;
+    return { text: `${label} is ${formatValueFor(cat, c.key, actualRaw, bound).toLowerCase()}`, magnitude: gap };
   }
 
   const left = comparable(view, cat, c.key);
@@ -100,10 +143,15 @@ export function describeGap(view: ProductView, cat: CategoryDefinition, c: Condi
 export function describeFit(view: ProductView, cat: CategoryDefinition, c: Condition): string {
   const label = labelFor(cat, c.key);
   const def = attributeDef(cat, c.key);
-  const actualRaw = c.key === "price" ? view.price.money.amountMinor : view.attributes[c.key];
-  const actual = actualRaw === undefined ? "" : formatValueFor(cat, c.key, actualRaw);
+  const actualRaw = c.key === "price" ? priceMinorOf(view) : view.attributes[c.key];
+  const bound = c.key === "price" ? undefined : view.bounds[c.key];
+  const actual = actualRaw === undefined ? "" : formatValueFor(cat, c.key, actualRaw, bound);
 
   if (def?.type === "enum" && actualRaw !== undefined) return `${label}: ${actual}`;
+
+  // A bound met the limit or it would not be a fit, and by how much is not
+  // known. The qualifier is the whole answer.
+  if (bound && actualRaw !== undefined) return `${label}: ${actual}`;
 
   if ((c.op === "lt" || c.op === "lte") && actualRaw !== undefined) {
     const left = comparable(view, cat, c.key);
