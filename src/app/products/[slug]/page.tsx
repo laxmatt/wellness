@@ -154,7 +154,7 @@ export default async function ProductPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <CompareToggle size="lg" item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
               {lowest ? (
-                <a href={buyable.length > 1 ? "#retailers" : lowest.url} {...(buyable.length > 1 ? {} : outboundLinkProps(lowest.affiliateStatus))} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
+                <a href={buyable.length > 1 ? "#retailers" : lowest.url} {...(buyable.length > 1 ? {} : outboundLinkProps(lowest.affiliateStatus, { productId: view.id, productName: view.name, retailer: lowest.merchant.name }))} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
                   {buyable.length > 1 ? `See ${buyable.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
                 </a>
               ) : null}
@@ -229,7 +229,7 @@ export default async function ProductPage({ params }: Props) {
                       <div className="flex items-center gap-4">
                         <PriceDisplay price={c.view.price} compact />
                         {offers[0] ? (
-                          <a href={offers[0].url} {...outboundLinkProps(offers[0].affiliateStatus)} className="tap text-sm font-semibold text-accent-strong hover:underline">
+                          <a href={offers[0].url} {...outboundLinkProps(offers[0].affiliateStatus, { productId: c.view.id, productName: c.view.name, retailer: offers[0].merchant.name })} className="tap text-sm font-semibold text-accent-strong hover:underline">
                             Shop
                           </a>
                         ) : null}

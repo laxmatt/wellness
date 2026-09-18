@@ -102,7 +102,7 @@ export function WinnersRow({ products, cat, set }: { products: RecommendedProduc
                       <a
                         key={o.id}
                         href={o.url}
-                        {...outboundLinkProps(o.affiliateStatus)}
+                        {...outboundLinkProps(o.affiliateStatus, { productId: w.view.id, productName: w.view.name, retailer: o.merchant.name })}
                         className={cn(buttonStyles("primary", "md"), "w-full justify-between gap-2 px-4")}
                       >
                         <span className="truncate">Visit {o.merchant.name}</span>

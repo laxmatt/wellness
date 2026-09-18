@@ -21,7 +21,7 @@ describe('optional traffic measurement', () => {
     expect(document.querySelector('script[data-wfc-analytics]')).toBeNull();
   });
   it('loads one tag and page view after allowing, then counts a retailer click once', () => {
-    render(<><TrafficAnalytics measurementId="G-TEST123" /><a href="https://retailer.example/?private=secret" data-shop-link="">Visit retailer</a></>);
+    render(<><TrafficAnalytics measurementId="G-TEST123" /><a href="https://retailer.example/?private=secret" data-shop-link="" data-product-id="sauna-test" data-product-name="Test Sauna" data-retailer-name="Select Saunas">Visit retailer</a></>);
     fireEvent.click(screen.getByText('Allow analytics'));
     initializeAnalytics('G-TEST123');
     expect(document.querySelectorAll('script[data-wfc-analytics]')).toHaveLength(1);
@@ -29,6 +29,8 @@ describe('optional traffic measurement', () => {
     expect(commands().filter(x => x[1] === 'conversion')).toHaveLength(0);
     fireEvent.click(screen.getByText('Visit retailer'));
     expect(commands().filter(x => x[1] === 'retailer_handoff')).toHaveLength(1);
+    expect(commands().find(x => x[1] === 'retailer_handoff')?.[2]).toMatchObject({ product_id: 'sauna-test', product_name: 'Test Sauna', retailer_name: 'Select Saunas' });
+    expect(commands().find(x => x[1] === 'conversion')?.[2]).not.toHaveProperty('product_name');
     expect(commands().filter(x => x[1] === 'conversion')).toHaveLength(1);
     expect(commands().find(x => x[1] === 'conversion')?.[2]).toMatchObject({ send_to: 'AW-18455839726/L5m_CMSpifocEO6Ht-BE' });
     expect(commands().find(x => x[1] === 'conversion')?.[2]).not.toHaveProperty('value');

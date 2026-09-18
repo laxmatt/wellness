@@ -134,7 +134,7 @@ export function OfferList({ view }: { view: ProductView }) {
                 <p className="tabular text-xs text-fg-muted line-through">{formatMoney(o.listPrice)}</p>
               ) : null}
             </div>
-            <a href={o.url} {...outboundLinkProps(o.affiliateStatus)} className={buttonStyles("primary", "md")}>
+            <a href={o.url} {...outboundLinkProps(o.affiliateStatus, { productId: view.id, productName: view.name, retailer: o.merchant.name })} className={buttonStyles("primary", "md")}>
               Visit {o.merchant.name.replace(/\s*\(direct\)$/, "")}
             </a>
           </div>

@@ -105,7 +105,7 @@ export function CompareView({ model, ids, categoryId }: { model: CompareModel; i
                       <div key={m.offerId}>
                       <a
                         href={m.url}
-                        {...outboundLinkProps(m.affiliateStatus)}
+                        {...outboundLinkProps(m.affiliateStatus, { productId: c.id, productName: c.name, retailer: m.merchant })}
                         className={cn(buttonStyles("primary", "sm"), "w-full justify-between gap-2 px-3")}
                       >
                         <span className="truncate">Visit {m.merchant}</span>

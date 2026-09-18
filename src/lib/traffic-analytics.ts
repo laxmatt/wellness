@@ -90,13 +90,20 @@ export function initializeAnalytics(id: string) {
   script.dataset.wfcAnalytics = 'true';
   document.head.appendChild(script);
 }
-export function trackTraffic(event: TrafficEvent, categoryId?: string) {
+export function trackTraffic(event: TrafficEvent, categoryId?: string, item?: { product_id?: string; product_name?: string; retailer_name?: string }) {
   if (typeof window === 'undefined' || readConsent() !== 'granted' || !window.gtag) return;
   if (!['filter_used', 'comparison_opened', 'retailer_handoff'].includes(event)) return;
   // Category is a controlled enum; no filter values, product selections or shopper text.
   const category = ['saunas', 'cold-plunge', 'red-light', 'wellness-drinks'].includes(categoryId ?? '') ? categoryId : 'unspecified';
   if (!activeMeasurementId.startsWith('G-')) return;
-  window.gtag('event', event, { send_to: activeMeasurementId, category_id: category, ...safePage(location.href), page_referrer: referrerOrigin(document.referrer) });
+  const details: Record<string, string> = {};
+  if (event === 'retailer_handoff' && item) {
+    for (const key of ['product_id', 'product_name', 'retailer_name'] as const) {
+      const value = item[key];
+      if (value && !/[\x00-\x1f<>@?=&]/.test(value) && !value.includes('://')) details[key] = value.slice(0, 100);
+    }
+  }
+  window.gtag('event', event, { ...details, send_to: activeMeasurementId, category_id: category, ...safePage(location.href), page_referrer: referrerOrigin(document.referrer) });
 }
 export function trackRetailerConversion(label = ADS_CONVERSION_LABEL) {
   if (typeof window === 'undefined' || readConsent() !== 'granted' || !window.gtag || !/^[A-Za-z0-9_-]+$/.test(label)) return;

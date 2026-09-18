@@ -32,7 +32,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   // goes nowhere a shopper can buy.
   const directSaunaOffer = cat.id === "saunas" ? buyable[0] : undefined;
   const cardHref = directSaunaOffer?.url ?? href;
-  const cardLinkProps = directSaunaOffer ? outboundLinkProps(directSaunaOffer.affiliateStatus) : {};
+  const cardLinkProps = directSaunaOffer ? outboundLinkProps(directSaunaOffer.affiliateStatus, { productId: view.id, productName: view.name, retailer: directSaunaOffer.merchant.name }) : {};
   const external = Boolean(directSaunaOffer) || buyable.length === 1;
   const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
   // Nothing to shop is not a shop button. The product page still says what is
@@ -97,7 +97,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a
             href={shopHref}
-            {...(external ? outboundLinkProps(buyable[0].affiliateStatus) : {})}
+            {...(external ? outboundLinkProps(buyable[0].affiliateStatus, { productId: view.id, productName: view.name, retailer: buyable[0].merchant.name }) : {})}
             className={buttonStyles("primary", "md")}
           >
             {shopLabel}

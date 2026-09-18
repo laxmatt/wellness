@@ -69,7 +69,7 @@ export function CategoryBrowse({
     const image = primaryImage(view.images);
     const offer = buyableOffers(view)[0];
     if (!image || image.src.startsWith("demo:") || !offer) return [];
-    return [{ image, name: view.name, brand: view.brand.name, url: offer.url, affiliateStatus: offer.affiliateStatus }];
+    return [{ productId: view.id, retailer: offer.merchant.name, image, name: view.name, brand: view.brand.name, url: offer.url, affiliateStatus: offer.affiliateStatus }];
   }).slice(0, 6) : [];
 
   return (

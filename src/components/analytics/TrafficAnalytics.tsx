@@ -38,7 +38,7 @@ export function TrafficAnalytics({ measurementId = MEASUREMENT_ID }: { measureme
     const click = (event: MouseEvent) => {
       if (event.type === 'auxclick' && event.button !== 1) return;
       const anchor = event.target instanceof Element ? event.target.closest('a[data-shop-link]') : null;
-      if (anchor) { trackTraffic('retailer_handoff'); trackRetailerConversion(); trackOpenAIRetailerClick(); }
+      if (anchor) { trackTraffic('retailer_handoff', undefined, { product_id: anchor.getAttribute('data-product-id') ?? undefined, product_name: anchor.getAttribute('data-product-name') ?? undefined, retailer_name: anchor.getAttribute('data-retailer-name') ?? undefined }); trackRetailerConversion(); trackOpenAIRetailerClick(); }
     };
     document.addEventListener('click', click);
     document.addEventListener('auxclick', click);

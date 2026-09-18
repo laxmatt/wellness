@@ -39,12 +39,15 @@ export function outboundRel(affiliateStatus: AffiliateStatus): string {
  * every "nothing links to the withheld listing" assertion by finding no links
  * at all.
  */
-export function outboundLinkProps(affiliateStatus: AffiliateStatus): {
+export function outboundLinkProps(affiliateStatus: AffiliateStatus, item?: { productId: string; productName: string; retailer: string }): {
   target: "_blank";
   rel: string;
   "data-shop-link": string;
+  "data-product-id"?: string;
+  "data-product-name"?: string;
+  "data-retailer-name"?: string;
 } {
-  return { target: "_blank", rel: outboundRel(affiliateStatus), "data-shop-link": "" };
+  return { target: "_blank", rel: outboundRel(affiliateStatus), "data-shop-link": "", ...(item ? { "data-product-id": item.productId, "data-product-name": item.productName, "data-retailer-name": item.retailer } : {}) };
 }
 
 /**
