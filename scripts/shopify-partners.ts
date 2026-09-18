@@ -34,6 +34,7 @@ export type ShopifyPartner = { id: string; name: string; storeUrl: string };
 export const SHOPIFY_SOURCES: ShopifyPartner[] = [
   { id: "topture-shopify", name: "Topture", storeUrl: "https://topture.com" },
   { id: "select-saunas-shopify", name: "Select Saunas", storeUrl: "https://selectsaunas.com" },
+  { id: "saunakits-shopify", name: "SaunaKits.com", storeUrl: "https://saunakits.com" },
   { id: "hooga-shopify", name: "Hooga Health", storeUrl: "https://hoogahealth.com" },
 ];
 
@@ -128,6 +129,18 @@ export const SELECT_SAUNAS = shopifySource({
     "Marketing Tools holds no files, and the store publishes its own catalogue at /products.json. The dashboard has \"Get product link\" and \"Get link with source\", so a per-product link is something a person can generate; what either button does to an address has not been read, and guessing at it is the one thing that would turn an honest gap into a false claim. Whatever the portal returns goes in this record when somebody runs it.",
 });
 
+export const SAUNAKITS = shopifySource({
+  id: "saunakits-shopify",
+  name: "SaunaKits.com (UpPromote)",
+  merchantId: "saunakits-store",
+  merchantName: "SaunaKits.com",
+  merchantWebsite: "https://saunakits.com",
+  idPrefix: "saunakits",
+  defaultBrand: "SaunaKits.com",
+  notes:
+    "Marketing Tools holds no files, so inventory comes from the merchant's official public Shopify catalogue. The dashboard's product-link tool was run against a real product and verified that it adds the recorded sca_ref parameter without changing the product address.",
+});
+
 export const HOOGA = shopifySource({
   id: "hooga-shopify",
   name: "Hooga Health (GoAffPro, 8%)",
@@ -140,7 +153,7 @@ export const HOOGA = shopifySource({
     "Product-link generator in the dashboard, no file export, catalogue published at /products.json. Hooga is primarily a red-light brand; how much of its catalogue is a complete sauna is a question the first snapshot answers and this does not guess at.",
 });
 
-export const SHOPIFY_PARTNERS: PartnerSource[] = [TOPTURE, SELECT_SAUNAS, HOOGA];
+export const SHOPIFY_PARTNERS: PartnerSource[] = [TOPTURE, SELECT_SAUNAS, SAUNAKITS, HOOGA];
 
 /**
  * Approved partners with no catalogue to read, recorded as what each one is.
@@ -304,7 +317,7 @@ const NOT_SAUNAS: NotASauna[] = [
     // that appears in both is not evidence, so it is not a rule.
     words: [
       "part", "parts", "spare", "spares", "replacement", "component", "components",
-      "floor kit", "roof kit", "door kit", "vent kit", "trim kit", "lighting kit", "repair kit", "upgrade kit", "conversion kit",
+      "floor kit", "roof kit", "door kit", "sauna door", "vent kit", "trim kit", "lighting kit", "repair kit", "upgrade kit", "conversion kit",
       "backrest", "backrests", "headrest", "headrests", "flooring", "duckboard", "duckboards",
       "chimney", "chimneys", "flue", "flues", "vent", "vents", "air tunnel", "air tunnels", "duct", "ducts",
       "heat shield", "guard", "guards", "railing", "railings",

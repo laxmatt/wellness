@@ -31,6 +31,7 @@ describe("what each programme issued", () => {
       "hooga-shopify",
       "lifepro",
       "saunabox",
+      "saunakits-shopify",
       "select-saunas-shopify",
       "therasage",
       "topture-shopify",
@@ -60,6 +61,12 @@ describe("what each programme issued", () => {
         "select-saunas-shopify",
         "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
         "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna?sca_ref=12323351.NbtdIcjAoO",
+        "sca_ref",
+      ],
+      [
+        "saunakits-shopify",
+        "https://saunakits.com/products/saunalife-4-person-cube-series-outdoor-home-sauna-kit-cl5g",
+        "https://saunakits.com/products/saunalife-4-person-cube-series-outdoor-home-sauna-kit-cl5g?sca_ref=12323721.J7K7UndolP",
         "sca_ref",
       ],
       ["topture-shopify", "https://topture.com/products/thermasol-vue-sauna-cabin", "https://topture.com/products/thermasol-vue-sauna-cabin?ref=MATTORR", "ref"],
@@ -186,7 +193,7 @@ describe("a link to one product", () => {
 
 describe("what the catalogue says about these links", () => {
   it("says a verified link pays, and says an unverified one does not", () => {
-    for (const id of ["topture-shopify", "select-saunas-shopify", "hooga-shopify"]) {
+    for (const id of ["topture-shopify", "select-saunas-shopify", "saunakits-shopify", "hooga-shopify"]) {
       expect(affiliateStatusFor(programmeFor(id)), id).toBe("affiliate");
     }
     // A verified transformation the terms forbid is still not a paying link.
@@ -211,7 +218,7 @@ describe("what the catalogue says about these links", () => {
       expect(source.affiliate.programRef, source.id).toBeDefined();
       // And what makes the link pay is on the record, not assumed.
       expect(source.affiliate.tag?.origin, source.id).toBe(source.merchantWebsite);
-      expect(source.affiliate.tag?.verifiedOn, source.id).toBe("2026-09-15");
+      expect(source.affiliate.tag?.verifiedOn, source.id).toMatch(/^2026-09-(15|17)$/);
       // Never both: an issued deep link and an added parameter say different
       // things about one link.
       expect(source.affiliate.linkPrefix, source.id).toBeUndefined();

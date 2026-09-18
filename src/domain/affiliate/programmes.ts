@@ -181,6 +181,32 @@ export const PROGRAMMES: PartnerProgramme[] = [
       "UpPromote, dashboard active. Marketing Tools holds no files. Product-level links are generatable through the portal's own tool, so this is a job for a person with the dashboard open, not a transformation to guess at. The commission rate is not stated in this record because nobody has read it.",
   },
   {
+    partnerId: "saunakits-shopify",
+    merchantName: "SaunaKits.com",
+    network: "uppromote",
+    dashboard: "active",
+    programRef: "12323721.J7K7UndolP",
+    referralLink: "https://saunakits.com?sca_ref=12323721.J7K7UndolP",
+    // Verified in UpPromote's "Get product link" tool on 2026-09-17:
+    // https://saunakits.com/products/saunalife-4-person-cube-series-outdoor-home-sauna-kit-cl5g
+    // became the same product address with ?sca_ref=12323721.J7K7UndolP.
+    productLinks: {
+      kind: "verified",
+      tag: {
+        param: "sca_ref",
+        value: "12323721.J7K7UndolP",
+        origin: "https://saunakits.com",
+        verifiedOn: "2026-09-17",
+        verifiedBy: "Matt, relayed through Codex after using the programme's own dashboard",
+      },
+    },
+    inventory: { kind: "shopify_json", url: "https://saunakits.com/products.json" },
+    compliance: [],
+    verifiedOn: "2026-09-17",
+    notes:
+      "UpPromote dashboard active. Marketing Tools holds no files. The merchant publishes its official public Shopify catalogue, and the programme's own product-link tool verified the tracking parameter used on direct product links.",
+  },
+  {
     partnerId: "hooga-shopify",
     merchantName: "Hooga",
     network: "goaffpro",

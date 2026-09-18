@@ -21,7 +21,9 @@ const CATALOG = join(ROOT, "catalog");
 const PLANS = join(ROOT, "docs/promotion-plans");
 const REVIEWER = "Matt (site owner), relayed through Codex";
 const TODAY = new Date().toISOString().slice(0, 10);
-const SOURCES = ["select-saunas-shopify", "topture-shopify"];
+const DEFAULT_SOURCES = ["select-saunas-shopify", "topture-shopify", "saunakits-shopify"];
+const requestedSources = process.argv.slice(2).filter((argument) => !argument.startsWith("--"));
+const SOURCES = requestedSources.length > 0 ? requestedSources : DEFAULT_SOURCES;
 
 function stop(message: string, details: string[] = []): never {
   console.error(`Stopped. ${message}`);
