@@ -38,7 +38,8 @@
     "fetch:shopify": "tsx scripts/fetch-shopify.ts",
     "ingestion:seed:shopify": "tsx scripts/seed-shopify.ts",
     "promote:shopify-saunas": "tsx scripts/promote-shopify-saunas.ts",
-    "refresh:topture": "tsx scripts/refresh-topture-feed.ts"
+    "refresh:topture": "tsx scripts/refresh-topture-feed.ts",
+    "import:sweaty-yeti": "tsx scripts/import-sweaty-yeti.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

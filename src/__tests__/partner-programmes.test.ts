@@ -33,6 +33,7 @@ describe("what each programme issued", () => {
       "saunabox",
       "saunakits-shopify",
       "select-saunas-shopify",
+      "sweaty-yeti-woocommerce",
       "therasage",
       "topture-shopify",
     ]);
@@ -71,6 +72,7 @@ describe("what each programme issued", () => {
       ],
       ["topture-shopify", "https://topture.com/products/thermasol-vue-sauna-cabin", "https://topture.com/products/thermasol-vue-sauna-cabin?ref=MATTORR", "ref"],
       ["hooga-shopify", "https://hoogahealth.com/products/sauna-series-floor-stand", "https://hoogahealth.com/products/sauna-series-floor-stand?ref=MATTORR", "ref"],
+      ["sweaty-yeti-woocommerce", "https://sweatyyetisauna.com/product/sauna-plus/", "https://sweatyyetisauna.com/product/sauna-plus/?sld=126", "sld"],
     ];
     for (const [id, plain, expected, param] of observed) {
       const link = productLink(programmeFor(id), plain);

@@ -89,7 +89,10 @@ export type PartnerProgramme = {
   referralWindowDays?: number;
   productLinks: ProductLinkRoute;
   /** Whether a catalogue exists to read, and in what form. */
-  inventory: { kind: "shopify_json"; url: string } | { kind: "none"; why: string };
+  inventory:
+    | { kind: "shopify_json"; url: string }
+    | { kind: "woocommerce_store_api"; url: string }
+    | { kind: "none"; why: string };
   compliance: ComplianceRequirement[];
   /** When a person last read this partner's dashboard and wrote these facts down. */
   verifiedOn: string;
@@ -143,6 +146,34 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
 }
 
 export const PROGRAMMES: PartnerProgramme[] = [
+  {
+    partnerId: "sweaty-yeti-woocommerce",
+    merchantName: "Sweaty Yeti Sauna",
+    network: "other",
+    dashboard: "active",
+    programRef: "126",
+    referralLink: "https://sweatyyetisauna.com/?sld=126",
+    coupon: "wellnessfitcheck5",
+    referralWindowDays: 30,
+    productLinks: {
+      kind: "verified",
+      tag: {
+        param: "sld",
+        value: "126",
+        origin: "https://sweatyyetisauna.com",
+        verifiedOn: "2026-09-18",
+        verifiedBy: "Codex, in the programme's own Solid Affiliate dashboard",
+      },
+    },
+    inventory: {
+      kind: "woocommerce_store_api",
+      url: "https://sweatyyetisauna.com/wp-json/wc/store/v1/products?per_page=100",
+    },
+    compliance: [],
+    verifiedOn: "2026-09-18",
+    notes:
+      "Solid Affiliate dashboard active. The portal explicitly says to add ?sld=126 to any page URL. The official public WooCommerce Store API currently exposes eight product pages; sauna publishing excludes the two products that do not contain a sauna.",
+  },
   {
     partnerId: "topture-shopify",
     merchantName: "Topture",
