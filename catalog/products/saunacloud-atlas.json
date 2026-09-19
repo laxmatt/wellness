@@ -1,24 +1,24 @@
 {
-  "id": "saunacloud-atlas-one",
-  "slug": "saunacloud-atlas-one",
-  "name": "Atlas One Red Light Infrared Sauna",
+  "id": "saunacloud-atlas",
+  "slug": "saunacloud-atlas",
+  "name": "Atlas Custom Infrared Sauna",
   "brandId": "saunacloud",
   "categoryId": "saunas",
-  "description": "SaunaCloud's custom dual-therapy model combines VantaWave far-infrared heat with integrated 630 nm red and 850 nm near-infrared light as a standard feature.",
+  "description": "SaunaCloud's flagship custom indoor far-infrared sauna, designed to the buyer's room with VantaWave wall heaters, CORE 5 controls, solid Western Red Cedar and optional integrated red light.",
   "status": "published",
   "availability": "unknown",
   "market": "US",
   "images": [
     {
-      "id": "saunacloud-atlas-one-image-1",
+      "id": "saunacloud-atlas-image-1",
       "kind": "approved_creative",
       "role": "primary",
-      "src": "https://saunacloud.com/images/custom/sauna-cloud-hero-14.jpg",
-      "alt": "Atlas One Red Light Infrared Sauna",
+      "src": "https://saunacloud.com/images/hero-sauna.webp",
+      "alt": "Atlas Custom Infrared Sauna",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -27,12 +27,12 @@
   ],
   "offers": [
     {
-      "id": "saunacloud-atlas-one-offer",
+      "id": "saunacloud-atlas-offer",
       "merchantId": "saunacloud-store",
       "market": "US",
       "currency": "USD",
       "quoteOnly": true,
-      "url": "https://saunacloud.com/atlas-one/?ref=2be9769d46ff7c74",
+      "url": "https://saunacloud.com/atlas/?ref=2be9769d46ff7c74",
       "affiliate": {
         "status": "affiliate",
         "network": "direct",
@@ -43,8 +43,8 @@
       "lastChecked": "2026-09-19",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -61,8 +61,8 @@
       "value": "far_infrared",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -73,8 +73,8 @@
       "value": "cabin",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -85,8 +85,8 @@
       "value": "indoor",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -97,8 +97,8 @@
       "value": "Custom, 1–4 person",
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -109,8 +109,8 @@
       "value": 4,
       "source": {
         "kind": "manufacturer",
-        "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-        "url": "https://saunacloud.com/atlas-one/",
+        "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+        "url": "https://saunacloud.com/atlas/",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."
@@ -118,15 +118,15 @@
       "verification": "manufacturer_reported"
     }
   },
-  "sourceTitle": "Atlas One Red Light Infrared Sauna",
+  "sourceTitle": "Atlas Custom Infrared Sauna",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
   },
   "source": {
     "kind": "manufacturer",
-    "ref": "SaunaCloud official Atlas One Red Light Infrared Sauna page",
-    "url": "https://saunacloud.com/atlas-one/",
+    "ref": "SaunaCloud official Atlas Custom Infrared Sauna page",
+    "url": "https://saunacloud.com/atlas/",
     "retrievedAt": "2026-09-19",
     "method": "direct",
     "note": "SaunaCloud told Wellness Fit Check to use its public model and specification pages as the current configurations. Each sauna is custom designed and quote-only; dimensions, circuit requirements, room-air temperature and price vary by project and are not inferred."

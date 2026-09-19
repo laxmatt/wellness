@@ -41,7 +41,8 @@
     "refresh:topture": "tsx scripts/refresh-topture-feed.ts",
     "import:sweaty-yeti": "tsx scripts/import-sweaty-yeti.ts",
     "import:approved-shopify": "tsx scripts/import-approved-shopify.ts",
-    "import:caldera": "tsx scripts/import-caldera.ts"
+    "import:caldera": "tsx scripts/import-caldera.ts",
+    "import:saunacloud": "tsx scripts/import-saunacloud.ts"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",

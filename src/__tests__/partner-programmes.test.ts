@@ -33,6 +33,7 @@ describe("what each programme issued", () => {
       "hooga-shopify",
       "lifepro",
       "saunabox",
+      "saunacloud",
       "saunakits-shopify",
       "select-saunas-shopify",
       "sunlighten-shopify",
@@ -122,6 +123,13 @@ describe("what each programme issued", () => {
     expect(productLink(programme, destination)).toEqual({ ok: true, url: destination });
     expect(productLink(programme, "https://example.com/products/gdi-7206-01").ok).toBe(false);
     expect(affiliateStatusFor(programme)).toBe("affiliate");
+  });
+
+  it("deep-links SaunaCloud's public model pages with its issued referral id", () => {
+    const destination = "https://saunacloud.com/atlas/";
+    const link = productLink(programmeFor("saunacloud"), destination);
+    expect(link.ok).toBe(true);
+    if (link.ok) expect(link.url).toBe("https://saunacloud.com/atlas/?ref=2be9769d46ff7c74");
   });
 
   it("records SAUNABOX's verified referral and public Shopify inventory source without its setup link", () => {

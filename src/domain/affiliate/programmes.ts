@@ -154,6 +154,20 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
 
 export const PROGRAMMES: PartnerProgramme[] = [
   {
+    partnerId: "saunacloud",
+    merchantName: "SaunaCloud",
+    network: "direct",
+    dashboard: "active",
+    programRef: "2be9769d46ff7c74",
+    referralLink: "https://saunacloud.com/?ref=2be9769d46ff7c74",
+    commissionPercent: 7,
+    productLinks: { kind: "verified", tag: { param: "ref", value: "2be9769d46ff7c74", origin: "https://saunacloud.com", verifiedOn: "2026-09-19", verifiedBy: "SaunaCloud's issued referral link and its direction to use the public model pages" } },
+    inventory: { kind: "none", why: "SaunaCloud directs affiliates to its four public model/spec pages rather than a structured product feed." },
+    compliance: [],
+    verifiedOn: "2026-09-19",
+    notes: "Direct programme. SaunaCloud confirmed the public model/spec pages are the current configurations. All models are custom and quote-only, so no price or fixed dimensions are invented.",
+  },
+  {
     partnerId: "caldera-shopify",
     merchantName: "Caldera Sauna",
     network: "direct",
