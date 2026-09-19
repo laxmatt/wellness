@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { sendJourney } from '@/lib/traffic/client';
 import { initializeOpenAIMeasurement, trackOpenAIRetailerClick } from '@/lib/traffic-analytics';
 import { CONSENT_EVENT, MEASUREMENT_ID, initializeAnalytics, readConsent, referrerOrigin, safePage, saveConsent, trackTraffic, trackRetailerConversion, validMeasurementId, type Consent } from '@/lib/traffic-analytics';
 
@@ -26,12 +27,13 @@ export function TrafficAnalytics({ measurementId = MEASUREMENT_ID }: { measureme
     return () => { window.removeEventListener(CONSENT_EVENT, sync); window.removeEventListener('storage', external); };
   }, [measurementId]);
   useEffect(() => {
-    if (!enabled || consent !== 'granted') return;
+    if (!enabled || consent !== 'granted' || pathname.startsWith('/admin')) return;
     initializeAnalytics(measurementId);
     initializeOpenAIMeasurement();
     if (lastPage.current !== pathname) {
       lastPage.current = pathname;
       const page = { ...safePage(location.href), page_referrer: referrerOrigin(document.referrer) };
+      sendJourney('page_view', new URL(page.page_location).pathname as Parameters<typeof sendJourney>[1]);
       window.gtag?.('set', page);
       if (measurementId.startsWith('G-')) window.gtag?.('event', 'page_view', { ...page, send_to: measurementId });
     }
@@ -56,7 +58,7 @@ export function TrafficAnalytics({ measurementId = MEASUREMENT_ID }: { measureme
     </div>
     {(consent === null || editing) && <section aria-label="Analytics preferences" className="fixed inset-x-3 top-3 z-50 mx-auto max-w-xl rounded-card border border-edge bg-surface-raised p-5 shadow-float">
       <h2 className="font-semibold">Help us improve this site?</h2>
-      <p className="mt-2 text-sm">With your permission, Google and OpenAI use cookies and browser information to measure ad performance and clicks to retailers. We opt our measurement events out of advertising personalization. You can change your choice below the footer.</p>
+      <p className="mt-2 text-sm">With your permission, we record anonymous shopping visits, and Google and OpenAI use cookies and browser information to measure ad performance and clicks to retailers. We opt our measurement events out of advertising personalization. You can change your choice below the footer.</p>
       <Link href="/privacy" className="mt-2 inline-block text-sm underline">How analytics works</Link>
       <div className="mt-3 flex flex-wrap gap-3">
         <button className="tap rounded-pill border border-edge-strong px-4 py-2" onClick={() => choose('denied')}>No thanks</button>

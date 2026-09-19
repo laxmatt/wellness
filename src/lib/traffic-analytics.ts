@@ -1,4 +1,5 @@
 /** Explicit, consented shopping events only. Never pass shopper text or link URLs. */
+import { clearJourney, sendJourney } from './traffic/client';
 export const CONSENT_KEY = 'wfc.measurement-consent.v3';
 export const OPENAI_PIXEL_ID = 'A6Mo5Ea5k15zTH46mE3Erv';
 type OpenAIQueue = ((...args: unknown[]) => void) & { q: unknown[][] };
@@ -91,8 +92,10 @@ export function initializeAnalytics(id: string) {
   document.head.appendChild(script);
 }
 export function trackTraffic(event: TrafficEvent, categoryId?: string, item?: { product_id?: string; product_name?: string; retailer_name?: string }) {
-  if (typeof window === 'undefined' || readConsent() !== 'granted' || !window.gtag) return;
+  if (typeof window === 'undefined' || readConsent() !== 'granted') return;
   if (!['filter_used', 'comparison_opened', 'retailer_handoff'].includes(event)) return;
+  sendJourney(event, new URL(safePage(location.href).page_location).pathname as Parameters<typeof sendJourney>[1], item);
+  if (!window.gtag) return;
   // Category is a controlled enum; no filter values, product selections or shopper text.
   const category = ['saunas', 'cold-plunge', 'red-light', 'wellness-drinks'].includes(categoryId ?? '') ? categoryId : 'unspecified';
   if (!activeMeasurementId.startsWith('G-')) return;
@@ -112,6 +115,7 @@ export function trackRetailerConversion(label = ADS_CONVERSION_LABEL) {
 export function saveConsent(consent: Consent, id: string) {
   try { localStorage.setItem(CONSENT_KEY, consent); } catch { return false; }
   if (consent === 'denied') {
+    clearJourney();
     window.oaiq?.('consent', false);
     window.gtag?.('consent', 'update', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
     // Disable before reload. Remove only our GA cookies, including parent-domain variants.
