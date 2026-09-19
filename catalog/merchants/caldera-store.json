@@ -1,0 +1,8 @@
+{
+  "id": "caldera-store",
+  "slug": "caldera-sauna",
+  "name": "Caldera Sauna",
+  "websiteUrl": "https://www.calderasauna.com/",
+  "network": "direct",
+  "markets": ["US"]
+}

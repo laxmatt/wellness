@@ -50,13 +50,52 @@
         "method": "direct",
         "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
       }
+    },
+    {
+      "id": "caldera-maxxus-hemlock-near-zero-emf-far-ir-saunas-mx-k206-01-zf-offer",
+      "merchantId": "caldera-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 347900,
+      "url": "https://www.calderasauna.com/products/maxxus-hemlock-near-zero-emf-far-ir-saunas-mx-k206-01-zf",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "MO926"
+      },
+      "discountCodes": [
+        {
+          "code": "MO926",
+          "description": "Use Caldera's issued code at checkout to reveal the affiliate discount.",
+          "source": {
+            "kind": "merchant_feed",
+            "ref": "Caldera Sauna, official public Shopify snapshot",
+            "url": "https://www.calderasauna.com/products/maxxus-hemlock-near-zero-emf-far-ir-saunas-mx-k206-01-zf",
+            "retrievedAt": "2026-09-19",
+            "method": "direct",
+            "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+          }
+        }
+      ],
+      "availability": "in_stock",
+      "merchantSku": "MX-K206-01-ZF",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Caldera Sauna, official public Shopify snapshot",
+        "url": "https://www.calderasauna.com/products/maxxus-hemlock-near-zero-emf-far-ir-saunas-mx-k206-01-zf",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+      }
     }
   ],
   "variants": [],
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
-      "select-saunas": "MX-K206-01-ZF"
+      "select-saunas": "MX-K206-01-ZF",
+      "caldera-store": "MX-K206-01-ZF"
     }
   },
   "attributes": {
@@ -227,7 +266,7 @@
     "method": "direct",
     "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
   },
-  "lastUpdated": "2026-09-15",
+  "lastUpdated": "2026-09-19",
   "flags": {
     "demo": false,
     "newArrival": false

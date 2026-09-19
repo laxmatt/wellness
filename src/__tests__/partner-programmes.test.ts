@@ -28,6 +28,7 @@ import { BLOCKED_PARTNERS, SHOPIFY_PARTNERS } from "../../scripts/shopify-partne
 describe("what each programme issued", () => {
   it("records the five partners with an arrangement and the one without", () => {
     expect(PROGRAMMES.map((p) => p.partnerId).sort()).toEqual([
+      "caldera-shopify",
       "frostonic-shopify",
       "hooga-shopify",
       "lifepro",
@@ -112,6 +113,15 @@ describe("what each programme issued", () => {
       expect(url.searchParams.get("ued")).toBe(destination);
     }
     expect(productLink(programmeFor("sunlighten-shopify"), "https://example.com/products/x").ok).toBe(false);
+  });
+
+  it("keeps Caldera product links on its store and records its issued checkout code", () => {
+    const programme = programmeFor("caldera-shopify")!;
+    expect(programme.coupon).toBe("MO926");
+    const destination = "https://www.calderasauna.com/products/gdi-7206-01";
+    expect(productLink(programme, destination)).toEqual({ ok: true, url: destination });
+    expect(productLink(programme, "https://example.com/products/gdi-7206-01").ok).toBe(false);
+    expect(affiliateStatusFor(programme)).toBe("affiliate");
   });
 
   it("records SAUNABOX's verified referral and public Shopify inventory source without its setup link", () => {

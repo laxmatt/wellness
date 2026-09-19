@@ -45,6 +45,8 @@ export type ProductLinkRoute =
    * the intended product on the advertiser's own storefront.
    */
   | { kind: "awin_redirect"; advertiserId: string; publisherId: string; destinationOrigin: string; verifiedOn: string; verifiedBy: string }
+  /** A direct programme that attributes purchases with its issued checkout code. */
+  | { kind: "direct_coupon"; code: string; destinationOrigin: string; verifiedOn: string; verifiedBy: string }
   /**
    * Somebody generated a real link in the portal, compared it against the plain
    * product address it came from, and recorded the difference.
@@ -151,6 +153,20 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
 }
 
 export const PROGRAMMES: PartnerProgramme[] = [
+  {
+    partnerId: "caldera-shopify",
+    merchantName: "Caldera Sauna",
+    network: "direct",
+    dashboard: "active",
+    programRef: "MO926",
+    referralLink: "https://www.calderasauna.com/",
+    coupon: "MO926",
+    productLinks: { kind: "direct_coupon", code: "MO926", destinationOrigin: "https://www.calderasauna.com", verifiedOn: "2026-09-14", verifiedBy: "Caldera support, by email" },
+    inventory: { kind: "shopify_json", url: "https://www.calderasauna.com/products.json" },
+    compliance: [],
+    verifiedOn: "2026-09-19",
+    notes: "Direct arrangement. Caldera instructed Wellness Fit Check to use code MO926 and said product information is available on its site. Inventory is deduplicated by manufacturer SKU so Caldera becomes another retailer on existing products rather than another product.",
+  },
   {
     partnerId: "sunlighten-shopify",
     merchantName: "Sunlighten",
@@ -410,7 +426,7 @@ export const programmeFor = (partnerId: string): PartnerProgramme | undefined =>
  */
 export function affiliateStatusFor(programme: PartnerProgramme | undefined): AffiliateStatus {
   if (!programme) return "unknown";
-  if (["verified", "awin_redirect"].includes(programme.productLinks.kind) && !needsComplianceReview(programme)) return "affiliate";
+  if (["verified", "awin_redirect", "direct_coupon"].includes(programme.productLinks.kind) && !needsComplianceReview(programme)) return "affiliate";
   return "affiliate_link_unresolved";
 }
 
@@ -458,6 +474,12 @@ export function productLink(programme: PartnerProgramme | undefined, productUrl:
     link.searchParams.set("ued", destination.toString());
     return { ok: true, url: link.toString() };
   }
+  if (route.kind === "direct_coupon") {
+    let destination: URL;
+    try { destination = new URL(productUrl); } catch { return { ok: false, reason: `${programme.merchantName}: product URL is invalid.` }; }
+    if (destination.origin !== route.destinationOrigin) return { ok: false, reason: `${programme.merchantName}: ${destination.origin} is not the verified destination origin ${route.destinationOrigin}.` };
+    return { ok: true, url: destination.toString() };
+  }
   const tagged = tagUrl(productUrl, route.tag);
   if (!tagged.ok) return { ok: false, reason: `${programme.merchantName}: ${tagged.reason}` };
   return tagged;
@@ -481,6 +503,8 @@ export function programmeNote(programme: PartnerProgramme): string {
       ? `product links verified on ${programme.productLinks.tag.verifiedOn}, ${programme.productLinks.tag.param}`
       : programme.productLinks.kind === "awin_redirect"
         ? `Awin product redirects verified on ${programme.productLinks.verifiedOn}`
+        : programme.productLinks.kind === "direct_coupon"
+          ? `checkout attribution verified on ${programme.productLinks.verifiedOn}, code ${programme.productLinks.code}`
       : "no verified product link",
   );
   const outstanding = outstandingCompliance(programme);
