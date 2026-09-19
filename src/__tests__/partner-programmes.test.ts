@@ -34,6 +34,7 @@ describe("what each programme issued", () => {
       "saunabox",
       "saunakits-shopify",
       "select-saunas-shopify",
+      "sunlighten-shopify",
       "sweattent-shopify",
       "sweaty-yeti-woocommerce",
       "therasage",
@@ -97,6 +98,20 @@ describe("what each programme issued", () => {
     expect(p.commissionPercent).toBe(10);
     expect(p.referralWindowDays).toBe(30);
     expect(p.inventory.kind).toBe("none");
+  });
+
+  it("builds and constrains Sunlighten's verified Awin deep links", () => {
+    const destination = "https://shop-us.sunlighten.com/products/amplify-ii-smart-sauna-eucalyptus";
+    const link = productLink(programmeFor("sunlighten-shopify"), destination);
+    expect(link.ok).toBe(true);
+    if (link.ok) {
+      const url = new URL(link.url);
+      expect(url.origin).toBe("https://www.awin1.com");
+      expect(url.searchParams.get("awinmid")).toBe("63394");
+      expect(url.searchParams.get("awinaffid")).toBe("3090899");
+      expect(url.searchParams.get("ued")).toBe(destination);
+    }
+    expect(productLink(programmeFor("sunlighten-shopify"), "https://example.com/products/x").ok).toBe(false);
   });
 
   it("records SAUNABOX's verified referral and public Shopify inventory source without its setup link", () => {

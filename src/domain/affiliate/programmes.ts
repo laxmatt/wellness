@@ -41,6 +41,11 @@ export type ProductLinkRoute =
    */
   | { kind: "portal_tool"; tools: string[]; why: string }
   /**
+   * Awin's public redirector, verified by following a real generated URL to
+   * the intended product on the advertiser's own storefront.
+   */
+  | { kind: "awin_redirect"; advertiserId: string; publisherId: string; destinationOrigin: string; verifiedOn: string; verifiedBy: string }
+  /**
    * Somebody generated a real link in the portal, compared it against the plain
    * product address it came from, and recorded the difference.
    *
@@ -146,6 +151,26 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
 }
 
 export const PROGRAMMES: PartnerProgramme[] = [
+  {
+    partnerId: "sunlighten-shopify",
+    merchantName: "Sunlighten",
+    network: "awin",
+    dashboard: "active",
+    programRef: "awin-advertiser-63394-publisher-3090899",
+    referralLink: "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899",
+    productLinks: {
+      kind: "awin_redirect",
+      advertiserId: "63394",
+      publisherId: "3090899",
+      destinationOrigin: "https://shop-us.sunlighten.com",
+      verifiedOn: "2026-09-19",
+      verifiedBy: "Codex, by following the Awin redirect through to a real Sunlighten product",
+    },
+    inventory: { kind: "shopify_json", url: "https://shop-us.sunlighten.com/products.json" },
+    compliance: [],
+    verifiedOn: "2026-09-19",
+    notes: "Awin membership active for advertiser 63394. The official US Shopify catalogue is available; import consolidates finish duplicates and excludes packages, accessories and red-light devices.",
+  },
   {
     partnerId: "sweattent-shopify",
     merchantName: "SweatTent",
@@ -385,7 +410,7 @@ export const programmeFor = (partnerId: string): PartnerProgramme | undefined =>
  */
 export function affiliateStatusFor(programme: PartnerProgramme | undefined): AffiliateStatus {
   if (!programme) return "unknown";
-  if (programme.productLinks.kind === "verified" && !needsComplianceReview(programme)) return "affiliate";
+  if (["verified", "awin_redirect"].includes(programme.productLinks.kind) && !needsComplianceReview(programme)) return "affiliate";
   return "affiliate_link_unresolved";
 }
 
@@ -417,6 +442,22 @@ export function productLink(programme: PartnerProgramme | undefined, productUrl:
   if (outstanding.length > 0) {
     return { ok: false, reason: `${programme.merchantName}: ${outstanding.length} compliance requirement(s) outstanding. ${outstanding.map((c) => c.requirement).join(" ")}` };
   }
+  if (route.kind === "awin_redirect") {
+    let destination: URL;
+    try {
+      destination = new URL(productUrl);
+    } catch {
+      return { ok: false, reason: `${programme.merchantName}: product URL is invalid.` };
+    }
+    if (destination.origin !== route.destinationOrigin) {
+      return { ok: false, reason: `${programme.merchantName}: ${destination.origin} is not the verified destination origin ${route.destinationOrigin}.` };
+    }
+    const link = new URL("https://www.awin1.com/cread.php");
+    link.searchParams.set("awinmid", route.advertiserId);
+    link.searchParams.set("awinaffid", route.publisherId);
+    link.searchParams.set("ued", destination.toString());
+    return { ok: true, url: link.toString() };
+  }
   const tagged = tagUrl(productUrl, route.tag);
   if (!tagged.ok) return { ok: false, reason: `${programme.merchantName}: ${tagged.reason}` };
   return tagged;
@@ -438,6 +479,8 @@ export function programmeNote(programme: PartnerProgramme): string {
   bits.push(
     programme.productLinks.kind === "verified"
       ? `product links verified on ${programme.productLinks.tag.verifiedOn}, ${programme.productLinks.tag.param}`
+      : programme.productLinks.kind === "awin_redirect"
+        ? `Awin product redirects verified on ${programme.productLinks.verifiedOn}`
       : "no verified product link",
   );
   const outstanding = outstandingCompliance(programme);

@@ -1,0 +1,199 @@
+{
+  "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus",
+  "slug": "sunlighten-amplify-iv-smart-sauna-eucalyptus",
+  "name": "Amplify RED IV - Eucalyptus",
+  "brandId": "sunlighten",
+  "categoryId": "saunas",
+  "description": "Powered By Near Infrared Amplify surrounds you with red + near-infrared photobiomodulation (PBM) purposefully integrated throughout the sauna, layering four energy technologies engineered around how the body receives light and heat. Thick insulation, double-pane glass doors and enhanced heaters push temperatures up to 170°F.* Relax completely and recover more deeply with a deeper, faster sweat.",
+  "status": "published",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/AmplifyIV-Eucalyptus-Left-Redlight.png?v=1786991954",
+      "alt": "Amplify RED IV - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/AmplifyIV-Eucalyptus-Front-Redlight.png?v=1786991954",
+      "alt": "Amplify RED IV - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/AmplifyIV-Eucalyptus-Right-Redlight.png?v=1786991954",
+      "alt": "Amplify RED IV - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Amp4_Topdown.jpg?v=1786992505",
+      "alt": "Amplify RED IV - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sunlighten-amplify-iv-smart-sauna-eucalyptus-offer",
+      "merchantId": "sunlighten-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1029900,
+      "url": "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899&ued=https%3A%2F%2Fshop-us.sunlighten.com%2Fproducts%2Famplify-iv-smart-sauna-eucalyptus",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-63394-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "merchantSku": "Amplify IV Smart Sauna - Eucalyptus",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sunlighten-store": "Amplify IV Smart Sauna - Eucalyptus"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "4-person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 170,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Amplify RED IV - Eucalyptus",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sunlighten-shopify, official public Shopify snapshot",
+    "url": "https://shop-us.sunlighten.com/products/amplify-iv-smart-sauna-eucalyptus",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

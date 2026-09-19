@@ -17,6 +17,10 @@ const configs = [
     source: "frostonic-shopify", merchantId: "frostonic-store", brandId: "frostonic", categoryId: "cold-plunge", network: "goaffpro",
     snapshot: "frostonic-shopify.json", handles: ["frostonic-icebarrel-go", "comfort-modular-independent-plunge-tub", "structured-modular-independent-plunge", "integrated-ice-bath-with-ladder", "air-round-inflatable-cold-plunge-tub", "air-pro-inflatable-ice-bath-tub", "integrated-all-in-one-cold-plunge-tub"],
   },
+  {
+    source: "sunlighten-shopify", merchantId: "sunlighten-store", brandId: "sunlighten", categoryId: "saunas", network: "awin",
+    snapshot: "sunlighten-shopify.json", handles: ["amplify-ii-smart-sauna-eucalyptus", "amplify-iii-smart-sauna-eucalyptus", "amplify-iv-smart-sauna-eucalyptus", "signature-1-eucalyptus", "signature-2-obsidian", "signature-3-obsidian", "signature-4-obsidian", "solo-system-chromo"],
+  },
 ] as const;
 
 mkdirSync(OUT, { recursive: true });
@@ -39,10 +43,17 @@ for (const config of configs) {
     const source = { kind: "merchant_feed" as const, ref: `${config.source}, official public Shopify snapshot`, url: productUrl, retrievedAt: TODAY, method: "direct" as const, note: "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing." };
     const attributes: Record<string, unknown> = {};
     if (config.categoryId === "saunas") {
-      attributes.sauna_type = { value: "traditional", source: { ...source, note: `${source.note} The product description explicitly describes a wood-fired sauna.` }, verification: "manufacturer_reported" };
-      attributes.sauna_style = { value: "tent", source, verification: "manufacturer_reported" };
-      attributes.placement = { value: "outdoor", source, verification: "manufacturer_reported" };
-      const temperature = /(200)°F\+/i.exec(description);
+      const isSweatTent = config.source === "sweattent-shopify";
+      attributes.sauna_type = { value: isSweatTent ? "traditional" : "far_infrared", source: { ...source, note: `${source.note} The product description identifies the heating technology.` }, verification: "manufacturer_reported" };
+      attributes.sauna_style = { value: isSweatTent ? "tent" : raw.product_type === "Solo" ? "pod" : "cabin", source, verification: "manufacturer_reported" };
+      attributes.placement = { value: isSweatTent ? "outdoor" : "indoor", source, verification: "manufacturer_reported" };
+      const sunlightenCapacity: Record<string, number> = { "amplify-ii-smart-sauna-eucalyptus": 2, "amplify-iii-smart-sauna-eucalyptus": 3, "amplify-iv-smart-sauna-eucalyptus": 4, "signature-1-eucalyptus": 1, "signature-2-obsidian": 2, "signature-3-obsidian": 3, "signature-4-obsidian": 4, "solo-system-chromo": 1 };
+      const capacity = sunlightenCapacity[raw.handle] ?? Number(/\b([1-5])[- ]person\b/i.exec(`${raw.title} ${description}`)?.[1] || 0);
+      if (capacity) {
+        attributes.capacity_max_people = { value: capacity, source, verification: "manufacturer_reported" };
+        attributes.capacity_label = { value: `${capacity}-person`, source, verification: "manufacturer_reported" };
+      }
+      const temperature = /(170|200)°F\+?/i.exec(description);
       if (temperature) attributes.max_temperature_f = { value: Number(temperature[1]), source, verification: "manufacturer_reported" };
       for (const fact of extractSaunaEnvironment(description)) attributes[fact.key] = { value: fact.value, source, verification: "manufacturer_reported" };
     } else {

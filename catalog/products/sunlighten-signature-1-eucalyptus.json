@@ -1,0 +1,187 @@
+{
+  "id": "sunlighten-signature-1-eucalyptus",
+  "slug": "sunlighten-signature-1-eucalyptus",
+  "name": "Signature I - Eucalyptus",
+  "brandId": "sunlighten",
+  "categoryId": "saunas",
+  "description": "Select this 1-person sauna if you want simplicity. With the push of a button, you’ll enjoy a deep cellular detox and support overall wellness in the sanctuary of your own personal home sauna. Surrounded in gentle far infrared heat, you can boost your immune system, improve circulation, and naturally detoxify your body.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sunlighten-signature-1-eucalyptus-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Signature-I-Euca-FrontLeft.jpg?v=1750445633",
+      "alt": "Signature I - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-1-eucalyptus-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Signature-I-Euca-Front.jpg?v=1750445633",
+      "alt": "Signature I - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-1-eucalyptus-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Signature-I-Euca-FrontRight.jpg?v=1750445633",
+      "alt": "Signature I - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-1-eucalyptus-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Signature_1_Euca_sunroom.jpg?v=1750445633",
+      "alt": "Signature I - Eucalyptus",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sunlighten-signature-1-eucalyptus-offer",
+      "merchantId": "sunlighten-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 499900,
+      "url": "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899&ued=https%3A%2F%2Fshop-us.sunlighten.com%2Fproducts%2Fsignature-1-eucalyptus",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-63394-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "Signature I - Eucalyptus",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sunlighten-store": "Signature I - Eucalyptus"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 1,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "1-person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Signature I - Eucalyptus",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sunlighten-shopify, official public Shopify snapshot",
+    "url": "https://shop-us.sunlighten.com/products/signature-1-eucalyptus",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}
