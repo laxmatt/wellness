@@ -32,10 +32,11 @@
   "images": [
     {
       "id": "ice-barrel-500-primary",
-      "kind": "demo_placeholder",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:ice-barrel-500-primary",
-      "alt": "Ice Barrel 500 insulated barrel (demo placeholder)"
+      "src": "https://icebarrel.com/cdn/shop/files/IB_Isolated_500_v3.jpg?v=1786463433",
+      "alt": "Ice Barrel 500 insulated cold plunge",
+      "source": { "kind": "manufacturer", "ref": "Ice Barrel official product page", "url": "https://icebarrel.com/products/ice-barrel-500", "retrievedAt": "2026-09-19", "method": "direct", "note": "Official manufacturer-hosted product image." }
     }
   ],
   "offers": [

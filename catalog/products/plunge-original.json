@@ -25,17 +25,11 @@
   "images": [
     {
       "id": "plunge-original-primary",
-      "kind": "demo_placeholder",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:plunge-original-primary",
-      "alt": "Plunge Original tub (demo placeholder)"
-    },
-    {
-      "id": "plunge-original-lifestyle",
-      "kind": "demo_placeholder",
-      "role": "lifestyle",
-      "src": "demo:plunge-original-lifestyle",
-      "alt": "Plunge on a covered patio (demo placeholder)"
+      "src": "https://plunge.com/cdn/shop/files/The_Plunge_Pro_Chiller_af334e0a-0cf8-4a16-8a25-296e45866bec.jpg?v=1774982298",
+      "alt": "The Plunge Original cold plunge tub",
+      "source": { "kind": "manufacturer", "ref": "Plunge official product page", "url": "https://plunge.com/products/plunge", "retrievedAt": "2026-09-19", "method": "direct", "note": "Official manufacturer-hosted product image." }
     }
   ],
   "offers": [

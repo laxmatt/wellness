@@ -1,6 +1,6 @@
 {
-  "status": "published",
-  "availability": "unknown",
+  "status": "discontinued",
+  "availability": "discontinued",
   "market": "US",
   "lastUpdated": "2026-09-08",
   "flags": {
@@ -43,7 +43,7 @@
         "status": "unknown"
       },
       "discountCodes": [],
-      "availability": "unknown",
+      "availability": "discontinued",
       "lastChecked": "2026-09-08",
       "source": {
         "kind": "manufacturer",

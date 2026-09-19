@@ -1,5 +1,5 @@
 {
-  "status": "published",
+  "status": "discontinued",
   "availability": "discontinued",
   "market": "US",
   "lastUpdated": "2026-09-11",
@@ -40,10 +40,11 @@
   "images": [
     {
       "id": "edge-tub-elite-primary",
-      "kind": "demo_placeholder",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:edge-tub-elite-primary",
-      "alt": "Edge Tub Elite with chiller (demo placeholder)"
+      "src": "https://cdn.shopify.com/s/files/1/0625/0148/6807/t/3/assets/100a3556-1648429241416.jpg?v=1648429246",
+      "alt": "Edge Tub Elite cold plunge",
+      "source": { "kind": "manufacturer", "ref": "Edge Theory Labs official site image", "url": "https://www.edgetheorylabs.com/products/the-edge-tub-elite", "retrievedAt": "2026-09-19", "method": "direct", "note": "Official brand-hosted image. Product is marked discontinued and is not shown in current shopping results." }
     }
   ],
   "offers": [

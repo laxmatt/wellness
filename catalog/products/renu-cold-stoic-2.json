@@ -25,17 +25,11 @@
   "images": [
     {
       "id": "renu-cold-stoic-2-primary",
-      "kind": "demo_placeholder",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:renu-cold-stoic-2-primary",
-      "alt": "Renu Therapy Cold Stoic 2.0 (demo placeholder)"
-    },
-    {
-      "id": "renu-cold-stoic-2-lifestyle",
-      "kind": "demo_placeholder",
-      "role": "lifestyle",
-      "src": "demo:renu-cold-stoic-2-lifestyle",
-      "alt": "Cold Stoic on a wood deck (demo placeholder)"
+      "src": "https://www.renutherapy.com/cdn/shop/files/product_cold_stoic_2__meterous_black_california_redwood.jpg?v=1779982775",
+      "alt": "Renu Therapy Cold Stoic 2.0",
+      "source": { "kind": "manufacturer", "ref": "Renu Therapy official product page", "url": "https://www.renutherapy.com/products/cold-stoic-2-0", "retrievedAt": "2026-09-19", "method": "direct", "note": "Official manufacturer-hosted product image." }
     }
   ],
   "offers": [

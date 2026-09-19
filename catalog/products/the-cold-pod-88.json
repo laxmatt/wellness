@@ -26,10 +26,11 @@
   "images": [
     {
       "id": "the-cold-pod-88-primary",
-      "kind": "demo_placeholder",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:the-cold-pod-88-primary",
-      "alt": "The Cold Pod 88 gallon portable tub (demo placeholder)"
+      "src": "https://m.media-amazon.com/images/I/41gSWdJWrjL.jpg",
+      "alt": "The Cold Pod 88-gallon portable ice bath",
+      "source": { "kind": "retailer", "ref": "Amazon listing image for ASIN B0CPKYNJ9Q", "url": "https://www.amazon.com/dp/B0CPKYNJ9Q", "retrievedAt": "2026-09-19", "method": "direct", "note": "Product image associated with the same Amazon ASIN as the site's offer." }
     }
   ],
   "offers": [
