@@ -25,3 +25,15 @@ it('separates test mode into a new visit and avoids admin collection', () => {
   history.replaceState({}, '', '/admin/traffic');
   sendJourney('page_view','/other'); expect(fetchMock).toHaveBeenCalledTimes(1);
 });
+it('keeps tagged tests excluded after navigation and assigns stable step order', () => {
+  localStorage.setItem('wfc.measurement-consent.v3','granted');
+  vi.stubGlobal('location', new URL('https://wellnessfitcheck.com/saunas?utm_content=tracking_test'));
+  sendJourney('page_view','/saunas');
+  vi.stubGlobal('location', new URL('https://wellnessfitcheck.com/compare'));
+  sendJourney('comparison_opened','/compare');
+  const a = JSON.parse(fetchMock.mock.calls[0][1].body);
+  const b = JSON.parse(fetchMock.mock.calls[1][1].body);
+  expect(b.session).toBe(a.session);
+  expect(b.test).toBe(true);
+  expect([a.sequence,b.sequence]).toEqual([1,2]);
+});

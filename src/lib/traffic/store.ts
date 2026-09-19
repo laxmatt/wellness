@@ -11,7 +11,8 @@ export async function trafficDb() {
     id UUID PRIMARY KEY, session UUID NOT NULL, at TIMESTAMPTZ NOT NULL DEFAULT now(),
     event TEXT NOT NULL, page TEXT NOT NULL, source TEXT NOT NULL, test BOOLEAN NOT NULL,
     product TEXT, retailer TEXT, name TEXT
-  ); CREATE INDEX IF NOT EXISTS wfc_traffic_at ON wfc_traffic_events(at);
+  ); ALTER TABLE wfc_traffic_events ADD COLUMN IF NOT EXISTS sequence INTEGER;
+  CREATE INDEX IF NOT EXISTS wfc_traffic_at ON wfc_traffic_events(at);
   CREATE INDEX IF NOT EXISTS wfc_traffic_session ON wfc_traffic_events(session, at);`).catch(e => { ready = undefined; throw e; });
   await ready;
   return pool;
@@ -23,10 +24,10 @@ export async function recordEvent(e: Omit<JourneyEvent, 'at'>) {
   try {
     await client.query('BEGIN');
     await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [e.session]);
-    await client.query(`INSERT INTO wfc_traffic_events(id,session,event,page,source,test,product,retailer,name)
-      SELECT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE
+    await client.query(`INSERT INTO wfc_traffic_events(id,session,event,page,source,test,product,retailer,name,sequence)
+      SELECT $1,$2,$3,$4,$5,$6,$7,$8,$9,$10 WHERE
       (SELECT count(*) FROM wfc_traffic_events WHERE session=$2 AND at > now()-interval '1 day') < 300
-      ON CONFLICT(id) DO NOTHING`, [e.id,e.session,e.event,e.page,e.source,e.test,e.product ?? null,e.retailer ?? null,e.name ?? null]);
+      ON CONFLICT(id) DO NOTHING`, [e.id,e.session,e.event,e.page,e.source,e.test,e.product ?? null,e.retailer ?? null,e.name ?? null,e.sequence ?? null]);
     await client.query('COMMIT');
   } catch (e) { await client.query('ROLLBACK'); throw e; }
   finally { client.release(); }

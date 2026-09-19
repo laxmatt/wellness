@@ -7,6 +7,13 @@ import { GET } from '@/app/api/admin/traffic/route';
 const event = { id: '5c1882c7-70b7-43c6-8ec0-7f5a888386ef', session: '2c1882c7-70b7-43c6-8ec0-7f5a888386ef', event: 'page_view' as const, page: '/saunas' as const, source: 'chatgpt_ads' as const, test: false };
 beforeEach(() => { vi.clearAllMocks(); process.env.ADMIN_ACCESS_KEY = 'local-test-only'; });
 describe('traffic reports', () => {
+  it('retains browser action order when network delivery is out of order', () => {
+    const report = summarize([
+      {...event, sequence: 2, event: 'filter_used', at: '2026-09-18T12:00:00Z'},
+      {...event, sequence: 1, at: '2026-09-18T12:00:01Z'},
+    ]);
+    expect(report.journeys[0].steps.map(e => e.event)).toEqual(['page_view','filter_used']);
+  });
   it('counts unique visits and retailer clicks separately, retaining ordered steps', () => {
     const rows: JourneyEvent[] = [
       { ...event, at: '2026-09-18T12:00:00Z' },
