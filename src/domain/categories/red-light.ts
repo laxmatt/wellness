@@ -13,6 +13,7 @@ export const redLight = CategoryDefinition.parse({
   ],
   subcategories: [
     { id: "panel", label: "Panels" },
+    { id: "mask", label: "Face masks" },
     { id: "handheld", label: "Handheld" },
   ],
   attributeDefinitions: [
