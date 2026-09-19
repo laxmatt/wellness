@@ -1,85 +1,85 @@
 {
-  "id": "hooga-hg300",
-  "slug": "hooga-hg300",
-  "name": "HG300",
+  "id": "hooga-hg1000",
+  "slug": "hooga-hg1000",
+  "name": "HG1000",
   "brandId": "hooga",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "The HG300 is one of Hooga's best-selling red light therapy panels — a straightforward, reliable device that delivers the two most widely studied wavelengths: 660nm red and 850nm near-infrared . With 60 single-chip LEDs producing over 90 mW/cm² at 6 inches, the HG300 gives you everything you need for effective daily red light therapy sessions at home. The HG300 red light panel weighs just 6 pounds with a 12.2\" x 8.2\" footprint — one of the most portable panels Hooga makes. The built-in swing-out kickstand and timer mean you can set it up anywhere and start a session in seconds. Internal cooling fans keep the panel running cool, and EMF emission is zero at the recommended 6-inch distance . Why the HG300 Is a Customer Favorite With 125 five-star reviews and a 4.9 average rating, the HG300 is one of the most trusted red light therapy panels on the market. Customers consistently highlight how easy it is to use, the solid build quality, and the results they see from consistent daily sessions. It's a popular first panel for people getting into red light therapy, and many customers come back to add larger Hooga panels after starting with the HG300. Who the HG300 Is For The HG300 red light therapy panel is ideal if you want a proven, no-frills device for targeted sessions — face, neck, shoulders, knees, or joints. It's a great starting point if you're new to red light therapy and want to experience the benefits before investing in a larger setup. It's also a popular choice as a second panel for travel or for dedicated use in a specific room. HG Series vs. PRO Series Hooga offers two panel lines at this size: the HG300 and the PRO300 . Both deliver the same 660nm and 850nm wavelengths and share the same compact form factor. The HG300 uses single-chip LEDs at 73 mW/cm², while the PRO300 uses dual-chip LEDs at 109 mW/cm² and adds a digital countdown timer and carrying handle. If you want the most value at the best price, the HG300 delivers. If you want higher irradiance and extra features, step up to the PRO300. Both are backed by a 3-year warranty and a 60-day return window starting the day of delivery, plus free shipping (orders over $100). Returns are not free — return shipping is deducted from your refund. Download the Hooga HG Series user manual (PDF) Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "description": "The HG1000 is Hooga's full-body red light therapy panel — sized to cover a standing adult from head to hip in a single position. It delivers 660 nm red and 850 nm near-infrared wavelengths through 200 × 5W LEDs , producing an irradiance of 98 mW/cm² at 6 inches. At 1000W with a 35.8\" × 8.2\" footprint, the HG1000 is a common choice for people who want full-body coverage in the HG line. It ships with a door mount, hanging kit with adjustable pulley , and a built-in timer plus a carrying handle for easier movement. Who the HG1000 Is For The HG1000 is a good fit if you want a straightforward full-body panel without the higher price point of the PRO or ULTRA line. If you want higher irradiance per session, look at the HG1500 for more LEDs in the same series, or the PRO1500 for dual-chip technology and modular stacking. Download the Hooga HG Series user manual (PDF) Backed by a 3-year warranty and easy 60-day returns, the HG1000 gives you full-body coverage at HG-line pricing. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
   "status": "published",
   "availability": "in_stock",
   "market": "US",
   "images": [
     {
-      "id": "hooga-hg300-image-1",
+      "id": "hooga-hg1000-image-1",
       "kind": "affiliate_feed",
       "role": "primary",
-      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HG300Main.jpg?v=1775591828",
-      "alt": "HG300 Red Light Therapy Device",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HG1000_Main_Image_2024.jpg?v=1721748820",
+      "alt": "HG1000 Red Light Therapy Panel",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       }
     },
     {
-      "id": "hooga-hg300-image-2",
+      "id": "hooga-hg1000-image-2",
       "kind": "affiliate_feed",
       "role": "gallery",
-      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Dimensions_HG300_f50a3a4e-0d2c-40e4-8af9-004c2da3feae.jpg?v=1775591822",
-      "alt": "HG300 Red Light Therapy Device",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Dimensions_HG1000.jpg?v=1775589889",
+      "alt": "HG1000 Red Light Therapy Panel",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       }
     },
     {
-      "id": "hooga-hg300-image-3",
+      "id": "hooga-hg1000-image-3",
       "kind": "affiliate_feed",
       "role": "gallery",
-      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HarnessTheLightPower_HG300_1.jpg?v=1775591817",
-      "alt": "HG300 Red Light Therapy Device",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HarnessTheLightPower_Updated_71bd7473-d57e-4bdf-add6-fbd2e4ce3613.jpg?v=1775589894",
+      "alt": "HG1000 Red Light Therapy Panel",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       }
     },
     {
-      "id": "hooga-hg300-image-4",
+      "id": "hooga-hg1000-image-4",
       "kind": "affiliate_feed",
       "role": "gallery",
-      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RechargeHumanBattery_HGSeries_Updated.jpg?v=1775591806",
-      "alt": "HG300 Red Light Therapy Device",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/EnhanceMuscleHGSeries_Updated_50657050-908f-47b2-9170-d9bec92efbd7.jpg?v=1775589900",
+      "alt": "HG1000 Red Light Therapy Panel",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       }
     },
     {
-      "id": "hooga-hg300-image-5",
+      "id": "hooga-hg1000-image-5",
       "kind": "affiliate_feed",
       "role": "gallery",
-      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RejuvenateSkinHGSeries_Updated.jpg?v=1775591811",
-      "alt": "HG300 Red Light Therapy Device",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RejuvenateSkinHGSeries_Updated_b00092db-a82a-4d4a-9304-a9e3e9989933.jpg?v=1775589907",
+      "alt": "HG1000 Red Light Therapy Panel",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -88,12 +88,12 @@
   ],
   "offers": [
     {
-      "id": "hooga-hg300-direct",
+      "id": "hooga-hg1000-direct",
       "merchantId": "hooga-store",
       "market": "US",
       "currency": "USD",
-      "priceMinor": 19900,
-      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel?ref=MATTORR",
+      "priceMinor": 59900,
+      "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel?ref=MATTORR",
       "affiliate": {
         "status": "affiliate",
         "network": "goaffpro",
@@ -101,12 +101,12 @@
       },
       "discountCodes": [],
       "availability": "in_stock",
-      "merchantSku": "hooga_HG300",
+      "merchantSku": "hooga_HG1000",
       "lastChecked": "2026-09-19",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
@@ -117,7 +117,7 @@
   "identifiers": {
     "gtin": [],
     "merchantSkus": {
-      "hooga-store": "hooga_HG300"
+      "hooga-store": "hooga_HG1000"
     }
   },
   "warranty": {
@@ -125,7 +125,7 @@
     "source": {
       "kind": "merchant_feed",
       "ref": "hooga-shopify, official public Shopify snapshot",
-      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
       "retrievedAt": "2026-09-19",
       "method": "direct",
       "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -137,7 +137,7 @@
     "source": {
       "kind": "merchant_feed",
       "ref": "hooga-shopify, official public Shopify snapshot",
-      "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+      "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
       "retrievedAt": "2026-09-19",
       "method": "direct",
       "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -146,11 +146,11 @@
   },
   "attributes": {
     "coverage": {
-      "value": "targeted",
+      "value": "full_body",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
@@ -158,11 +158,11 @@
       "verification": "manufacturer_reported"
     },
     "footprint": {
-      "value": "compact",
+      "value": "standard",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
@@ -175,7 +175,7 @@
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -188,7 +188,7 @@
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -204,7 +204,7 @@
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -212,12 +212,12 @@
       "verification": "manufacturer_reported"
     },
     "irradiance_mw_cm2": {
-      "value": 90,
+      "value": 98,
       "unit": "mW/cm²",
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -230,7 +230,7 @@
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -238,11 +238,24 @@
       "verification": "manufacturer_reported"
     },
     "led_count": {
-      "value": 60,
+      "value": 200,
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 5,
+      "unit": "W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -251,12 +264,12 @@
     },
     "mounting": {
       "value": [
-        "tabletop"
+        "door_hang"
       ],
       "source": {
         "kind": "merchant_feed",
         "ref": "hooga-shopify, official public Shopify snapshot",
-        "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+        "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
         "retrievedAt": "2026-09-19",
         "method": "direct",
         "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
@@ -264,7 +277,7 @@
       "verification": "manufacturer_reported"
     }
   },
-  "sourceTitle": "HG300 Red Light Therapy Device",
+  "sourceTitle": "HG1000 Red Light Therapy Panel",
   "editorial": {
     "strengths": [],
     "tradeoffs": []
@@ -272,7 +285,7 @@
   "source": {
     "kind": "merchant_feed",
     "ref": "hooga-shopify, official public Shopify snapshot",
-    "url": "https://hoogahealth.com/products/hooga-300w-red-and-near-infrared-light-therapy-panel",
+    "url": "https://hoogahealth.com/products/hooga-1000w-red-and-near-infrared-light-therapy-panel",
     "retrievedAt": "2026-09-19",
     "method": "direct",
     "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."

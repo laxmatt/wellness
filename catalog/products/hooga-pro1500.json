@@ -1,35 +1,89 @@
 {
-  "status": "published",
-  "availability": "unknown",
-  "market": "US",
-  "lastUpdated": "2026-09-08",
-  "flags": {
-    "demo": true,
-    "newArrival": false
-  },
-  "editorial": {
-    "strengths": [],
-    "tradeoffs": []
-  },
-  "identifiers": {
-    "gtin": [],
-    "asin": "B08Z6NMRB9",
-    "merchantSkus": {}
-  },
   "id": "hooga-pro1500",
   "slug": "hooga-pro1500",
   "name": "PRO1500",
   "brandId": "hooga",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "Full-height two-wavelength panel with 300 dual-chip LEDs, digital timer, and door-mount hardware included.",
+  "description": "PRO1500 is a high powered, full body red and near infrared light therapy device designed to provide you with affordable, effective light sessions at home. The advantage of this large light therapy device is that you can cover a large area of your body at once, making it a versatile addition to your daily wellness routine. The PRO1500 is modular and stand compatible, meaning it can be connected to other panels in the PRO series when attached to either of our mobile stands to create even larger, custom full body set ups. The panel features 300 dual-chip LEDs emitting 660nm red light and 850nm near-infrared light. The PRO1500 has a built in digital timer as well as a digital control panel , allowing you to choose between red, near infrared, or both. PRO1500 stands 36 inches tall by 8.6 inches wide and comes with an included door mount, adjustable pulley, and hanging wires so you can use it hanging on the back of a door, a hook, or you can attach it to our mobile stands which are sold separately. Compare to other brands: Hooga vs Joovv — full panel comparison Hooga vs PlatinumLED — full panel comparison Hooga vs MitoRedLight — full panel comparison Download the Hooga PRO Series user manual (PDF) Backed by a 3-year warranty , the PRO1500 is built to deliver consistent, high-output red light therapy at home. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
   "images": [
     {
-      "id": "hooga-pro1500-primary",
-      "kind": "demo_placeholder",
+      "id": "hooga-pro1500-image-1",
+      "kind": "affiliate_feed",
       "role": "primary",
-      "src": "demo:hooga-pro1500-primary",
-      "alt": "Hooga PRO1500 panel (demo placeholder)"
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/PRO1500_Angled_Left_Turned_On_June_2024.jpg?v=1718813375",
+      "alt": "PRO1500 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro1500-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/2026_Harness_HG_PRO_2_74534cba-c826-412e-b212-391cbbcc5a39.jpg?v=1775589754",
+      "alt": "PRO1500 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro1500-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HGPRO_Enhance_Muscle_Recovery_copy.jpg?v=1775589588",
+      "alt": "PRO1500 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro1500-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RejuvenateYourSkin_HG_PRO_2_copy.jpg?v=1769639975",
+      "alt": "PRO1500 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro1500-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Recharge_PRO_3.jpg?v=1775589761",
+      "alt": "PRO1500 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
     }
   ],
   "offers": [
@@ -39,81 +93,54 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 119900,
-      "url": "https://hoogahealth.com/products/hgpro1500",
+      "url": "https://hoogahealth.com/products/hgpro1500?ref=MATTORR",
       "affiliate": {
-        "status": "unknown"
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
       },
       "discountCodes": [],
-      "availability": "unknown",
-      "lastChecked": "2026-09-09",
+      "availability": "in_stock",
+      "merchantSku": "hooga_pro_HG1500",
+      "lastChecked": "2026-09-19",
       "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Page listed $1,199. Availability is not recorded from this reading: the page showed both a Sold out label and an Add to cart control, which do not agree. Previously carried $649 as prototype data."
-      }
-    },
-    {
-      "id": "hooga-pro1500-amazon",
-      "merchantId": "amazon",
-      "market": "US",
-      "currency": "USD",
-      "priceMinor": 69900,
-      "url": "https://www.amazon.com/dp/B08Z6NMRB9",
-      "affiliate": {
-        "status": "unknown"
-      },
-      "discountCodes": [],
-      "availability": "unknown",
-      "lastChecked": "2026-09-08",
-      "source": {
-        "kind": "demo",
-        "ref": "Prototype demo value",
-        "method": "direct",
-        "note": "Amazon listing price not retrieved. Demo value."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
       }
     }
   ],
-  "dimensions": {
-    "value": {
-      "length": 36,
-      "width": 8.6,
-      "height": 3.1
-    },
-    "unit": "in",
-    "source": {
-      "kind": "manufacturer",
-      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-      "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-09",
-      "method": "direct",
-      "note": "Page states 36 x 8.6 x 3.1 inches. Previously recorded as relayed via a search summary on 2026-09-08."
-    },
-    "verification": "manufacturer_reported"
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "hooga_pro_HG1500"
+    }
   },
   "warranty": {
     "value": "3-year warranty",
     "source": {
-      "kind": "manufacturer",
-      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
       "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-09",
+      "retrievedAt": "2026-09-19",
       "method": "direct",
-      "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
     },
     "verification": "manufacturer_reported"
   },
   "returnPolicy": {
-    "value": "60-day trial",
+    "value": "60-day return window from delivery; return shipping deducted",
     "source": {
-      "kind": "manufacturer",
-      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
       "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-09",
+      "retrievedAt": "2026-09-19",
       "method": "direct",
-      "note": "Page states a 60-day trial. Previously recorded as relayed via a search summary on 2026-09-08."
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
     },
     "verification": "manufacturer_reported"
   },
@@ -121,25 +148,52 @@
     "coverage": {
       "value": "full_body",
       "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Page describes the panel as full body, which is what this catalogue's editorial class from panel height already said. Recorded as the maker's own description; the class rule is unchanged and is in docs/source-checks/2026-09-09-hooga-pro1500.md."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
       },
       "verification": "manufacturer_reported"
     },
     "footprint": {
-      "value": "standard",
+      "value": "compact",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro1500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
     },
     "wavelengths_nm": {
       "value": [
@@ -148,38 +202,24 @@
       ],
       "unit": "nm",
       "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Page lists 660 nm and 850 nm. Previously recorded as relayed via a search summary on 2026-09-08."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
-    },
-    "irradiance_mw_cm2": {
-      "value": 189,
-      "unit": "mW/cm²",
-      "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-        "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
-        "method": "direct",
-        "note": "The page states this figure two ways and they disagree: over 189 mW/cm2 at 6 inches in the highlights, exactly 189 in the technical table, where no distance is given. Recorded as disputed and withheld from matching and scoring rather than resolved by choosing a passage. No measurement distance is recorded either, since the two statements do not share one. Previously recorded as relayed via a search summary on 2026-09-08."
-      },
-      "verification": "manufacturer_reported",
-      "disputed": true
     },
     "led_count": {
       "value": 300,
       "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Page lists 300 dual-chip LEDs. Previously recorded as relayed via a search summary on 2026-09-08."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
     },
@@ -189,73 +229,32 @@
         "floor_stand_optional"
       ],
       "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
         "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
+        "retrievedAt": "2026-09-19",
         "method": "direct",
-        "note": "Page includes a door mount, hanging kit and adjustable pulley, and says mobile stands are sold separately while the modular stand is compatible. Recorded as door hanging plus an optional floor stand, where it previously claimed a stand outright. Previously recorded as relayed via a search summary on 2026-09-08."
-      },
-      "verification": "manufacturer_reported"
-    },
-    "warranty_years": {
-      "value": 3,
-      "unit": "yr",
-      "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-        "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
-        "method": "direct",
-        "note": "Page states a 3-year warranty. Previously recorded as relayed via a search summary on 2026-09-08."
-      },
-      "verification": "manufacturer_reported"
-    },
-    "return_window_days": {
-      "value": 60,
-      "unit": "days",
-      "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-        "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
-        "method": "direct",
-        "note": "Page states a 60-day trial. Previously recorded as relayed via a search summary on 2026-09-08."
-      },
-      "verification": "manufacturer_reported"
-    },
-    "power_w": {
-      "value": 530,
-      "unit": "W",
-      "source": {
-        "kind": "manufacturer",
-        "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-        "url": "https://hoogahealth.com/products/hgpro1500",
-        "retrievedAt": "2026-09-09",
-        "method": "direct",
-        "note": "Page states 530 W consumption. The 1500 in the product name is an LED classification, not draw."
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
       },
       "verification": "manufacturer_reported"
     }
   },
-  "source": {
-    "kind": "editorial",
-    "ref": "Prototype catalog entry",
-    "retrievedAt": "2026-09-08",
-    "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+  "sourceTitle": "PRO1500 Red Light Therapy Panel",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
   },
-  "weight": {
-    "value": 21.125,
-    "unit": "lb",
-    "source": {
-      "kind": "manufacturer",
-      "ref": "Read by Codex on the manufacturer's page and supplied to this repository; not fetched here.",
-      "url": "https://hoogahealth.com/products/hgpro1500",
-      "retrievedAt": "2026-09-09",
-      "method": "direct",
-      "note": "Page's technical figure is 21 lb 2 oz, recorded here as 21.125 lb. Its own table rounds that to 21 lb."
-    },
-    "verification": "manufacturer_reported"
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/hgpro1500",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
   }
 }
