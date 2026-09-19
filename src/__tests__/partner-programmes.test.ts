@@ -28,11 +28,13 @@ import { BLOCKED_PARTNERS, SHOPIFY_PARTNERS } from "../../scripts/shopify-partne
 describe("what each programme issued", () => {
   it("records the five partners with an arrangement and the one without", () => {
     expect(PROGRAMMES.map((p) => p.partnerId).sort()).toEqual([
+      "frostonic-shopify",
       "hooga-shopify",
       "lifepro",
       "saunabox",
       "saunakits-shopify",
       "select-saunas-shopify",
+      "sweattent-shopify",
       "sweaty-yeti-woocommerce",
       "therasage",
       "topture-shopify",
@@ -73,6 +75,7 @@ describe("what each programme issued", () => {
       ["topture-shopify", "https://topture.com/products/thermasol-vue-sauna-cabin", "https://topture.com/products/thermasol-vue-sauna-cabin?ref=MATTORR", "ref"],
       ["hooga-shopify", "https://hoogahealth.com/products/sauna-series-floor-stand", "https://hoogahealth.com/products/sauna-series-floor-stand?ref=MATTORR", "ref"],
       ["sweaty-yeti-woocommerce", "https://sweatyyetisauna.com/product/sauna-plus/", "https://sweatyyetisauna.com/product/sauna-plus/?sld=126", "sld"],
+      ["frostonic-shopify", "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub?variant=46564189929610", "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub?variant=46564189929610&ref=MATT", "ref"],
     ];
     for (const [id, plain, expected, param] of observed) {
       const link = productLink(programmeFor(id), plain);

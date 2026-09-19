@@ -1,0 +1,151 @@
+{
+  "id": "frostonic-air-round-inflatable-cold-plunge-tub",
+  "slug": "frostonic-air-round-inflatable-cold-plunge-tub",
+  "name": "Air",
+  "brandId": "frostonic",
+  "categoryId": "cold-plunge",
+  "description": "The Air is the essential round inflatable Cold Plunge Tub, designed for maximum portability and rapid recovery. Its classic shape allows for deep immersion, making it the perfect ice bath companion for travel.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "frostonic-air-round-inflatable-cold-plunge-tub-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Inflatable_Multi_Sided_Ice_Bath_Tub.jpg?v=1758011461",
+      "alt": "Air",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-round-inflatable-cold-plunge-tub-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Inflatable_Multi_Sided_Ice_Bath_Tub_front.jpg?v=1758011492",
+      "alt": "Air",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-round-inflatable-cold-plunge-tub-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Inflatable_Multi_Sided_Ice_Bath_Tub_left.jpg?v=1758011543",
+      "alt": "Air",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-round-inflatable-cold-plunge-tub-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Inflatable_Multi_Sided_Ice_Bath_Tub_opening.jpg?v=1758011614",
+      "alt": "Air",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "frostonic-air-round-inflatable-cold-plunge-tub-offer",
+      "merchantId": "frostonic-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 99900,
+      "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub?ref=MATT",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATT"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GF-005",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "frostonic-store": "GF-005"
+    }
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "inflatable",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Air",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "frostonic-shopify, official public Shopify snapshot",
+    "url": "https://frostonic.com/products/air-round-inflatable-cold-plunge-tub",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

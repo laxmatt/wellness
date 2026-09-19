@@ -147,6 +147,45 @@ export function secretsIn(programme: PartnerProgramme): { field: string; matched
 
 export const PROGRAMMES: PartnerProgramme[] = [
   {
+    partnerId: "sweattent-shopify",
+    merchantName: "SweatTent",
+    network: "refersion",
+    dashboard: "active",
+    programRef: "9327296.77dd76",
+    referralLink: "https://sweattent.com/?rfsn=9327296.77dd76",
+    productLinks: {
+      kind: "portal_tool",
+      tools: ["Refersion affiliate dashboard"],
+      why: "The approval email verifies the storefront tracking link, but no product-level transformation has been verified. Published offers therefore use the exact issued storefront link.",
+    },
+    inventory: { kind: "shopify_json", url: "https://sweattent.com/products.json" },
+    compliance: [],
+    verifiedOn: "2026-09-19",
+    notes: "Refersion approval email verified the issued tracking link. The official public Shopify catalogue is available; sauna import keeps the canonical complete sauna and excludes duplicated bundles and accessories.",
+  },
+  {
+    partnerId: "frostonic-shopify",
+    merchantName: "FROSTONIC",
+    network: "goaffpro",
+    dashboard: "active",
+    programRef: "MATT",
+    referralLink: "https://frostonic.com/?ref=MATT",
+    productLinks: {
+      kind: "verified",
+      tag: {
+        param: "ref",
+        value: "MATT",
+        origin: "https://frostonic.com",
+        verifiedOn: "2026-09-19",
+        verifiedBy: "Codex, in the programme's own GoAffPro product-link generator",
+      },
+    },
+    inventory: { kind: "shopify_json", url: "https://frostonic.com/products.json" },
+    compliance: [],
+    verifiedOn: "2026-09-19",
+    notes: "GoAffPro dashboard active. Its product-link generator verified ?ref=MATT on a product URL. The official public Shopify catalogue is available; cold-plunge import excludes accessories, standalone chillers and sauna products.",
+  },
+  {
     partnerId: "sweaty-yeti-woocommerce",
     merchantName: "Sweaty Yeti Sauna",
     network: "other",

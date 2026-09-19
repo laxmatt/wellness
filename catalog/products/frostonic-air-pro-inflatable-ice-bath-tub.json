@@ -1,0 +1,151 @@
+{
+  "id": "frostonic-air-pro-inflatable-ice-bath-tub",
+  "slug": "frostonic-air-pro-inflatable-ice-bath-tub",
+  "name": "Air Pro",
+  "brandId": "frostonic",
+  "categoryId": "cold-plunge",
+  "description": "The Air Pro is the upgraded long oval inflatable Cold Plunge Tub, engineered for full body extension and superior comfort. Its spacious design ensures deeper immersion for a professional-grade ice bath experience.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "frostonic-air-pro-inflatable-ice-bath-tub-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Portable_Inflatable_Ice_Bath_Tub.jpg?v=1758013422",
+      "alt": "Air Pro",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-pro-inflatable-ice-bath-tub-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Portable_Inflatable_Ice_Bath_Tub_Front.jpg?v=1758013470",
+      "alt": "Air Pro",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-pro-inflatable-ice-bath-tub-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Portable_Inflatable_Ice_Bath_Tub_Right.jpg?v=1758013487",
+      "alt": "Air Pro",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-air-pro-inflatable-ice-bath-tub-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Portable_Inflatable_Ice_Bath_Tub_with_Cover.jpg?v=1758013793",
+      "alt": "Air Pro",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "frostonic-air-pro-inflatable-ice-bath-tub-offer",
+      "merchantId": "frostonic-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 99900,
+      "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub?ref=MATT",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATT"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GF-002",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "frostonic-store": "GF-002"
+    }
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "inflatable",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Air Pro",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "frostonic-shopify, official public Shopify snapshot",
+    "url": "https://frostonic.com/products/air-pro-inflatable-ice-bath-tub",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

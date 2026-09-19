@@ -1,0 +1,151 @@
+{
+  "id": "frostonic-integrated-ice-bath-with-ladder",
+  "slug": "frostonic-integrated-ice-bath-with-ladder",
+  "name": "All-In-One Ladder",
+  "brandId": "frostonic",
+  "categoryId": "cold-plunge",
+  "description": "The All-In-One Ladder is the easy-access integrated Ice Bath Tub, designed with convenience in mind. The built-in safety ladder ensures effortless entry and exit for all users. Enjoy a powerful, hassle-free Cold Plunge experience with the integrated 1HP chiller.",
+  "status": "published",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "frostonic-integrated-ice-bath-with-ladder-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Ice_Bath_Tub_with_Built_in_Chiller.jpg?v=1758007426",
+      "alt": "All-In-One Ladder",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-ice-bath-with-ladder-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Ice_Bath_Tub_with_Built_In_Chiller_side_view.jpg?v=1758007554",
+      "alt": "All-In-One Ladder",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-ice-bath-with-ladder-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Ice_Bath_Tub_with_Built_In_Chiller_standard.jpg?v=1758007658",
+      "alt": "All-In-One Ladder",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-ice-bath-with-ladder-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Ice_Bath_Tub_with_Built_In_Chiller_2.jpg?v=1758007759",
+      "alt": "All-In-One Ladder",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "frostonic-integrated-ice-bath-with-ladder-offer",
+      "merchantId": "frostonic-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1569900,
+      "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder?ref=MATT",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATT"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "merchantSku": "GD-007-Y",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "frostonic-store": "GD-007-Y"
+    }
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "tub",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "All-In-One Ladder",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "frostonic-shopify, official public Shopify snapshot",
+    "url": "https://frostonic.com/products/integrated-ice-bath-with-ladder",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}
