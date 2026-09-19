@@ -89,9 +89,9 @@ export function CategoryBrowse({
         {CHATBOT_ENABLED ? <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
         </div> : null}
-        <div className="mt-10">
+        {!["saunas", "cold-plunge"].includes(cat.id) ? <div className="mt-10">
           <WinnersRow products={products} cat={cat} set={set} />
-        </div>
+        </div> : null}
         <div className="mt-12 flex flex-col gap-10">
           <section id={`${cat.slug}-finder`} tabIndex={-1} className="mx-auto w-full max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between gap-4">
