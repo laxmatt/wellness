@@ -37,7 +37,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
   // Nothing to shop is not a shop button. The product page still says what is
   // known and why no retailer is listed, so the way in stays.
-  const shopLabel = directSaunaOffer ? "Shop" : buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
+  const shopLabel = directSaunaOffer ? `Check price at ${directSaunaOffer.merchant.name} ↗` : buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
   // Only where the card itself sends somebody out. The other two labels lead to
   // this site's own product page, which states the relationship per retailer,
   // and a disclosure over an internal link would be about links that are not
@@ -93,12 +93,12 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             behind a control: conflicts first, because a shopper scanning a grid
             is looking for the reason to stop. */}
         <NeedsFit productId={view.id} categoryId={view.categoryId} limit={3} />
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-1">
+        <div className={directSaunaOffer ? "mt-auto flex flex-col-reverse gap-2 pt-1" : "mt-auto grid grid-cols-2 gap-2 pt-1"}>
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a
             href={shopHref}
             {...(external ? outboundLinkProps(buyable[0].affiliateStatus, { productId: view.id, productName: view.name, retailer: buyable[0].merchant.name }) : {})}
-            className={buttonStyles("primary", "md")}
+            className={buttonStyles("primary", "md", directSaunaOffer ? "h-auto min-h-11 py-3 text-center" : undefined)}
           >
             {shopLabel}
           </a>

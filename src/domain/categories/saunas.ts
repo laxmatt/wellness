@@ -25,7 +25,7 @@ export const saunas = CategoryDefinition.parse({
   name: "Saunas",
   navLabel: "Saunas",
   tagline: "Find the right sauna for your home.",
-  intro: "Compare home saunas from multiple brands. Narrow your options by size, heating type, and price.",
+  intro: "Compare sauna brands, sizes, and prices. Find options that fit your home, then buy directly from the retailer.",
   images: [],
   subcategories: [],
   attributeDefinitions: [

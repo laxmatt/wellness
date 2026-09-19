@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { buttonStyles } from "@/components/ui/Button";
 import type { ReactNode } from "react";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { DemoArt } from "@/components/ui/DemoArt";
@@ -18,6 +19,7 @@ export function CategoryHero({ cat, title, description, count, visual }: { cat: 
         </p>
         <h1 className="font-display mt-3 text-4xl leading-[0.98] sm:text-5xl lg:text-6xl">{title}</h1>
         <p className="mt-4 max-w-xl text-base text-fg-soft sm:text-lg">{description}</p>
+        {cat.id === "saunas" ? <a href="#sauna-finder" className={buttonStyles("primary", "lg", "mt-6")}>Find my sauna ↓</a> : null}
       </div>
       <div className="lg:col-span-6">
         {visual ?? <div className="relative overflow-hidden rounded-card shadow-card">
@@ -49,6 +51,15 @@ export function MatcherInput({ cat }: { cat: CategoryDefinition }) {
 }
 
 export function RankingTransparency({ cat }: { cat: CategoryDefinition }) {
+  if (cat.scoring.criteria.length === 0) return (
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="rounded-card border border-edge bg-surface-raised p-6">
+        <h2 className="font-display text-2xl">How we compare {cat.name.toLowerCase()}</h2>
+        <p className="mt-2 max-w-3xl text-sm text-fg-soft">Compare specifications and prices reported by makers and retailers. We show missing details so you know what to confirm before buying. We do not score or rank these products.</p>
+        <Link href="/how-we-choose" className="mt-3 inline-flex text-sm font-semibold text-accent-strong hover:underline">About our comparisons</Link>
+      </div>
+    </section>
+  );
   const total = cat.scoring.criteria.reduce((s, c) => s + c.weight, 0);
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">

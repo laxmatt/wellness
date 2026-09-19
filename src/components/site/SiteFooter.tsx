@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div>
           <p className="font-display text-2xl">{SITE_NAME}</p>
           <p className="mt-2 max-w-sm text-sm text-fg-soft">
-            Product facts from makers and retailers, compared on the same terms. Rankings follow published rules, never who pays us.
+            Product facts from makers and retailers, compared on the same terms. Compare your options, then buy directly from the retailer.
           </p>
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-2 text-sm">
@@ -25,7 +25,7 @@ export function SiteFooter() {
         </nav>
         <div className="text-xs text-fg-muted">
           <p>
-            Prototype. Specifications are relayed from public sources and each one says who reported it. Where no price
+            Specifications are relayed from public sources and each one says who reported it. Where no price
             has been confirmed, the page says so instead of showing an amount. Retailer links state whether we may earn
             a commission or whether the relationship is unconfirmed.
           </p>

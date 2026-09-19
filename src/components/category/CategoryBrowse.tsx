@@ -83,7 +83,7 @@ export function CategoryBrowse({
           <WinnersRow products={products} cat={cat} set={set} />
         </div>
         <div className="mt-12 flex flex-col gap-10">
-          <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <section id={cat.id === "saunas" ? "sauna-finder" : undefined} tabIndex={-1} className="mx-auto w-full max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="eyebrow">All {cat.navLabel.toLowerCase()}</p>
@@ -101,12 +101,12 @@ export function CategoryBrowse({
                 ))}
               </FilterableGrid>
             </div>
-            <p className="mt-4 text-xs text-fg-muted">
+            {cat.scoring.criteria.length > 0 ? <p className="mt-4 text-xs text-fg-muted">
               Badges are decided across all {products.length} {cat.name.toLowerCase()} we track, not within your filters.{" "}
               <Link href={`/${cat.slug}`} className="font-semibold text-accent-strong hover:underline">
                 All {cat.navLabel.toLowerCase()}
               </Link>
-            </p>
+            </p> : null}
           </section>
           <RankingTransparency cat={cat} />
         </div>

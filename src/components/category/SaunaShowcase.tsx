@@ -20,7 +20,7 @@ export function SaunaShowcase({ items }: { items: Item[] }) {
                   {/* Catalog images retain their existing remote source URLs. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={image.src} alt={copy === 0 ? image.alt || name : ""} width={image.width ?? 600} height={image.height ?? 600} decoding="async" />
-                  <div className={styles.details}><strong>{brand}</strong><span>{name}</span><small>View at retailer ↗</small></div>
+                  <div className={styles.details}><strong>{brand}</strong><span>{name}</span><small>Check price at {retailer} ↗</small></div>
                 </a>
               ))}
             </div>

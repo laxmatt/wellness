@@ -22,24 +22,13 @@ export function FilterChips() {
   // page ignored. This flips on mount and says which is which.
   const ready = useSyncExternalStore(subscribeNothing, () => true, () => false);
   if (!f || f.groups.length === 0) return null;
-  return (
-    <div className="flex flex-col gap-3" data-filters-ready={ready ? "true" : "false"}>
-      {/* The rule the chips already follow, said out loud. Picking two chips in
-          one row widens the result and picking one in each row narrows it, and
-          nothing on the page said so: a shopper who picked "Under $300" and
-          watched five other chips grey out had no way to know why.
+  const primaryKeys = ["placement", "capacity_max_people", "price"];
+  const simplified = f.categoryId === "saunas";
+  const primary = simplified ? primaryKeys.flatMap((key) => f.groups.filter((g) => g.key === key)) : f.groups;
+  const more = simplified ? f.groups.filter((g) => !primaryKeys.includes(g.key)) : [];
+  const selectedMore = more.flatMap((g) => g.options).filter((o) => f.selected.includes(o.id));
+  const renderGroup = (g: (typeof f.groups)[number]) => (
 
-          The sentence about the number is written from what `countFor` does,
-          not from what a number beside a chip looks like it should mean. It
-          drops every selection in the chip's own row and counts that one option
-          against the other rows, so it is what the chip matches on its own, not
-          what pressing it would leave. Those differ the moment a second chip in
-          the same row is already on. */}
-      <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
-        Pick more than one in a row to widen the result. Pick across rows to narrow it. A chip&apos;s number counts that chip on its own against your other rows, so it ignores anything
-        else you have picked in its own row. A chip at zero is dimmed because nothing in your other rows matches it.
-      </p>
-      {f.groups.map((g) => (
         <div key={g.key} className="flex flex-wrap items-center gap-2">
           <span className="eyebrow w-full sm:w-28 sm:shrink-0">{g.label}</span>
           {g.options.map((o) => {
@@ -71,7 +60,18 @@ export function FilterChips() {
             );
           })}
         </div>
-      ))}
+      );
+  return (
+    <div className="flex flex-col gap-4" data-filters-ready={ready ? "true" : "false"}>
+      <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
+        {simplified ? "Choose where it will go, how many people, and your budget. You can select more than one option." : "Choose one or more options in each row to narrow your results."}
+      </p>
+      {primary.map(renderGroup)}
+      {more.length > 0 ? <details className="rounded-card border border-edge p-4">
+        <summary className="cursor-pointer py-2 font-semibold">More filters{selectedMore.length ? ` (${selectedMore.length} selected)` : ""}</summary>
+        {selectedMore.length > 0 ? <p className="mt-2 text-sm text-fg-soft">Selected: {selectedMore.map((o) => o.label).join(", ")}</p> : null}
+        <div className="mt-4 flex flex-col gap-4">{more.map(renderGroup)}</div>
+      </details> : null}
     </div>
   );
 }
@@ -118,7 +118,7 @@ export function FilterableGrid({ children, emptyHref, emptyLabel, sortLabel }: {
               "Ordered by your answers"
             ) : (
               <>
-                Ranked by {sortLabel}.{" "}
+                {sortLabel === "not ranked" ? "Compare by specifications and price." : <>Ranked by {sortLabel}.</>}{" "}
                 <Link href="/how-we-choose" className="font-semibold text-fg-soft underline-offset-2 hover:text-fg hover:underline">
                   How
                 </Link>
