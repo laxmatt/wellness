@@ -22,8 +22,10 @@ export function FilterChips() {
   // page ignored. This flips on mount and says which is which.
   const ready = useSyncExternalStore(subscribeNothing, () => true, () => false);
   if (!f || f.groups.length === 0) return null;
-  const primaryKeys = ["placement", "capacity_max_people", "price"];
-  const simplified = f.categoryId === "saunas";
+  const primaryKeys = f.categoryId === "cold-plunge"
+    ? ["chiller_included", "tub_type", "price"]
+    : ["placement", "capacity_max_people", "price"];
+  const simplified = f.categoryId === "saunas" || f.categoryId === "cold-plunge";
   const primary = simplified ? primaryKeys.flatMap((key) => f.groups.filter((g) => g.key === key)) : f.groups;
   const more = simplified ? f.groups.filter((g) => !primaryKeys.includes(g.key)) : [];
   const selectedMore = more.flatMap((g) => g.options).filter((o) => f.selected.includes(o.id));
@@ -64,7 +66,11 @@ export function FilterChips() {
   return (
     <div className="flex flex-col gap-4" data-filters-ready={ready ? "true" : "false"}>
       <p data-testid="filter-guidance" className="max-w-2xl text-sm leading-snug text-fg-soft">
-        {simplified ? "Choose where it will go, how many people, and your budget. You can select more than one option." : "Choose one or more options in each row to narrow your results."}
+        {f.categoryId === "saunas"
+          ? "Choose where it will go, how many people, and your budget. You can select more than one option."
+          : f.categoryId === "cold-plunge"
+            ? "Choose whether you want a chiller, the tub style, and your budget. You can select more than one option."
+            : "Choose one or more options in each row to narrow your results."}
       </p>
       {primary.map(renderGroup)}
       {more.length > 0 ? <details className="rounded-card border border-edge p-4">

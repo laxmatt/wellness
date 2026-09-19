@@ -54,15 +54,25 @@ export function CategoryBrowse({
     .map((o) => o.label)
     .join(" and ");
 
-  const heroSlugs = [
-    "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
-    "select-saunas-saunalife-model-g3-garden-series-outdoor-home-sauna-kit",
-    "select-saunas-almost-heaven-cascade-4-person-indoor-sauna",
-    "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
-    "select-saunas-saunalife-model-ergo-series-ee8g-sauna-barrel-6-person",
-    "select-saunas-maxxus-mx-m206-01-fs-ced-2-person-full-spectrum-near-zero-em",
-  ];
-  const showcase = cat.id === "saunas" ? heroSlugs.flatMap((slug) => {
+  const heroSlugs: Record<string, string[]> = {
+    saunas: [
+      "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+      "select-saunas-saunalife-model-g3-garden-series-outdoor-home-sauna-kit",
+      "select-saunas-almost-heaven-cascade-4-person-indoor-sauna",
+      "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+      "select-saunas-saunalife-model-ergo-series-ee8g-sauna-barrel-6-person",
+      "select-saunas-maxxus-mx-m206-01-fs-ced-2-person-full-spectrum-near-zero-em",
+    ],
+    "cold-plunge": [
+      "plunge-original",
+      "renu-therapy-cold-stoic-2-0",
+      "ice-barrel-500",
+      "frostonic-frostonic-icebarrel-go",
+      "frostonic-structured-modular-independent-plunge",
+      "the-cold-pod-88-gallon",
+    ],
+  };
+  const showcase = (heroSlugs[cat.id] ?? []).flatMap((slug) => {
     const product = products.find((item) => item.view.slug === slug);
     if (!product) return [];
     const { view } = product;
@@ -70,11 +80,11 @@ export function CategoryBrowse({
     const offer = buyableOffers(view)[0];
     if (!image || image.src.startsWith("demo:") || !offer) return [];
     return [{ productId: view.id, retailer: offer.merchant.name, image, name: view.name, brand: view.brand.name, url: offer.url, affiliateStatus: offer.affiliateStatus }];
-  }).slice(0, 6) : [];
+  }).slice(0, 6);
 
   return (
     <>
-      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} visual={showcase.length ? <SaunaShowcase items={showcase} /> : undefined} />
+      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} visual={showcase.length ? <SaunaShowcase items={showcase} label={`${cat.name} from multiple brands`} /> : undefined} />
       <CategoryFilterProvider groups={filterGroups} ids={ids} needs={buildNeeds(page)} categoryId={cat.id} initialSelected={initialSelected}>
         {CHATBOT_ENABLED ? <div className="mt-8 flex flex-col gap-10">
           <MatcherInput cat={cat} />
@@ -83,7 +93,7 @@ export function CategoryBrowse({
           <WinnersRow products={products} cat={cat} set={set} />
         </div>
         <div className="mt-12 flex flex-col gap-10">
-          <section id={cat.id === "saunas" ? "sauna-finder" : undefined} tabIndex={-1} className="mx-auto w-full max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
+          <section id={`${cat.slug}-finder`} tabIndex={-1} className="mx-auto w-full max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="eyebrow">All {cat.navLabel.toLowerCase()}</p>

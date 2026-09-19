@@ -30,14 +30,14 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
   // advertised "2 retailers" over a link to the single one a shopper can
   // actually be sent to. With none buyable it said "Shop" over an anchor that
   // goes nowhere a shopper can buy.
-  const directSaunaOffer = cat.id === "saunas" ? buyable[0] : undefined;
-  const cardHref = directSaunaOffer?.url ?? href;
-  const cardLinkProps = directSaunaOffer ? outboundLinkProps(directSaunaOffer.affiliateStatus, { productId: view.id, productName: view.name, retailer: directSaunaOffer.merchant.name }) : {};
-  const external = Boolean(directSaunaOffer) || buyable.length === 1;
+  const directRetailerOffer = ["saunas", "cold-plunge"].includes(cat.id) ? buyable[0] : undefined;
+  const cardHref = directRetailerOffer?.url ?? href;
+  const cardLinkProps = directRetailerOffer ? outboundLinkProps(directRetailerOffer.affiliateStatus, { productId: view.id, productName: view.name, retailer: directRetailerOffer.merchant.name }) : {};
+  const external = Boolean(directRetailerOffer) || buyable.length === 1;
   const shopHref = external ? buyable[0].url : buyable.length > 1 ? `${href}#retailers` : href;
   // Nothing to shop is not a shop button. The product page still says what is
   // known and why no retailer is listed, so the way in stays.
-  const shopLabel = directSaunaOffer ? `Check price at ${directSaunaOffer.merchant.name} ↗` : buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
+  const shopLabel = directRetailerOffer ? `Check price at ${directRetailerOffer.merchant.name} ↗` : buyable.length > 1 ? `${buyable.length} retailers` : buyable.length === 1 ? "Shop" : "Details";
   // Only where the card itself sends somebody out. The other two labels lead to
   // this site's own product page, which states the relationship per retailer,
   // and a disclosure over an internal link would be about links that are not
@@ -46,7 +46,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
 
   return (
     <article className="lift flex flex-col overflow-hidden rounded-card bg-surface-raised shadow-card hover:-translate-y-0.5 hover:shadow-float">
-      <a href={cardHref} {...cardLinkProps} className="relative block" aria-label={`${view.brand.name} ${view.name}${directSaunaOffer ? " — visit retailer (opens in a new tab)" : ""}`}>
+      <a href={cardHref} {...cardLinkProps} className="relative block" aria-label={`${view.brand.name} ${view.name}${directRetailerOffer ? " — visit retailer (opens in a new tab)" : ""}`}>
         <ImageFrame image={primaryImage(view.images)} ratio="4/5" priority={priority} />
         {primaryBadge ? (
           <div className="absolute left-3 top-3">
@@ -59,7 +59,7 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
           <div className="min-w-0">
             <p className="eyebrow">{view.brand.name}</p>
             <h3 className="font-display text-xl leading-tight">
-              <a href={cardHref} {...cardLinkProps} className="hover:underline" aria-label={directSaunaOffer ? `${view.name} — visit retailer (opens in a new tab)` : undefined}>
+              <a href={cardHref} {...cardLinkProps} className="hover:underline" aria-label={directRetailerOffer ? `${view.name} — visit retailer (opens in a new tab)` : undefined}>
                 {view.name}
               </a>
             </h3>
@@ -93,12 +93,12 @@ export function ProductCard({ item, cat, priority = false }: { item: Recommended
             behind a control: conflicts first, because a shopper scanning a grid
             is looking for the reason to stop. */}
         <NeedsFit productId={view.id} categoryId={view.categoryId} limit={3} />
-        <div className={directSaunaOffer ? "mt-auto flex flex-col-reverse gap-2 pt-1" : "mt-auto grid grid-cols-2 gap-2 pt-1"}>
+        <div className={directRetailerOffer ? "mt-auto flex flex-col-reverse gap-2 pt-1" : "mt-auto grid grid-cols-2 gap-2 pt-1"}>
           <CompareToggle item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
           <a
             href={shopHref}
             {...(external ? outboundLinkProps(buyable[0].affiliateStatus, { productId: view.id, productName: view.name, retailer: buyable[0].merchant.name }) : {})}
-            className={buttonStyles("primary", "md", directSaunaOffer ? "h-auto min-h-11 py-3 text-center" : undefined)}
+            className={buttonStyles("primary", "md", directRetailerOffer ? "h-auto min-h-11 py-3 text-center" : undefined)}
           >
             {shopLabel}
           </a>

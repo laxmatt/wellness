@@ -19,7 +19,7 @@ export function CategoryHero({ cat, title, description, count, visual }: { cat: 
         </p>
         <h1 className="font-display mt-3 text-4xl leading-[0.98] sm:text-5xl lg:text-6xl">{title}</h1>
         <p className="mt-4 max-w-xl text-base text-fg-soft sm:text-lg">{description}</p>
-        {cat.id === "saunas" ? <a href="#sauna-finder" className={buttonStyles("primary", "lg", "mt-6")}>Find my sauna ↓</a> : null}
+        {["saunas", "cold-plunge"].includes(cat.id) ? <a href={`#${cat.slug}-finder`} className={buttonStyles("primary", "lg", "mt-6")}>Find my {cat.navLabel.toLowerCase()} ↓</a> : null}
       </div>
       <div className="lg:col-span-6">
         {visual ?? <div className="relative overflow-hidden rounded-card shadow-card">

@@ -7,10 +7,10 @@ import styles from "./SaunaShowcase.module.css";
 
 type Item = { productId: string; retailer: string; image: ImageAsset; name: string; brand: string; url: string; affiliateStatus: AffiliateStatus };
 
-export function SaunaShowcase({ items }: { items: Item[] }) {
+export function SaunaShowcase({ items, label = "Products from multiple brands" }: { items: Item[]; label?: string }) {
   const [paused, setPaused] = useState(false);
   return (
-    <section aria-label="Saunas from multiple brands" className={styles.showcase}>
+    <section aria-label={label} className={styles.showcase}>
       <div className={styles.viewport}>
         <div className={styles.track} data-paused={paused}>
           {[0, 1].map((copy) => (

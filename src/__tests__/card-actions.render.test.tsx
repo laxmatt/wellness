@@ -85,7 +85,10 @@ describe("the action on a product card", () => {
         cleanup();
         draw(item, cat);
         const n = buyableOffers(item.view).length;
-        const expected = n > 1 ? `${n} retailers` : n === 1 ? "Shop" : "Details";
+        const directRetailerCategory = categoryId === "cold-plunge";
+        const expected = directRetailerCategory && n > 0
+          ? `Check price at ${buyableOffers(item.view)[0].merchant.name} ↗`
+          : n > 1 ? `${n} retailers` : n === 1 ? "Shop" : "Details";
         expect(screen.getByText(expected), `${item.view.id} should offer "${expected}"`).toBeTruthy();
       }
     }
