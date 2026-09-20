@@ -1,9 +1,10 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { MAX_COMPARE } from "@/lib/site";
 
 export type CompareItem = { id: string; slug: string; name: string; categoryId: string };
+export type CompareAuthority = { categoryId: string; publishedIds: string[] };
 
 type CompareState = {
   items: CompareItem[];
@@ -13,6 +14,7 @@ type CompareState = {
   clear: (categoryId?: string) => void;
   forCategory: (categoryId: string) => CompareItem[];
   ready: boolean;
+  reconcile: (authority: CompareAuthority) => void;
 };
 
 // Anonymous compare selection. Lives in localStorage only. Never leaves the
@@ -73,9 +75,25 @@ export function CompareProvider({ children }: { children: ReactNode }) {
 
   const remove = useCallback((id: string) => write(read().filter((i) => i.id !== id)), []);
   const clear = useCallback((categoryId?: string) => write(categoryId ? read().filter((i) => i.categoryId !== categoryId) : EMPTY), []);
+  const reconcile = useCallback(({ categoryId, publishedIds }: CompareAuthority) => {
+    const cur = read();
+    const known = new Set(publishedIds);
+    const next = cur.filter((item) => item.categoryId !== categoryId || known.has(item.id));
+    if (next.length !== cur.length) write(next);
+  }, []);
 
-  const value = useMemo(() => ({ items, has, toggle, remove, clear, forCategory, ready }), [items, has, toggle, remove, clear, forCategory, ready]);
+  const value = useMemo(() => ({ items, has, toggle, remove, clear, forCategory, ready, reconcile }), [items, has, toggle, remove, clear, forCategory, ready, reconcile]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
+// Only a complete, successfully loaded category list is authoritative. An
+// explicit empty list clears that category; absent authority changes nothing.
+export function CompareReconciler({ authority }: { authority?: CompareAuthority }) {
+  const { reconcile, ready } = useCompare();
+  useEffect(() => {
+    if (ready && authority) reconcile(authority);
+  }, [ready, authority, reconcile]);
+  return null;
 }
 
 export function useCompare(): CompareState {

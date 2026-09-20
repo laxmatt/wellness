@@ -1,0 +1,190 @@
+{
+  "id": "select-saunas-canadian-timber-minipod-dundalk-leisurecreaft-canadian-timbe",
+  "slug": "select-saunas-canadian-timber-minipod-dundalk-leisurecreaft-canadian-timbe",
+  "name": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna",
+  "brandId": "dundalk-leisurecraft",
+  "categoryId": "saunas",
+  "description": "Escape to Pure Relaxation with the Canadian Timber Minipod Discover the ultimate relaxation retreat with the Canadian Timber Minipod Sauna by Dundalk Leisurecraft. Handcrafted from premium Canadian Eastern White Cedar, this compact yet luxurious sauna offers a serene space for unwinding and rejuvenating. Key Features at a Glance Premium Eastern White Cedar Sustainably sourced and expertly selected for its resistance to decay, natural insulation properties, and beautiful tight knot grain, Eastern White Cedar provides a luxurious and durable sauna experience. Black Asphalt Shingle Roof The Minipod is built to last, with a protective black asphalt shingle roof that enhances durability in all weather conditions. Compact & Easy to Assemble Measuring 7×7 feet (184 cm), the Minipod's compact design makes it a perfect fit for small spaces. It arrives as a convenient, ready-to-assemble kit and can be set up in approximately 8 hours. Comfortable Side Wall Benches Designed for 4 people sitting up or 2 people lying down, the side benches offer both flexibility and comfort, allowing you to fully relax in the warmth. Videos Lead Times Dundalk Leisurecraft saunas are luxurious saunas handcrafted in Canada with sustainably sourced Canadian lumber. Due to this, these saunas are made to order, which means there isn't any inventory. Current lead time is 6-8 weeks to ship. Warranty The Canadian Timber Collection by Dundalk LeisureCraft Inc. saunas are warranted against defects in materials and workmanship under normal/residential use for a period of three (3) years, as applicable, from the date of receipt of the product. This warranty does not apply to normal wear and tear and/or natural weather conditions. This warranty does not cover regular required maintenance of the sauna, (eg. Tightening bands on the barrels, cleaning or staining the sauna) refer to your sauna assembly manual for maintenance guidelines. This warranty does not cover misuse or negligence and the manufacturer and associated retailers are not liable for any injury or damage caused by the product. This warranty is a parts-only warranty and any service or labor costs would not be considered part of the 3-year warranty. Resources Useful Links Canadian Timber Minipod Sauna Installation Manual Canadian Timber Minipod Sauna Diagram",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-canadian-timber-minipod-dundalk-leisurecreaft-canadian-timbe-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/Canadian-Timber-Mini-Pod-Sauna-Dundalk.jpg?v=1722656408",
+      "alt": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-canadian-timber-minipod-dundalk-leisurecreaft-canadian-timbe-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 595700,
+      "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "CTC77MW",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "CTC77MW"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-6 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-6 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna",
+        "matched": "2-6 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna | Outdoor Cabin Sauna Kits | Cabin Saunas, Dundalk Leisurecraft, no-discounts, Saunas, Traditional Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "pod",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"pod\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna | Outdoor Cabin Sauna Kits | Cabin Saunas, Dundalk Leisurecraft, no-discounts, Saunas, Traditional Saunas",
+        "matched": "pod",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dundalk Leisurecraft Minipod 2-6 Person Cabin Sauna | Outdoor Cabin Sauna Kits | Cabin Saunas, Dundalk Leisurecraft, no-discounts, Saunas, Traditional Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/canadian-timber-minipod-dundalk-leisurecreaft-canadian-timber-collection-2-4-person-capacity?variant=46951105495383&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

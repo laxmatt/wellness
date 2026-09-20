@@ -1,0 +1,259 @@
+{
+  "id": "hooga-pro4500",
+  "slug": "hooga-pro4500",
+  "name": "PRO4500",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "PRO4500 is a high-powered, truly full-body red and near-infrared light therapy device — Hooga's maximum-coverage panel, designed to deliver an entire body treatment in a single position. At more than 5 feet tall with 900 LEDs, it covers an adult head to toe at once, making it a versatile addition to your daily wellness routine. This panel features 900 dual-chip LEDs emitting 660nm red light and 850nm near-infrared light . The panel has many built in cooling fans, as well as a built in digital timer and a digital control module allowing you to choose from red, near infrared, or both wavelengths of light. It stands more than 5 feet tall, making it one of the largest panels of its kind. It's modular and stand compatible , meaning it can be connected to other devices in the PRO series and it can be attached to either of our mobile stands. Compare to other brands: Hooga vs Joovv — full panel comparison Hooga vs PlatinumLED — full panel comparison Hooga vs MitoRedLight — full panel comparison Hooga quality & certifications — what we can verify Download the Hooga PRO Series user manual (PDF) Backed by a 3-year warranty , the PRO4500 is built for full-body sessions with clinical-grade output. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "hooga-pro4500-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/PRO4500_Vertical_Stand_2025.png?v=1773851698",
+      "alt": "PRO4500 - Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro4500-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/PRO4500_ANGLED_LEFT_TURNED_ON_JUNE_2024.jpg?v=1773851698",
+      "alt": "PRO4500 - Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro4500-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/2026_Harness_HG_PRO_2.png?v=1769639975",
+      "alt": "PRO4500 - Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro4500-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RejuvenateYourSkin_HG_PRO_2_copy.jpg?v=1769639975",
+      "alt": "PRO4500 - Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-pro4500-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HGPRO_Enhance_Muscle_Recovery_copy.jpg?v=1775589588",
+      "alt": "PRO4500 - Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-pro4500-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 299900,
+      "url": "https://hoogahealth.com/products/hgpro4500?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "hooga_HG4500_PRO",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "hooga_HG4500_PRO"
+    }
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/hgpro4500",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery; return shipping deducted",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/hgpro4500",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "footprint": {
+      "value": "compact",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "wavelengths_nm": {
+      "value": [
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 900,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "floor_stand_optional"
+      ],
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/hgpro4500",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "PRO4500 - Full Body Red Light Therapy Panel",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/hgpro4500",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

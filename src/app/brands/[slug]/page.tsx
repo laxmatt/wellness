@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Breadcrumbs, Container, Shell } from "@/components/site/Shell";
 import { getBrandPage, getBrands } from "@/lib/queries";
+import { social } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,7 +15,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const data = await getBrandPage(slug);
   if (!data) return {};
-  return { title: data.brand.name, description: data.brand.description ?? `${data.brand.name} products compared.`, alternates: { canonical: `/brands/${slug}` } };
+  const description = data.brand.description ?? `${data.brand.name} products compared.`;
+  return {
+    title: data.brand.name,
+    description,
+    alternates: { canonical: `/brands/${slug}` },
+    ...social({ title: data.brand.name, description, path: `/brands/${slug}` }),
+  };
 }
 
 export default async function BrandPage({ params }: Props) {

@@ -1,0 +1,314 @@
+{
+  "id": "hooga-ultra750",
+  "slug": "hooga-ultra750",
+  "name": "ULTRA750",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "The ULTRA750 is Hooga's half-body quad-chip red light therapy panel — a high-output device sized for the torso, back, or full front from head to hip in a single session. It delivers four wavelengths from every LED — 630 nm, 660 nm, 810 nm, and 850 nm — through 150 × 5W quad-chip LEDs , producing an irradiance of 161 mW/cm² at 6 inches . At 750W with a 20.4\" × 8.6\" footprint, the ULTRA750 is a serious step up from tabletop panels without committing to the space and cost of a full-body setup. It includes a door mount, hanging kit with adjustable pulley , and connects to Hooga mobile stands (sold separately). Why Quad-Chip LEDs Matter Most red light panels use single- or dual-chip LEDs, meaning each LED emits one or two wavelengths. The ULTRA750's quad-chip LEDs pack four chips into every single LED — one for each of the 630, 660, 810, and 850 nm wavelengths. Every point on the panel emits the full spectrum, giving you a more even and consistent light output across the treatment area. Modular and Stand-Compatible The ULTRA750 can connect physically to other ULTRA panels ( ULTRA1500 ) on a Hooga mobile stand to build a wider treatment area — useful if you start with half-body and later want full-body coverage without replacing the device. It also syncs wirelessly with other ULTRA panels via the included remote control. Full Control at Your Fingertips The ULTRA750 features an interactive digital touchscreen with slider controls for precision adjustments. You get brightness control from 1% to 100% for red and near-infrared wavelengths independently, an adjustable timer from 1 to 30 minutes , and pulse frequency control from 1Hz to 9999Hz . Who the ULTRA750 Is For The ULTRA750 is a good fit if you want more coverage than a tabletop panel but don't need a full-body setup yet, or if you plan to expand into full body later by adding a second ULTRA panel. If you know you want full-body from day one, look at the ULTRA1500 instead. For a targeted tabletop panel, see the ULTRA360 . Download the Hooga ULTRA Series user manual (PDF) Backed by a 3-year warranty and easy 60-day returns, the ULTRA750 delivers Hooga's quad-chip technology in a modular, half-body panel. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "hooga-ultra750-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/750.jpg?v=1775589803",
+      "alt": "ULTRA750 Red Light Therapy",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra750-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA750_final.png?v=1789667610",
+      "alt": "ULTRA750 Red Light Therapy",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra750-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ChatGPT_Image_Sep_16_2026_02_15_14_PM_0d027853-b432-47db-857d-ae93dd77cf3d.png?v=1789667607",
+      "alt": "ULTRA750 Red Light Therapy",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra750-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA750_Dimensions.jpg?v=1775589818",
+      "alt": "ULTRA750 Red Light Therapy",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra750-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Image_3_-_Recharge_the_Human_Battery_ea01ec29-664b-4529-a0f2-284668a020ce.jpg?v=1775589823",
+      "alt": "ULTRA750 Red Light Therapy",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-ultra750-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 79900,
+      "url": "https://hoogahealth.com/products/ultra-750?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "ultra_750",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "ultra_750"
+    }
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra-750",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery; return shipping deducted",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra-750",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "half_body",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "footprint": {
+      "value": "standard",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        810,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 161,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_distance_in": {
+      "value": 6,
+      "unit": "in",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 150,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 5,
+      "unit": "W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "tabletop",
+        "door_hang",
+        "floor_stand_optional"
+      ],
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-750",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "ULTRA750 Red Light Therapy",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/ultra-750",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

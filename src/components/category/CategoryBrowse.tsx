@@ -1,0 +1,126 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
+import Link from "next/link";
+import { buyableOffers } from "@/domain/view";
+import { SaunaShowcase } from "./SaunaShowcase";
+import { primaryImage } from "@/components/ui/ImageFrame";
+import { CategoryHero, MatcherInput, RankingTransparency } from "@/components/category/sections";
+import { WinnersRow } from "@/components/category/WinnersRow";
+import { FilterChips, FilterableGrid } from "@/components/category/FilterBar";
+import { CategoryFilterProvider } from "@/components/category/FilterContext";
+import { StartingPoint } from "@/components/category/StartingPoint";
+import { ProductCard } from "@/components/product/ProductCard";
+import { buildFilterGroups } from "@/domain/filters";
+import { buildNeeds, type CategoryPage } from "@/lib/queries";
+
+/**
+ * One browse surface, for the category page and every facet URL under it.
+ *
+ * They were two pages. The facet one rendered a filtered subset of products and
+ * built its chips from that subset, so a shopper who arrived at
+ * /wellness-drinks/energy could narrow further and never widen: nothing on the
+ * page could reach a drink that was not an energy drink. The facet was in the
+ * route, and a route is not a control.
+ *
+ * Now a facet is a chip, already pressed. Same products, same groups, same
+ * state, same counts. The URL decides what starts selected and nothing else,
+ * so removing it is an ordinary tap and "Clear filters" clears it like any
+ * other.
+ */
+export function CategoryBrowse({
+  page,
+  // What a facet URL opened with, if this is one. It earns a single line of
+  // orientation, shown only while those chips are still on, and nothing else.
+  // The heading, the hero and the count belong to the category on every page
+  // that renders this, because that is what they are counting: a hero reading
+  // "Sugar-Free Wellness Drinks" above "all 6 we track" describes neither the
+  // page nor the results, and once the shopper widens it describes nothing.
+  initialSelected = [],
+}: {
+  page: CategoryPage;
+  initialSelected?: string[];
+}) {
+  const { cat, products, set } = page;
+  // `initialSelected` is kept, so a starting point that matches nothing still
+  // appears as the chip holding the result empty. Without it the shopper lands
+  // on an empty grid with no control to undo.
+  const filterGroups = buildFilterGroups(products.map((p) => p.view), cat, initialSelected);
+  const ids = products.map((p) => p.view.id);
+  // Named by the chip, not by the facet. /wellness-drinks/sugar-free presses a
+  // chip reading "Zero sugar", and a line saying "Sugar-free is selected" sends
+  // the shopper looking for a control with that name.
+  const startingLabel = filterGroups
+    .flatMap((g) => g.options)
+    .filter((o) => initialSelected.includes(o.id))
+    .map((o) => o.label)
+    .join(" and ");
+
+  const heroSlugs: Record<string, string[]> = {
+    saunas: [
+      "topture-kohler-c1-indoor-sauna-kit-scandinavian-spruce",
+      "select-saunas-saunalife-model-g3-garden-series-outdoor-home-sauna-kit",
+      "select-saunas-almost-heaven-cascade-4-person-indoor-sauna",
+      "topture-true-north-5-person-outdoor-quattro-cedar-cabin-sauna",
+      "select-saunas-saunalife-model-ergo-series-ee8g-sauna-barrel-6-person",
+      "select-saunas-maxxus-mx-m206-01-fs-ced-2-person-full-spectrum-near-zero-em",
+    ],
+    "cold-plunge": [
+      "plunge-original",
+      "renu-therapy-cold-stoic-2-0",
+      "ice-barrel-500",
+      "frostonic-frostonic-icebarrel-go",
+      "frostonic-structured-modular-independent-plunge",
+      "the-cold-pod-88-gallon",
+    ],
+  };
+  const showcase = (heroSlugs[cat.id] ?? []).flatMap((slug) => {
+    const product = products.find((item) => item.view.slug === slug);
+    if (!product) return [];
+    const { view } = product;
+    const image = primaryImage(view.images);
+    const offer = buyableOffers(view)[0];
+    if (!image || image.src.startsWith("demo:") || !offer) return [];
+    return [{ productId: view.id, retailer: offer.merchant.name, image, name: view.name, brand: view.brand.name, url: offer.url, affiliateStatus: offer.affiliateStatus }];
+  }).slice(0, 6);
+
+  return (
+    <>
+      <CategoryHero cat={cat} title={cat.tagline} description={cat.intro} count={products.length} visual={showcase.length ? <SaunaShowcase items={showcase} label={`${cat.name} from multiple brands`} /> : undefined} />
+      <CategoryFilterProvider groups={filterGroups} ids={ids} needs={buildNeeds(page)} categoryId={cat.id} initialSelected={initialSelected}>
+        {CHATBOT_ENABLED ? <div className="mt-8 flex flex-col gap-10">
+          <MatcherInput cat={cat} />
+        </div> : null}
+        {!["saunas", "cold-plunge"].includes(cat.id) ? <div className="mt-10">
+          <WinnersRow products={products} cat={cat} set={set} />
+        </div> : null}
+        <div className="mt-12 flex flex-col gap-10">
+          <section id={`${cat.slug}-finder`} tabIndex={-1} className="mx-auto w-full max-w-7xl scroll-mt-24 px-4 sm:px-6 lg:px-8">
+            <div className="flex items-end justify-between gap-4">
+              <div>
+                <p className="eyebrow">All {cat.navLabel.toLowerCase()}</p>
+                <h2 className="font-display mt-1 text-3xl">Pick what matters to you.</h2>
+              </div>
+            </div>
+            {startingLabel ? <StartingPoint ids={initialSelected} label={startingLabel} /> : null}
+            <div className="mt-6">
+              <FilterChips />
+            </div>
+            <div className="mt-6">
+              <FilterableGrid sortLabel={cat.scoring.label.toLowerCase()}>
+                {products.map((item, i) => (
+                  <ProductCard key={item.view.id} item={item} cat={cat} priority={i < 4} />
+                ))}
+              </FilterableGrid>
+            </div>
+            {cat.scoring.criteria.length > 0 ? <p className="mt-4 text-xs text-fg-muted">
+              Badges are decided across all {products.length} {cat.name.toLowerCase()} we track, not within your filters.{" "}
+              <Link href={`/${cat.slug}`} className="font-semibold text-accent-strong hover:underline">
+                All {cat.navLabel.toLowerCase()}
+              </Link>
+            </p> : null}
+          </section>
+          <RankingTransparency cat={cat} />
+        </div>
+      </CategoryFilterProvider>
+    </>
+  );
+}

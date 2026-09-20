@@ -1,0 +1,187 @@
+{
+  "id": "sunlighten-signature-4-obsidian",
+  "slug": "sunlighten-signature-4-obsidian",
+  "name": "Signature IV - Eucalyptus - Obsidian",
+  "brandId": "sunlighten",
+  "categoryId": "saunas",
+  "description": "Room for four. Quiet for all of it. Obsidian outside. Natural eucalyptus inside. Signature IV Obsidian is the largest Signature we make, finished in premium black outside and natural sustainably sourced eucalyptus inside, the same wood as our Eucalyptus models. Patented SoloCarbon® far infrared heaters deliver gentle, even heat with the push of a button, so a sauna habit stays easy to keep for everyone in the house. An adjustable bench reclines, so you can sit upright with company or lie back and let the session come to you. Space for four means it becomes a shared ritual instead of a solo one, and there is still plenty of bench when you want it to yourself. Chromotherapy lighting and a premium Bluetooth sound system round out the session. Supports detoxification through deep sweating, circulation, immune health, and relaxation.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sunlighten-signature-4-obsidian-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIVObsidianCOBRight.jpg?v=1785784089",
+      "alt": "Signature IV - Eucalyptus - Obsidian",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-4-obsidian-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIVObsidianCOBFront.jpg?v=1785784089",
+      "alt": "Signature IV - Eucalyptus - Obsidian",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-4-obsidian-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIVObsidianCOBLeft.jpg?v=1785784089",
+      "alt": "Signature IV - Eucalyptus - Obsidian",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-4-obsidian-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIVObsidianLifestyle.jpg?v=1785784113",
+      "alt": "Signature IV - Eucalyptus - Obsidian",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sunlighten-signature-4-obsidian-offer",
+      "merchantId": "sunlighten-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 779900,
+      "url": "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899&ued=https%3A%2F%2Fshop-us.sunlighten.com%2Fproducts%2Fsignature-4-obsidian",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-63394-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "Signature IV - Eucalyptus - Black Edition",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sunlighten-store": "Signature IV - Eucalyptus - Black Edition"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "4-person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Signature IV - Eucalyptus - Obsidian",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sunlighten-shopify, official public Shopify snapshot",
+    "url": "https://shop-us.sunlighten.com/products/signature-4-obsidian",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

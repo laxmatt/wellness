@@ -1,0 +1,151 @@
+{
+  "id": "frostonic-integrated-all-in-one-cold-plunge-tub",
+  "slug": "frostonic-integrated-all-in-one-cold-plunge-tub",
+  "name": "All-In-One",
+  "brandId": "frostonic",
+  "categoryId": "cold-plunge",
+  "description": "The All-In-One is the ultimate intergrated Cold Plunge Tub, seamlessly integrating a powerful 1 HP smart chiller within its sleek shell. Enjoy precise, effortless temperature control and a minimalist design. Ideal for stepping or jumping in.",
+  "status": "published",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "frostonic-integrated-all-in-one-cold-plunge-tub-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Premium_Ice_Bath_Tub_with_Built_in_Chiller.jpg?v=1758013984",
+      "alt": "All-In-One",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-all-in-one-cold-plunge-tub-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Premium_Ice_Bath_Tub_with_Built_in_Chiller_other_side.jpg?v=1758014085",
+      "alt": "All-In-One",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-all-in-one-cold-plunge-tub-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Premium_Ice_Bath_Tub_with_Built_in_Chiller_with_water.jpg?v=1758014523",
+      "alt": "All-In-One",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-integrated-all-in-one-cold-plunge-tub-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/Premium_Ice_Bath_Tub_with_Built_in_Chiller_with_water_other_side.jpg?v=1758014768",
+      "alt": "All-In-One",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "frostonic-integrated-all-in-one-cold-plunge-tub-offer",
+      "merchantId": "frostonic-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1269000,
+      "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub?ref=MATT",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATT"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "merchantSku": "GD-002",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "frostonic-store": "GD-002"
+    }
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "tub",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "All-In-One",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "frostonic-shopify, official public Shopify snapshot",
+    "url": "https://frostonic.com/products/integrated-all-in-one-cold-plunge-tub",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

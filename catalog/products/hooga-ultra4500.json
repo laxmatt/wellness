@@ -1,0 +1,298 @@
+{
+  "id": "hooga-ultra4500",
+  "slug": "hooga-ultra4500",
+  "name": "ULTRA4500",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "The ULTRA4500 is Hooga's largest quad-chip red light therapy panel — a floor-standing device with 900 × 5W quad-chip LEDs delivering four wavelengths in every session: 630 nm, 660 nm, 810 nm, and 850 nm . Every LED emits all four wavelengths, producing an irradiance of 165 mW/cm² at 6 inches across an 82\" × 37\" treatment area. At 5+ feet tall, the ULTRA4500 is Hooga's maximum-coverage full-body panel — built to treat an entire adult from head to toe in a single position, with the most advanced feature set Hooga offers. Why Quad-Chip LEDs Matter Most red light panels use single- or dual-chip LEDs, meaning each LED emits one or two wavelengths. The ULTRA4500's quad-chip LEDs pack four chips into every single LED — two red (630 and 660 nm) and two near-infrared (810 and 850 nm). Every point on the panel emits the full spectrum, giving you consistent output across the entire treatment area. Full Control at Your Fingertips The ULTRA4500 features an interactive digital touchscreen with slider controls for precision adjustments. You get brightness control from 1% to 100% for red and near-infrared wavelengths independently, an adjustable timer from 1 to 30 minutes , and pulse frequency control from 1Hz to 9999Hz . Multiple ULTRA panels can be linked and controlled together via the included wireless remote. Who the ULTRA4500 Is For The ULTRA4500 is Hooga's most feature-complete panel — a good fit for wellness enthusiasts, athletes, and anyone building a serious home red light setup. For a smaller quad-chip option in the same line, see the ULTRA1500 , ULTRA750 , or ULTRA360 . Compare to other brands: Hooga vs Joovv — full panel comparison Hooga vs PlatinumLED — full panel comparison Hooga vs MitoRedLight — full panel comparison Download the Hooga ULTRA Series user manual (PDF) Backed by a 3-year warranty and easy 60-day returns, the ULTRA4500 is Hooga's largest quad-chip panel with the most advanced feature set. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "hooga-ultra4500-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA4500_On_Vertical_Stand_2025.jpg?v=1775589582",
+      "alt": "ULTRA4500 Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra4500-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA4500_final.png?v=1789667719",
+      "alt": "ULTRA4500 Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra4500-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ChatGPT_Image_Sep_16_2026_02_15_14_PM_196fcb0c-b88c-4e68-b70e-8425bd1cfbb8.png?v=1789667647",
+      "alt": "ULTRA4500 Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra4500-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA4500.jpg?v=1788377912",
+      "alt": "ULTRA4500 Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra4500-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Image_3_-_Recharge_the_Human_Battery.jpg?v=1775589604",
+      "alt": "ULTRA4500 Full Body Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-ultra4500-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 399900,
+      "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "ULTRA4500_panel",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "ULTRA4500_panel"
+    }
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery; return shipping deducted",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "full_body",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "footprint": {
+      "value": "large",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        810,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 165,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_distance_in": {
+      "value": 6,
+      "unit": "in",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 900,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 5,
+      "unit": "W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "ULTRA4500 Full Body Red Light Therapy Panel",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/ultra4500-red-light-therapy",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

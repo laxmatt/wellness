@@ -1,0 +1,313 @@
+{
+  "id": "hooga-ultra360",
+  "slug": "hooga-ultra360",
+  "name": "ULTRA360",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "panel",
+  "description": "The ULTRA360 is Hooga's premium targeted red light therapy panel — built around 72 quad-chip LEDs that deliver four wavelengths from a single device: 630nm, 660nm, 810nm, and 850nm . With an irradiance of over 132 mW/cm² at 6 inches, the ULTRA360 packs more power and wavelength coverage than any other panel in its size class. At 360W with a compact tabletop footprint, the ULTRA360 red light panel is designed for focused, targeted sessions — face, neck, shoulders, joints, or anywhere you want concentrated light output. The built-in adjustable stand and carrying handle make it easy to set up and move between rooms. What Makes Quad-Chip LEDs Different Most red light therapy panels use single-chip or dual-chip LEDs, which means each LED emits one or two wavelengths. The ULTRA360's quad-chip LEDs pack four chips into every single LED — one for each wavelength (630nm, 660nm, 810nm, 850nm). This delivers a more complete and evenly blended light output across the entire panel surface. You get full-spectrum red and near-infrared coverage from every point on the panel, not alternating wavelengths in a checkerboard pattern. Full Control at Your Fingertips The ULTRA360 features an interactive digital touchscreen with slider controls for precision adjustments. You get brightness control from 1% to 100% for red and near-infrared wavelengths independently, an adjustable timer from 1 to 30 minutes , and pulse frequency control from 1Hz to 9999Hz . No other panel at this price point offers this level of customization. Who the ULTRA360 Is For The ULTRA360 red light therapy panel is built for people who want the most advanced targeted panel available. The four-wavelength quad-chip design and full brightness and pulse control make it a popular choice for wellness enthusiasts, biohackers, and anyone who wants precise control over their red light therapy sessions. If you've used a basic panel before and want to step up, this is it. Connects with the ULTRA Series The ULTRA360 can communicate with other panels in the ULTRA series via the included remote control, allowing you to sync settings across multiple panels. It can also be used completely on its own as a standalone tabletop panel. Note: The ULTRA360 is designed primarily for tabletop use with its built-in stand. It does not attach to mobile stands or other ULTRA panels physically, but it does sync with them wirelessly via remote. Download the Hooga ULTRA Series user manual (PDF) The Benefits of Pulsed Light The ULTRA360 lets you switch from continuous output to pulsed delivery — a mode preferred by many advanced users for the reasons below. Deeper tissue penetration. Delivering light in rapid pulses helps photons reach beyond the skin's surface and into deeper layers, making pulsed mode especially useful for supporting muscles, joints, and connective tissue recovery. Targeted cellular response. Pulsing at specific frequencies can synchronize with the body's own cellular rhythms, encouraging biological responses like tissue repair and reduced inflammation more precisely than continuous light. Cooler, more comfortable sessions. Because the light cycles on and off, tissues have a moment to dissipate heat between pulses. That keeps longer sessions comfortable and reduces the risk of overheating sensitive areas. Sustained effectiveness. Continuous exposure can cause cellular receptors to adapt and become less responsive over time. Pulsed light helps prevent that adaptation, so your body keeps responding to each session. Backed by a 3-year warranty , the ULTRA360 gives you four wavelengths and advanced controls in a compact tabletop panel. Not sure which panel is right? Give a Hooga gift card. Let them pick the size, wavelength, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "hooga-ultra360-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/360_2.jpg?v=1775589774",
+      "alt": "ULTRA360 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra360-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ULTRA_360_final.png?v=1789667562",
+      "alt": "ULTRA360 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra360-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/ChatGPT_Image_Sep_16_2026_02_15_14_PM.png?v=1789588825",
+      "alt": "ULTRA360 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra360-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/HGPRO_Enhance_Muscle_Recovery_copy_b22cb256-fcbe-4392-b4b3-6cd4a4813058.jpg?v=1775591359",
+      "alt": "ULTRA360 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-ultra360-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/RejuvenateYourSkin_HG_PRO_2_copy_a80e228b-6508-4236-97d1-c77407eb1404.jpg?v=1775591359",
+      "alt": "ULTRA360 Red Light Therapy Panel",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-ultra360-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 39900,
+      "url": "https://hoogahealth.com/products/ultra-360?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "ultra_360",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "ultra_360"
+    }
+  },
+  "warranty": {
+    "value": "3-year warranty",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra-360",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery; return shipping deducted",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/ultra-360",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "targeted",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "footprint": {
+      "value": "compact",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 3,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        810,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_mw_cm2": {
+      "value": 132,
+      "unit": "mW/cm²",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "irradiance_distance_in": {
+      "value": 6,
+      "unit": "in",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "led_count": {
+      "value": 72,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 360,
+      "unit": "W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "tabletop",
+        "floor_stand_optional"
+      ],
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/ultra-360",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "ULTRA360 Red Light Therapy Panel",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/ultra-360",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

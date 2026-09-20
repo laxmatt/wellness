@@ -1,0 +1,340 @@
+{
+  "id": "select-saunas-golden-designs-kuusamo",
+  "slug": "select-saunas-golden-designs-kuusamo",
+  "name": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna",
+  "brandId": "golden-designs",
+  "categoryId": "saunas",
+  "description": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-golden-designs-kuusamo-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/GoldenDesignsKuusamoEdition6PersonTraditionalSauna_GDI-7206-01_-CanadianRedCedarInterior.jpg?v=1721624719",
+      "alt": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-golden-designs-kuusamo-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 849900,
+      "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "GDI-7206-01",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    },
+    {
+      "id": "caldera-gdi-7206-01-offer",
+      "merchantId": "caldera-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 944900,
+      "url": "https://www.calderasauna.com/products/gdi-7206-01",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "MO926"
+      },
+      "discountCodes": [
+        {
+          "code": "MO926",
+          "description": "Use Caldera's issued code at checkout to reveal the affiliate discount.",
+          "source": {
+            "kind": "merchant_feed",
+            "ref": "Caldera Sauna, official public Shopify snapshot",
+            "url": "https://www.calderasauna.com/products/gdi-7206-01",
+            "retrievedAt": "2026-09-19",
+            "method": "direct",
+            "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+          }
+        }
+      ],
+      "availability": "in_stock",
+      "merchantSku": "GDI-7206-01",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Caldera Sauna, official public Shopify snapshot",
+        "url": "https://www.calderasauna.com/products/gdi-7206-01",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "GDI-7206-01",
+      "caldera-store": "GDI-7206-01"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "6-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"6-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna",
+        "matched": "6-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 6,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"6\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna",
+        "matched": "6",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna | Indoor Traditional Sauna Kits | 6-Person, Saunas, Traditional Saunas",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Traditional\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna | Indoor Traditional Sauna Kits | 6-Person, Saunas, Traditional Saunas",
+        "matched": "Traditional",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 77,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 77\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*|Exterior dimensions \\(LWH\\):\\s*\\d+(?:\\.\\d+)?[\\\"”″]\\s*x\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 77\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 67,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 77\\\" x 67\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*W?\\s*x\\s*|Exterior dimensions \\(LWH\\):\\s*)(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 77\" x 67\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 82,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Assembled Dimensions (W x D x H): 77\\\" x 67\\\" x 82\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:Assembled|Exterior) Dimensions[^:()]{0,20}(?:\\((?:WDH|LWH|W\\s*x\\s*D\\s*x\\s*H)\\))?\\s*:?\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[WL]?\\s*x\\s*\\d+(?:\\.\\d+)?[\\\"”″]?\\s*[DW]?\\s*x\\s*(?<![-/\\d])(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Assembled Dimensions (W x D x H): 77\" x 67\" x 82\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "240v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 240V / 40AMP\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Electrical service: 240V / 40AMP",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "heater_model": {
+      "value": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Harvia SWS80 The Wall 8 kW Traditional Sauna Stove\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Harvia\\s+(?:(?!Features|Specifications|Digital|for\\b)[^.;:\\s]+\\s+){0,8}(?:Stove|Heater)|stove with built-in controls)",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Golden Designs Kuusamo 6-Person Indoor Traditional Sauna Indulge in the ultimate relaxation and wellness experience with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Meticulously crafted to perfection, this sauna is a haven of tranquility where you can escape the cares of the world and immerse yourself in the healing power of steam therapy. Luxurious Design: The all-glass front and right side walls create an elegant and inviting ambiance, allowing natural light to flood the interior. Step into a world of luxury with the rich Canadian Red Cedar interior, exuding a delightful and aromatic scent. The all-Canadian Hemlock exterior, finished with a clear stain, adds a touch of sophistication to your space, making this sauna a true statement piece. Therapeutic Steam Experience: Embrace the therapeutic benefits of steam therapy for your body and soul. As the gentle mist envelops your senses, feel the stresses and tensions melt away, leaving you feeling refreshed and rejuvenated. Steam therapy offers a plethora of health benefits, from alleviating muscle soreness to promoting better blood circulation and detoxification. Spacious Retreat: The Golden Designs Kuusamo Edition sauna comfortably accommodates up to 6 persons, making it the perfect space to share relaxation with family and friends. Enjoy quality time together in a serene environment, where laughter and well-being merge effortlessly. Craftsmanship at its Finest: Impeccably designed and expertly crafted, this indoor sauna reflects the highest standards of quality and luxury. The tempered glass door and large viewing window provide a spacious and open feel, inviting you to immerse yourself in the serene ambiance. Interior LED lighting sets the mood for an unforgettable sauna experience. Transform Your Home: Transform your home into a personal oasis of relaxation and wellness with the Golden Designs Kuusamo Edition 6-Person Indoor Traditional Steam Sauna. Elevate your lifestyle and embrace the art of relaxation with this beautifully designed and expertly crafted indoor sauna. Features 6-person capacity 100% Natural Canadian Red Cedar Wood Interior / Canadian Hemlock Wood Exterior Oversize interior chromotherapy lighting system (Red Light Therapy Feature Starting in 2024 Models) Interior backrest with accent lighting Interior LED Control Panel with built-in FM Radio and Bluetooth Connection Built-in Performance Speakers Sandglass, bucket, and scoop Stainless steel hinge and handle Harvia SWS80 The Wall 8 kW Traditional Sauna Stove with built-in Controls Specifications Electrical service: 240V / 40AMP (Stove) and 120V / 15AMP (Control for Lights and Music). Please consult a certified electrician. Assembled Dimensions (W x D x H): 77\" x 67\" x 82\" Assembled Weight: 775 lbs Shipping Weight: 985 lbs All Golden Designs Saunas Include a 5-Year Limited Warranty. View more details here. What are you waiting for? Order your sauna today and experience the Golden Designs difference. Videos",
+        "matched": "Harvia SWS80 The Wall 8 kW Traditional Sauna Stove",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/golden-designs-kuusamo?variant=46972805579095&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

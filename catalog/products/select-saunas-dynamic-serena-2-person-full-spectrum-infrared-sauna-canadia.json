@@ -1,0 +1,291 @@
+{
+  "id": "select-saunas-dynamic-serena-2-person-full-spectrum-infrared-sauna-canadia",
+  "slug": "select-saunas-dynamic-serena-2-person-full-spectrum-infrared-sauna-canadia",
+  "name": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-dynamic-serena-2-person-full-spectrum-infrared-sauna-canadia-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/DYN-6229-03_2.jpg?v=1756656334",
+      "alt": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-dynamic-serena-2-person-full-spectrum-infrared-sauna-canadia-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 329900,
+      "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6229-03 FS",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "DYN-6229-03 FS"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna",
+        "matched": "2-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Serena 2-Person Full-Spectrum Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 46,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 40,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 40″ x 46″ x 75″\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+        "matched": "Exterior dimensions (LWH): 40″ x 46″ x 75″",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Serena 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) FAR Infrared Sauna (Canadian Hemlock) Looking for a natural way to relax and recharge without leaving home? Dynamic Saunas are crafted from sustainable Canadian Hemlock wood, offering both durability and a clean, modern look. Equipped with energy-efficient Low EMF FAR infrared heating panels, they provide soothing warmth that helps reduce stress, ease muscle tension, and promote overall wellness. This sauna also features are newest Full Spectrum heating technology, MP3 Aux - Bluetooth capability, and Chromotherapy Lighting. Designed with versatility in mind, Dynamic Saunas can be installed in almost any indoor space from basements and master baths to walk-in closets or fitness rooms. Their compact design makes them easy to place, while their long-term health benefits make them an ideal addition to any lifestyle. With a Dynamic Sauna, you’re not just upgrading your home, you’re creating a personal sanctuary for daily renewal. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels 2-person capacity 7 Total Heaters, 5 PureTech™ Near Zero EMF (EMF under 3 MG - 2 to 3 inches from the heating panels) FAR Infrared Carbon heating panels, 2 Near IR Elements Natural Reforested Canadian Hemlock wood construction Clear Tempered glass door Interior Chromotherapy Color Lighting System + Red Light Therapy Feature Interior LED Control Panels Bluetooth and MP3 auxiliary connection with built in speakers 118F-132F is the deal temperature range, sauna can heat up to 140F Clasp together assembly Roof vent Ships in 2 boxes Note: Indoor use only Specifications: Sauna weight: 285 lbs. Shipping weight: 370 lbs. Electrical service: 120V/15amp Non GFCI plug & play (Recommended Dedicated Outlet) Exterior dimensions (LWH): 40″ x 46″ x 75″ Interior dimensions (LWH): 36″ x 42″ x 68″",
+        "matched": "Electrical service: 120V/15amp",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "max_temperature_f": {
+      "value": 140,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “sauna can heat up to 140F”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/dynamic-serena-2-person-full-spectrum-infrared-sauna-canadian-hemlock-2026-model?variant=51596006097239&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

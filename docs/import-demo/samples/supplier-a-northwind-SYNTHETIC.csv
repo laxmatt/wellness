@@ -1,0 +1,7 @@
+﻿sku,product_name,brand,category,function,sugar_g,caffeine_mg,unit_price_usd,servings_per_pack,source_url
+NW-1001,"Citrus Salt Sticks, 30 pack",Northwind Hydration,wellness-drinks,electrolytes,0,0,45.00,30,https://example.invalid/northwind/citrus-salt
+NW-1002,"Berry Sparkling Energy, 12 cans",Northwind Hydration,wellness-drinks,energy,0,200,16.12,12,https://example.invalid/northwind/berry-sparkling
+NW-1003,"Daily Greens Scoop, 30 servings
+(new formula)",Northwind Hydration,wellness-drinks,greens,1,,99.00,30,https://example.invalid/northwind/daily-greens
+NW-1004,"Lemon Hydration Sticks, 16 pack",Northwind Hydration,wellness-drinks,"electrolytes|hydration",11,,24.99,16,https://example.invalid/northwind/lemon-hydration
+NW-1005,"Root Beer Prebiotic, 12 cans",Northwind Hydration,wellness-drinks,prebiotic,3,,35.99,12,https://example.invalid/northwind/root-beer

@@ -1,0 +1,10 @@
+{
+  "id": "saunacloud-store",
+  "slug": "saunacloud-store",
+  "name": "SaunaCloud",
+  "websiteUrl": "https://saunacloud.com",
+  "network": "direct",
+  "markets": [
+    "US"
+  ]
+}

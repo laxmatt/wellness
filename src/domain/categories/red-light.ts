@@ -13,6 +13,7 @@ export const redLight = CategoryDefinition.parse({
   ],
   subcategories: [
     { id: "panel", label: "Panels" },
+    { id: "mask", label: "Face masks" },
     { id: "handheld", label: "Handheld" },
   ],
   attributeDefinitions: [
@@ -213,6 +214,19 @@ export const redLight = CategoryDefinition.parse({
     { slug: "targeted", label: "Targeted", title: "Targeted Red Light Panels", description: "Compact panels for face, joints and desk use.", conditions: [{ key: "coverage", op: "eq", value: "targeted" }] },
     { slug: "under-500", label: "Under $500", title: "Red Light Panels Under $500", description: "Every panel we track priced under $500.", conditions: [{ key: "price", op: "lt", value: 50000 }] },
     { slug: "under-1000", label: "Under $1,000", title: "Red Light Panels Under $1,000", description: "Mid-range panels priced under $1,000.", conditions: [{ key: "price", op: "lt", value: 100000 }] },
+  ],
+  aliases: [
+    "red light",
+    "red lights",
+    "red light panel",
+    "red light panels",
+    "red light therapy",
+    "light therapy",
+    "light panel",
+    "light panels",
+    "infrared panel",
+    "near infrared panel",
+    "photobiomodulation",
   ],
   matcherVocabulary: {
     coverage: {

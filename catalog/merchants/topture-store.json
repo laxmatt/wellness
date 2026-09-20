@@ -1,0 +1,10 @@
+{
+  "id": "topture-store",
+  "slug": "topture-store",
+  "name": "Topture",
+  "websiteUrl": "https://topture.com",
+  "network": "goaffpro",
+  "markets": [
+    "US"
+  ]
+}

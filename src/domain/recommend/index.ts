@@ -1,5 +1,5 @@
 import type { CategoryDefinition } from "../category";
-import type { ProductView } from "../view";
+import { buyableOffers, type ProductView } from "../view";
 import { assignBadges, type Badge, type RecommendationSet } from "./badges";
 import { deriveInsights, type Insight } from "./insights";
 import { toScoringInput, type ScoreResult } from "./score";
@@ -21,7 +21,10 @@ export type RecommendedProduct = {
 
 export function recommendCategory(views: ProductView[], cat: CategoryDefinition): { set: RecommendationSet; products: RecommendedProduct[] } {
   const published = views.filter((v) => v.status === "published");
-  const set = assignBadges(published.map(toScoringInput), cat);
+  // Which products a badge may point at. Computed here, from the views, so
+  // ScoringInput stays free of offer data and ranking stays unable to see it.
+  const sellable = new Set(published.filter((v) => buyableOffers(v).length > 0).map((v) => v.id));
+  const set = assignBadges(published.map(toScoringInput), cat, sellable);
   const order = new Map(set.ranking.map((id, i) => [id, i]));
   const products = published
     .map((view) => ({

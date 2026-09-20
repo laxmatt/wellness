@@ -1,0 +1,278 @@
+{
+  "id": "frostonic-comfort-modular-independent-plunge-tub",
+  "slug": "frostonic-comfort-modular-independent-plunge-tub",
+  "name": "Plunge Curve",
+  "brandId": "frostonic",
+  "categoryId": "cold-plunge",
+  "description": "The Plunge Curve is engineered as a split-system , giving you the freedom to customize your setup and prioritize optimal comfort. The ergonomic design of this separate ice bath tub ensures full-body immersion and superior relaxation, while the detached chilling unit provides installation flexibility. Note: The Plunge Curve requires a dedicated Frostonic PowerChiller for operation.",
+  "status": "published",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/streamlined-white-acrylic-freestanding-bathtub-with-chiller.jpg?v=1757920110",
+      "alt": "Plunge Curve",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/streamlined-white-acrylic-bathtub-front-top-down-view-with-valves.jpg?v=1757930194",
+      "alt": "Plunge Curve",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/streamlined-white-acrylic-bathtub-top-down-view.jpg?v=1757930200",
+      "alt": "Plunge Curve",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0711/7566/7850/files/streamlined-white-acrylic-bathtub-side-view.jpg?v=1757930206",
+      "alt": "Plunge Curve",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-offer",
+      "merchantId": "frostonic-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 360000,
+      "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub?ref=MATT",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATT"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-variant-1",
+      "supplierVariantId": "47379934937226",
+      "label": "1500*720*580mm",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "1500*720*580mm"
+        }
+      ],
+      "offer": {
+        "id": "frostonic-comfort-modular-independent-plunge-tub-variant-offer-1",
+        "merchantId": "frostonic-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 360000,
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub?ref=MATT",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATT"
+        },
+        "discountCodes": [],
+        "availability": "out_of_stock",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "frostonic-shopify, official public Shopify snapshot",
+          "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-variant-2",
+      "supplierVariantId": "47379934969994",
+      "label": "1700*800*580mm",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "1700*800*580mm"
+        }
+      ],
+      "offer": {
+        "id": "frostonic-comfort-modular-independent-plunge-tub-variant-offer-2",
+        "merchantId": "frostonic-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 370000,
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub?ref=MATT",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATT"
+        },
+        "discountCodes": [],
+        "availability": "out_of_stock",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "frostonic-shopify, official public Shopify snapshot",
+          "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "frostonic-comfort-modular-independent-plunge-tub-variant-3",
+      "supplierVariantId": "47379935002762",
+      "label": "1800*800*600mm",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "1800*800*600mm"
+        }
+      ],
+      "offer": {
+        "id": "frostonic-comfort-modular-independent-plunge-tub-variant-offer-3",
+        "merchantId": "frostonic-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 380000,
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub?ref=MATT",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATT"
+        },
+        "discountCodes": [],
+        "availability": "out_of_stock",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "frostonic-shopify, official public Shopify snapshot",
+          "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {}
+  },
+  "attributes": {
+    "chiller_included": {
+      "value": false,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "tub_type": {
+      "value": "tub",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "frostonic-shopify, official public Shopify snapshot",
+        "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Plunge Curve",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "frostonic-shopify, official public Shopify snapshot",
+    "url": "https://frostonic.com/products/comfort-modular-independent-plunge-tub",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

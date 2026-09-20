@@ -1,0 +1,392 @@
+{
+  "id": "hooga-red-light-therapy-face-mask",
+  "slug": "hooga-red-light-therapy-face-mask",
+  "name": "Red Light Therapy Face Mask",
+  "brandId": "hooga",
+  "categoryId": "red-light",
+  "subcategoryId": "mask",
+  "description": "The Hooga Red Light Therapy Face Mask is a flexible silicone LED mask designed for daily at-home skincare. It uses 66 tri-chip LEDs across three wavelengths — 630nm, 660nm, and 850nm — for a full-face session in as little as 5 minutes, hands-free. Choose the Face Mask Only , add the optional Neck Piece for décolleté coverage, or grab the Face + Neck combo . Both connect to the same rechargeable controller — no wall outlet, no dangling cable during your session. Why Customers Choose the Hooga Face Mask Three real wavelengths, not one — 630nm + 660nm red plus 850nm near-infrared, all delivered from every LED via tri-chip construction. Cordless during use — 3,000 mAh battery (mask only) or 5,000 mAh (face + neck set) built into the controller. Multiple sessions per charge. Fits comfortably — flexible medical-grade silicone with adjustable back strap. Adjustable everything — brightness (25% / 50% / 75% / 100%), timer (5 / 10 / 15 / 20 min), and Nogier pulse frequency (73 / 146 / 292 Hz) or continuous mode. Under a pound — 0.39 lbs face only, 0.79 lbs with the neck piece — sits comfortably during long sessions. Specifications Model: HG-MSK-03 Wavelengths: 630nm, 660nm (red) + 850nm (near infrared) LEDs: 66 tri-chip on the face mask, 48 tri-chip on the neck piece Surface irradiance: 50 mW/cm² Beam angle: 120° Pulse frequencies: 73 / 146 / 292 Hz (or continuous) Timer: 5 / 10 / 15 / 20 minute auto-shutoff Rated power: 5W (face only) / 8W (face + neck) Battery: 3,000 mAh (face only) / 5,000 mAh (face + neck) Charging: USB Type-C, 5V DC input Weight: 0.39 lbs (face only) / 0.79 lbs (face + neck) Warranty: 1 year Simple 6-Step Setup Cleanse — remove makeup and any cosmetics that could reflect or block light. Strap — feed the facial straps through the inlet holes and secure the velcro at the back of your head. Fit — position the mask with the LEDs facing your skin, align the eye/nose/lip cutouts, and adjust for comfort. Power on — press and hold the controller's power button for 3 seconds. Choose your session — pick your timer, brightness, and (optionally) a pulse frequency. Relax — the timer auto-stops the session. What's in the Box 1 × Hooga LED Face Mask (Face Only or Face + Neck depending on variant) 1 × Rechargeable controller (with built-in battery) 1 × USB Type-C charging / connection cable 1 × Carrying bag 2 × Silicone eye guards 1 × User manual Download the Hooga Face Mask instruction sheet (PDF) Backed by a 1-year warranty and easy 60-day returns. This device is not intended to diagnose, treat, cure, or prevent any disease. Consult a healthcare professional before use if you are pregnant, taking photosensitizing medications, or have a skin or medical condition. Not sure which product is right? Give a Hooga gift card. Let them pick the product, size, and accessories that fit their routine. Gift cards are delivered instantly by email, never expire, and work on every Hooga product. Shop gift cards →",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "hooga-red-light-therapy-face-mask-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/Hooga_Face_Mask_2025.jpg?v=1775592081",
+      "alt": "Red Light Therapy Face Mask",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/2_Face_Mask_Features_image.jpg?v=1775592091",
+      "alt": "Red Light Therapy Face Mask",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/2_Face_Mask_Irradiance_image.png?v=1778877230",
+      "alt": "Red Light Therapy Face Mask",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/1_FaceMask_Frequenciesimage.jpg?v=1775592069",
+      "alt": "Red Light Therapy Face Mask",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-image-5",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0075/2923/4522/files/4_FaceMask_Benefitsimage.jpg?v=1775592096",
+      "alt": "Red Light Therapy Face Mask",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "hooga-red-light-therapy-face-mask-direct",
+      "merchantId": "hooga-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 9900,
+      "url": "https://hoogahealth.com/products/led-mask?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "rlt_mask_neck_2025",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+      }
+    }
+  ],
+  "variants": [
+    {
+      "id": "hooga-red-light-therapy-face-mask-variant-1",
+      "supplierVariantId": "49401230819575",
+      "label": "Face Mask Only",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "Face Mask Only"
+        }
+      ],
+      "offer": {
+        "id": "hooga-red-light-therapy-face-mask-variant-offer-1",
+        "merchantId": "hooga-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 17900,
+        "url": "https://hoogahealth.com/products/led-mask?ref=MATTORR",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATTORR"
+        },
+        "discountCodes": [],
+        "availability": "in_stock",
+        "merchantSku": "rlt_mask_face_2025",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "hooga-shopify, official public Shopify snapshot",
+          "url": "https://hoogahealth.com/products/led-mask",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-variant-2",
+      "supplierVariantId": "49401230852343",
+      "label": "Face/Neck Combo Set",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "Face/Neck Combo Set"
+        }
+      ],
+      "offer": {
+        "id": "hooga-red-light-therapy-face-mask-variant-offer-2",
+        "merchantId": "hooga-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 24900,
+        "url": "https://hoogahealth.com/products/led-mask?ref=MATTORR",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATTORR"
+        },
+        "discountCodes": [],
+        "availability": "in_stock",
+        "merchantSku": "rlt_face_neck_combo_2025",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "hooga-shopify, official public Shopify snapshot",
+          "url": "https://hoogahealth.com/products/led-mask",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    },
+    {
+      "id": "hooga-red-light-therapy-face-mask-variant-3",
+      "supplierVariantId": "49741132857591",
+      "label": "Neck Only",
+      "options": [
+        {
+          "category": "Configuration",
+          "value": "Neck Only"
+        }
+      ],
+      "offer": {
+        "id": "hooga-red-light-therapy-face-mask-variant-offer-3",
+        "merchantId": "hooga-store",
+        "market": "US",
+        "currency": "USD",
+        "priceMinor": 9900,
+        "url": "https://hoogahealth.com/products/led-mask?ref=MATTORR",
+        "affiliate": {
+          "status": "affiliate",
+          "network": "goaffpro",
+          "programRef": "MATTORR"
+        },
+        "discountCodes": [],
+        "availability": "in_stock",
+        "merchantSku": "rlt_mask_neck_2025",
+        "lastChecked": "2026-09-19",
+        "source": {
+          "kind": "merchant_feed",
+          "ref": "hooga-shopify, official public Shopify snapshot",
+          "url": "https://hoogahealth.com/products/led-mask",
+          "retrievedAt": "2026-09-19",
+          "method": "direct",
+          "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Product link was generated with Hooga's portal-verified referral parameter."
+        }
+      },
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "hooga-store": "rlt_mask_neck_2025"
+    }
+  },
+  "warranty": {
+    "value": "1-year warranty",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/led-mask",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "returnPolicy": {
+    "value": "60-day return window from delivery; return shipping deducted",
+    "source": {
+      "kind": "merchant_feed",
+      "ref": "hooga-shopify, official public Shopify snapshot",
+      "url": "https://hoogahealth.com/products/led-mask",
+      "retrievedAt": "2026-09-19",
+      "method": "direct",
+      "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+    },
+    "verification": "manufacturer_reported"
+  },
+  "attributes": {
+    "coverage": {
+      "value": "targeted",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Coverage is the site's editorial class based on the maker-stated size and intended treatment area."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "footprint": {
+      "value": "compact",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing. Footprint is the site's editorial class based on the maker-stated longest side."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "warranty_years": {
+      "value": 1,
+      "unit": "yr",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "return_window_days": {
+      "value": 60,
+      "unit": "days",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "wavelengths_nm": {
+      "value": [
+        630,
+        660,
+        850
+      ],
+      "unit": "nm",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "power_w": {
+      "value": 5,
+      "unit": "W",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "pulsing": {
+      "value": true,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "hooga-shopify, official public Shopify snapshot",
+        "url": "https://hoogahealth.com/products/led-mask",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Red Light Therapy Face Mask",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "hooga-shopify, official public Shopify snapshot",
+    "url": "https://hoogahealth.com/products/led-mask",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability, images and stated specifications come from Hooga's approved official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

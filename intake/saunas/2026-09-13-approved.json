@@ -1,0 +1,97 @@
+{
+  "categoryId": "saunas",
+  "readOn": "2026-09-13",
+  "readBy": "Codex, using its own web tool, and supplied to this repository. Not fetched here: every merchant domain is refused at this container's egress proxy.",
+  "approval": "Approved by Matt by email on 2026-09-13: SaunaCloud direct, Select Saunas via UpPromote, Sweat Kingdom via Awin advertiser 125462, publisher 3090899.",
+  "products": [
+    {
+      "key": "saunacloud-atlas-one",
+      "name": "Atlas One",
+      "url": "https://saunacloud.com/atlas-one-red-light-infrared-sauna/",
+      "sourceKind": "manufacturer",
+      "brand": {
+        "id": "saunacloud",
+        "name": "SaunaCloud",
+        "websiteUrl": "https://saunacloud.com"
+      },
+      "merchant": {
+        "id": "saunacloud-store",
+        "name": "SaunaCloud",
+        "websiteUrl": "https://saunacloud.com",
+        "network": "direct",
+        "programRef": "2be9769d46ff7c74",
+        "issuedLink": "https://saunacloud.com/?ref=2be9769d46ff7c74",
+        "issuedLinkNote": "The one link issued for this programme, and it addresses the site root. No deep link to any product page has been issued, so the link below earns nothing. Terms as stated to Matt: 7% of the pre-tax total after full payment, first visit attributed for 180 days."
+      },
+      "price": null,
+      "priceNote": "The maker's page quotes no amount. It asks for a quote. No price is recorded, and none is inferred: a quote-only product with a zero in it would read as free.",
+      "description": "One-person far infrared cabin sold by quote rather than at a listed price.",
+      "attributes": {
+        "sauna_type": "far_infrared",
+        "capacity_label": "1 person",
+        "capacity_max_people": 1,
+        "width_in": 49.5,
+        "depth_in": 52.25,
+        "height_in": 84,
+        "placement": "indoor_outdoor",
+        "connection": "hardwired",
+        "voltage": "240v",
+        "amperage_a": 30
+      },
+      "notStated": [
+        "heater_kw",
+        "heater_model"
+      ],
+      "caveats": [
+        "The page states a heater surface temperature. That is not the temperature of the cabin, and no cabin temperature is recorded from it.",
+        "The warranty on this page is stated per component. It is not a blanket lifetime warranty and is not recorded as one.",
+        "The page is on the maker's own domain and was read as the maker speaking. Whether \"Atlas\" names a separate company from SaunaCloud is not established here, so the brand record carries the name on the domain that was read."
+      ]
+    },
+    {
+      "key": "dynamic-barcelona-dyn-6106-01",
+      "name": "Barcelona DYN-6106-01",
+      "url": "https://selectsaunas.com/products/dynamic-saunas-dyn-6106-01-barcelona-1-2-person-low-emf-far-infrared-sauna",
+      "sourceKind": "retailer",
+      "brand": {
+        "id": "dynamic-saunas",
+        "name": "Dynamic Saunas"
+      },
+      "merchant": {
+        "id": "select-saunas",
+        "name": "Select Saunas",
+        "websiteUrl": "https://selectsaunas.com",
+        "network": "other",
+        "issuedLinkNote": "Approved through UpPromote on 2026-09-13. No tracking link has been issued or supplied, so the link below earns nothing and none is invented."
+      },
+      "price": {
+        "amountMinor": 199900,
+        "currency": "USD"
+      },
+      "description": "One to two person far infrared cabin that runs from an ordinary wall socket.",
+      "attributes": {
+        "sauna_type": "far_infrared",
+        "capacity_label": "1-2 people",
+        "capacity_max_people": 2,
+        "width_in": 39,
+        "depth_in": 36,
+        "height_in": 73,
+        "connection": "plug_in",
+        "voltage": "120v",
+        "amperage_a": 15
+      },
+      "notStated": [
+        "placement",
+        "heater_kw",
+        "heater_model"
+      ],
+      "caveats": [
+        "Read from a retailer's listing, not from Dynamic Saunas. The brand and the seller are two different parties and are recorded as two records.",
+        "The page states the roof overhang adds 2 in. It states that as an addition to the exterior dimension, not as a required clearance, and it is not recorded as clearance.",
+        "Stock was not verified. Availability is recorded as unknown rather than guessed."
+      ],
+      "mpn": "DYN-6106-01"
+    }
+  ],
+  "supersededNote": "The Sweat Box reading was superseded on 2026-09-14 by Sweat Kingdom's own Awin feed F3219. See intake/sweat-kingdom/. A page read by hand is not the merchant's catalogue, and where the merchant publishes one, that is the record."
+}

@@ -1,0 +1,187 @@
+{
+  "id": "sunlighten-signature-2-obsidian",
+  "slug": "sunlighten-signature-2-obsidian",
+  "name": "Signature II - Eucalyptus - Black Edition",
+  "brandId": "sunlighten",
+  "categoryId": "saunas",
+  "description": "Your quiet hour, in black. Obsidian outside. Natural eucalyptus inside. Choose Signature II Obsidian if you want simplicity in a finish that disappears into the room. Dark on the outside, natural sustainably sourced eucalyptus on the inside, the same wood as our Eucalyptus models. Push one button and settle into gentle, even far infrared from patented SoloCarbon® heaters, the technology behind every Sunlighten sauna. No programs to learn, no settings to manage. Room enough for two, or for stretching out alone with the door closed and the world outside it. Chromotherapy lighting and a premium Bluetooth sound system let you set the mood, or leave both off and take the quiet. Supports detoxification through deep sweating, circulation, immune health, and relaxation.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sunlighten-signature-2-obsidian-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIIObsidianCOBRight.jpg?v=1785783252",
+      "alt": "Signature II - Eucalyptus - Black Edition",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-2-obsidian-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIIObsidianCOBFront.jpg?v=1785783252",
+      "alt": "Signature II - Eucalyptus - Black Edition",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-2-obsidian-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SignatureIIObsidianCOBLeft.jpg?v=1785783252",
+      "alt": "Signature II - Eucalyptus - Black Edition",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-signature-2-obsidian-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/Signature_II_Obsidian_Lifestyle2.png?v=1785783380",
+      "alt": "Signature II - Eucalyptus - Black Edition",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sunlighten-signature-2-obsidian-offer",
+      "merchantId": "sunlighten-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 549900,
+      "url": "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899&ued=https%3A%2F%2Fshop-us.sunlighten.com%2Fproducts%2Fsignature-2-obsidian",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-63394-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "Signature II - Eucalyptus - Black Edition",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sunlighten-store": "Signature II - Eucalyptus - Black Edition"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "2-person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Signature II - Eucalyptus - Black Edition",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sunlighten-shopify, official public Shopify snapshot",
+    "url": "https://shop-us.sunlighten.com/products/signature-2-obsidian",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

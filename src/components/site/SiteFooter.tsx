@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { NAV, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
+import { NAV } from "@/lib/nav";
 
 export function SiteFooter() {
   return (
@@ -8,7 +9,7 @@ export function SiteFooter() {
         <div>
           <p className="font-display text-2xl">{SITE_NAME}</p>
           <p className="mt-2 max-w-sm text-sm text-fg-soft">
-            Product facts from makers and retailers, compared on the same terms. Rankings follow published rules, never who pays us.
+            Product facts from makers and retailers, compared on the same terms. Compare your options, then buy directly from the retailer.
           </p>
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-2 text-sm">
@@ -18,11 +19,16 @@ export function SiteFooter() {
             </Link>
           ))}
           <Link href="/disclosure" className="tap flex items-center text-fg-soft hover:text-fg">
-            Affiliate disclosure
+            How this site is paid
           </Link>
+          <Link href="/privacy" className="tap flex items-center text-fg-soft hover:text-fg">Analytics and privacy</Link>
         </nav>
         <div className="text-xs text-fg-muted">
-          <p>Prototype. Product data is demo data relayed from public sources and marked as such. Prices shown with the date checked.</p>
+          <p>
+            Specifications are relayed from public sources and each one says who reported it. Where no price
+            has been confirmed, the page says so instead of showing an amount. Retailer links state whether we may earn
+            a commission or whether the relationship is unconfirmed.
+          </p>
           <p className="mt-2">
             This site helps you compare products by their stated specifications and price. It does not give medical advice, and no product here is presented as treating any condition.
           </p>

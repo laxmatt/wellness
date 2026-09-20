@@ -1,6 +1,7 @@
+import { CHATBOT_ENABLED } from "@/lib/features";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AssistantLauncher } from "@/components/assistant/AssistantLauncher";
 import { CompareToggle } from "@/components/compare/CompareToggle";
 import { InsightsPanel, OfferList, ProvenanceBlock, SpecGroups } from "@/components/product/detail";
@@ -12,9 +13,13 @@ import { Badge } from "@/components/ui/Badge";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { SpecRow } from "@/components/ui/SpecRow";
 import { primaryStrength } from "@/domain/recommend";
+import { outboundLinkProps } from "@/domain/outbound";
+import { buyableOffers } from "@/domain/view";
 import { getCatalog } from "@/providers";
-import { getProductPage } from "@/lib/queries";
+import { getProductPage, getProductRedirect } from "@/lib/queries";
 import { SITE_URL } from "@/lib/site";
+import { social } from "@/lib/metadata";
+import { breadcrumbList, jsonLdScript } from "@/lib/structured-data";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,10 +33,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getProductPage(slug);
   if (!data) return {};
   const { view } = data.item;
+  const title = `${view.brand.name} ${view.name}`;
   return {
-    title: `${view.brand.name} ${view.name}`,
+    title,
     description: view.description,
     alternates: { canonical: `/products/${view.slug}` },
+    ...social({ title, description: view.description, path: `/products/${view.slug}` }),
   };
 }
 
@@ -45,14 +52,35 @@ const schemaAvailability: Record<string, string> = {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
+  // A configuration is not a second product. Its record stays published,
+  // priced and linked, and its address leads to the model it belongs to, where
+  // its own price and its own link are listed.
+  const to = await getProductRedirect(slug);
+  if (to) redirect(to);
   const data = await getProductPage(slug);
   if (!data) notFound();
-  const { item, page, similar } = data;
+  const { item, page, similar, configurations } = data;
   const { view } = item;
   const cat = page.cat;
   const primaryBadge = item.badges[0];
   const alsoValue = item.badges.includes("best_overall") && item.badges.includes("best_value");
-  const lowest = view.offers[0];
+  // The shared rule, not a fourth copy of it. This page held its own
+  // `!o.disputed` filter, so when discontinued joined the rule everywhere else,
+  // this page kept publishing a buy button and a schema.org Offer for a maker
+  // that states on its own site it has gone out of business. The harness caught
+  // it; the duplication is why there was anything to catch.
+  const buyable = buyableOffers(view);
+  const lowest = buyable[0];
+
+  // Structured data is a price claim made to search engines, which will quote
+  // it back to people. It carries only amounts that price this product:
+  // nothing disputed, and nothing whose amount is prototype data. The page
+  // itself has said "Check current price" for a placeholder since 2026-09-09;
+  // this markup was still publishing the invented number underneath it.
+  // An Offer in structured data carries a price. A merchant that quotes on
+  // request has not given one, so the listing appears on the page and not in
+  // the markup a search engine would quote back.
+  const publishedOffers = buyable.filter((o) => o.price !== undefined && !o.priceIsDemo);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -61,12 +89,12 @@ export default async function ProductPage({ params }: Props) {
     brand: { "@type": "Brand", name: view.brand.name },
     description: view.description,
     url: `${SITE_URL}/products/${view.slug}`,
-    ...(view.offers.length > 0
+    ...(publishedOffers.some((o) => o.price !== undefined)
       ? {
-          offers: view.offers.map((o) => ({
+          offers: publishedOffers.filter((o) => o.price !== undefined).map((o) => ({
             "@type": "Offer",
-            price: (o.price.amountMinor / 100).toFixed(2),
-            priceCurrency: o.price.currency,
+            price: (o.price!.amountMinor / 100).toFixed(2),
+            priceCurrency: o.price!.currency,
             url: o.url,
             seller: { "@type": "Organization", name: o.merchant.name },
             ...(schemaAvailability[o.availability] ? { availability: schemaAvailability[o.availability] } : {}),
@@ -79,10 +107,23 @@ export default async function ProductPage({ params }: Props) {
     <Shell
       current={`/${cat.slug}`}
       trayCategoryId={cat.id}
+      compareAuthority={{ categoryId: cat.id, publishedIds: page.products.map((p) => p.view.id) }}
       assistantCategoryId={cat.id}
       compareSeeds={page.products.map((p) => ({ id: p.view.id, slug: p.view.slug, name: p.view.name, categoryId: cat.id }))}
     >
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(
+            breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: cat.name, path: `/${cat.slug}` },
+              { name: `${view.brand.name} ${view.name}` },
+            ]),
+          ),
+        }}
+      />
       <Container className="pt-4">
         <Breadcrumbs items={[{ href: "/", label: "Home" }, { href: `/${cat.slug}`, label: cat.name }, { label: `${view.brand.name} ${view.name}` }]} />
         <div className="mt-4 grid gap-8 lg:grid-cols-12 lg:gap-12">
@@ -113,8 +154,8 @@ export default async function ProductPage({ params }: Props) {
             <div className="grid grid-cols-2 gap-3">
               <CompareToggle size="lg" item={{ id: view.id, slug: view.slug, name: view.name, categoryId: view.categoryId }} />
               {lowest ? (
-                <a href={view.offers.length > 1 ? "#retailers" : lowest.url} target={view.offers.length > 1 ? undefined : "_blank"} rel={view.offers.length > 1 ? undefined : "sponsored nofollow noopener"} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
-                  {view.offers.length > 1 ? `See ${view.offers.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
+                <a href={buyable.length > 1 ? "#retailers" : lowest.url} {...(buyable.length > 1 ? {} : outboundLinkProps(lowest.affiliateStatus, { productId: view.id, productName: view.name, retailer: lowest.merchant.name }))} className="tap inline-flex h-13 items-center justify-center rounded-pill bg-fg px-6 text-base font-semibold text-fg-inverse hover:bg-accent-strong">
+                  {buyable.length > 1 ? `See ${buyable.length} retailers` : `Shop at ${lowest.merchant.name.replace(/\s*\(direct\)$/, "")}`}
                 </a>
               ) : null}
             </div>
@@ -124,10 +165,10 @@ export default async function ProductPage({ params }: Props) {
                 {primaryStrength(view, cat)}
               </p>
             ) : null}
-            <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
-              <AssistantLauncher />
+            {CHATBOT_ENABLED ? <div className="flex flex-wrap items-center gap-3 border-t border-edge pt-4">
+              <AssistantLauncher entry={{ kind: "category", categoryId: cat.id }} />
               <p className="text-xs text-fg-muted">Optional. Ask how this compares to the alternatives.</p>
-            </div>
+            </div> : null}
           </div>
         </div>
 
@@ -156,6 +197,49 @@ export default async function ProductPage({ params }: Props) {
               <OfferList view={view} />
             </div>
           </section>
+
+          {view.sourceTitle && view.sourceTitle !== view.name ? (
+            <p className="text-sm text-fg-muted">
+              <span className="font-semibold">Listed by {lowest?.merchant.name.replace(/\s*\(direct\)$/, "") ?? "the retailer"} as:</span> {view.sourceTitle}
+            </p>
+          ) : null}
+
+          {configurations.length > 0 ? (
+            <section id="configurations">
+              <h2 className="font-display text-3xl">Configurations</h2>
+              <p className="mt-1 text-sm text-fg-muted">
+                The retailer sells this on more than one page: a finish, or a size. They are the same model, so they are here rather than as separate listings to choose between. Each
+                carries its own price and its own link.
+              </p>
+              <ul className="mt-5 divide-y divide-edge border-y border-edge">
+                {configurations.map((c) => {
+                  const offers = buyableOffers(c.view);
+                  return (
+                    <li key={c.view.id} className="flex flex-wrap items-baseline justify-between gap-3 py-3">
+                      <div className="min-w-0">
+                        <p className="font-semibold">{c.view.name}</p>
+                        {/* The retailer's own title, whole. The name above is
+                            the short form of it, and a shopper clicking Shop
+                            arrives at exactly this configuration. */}
+                        {c.view.sourceTitle ? <p className="break-words text-sm text-fg-soft">{c.view.sourceTitle}</p> : null}
+                        <p className="text-sm text-fg-muted">
+                          {c.view.availability === "unknown" ? "Availability not stated" : c.view.availability.replace(/_/g, " ")}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <PriceDisplay price={c.view.price} compact />
+                        {offers[0] ? (
+                          <a href={offers[0].url} {...outboundLinkProps(offers[0].affiliateStatus, { productId: c.view.id, productName: c.view.name, retailer: offers[0].merchant.name })} className="tap text-sm font-semibold text-accent-strong hover:underline">
+                            Shop
+                          </a>
+                        ) : null}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : null}
 
           {similar.length > 0 ? (
             <section>

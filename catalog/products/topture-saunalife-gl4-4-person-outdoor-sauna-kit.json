@@ -1,0 +1,170 @@
+{
+  "id": "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+  "slug": "topture-saunalife-gl4-4-person-outdoor-sauna-kit",
+  "name": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front",
+  "brandId": "saunalife-saunas",
+  "categoryId": "saunas",
+  "description": "Description Bring Scandinavian luxury to your backyard with the SaunaLife Garden Luxury-Series Model GL4 Outdoor Home Sauna Kit. Expertly crafted with professional-grade materials and designed for effortless at-home assembly, the GL4 combines striking architectural beauty with superior performance. Its modern, full-glass front and integrated porch create an inviting retreat, while ultra-premium Nordic Thermo-Spruce and Thermo-Aspen components ensure unmatched comfort, durability, and weather resistance. With easy two-day DIY installation, ambient LED lighting, and Wi-Fi smart controls, the GL4 makes luxury outdoor sauna living both accessible and achievable. Features Premium 1.57\" thick Nordic Thermo-Spruce walls for enhanced durability and longevity Modern architectural design with horizontal eaves, black trim, and integrated porch for a sleek, contemporary look Full bronze tempered-glass front (5/16” thick) with reversible door and full-height handle for open views and privacy Contoured 2-tier benching and backrest made of extra-thick, silky-smooth Thermo-Aspen for luxurious comfort Full-width recessed LED lighting integrated in porch eaves for elegant exterior illumination Indirect interior LED lighting with dimmable settings controlled via Wi-Fi app or wireless remote Engineered for pro-quality DIY installation in just 2 days with 2 people Interlocking-beam construction supports natural wood movement and ensures long-term stability What's Included? Model GL4 Outdoor Home Sauna Kit Thermo-spruce wall boards (1.57\" thick) Tempered bronze glass door with long black painted handle Tempered bronze glass windows with black painted frames 2-tiered Thermo-Aspen benches and backrests Extra-thick Thermo-Spruce roof (1.57\" thick) Thermo-Spruce porch boards (1.1\" thick) Thermo-Spruce floor boards (1.1\" thick) Black fascia boards Black metal flashing Ground frame Self-adhesive roofing felt Ventilation system Drainage system All screws and fasteners Comprehensive assembly instructions White LED light system with Wi-Fi app control Recessed exterior LED lighting Indirect interior LED lighting Wireless handheld remote control Specifications Model: GL4 Construction Material: Thermo-Spruce Exterior Dimensions: 58.9\"W (149.61 cm) x 79.5\"D (201.93 cm) x 85.1\"H (216.15 cm) Interior Dimensions: 55.5\"W (140.97 cm) x 59.1\"D (150.11 cm) x 76\"H (193.04 cm) Upper Bench: 54\"W (137.16 cm) x 23.6\"D (59.94 cm) Lower Bench: 54\"W (137.16 cm) x 12.5\"D (31.75 cm) Glass Style: Tempered Bronze Glass Glass Thickness: 0.24\" (Windows), 0.31\" (Door) Door Dimensions: 27.6\"W (70.10 cm) x 74.8\"H (189.99 cm) Window Dimensions: 24.6\"W (62.48 cm) x 72.4\"H (183.90 cm) Product Weight: 1650 lbs (748.5 kg) Shipping Dimensions: 83\"W (210.82 cm) x 43\"D (109.22 cm) x 32\"H (81.28 cm) Shipping Weight: 1830 lbs (830 kg) Porch Dimensions: 58.9\"W (149.6 cm) x 14.6\"D (37.1 cm) Documents SaunaLife GL4 Installation Manual SaunaLife GL4 Dimensions",
+  "status": "published",
+  "availability": "backorder",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-saunalife-gl4-4-person-outdoor-sauna-kit-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/saunalife-gl4-4-person-outdoor-sauna-kit-sl-modelgl4-2424598.jpg?v=1757638833",
+      "alt": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-saunalife-gl4-4-person-outdoor-sauna-kit-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 949000,
+      "listPriceMinor": 1099900,
+      "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "backorder",
+      "merchantSku": "SL-MODELGL4",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as backorder. Restock date 2026-09-11."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "SL-MODELGL4"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front",
+        "matched": "4-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating, Features:Porch, glass sauna, Luxury Saunas, window",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "cabin",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Cabin\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "SaunaLife GL4 | 4-Person Outdoor Sauna Kit | Glass Front | Outdoor Saunas | Cabin Saunas, Features:2-tier Seating, Features:Porch, glass sauna, Luxury Saunas, window",
+        "matched": "Cabin",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/saunalife-gl4-4-person-outdoor-sauna-kit?variant=52416469827848&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

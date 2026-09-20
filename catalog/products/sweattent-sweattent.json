@@ -1,0 +1,175 @@
+{
+  "id": "sweattent-sweattent",
+  "slug": "sweattent-sweattent",
+  "name": "Sweat Tent Portable Outdoor Sauna",
+  "brandId": "sweattent",
+  "categoryId": "saunas",
+  "description": "The original Sweat Tent is a portable wood-fired sauna that delivers real 200°F+ heat anywhere you can build a fire. No construction, no permits, no electrician, no plumbing. Set it up in 15 minutes, light the stove, and step in. The multi-layer insulated tent holds heat below freezing temperatures, and the patented design has been tested in backyards, mountain cabins, and beach trips by over 10,000 owners. Wood-fired heat reaches temperatures electric and infrared can’t match, with zero EMF and real Finnish steam (löyly). Whether you’re recovering from training, building a daily wellness ritual, or sweating with friends, this is the sauna that goes wherever you do.",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sweattent-sweattent-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0643/9803/3137/files/sweat-tent-large-black-standard-01-hero_70bb1853-88c1-4e0c-aff2-2b8ccee9f118.png?v=1782931044",
+      "alt": "Sweat Tent Portable Outdoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sweattent-sweattent-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0643/9803/3137/files/sweat-tent-large-black-standard-02-snow-lifestyle_d8983157-5ffd-4b21-9606-5473c2fb2b5c.png?v=1782931044",
+      "alt": "Sweat Tent Portable Outdoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sweattent-sweattent-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0643/9803/3137/files/sweat-tent-large-black-standard-03-backyard-lifestyle_9455fafd-3c51-47f8-a8ee-85f91f567f61.png?v=1782931044",
+      "alt": "Sweat Tent Portable Outdoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sweattent-sweattent-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0643/9803/3137/files/sweat-tent-large-black-standard-04-interior_e319f75a-c111-4853-87ee-f2c82e110b4d.png?v=1782931044",
+      "alt": "Sweat Tent Portable Outdoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sweattent-sweattent-offer",
+      "merchantId": "sweattent-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 149900,
+      "url": "https://sweattent.com/?rfsn=9327296.77dd76",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "refersion",
+        "programRef": "9327296.77dd76"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "ST0091",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Outbound uses the exact storefront referral link issued in the approval email; no unverified product-link transformation is applied."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sweattent-store": "ST0091"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "traditional",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "tent",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "max_temperature_f": {
+      "value": 200,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sweattent-shopify, official public Shopify snapshot",
+        "url": "https://sweattent.com/products/sweattent",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Sweat Tent Portable Outdoor Sauna",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sweattent-shopify, official public Shopify snapshot",
+    "url": "https://sweattent.com/products/sweattent",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}

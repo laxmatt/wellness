@@ -2,7 +2,7 @@
   "status": "published",
   "availability": "unknown",
   "market": "US",
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "flags": {
     "demo": true,
     "newArrival": true
@@ -21,7 +21,7 @@
   "brandId": "mito-red-light",
   "categoryId": "red-light",
   "subcategoryId": "panel",
-  "description": "Four-wavelength full-height panel with 300 dual-chip LEDs and a three-year warranty.",
+  "description": "Four-wavelength full-body panel, 12 in wide by 36 in high, with 300 LEDs and a three-year warranty.",
   "images": [
     {
       "id": "mito-mitopro-1500-plus-primary",
@@ -38,34 +38,36 @@
       "market": "US",
       "currency": "USD",
       "priceMinor": 116900,
-      "url": "https://mitoredlight.com/products/mitopro-series",
+      "url": "https://mitoredlight.com/products/mitopro-series?variant=32084839432292",
       "affiliate": {
         "status": "unknown"
       },
       "discountCodes": [],
       "availability": "unknown",
-      "lastChecked": "2026-09-08",
+      "lastChecked": "2026-09-09",
       "source": {
         "kind": "manufacturer",
-        "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitopro-series?variant=32084839432292",
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "$1,169, read at 17:40 Pacific on 2026-09-09. The explicitly labelled 1500+ row and the size selector both show this amount, and the Shop link on that column resolves to this variant-scoped URL, which was followed rather than assembled. The record carried the same $1,169 relayed from a search summary; the amount has not changed and what it is worth has. Two limits are on record and neither is resolved: the page's static text still carries the default 300+ cart at $369, so nothing here verifies what a checkout would charge or whether this variant is in stock. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       }
     }
   ],
   "dimensions": {
     "value": {
-      "length": 35,
-      "width": 13
+      "length": 36,
+      "width": 12
     },
     "unit": "in",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
       "url": "https://mitoredlight.com/products/mitopro-series",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "12 in wide by 36 in high; the depth was not read, so none is recorded. The figures are stored longest side first, matching how this record already read. It carried a relayed 35 by 13 in, which the page does not support. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
     },
     "verification": "manufacturer_reported"
   },
@@ -73,10 +75,11 @@
     "value": "3-year warranty",
     "source": {
       "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
       "url": "https://mitoredlight.com/products/mitopro-series",
-      "retrievedAt": "2026-09-08",
-      "method": "secondhand",
-      "note": "Relayed via search summary; manufacturer page not fetched directly."
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "The page states a 3-year warranty. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
     },
     "verification": "manufacturer_reported"
   },
@@ -95,22 +98,24 @@
     "coverage": {
       "value": "full_body",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from panel height: targeted under 20 in, half body 20 to 34 in, full body 35 in and up."
+        "note": "The page describes the 1500+ as full body. This was an editorial class inferred from panel height; the maker states it. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
-      "verification": "unknown"
+      "verification": "manufacturer_reported"
     },
     "footprint": {
       "value": "standard",
       "source": {
-        "kind": "editorial",
-        "ref": "Editorial classification",
-        "retrievedAt": "2026-09-08",
+        "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitopro-series",
+        "retrievedAt": "2026-09-09",
         "method": "direct",
-        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in."
+        "note": "Editorial class from longest side: compact under 20 in, standard 20 to 40 in, large over 40 in. The panel is 36 in on its long side, read from the page, so the class now rests on stated dimensions rather than on a relayed figure. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "unknown"
     },
@@ -124,45 +129,48 @@
       "unit": "nm",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "630, 660, 830 and 850 nm. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "manufacturer_reported"
     },
     "irradiance_mw_cm2": {
-      "value": 76.5,
       "unit": "mW/cm\u00b2",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Brand reports average irradiance across the panel face. Distance not stated in the summary. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "No comparable figure is recorded. The record carried 76.5 mW/cm2, relayed from a search summary as an average across the panel face with no distance at all, and the page does not show that number. What the page shows is an irradiance table giving more than 170 and more than 68 at six inches, marked ** and * respectively, with footnotes labelling * as consumer-grade and ** as laboratory. Its own prose says the consumer readings are the higher ones, which contradicts the footnotes, so the page does not settle which method produced which number. Nothing here read a report behind either. This catalogue's irradiance field carries one unqualified figure and compares it against other products' unqualified figures, so importing either number would assert both a method and a comparability the source does not support. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
-      "verification": "manufacturer_reported"
+      "verification": "not_stated"
     },
     "led_count": {
       "value": 300,
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "300 dual-chip LEDs. Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "300 LEDs. The reading confirms the count and not the wording: the record previously said \"300 dual-chip LEDs\", relayed from a search summary, and that adjective is not carried forward as if it had been read. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "manufacturer_reported"
     },
     "power_w": {
-      "value": 270,
+      "value": 375,
       "unit": "W",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "375 W consumption. This is what the panel draws, which is not its light output and is not treated as one. The record carried 270 W relayed from a search summary, which this page does not support. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "manufacturer_reported"
     },
@@ -171,10 +179,11 @@
       "unit": "yr",
       "source": {
         "kind": "manufacturer",
+        "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
         "url": "https://mitoredlight.com/products/mitopro-series",
-        "retrievedAt": "2026-09-08",
-        "method": "secondhand",
-        "note": "Relayed via search summary; manufacturer page not fetched directly."
+        "retrievedAt": "2026-09-09",
+        "method": "direct",
+        "note": "A 3-year warranty. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
       },
       "verification": "manufacturer_reported"
     },
@@ -189,6 +198,20 @@
         "note": "Relayed via search summary; manufacturer page not fetched directly."
       },
       "verification": "manufacturer_reported"
+    },
+    "mounting": {
+      "value": [
+        "door_hang"
+      ],
+      "source": {
+        "kind": "manufacturer",
+        "ref": "Read by Codex on 2026-09-11 and supplied to this repository; not fetched here.",
+        "url": "https://mitoredlight.com/products/mitopro-series?variant=32084839432292",
+        "retrievedAt": "2026-09-11",
+        "method": "direct",
+        "note": "The page's FAQ box contents states that the 300+, 1000+ and 1500+ include an over-door hook, steel cables and four vinyl straps. This record is the 1500+, which the statement names, and the variant string pins the page to it. A tabletop stand is stated for the 300+ only, so no tabletop value is recorded here: the same sentence that supplies this record's value names a different model for that one, and taking it would be transferring a fact across models."
+      },
+      "verification": "manufacturer_reported"
     }
   },
   "source": {
@@ -196,6 +219,19 @@
     "ref": "Prototype catalog entry",
     "retrievedAt": "2026-09-08",
     "method": "direct",
-    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08."
+    "note": "Demo catalog. Specs relayed from web search summaries on 2026-09-08, then the MitoPRO series page was read by Codex on 2026-09-09 at 17:40 Pacific and the 1500+ column recorded from it. The irradiance figures the page gives carry method labels its own prose contradicts, so no comparable number is recorded. The returns figure was not part of that reading and is still the relayed one. Stock, images and any therapeutic claim remain unverified."
+  },
+  "weight": {
+    "value": 22,
+    "unit": "lb",
+    "source": {
+      "kind": "manufacturer",
+      "ref": "Read by Codex on the manufacturer's series page and supplied to this repository; not fetched here.",
+      "url": "https://mitoredlight.com/products/mitopro-series",
+      "retrievedAt": "2026-09-09",
+      "method": "direct",
+      "note": "22 lb. Read from the 1500+ column of the series comparison table. The series page also sells the 300+, the 1500X and array bundles, and none of their figures belong on this record."
+    },
+    "verification": "manufacturer_reported"
   }
 }

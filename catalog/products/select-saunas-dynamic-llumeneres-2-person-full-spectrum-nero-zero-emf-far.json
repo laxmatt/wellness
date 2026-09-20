@@ -1,0 +1,318 @@
+{
+  "id": "select-saunas-dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far",
+  "slug": "select-saunas-dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far",
+  "name": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+  "brandId": "dynamic-saunas",
+  "categoryId": "saunas",
+  "description": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "select-saunas-dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0676/0254/6902/files/imgi_27_DYN-6215-03_SJ-8277_2.jpg?v=1768314746",
+      "alt": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-9a945c38d7cc8b67. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "select-saunas-dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-offer",
+      "merchantId": "select-saunas",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 369900,
+      "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "uppromote",
+        "programRef": "12323351.NbtdIcjAoO"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6215-03 FS",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+      }
+    },
+    {
+      "id": "caldera-dynamic-saunas-fs-dyn-6215-03-fs-offer",
+      "merchantId": "caldera-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 407900,
+      "url": "https://www.calderasauna.com/products/dynamic-saunas-fs-dyn-6215-03-fs",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "direct",
+        "programRef": "MO926"
+      },
+      "discountCodes": [
+        {
+          "code": "MO926",
+          "description": "Use Caldera's issued code at checkout to reveal the affiliate discount.",
+          "source": {
+            "kind": "merchant_feed",
+            "ref": "Caldera Sauna, official public Shopify snapshot",
+            "url": "https://www.calderasauna.com/products/dynamic-saunas-fs-dyn-6215-03-fs",
+            "retrievedAt": "2026-09-19",
+            "method": "direct",
+            "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+          }
+        }
+      ],
+      "availability": "in_stock",
+      "merchantSku": "DYN-6215-03 FS",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Caldera Sauna, official public Shopify snapshot",
+        "url": "https://www.calderasauna.com/products/dynamic-saunas-fs-dyn-6215-03-fs",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Caldera instructed Wellness Fit Check to use its site as the product source and issued checkout code MO926. Supplier claims are not independent testing."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "select-saunas": "DYN-6215-03 FS",
+      "caldera-store": "DYN-6215-03 FS"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "2-Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"2-Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "2-Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 2,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"2\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 4,
+        "field": "product_title",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna",
+        "matched": "2",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Indoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Indoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(far infrared|infrared|traditional)\", found inside longer text in that cell. It matched \"Far Infrared\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(far infrared|infrared|traditional)",
+        "version": 4,
+        "field": "classified_as",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF Far Infrared Sauna | Indoor Infrared Sauna Kits",
+        "matched": "Far Infrared",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "width_in": {
+      "value": 48,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "depth_in": {
+      "value": 42,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "height_in": {
+      "value": 75,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Exterior dimensions (LWH): 42\\\" x 48\\\" x 75\\\"\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "Exterior dimensions \\(LWH\\):\\s*(\\d+(?:\\.\\d+)?)[\\\"”″](?!\\s*\\+)\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]\\s*x\\s*(\\d+(?:\\.\\d+)?)[\\\"”″]",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Exterior dimensions (LWH): 42\" x 48\" x 75\"",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "voltage": {
+      "value": "120v",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*)(120|240)\\s*V",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "amperage_a": {
+      "value": 15,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v5.",
+        "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from the structured specification text preserved in the Select Saunas feed description. Matched \"Electrical service: 120V/15amp\". This is a retailer-relayed manufacturer claim, not independent verification."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:(?:Electrical service|Electrical requirements):\\s*(?:120|240)\\s*V\\s*[/,]?\\s*|Heater size:\\s*\\d+(?:\\.\\d+)?\\s*kW,\\s*(?:120|240)V,\\s*)(\\d+)\\s*(?:-|)amp",
+        "version": 5,
+        "field": "body_text",
+        "sourceText": "Dynamic Llumeneres 2-Person Full Spectrum Near-Zero EMF (Under 3 mg) Far Infrared Sauna Want to bring the luxury of a spa into the comfort of your own home? Dynamic Saunas are built from eco-friendly Canadian Hemlock wood, combining natural strength with a sleek, modern finish that enhances any space. With advanced Low EMF FAR infrared heating panels, each sauna delivers safe, energy-efficient heat that encourages relaxation, supports circulation, and helps restore balance to your body. Flexible and easy to set up, Dynamic Saunas are designed to fit seamlessly into a variety of indoor spaces whether it’s a master bath, basement, walk-in closet, or personal gym. Their compact yet durable design makes them an ideal choice for homeowners who want both wellness and convenience in one. Choosing a Dynamic Sauna means investing in daily comfort, long-term health benefits, and a private retreat you can enjoy anytime. Features: Near-zero EMF - EMF under 3 mg 2 to 3 inches from the heating panels Full 2-person capacity Natural Canadian Reforested Hemlock wood construction Tempered glass door Interior chromotherapy lighting system with red light feature 6 Total Heaters, 4 PureTech™ Near Zero EMF (EMF Under 3MG when sitting 2 to 3 inches from the heating elements) FAR IR Carbon Heating Panels, 2 Near IR Elements Interior LED Control Panel Bluetooth, MP3 auxiliary connection with built in speakers Clasp together assembly Ships in 2 boxes Specifications: Sauna weight: 350 lbs. Shipping weight: 395 lbs. Electrical service: 120V/15amp plug & play Exterior dimensions (LWH): 42\" x 48\" x 75\" Interior dimensions (LWH): 38\" x 44\" x 68\" Document: View Owner's Manual",
+        "matched": "Electrical service: 120V/15amp",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Select Saunas (UpPromote), JSON uploaded 2026-09-15: select-saunas-shopify.json. Mapping profile select-saunas-shopify v4.",
+    "url": "https://selectsaunas.com/products/dynamic-llumeneres-2-person-full-spectrum-nero-zero-emf-far-ir-sauna-canadian-hemlock-2026-model?variant=51596050661719&sca_ref=12323351.NbtdIcjAoO",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "One row in this file. Written by this import: Capacity, Seats up to, Placement, Heating. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

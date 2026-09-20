@@ -1,0 +1,182 @@
+{
+  "id": "topture-true-north-large-pod-outdoor-barrel-sauna",
+  "slug": "topture-true-north-large-pod-outdoor-barrel-sauna",
+  "name": "True North Large Pod 4-8 Person Outdoor Sauna",
+  "brandId": "true-north-saunas",
+  "categoryId": "saunas",
+  "description": "Description Transform your backyard into a luxurious retreat with this handmade sauna from Ontario, Canada. It has been developed for outdoor use in nature and can withstand any weather. You can select an optional porch (which decreases inside length). Different window options are available and you can choose if you want a wood stove or an electric heater inside. The sauna comes as a kit that requires assembly . Features: 2 wood options: White Cedar- slightly stronger and almost as resistant to rot and decay as red cedar, and has a beautiful light-colored finish. Red Cedar- naturally weather and insect-resistant, gives off a pleasant and recognizable scent and is aesthetically attractive. Comes standard with roof membrane & 2nd layer of roof boards Fascia boards to protect the end grain of the barrel wood 2 premium benches for sitting and reclining Partially pre-assembled construction with built-in venting holes Also Includes: 3 peg towel hanger, Vent kit, and cover, Screws for assembly, Door handles, Glassdoor, Benches Optional front and rear windows Optional porch which decreases inside space accordingly. The total length remains the same. Specifications Seats: 4-8 people Height: 8' Length: 8', 9', or 10' Width: 84.5\" Max; 80.25\" at base Bench Length: 8' Sauna: 89 ½ no porch or 77 ½” with 1’ porch 9' Sauna: 101 ½” no porch or 89 ½” with 1’ porch 10' Sauna: 113 ½” no porch or 101 ½” with 1’ porch Wood: White Cedar or Red Cedar Walls: 1.55\" thick solid wood Door: Wood-framed glass Made in: Canada Assembly Assembly Guide",
+  "status": "published",
+  "availability": "preorder",
+  "market": "US",
+  "images": [
+    {
+      "id": "topture-true-north-large-pod-outdoor-barrel-sauna-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0542/4037/9061/files/true-north-large-pod-4-8-person-outdoor-sauna-lp24030-p-with-porch-591451.jpg?v=1740611413",
+      "alt": "True North Large Pod 4-8 Person Outdoor Sauna",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-15 under plan plan-be4fdf3aa6473498. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "topture-true-north-large-pod-outdoor-barrel-sauna-offer",
+      "merchantId": "topture-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 1062300,
+      "listPriceMinor": 1416333,
+      "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "goaffpro",
+        "programRef": "MATTORR"
+      },
+      "discountCodes": [],
+      "availability": "preorder",
+      "merchantSku": "LP24030 - WC - With Porch",
+      "lastChecked": "2026-09-15",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture personal product feed, products-2026-09-15.csv",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Official daily partner feed. Availability reported as made_to_order. Lead time 8 weeks."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "topture-store": "LP24030 - WC - With Porch"
+    }
+  },
+  "attributes": {
+    "capacity_label": {
+      "value": "4-8 Person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(\\\\d+\\\\s*[-–]\\\\s*\\\\d+\\\\s*[-–]?\\\\s*(?:person|people)|\\\\d+\\\\s*[-–]?\\\\s*(?:person|people))\", found inside longer text in that cell. It matched \"4-8 Person\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(\\d+\\s*[-–]\\s*\\d+\\s*[-–]?\\s*(?:person|people)|\\d+\\s*[-–]?\\s*(?:person|people))",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "True North Large Pod 4-8 Person Outdoor Sauna",
+        "matched": "4-8 Person",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "capacity_max_people": {
+      "value": 8,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"product_title\" by the pattern \"(?:\\\\d+\\\\s*[-–]\\\\s*)?(\\\\d+)\\\\s*[-–]?\\\\s*(?:Person|person|People|people)\", found inside longer text in that cell. It matched \"8\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-–]\\s*)?(\\d+)\\s*[-–]?\\s*(?:Person|person|People|people)",
+        "version": 3,
+        "field": "product_title",
+        "sourceText": "True North Large Pod 4-8 Person Outdoor Sauna",
+        "matched": "8",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "placement": {
+      "value": "outdoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(indoor\\\\s*[/&]\\\\s*outdoor|indoor or outdoor|outdoor|indoor)\", found inside longer text in that cell. It matched \"Outdoor\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(indoor\\s*[/&]\\s*outdoor|indoor or outdoor|outdoor|indoor)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "True North Large Pod 4-8 Person Outdoor Sauna | Outdoor Saunas | Features:Porch, Pod Saunas",
+        "matched": "Outdoor",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "sauna_style": {
+      "value": "pod",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "secondhand",
+        "note": "Extracted from \"classified_as\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile|Trailer)\", found inside longer text in that cell. It matched \"Pod\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile|Trailer)",
+        "version": 3,
+        "field": "classified_as",
+        "sourceText": "True North Large Pod 4-8 Person Outdoor Sauna | Outdoor Saunas | Features:Porch, Pod Saunas",
+        "matched": "Pod",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner)"
+      }
+    },
+    "enclosure_protection": {
+      "value": "weather_ready",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+        "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+        "retrievedAt": "2026-09-15",
+        "method": "direct",
+        "note": "Explicit product-page evidence: “withstand any weather”. Supplier or seller claim; not independently verified."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Topture (GoAffPro, 2%), JSON uploaded 2026-09-15: topture-shopify.json. Mapping profile topture-shopify v3.",
+    "url": "https://topture.com/products/true-north-large-pod-outdoor-barrel-sauna?variant=44697473450248&ref=MATTORR",
+    "retrievedAt": "2026-09-15",
+    "method": "direct",
+    "note": "Chosen from 12 rows sharing /products/true-north-large-pod-outdoor-barrel-sauna, ranging $10,623 to $15,018. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Capacity, Seats up to, Placement, Style. Held because somebody changed it here and the file has not moved since: Merchant link."
+  },
+  "lastUpdated": "2026-09-15",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

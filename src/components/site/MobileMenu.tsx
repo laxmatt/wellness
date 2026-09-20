@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { NAV, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
+import { NAV } from "@/lib/nav";
 
 // Compact phone header: logo, Compare, menu button. The panel is portaled to
 // document.body because the header's backdrop-blur creates a containing block
@@ -56,7 +57,7 @@ export function MobileMenu({ current }: { current?: string }) {
           ))}
           <li>
             <Link href="/disclosure" onClick={() => setOpen(false)} className="flex min-h-14 items-center text-sm font-semibold text-fg-soft">
-              Affiliate disclosure
+              How this site is paid
             </Link>
           </li>
         </ul>

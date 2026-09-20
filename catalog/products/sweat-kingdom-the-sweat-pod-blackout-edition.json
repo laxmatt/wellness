@@ -1,0 +1,130 @@
+{
+  "id": "sweat-kingdom-the-sweat-pod-blackout-edition",
+  "slug": "sweat-kingdom-the-sweat-pod-blackout-edition",
+  "name": "The Sweat Pod (2-4 Person) - Blackout Edition",
+  "brandId": "sweat-kingdom",
+  "categoryId": "saunas",
+  "description": "Availability: 5 week lead time The blackout package levels up your sauna by adding an additional 2 layers of protection on the side walls and roof, ensuring it is water resistant and protected from the elements. These will last up to 2X longer than your typical kit sauna and are built to withstand the harshest conditions.",
+  "status": "published",
+  "availability": "out_of_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sweat-kingdom-the-sweat-pod-blackout-edition-primary",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0639/1614/6852/files/ChatGPT_Image_Jul_28_2026_at_01_25_56_PM.png?v=1785266795",
+      "alt": "The Sweat Pod (2-4 Person) - Blackout Edition",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+        "retrievedAt": "2026-09-14",
+        "method": "direct",
+        "note": "Supplied in this partner's feed, and the right to publish it is unresolved. No licence is recorded: a feed carrying an image is not a grant to publish it, nothing in the file says who owns the photograph or what an affiliate may do with it, and this partner's image terms have not been read. File names in these feeds commonly suggest generated renders rather than photographs, which is the merchant's own naming and not a finding about the product. Published with the right to use this picture still unresolved, accepted by Matt (site owner), relayed through Codex on 2026-09-14 under plan plan-3d117476659f1244. That is a decision to publish without permission having been established, not a record that permission exists."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sweat-kingdom-the-sweat-pod-blackout-edition-offer",
+      "merchantId": "sweat-kingdom-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 754500,
+      "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-125462-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "out_of_stock",
+      "merchantSku": "50437618598052",
+      "lastChecked": "2026-09-14",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+        "retrievedAt": "2026-09-14",
+        "method": "direct",
+        "note": "Chosen from 6 rows sharing /products/the-sweat-pod-blackout-edition, ranging $7,545 to $10,745. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style, Compared as part of."
+      }
+    }
+  ],
+  "identifiers": {
+    "gtin": [],
+    "mpn": "bp1",
+    "merchantSkus": {
+      "sweat-kingdom-store": "50437618598052"
+    }
+  },
+  "attributes": {
+    "capacity_max_people": {
+      "value": 4,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(?:\\\\d+\\\\s*[-\\\\u2013]\\\\s*)?(\\\\d+)\\\\s*Person\", found inside longer text in that cell. It matched \"4\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(?:\\d+\\s*[-\\u2013]\\s*)?(\\d+)\\s*Person",
+        "version": 1,
+        "field": "title",
+        "sourceText": "The Sweat Pod (2-4 Person) - Blackout Edition - Regular (2 Person) / Harvia KIP With Built In Controls (Regular 6kw - Large 8kw)",
+        "matched": "4",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    },
+    "sauna_style": {
+      "value": "pod",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+        "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+        "retrievedAt": "2026-09-14",
+        "method": "secondhand",
+        "note": "Extracted from \"title\" by the pattern \"(Barrel|Cabin|Pod|Box|Mobile)\", found inside longer text in that cell. It matched \"Pod\". The rule was approved by a person before this value was written."
+      },
+      "verification": "manufacturer_reported",
+      "derivation": {
+        "rule": "(Barrel|Cabin|Pod|Box|Mobile)",
+        "version": 1,
+        "field": "title",
+        "sourceText": "The Sweat Pod (2-4 Person) - Blackout Edition - Regular (2 Person) / Harvia KIP With Built In Controls (Regular 6kw - Large 8kw)",
+        "matched": "Pod",
+        "confidence": "within_text",
+        "reviewState": "approved",
+        "approvedBy": "Matt (site owner), relayed through Codex"
+      }
+    }
+  },
+  "sourceTitle": "The Sweat Pod (2-4 Person) - Blackout Edition - Regular (2 Person) / Harvia KIP With Built In Controls (Regular 6kw - Large 8kw)",
+  "family": {
+    "of": "sweat-kingdom-the-sweat-pod",
+    "because": "\"The Sweat Pod (2-4 Person) - Blackout Edition\" is the same pod in a blackout finish, sold in the same two sizes."
+  },
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "Sweat Kingdom (Awin advertiser 125462, feed F3219), CSV uploaded 2026-09-14: awin-125462-f3219-2026-09-13.csv. Mapping profile sweat-kingdom-awin v1.",
+    "url": "https://www.awin1.com/cread.php?awinmid=125462&awinaffid=3090899&ued=https%3A%2F%2Fsweatkingdom.com%2Fproducts%2Fthe-sweat-pod-blackout-edition%3Fvariant%3D50437618598052",
+    "retrievedAt": "2026-09-14",
+    "method": "direct",
+    "note": "Chosen from 6 rows sharing /products/the-sweat-pod-blackout-edition, ranging $7,545 to $10,745. The cheapest is the one represented, named as the file names it, and its own link is the link on this record. Written by this import: Product name, Retailer's own title, Description, Merchant link, Merchant SKU, Manufacturer part number, Image, Brand, Price, Availability, Seats up to, Style, Compared as part of."
+  },
+  "lastUpdated": "2026-09-14",
+  "flags": {
+    "demo": false,
+    "newArrival": false
+  }
+}

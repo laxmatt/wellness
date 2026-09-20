@@ -1,0 +1,187 @@
+{
+  "id": "sunlighten-solo-system-chromo",
+  "slug": "sunlighten-solo-system-chromo",
+  "name": "Solo System Chromo",
+  "brandId": "sunlighten",
+  "categoryId": "saunas",
+  "description": "Not everyone has the space or budget for a cabin sauna. But everyone needs the benefits of infrared. For a healthier, happier you, envelop your entire body with the potent benefits of Sunlighten’s patented SoloCarbon® far infrared heating technology, engineered to produce an exceptionally high quantity of far infrared. Infrared density matters — the more far infrared your body absorbs, the more effectively it can support circulation, promote a deep sweat, ease muscle tension, and encourage relaxation. Our advanced heater is proven to raise core body temperature rather than simply heating the surrounding air, creating a more comfortable yet highly effective session!",
+  "status": "published",
+  "availability": "in_stock",
+  "market": "US",
+  "images": [
+    {
+      "id": "sunlighten-solo-system-chromo-image-1",
+      "kind": "affiliate_feed",
+      "role": "primary",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SoloSuanaProduct1_6.jpg?v=1764249608",
+      "alt": "Solo System Chromo",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-solo-system-chromo-image-2",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SoloProductPageImages_1000x1000px.jpg?v=1764249608",
+      "alt": "Solo System Chromo",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-solo-system-chromo-image-3",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SoloSuanaProduct1_1.jpg?v=1764249608",
+      "alt": "Solo System Chromo",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    },
+    {
+      "id": "sunlighten-solo-system-chromo-image-4",
+      "kind": "affiliate_feed",
+      "role": "gallery",
+      "src": "https://cdn.shopify.com/s/files/1/0526/0050/4514/files/SoloSuanaProduct1_7.jpg?v=1764249608",
+      "alt": "Solo System Chromo",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Published under the site's standing owner decision that an approved partner directing Wellness Fit Check to its official inventory source is sufficient permission to use supplied product imagery."
+      }
+    }
+  ],
+  "offers": [
+    {
+      "id": "sunlighten-solo-system-chromo-offer",
+      "merchantId": "sunlighten-store",
+      "market": "US",
+      "currency": "USD",
+      "priceMinor": 209900,
+      "url": "https://www.awin1.com/cread.php?awinmid=63394&awinaffid=3090899&ued=https%3A%2F%2Fshop-us.sunlighten.com%2Fproducts%2Fsolo-system-chromo",
+      "affiliate": {
+        "status": "affiliate",
+        "network": "awin",
+        "programRef": "awin-advertiser-63394-publisher-3090899"
+      },
+      "discountCodes": [],
+      "availability": "in_stock",
+      "merchantSku": "Solo System Chromo",
+      "lastChecked": "2026-09-19",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. Product link was generated with the portal-verified tracking parameter."
+      }
+    }
+  ],
+  "variants": [],
+  "identifiers": {
+    "gtin": [],
+    "merchantSkus": {
+      "sunlighten-store": "Solo System Chromo"
+    }
+  },
+  "attributes": {
+    "sauna_type": {
+      "value": "far_infrared",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing. The product description identifies the heating technology."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "sauna_style": {
+      "value": "pod",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "placement": {
+      "value": "indoor",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_max_people": {
+      "value": 1,
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    },
+    "capacity_label": {
+      "value": "1-person",
+      "source": {
+        "kind": "merchant_feed",
+        "ref": "sunlighten-shopify, official public Shopify snapshot",
+        "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+        "retrievedAt": "2026-09-19",
+        "method": "direct",
+        "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+      },
+      "verification": "manufacturer_reported"
+    }
+  },
+  "sourceTitle": "Solo System Chromo",
+  "editorial": {
+    "strengths": [],
+    "tradeoffs": []
+  },
+  "source": {
+    "kind": "merchant_feed",
+    "ref": "sunlighten-shopify, official public Shopify snapshot",
+    "url": "https://shop-us.sunlighten.com/products/solo-system-chromo",
+    "retrievedAt": "2026-09-19",
+    "method": "direct",
+    "note": "Product identity, description, price, availability and images come from the approved merchant's official storefront catalogue. Supplier claims are not independent testing."
+  },
+  "lastUpdated": "2026-09-19",
+  "flags": {
+    "demo": false,
+    "newArrival": true
+  }
+}
